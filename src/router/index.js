@@ -7,7 +7,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 /* Layout */
-import Layout from '../views/layout/Layout'
+// import Layout from '../views/layout/Layout'
 import stuLayout from '../views/layout/stu-Layout'
 /**
 * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
@@ -39,20 +39,20 @@ export const constantRouterMap = [
 
   {
     path: '/example',
-    component: Layout,
+    component: stuLayout,
     redirect: '/example/table',
-    name: 'Example',
+    name: '默认栏目',
     meta: { title: 'Example', icon: 'example' },
     children: [
       {
         path: 'table',
-        name: 'Table',
+        name: '数据',
         component: () => import('@/views/table/index'),
         meta: { title: 'Table', icon: 'table' }
       },
       {
         path: 'tree',
-        name: 'Tree',
+        name: '树',
         component: () => import('@/views/tree/index'),
         meta: { title: 'Tree', icon: 'tree' }
       }
@@ -61,11 +61,11 @@ export const constantRouterMap = [
 
   {
     path: '/form',
-    component: Layout,
+    component: stuLayout,
     children: [
       {
         path: 'index',
-        name: 'Form',
+        name: '表单',
         component: () => import('@/views/form/index'),
         meta: { title: 'Form', icon: 'form' }
       }

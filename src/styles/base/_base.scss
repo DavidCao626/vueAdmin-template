@@ -1,18 +1,40 @@
 
+:root{
+  --color-primary:#409DFD;
+  --color-primary-light:#379EF3;
+  --color-primary-dark:#65769D;
+  
+  --color-grey-light-1:#8D8D8D;
+  --color-grey-light-2:#9A9A9A;;
+  --color-grey-light-3:#E4E8EB;
+  --color-grey-light-4:#f6f8f9;
+  --color-grey-light-5:#FBFBFB;
+
+  --color-grey-dark-1:#222222;//导航
+  --color-grey-dark-2:#353535;//主
+  --color-grey-dark-3:#5d5d5d;//logo
+
+  --shadow-dark:0 1px 4px 0 rgba(238, 238, 238, 0.5);
+}
+
+
 body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
- line-height: 1.6;
+  line-height: 1.6;
   font-family: -apple-system-font, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif;
+  font-weight: 400;
+  min-height: 100vh;
+  color: var(--color-grey-dark-2);
+  background-color: var(--color-grey-light-4);
 }
 
 html {
-  // This defines what 1rem is
+  // This defines what 1rem is 12px
   font-size: 87.5%;
   box-sizing: border-box;
   
-
 }
 
 *,
@@ -31,7 +53,9 @@ a:focus,
 a:active {
   outline: none;
 }
-
+a{
+  color: var(--color-primary-dark);
+}
 a,
 a:focus,
 a:hover {
@@ -57,5 +81,9 @@ a:hover {
 }
 
 .app-container {
-  padding: 20px;
+  
+    width: 95%;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
 }

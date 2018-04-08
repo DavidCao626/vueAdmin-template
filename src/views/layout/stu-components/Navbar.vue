@@ -65,14 +65,12 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-@import "src/styles/components/_button.scss";
 .navbar {
   background-color: #ffffff;
-  box-shadow: 0 1px 4px 0 rgba(238, 238, 238, 0.5);
+  
 
   &__inner {
-    padding: 0 65px;
-    height: 80px;
+     padding: 0 65px;
   }
   &-layout {
     height: 100%;
@@ -129,7 +127,7 @@ export default {
     height: 50px;
     display: inline-block;
     position: absolute;
-    right: 35px;
+    right:-5px;
     .avatar-wrapper {
       cursor: pointer;
       margin-top: 5px;
