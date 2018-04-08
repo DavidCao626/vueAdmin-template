@@ -1,5 +1,5 @@
 <template>
-  <div class="app-wrapper" :class="{hideSidebar:!sidebar.opened}">
+  <div class="app-wrapper" >
     <sidebar class="sidebar-container"></sidebar>
     <div class="main-container">
       <navbar></navbar>
@@ -9,10 +9,9 @@
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from '@/views/layout/components'
-
+import { Navbar, Sidebar, AppMain } from '@/views/layout/stu-components'
 export default {
-  name: 'layout',
+  name: 'stulayout',
   components: {
     Navbar,
     Sidebar,
