@@ -1,0 +1,24 @@
+.btn-round{
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    border: 1px solid #E4E8EB;
+    border-radius: 50%;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    line-height: 38px;
+    box-sizing: border-box;
+    &::before{
+        content: " ";
+        width: 22px;
+        height: 20px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    &::before{
+       background-image: url("/src/icons/svg/user.svg");
+        width:22px;
+        height:20px;
+    }
+}
