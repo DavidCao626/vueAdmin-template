@@ -27,6 +27,7 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+@import 'src/styles/main.scss'; // global css
 @import "src/styles/abstracts/mixins.scss";
 .app-wrapper {
   @include clearfix;

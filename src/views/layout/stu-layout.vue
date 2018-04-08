@@ -1,6 +1,6 @@
 <template>
-  <div class="app-wrapper" >
-    <sidebar class="sidebar-container"></sidebar>
+  <div class="app-wrapper" :class="{hideSidebar:!sidebar.opened}">
+
     <div class="main-container">
       <navbar></navbar>
       <app-main></app-main>
@@ -25,12 +25,18 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style  lang="scss" >
+
+@import "src/styles/core.scss"; // global css
 @import "src/styles/abstracts/mixins.scss";
 .app-wrapper {
   @include clearfix;
   position: relative;
   height: 100%;
   width: 100%;
+}
+body {
+  background-color: #f6f8f9;
+  min-width: 768px;
 }
 </style>
