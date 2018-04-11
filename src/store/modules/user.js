@@ -29,7 +29,7 @@ const user = {
     Register({ commit }, registerForm) {
       return new Promise((resolve, reject) => {
         uregister(registerForm.username, registerForm.pass, registerForm.checkPass).then(response => {
-          resolve()
+          resolve(response)
         }).catch(error => {
           reject(error)
         })

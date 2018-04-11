@@ -7,7 +7,7 @@
 		<el-card class="box-card  login-form ">
 			<div slot="header" class="clearfix">
 			    <span>新用户注册</span>
-			    <router-link to="/"> <el-button style="float: right; padding: 3px 0" type="text"> 返回登录</el-button></router-link>
+			    <router-link to="/login"> <el-button style="float: right; padding: 3px 0" type="text"> 返回登录</el-button></router-link>
 			  </div>
 	
 		  	<br />
@@ -96,10 +96,11 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$store.dispatch('Register', this.ruleLoginForm).then(() => {
+          this.$store.dispatch('Register', this.ruleLoginForm).then((response) => {
+            console.log(response)
             this.$router.push({ path: '/login' })
-          }).catch(() => {
-
+          }).catch((response) => {
+            console.log(response)
           })
         } else {
           console.log('error submit!!')
