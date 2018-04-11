@@ -76,6 +76,7 @@ export default {
   },
   methods: {
     fetchData() {
+      console.log(this.$route.matched)
       this.listLoading = true
       getList(this.listQuery).then(response => {
         this.list = response.data.items
