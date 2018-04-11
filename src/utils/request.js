@@ -1,11 +1,18 @@
 import axios from 'axios'
 import store from '../store'
 import { getToken } from '@/utils/auth'
+import {
+	Message
+} from 'element-ui';
+import {
+	Loading
+} from 'element-ui'
 
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
-  timeout: 15000 // 请求超时时间
+  timeout: 15000, // 请求超时时间
+  headers: {'Specify-Request-Type': 'application/x-www-form-urlencoded;charset=utf-8'}
 })
 
 // request拦截器
@@ -19,6 +26,27 @@ service.interceptors.request.use(config => {
   console.log(error) // for debug
   Promise.reject(error)
 })
+
+service.interceptors.response.use(response=>{
+		if(response.data.respStatus > 0) {
+					return response.data.body
+			} else {
+				Message({
+					"message": response.data.body.message,
+					"type": "error"
+				});
+			  return Promise.reject(response.data.body);
+		}
+},error=>{
+		console.log(error);
+		Message({
+					"message": error.message,
+					"type": "error"
+		 });
+		 return Promise.reject(error);
+});
+
+
 
 // respone拦截器
 // service.interceptors.response.use(
