@@ -19,7 +19,7 @@
 			</el-form-item>
 			
 			<el-form-item label="密码：" prop="pass">
-				<el-input type="password" v-model="ruleLoginForm.pass" name="pwd" autocomplete="off" placeholder="填写你的密码"></el-input>
+				<el-input type="password" v-model="ruleLoginForm.pass" name="pwd" autoComplete="off" placeholder="填写你的密码"></el-input>
 			
 			</el-form-item>
 		<br />
@@ -68,8 +68,8 @@ export default {
         if (valid) {
           this.$store.dispatch('Login', this.ruleLoginForm).then(() => {
             this.$router.push({ path: '/' })
-          }).catch(() => {
-
+          }).catch((err) => {
+			 console.log(err);
           })
         } else {
           return false
