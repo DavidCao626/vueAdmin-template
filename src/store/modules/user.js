@@ -1,6 +1,6 @@
 import { login, logout, getInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-
+import { uregister } from '@/api/register'
 const user = {
   state: {
     token: getToken(),
@@ -25,15 +25,27 @@ const user = {
   },
 
   actions: {
+
+    Register({ commit }, registerForm) {
+      return new Promise((resolve, reject) => {
+        uregister(registerForm.username, registerForm.pass, registerForm.checkPass).then(response => {
+          resolve(response)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
     // 登录
     Login({ commit }, userInfo) {
-      const username = userInfo.username.trim()
+      // const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
-        login(username, userInfo.password).then(response => {
-          const data = response.data
-          setToken(data.token)
-          commit('SET_TOKEN', data.token)
-          resolve()
+        login(userInfo.username, userInfo.pass).then(response => {
+          // const data = response.data
+          // setToken(data.token)
+          setToken('')
+          // commit('SET_TOKEN', data.token)
+          resolve(response)
         }).catch(error => {
           reject(error)
         })

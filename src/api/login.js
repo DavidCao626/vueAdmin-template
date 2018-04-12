@@ -1,12 +1,12 @@
 import request from '@/utils/request'
 
-export function login(username, password) {
+export function login(loginName, pwd) {
   return request({
-    url: '/user/login',
+    url: '/user/ulogin.do',
     method: 'post',
     data: {
-      username,
-      password
+      loginName,
+      pwd
     }
   })
 }
