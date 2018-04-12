@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="bodyBox">
+			  <test></test>
+			  <test1></test1>
+			 <el-button @click="submitQuestion">测试改变</el-button>
+			 <el-button @click="printInfo">外部数据</el-button>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>机构管理</title>
+	</head>
+	<body>
+		<div id="bodyBox">
+			<gc-hcontainer :component-store="pageHCon">
+				<template slot="aside">
+					<gc-tree :component-store="treeStore"></gc-tree>
+				</template>
+				<div style="margin-right:120px;margin-top:5px;margin-left:10px">
+					 <el-tabs v-model="activeName" type="card">
+    			<el-tab-pane label="更新机构信息" name="first" :disabled="updateEnable">
+    			<gc-form :component-store="formStore">
+					<el-form-item label="机构名称" prop="orgName">
+							<el-input v-model="formDataStore.data.orgName" placeholder="请输入名称"></el-input>
+					</el-form-item>
+					<el-form-item label="机构编号" prop="orgCode">
+							<el-input v-model="formDataStore.data.orgCode" disabled ></el-input>
+					</el-form-item>
+					<el-form-item label="机构简称" prop="orgAbbreviationName">
+							<el-input v-model="formDataStore.data.orgAbbreviationName" placeholder="请输入名称"></el-input>
+					</el-form-item>
+					<el-form-item label="社会属性编码" prop="socialNo">
+							<el-input v-model="formDataStore.data.socialNo" placeholder="请输入名称"></el-input>
+					</el-form-item>
+					<el-form-item label="上级组织编号" prop="PCode">
+							<el-input v-model="formDataStore.data.PCode" disabled ></el-input>
+					</el-form-item>
+					<el-form-item label="上级组织名称" >
+							<el-input   disabled  v-model="nchild_name"></el-input>
+					</el-form-item>
+					<el-form-item label="组织类型" prop="orgType">
+						<gc-s-sel :component-store="f_type"></gc-s-sel>
+					</el-form-item>
+					<el-form-item label="组织类别" prop="orgCategory">
+						<gc-s-sel :component-store="f_category"></gc-s-sel>
+					</el-form-item>
+					<el-form-item label="所属地域" prop="areaCode">
+						<gc-s-cas :component-store="f_area_code"></gc-s-cas>
+					</el-form-item>
+					<el-form-item label="是否可用" prop="available">
+						<gc-s-radio :component-store="f_available"></gc-s-radio>
+					</el-form-item>
+					<el-form-item label="" prop="submit">
+							<el-button type="success"  size="small" @click="update()">保存信息</el-button>
+					</el-form-item>
+				</gc-form>
+    </el-tab-pane>
+    <el-tab-pane label="新增下级机构" name="second" :disabled="nchildEnable">
+    	<gc-form :component-store="nchild_formStore">
+					<el-form-item label="机构名称" prop="orgName">
+							<el-input v-model="nchild_formDataStore.data.orgName" placeholder="请输入名称"></el-input>
+					</el-form-item>
+					<el-form-item label="机构简称" prop="orgAbbreviationName">
+							<el-input v-model="nchild_formDataStore.data.orgAbbreviationName" placeholder="请输入名称"></el-input>
+					</el-form-item>
+					<el-form-item label="社会属性编码" prop="socialNo">
+							<el-input v-model="nchild_formDataStore.data.socialNo" placeholder="请输入名称"></el-input>
+					</el-form-item>
+					<el-form-item label="上级组织编号" prop="PCode">
+							<el-input v-model="nchild_formDataStore.data.PCode" disabled ></el-input>
+					</el-form-item>
+					<el-form-item label="上级组织名称" >
+							<el-input   disabled  v-model="nchild_name"></el-input>
+					</el-form-item>
+					<el-form-item label="组织类型" prop="orgType">
+						<gc-s-sel :component-store="n_f_type"></gc-s-sel>
+					</el-form-item>
+					<el-form-item label="组织类别" prop="orgCategory">
+						<gc-s-sel :component-store="n_f_category"></gc-s-sel>
+					</el-form-item>
+					<el-form-item label="所属地域" prop="areaCode">
+						<gc-s-cas :component-store="n_f_area_code"></gc-s-cas>
+					</el-form-item>
+					<el-form-item label="是否可用" prop="available">
+						<gc-s-radio :component-store="n_f_available"></gc-s-radio>
+					</el-form-item>
+					<el-form-item label="" prop="submit">
+							<el-button type="success"  size="small" @click="add()">保存信息</el-button>
+					</el-form-item>
+				</gc-form>
+    </el-tab-pane>
+  </el-tabs>
+</div>
+			</gc-hcontainer>
+		</div>
+	</body>
+</html>

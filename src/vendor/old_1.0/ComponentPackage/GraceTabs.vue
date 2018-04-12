@@ -26,47 +26,46 @@
 </template>
 <script>
 	export default {
-		name: 'graceTabs',
-		props: ['componentStore'],
-		data: function() {
-			var store = {};
-			if(this.componentStore) {
-				store = this.componentStore;
-			}
-			return store;
-		},
-		methods: {
-			removeTab(targetName) {
-				let tabs = this.store.data;
-				let activeName = this.store.conf.activeTab;
-				if(activeName==0)
-				{
-					return;
-				}
-				if(activeName === targetName) {
-					tabs.forEach((tab, index) => {
-						if(tab.name === targetName) {
-							let nextTab = tabs[index + 1] || tabs[index - 1];
-							if(nextTab) {
-								activeName = nextTab.name;
-							}
-						}
-					});
-				}
-				this.store.conf.activeTab = activeName;
-				this.store.data = this.store.data.filter(tab => tab.name !== targetName);
-			}
-		},
-		computed: {},
-		beforeUpdate: function() {},
-		updated: function() {},
-		mounted: function() {
-		},
-		watch:{
-			"store.conf.height":function(val){
-				this.store.conf.panelHeight=val-40;
-			}
-		}
+	  name: 'graceTabs',
+	  props: ['componentStore'],
+	  data: function() {
+	    var store = {}
+	    if (this.componentStore) {
+	      store = this.componentStore
+	    }
+	    return store
+	},
+	  methods: {
+	    removeTab(targetName) {
+	      const tabs = this.store.data
+	      let activeName = this.store.conf.activeTab
+	      if (activeName == 0) {
+	        return
+      }
+	      if (activeName === targetName) {
+	        tabs.forEach((tab, index) => {
+	          if (tab.name === targetName) {
+	            const nextTab = tabs[index + 1] || tabs[index - 1]
+	            if (nextTab) {
+	              activeName = nextTab.name
+	            }
+	          }
+	        })
+	      }
+	      this.store.conf.activeTab = activeName
+	      this.store.data = this.store.data.filter(tab => tab.name !== targetName)
+	    }
+	  },
+	  computed: {},
+	  beforeUpdate: function() {},
+	  updated: function() {},
+	  mounted: function() {
+	  },
+	  watch: {
+	    'store.conf.height': function(val) {
+	      this.store.conf.panelHeight = val - 40
+    }
+	  }
 	}
 </script>
 <style>

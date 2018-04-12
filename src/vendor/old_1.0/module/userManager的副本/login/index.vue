@@ -1,0 +1,36 @@
+<template>
+	<div id="form">
+		<router-view ></router-view>
+			
+	</div>
+</template>
+
+<script>
+	import Vue from 'vue'
+	import Element from 'element-ui'
+	import '@/theme/index.css'
+	Vue.use(Element)
+import VueRouter from 'vue-router'
+	Vue.use(VueRouter)
+	
+	import login from './components/login.vue'
+	import register from './components/register.vue'
+	
+	const routes = [
+	  { path: '/', component: login },
+	  { path: '/register', component: register }
+	]
+	
+	const router = new VueRouter({
+ 		 routes
+	})
+	
+export default {
+  components: {
+    login,
+    register
+  },
+  router
+}
+
+</script>

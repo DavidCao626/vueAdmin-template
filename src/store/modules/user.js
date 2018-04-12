@@ -1,6 +1,6 @@
-import { login, logout, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
-import { uregister } from '@/api/register'
+import { login, logout, getInfo } from '~/api/login'
+import { getToken, setToken, removeToken } from '~/utils/auth'
+import { uregister } from '~/api/register'
 const user = {
   state: {
     token: getToken(),

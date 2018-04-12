@@ -1,0 +1,59 @@
+<template>
+	<div>
+		<div class="grace-item-content">
+			<el-select v-model="fields._value" v-bind="innerProp" v-on="innerEvent">
+				<template v-if="fields.isGroup">
+					<el-option-group v-for="group in fields.groups" :key="getGroupLabel(group)" :label="getGroupLabel(group)">
+						<el-option v-for="item in group.options" :key="getItemValue(item)" :label="getItemLabel(item)" :value="getItemValue(item)">
+							<span>{{getItemLabel(item)}}</span>
+						</el-option>
+					</el-option-group>
+				</template>
+				<template v-else>
+					<el-option v-for="item in fields.options" :key="getItemValue(item)" :label="getItemLabel(item)" :value="getItemValue(item)">
+						<span>{{getItemLabel(item)}}</span>
+					</el-option>
+				</template>
+			</el-select>
+		</div>
+		<div class="grace-form-rule-message" v-if="fields._rule_message">
+			{{fields._rule_message}}
+		</div>
+	</div>
+</template>
+<script>
+	// 动态的去创建组件
+
+	export default {
+	  data() {
+	    return {
+	      innerProp: this.fields.inner_prop,
+	      innerEvent: this.fields.inner_event
+	    }
+	  },
+	  components: {},
+	  props: ['fields'],
+	  methods: {
+	    getGroupLabel: function(item) {
+	      return item[this.fields.props['groupLable']]
+	    },
+	    getItemLabel: function(item) {
+	      return item[this.fields.props['itemLable']]
+	    },
+	    getItemValue: function(item) {
+	      return item[this.fields.props['itemValue']]
+	    }
+	  },
+	  computed: {},
+	  watch: {},
+	  mounted: function() {
+	    var resolver = this.fields._getResolver()
+	    if (resolver.isItem) {
+	      resolver.mountedItem()
+	    }
+	  }
+	}
+</script>
+<style>
+
+</style>

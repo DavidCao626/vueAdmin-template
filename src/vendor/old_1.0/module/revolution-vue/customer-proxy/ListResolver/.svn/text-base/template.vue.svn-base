@@ -1,0 +1,36 @@
+<template>
+	<div class="inner_temp">
+	    <el-input v-bind="innerProp" v-model="fields._value" v-on="innerEvent"></el-input>
+    </div>
+</template>
+<script>
+	export default {
+		data() {
+				return {
+					innerProp: this.fields.inner_prop,
+					innerEvent: this.fields.inner_event
+				}
+			},
+			components: {},
+			props: ['fields'],
+			methods: {
+				getLabel: function(item) {
+					return item[this.fields.props["label"]];
+				},
+				getTitle: function(item) {
+					return item[this.fields.props["title"]];
+				}
+			},
+			mounted: function() {
+			},
+			computed: {},
+			watch: {}
+	}
+</script>
+<style>
+	.grace-form-rule-message {
+		line-height: 12px;
+		color: red;
+		font-size: 12px;
+	}
+</style>

@@ -1,0 +1,132 @@
+10
+
+dir
+1082
+svn://192.168.1.110/repositories/StuProjectWebWork/src/module/userManager
+svn://192.168.1.110
+
+
+
+2018-04-06T05:31:27.873372Z
+1082
+wanghongkun
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+116339d3-34e4-4030-92b0-37ddc433328a
+
+test
+dir
+
+UserConfig.js
+file
+
+
+
+
+2018-04-06T05:39:40.148193Z
+8768ffce01b836c6cb8202ad324ebbcc
+2018-02-26T08:22:37.026845Z
+299
+wanghongkun
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1050
+
+dutyManager
+dir
+
+userAuth
+dir
+
+socializeClassify
+dir
+
+studentManager
+dir
+
+managerNodeConfig
+dir
+
+login
+dir
+
+userManager
+dir
+
+DutyUrlConfig.js
+file
+
+
+
+
+2018-04-06T05:39:40.151194Z
+c7d8b5d3b44807968416bb08b3498fd8
+2018-02-25T01:08:13.011912Z
+245
+wanghongkun
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+447
+
+userSelfAuth
+dir
+
+updateUserPwd
+dir
+
+updateUserInfo
+dir
+
+staffManager
+dir
+

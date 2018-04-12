@@ -15,61 +15,61 @@
 </template>
 <script>
 	export default {
-		name: 'graceHContainer',
-		props: ['componentStore'],
-		data: function() {
-			var store = {};
-			if(this.componentStore) {
-				store = this.componentStore;
-			}
-			return store;
-		},
-		methods: {
-			changeHeight: function() {
-				var realHeight = this.store.conf.prefHeight;
-				if(!realHeight) {
-					realHeight = 0;
-				}
-				if(typeof this.$el !== "undefined") {
-					var headerHeight = this.__selector(this.$el, "#nc_container_header").clientHeight;
-					if(!this.store.conf.isHeader) {
-						headerHeight = 0;
-					}
-					realHeight = realHeight - headerHeight;
-					console.log([headerHeight, realHeight]);
-					this.__putDeepObjectValue("store:conf:resultHeight", realHeight);
-				}
-				if(realHeight > 0) {
-					this.store.conf.workHeight = realHeight + "px"
-				} else {
-					this.store.conf.workHeight = "auto";
-				}
-			}
-		},
-		computed: {
-			/**
+	  name: 'graceHContainer',
+	  props: ['componentStore'],
+	  data: function() {
+	    var store = {}
+	    if (this.componentStore) {
+	      store = this.componentStore
+	    }
+	    return store
+	},
+	  methods: {
+	    changeHeight: function() {
+	      var realHeight = this.store.conf.prefHeight
+	      if (!realHeight) {
+	        realHeight = 0
+	      }
+	      if (typeof this.$el !== 'undefined') {
+	        var headerHeight = this.__selector(this.$el, '#nc_container_header').clientHeight
+	        if (!this.store.conf.isHeader) {
+	          headerHeight = 0
+	        }
+	        realHeight = realHeight - headerHeight
+	        console.log([headerHeight, realHeight])
+	        this.__putDeepObjectValue('store:conf:resultHeight', realHeight)
+	      }
+	      if (realHeight > 0) {
+	        this.store.conf.workHeight = realHeight + 'px'
+	      } else {
+	        this.store.conf.workHeight = 'auto'
+      }
+	    }
+	  },
+	  computed: {
+	    /**
 			 * 头部高度
 			 */
-			headerHeight: function() {
-				var val = this.__getDeepObjectValue("store.conf.headerHeight");
-				if(typeof val !== "undefined" && val != "auto") {
-					return val + "px";
-				} else {
-					return "auto";
-				}
-			}
-		},
-		updated: function() {
-			//this.changeHeight();
-		},
-		mounted: function() {
-			//this.changeHeight();
-		},
-		watch: {
-			"store.conf.prefHeight": function(val) {
-				this.changeHeight();
-			}
-		}
+	    headerHeight: function() {
+	      var val = this.__getDeepObjectValue('store.conf.headerHeight')
+      if (typeof val !== 'undefined' && val != 'auto') {
+	        return val + 'px'
+      } else {
+	        return 'auto'
+      }
+	    }
+	  },
+	  updated: function() {
+	    // this.changeHeight();
+	  },
+	  mounted: function() {
+	    // this.changeHeight();
+	  },
+	  watch: {
+	    'store.conf.prefHeight': function(val) {
+	      this.changeHeight()
+	    }
+	  }
 	}
 </script>
 <style>

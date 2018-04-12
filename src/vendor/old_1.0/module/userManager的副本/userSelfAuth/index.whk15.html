@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>提交认证信息</title>
+	</head>
+	<body>
+		<div id="bodyBox">
+			<gc-hcontainer :component-store="pageHCon">
+				<div style="margin-right:120px;margin-top:5px;margin-left:10px">
+    		<gc-form :component-store="formStore">
+					<el-form-item label="管理机构" prop="title">
+							<gc-s-sel :component-store="nf_manager_node_list"></gc-s-sel>
+					</el-form-item>
+					<el-form-item label="成员职务" prop="path_attr">
+							<gc-s-sel :component-store="nf_manager_duty_list"></gc-s-sel>
+					</el-form-item>
+					<el-form-item label="用户对象" prop="classifyName">
+						<el-input disabled v-model="formDataStore.data.classifyName" placeholder="用户对象名称"></el-input>
+					</el-form-item>
+					<el-form-item label="认证机构" prop="certOrgName">
+						<el-input disabled v-model="formDataStore.data.certOrgName" placeholder="认证机构名称"></el-input>
+					</el-form-item>
+					<auth-body  ></auth-body>
+					<el-form-item label="" prop="submit">
+							<el-button type="success" @click="submitCert()"  size="small">提交认证</el-button>
+					</el-form-item>
+				</gc-form>
+</div>
+</gc-hcontainer>
+		</div>
+	</body>
+</html>

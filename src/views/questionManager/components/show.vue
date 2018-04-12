@@ -1,0 +1,45 @@
+<template>
+	<div class="question-box">
+		<div class="question-show">
+			<item :isShow="1">
+							
+			</item>
+		</div>
+	</div>
+		
+	
+</template>
+
+<script>
+	import Item from './question/edit/custom-question-item.vue'
+export default {
+	name: 'question-show',
+	data() {
+	    return {
+	
+	    }
+	},
+	mounted: function() {
+	    // ajax初始化灌入数据
+	    this.$store.dispatch('initQuuestion')
+  },
+	components: {
+	    Item
+	}
+}
+</script>
+<style scoped>
+.question-box{
+	height: 100vh;
+	background-image: url(https://image.wjx.cn/images/newimg/wjx-exam/webchat/new/banner-wechat-ks.jpg) ;
+	background-size: cover;
+	background-position: bottom;
+}
+.question-show{
+	padding: 15vh;
+	width: 90vh;
+	margin: 0 auto;
+}
+
+ 	
+</style>

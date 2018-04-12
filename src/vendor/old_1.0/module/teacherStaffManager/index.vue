@@ -1,0 +1,60 @@
+<template>
+	<div>
+		<el-row>
+		  <el-col :span="21">
+		  		<search></search>
+		  </el-col>
+		  <el-col :span="3">
+		  		<operation></operation>
+		  </el-col>
+		</el-row>
+		<el-row>
+		    <el-col :span="24">
+		     <data-list></data-list>
+			</el-col>
+		</el-row>
+		<el-row>
+		    <el-col :span="24">
+		     
+		<pages></pages>
+			</el-col>
+		</el-row>
+		
+		<!--<add-staff-dialog></add-staff-dialog>-->
+	</div>
+</template>
+
+<script>
+	
+	import search from './components/search.vue'
+	import operation from './components/operation.vue'
+	import datalist from './components/data-list.vue'
+	import pages from './components/pages.vue'
+	import addStaffDialog from './components/add-staff-dialog.vue'
+	
+	export default {
+	  components: {
+    search,
+    operation,
+    'data-list': datalist,
+    'add-staff-dialog': addStaffDialog,
+    pages
+  },
+	  data: function() {
+	    return {
+	
+	    }
+  },
+	  methods: {
+	   	  tanchuang: function($event) {
+	   	  	this.ss = !this.ss
+	   	  }
+	  }
+	}
+</script>
+
+<style>
+	 .bg-purple-dark {
+    background: #99a9bf;
+  }
+</style>

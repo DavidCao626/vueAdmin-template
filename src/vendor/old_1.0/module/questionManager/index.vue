@@ -1,0 +1,37 @@
+<template>
+	<div >
+	
+		<router-view ></router-view>
+			
+	</div>
+</template>
+
+<script>
+	import Vue from 'vue'
+	import VueRouter from 'vue-router'
+	Vue.use(VueRouter)
+	
+	import Element from 'element-ui'
+	import '@/theme/index.css'
+	Vue.use(Element)
+
+import main from './components/main.vue'
+	import show from './components/show.vue'
+	import results from './components/results.vue'
+
+	const routes = [
+	  { path: '/', component: main },
+	  { path: '/show', component: show },
+	  { path: '/results', component: results }
+	]
+	
+	const router = new VueRouter({
+ 		 routes
+	})
+	
+export default {
+	  name: 'question-index',
+  router
+}
+
+</script>

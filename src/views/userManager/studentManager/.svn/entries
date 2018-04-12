@@ -1,0 +1,52 @@
+10
+
+dir
+1082
+svn://192.168.1.110/repositories/StuProjectWebWork/src/module/userManager/studentManager
+svn://192.168.1.110
+
+
+
+2018-04-06T05:26:01.618382Z
+1070
+wanghongkun
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+116339d3-34e4-4030-92b0-37ddc433328a
+
+studentSelfPersonalInfo
+dir
+
+stuSelfInfo
+dir
+
+studentUniversityInfo
+dir
+
+checkStuInfo
+dir
+
+studentPersonalInfo
+dir
+
+updateStuInfo
+dir
+
+studentBaseInfo
+dir
+
+studentSelfUniversityInfo
+dir
+

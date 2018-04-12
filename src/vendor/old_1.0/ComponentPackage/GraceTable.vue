@@ -28,39 +28,39 @@
 </template>
 <script>
 	export default {
-		name: 'graceTable',
-		props: ['componentStore'],
-		data: function() {
-			var store = {};
-			if(this.componentStore) {
-				store = this.componentStore;
-			}
-			return store;
-		},
-		methods: {
-			selectionChange: function(selection, row) {
-				this.store.conf.selects = selection;
-			},
-			sortChange: function(column, prop, order) {
-				console.log("order");
-			},
-			filterChange: function(filters) {
-				console.log(filter);
-			},
-			callBackOperator:function(command){
-				command.operation.call(this,command.index,command.row);
-			}
-		},
-		computed: {
+	  name: 'graceTable',
+	  props: ['componentStore'],
+	  data: function() {
+	    var store = {}
+	    if (this.componentStore) {
+	      store = this.componentStore
+	    }
+	    return store
+	},
+	  methods: {
+	    selectionChange: function(selection, row) {
+	      this.store.conf.selects = selection
+	    },
+	    sortChange: function(column, prop, order) {
+	      console.log('order')
+    },
+	    filterChange: function(filters) {
+	      console.log(filter)
+	    },
+	    callBackOperator: function(command) {
+	      command.operation.call(this, command.index, command.row)
+	    }
+	  },
+	  computed: {
 
-		},
-		beforeUpdate: function() {
-			this.store.conf.loading = true;
-		},
-		updated: function() {
-			this.store.conf.loading = false;
-		},
-		mounted: function() {}
+	  },
+	  beforeUpdate: function() {
+	    this.store.conf.loading = true
+	},
+	  updated: function() {
+	    this.store.conf.loading = false
+	},
+	  mounted: function() {}
 	}
 </script>
 <style>

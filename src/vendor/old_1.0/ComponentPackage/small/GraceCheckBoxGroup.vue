@@ -8,35 +8,35 @@
 </template>
 <script>
 	export default {
-		name: 'graceCheckBoxGroup',
-		props: ['componentStore','modelRef','modelKey'],
-		data: function() {
-			var store = {};
-			if(this.componentStore) {
-				store = this.componentStore;
-			}
-			if(this.modelRef){
-				 store.conf.modelRef=this.modelRef;
-			}
-			if(this.modelKey){
-				store.conf.modelKey=this.modelKey;
-			}
-			return store;
-		},
-		methods: {},
-		computed: {
-			model: {
-				get: function() {
-					return this.store.conf.modelRef[this.store.conf.modelKey];
-				},
-				set: function(newVal) {
-					this.store.conf.modelRef[this.store.conf.modelKey] = newVal;
-				}
-			}
-		},
-		mounted:function(){
-			
-		},
-		watch: {}
+	  name: 'graceCheckBoxGroup',
+	  props: ['componentStore', 'modelRef', 'modelKey'],
+	  data: function() {
+	    var store = {}
+	    if (this.componentStore) {
+	      store = this.componentStore
+	    }
+	    if (this.modelRef) {
+				 store.conf.modelRef = this.modelRef
+	    }
+	    if (this.modelKey) {
+	      store.conf.modelKey = this.modelKey
+	    }
+	    return store
+	},
+	  methods: {},
+	  computed: {
+	    model: {
+	      get: function() {
+	        return this.store.conf.modelRef[this.store.conf.modelKey]
+	      },
+	      set: function(newVal) {
+	        this.store.conf.modelRef[this.store.conf.modelKey] = newVal
+	      }
+	    }
+	  },
+	  mounted: function() {
+	
+	  },
+	  watch: {}
 	}
 </script>

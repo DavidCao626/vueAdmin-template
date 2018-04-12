@@ -1,0 +1,22 @@
+<template>
+	<div><!--template下面必须带一个root根节点把 子组件包起来	-->
+		<elx-steps></elx-steps>
+	</div>
+</template>
+
+<script>
+	import statisticaltools from './components/statisticaltools.vue'
+import test from './components/test.vue'
+import steps from './components/elx-steps.vue'
+export default {
+  components: {
+    'statisticaltools': statisticaltools,
+    test,
+    'elx-steps': steps
+  }
+}
+
+</script>
+
+<style>
+</style>

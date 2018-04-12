@@ -1,0 +1,56 @@
+<template>
+<div class="app-container">
+  <el-container>
+    <!--<el-header>
+      问卷模块
+    </el-header>-->
+    <el-container>
+      <el-main>
+        <div v-show="showQuestionBox">
+          <oter></oter>
+        </div>
+        <div v-show="!showQuestionBox">
+          <edit></edit>
+        </div>
+      </el-main>
+    </el-container>
+    <el-footer>
+  <!--    <list @showQuestionBox="showQuestionBox=true"></list>-->
+    </el-footer>
+  </el-container>
+</div>
+</template>
+<script>
+import oter from "./or/oter.vue";
+import edit from "./question/edit/edit.vue";
+
+import list from "./question/list.vue";
+
+
+
+
+export default {
+  name: "question-main",
+  data() {
+    return {
+      showQuestionBox: false
+    };
+  },
+  components: {
+    list,
+    edit,
+    oter
+  },
+  methods: {
+    changeLayout: function() {
+      showQuestionBox = true;
+    }
+  }
+};
+</script>
+
+<style scoped="scoped">
+.app-container {
+  padding: 20px;
+}
+</style>

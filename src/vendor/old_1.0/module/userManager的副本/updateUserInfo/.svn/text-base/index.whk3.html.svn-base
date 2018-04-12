@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div id="bodybox">
+			<div style="border: solid #E4E4E4 1px; padding: 30px; width: 40%;"  v-loading="loading">
+				<el-form ref="form1" label-width="80px" size="mini" :model="userInfoFormStore.formData.data" :rules="userInfoFormStore.formData.rules">
+					<el-form-item label="登录名" prop="login_name">
+						<el-input size="mini" v-model="userInfoFormStore.formData.data.login_name" disabled></el-input>
+					</el-form-item>
+					<el-form-item label="用户昵称" prop="nick_name">
+						<el-input size="mini" v-model="userInfoFormStore.formData.data.nick_name"></el-input>
+					</el-form-item>
+					<el-form-item label="移动电话" prop="mobile_phone">
+						<el-input size="mini" v-model="userInfoFormStore.formData.data.mobile_phone"></el-input>
+					</el-form-item>
+					<el-form-item label="QQ号码" prop="qq">
+						<el-input size="mini" v-model="userInfoFormStore.formData.data.qq"></el-input>
+					</el-form-item>
+					<el-form-item label="电子邮件" prop="email">
+						<el-input size="mini" v-model="userInfoFormStore.formData.data.email"></el-input>
+					</el-form-item>
+					<el-form-item>
+						<el-row :gutter="10">
+							<el-col :span="16"><pre> </pre></el-col>
+							<el-col :span="4">
+								<el-button icon="el-icon-check" size="mini" type="success" @click="saveInfo('form1')">保存</el-button>
+							</el-col>
+							<el-col :span="4">
+								<el-button icon="el-icon-close" size="mini" plain>取消</el-button>
+							</el-col>
+						</el-row>
+					</el-form-item>
+				</el-form>
+			</div>
+		</div>
+	</body>
+
+</html>

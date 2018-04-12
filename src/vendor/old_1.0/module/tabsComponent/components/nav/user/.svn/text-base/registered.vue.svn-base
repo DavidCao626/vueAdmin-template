@@ -1,0 +1,143 @@
+<template>
+	<ul class="nav navbar-nav">
+		<li>
+			<roleSwitches></roleSwitches>
+		</li>
+		<li>
+			<messages></messages>
+		</li>
+		<li>
+			<el-dropdown  class="header-dropdown-devin"  @command="handleCommand" trigger="hover"> 
+				<span class="el-dropdown-link">
+		       		<el-button type="text"  size="small">
+		           		<img alt="profile" class="img-circle palette-Grey-900 small" height="23" :src="user.avatar" />
+		           		 &nbsp; 
+		            	<strong :style="{'color':'#000'}">{{user.username}}</strong>
+		       		</el-button>
+		        </span>
+				<el-dropdown-menu slot="dropdown">
+					<el-dropdown-item command="0">修改资料</el-dropdown-item>
+				  <el-dropdown-item command="1">修改密码</el-dropdown-item>
+				  <el-dropdown-item command="2" divided>注销退出</el-dropdown-item>
+
+					
+					
+					<!--<ul class="dropdown-menu-devin" :style="{'overflow-x':'visible'}">
+						<ul class="menu">
+						
+							<li>
+								<a href="/userManager/login.html">
+									<h3>
+										退出	
+										<span class="text-green fontello-record"></span>
+		                            </h3>
+								</a>
+							</li>
+						</ul>
+					</ul>-->
+				</el-dropdown-menu>
+			</el-dropdown>
+		</li>
+	</ul>
+	
+</template>
+
+<script>
+import messages from './messages.vue'
+import roleSwitches from './roleSwitches.vue'
+import GUtils from "@/components/Utils.js"
+import RquestPathConfig from "@/API/User/user_manager_loginAndRegister.js"
+export default {
+	props: {
+		user:{
+			type: Object,
+			default: function() {
+				return {
+					username: '',
+					avatar: '',
+				}
+			}
+		}
+	},
+	inject: ['tabsStore'],
+  components: {
+    messages,
+    roleSwitches
+  },
+  methods: {
+  	handleCommand:function (commen) {
+  		switch(commen)
+			{
+				case "0":
+			     this.updateUserInfoPage()
+			  break;
+			  case "1":
+			     this.updateUserPwdPage()
+			  break;
+			  default:
+			  console.log("logout!");
+			  GUtils.post(RquestPathConfig.logoutUrl,{},function(data){
+			  	window.location.href='/userManager/login.html'
+			  })
+			}
+  	},
+    updateUserInfoPage:function(){
+    	this.tabsStore.addTab({
+			  "name": '2',
+				"title": '修改个人资料',
+				"link": 'http://192.168.1.110/StuService/module/updateUserInfo.do',
+				"closable":true
+			});
+    },
+    updateUserPwdPage:function(){
+    	this.tabsStore.addTab({
+			  "name": '3',
+				"title": '修改个人密码',
+				"link": 'http://192.168.1.110/StuService/module/updateUserPwd.do',
+				"closable":true
+			});
+    }
+  }
+  
+}
+</script>
+
+<style>
+.table {
+	display: table;
+	table-layout: fixed;
+}
+
+.table-cell {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.hcenterR {
+	display: box;
+	display: -webkit-box;
+	display: -moz-box;
+	height: 50px;
+	-webkit-box-pack: end;
+	-moz-box-pack: center;
+	-webkit-box-align: center;
+	-moz-box-align: center;
+}
+
+.hcenterL {
+	display: box;
+	display: -webkit-box;
+	display: -moz-box;
+	height: 50px;
+	-webkit-box-pack: 'start -moz-box-pack: center';
+	-webkit-box-align: center;
+	-moz-box-align: center;
+}
+
+.roundpic {
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+}
+</style>

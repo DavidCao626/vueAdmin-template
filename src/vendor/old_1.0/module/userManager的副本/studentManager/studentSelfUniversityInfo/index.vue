@@ -1,0 +1,18 @@
+<template>
+	<div>
+		<ssui></ssui>
+	</div>
+</template>
+
+<script>
+	import ssui from './components/stuSelfUniversityInfo.vue'
+export default {
+	  components: {
+	    ssui
+	  }
+	}
+</script>
+
+<style>
+
+</style>

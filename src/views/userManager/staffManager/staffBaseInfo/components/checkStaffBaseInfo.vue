@@ -1,0 +1,149 @@
+<template>
+	<div>
+		<el-form size="mini" :model="formStore.formData.data" ref="addForm" :rules="formStore.formData.rules" label-width="100px" v-loading="iloading">
+			<el-form-item label="职工编码">
+				<el-input disabled size="mini" v-model="formStore.formData.data.staffCode"></el-input>
+			</el-form-item>
+			<el-form-item label="姓名">
+				<el-input disabled size="mini" v-model="formStore.formData.data.name"></el-input>
+			</el-form-item>
+			<el-form-item label="姓名拼音">
+				<el-input disabled size="mini" v-model="formStore.formData.data.namePhoneticize"></el-input>
+			</el-form-item>
+			<el-form-item label="性别">
+				<el-radio-group disabled v-model="formStore.formData.data.sexType" size="small">
+					<el-radio-button label="1">男</el-radio-button>
+					<el-radio-button label="0">女</el-radio-button>
+				</el-radio-group>
+			</el-form-item>
+			<el-form-item label="民族">
+				<el-select disabled v-model="formStore.formData.data.nation" placeholder="请选择">
+					<el-option v-for="(item,index) in nationsData" :key="item.index" :label="item.name" :value="item.id">
+					</el-option>
+				</el-select>
+			</el-form-item>
+			<el-form-item label="手机号">
+				<el-input disabled size="mini" v-model="formStore.formData.data.phone"></el-input>
+			</el-form-item>
+			<el-form-item label="邮箱">
+				<el-input disabled size="mini" v-model="formStore.formData.data.email"></el-input>
+			</el-form-item>
+			<el-form-item label="身份证号">
+				<el-input disabled size="mini" v-model="formStore.formData.data.identityNo"></el-input>
+			</el-form-item>
+			<el-form-item label="证件照片">
+				<el-button size="mini">点击查看</el-button>
+			</el-form-item>
+			<el-form-item label="审核状态">
+				<el-select v-model="formStore.formData.data.checkFlag" placeholder="请选择">
+					<el-option v-for="(item,index) in checkFlagData[0]" :key="item.index" :label="item.dict_desc" :value="item.dict_key">
+					</el-option>
+				</el-select>
+			</el-form-item>
+			<el-form-item label="审核备注">
+				<el-input size="mini" v-model="formStore.formData.data.checkComment"></el-input>
+			</el-form-item>
+		</el-form>
+	</div>
+</template>
+
+<script>
+	import Vue from 'vue'
+	import Element from 'element-ui'
+	import '@/theme/index.css'
+	import '@/styles/app.scss'
+	import VueExpand from '@/components/VueExpand'
+	Vue.use(Element)
+Vue.use(VueExpand)
+import GUtils from '@/components/Utils.js'
+	import GStoreFactory from '@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js'
+	import GraceComponent from '@/ComponentPackage/GraceComponents.js'
+	import dataPath from '@/API/Staff/staff_info_manager.js'
+	import nations from '../nations.js'
+	import politicalStatus from '../politicalStatus.js'
+	Vue.use(GraceComponent)
+
+var formStore = GStoreFactory.buildServiceForm()
+var formDataStore = GStoreFactory.buildServiceFormData()
+formDataStore.pushData({
+	  staffCode: '', // 职工编码
+	  name: '', // 姓名
+	  namePhoneticize: '', // 姓名拼音
+	  sexType: '1', // 性别
+	  nation: '', // 民族
+	  phone: '', // 手机号
+	  email: '', // 邮箱
+	  identityNo: '', // 身份证号码
+	  checkFlag: '0', // 审核状态
+	  checkComment: '', // 审核备注
+	  personalPhoto: '' // 证件照片
+	})
+formDataStore.pushRules({
+	  staffCode: [], // 职工编码
+	  name: [], // 姓名
+	  namePhoneticize: [], // 姓名拼音
+	  sexType: [], // 性别
+	  nation: [], // 民族
+	  phone: [], // 手机号
+	  email: [], // 邮箱
+	  identityNo: [], // 身份证号码
+	  checkFlag: [], // 审核状态
+	  checkComment: [], // 审核备注
+	  personalPhoto: [] // 证件照片
+	})
+formStore.addAttr('formData', formDataStore)
+
+var nationsData = nations.data
+var checkFlagData = []
+var requestData = {
+	  'dicts': ['check_flag', 'sex_type']
+	}
+	var dictData = {}
+GUtils.post(dataPath.getDictByDictNames, requestData, function(data) {
+	  dictData = data.resBody
+	checkFlagData.push(dictData.check_flag)
+})
+var iloading = false
+export default {
+	  data() {
+	    return {
+	      formStore,
+	      nationsData,
+	      checkFlagData,
+	      iloading
+
+	    }
+	  },
+	  methods: {
+	    submitForm: function(id) {
+	      var that = this
+	      console.log(['checkId', id])
+	      GUtils.post(dataPath.checkStaffBaseInfo, {
+	        'id': id,
+	        'state': formDataStore.data.checkFlag,
+	        'message': formDataStore.data.checkComment
+	      }, function(data) {
+	        that.$parent.$parent.iLoad()
+	      })
+
+      console.log(['submitForm'])
+	    },
+	    loadFormData: function(id) {
+	      var that = this
+	      GUtils.post(dataPath.queryStaffBaseInfoById, {
+	        'id': id
+	      }, function(data) {
+	        formDataStore.pushData(data.resBody)
+	        formDataStore.pushData({
+	          lastUpdateTime: null
+	        })
+	        delete formDataStore.data['lastUpdateTime']
+	      })
+    }
+	  }
+	}
+</script>
+
+<style>
+
+</style>

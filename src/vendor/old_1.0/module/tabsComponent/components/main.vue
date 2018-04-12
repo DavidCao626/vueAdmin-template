@@ -1,0 +1,122 @@
+<template>
+	<div id="bodyBox">
+		<el-dialog
+		  title="您现在是访客模式，登录获取更多功能。"
+		  :visible.sync="centerDialogVisible"
+		  width="30%"
+		  center>
+	  <login-alert></login-alert>
+	  
+	  
+	    </el-dialog>
+	    
+	    
+		<gc-container :component-store="pageHCon">
+			<div slot="header" style="margin-bottom:1px">
+				<app-nav  @getloginStatus="getloginStatus"></app-nav>
+			</div>
+			<gc-tabs :component-store="tabsStore">
+				
+			</gc-tabs>
+			<div slot="footer">
+			</div>
+		</gc-container>
+	</div>
+</template>
+
+<script>
+import Vue from 'vue'
+import Element from 'element-ui'
+import VueExpand from '@/components/VueExpand'
+Vue.use(Element)
+Vue.use(VueExpand)
+import GUtils from '@/components/Utils.js'
+import GStoreFactory from '@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js'
+import GraceComponent from '@/ComponentPackage/GraceComponents.js'
+
+import '@/theme/index.css'
+import '@/styles/app.scss'
+
+Vue.use(GraceComponent)
+import axios from 'axios'
+Vue.use(Element)
+
+/* 填充main框架的tabsPage页面内容*/
+var tabsStore = GStoreFactory.buildTabsStore()
+var menusStore = GStoreFactory.buildRowMeunStore()
+var pageManagerStore = GStoreFactory.buildManagerPageStore()
+var pagehContainer = GStoreFactory.buildVContainer()
+tabsStore.pushAll([{
+  'name': '0',
+  'title': '主页',
+  'link': '/module/dashboard.html'
+}])
+tabsStore.addConf('activeTab', '0')
+tabsStore.addConf('closable', false)
+
+menusStore.addConf('selectCallBack', function(idx, idxPath, itemObj) {
+  if (tabsStore.isExits(idx)) {
+    tabsStore.addConf('activeTab', idx)
+    return
+  }
+  tabsStore.addTab({
+    'name': idx,
+    'title': itemObj.title,
+    'link': itemObj.path_attr,
+    'closable': true
+  })
+})
+
+import nav from './nav/nav.vue'
+import login from './login.vue'
+import loginAlert from './login.vue'
+
+export default {
+  data() {
+    return {
+      centerDialogVisible: false,
+      		pageHCon: pagehContainer,
+      		tabsStore: tabsStore,
+      		pmanager: pageManagerStore,
+      		islogin: false
+    }
+  },
+
+  provide: {
+    'menusStore': menusStore,
+    'tabsStore': tabsStore
+  	},
+
+  components: {
+    login,
+    'app-nav': nav,
+    'login-alert': loginAlert
+  },
+
+  methods: {
+      	getloginStatus: function($e) {
+      		this.islogin = $e
+      		if ($e == false) {
+      			this.centerDialogVisible = true
+      		}
+      	}
+  },
+
+  mounted: function() {
+    var height = GUtils.getClientHeight()
+    pagehContainer.store.conf.prefHeight = height
+  },
+
+  watch: {
+    'pageHCon.store.conf.resultHeight': function(val) {
+      this.pmanager.store.conf.workSpaceHeight = val - 4
+      this.tabsStore.store.conf.height = val - 2
+    }
+  }
+}
+</script>
+
+
+<style  lang="scss">
+
+</style>

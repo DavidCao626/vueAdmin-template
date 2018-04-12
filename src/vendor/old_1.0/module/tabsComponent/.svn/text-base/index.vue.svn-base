@@ -1,0 +1,30 @@
+<template>
+	<div >
+	
+		<router-view ></router-view>
+			
+	</div>
+</template>
+
+<script>
+	import Vue from 'vue'
+	import VueRouter from 'vue-router'
+	Vue.use(VueRouter)
+	
+	import main from './components/main.vue'
+	import login from './components/login.vue'
+	
+	const routes = [
+	  { path: '/', component: main },
+	  { path: '/login', component: login }
+	]
+	
+	const router = new VueRouter({
+ 		 routes 
+	})
+	
+    export default {
+        router
+    }
+
+</script>

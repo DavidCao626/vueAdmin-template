@@ -22,9 +22,10 @@ import stuLayout from '../views/layout/stu-Layout'
   }
 **/
 export const constantRouterMap = [
-  { path: '/login', component: () => import('@/views/login'), hidden: true },
-  { path: '/404', component: () => import('@/views/404'), hidden: true },
-  { path: '/register', component: () => import('@/views/register'), hidden: true },
+  { path: '/login', component: () => import('~/views/login'), hidden: true },
+  { path: '/404', component: () => import('~/views/404'), hidden: true },
+  { path: '/register', component: () => import('~/views/register'), hidden: true },
+  { path: '/question', component: () => import('~/views/questionManager/index'), hidden: true },
   {
     path: '/',
     component: stuLayout,
@@ -33,7 +34,7 @@ export const constantRouterMap = [
     hidden: true,
     children: [{
       path: 'dashboard',
-      component: () => import('@/views/dashboard/index')
+      component: () => import('~/views/dashboard/index')
     }]
   },
 
@@ -47,13 +48,13 @@ export const constantRouterMap = [
       {
         path: 'table',
         name: '数据',
-        component: () => import('@/views/table/index'),
+        component: () => import('~/views/table/index'),
         meta: { title: 'Table', icon: 'table' }
       },
       {
         path: 'tree',
         name: '树',
-        component: () => import('@/views/tree/index'),
+        component: () => import('~/views/tree/index'),
         meta: { title: 'Tree', icon: 'tree' }
       }
     ]
@@ -66,7 +67,7 @@ export const constantRouterMap = [
       {
         path: 'index',
         name: '表单',
-        component: () => import('@/views/form/index'),
+        component: () => import('~/views/form/index'),
         meta: { title: 'Form', icon: 'form' }
       }
     ]

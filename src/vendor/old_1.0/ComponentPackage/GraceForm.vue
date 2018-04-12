@@ -5,31 +5,31 @@
 </template>
 <script>
 	export default {
-		name: 'graceForm',
-		props: ['componentStore'],
-		data: function() {
-			var store = {};
-			if(this.componentStore) {
-				store = this.componentStore;
-			}
-			console.log([store,store.bindMutual]);
-			return store;
-		},
-		methods: {
+	  name: 'graceForm',
+	  props: ['componentStore'],
+	  data: function() {
+	    var store = {}
+	    if (this.componentStore) {
+	      store = this.componentStore
+	    }
+	    console.log([store, store.bindMutual])
+	    return store
+	},
+	  methods: {
 
-		},
-		computed: {
+	  },
+	  computed: {
 
-		},
-		beforeUpdate: function() {
+	  },
+	  beforeUpdate: function() {
 
-		},
-		updated: function() {
+	  },
+	  updated: function() {
 
-		},
-		mounted: function() {
+	  },
+	  mounted: function() {
 
-		}
+	  }
 	}
 </script>
 <style>

@@ -1,0 +1,18 @@
+<template>
+	<div>
+		<update-stu-info></update-stu-info>
+	</div>
+</template>
+
+<script>
+	import updateStuInfo from './components/updateStuInfo.vue';
+	export default {
+		components: {
+			updateStuInfo
+		}
+	}
+</script>
+
+<style>
+
+</style>

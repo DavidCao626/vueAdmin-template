@@ -45,65 +45,64 @@
 </template>
 <script>
 	export default {
-		name: 'graceMenus',
-		props: ['componentStore'],
-		data: function() {
-			var store = {};
-			if(this.componentStore) {
-				store = this.componentStore;
-			}
-			return store;
-		},
-		methods: {
-			selectMenu: function(idx, indexPath, item) {
-				console.log(item)
-				console.log(idx, indexPath);
-				this.store.conf.selectCallBack.call(this, idx, indexPath, item.$attrs["data-item"]);
-			},
-			//获取组建绑定元素外部对应值
-			getItemField: function(item, Field) {
-				var bingItem = this.store.conf.bingItem;
-				if(bingItem && bingItem[Field]) {
+	  name: 'graceMenus',
+	  props: ['componentStore'],
+	  data: function() {
+	    var store = {}
+	    if (this.componentStore) {
+	      store = this.componentStore
+	    }
+	    return store
+	},
+	  methods: {
+	    selectMenu: function(idx, indexPath, item) {
+	      console.log(item)
+	      console.log(idx, indexPath)
+	      this.store.conf.selectCallBack.call(this, idx, indexPath, item.$attrs['data-item'])
+	    },
+	    // 获取组建绑定元素外部对应值
+	    getItemField: function(item, Field) {
+	      var bingItem = this.store.conf.bingItem
+	      if (bingItem && bingItem[Field]) {
+	        return item[bingItem[Field]]
+	      } else {
+	        return eval('item.' + Field)
+	      }
+	    },
+	    // 获取外部绑定元素的对应值转成v-if可识别bool类型结果
+	    getItemFieldBoolResults: function(item, Field) {
+	      switch (this.getItemField(item, Field)) {
+	        case 'false':
+	          return false
+	        case false:
+	          return false
+	        case 'true':
+	          return true
+	        case true:
+	          return true
+	        default:
+	          if (this.getItemField(item, Field).length > 0) {
+	            return true
+	          } else {
+	            return false
+	          }
+	      }
+	    }
+	  },
+	  computed: {
+	    isChilds: {
+	      get: function() {
+	        return true
+	      },
+	      set: function(newValue) {
 
-					return item[bingItem[Field]];
-				} else {
-					return eval("item." + Field);
-				}
-			},
-			//获取外部绑定元素的对应值转成v-if可识别bool类型结果
-			getItemFieldBoolResults: function(item, Field) {
-				switch(this.getItemField(item, Field)) {
-					case "false":
-						return false;
-					case false:
-						return false;
-					case "true":
-						return true;
-					case true:
-						return true;
-					default:
-						if(this.getItemField(item, Field).length > 0) {
-							return true
-						} else {
-							return false
-						}
-				}
-			}
-		},
-		computed: {
-			isChilds: {
-				get: function() {
-					return true
-				},
-				set: function(newValue) {
-
-				}
-			}
-		},
-		beforeUpdate: function() {},
-		updated: function() {},
-		mounted: function() {},
-		watch: {}
+	      }
+	    }
+	  },
+	  beforeUpdate: function() {},
+	  updated: function() {},
+	  mounted: function() {},
+	  watch: {}
 	}
 </script>
 <style>

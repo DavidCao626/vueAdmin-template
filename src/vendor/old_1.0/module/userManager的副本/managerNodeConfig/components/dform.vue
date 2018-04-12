@@ -1,0 +1,121 @@
+<template>
+	<div >
+		<el-form size="mini" :model="formStore.formData.data" ref='form1' :rules='formStore.formData.rules' label-width="80px">
+			<el-form-item label="机构名称" >
+				<span>{{orgName[0]}}</span>
+			</el-form-item>
+			<el-form-item label="用户对象" prop="userObjectId">
+				<el-select size="small" v-model="formStore.formData.data.userObjectId" placeholder="请选择">
+					<el-option v-for="(item,index) in userObject[0]" :key="item.index" :label="item.userObjectName" :value="item.id">
+					</el-option>
+				</el-select>
+			</el-form-item>
+			<el-form-item label="认证机构" prop="orgCode">
+				<gc-s-cas :component-store="f_org_code"></gc-s-cas>
+			</el-form-item>
+			<el-form-item label="对象别名" prop="alias">
+				<el-row>
+					<el-col :span="15">
+						<el-input size="mini" v-model="formStore.formData.data.alias"></el-input>
+					</el-col>
+				</el-row>	
+			</el-form-item>
+			<el-form-item label="是否可用">
+				<gc-s-radio :component-store="radioStore"></gc-s-radio>
+			</el-form-item>
+		</el-form>
+	</div>
+</template>
+
+<script>
+	import Vue from 'vue'
+	import Element from 'element-ui'
+	import '@/theme/index.css'
+	import '@/styles/app.scss'
+	import VueExpand from '@/components/VueExpand'
+	Vue.use(Element)
+Vue.use(VueExpand)
+import GUtils from '@/components/Utils.js'
+	import GStoreFactory from '@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js'
+	import GraceComponent from '@/ComponentPackage/GraceComponents.js'
+	import reqPath from '@/API/System/SystemManagerApi.js'
+	Vue.use(GraceComponent)
+	import dataPath from '@/API/ManagerNode/manager_node.js'
+	
+	var orgName = []
+	var userObject = []
+	GUtils.post(dataPath.getUserObject, {}, function(data) {
+	  console.log(data)
+	  userObject.push(data.resBody)
+})
+GUtils.post(dataPath.getUserManagerNodeName, {}, function(data) {
+	  console.log(data)
+	  orgName.push(data.resBody[0].orgName)
+})
+
+// 获取数据结束
+
+var formStore = GStoreFactory.buildServiceForm()
+	var formDataStore = GStoreFactory.buildServiceFormData()
+	formDataStore.pushData({
+	  userObjectId: '',
+	  alias: '', // 别名
+	  available: 'Y',
+	  orgCode: []
+	})
+	formDataStore.pushRules({
+	  alias: [{
+	    required: true,
+	    message: '请输入别名',
+	    trigger: 'blur'
+	  }]
+	})
+	formStore.addAttr('formData', formDataStore)
+	// 用户对象的认证机构
+	var f_org_code = GStoreFactory.buildSmallCascaderStore(formDataStore.data, 'orgCode')
+	f_org_code.addConf('props', {
+	  value: 'org_code',
+	  label: 'org_name',
+	  children: 'children',
+	  disabled: 'disabled'
+	})
+	f_org_code.addConf('disabled', false)
+	f_org_code.addConf('displayAll', true)
+	GUtils.post(reqPath.queryUserOrg, {}, function(data) {
+	  f_org_code.pushAll(data.resBody)
+	})
+// 用户对象的认证机构结束
+// 是否可用
+var radioStore = GStoreFactory.buildSmallRadioStore(formDataStore.data, 'available')
+	radioStore.pushData({
+	  'val': 'Y',
+	  'name': '可用'
+	})
+	radioStore.pushData({
+	  'val': 'N',
+	  'name': '停用'
+	})
+	// 是否可用结束
+
+export default {
+
+	  data() {
+	    return {
+	      f_org_code: f_org_code,
+	      formStore: formStore,
+	      radioStore: radioStore,
+	      orgName: orgName,
+	      userObject: userObject
+	    }
+	  },
+	  methods: {
+	    testbt: function() {
+	      console.log(['form1', this])
+	    }
+	  }
+	}
+</script>
+
+<style>
+
+</style>

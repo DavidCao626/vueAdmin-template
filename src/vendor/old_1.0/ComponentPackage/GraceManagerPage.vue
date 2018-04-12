@@ -40,48 +40,48 @@
 </template>
 <script>
 	export default {
-		name: 'graceManagerComponent',
-		props: ['componentStore'],
-		data: function() {
-			var store = {};
-			if(this.componentStore) {
-				store = this.componentStore;
-			}
-			return store;
-		},
-		methods: {
-			hidenDialog: function() {
-				this.store.conf.dialogVisiable = false;
-			},
-			doAllSearch:function(){
-				this.queryDataStore();
-				this.store.conf.dialogVisiable = false;
-			},
-			callBackOperator: function(command) {
-				console.log(this);
-				command.operation.call(this,this.serviceTable,this.serviceForm);
-			},
-			queryDataStore: function() {
-				this.store.conf.loadData.call(this,this.serviceForm,this.serviceTable);
-			}
-		},
-		computed: {},
-		beforeUpdate: function() {},
-		updated: function() {},
-		mounted: function() {},
-		watch: {
-			"store.conf.workSpaceHeight": function(val) {
-				this.serviceTable.store.conf.height = (val - 80);
-			},
-			
-			"serviceForm.bindMutual.data.page_current_page":function(val){
-				this.queryDataStore();
-			},
-			"serviceForm.bindMutual.data.page_size":function(val){
-				console.log(val);
-				this.queryDataStore();
-			}
-		}
+	  name: 'graceManagerComponent',
+	  props: ['componentStore'],
+	  data: function() {
+	    var store = {}
+	    if (this.componentStore) {
+	      store = this.componentStore
+	    }
+	    return store
+	},
+	  methods: {
+	    hidenDialog: function() {
+	      this.store.conf.dialogVisiable = false
+	    },
+	    doAllSearch: function() {
+	      this.queryDataStore()
+	      this.store.conf.dialogVisiable = false
+	    },
+	    callBackOperator: function(command) {
+	      console.log(this)
+	      command.operation.call(this, this.serviceTable, this.serviceForm)
+	    },
+	    queryDataStore: function() {
+	      this.store.conf.loadData.call(this, this.serviceForm, this.serviceTable)
+	    }
+	  },
+	  computed: {},
+	  beforeUpdate: function() {},
+	  updated: function() {},
+	  mounted: function() {},
+	  watch: {
+	    'store.conf.workSpaceHeight': function(val) {
+	      this.serviceTable.store.conf.height = (val - 80)
+	    },
+	
+	    'serviceForm.bindMutual.data.page_current_page': function(val) {
+	      this.queryDataStore()
+	    },
+	    'serviceForm.bindMutual.data.page_size': function(val) {
+	      console.log(val)
+	      this.queryDataStore()
+	    }
+	  }
 	}
 </script>
 <style>

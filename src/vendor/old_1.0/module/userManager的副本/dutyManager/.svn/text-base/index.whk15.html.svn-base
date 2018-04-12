@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>mytitle</title>
+	</head>
+
+	<body>
+		<div id="bodyBox">
+			<gc-container :component-store="pageHCon">
+				<div slot="header">
+				</div>
+				<gc-manager :component-store="pmanager">
+					<template slot="quickSearchItems">
+						<el-form-item label="职务名称" prop="dutyName">
+							<el-input v-model="serviceForm.bindMutual.data.dutyName" size="mini"></el-input>
+						</el-form-item>
+					</template>
+					<!-- 常用的操作-->
+					<template slot="often">
+						<el-button type="info" title="更多条件" size="mini" @click="dialogVisible= true">新增</el-button>
+						<el-button type="info" title="导出" size="mini">导出</el-button>
+						<el-button type="info" title="导出" size="mini">打包</el-button>
+					</template>
+					<template slot="allSearchItems">
+						<gc-form :component-store="moreForm">
+							<el-form-item label="职务名称" prop="dutyName">
+								<el-input v-model="serviceForm.bindMutual.data.dutyName" size="mini"></el-input>
+							</el-form-item>
+							<!--<el-form-item prop='roleValue' label="对应角色">
+							<el-col :span="20">
+								<el-select filterable v-model="serviceForm.bindMutual.data.roleValue" placeholder="请选择角色">
+									<el-option v-for="(item,index) in roles[0]" :key="item.index" :label="item.lable" :value="item.val">
+									</el-option>
+								</el-select>
+							</el-col>
+						</el-form-item>-->
+							<el-form-item prop='targetUserType' label="用户类型">
+								<el-col :span="20">
+									<el-select v-model="serviceForm.bindMutual.data.targetUserType" placeholder="请选择用户类型">
+										<el-option v-for="(item,index) in userTypes[0]" :key="item.index" :label="item.userObjectName" :value="item.userObjectSerial">
+										</el-option>
+									</el-select>
+								</el-col>
+							</el-form-item>
+							<el-form-item label="职务状态" prop="available">
+								<el-select v-model="moreForm.bindMutual.data.available" placeholder="请选择">
+									<el-option v-for="(item,index) in options" :key="index" :label="item.label" :value="item.value">
+									</el-option>
+								</el-select>
+							</el-form-item>
+							<!--<el-form-item label="是否可用" prop='available'>
+							<gc-s-radio :component-store="addRadioStore"></gc-s-radio>
+						</el-form-item>-->
+						</gc-form>
+					</template>
+					<template slot="dataCloumns">
+						<el-table-column prop="duty_code" label="职务代码" width="200">
+						</el-table-column>
+						<el-table-column prop="duty_name" label="职务名称" sortable width="200">
+						</el-table-column>
+						<!--<el-table-column prop="role_code" min-width="120" label="角色代码">
+						</el-table-column>-->
+						<!--<el-table-column prop="role_value" min-width="200" sortable label="角色权职">
+						</el-table-column>-->
+						<el-table-column prop="target_user_type" width="220" sortable label="用户对象类型">
+						</el-table-column>
+						<el-table-column prop="available" width="220" sortable label="状态">
+						</el-table-column>
+						<el-table-column prop="last_update_time" min-width="220" sortable label="最后更新时间">
+						</el-table-column>
+					</template>
+				</gc-manager>
+			</gc-container>
+			<!--增加职务开始-->
+			<el-dialog title="增加职务" :visible.sync="dialogVisible" width="45vw" top="8vh">
+
+				<div style="overflow-y:scroll;height:48vh;padding:0 15px">
+					<!--<slot name="allSearchItems"></slot>-->
+
+					<el-form size="mini" :model="addDutyStore.formData.data" ref='addForm' :rules='addDutyStore.formData.rules' label-width="80px">
+						<el-form-item prop='dutyName' label="职务名称">
+							<el-col :span="20">
+								<el-input v-model='addDutyStore.formData.data.dutyName' size="mini" placeholder="请输入职务名称"></el-input>
+							</el-col>
+						</el-form-item>
+						<!--<el-form-item prop='roleValue' label="对应角色">
+							<el-col :span="20">
+								<el-select filterable v-model="addDutyStore.formData.data.roleValue" placeholder="请选择角色">
+									<el-option v-for="(item,index) in rolesList" :key="item.index" :label="item.lable" :value="item.val">
+									</el-option>
+								</el-select>
+							</el-col>-->
+						<el-form-item label="对应角色" prop="nRoleValue">
+							<nrole-check></nrole-check>
+						</el-form-item>
+
+						<el-form-item prop='targetUserType' label="用户类型">
+
+							<el-col :span="20">
+								<el-select v-model="addDutyStore.formData.data.targetUserType" placeholder="请选择用户类型">
+									<el-option v-for="(item,index) in userTypeList[0]" :key="item.index" :label="item.userObjectName" :value="item.userObjectSerial">
+									</el-option>
+								</el-select>
+							</el-col>
+						</el-form-item>
+						
+						<el-form-item prop='isMember' label="成员职务">
+							<el-radio-group v-model="addDutyStore.formData.data.isMember" size="small">
+								<el-radio-button v-for="(item,index) in memberData" :key="index" :label="item.val">{{item.label}}</el-radio-button>
+							</el-radio-group>
+						</el-form-item>
+						
+						<el-form-item label="是否可用" prop='available'>
+							<gc-s-radio :component-store="addRadioStore"></gc-s-radio>
+						</el-form-item>
+					</el-form>
+				</div>
+				<span slot="footer" class="dialog-footer">
+					<el-button size="small" @click="saveDuty('addForm')">增 加</el-button>
+				    <el-button size="small" @click="dialogVisible= false">取 消</el-button>
+  				</span>
+			</el-dialog>
+			<!--增加职务结束-->
+			<!--更新职务开始-->
+			<el-dialog title="编辑职务" :visible.sync="udialogVisible" width="45vw" top="8vh">
+
+				<div style="overflow-y:scroll;height:48vh;padding:0 15px">
+					<!--<slot name="allSearchItems"></slot>-->
+
+					<el-form size="mini" :model="updateDutyStore.formData.data" ref='updateForm' :rules='updateDutyStore.formData.rules' label-width="80px">
+						<el-form-item prop='dutyName' label="职务名称">
+							<el-col :span="20">
+								<el-input disabled v-model='updateDutyStore.formData.data.dutyName' size="mini" placeholder="请输入职务名称"></el-input>
+							</el-col>
+						</el-form-item>
+						<!--<el-form-item prop='roleValue' label="对应角色">
+							<el-col :span="20">
+								<el-select filterable v-model="updateDutyStore.formData.data.roleValue" placeholder="请选择角色">
+									<el-option v-for="(item,index) in rolesList" :key="item.index" :label="item.lable" :value="item.val">
+									</el-option>
+								</el-select>
+							</el-col>
+						</el-form-item>-->
+							<el-form-item label="对应角色" prop="nRoleValue">
+							   <role-check></role-check>
+						</el-form-item>
+						<el-form-item prop='targetUserType' label="用户类型">
+							<el-col :span="20">
+								<el-select v-model="updateDutyStore.formData.data.targetUserType" placeholder="请选择用户类型">
+									<el-option v-for="(item,index) in userTypeList[0]" :key="item.index" :label="item.userObjectName" :value="item.userObjectSerial">
+									</el-option>
+								</el-select>
+							</el-col>
+						</el-form-item>
+						
+							<el-form-item prop='isMember' label="成员职务">
+							<el-radio-group v-model="updateDutyStore.formData.data.isMember" size="small">
+								<el-radio-button v-for="(item,index) in memberData" :key="index" :label="item.val">{{item.label}}</el-radio-button>
+							</el-radio-group>
+						</el-form-item>
+						
+						
+						
+						<el-form-item label="是否可用" prop='available'>
+							<gc-s-radio :component-store="updateRadioStore"></gc-s-radio>
+						</el-form-item>
+					</el-form>
+				</div>
+				<span slot="footer" class="dialog-footer">
+					<el-button size="small" @click="updateDuty('updateForm')">确 定</el-button>
+				    <el-button size="small" @click="udialogVisible= false">取 消</el-button>
+  				</span>
+			</el-dialog>
+			<!--更新职务结束-->
+
+		</div>
+	</body>
+
+</html>

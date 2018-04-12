@@ -1,0 +1,52 @@
+10
+
+dir
+1082
+svn://192.168.1.110/repositories/StuProjectWebWork/src/module
+svn://192.168.1.110
+
+
+
+2018-04-06T05:31:27.873372Z
+1082
+wanghongkun
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+116339d3-34e4-4030-92b0-37ddc433328a
+
+systemManager
+dir
+
+questionManager
+dir
+
+revolution-vue
+dir
+
+dashboard
+dir
+
+userManager
+dir
+
+hconComponent
+dir
+
+teacherStaffManager
+dir
+
+tabsComponent
+dir
+

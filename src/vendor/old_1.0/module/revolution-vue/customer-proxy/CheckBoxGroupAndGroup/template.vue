@@ -1,0 +1,55 @@
+<template>
+	<div class="grace-form-item">
+		<div class="grace-item-content">
+			<el-checkbox-group v-model="fields._value" v-bind="innerProp" v-on="innerEvent">
+				<template v-for="group in fields.groups">
+					<div :key="group.label" style="margin-top:2px">
+						<el-checkbox-button :disabled="true" :name="'group.label'" :label="'-1'"  :size="fields.size" :border="fields.isBorder" v-if="fields.isButton">{{group.name}}</el-checkbox-button>
+						<template v-for="item in group.options">
+							<el-checkbox-button :disabled="item.disabled" :name="getLabel(item)" :label="getLabel(item)" :key="getLabel(item)" :size="fields.size" :border="fields.isBorder" v-if="fields.isButton">{{getTitle(item)}}</el-checkbox-button>
+							<el-checkbox :disabled="item.disabled" :name="getLabel(item)" :label="getLabel(item)" :key="getLabel(item)" :size="fields.size" :border="fields.isBorder" v-else>{{getTitle(item)}}</el-checkbox>
+						</template>
+					</div>
+				</template>
+			</el-checkbox-group>
+		</div>
+		<div class="grace-form-rule-message" v-if="fields._rule_message">
+			{{fields._rule_message}}
+		</div>
+	</div>
+</template>
+<script>
+	export default {
+	  data() {
+	    return {
+	      innerProp: this.fields.inner_prop,
+	      innerEvent: this.fields.inner_event
+	    }
+	  },
+	  components: {},
+	  props: ['fields'],
+	  methods: {
+	    getLabel: function(item) {
+	      return item[this.fields.props['label']]
+	    },
+	    getTitle: function(item) {
+	      return item[this.fields.props['title']]
+	    }
+	  },
+	  mounted: function() {
+	    var resolver = this.fields._getResolver()
+	    if (resolver.isItem) {
+	      resolver.mountedItem()
+	    }
+	  },
+	  computed: {},
+	  watch: {}
+	}
+</script>
+<style>
+	.grace-form-rule-message {
+		line-height: 12px;
+		color: red;
+		font-size: 12px;
+	}
+</style>

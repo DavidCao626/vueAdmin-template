@@ -1,0 +1,127 @@
+<template>
+	<div>
+		<el-card class="boxCard">
+			<el-collapse v-model="activeNames">
+				<el-collapse-item title="基本信息" name="1">
+					<update-stu-base-info :bid="baseInfoBid"></update-stu-base-info>
+				</el-collapse-item>
+				<el-collapse-item title="个人信息" name="2">
+					<update-stu-person-info :bid="personalInfoBid"></update-stu-person-info>
+				</el-collapse-item>
+				<el-collapse-item title="在校信息" name="3">
+					<update-stu-university-info :bid="universityInfoBid"></update-stu-university-info>
+				</el-collapse-item>
+			</el-collapse>
+			<div class="but">
+				<br/>
+				<el-button type="success" size="mini" @click="footerButton('1')">通 过</el-button>
+				<el-button type="danger" size="mini" @click="footerButton('2')">不通过</el-button>
+				<span> </span>
+				<br/>
+			</div>
+		</el-card>
+
+		<el-dialog title="审核信息" :visible.sync="checkCommentDV" width="40vw" top="5vh">
+			<el-input type="textarea" resize="none" :rows="rows" v-model="checkComment"></el-input>
+			<span slot="footer" class="dialog-footer">
+						<el-button size="small" @click="checkFun">确定</el-button>
+				    <el-button size="small" @click="checkCommentDV = false">取消</el-button>
+  				</span>
+		</el-dialog>
+
+	</div>
+</template>
+
+<script>
+	import Vue from 'vue'
+	import Element from 'element-ui'
+	import '@/theme/index.css'
+	import '@/styles/app.scss'
+	import VueExpand from '@/components/VueExpand'
+	Vue.use(Element)
+Vue.use(VueExpand)
+import GUtils from '@/components/Utils.js'
+	import GStoreFactory from '@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js'
+	import GraceComponent from '@/ComponentPackage/GraceComponents.js'
+	import dataPath from '@/API/Student/student_info_manager.js'
+	Vue.use(GraceComponent)
+import updateStuBaseInfo from './updateStuBaseInfo.vue'
+	import updateStuPersonInfo from './updateStuPersonInfo.vue'
+	import updateStuUniversityInfo from './updateStuUniversityInfo.vue'
+
+	var stuNo = '0' // 传来的-=-=-=-=
+var baseInfoId = '0' // 传来的
+var personalInfoBid = '0'// 传
+var universityInfoBid = '0'// 传
+
+var ckParams = {}
+ckParams.stuNo = ''
+ckParams.baseInfoId = ''
+ckParams.personalInfoBid = ''
+ckParams.universityInfoBid = ''
+ckParams.loginName = ''
+
+export default {
+	  components: {
+	    updateStuBaseInfo,
+	    updateStuPersonInfo,
+	    updateStuUniversityInfo
+	  },
+	  props: ['ckParams'],
+	  data() {
+	    return {
+	      baseInfoBid: this.ckParams.baseInfoId, // -=-=-=-=-=-=-=-=-=-审核信息的id   基本信息
+	      personalInfoBid: this.ckParams.personalInfoBid, // -=-=-=-=-=-=-=-=-=-审核信息的id   个人信息
+	      universityInfoBid: this.ckParams.universityInfoBid, // -=-=-=-=-=-=-=-=-=-审核信息的id   在校信息
+	      activeNames: ['1'],
+	      rows: 5,
+	      checkFlag: '',
+	      checkComment: '审核备注', // 审核备注
+	      checkCommentDV: false
+	    }
+	  },
+	  methods: {
+	    footerButton: function(state) {
+	      this.checkFlag = state
+	      this.checkCommentDV = true
+	    },
+	    checkFun: function() {
+	      GUtils.post(dataPath.checkStuInfo, {
+	        'universityId': this.universityInfoBid,
+	        'stuNo': this.ckParams.stuNo,
+	        'checkFlag': this.checkFlag,
+	        'checkComment': this.checkComment
+	      }, function(data) {
+	        alert('审核成功')
+      })
+	    }
+	  },
+	  beforeCreate: function() {
+	    // 获取信息id的方法
+    //			GUtils.post(dataPath.getAllInfoIdByStuNo, {
+    //				"stuNo": stuNo
+    //			}, function(data) {
+    //				console.log(['getId',data]);
+    //				personalInfoBid = data.resBody.stuPersonalInfoId;
+    //				universityInfoBid = data.resBody.stuUniversityInfoId;
+    //			})
+
+	  }
+	}
+</script>
+
+<style>
+	.boxCard {
+		width: 70vw;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	
+	.but {
+		padding: 0;
+		float: right;
+	}
+	/*.el-icon-arrow-left:before {
+    content: "\E606";
+}*/
+</style>

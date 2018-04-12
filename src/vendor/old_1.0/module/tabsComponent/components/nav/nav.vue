@@ -1,0 +1,79 @@
+<template>
+	<nav class="navbar navbar-static-top">
+		<header class="main-header">
+			<logo></logo>
+			<div class="pull-left">
+				<div :style="{'padding-top': '8px','margin-left':'30px'}">
+					<menus></menus>
+				</div>
+			</div>
+			<div class="navbar-custom-menu">
+				<template v-if="isLogin">
+					<registered :user="loginUser"></registered>
+				</template>
+				<template v-else>
+					<guest></guest>
+				</template>
+			</div>
+		</header>
+	</nav>
+</template>
+	
+	
+<script>
+import axios from 'axios'
+
+import logo from './logo.vue'
+import menus from './menus.vue'
+import registered from './user/registered.vue'
+import guest from './user/guest.vue'
+
+import RquestUserPathConfig from '@/API/User/user_manager_self.js'
+export default {
+
+  components: {
+    logo,
+    menus,
+    registered,
+    guest
+  },
+   	data() {
+    return {
+      		isLogin: false,
+      		loginUser: {}
+    }
+  },
+
+  methods: {
+      	getUserforServer: function() {
+      		const t = this
+      		axios({// 获取用户菜单
+        'url': RquestUserPathConfig.getLoginUserInfo,
+        'method': 'post'
+      }).then(function(response) {
+        if (response.data.respStatus == 1) {
+          t.isLogin = true
+          const resMenuBody = response.data.body.resBody[0]
+          t.loginUser.avatar = resMenuBody.userInfo[0].head_pic
+          t.loginUser.username = resMenuBody.userInfo[0].login_name
+        } else {
+          t.isLogin = false
+          console.log('用户登录信息接口错误 接口地址 getUserMenu')
+        }
+        t.$emit('getloginStatus', t.isLogin)
+      })
+    }
+  },
+  mounted: function() {
+	    this.$nextTick(function() {
+      this.getUserforServer()
+	    })
+  }
+}
+</script>
+<style scoped lang="scss">
+header{
+	    background-color: #fff;
+}
+</style>
+

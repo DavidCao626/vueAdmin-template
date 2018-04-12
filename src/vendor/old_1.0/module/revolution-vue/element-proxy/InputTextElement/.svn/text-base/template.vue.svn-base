@@ -1,0 +1,54 @@
+<template>
+		<div class="grace-form-item">
+				<el-input v-bind="innerProp" v-model="fields._value" v-on="innerEvent">
+					<template slot="prepend" v-if="fields.prepend">
+						{{fields.prepend}}
+					</template>
+					<template slot="append" v-if="fields.append">
+						{{fields.append}}
+					</template>
+				</el-input>
+			<div class="grace-form-rule-message" v-if="fields._rule_message">
+				{{fields._rule_message}}
+			</div>
+		</div>
+</template>
+<script>
+	//动态的去创建组件
+
+	export default {
+		data() {
+				return {
+					innerProp: this.fields.inner_prop,
+					innerEvent: this.fields.inner_event
+				}
+			},
+			components: {},
+			props: ['fields'],
+			methods: {},
+			mounted: function() {
+				var resolver=this.fields._getResolver();
+				console.log(["mounted",resolver]);
+				if(resolver.isItem){
+					resolver.mountedItem();
+				}
+			},
+			updated:function(){
+				var resolver=this.fields._getResolver();
+				console.log(["updated",resolver]);
+				if(resolver.isItem){
+					resolver.mountedItem();
+				}
+			},
+			computed: {},
+			watch: {}
+	}
+</script>
+<style>
+	.grace-form-rule-message {
+		line-height: 12px;
+		color: red;
+		font-size: 12px;
+		padding: 2px;
+	}
+</style>

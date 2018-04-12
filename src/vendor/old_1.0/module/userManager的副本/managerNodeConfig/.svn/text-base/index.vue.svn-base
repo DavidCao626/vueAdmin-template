@@ -1,0 +1,18 @@
+<template>
+	<div>
+		<imain></imain>
+	</div>
+</template>
+
+<script>
+	import imain from './components/imain.vue';
+	export default {
+		components: {
+			"imain": imain
+		}
+	}
+</script>
+
+<style>
+
+</style>

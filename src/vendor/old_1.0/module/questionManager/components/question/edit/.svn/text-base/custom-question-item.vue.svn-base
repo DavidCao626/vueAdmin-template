@@ -1,0 +1,365 @@
+<template>
+
+	<el-card class="box-card">
+
+		<div slot="header" class="clearfix">
+			<div class="question-type-title">
+				<template v-if="isShow!=0">
+					<template v-if="isShow==2"><span class="bg-blue">问卷结果统计：</span></template>
+					{{question.title}}
+				</template>
+				<template v-else>
+					<el-input placeholder="请输入内容" v-model="question.title"> </el-input>
+				</template>
+			</div>
+		</div>
+		<div class="question-description">
+			<template v-if="isShow!=0">
+				<p>{{question.description}}</p>
+			</template>
+			<template v-else>
+				<el-input type="textarea" v-model="question.description" placeholder="请输入内容"></el-input>
+			</template>
+		</div>
+		<br />
+		<div class="question-description">
+			<template v-if="isShow==0">
+				所属权限：
+				<gc-s-cas :component-store="f_org_code"></gc-s-cas>
+			</template>
+
+		</div>
+		<div class="question-list-box">
+			<div class="question-list-item" v-for="(value,key) in question.questionLists">
+				<div class="question-list-item-header">
+					<el-row :gutter="0">
+						<el-col :span="15">
+							<template v-if="isShow!=0">
+								<p>Q{{key+1}}-{{value.label}}</p>
+							</template>
+							<template v-else>
+								<el-input placeholder="请输入内容" v-model="value.label">
+									<template slot="prefix">
+										<p>Q{{key+1}}</p>
+									</template>
+								</el-input>
+							</template>
+
+						</el-col>
+						<el-col :span="8">
+							<span class="pull-right">
+									<template v-if="isShow==0">
+										<el-switch v-model="value.required" inactive-text="是否必填项"></el-switch>
+									</template>
+								</span>
+						</el-col>
+
+					</el-row>
+				</div>
+
+				<template v-if="isShow<2">
+					<!-- 填空题 -->
+					<div v-if="value.type === 'input' || value.type === 'textarea'" class="question-content-wrap">
+						<div v-for="(question,optionsKey) in value.options">
+
+							<el-row>
+								<el-col :xs="8" :sm="10">
+									<el-input :placeholder="question.value" :required="required" :autosize="{ minRows: 2, maxRows: 4}" class="question-input" :type="question.type">
+										<template slot="prefix">
+											<p> </p>
+										</template>
+									</el-input>
+								</el-col>
+								<el-col :xs="9" :sm="13">
+									<div class="pull-right">
+										<template v-if="isShow==0">
+											<el-button type="text" @click="close(key,optionsKey)" icon="el-icon-close"></el-button>
+										</template>
+									</div>
+								</el-col>
+							</el-row>
+
+							</Item>
+						</div>
+					</div>
+				</template>
+				<!-- 单选题 -->
+				<div v-if="value.type === 'radio' " class="question-content-wrap">
+
+					<div v-for="(question,optionsKey) in value.options">
+						<el-row>
+
+							<template v-if="isShow==0">
+								<el-col :xs="8" :sm="10">
+									<el-radio-group v-model="value.name">
+										<el-radio class="question-radio" :label="optionsKey">
+											<el-input v-model="question.label" placeholder="请输入内容">
+											</el-input>
+										</el-radio>
+									</el-radio-group>
+
+								</el-col>
+								<el-col :xs="9" :sm="13">
+									<div class="pull-right">
+
+										<el-button type="text" @click="up(key,optionsKey)" icon="el-icon-arrow-up"></el-button>
+										<el-button type="text" @click="down(key,optionsKey)" icon="el-icon-arrow-down"></el-button>
+										<el-button type="text" @click="copy(key,optionsKey)" icon="el-icon-document"></el-button>
+										<el-button type="text" @click="close(key,optionsKey)" icon="el-icon-close"></el-button>
+
+									</div>
+								</el-col>
+							</template>
+							<template v-if="isShow==1">
+								<el-col :xs="8" :sm="10">
+									<el-radio-group v-model="value.name">
+										<el-radio class="question-radio" :label="optionsKey">
+											<span style="margin: 10px;">{{question.label}}</span>
+										</el-radio>
+									</el-radio-group>
+
+								</el-col>
+							</template>
+
+							<template v-if="isShow==2">
+
+								<span style="margin: 10px;">{{question.label}}</span>
+								<div class="Percentage-parent">
+									<div class="Percentage-child" :style="{width:question.number_Percentage+'%'}">
+
+									</div>
+									<div class="Percentage-text">
+										{{question.number_Percentage+'%'}}
+									</div>
+								</div>
+
+							</template>
+
+						</el-row>
+					</div>
+				</div>
+				<!-- 多选题 -->
+				<div v-if="value.type === 'checkbox' " class="question-content-wrap">
+					<el-checkbox-group v-model="value.name">
+						
+					<div v-for="(question,optionsKey) in value.options">
+						<el-row>
+
+							<template v-if="isShow==0">
+								<el-col :xs="8" :sm="10">
+										<el-checkbox class="question-checkbox" :label="optionsKey">
+
+											<el-input v-model="question.label" placeholder="请输入内容"></el-input>
+
+										</el-checkbox>
+
+							
+
+								</el-col>
+								<el-col :xs="9" :sm="13">
+									<div class="pull-right">
+										<el-button type="text" @click="up(key,optionsKey)" icon="el-icon-arrow-up"></el-button>
+										<el-button type="text" @click="down(key,optionsKey)" icon="el-icon-arrow-down"></el-button>
+										<el-button type="text" @click="copy(key,optionsKey)" icon="el-icon-document"></el-button>
+										<el-button type="text" @click="close(key,optionsKey)" icon="el-icon-close"></el-button>
+
+									</div>
+								</el-col>
+							</template>
+							<template v-if="isShow==1">
+
+								
+
+									<el-checkbox class="question-checkbox" :label="optionsKey"  >
+												
+										<span style="margin: 10px;">{{question.label}}</span>
+
+									</el-checkbox>
+
+
+							</template>
+
+							<template v-if="isShow==2">
+								<span style="margin: 10px;">{{question.label}}</span>
+								<div class="Percentage-parent">
+									<div class="Percentage-child" :style="{width:question.number_Percentage+'%'}">
+
+									</div>
+									<div class="Percentage-text">
+										{{question.number_Percentage+'%'}}
+									</div>
+								</div>
+
+							</template>
+
+						</el-row>
+					</div>
+							</el-checkbox-group>
+				</div>
+			</div>
+		</div>
+
+		<div class="question-description foot">
+
+			<template v-if="isShow==1">
+				<br />
+				<el-button type="primary" @click="subForm">提交调查</el-button>
+			</template>
+			<template v-if="isShow==2">
+				<br />
+			</template>
+			<template v-else-if="question.id>0">
+				<el-button type="primary" @click="updetaForm">更新问卷</el-button>
+			</template>
+			<template v-if="isShow==0">
+				<el-button type="primary" @click="saveForm">生成问卷</el-button>
+			</template>
+
+		</div>
+	</el-card>
+</template>
+
+<script>
+	import Vue from 'vue'
+	import VueExpand from '@/components/VueExpand'
+	Vue.use(VueExpand);
+	import GUtils from "@/components/Utils.js"
+	import GStoreFactory from "@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js"
+	import GraceComponent from "@/ComponentPackage/GraceComponents.js"
+	import reqPath from "@/API/System/SystemManagerApi.js"
+
+	Vue.use(GraceComponent);
+
+	export default {
+		data() {
+			return {
+				//f_org_code
+			}
+		},
+		name: "question-custome-item",
+		props: {
+			isShow: {
+				type: Number,
+				default: 0
+			}
+		},
+		computed: {
+			f_org_code: function() {
+				var f_org_code = GStoreFactory.buildSmallCascaderStore(this.$store.getters['getQss'], 'orgCode');
+				console.log(f_org_code)
+
+				f_org_code.addConf("props", {
+					value: 'org_code',
+					label: 'org_name',
+					children: 'children',
+					disabled: 'disabled'
+				});
+				f_org_code.addConf("disabled", false);
+				f_org_code.addConf("displayAll", true);
+
+				GUtils.post(reqPath.queryUserOrg, {}, function(data) {
+					f_org_code.pushAll(data.resBody);
+				});
+				return f_org_code;
+			},
+			question: {
+				get() {
+					return this.$store.getters['getQss'];
+				}
+			},
+			required: function() {
+				if(!this.isShow) {
+					return {
+						"required": "required"
+					};
+				} else {
+					return {
+						"required": ""
+					}
+				}
+			}
+		},
+		watch: {
+			question: {
+				get() {
+					return this.$store.getters['getQss'];
+				},
+
+				handler: function(val) {
+
+					this.$store.dispatch("updateValue", val);
+				},
+				deep: true
+			}
+		},
+		mounted: function() {
+
+			//ajax初始化灌入数据
+			//this.$store.dispatch("initQuuestion");
+		},
+		methods: {
+			up(key, optionsKey) {
+				var kes = {};
+				kes.key = key;
+				kes.optionsKey = optionsKey;
+				this.$store.dispatch("up", kes);
+			},
+			down(key, optionsKey) {
+				var kes = {};
+				kes.key = key;
+				kes.optionsKey = optionsKey;
+				this.$store.dispatch("down", kes);
+			},
+			copy(key, optionsKey) {
+				var kes = {};
+				kes.key = key;
+				kes.optionsKey = optionsKey;
+				this.$store.dispatch("copy", kes);
+			},
+			close(key, optionsKey) {
+				var kes = {};
+				kes.key = key;
+				kes.optionsKey = optionsKey;
+				this.$store.dispatch("close", kes);
+			},
+			updateValue(title, $event) {
+				this.$store.dispatch("updateValue", event.target.value);
+			},
+			saveForm() {
+				this.$store.dispatch("saveForm");
+			},
+			subForm() {
+				this.$store.dispatch("subForm");
+			},
+			updetaForm() {
+				this.$store.dispatch("updetaForm");
+			}
+
+		},
+
+	};
+</script>
+
+<style>
+	.Percentage-text {
+		display: inline-block;
+		float: right;
+		font-size: 11px;
+		color: green;
+		margin-right: 2px;
+		margin-top: 2px;
+	}
+	
+	.Percentage-parent {
+		width:250px;
+		height: 15px;
+		background-color: #eee;
+		margin: 10px;
+	}
+	
+	.Percentage-child {
+		width: 0%;
+		height: 100%;
+		background-color: green;
+	}
+</style>

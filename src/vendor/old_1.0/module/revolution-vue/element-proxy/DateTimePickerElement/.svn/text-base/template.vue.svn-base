@@ -1,0 +1,39 @@
+<template>
+	<div>
+		<div class="grace-item-content">
+			<el-date-picker v-model="fields._value" type="datetime" v-bind="innerProp" v-on="innerEvent">
+			</el-date-picker>
+		</div>
+		<div class="grace-form-rule-message" v-if="fields._rule_message">
+			{{fields._rule_message}}
+		</div>
+	</div>
+</template>
+<script>
+	//动态的去创建组件
+
+	export default {
+		data() {
+				return {
+					innerProp: this.fields.inner_prop,
+					innerEvent: this.fields.inner_event
+				}
+			},
+			components: {},
+			props: ['fields'],
+			methods: {
+
+			},
+			computed: {},
+			watch: {},
+			mounted: function() {
+				var resolver=this.fields._getResolver();
+				if(resolver.isItem){
+					resolver.mountedItem();
+				}
+			}
+	}
+</script>
+<style>
+
+</style>

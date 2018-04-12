@@ -1,0 +1,18 @@
+<template>
+	<div>
+		<check-staff-info></check-staff-info>
+	</div>
+</template>
+
+<script>
+	import checkStaffInfo from './components/checkStaffInfo.vue'
+export default {
+	  components: {
+	    checkStaffInfo
+	  }
+	}
+</script>
+
+<style>
+
+</style>

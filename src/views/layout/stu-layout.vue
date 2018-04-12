@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { Navbar, AppMain } from '@/views/layout/stu-components'
+import { Navbar, AppMain } from '~/views/layout/stu-components'
 
 export default {
   name: 'layout',

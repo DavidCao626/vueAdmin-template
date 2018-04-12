@@ -1,0 +1,22 @@
+<template>
+	<div>
+		<add-form></add-form>
+		<hr/>
+		<update-form></update-form>
+	</div>
+</template>
+
+<script>
+	import addForm from './components/addStuUniversityInfo.vue';
+	import updateForm from './components/updateStuUniversityInfo.vue';
+	export default {
+		components: {
+			addForm,
+			updateForm
+		}
+	}
+</script>
+
+<style>
+
+</style>

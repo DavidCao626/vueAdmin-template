@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
-import Breadcrumb from '@/components/Breadcrumb'
+import { getList } from '~/api/table'
+import Breadcrumb from '~/components/Breadcrumb'
 export default {
   data() {
     return {

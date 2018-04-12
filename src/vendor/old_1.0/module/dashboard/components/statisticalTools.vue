@@ -1,0 +1,276 @@
+<template>
+	<transition name="el-zoom-in-top">
+		<div class="content-wrapper dashboard-wrapper">
+			<!-- Main content -->
+			<section class="content">
+				<div class="row">
+					<div class="col-md-3">
+						<!--New User-->
+						<div class="box palette-Pink-300 bg">
+							<div class="box-header  palette-Pink-300 bg">
+								<!-- tools box -->
+								<div class="pull-right text-white box-tools"> <span class="text-white box-btn"><i class="circle-nest-medium ti-user"></i>
+                                    </span>&nbsp;&nbsp;&nbsp; </div>
+								<h3 class="box-title">
+                                    <span class="text-white">&nbsp;&nbsp;&nbsp;新注册用户</span>
+                                </h3> </div>
+							<!-- /.box-header -->
+							<div class="box-body no-pad" style="display: block;">
+								<div class="events-nest ">
+									<div class="wrap-no-pad text-white">
+										<bars :data="[1, 2, 5, 9, 5, 10, 3, 5, 2, 5, 1, 8, 2, 9, 0]" :gradient="['#ffffff', '#ffffff']"></bars>
+										<h1 class="text-white"><strong><animate-number
+      from="1" 
+      to="45" 
+      duration="9000" 
+      easing="easeOutQuad"
+      :formatter="formatter"
+    ></animate-number></strong></h1> <span>激活 用户数</span>
+										<p>6541</p>
+										<br> </div>
+								</div>
+							</div>
+						</div>
+						<!-- /.box-body -->
+					</div>
+					<!--end of New User-->
+				
+				<div class="col-md-3">
+					<!--facebook-->
+					<div class="box palette-Cyan-400 bg">
+						<div class="box-header  palette-Cyan-400 bg">
+							<!-- tools box -->
+							<div class="pull-right text-white box-tools"> <span class="text-white box-btn"><i class="circle-nest-medium ti-stats-up"></i>
+                                    </span>&nbsp;&nbsp;&nbsp; </div>
+							<h3 class="box-title">
+                                    <span class="text-white">&nbsp;&nbsp;&nbsp;页面浏览数</span>
+                                </h3> </div>
+						<!-- /.box-header -->
+						<div class="box-body no-pad" style="display: block;">
+							<div class="events-nest ">
+								<div class="wrap-no-pad text-white">
+									<bars :data="[1, 2, 5, 9, 5, 10, 3, 5, 2, 5, 1, 8, 2, 9, 0]" :gradient="['#ffffff', '#ffffff']"></bars>
+									<h1 class="text-white"><strong><animate-number
+      from="45575" 
+      to="744" 
+      duration="9000" 
+      easing="easeOutQuad"
+      :formatter="formatter"
+    ></animate-number></strong></h1> <span>本月浏览量</span>
+									<p>12602</p>
+									<br> </div>
+							</div>
+						</div>
+						<!-- /.box-body -->
+					</div>
+					<!--end of facebook-->
+				</div>
+				<div class="col-md-3">
+					<!--facebook-->
+					<div class="box palette-Deep-Purple-300 bg">
+						<div class="box-header  palette-Deep-Purple-300 bg">
+							<!-- tools box -->
+							<div class="pull-right text-white box-tools"> <span class="text-white box-btn"><i class="circle-nest-medium dripicons-wallet"></i>
+                                    </span>&nbsp;&nbsp;&nbsp; </div>
+							<h3 class="box-title">
+                                    <span class="text-white">&nbsp;&nbsp;&nbsp;教职工统计</span>
+                                </h3> </div>
+						<!-- /.box-header -->
+						<div class="box-body no-pad" style="display: block;">
+							<div class="events-nest ">
+								<div class="wrap-no-pad text-white">
+									<bars :data="[1, 2, 5, 9, 5, 10, 3, 5, 2, 5, 1, 8, 2, 9, 0]" :gradient="['#ffffff', '#ffffff']"></bars>
+									<h1 class="text-white"><strong><animate-number
+      from="0" 
+      to="13" 
+      duration="9000" 
+      easing="easeOutQuad"
+      :formatter="formatter"
+    ></animate-number></strong></h1> <span>本月登登录</span>
+									<p>1502次</p>
+									<br> </div>
+							</div>
+						</div>
+						<!-- /.box-body -->
+					</div>
+					<!--end of facebook-->
+				</div>
+				<div class="col-md-3">
+					<!--facebook-->
+					<div class="box palette-Indigo-900 bg">
+						<div class="box-header  palette-Indigo-900 bg">
+							<!-- tools box -->
+							<div class="pull-right text-white box-tools"> <span class="text-white box-btn"><i class="circle-nest-medium dripicons-basket"></i>
+                                    </span>&nbsp;&nbsp;&nbsp; </div>
+							<h3 class="box-title">
+                                    <span class="text-white">&nbsp;&nbsp;&nbsp;今日学生登陆数</span>
+                                </h3> </div>
+						<!-- /.box-header -->
+						<div class="box-body no-pad" style="display: block;">
+							<div class="events-nest ">
+								<div class="wrap-no-pad text-white">
+									<bars :data="[1, 2, 5, 9, 5, 10, 3, 5, 2, 5, 1, 8, 2, 9, 0]" :gradient="['#ffffff', '#ffffff']"></bars>
+									<h1 class="text-white"><strong><animate-number
+      from="1" 
+      to="3500" 
+      duration="9000" 
+      easing="easeOutQuad"
+      :formatter="formatter"
+    ></animate-number></strong></h1> <span>Dollars</span>
+									<p>
+										<animate-number from="1" to="65" duration="9000" easing="easeOutQuad" :formatter="formatter"></animate-number>次</p>
+									<br> </div>
+							</div>
+						</div>
+						<!-- /.box-body -->
+					</div>
+					<!--end of facebook-->
+				</div>
+		</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="box no-shadow">
+							<!-- /.box-header -->
+							<div class="box-body" style="padding:0">
+								<div class="events-nest">
+									<div class="text-white lastest-post-nest palette-Blue-800 bg">
+										<div class="wrap"> <small class="palette-Blue-400 bg"><i class="ti-facebook "></i></small>
+											<div class="row">
+												<div class="col-md-2">
+													<h1 class="text-white"><img alt="profile" class="img-circle palette-Grey-900 bg" src="http://api.randomuser.me/portraits/thumb/men/46.jpg"></h1> </div>
+												<div class="col-md-9">
+													<h3>王小明</h3>
+													<p>该学生来自：内蒙古大学-计算机学院-软件系-2018级-03班</p>
+													<p>
+														<el-rate v-model="value1"></el-rate>
+													</p> <b><i class="ti-eye"></i> 121</b> <b><i class="ti-thumb-up"></i>45</b> <b><i class="ti-comment-alt"></i> 8</b> </div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.box-body -->
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="box no-shadow">
+							<!-- /.box-header -->
+							<div class="box-body" style="padding:0">
+								<div class="events-nest">
+									<div class="text-white lastest-post-nest-two palette-Deep-Purple-500 bg">
+										<div class="wrap"> <small class="palette-Blue-800 bg"><i class="ti-twitter-alt "></i></small>
+											<div class="row">
+												<div class="col-md-2">
+													<h1 class="text-white"><img alt="profile" class="img-circle palette-Grey-900 bg" src="http://api.randomuser.me/portraits/thumb/women/26.jpg"></h1> </div>
+												<div class="col-md-9">
+													<h3>李红</h3>
+													<p>该学生来自：内蒙古大学-计算机学院-软件系-2018级-02班</p>
+													<p>
+														<el-rate v-model="value1"></el-rate>
+													</p> <b><i class="ti-eye"></i> 121</b> <b><i class="ti-thumb-up"></i>45</b> <b><i class="ti-comment-alt"></i> 8</b> </div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.box-body -->
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="box box-no-shadow">
+							<!-- /.box-header -->
+							<div class="box-body " style="display: block;">
+								<div style="margin:0" class="row summary-border-top">
+									<div class="col-md-6">
+										<div class="summary-nest">
+											<h2 class="text-black "><span class="counter-up">276.747</span><small class="palette-Orange-700 bg">K</small></h2>
+											<p>Sales</p>
+										</div>
+									</div>
+									<div class="col-md-6 summary-border-left">
+										<div class="summary-nest">
+											<h2 class="text-black"><span class="counter-up">3.219</span><small class="palette-Pink-500 bg">K</small></h2>
+											<p>Man</p>
+										</div>
+									</div>
+								</div>
+								<div style="margin:0" class="row">
+									<div class="col-md-12">
+										<div class="summary-nest summary-pad-nest">
+											<bars :data="[1, 2, 5, 9, 5, 10, 3, 5, 2, 5, 1, 8, 2, 9, 4]" :gradient="['#3b5998', '#3b5998']"></bars>
+											<h4 class="text-center"><span class="counter-up">5</span>/<span class="counter-up">12</span>/<span class="counter-up">2013</span></h4> </div>
+									</div>
+								</div>
+								<div style="margin:0" class="row summary-border-bottom">
+									<div class="col-md-6">
+										<div class="summary-nest summary-pad-nest">
+											<h2 class="text-black "><span class="counter-up">82</span><small class="palette-Lime-500 bg ">%</small></h2>
+											<p>Avarage Sales</p>
+										</div>
+									</div>
+									<div class="col-md-6 summary-border-left">
+										<div class="summary-nest summary-pad-nest">
+											<h2 class="text-black"><span class="counter-up">24</span><small class="palette-Teal-500 bg ">th</small></h2>
+											<p>Overall Rank</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- end .timeline -->
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="box box-no-shadow bg-widget-random">
+						<!-- /.box-header -->
+							<div class="box-header bg-transparent">
+								<h3 class="box-title"><i class="text-white bg  ti-pulse"></i>
+	                                    <span class="text-white ">系统日志</span></h3>
+	                             <div style="margin:15px 0 0" class="box-body">
+	                                <div class="stats-wrap">
+	                                    <h2><b class="counter-up text-white">65,807</b> <span style="background:#666;">+<b class="counter-up">20</b>%</span></h2>
+	                                    <p class="text-grey">全部用户<small>本月 </small> </p>
+	                                    <h4><b class="counter-up text-white">1,204</b> <span style="background:#888;">+<b class="counter-up">5</b>%</span></h4>
+	                                    <p>学生数 <small>本周</small> </p>
+	                                    <h4 class="text-white"><b class="counter-up">2,690</b> <span>+<b class="counter-up">125</b></span></h4>
+	                                    <p>新学生<small>本月</small> </p>
+	                                    <div class="your-account">
+	                                        <h4>系统目前运行正常，正在监控中</h4>
+	                                        <h6>发生严重故障事件日志会发送到你 <strong>833****1@qq.com</strong>.</h6>
+	                                        <ul>
+	                                            <li><i class="text-white palette-Orange-700 bg  ti-alarm-clock "></i>运行时长： 62小时</li>
+	                                            <li><i class="text-white palette-Pink-700 bg ti-heart-broken "></i>健康问题： 0次</li>
+	                                            <li><i class="palette-Cyan-700 bg text-white ti-server "></i>上次备份时间： 2小时前</li>
+	                                        </ul>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                            <!-- /.box-body -->
+	                        </div>
+	                    </div>
+	                </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12"> </div>
+                </div>
+            </section>
+            <!-- /.content -->
+       </div>
+    </transition>
+</template>
+	
+
+<script>
+		import Vue from 'vue'
+import Element from 'element-ui'
+import '@/theme/index.css'
+import '@/styles/app.scss'
+import VueExpand from '@/components/VueExpand'
+Vue.use(Element)
+export default {
+}
+</script>
+
+<style>
+</style>

@@ -1,4 +1,4 @@
-var requestPath={
-      	tableStoreUrl:"/static/list.json"
-};
-export default requestPath;
+var requestPath = {
+      	tableStoreUrl: '/static/list.json'
+}
+export default requestPath

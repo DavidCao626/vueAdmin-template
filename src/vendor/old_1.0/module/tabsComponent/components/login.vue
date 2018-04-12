@@ -1,0 +1,91 @@
+<template>
+<div >
+
+	<div class="box-card ">
+		<div slot="header" class="clearfix">
+		    <span>学工系统登录</span>
+		  <a :href="siteconfig.siteReg" >  <el-button style="float: right; padding: 3px 0" type="text"> 注册新用户</el-button></a>
+		  </div>
+
+	  	<br />
+		<el-form id="loginForm" :model="ruleLoginForm" status-icon  :rules="rules2" ref="ruleLoginForm" label-width="80px" label-position="left" :action="formurl" method="get">
+			
+			<el-form-item label="用户名：" prop="username">
+			    <el-input v-model="ruleLoginForm.username" name="loginName"   value="&nbsp;" placeholder="填写你的账号 最少4位"></el-input>
+			</el-form-item>
+			
+			<el-form-item label="密码：" prop="pass">
+				<el-input type="password" v-model="ruleLoginForm.pass" name="pwd" autocomplete="off" placeholder="填写你的密码"></el-input>
+			
+			</el-form-item>
+		<br />
+			<el-form-item>
+				<el-button type="success"  size="medium"  @click="submitForm('ruleLoginForm')">立即登录</el-button>
+				<el-button type="text"  @click="">忘记密码?</el-button>
+			</el-form-item>
+		</el-form>
+	</div>
+</div>
+</template>
+	
+	
+<script>
+import Vue from 'vue'
+import Element from 'element-ui'
+import '@/theme/index.css'
+
+Vue.use(Element)
+
+import RquestPathConfig from '@/API/User/user_manager_loginAndRegister.js'
+import siteconfig from '@/API/User/user_layout_menu.js'
+
+export default {
+  data() {
+    return {
+      	siteconfig: siteconfig,
+      	formurl: RquestPathConfig.formloginUrl,
+      serverMessage: {
+        	exType: 'error',
+        message: '登录失败',
+        code: '123',
+        msgData: '用户名或密码不存在'
+      },
+      ruleLoginForm: {
+        pass: '',
+        username: ''
+      },
+      rules2: {
+        pass: [
+         		{ required: true, message: '请输入密码', trigger: 'blur' }
+        ],
+        username: [
+            	{ required: true, message: '请输入用户名', trigger: 'blur' },
+          		{ min: 4, max: 14, message: '长度在4 到 14 个字符', trigger: 'blur' }
+
+        ]
+      }
+    }
+  },
+
+  methods: {
+    submitForm(formName) {
+      	const t = this
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          document.getElementById('loginForm').submit()
+        } else {
+          return false
+        }
+      })
+    }
+  }
+
+}
+</script>
+<style scoped lang="scss">
+
+    .login-form {
+		box-shadow:0px 5px 20px 0px #3b1900;
+    }
+
+</style>

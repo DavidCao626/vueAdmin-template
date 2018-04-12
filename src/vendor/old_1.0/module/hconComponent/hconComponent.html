@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>mytitle</title>
+	</head>
+
+	<style>
+
+	</style>
+
+	<body>
+		<div id="bodyBox">
+			<gc-hcontainer :component-store="pageHCon">
+				<template slot="aside">
+					<gc-tree :component-store="treeStore"></gc-tree>
+				</template>
+				<div style="margin:10px">
+				<gc-form :component-store="formStore">
+					<el-form-item label="性别" prop="sex">
+						<gc-s-sel :component-store="selectStore"></gc-s-sel>
+					</el-form-item>
+					<el-form-item label="专业" prop="zy">
+					<gc-s-check  :component-store="checkStore"></gc-s-check>
+					</el-form-item>
+					<el-form-item label="专业" prop="isOnePic">
+					<gc-s-radio  :component-store="radioStore"></gc-s-radio>
+					</el-form-item>
+					<el-form-item label="组织" prop="orgPath">
+							<gc-s-cas  :component-store="cascaderStore"></gc-s-cas>
+					</el-form-item>
+					<el-button type="success" @click="getFormData()" size="small">打印Form</el-button>
+				</gc-form>
+				</div>
+			</gc-hcontainer>
+		</div>
+	</body>
+</html>

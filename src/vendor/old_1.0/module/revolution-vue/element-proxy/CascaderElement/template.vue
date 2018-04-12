@@ -1,0 +1,30 @@
+<template>
+ 	<el-cascader v-model="fields._value" :props="innerProperties" v-bind="innerProp" :options="opetions" v-on="innerEvent">
+	</el-cascader>
+</template>
+<script>
+	// 动态的去创建组件
+	
+	export default {
+	  data() {
+	    return {
+	      innerProp: this.fields.inner_prop,
+	      innerEvent: this.fields.inner_event,
+	      opetions: this.fields.options,
+	      innerProperties: this.fields.props
+	    }
+	  },
+	  components: {
+	  },
+	  props: ['fields'],
+	  methods: {
+	  },
+	  computed: {},
+	  watch: {}
+	}
+</script>
+<style>
+	.grace-input {
+		margin-top: 5px
+	}
+</style>
