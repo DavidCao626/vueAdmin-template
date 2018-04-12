@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import jsonRequest from '@/utils/ajax'
+// import jsonRequest from '@/utils/ajax'
 
 export function login(loginName, pwd) {
   return request({
