@@ -1,6 +1,4 @@
-
-
-[中文文档](https://github.com/PanJiaChen/vueAdmin-template/blob/master/README-zh.md)
+参考文档(https://panjiachen.github.io/vue-element-admin-site/#/zh-cn/README)
 
 ## Build Setup
 
@@ -21,3 +19,47 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
+
+# vscode 插件
+vscode-element-helper  vue-snippets  theme-oceanicnext   prettier-vscode  path-intellisense  auto-rename-tag   auto-close-tag
+
+# vs ide设置
+{
+
+
+
+    "workbench.colorCustomizations": {
+      "statusBar.background": "#333333",
+      "statusBar.noFolderBackground": "#333333",
+      "statusBar.debuggingBackground": "#263238"
+    },
+"workbench.colorTheme": "Oceanic Next (dimmed bg)",
+ 
+"files.autoSave":"off",
+
+"eslint.validate": [
+  "javascript",
+  {
+    "language": "vue",
+    "autoFix": true
+  },
+  "html",
+  "vue"
+],
+"eslint.autoFixOnSave": true,
+"editor.fontSize": 14,
+"editor.quickSuggestions": {
+  "strings": true
+},
+
+"editor.formatOnPaste": true,
+"vetur.format.defaultFormatter.html": "js-beautify-html",
+"editor.formatOnType": true,
+}
+
+
+
+
+    
+}
+    
