@@ -1,0 +1,92 @@
+10
+
+dir
+1082
+svn://192.168.1.110/repositories/StuProjectWebWork/src/API
+svn://192.168.1.110
+
+
+
+2018-04-06T05:29:09.809420Z
+1081
+chengbin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+116339d3-34e4-4030-92b0-37ddc433328a
+
+ManagerNode
+dir
+
+UserAuth
+dir
+
+socializeClassify
+dir
+
+Staff
+dir
+
+System
+dir
+
+Duty
+dir
+
+bashPath.js
+file
+1131
+
+
+
+2018-04-09T02:26:44.567660Z
+5eeb74b46a0629e0455c175a7d4ac879
+2018-04-09T02:27:41.352102Z
+1131
+wanghongkun
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+75
+
+Student
+dir
+
+question
+dir
+
+Teacher
+dir
+
+User
+dir
+
