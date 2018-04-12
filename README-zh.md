@@ -1,31 +1,11 @@
-# vueAdmin-template
-
-> 这是一个 极简的vue admin 管理后台 它只包含了 Element UI & axios & iconfont & permission control & lint，这些搭建后台必要的东西。
-
-[线上地址](http://panjiachen.github.io/vueAdmin-template)
-
-## Extra
-如果你想要根据用户角色来动态生成侧边栏和router，你可以使用改分支[permission-control](https://github.com/PanJiaChen/vueAdmin-template/tree/permission-control)
- 
- ## 相关项目
- [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
-
- [electron-vue-admin](https://github.com/PanJiaChen/electron-vue-admin)
-
-写了一个系列的教程配套文章，如何从零构建后一个完整的后台项目:
- - [手摸手，带你用 vue 撸后台 系列一(基础篇)](https://juejin.im/post/59097cd7a22b9d0065fb61d2)
- - [手摸手，带你用 vue 撸后台 系列二(登录权限篇)](https://juejin.im/post/591aa14f570c35006961acac)
- - [手摸手，带你用 vue 撸后台 系列三 (实战篇)](https://juejin.im/post/593121aa0ce4630057f70d35)
- - [手摸手，带你用vue撸后台 系列四(vueAdmin 一个极简的后台基础模板,专门针对本项目的文章,算作是一篇文档)](https://juejin.im/post/595b4d776fb9a06bbe7dba56)
- - [手摸手，带你封装一个vue component](https://segmentfault.com/a/1190000009090836)
-
+参考文档(https://panjiachen.github.io/vue-element-admin-site/#/zh-cn/README)
 
 ## Build Setup
 
 ``` bash
 
 # Clone project
-git clone https://github.com/PanJiaChen/vueAdmin-template.git
+git clone https://gitee.com/Davidcao/vueAdmin-template.git
 
 # Install dependencies
 npm install
@@ -43,12 +23,46 @@ npm run build
 npm run build --report
 ```
 
-## Demo
-![demo](https://github.com/PanJiaChen/PanJiaChen.github.io/blob/master/images/demo.gif)
+# vscode 插件
+vscode-element-helper  vue-snippets  theme-oceanicnext   prettier-vscode  path-intellisense  auto-rename-tag   auto-close-tag
 
-## License
-[MIT](https://github.com/PanJiaChen/vueAdmin-template/blob/master/LICENSE) license.
-
-Copyright (c) 2017-present PanJiaChen
+# vs ide设置
+{
 
 
+
+    "workbench.colorCustomizations": {
+      "statusBar.background": "#333333",
+      "statusBar.noFolderBackground": "#333333",
+      "statusBar.debuggingBackground": "#263238"
+    },
+"workbench.colorTheme": "Oceanic Next (dimmed bg)",
+ 
+"files.autoSave":"off",
+
+"eslint.validate": [
+  "javascript",
+  {
+    "language": "vue",
+    "autoFix": true
+  },
+  "html",
+  "vue"
+],
+"eslint.autoFixOnSave": true,
+"editor.fontSize": 14,
+"editor.quickSuggestions": {
+  "strings": true
+},
+
+"editor.formatOnPaste": true,
+"vetur.format.defaultFormatter.html": "js-beautify-html",
+"editor.formatOnType": true,
+}
+
+
+
+
+    
+}
+    
