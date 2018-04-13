@@ -24,20 +24,21 @@ import stuLayout from '../views/layout/stu-Layout'
 export const constantRouterMap = [
   { path: '/login', component: () => import('~/views/login'), hidden: true },
   { path: '/404', component: () => import('~/views/404'), hidden: true },
-  { path: '/register', component: () => import('~/views/register'), hidden: true },
-  { path: '/question', component: () => import('~/views/questionManager/index'), hidden: true },
+  {
+    path: '/register',
+    component: () => import('~/views/register'),
+    hidden: true
+  },
   {
     path: '/',
     component: stuLayout,
     redirect: '/dashboard',
     name: 'Dashboard',
     hidden: true,
-    children: [{
-      path: 'dashboard',
-      component: () => import('~/views/dashboard/index')
-    }]
+    children: [
+      { path: 'dashboard', component: () => import('~/views/dashboard/index') }
+    ]
   },
-
   {
     path: '/example',
     component: stuLayout,
@@ -47,7 +48,7 @@ export const constantRouterMap = [
     children: [
       {
         path: 'table',
-        name: '数据',
+        name: '问卷',
         component: () => import('~/views/table/index'),
         meta: { title: 'Table', icon: 'table' }
       },
@@ -59,7 +60,30 @@ export const constantRouterMap = [
       }
     ]
   },
-
+  {
+    path: '/question',
+    component: stuLayout,
+    redirect: '/question/list',
+    name: '调查问卷',
+    meta: { title: '调查问卷', icon: 'example' },
+    children: [
+      {
+        path: 'list',
+        name: '问卷填写',
+        component: () => import('~/views/question/components/main')
+      },
+      {
+        path: 'show',
+        name: '填表',
+        component: () => import('~/views/question/components/show')
+      },
+      {
+        path: 'results',
+        name: '填表',
+        component: () => import('~/views/question/components/results')
+      }
+    ]
+  },
   {
     path: '/form',
     component: stuLayout,
@@ -72,7 +96,6 @@ export const constantRouterMap = [
       }
     ]
   },
-
   { path: '*', redirect: '/404', hidden: true }
 ]
 
@@ -81,4 +104,3 @@ export default new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
-
