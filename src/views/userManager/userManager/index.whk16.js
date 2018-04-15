@@ -570,61 +570,13 @@ updateStore.addConf('updateUser', {
   'method': 'post',
   'url': RquestPathConfig.updateUserUrl
 })
-// --------更新用户表单定义结束--------
 
-/* var f_org_code = GStoreFactory.buildSmallCascaderStore(addUserDutyData.data, 'orgCode');
-
-//f_org_code.addConf("change",function(e){
-//	//点击组织回调
-//	console.log(["change",e]);
-//});
-f_org_code.addConf('expandTrigger','hover');
-f_org_code.addConf("props", {
-	value: 'org_code',
-	label: 'org_name',
-	children: 'children',
-	disabled: 'disabled'
-});
-var f_org_code2 = GStoreFactory.buildSmallCascaderStore(updateUserDutyData.data, 'orgCode');
-f_org_code2.addConf('isSelectChange',false);
-//f_org_code2.addConf("change",function(e){
-//	//点击组织回调
-//	console.log(["change",e]);
-//});
-f_org_code2.addConf('expandTrigger','hover');
-f_org_code2.addConf("props", {
-	value: 'org_code',
-	label: 'org_name',
-	children: 'children',
-	disabled: 'disabled'
-});
-
-f_org_code2.addConf("disabled", false);
-f_org_code.addConf("disabled", false);
-GUtils.post(reqPath.queryUserOrg, {}, function(data) {
-	f_org_code.pushAll(data.resBody);
-	f_org_code2.pushAll(data.resBody);
-});
-*/
 var vuemain = new Vue({
-  el: '#bodyBox',
-  data: {
-    // f_org_code2: f_org_code2,
-    // updateUserDutyLoading: false,
-    // dutyTableLoading: false,
-    // updateUserDurtDV: false,
-    // addShow: true,
-    // dutyDialogVisible: false,
+  data(){
+    return {
     dialogVisible: false,
     updateUserDialogVisible: false,
-    // f_org_code: f_org_code,
-    // addDutyRadioStore: addDutyRadioStore,
-    // //updateDutyRadioStore: updateDutyRadioStore,
-    // orgList: pageDataStore.orgList.data,
-    // dutyList: pageDataStore.dutyList.data,
-    //	addUserDutyStore: addUserDutyStore,
-    // updateUserDutyStore: updateUserDutyStore,
-    // dutyTableStore: dutyTableStore,
+  
     pageHCon: pagehContainer,
     pmanager: pageManagerStore,
     serviceForm: formStore,
@@ -645,15 +597,13 @@ var vuemain = new Vue({
       label: '停用',
       value: '0'
     }]
+    }
   },
   mounted: function() {
     var height = GUtils.getClientHeight()
     pagehContainer.store.conf.prefHeight = height
   },
   methods: {
-    //		change:function(a1){
-    //			console.log(["a1",a1])
-    //		},
     updateUserDuty: function(formName) {
       vuemain.$refs[formName].validate((valid) => {
         if (valid) {

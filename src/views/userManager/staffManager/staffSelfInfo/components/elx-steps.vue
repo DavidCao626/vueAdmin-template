@@ -49,90 +49,89 @@
 </template>
 
 <script>
-	import Vue from 'vue'
-	import Element from 'element-ui'
-	import '@/theme/index.css'
-	import '@/styles/app.scss'
-	import VueExpand from '@/components/VueExpand'
-	Vue.use(Element)
-Vue.use(VueExpand)
-import GUtils from '@/components/Utils.js'
-	import GStoreFactory from '@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js'
-	import GraceComponent from '@/ComponentPackage/GraceComponents.js'
-	import dataPath from '@/API/Staff/staff_info_manager.js'
-	import reqPath from '@/API/System/SystemManagerApi.js'
-	Vue.use(GraceComponent)
-import axios from 'axios'
-	import {
-	  Loading
-	} from 'element-ui'
-import RquestUserPathConfig from '@/API/User/user_manager_self.js' // 演示接口
-	import addStaffBaseInfo from './addStaffBaseInfo.vue'
-import addStaffUniversityInfo from './addStaffUniversityInfo.vue'
-	var loadOrg = {}
-loadOrg.orgCode = ''
+import Vue from "vue";
+import Element from "element-ui";
+import "@/theme/index.css";
+import VueExpand from "@/components/VueExpand";
+Vue.use(Element);
+Vue.use(VueExpand);
+import GUtils from "@/components/Utils.js";
+import GStoreFactory from "@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js";
+import GraceComponent from "@/ComponentPackage/GraceComponents.js";
+import dataPath from "@/API/Staff/staff_info_manager.js";
+import reqPath from "@/API/System/SystemManagerApi.js";
+Vue.use(GraceComponent);
+import axios from "axios";
+import { Loading } from "element-ui";
+import RquestUserPathConfig from "@/API/User/user_manager_self.js"; // 演示接口
+import addStaffBaseInfo from "./addStaffBaseInfo.vue";
+import addStaffUniversityInfo from "./addStaffUniversityInfo.vue";
+var loadOrg = {};
+loadOrg.orgCode = "";
 export default {
-	  components: {
-	    addStaffBaseInfo,
-	    addStaffUniversityInfo
-	  },
-	  data() {
-	    return {
-	      loadOrg,
-	      active: 0,
-	      submitArray: {},
-	      // sub: 0,
-	      ruleNum: 999
-	    }
+  components: {
+    addStaffBaseInfo,
+    addStaffUniversityInfo
   },
-	  methods: {
-	    form1ok(dataName, data) {
-	      console.log(data)
-	      switch (dataName) {
-	        case 'universityForm':
-	          this.submitArray.staffUniversityInfo = data
-	          break
-        case 'baseForm':
-	          this.submitArray.staffBaseInfo = data
-	          break
+  data() {
+    return {
+      loadOrg,
+      active: 0,
+      submitArray: {},
+      // sub: 0,
+      ruleNum: 999
+    };
+  },
+  methods: {
+    form1ok(dataName, data) {
+      console.log(data);
+      switch (dataName) {
+        case "universityForm":
+          this.submitArray.staffUniversityInfo = data;
+          break;
+        case "baseForm":
+          this.submitArray.staffBaseInfo = data;
+          break;
         default:
-	          break
+          break;
       }
-	    },
-	    nextb() {
-	      this.ruleNum = this.active
+    },
+    nextb() {
+      this.ruleNum = this.active;
 
-	      // this.next();
-	    },
-	    next() {
-	      // this.active++
-	      console.log(['sArr', this.submitArray])
-	      console.log(['sArrl', this.submitArray])
-	      if (this.active++ > 1) this.active = 2
-	    },
-	    backStep() {
-	      this.active--
-	    },
-	    subForm() {
-	      this.sub = 1
-	      GUtils.requestBody(dataPath.submitStaffInfo, this.submitArray, function(data) {
-	        console.log(['submit', 'submitData'])
-	      })
+      // this.next();
+    },
+    next() {
+      // this.active++
+      console.log(["sArr", this.submitArray]);
+      console.log(["sArrl", this.submitArray]);
+      if (this.active++ > 1) this.active = 2;
+    },
+    backStep() {
+      this.active--;
+    },
+    subForm() {
+      this.sub = 1;
+      GUtils.requestBody(dataPath.submitStaffInfo, this.submitArray, function(
+        data
+      ) {
+        console.log(["submit", "submitData"]);
+      });
     }
-	  },
-	  watch: {
-	    submitArray: function() {}
-	  }
-	}
+  },
+  watch: {
+    submitArray: function() {}
+  }
+};
 </script>
 
 <style scoped>
-	.container_box {
-		width: 150vh;
-	}
-	
-	.footer {
-		margin: 15px auto;
-		width: 150vh;
-	}
+.container_box {
+  width: 150vh;
+}
+
+.footer {
+  margin: 15px auto;
+  width: 150vh;
+}
 </style>

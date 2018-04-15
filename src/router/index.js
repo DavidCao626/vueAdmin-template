@@ -22,6 +22,7 @@ import stuLayout from '../views/layout/stu-Layout'
   }
 **/
 export const constantRouterMap = [
+
   { path: '/login', component: () => import('~/views/login'), hidden: true },
   { path: '/404', component: () => import('~/views/404'), hidden: true },
   { path: '/register', component: () => import('~/views/register'), hidden: true },
@@ -69,6 +70,99 @@ export const constantRouterMap = [
         name: '表单',
         component: () => import('~/views/form/index'),
         meta: { title: 'Form', icon: 'form' }
+      }
+    ]
+  },
+
+  {
+    path: '/user',
+    component: stuLayout,
+    children: [{
+      path: 'updateUserPwd',
+      name: '用户修改密码',
+      component: () => import('~/views/userManager/updateUserPwd')
+    }, {
+      path: 'updateUserInfo',
+      name: '用户修改资料',
+      component: () => import('~/views/userManager/updateUserInfo')
+    }, {
+      path: 'userSelfAuth',
+      name: '用户认证表单',
+      component: () => import('~/views/userManager/userSelfAuth/index')
+    },
+    {
+      path: 'userManager',
+      name: '用户信息管理',
+      component: () => import('~/views/userManager/userManager/index')
+    },
+    {
+      path: 'userAuth',
+      name: '认证信息管理',
+      component: () => import('~/views/userManager/userAuth/index')
+    }
+    ]
+  },
+
+  {
+    path: '/student',
+    component: stuLayout,
+    children: [
+      {
+        path: 'stuSelfInfo',
+        name: '创建学生信息',
+        component: () => import('~/views/userManager/studentManager/stuSelfInfo/index'), hidden: true
+      },
+      {
+        path: 'updateStuInfo',
+        name: '修改学生信息',
+        component: () => import('~/views/userManager/studentManager/updateStuInfo/index'), hidden: true
+      },
+      {
+        path: 'studentBaseInfo',
+        name: '学生信息管理',
+        component: () => import('~/views/userManager/studentManager/studentBaseInfo/index'), hidden: true
+      }
+    ]
+  },
+  {
+    path: '/staff',
+    component: stuLayout,
+    children: [
+      {
+        path: 'staffSelfInfo',
+        name: '创建职工信息',
+        component: () => import('~/views/userManager/staffManager/staffSelfInfo/index'), hidden: true
+      },
+      {
+        path: 'updateStaffInfo',
+        name: '修改职工信息',
+        component: () => import('~/views/userManager/staffManager/updateStaffInfo/index'), hidden: true
+      }
+      , {
+        path: 'staffBaseInfo',
+        name: '职工信息管理',
+        component: () => import('~/views/userManager/staffManager/staffBaseInfo/index'), hidden: true
+      }
+    ]
+  },
+  {
+    path: '/system',
+    component: stuLayout,
+    children: [
+      {
+        path: 'managerNodeConfig',
+        name: '管理节点配置用户对象',
+        component: () => import('~/views/userManager/managerNodeConfig/index'), hidden: true
+      },
+      {
+        path: 'dutyManager',
+        name: '职务管理',
+        component: () => import('~/views/userManager/dutyManager/index'), hidden: true
+      },
+      {
+        path: 'socializeClassify',
+        name: '系统用户管理',
+        component: () => import('~/views/userManager/socializeClassify/index'), hidden: true
       }
     ]
   },

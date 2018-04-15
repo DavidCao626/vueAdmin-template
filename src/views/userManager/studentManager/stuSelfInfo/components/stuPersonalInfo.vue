@@ -43,7 +43,7 @@
 	import Vue from 'vue'
 	import Element from 'element-ui'
 	import '@/theme/index.css'
-	import '@/styles/app.scss'
+	// import '@/styles/app.scss'
 	import VueExpand from '@/components/VueExpand'
 	Vue.use(Element)
 Vue.use(VueExpand)
@@ -61,7 +61,7 @@ GUtils.post(dataPath.getDictByDictNames, {
 	  'dicts': dicts
 	}, function(data) {
 	  adTypeData.push(data.resBody.accommodation_type)
-	console.log(['dictResponseData', data])
+  console.log(['dictResponseData', data])
 })
 
 formDataStore.pushData({

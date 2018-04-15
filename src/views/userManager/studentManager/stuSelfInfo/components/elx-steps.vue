@@ -54,7 +54,7 @@
 	import Vue from 'vue'
 	import Element from 'element-ui'
 	import '@/theme/index.css'
-	import '@/styles/app.scss'
+	// import '@/styles/app.scss'
 	import VueExpand from '@/components/VueExpand'
 	Vue.use(Element)
 Vue.use(VueExpand)
