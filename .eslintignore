@@ -1,9 +1,4 @@
 build/*.js
 config/*.js
 src/assets
-<<<<<<< HEAD
 src/vendor
-=======
-*.vue
-*.js
->>>>>>> 71613ea569e3491a6c9c9e50d82a25144577b2e0
