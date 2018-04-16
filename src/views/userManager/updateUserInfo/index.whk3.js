@@ -32,21 +32,12 @@ userInfoFormData.pushRules({
     message: '请输入正确的QQ号码',
     trigger: 'blur'
   }],
-  /*	email: [{
-			validator: GUtils.validSingle("请输入正确的邮箱格式", 'email', false),
-			trigger: 'blur'
-		}],*/
   email: [{
     pattern: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
     message: '请输入正确邮箱格式',
     trigger: 'blur'
   }],
   nick_name: [
-    /* {
-				required: true,
-				message: '请输入昵称',
-				trigger: 'blur'
-			},*/
     {
       min: 3,
       max: 20,
@@ -55,11 +46,6 @@ userInfoFormData.pushRules({
     }
   ],
   mobile_phone: [
-    /* {
-				required: true,
-				message: '手机号不能为空',
-				trigger: 'blur'
-			},*/
     {
       min: 11,
       max: 11,
@@ -82,28 +68,17 @@ userInfoFormStore.addConf('updateUserInfo', {
   'url': RquestPathConfig.updateUserInfoUrl
 })
 var vue = new Vue({
-  el: '#bodybox',
-  data: {
+  data(){return {
     userInfoFormStore: userInfoFormStore,
     loading: false
+  }
   },
   created: function() {
-    // this.loading = true;
     console.log(['this.loading', this.loading])
     var axiosConfig = userInfoFormStore.store.conf.loadData
     GUtils.post(axiosConfig.url, {}, function(data) {
       userInfoFormData.data = data.resBody[0].userInfo[0]
-      // vue.loading = false;
     })
-    //		axios(axiosConfig).then(function(response) {
-    //				console.log(["response", response]);
-    //				userInfoFormData.data = response.data.body.resBody[0].userInfo[0];
-    //
-    //				console.log(["vue.loading", vue.loading]);
-    //			})
-    //			.catch(function(error) {
-    //				console.log(error);
-    //			});
   },
   methods: {
     test: function() {
@@ -126,7 +101,6 @@ var vue = new Vue({
               message: '恭喜你，信息修改成功',
               type: 'success'
             })
-            // vue.loading = false;
           })
         } else {
           console.log('error submit!!')

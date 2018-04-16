@@ -57,7 +57,7 @@
 	import Vue from 'vue'
 	import Element from 'element-ui'
 	import '@/theme/index.css'
-	import '@/styles/app.scss'
+//	import '@/styles/app.scss'
 	import VueExpand from '@/components/VueExpand'
 	Vue.use(Element)
 Vue.use(VueExpand)
@@ -82,11 +82,11 @@ GUtils.post(dataPath.getDictByDictNames, {
 	  'dicts': dicts
 	}, function(data) {
 	  majorData.push(data.resBody.major)
-	educationalTypeData.push(data.resBody.educationalType)
-	schoolAreaData.push(data.resBody.schoolArea)
-	entranceGradeData.push(data.resBody.entranceGrade)
-	stateData.push(data.resBody.is_bandh)
-	checkFlagData.push(data.resBody.check_flag)
+  educationalTypeData.push(data.resBody.educationalType)
+  schoolAreaData.push(data.resBody.schoolArea)
+  entranceGradeData.push(data.resBody.entranceGrade)
+  stateData.push(data.resBody.is_bandh)
+  checkFlagData.push(data.resBody.check_flag)
 })
 
 formDataStore.pushData({
