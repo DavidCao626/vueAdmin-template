@@ -1,4 +1,4 @@
-import Vue from 'vue'
+
 import graceContainer from '@/ComponentPackage/GraceVContainer.vue'
 import graceTable from '@/ComponentPackage/GraceTable.vue'
 import graceForm from '@/ComponentPackage/GraceForm.vue'

@@ -2,8 +2,6 @@
 import Vue from 'Vue'
 import Vuex from 'vuex'
 
-// 引入 axios
-import axios from 'axios'
 import Utils from '@/components/Utils.js'
 import qusApi from '@/API/question/questionApi.js'
 
@@ -162,7 +160,7 @@ const mutations = {
     const list = state.qss.questionLists[index['key']].options
     // 复制时，同样需要对引用对象进行深拷贝
 
-    const newarray = list.splice(
+    list.splice(
       index['optionsKey'],
       1,
       list[index['optionsKey']],
@@ -182,7 +180,7 @@ const mutations = {
     // 复制时，同样需要对引用对象进行深拷贝
 
     list.splice(index['optionsKey'], 1)
-    if (list.length == 0) {
+    if (list.length === 0) {
       state.qss.questionLists.splice(index['key'], 1)
     }
 
@@ -347,7 +345,7 @@ const actions = {
   initQuuestion(commit) {
     const ls = localStorage.getItem('taskCode')
 
-    if (!ls || ls == 'undefined') {
+    if (!ls || ls) {
       alert('你还没taskcode！')
       return
     }
@@ -385,7 +383,7 @@ const actions = {
   getResultsQuuestion(commit) {
     const ls = localStorage.getItem('taskCode')
 
-    if (!ls || ls == 'undefined') {
+    if (!ls || ls === undefined) {
       alert('你还没taskcode！')
       return
     }
