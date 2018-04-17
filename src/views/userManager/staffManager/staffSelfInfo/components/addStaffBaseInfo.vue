@@ -59,50 +59,50 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Element from "element-ui";
-import "@/theme/index.css";
-import VueExpand from "@/components/VueExpand";
-Vue.use(Element);
-Vue.use(VueExpand);
-import GUtils from "@/components/Utils.js";
-import GStoreFactory from "@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js";
-import GraceComponent from "@/ComponentPackage/GraceComponents.js";
-import dataPath from "@/API/Staff/staff_info_manager.js";
-import nations from "../nations.js";
-import politicalStatus from "../politicalStatus.js";
-Vue.use(GraceComponent);
+import Vue from 'vue'
+import Element from 'element-ui'
+import '@/theme/index.css'
+import VueExpand from '@/components/VueExpand'
+Vue.use(Element)
+Vue.use(VueExpand)
+import GUtils from '@/components/Utils.js'
+import GStoreFactory from '@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js'
+import GraceComponent from '@/ComponentPackage/GraceComponents.js'
+import dataPath from '@/API/Staff/staff_info_manager.js'
+import nations from '../nations.js'
+import politicalStatus from '../politicalStatus.js'
+Vue.use(GraceComponent)
 
-var formStore = GStoreFactory.buildServiceForm();
-var formDataStore = GStoreFactory.buildServiceFormData();
+var formStore = GStoreFactory.buildServiceForm()
+var formDataStore = GStoreFactory.buildServiceFormData()
 formDataStore.pushData({
-  managerNodeCode: "",
-  staffCode: "", // 职工编码
-  name: "", // 姓名
-  namePhoneticize: "", // 姓名拼音
-  sexType: "1", // 性别
-  nation: "", // 民族
-  phone: "", // 手机号
-  email: "", // 邮箱
-  identityNo: "", // 身份证号码
+  managerNodeCode: '',
+  staffCode: '', // 职工编码
+  name: '', // 姓名
+  namePhoneticize: '', // 姓名拼音
+  sexType: '1', // 性别
+  nation: '', // 民族
+  phone: '', // 手机号
+  email: '', // 邮箱
+  identityNo: '', // 身份证号码
   //		checkFlag: "0", //审核状态
   //		checkComment: "", //审核备注
-  personalPhoto: "" // 证件照片
-});
+  personalPhoto: '' // 证件照片
+})
 formDataStore.pushRules({
   managerNodeCode: [
     {
       required: true,
-      message: "此项不能为空",
-      trigger: "blur"
+      message: '此项不能为空',
+      trigger: 'blur'
     }
   ],
   staffCode: [], // 职工编码
   name: [
     {
       required: true,
-      message: "姓名不能为空",
-      trigger: "blur"
+      message: '姓名不能为空',
+      trigger: 'blur'
     }
   ], // 姓名
   namePhoneticize: [], // 姓名拼音
@@ -114,37 +114,37 @@ formDataStore.pushRules({
   //		checkFlag: [], //审核状态
   //		checkComment: [], //审核备注
   personalPhoto: [] // 证件照片
-});
-formStore.addAttr("formData", formDataStore);
+})
+formStore.addAttr('formData', formDataStore)
 
-var nationsData = nations.data;
-var checkFlagData = [];
+var nationsData = nations.data
+var checkFlagData = []
 var requestData = {
-  dicts: ["check_flag", "sex_type"]
-};
-var dictData = {};
+  dicts: ['check_flag', 'sex_type']
+}
+var dictData = {}
 GUtils.post(dataPath.getDictByDictNames, requestData, function(data) {
-  dictData = data.resBody;
-  checkFlagData.push(dictData.check_flag);
-});
+  dictData = data.resBody
+  checkFlagData.push(dictData.check_flag)
+})
 export default {
-  props: ["rule", "loadOrg"],
+  props: ['rule', 'loadOrg'],
   data() {
     return {
       formStore,
-      imageUrl: "", // 证件照片
+      imageUrl: '', // 证件照片
       upLoadUrl: dataPath.upLoadStaffIdentityPic,
       nationsData,
       checkFlagData,
       managerCodeData: []
-    };
+    }
   },
   mounted: function() {
-    var that = this;
+    var that = this
     GUtils.post(dataPath.queryStaffUserAuth, {}, function(data) {
-      console.log(["managerCodeData", data]);
-      that.managerCodeData = data.resBody;
-    });
+      console.log(['managerCodeData', data])
+      that.managerCodeData = data.resBody
+    })
   },
   watch: {
     //			active(){
@@ -154,49 +154,49 @@ export default {
     rule: function() {
       if (this.rule == 0) {
         // 验证
-        console.log(["baseForm", this]);
-        this.$refs["baseForm"].validate(valid => {
+        console.log(['baseForm', this])
+        this.$refs['baseForm'].validate(valid => {
           if (valid) {
-            console.log(["验证基础信息"]);
-            this.$emit("form1", "baseForm", this.formStore.formData.data);
-            this.$emit("ruleM");
-            this.$parent.$parent.ruleNum = 999;
+            console.log(['验证基础信息'])
+            this.$emit('form1', 'baseForm', this.formStore.formData.data)
+            this.$emit('ruleM')
+            this.$parent.$parent.ruleNum = 999
           } else {
-            this.$parent.$parent.ruleNum = 999;
-            return false;
+            this.$parent.$parent.ruleNum = 999
+            return false
           }
-        });
+        })
       }
     }
   },
   methods: {
     orgCodeChange: function(val) {
-      this.loadOrg.orgCode = val;
+      this.loadOrg.orgCode = val
     },
     upLoadSuccess(response, file, fileList) {
-      console.log(["response", response]);
-      console.log(["file", file]);
-      console.log(["fileList", fileList]);
+      console.log(['response', response])
+      console.log(['file', file])
+      console.log(['fileList', fileList])
     },
     handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-      console.log(["res", res]); // res为文件路径
-      console.log(["file", file]);
-      this.formStore.formData.data.personalPhoto = res;
+      this.imageUrl = URL.createObjectURL(file.raw)
+      console.log(['res', res]) // res为文件路径
+      console.log(['file', file])
+      this.formStore.formData.data.personalPhoto = res
     },
     beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
       if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
+        this.$message.error('上传头像图片只能是 JPG 格式!')
       }
       if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
+        this.$message.error('上传头像图片大小不能超过 2MB!')
       }
-      return isJPG && isLt2M;
+      return isJPG && isLt2M
     }
   }
-};
+}
 </script>
 
 <style>

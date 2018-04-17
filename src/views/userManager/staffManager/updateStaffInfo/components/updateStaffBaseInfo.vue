@@ -59,42 +59,42 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Element from "element-ui";
-import "@/theme/index.css";
-import VueExpand from "@/components/VueExpand";
-Vue.use(Element);
-Vue.use(VueExpand);
-import GUtils from "@/components/Utils.js";
-import GStoreFactory from "@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js";
-import GraceComponent from "@/ComponentPackage/GraceComponents.js";
-import dataPath from "@/API/Staff/staff_info_manager.js";
-import nations from "../nations.js";
-import politicalStatus from "../politicalStatus.js";
-Vue.use(GraceComponent);
+import Vue from 'vue'
+import Element from 'element-ui'
+import '@/theme/index.css'
+import VueExpand from '@/components/VueExpand'
+Vue.use(Element)
+Vue.use(VueExpand)
+import GUtils from '@/components/Utils.js'
+import GStoreFactory from '@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js'
+import GraceComponent from '@/ComponentPackage/GraceComponents.js'
+import dataPath from '@/API/Staff/staff_info_manager.js'
+import nations from '../nations.js'
+import politicalStatus from '../politicalStatus.js'
+Vue.use(GraceComponent)
 
-var formStore = GStoreFactory.buildServiceForm();
-var formDataStore = GStoreFactory.buildServiceFormData();
+var formStore = GStoreFactory.buildServiceForm()
+var formDataStore = GStoreFactory.buildServiceFormData()
 formDataStore.pushData({
-  managerNodeCode: "",
-  staffCode: "", // 职工编码
-  name: "", // 姓名
-  namePhoneticize: "", // 姓名拼音
-  sexType: "1", // 性别
-  nation: "", // 民族
-  phone: "", // 手机号
-  email: "", // 邮箱
-  identityNo: "", // 身份证号码
+  managerNodeCode: '',
+  staffCode: '', // 职工编码
+  name: '', // 姓名
+  namePhoneticize: '', // 姓名拼音
+  sexType: '1', // 性别
+  nation: '', // 民族
+  phone: '', // 手机号
+  email: '', // 邮箱
+  identityNo: '', // 身份证号码
   //		checkFlag: "0", //审核状态
   //		checkComment: "", //审核备注
-  personalPhoto: "" // 证件照片
-});
+  personalPhoto: '' // 证件照片
+})
 formDataStore.pushRules({
   managerNodeCode: [
     {
       required: true,
-      message: "此项不能为空",
-      trigger: "blur"
+      message: '此项不能为空',
+      trigger: 'blur'
     }
   ],
   staffCode: [], // 职工编码
@@ -108,119 +108,119 @@ formDataStore.pushRules({
   //		checkFlag: [], //审核状态
   //		checkComment: [], //审核备注
   personalPhoto: [] // 证件照片
-});
-formStore.addAttr("formData", formDataStore);
+})
+formStore.addAttr('formData', formDataStore)
 
-var nationsData = nations.data;
-var checkFlagData = [];
+var nationsData = nations.data
+var checkFlagData = []
 var requestData = {
-  dicts: ["check_flag", "sex_type"]
-};
-var dictData = {};
+  dicts: ['check_flag', 'sex_type']
+}
+var dictData = {}
 GUtils.post(dataPath.getDictByDictNames, requestData, function(data) {
-  dictData = data.resBody;
-  checkFlagData.push(dictData.check_flag);
-});
-var iloading = false;
+  dictData = data.resBody
+  checkFlagData.push(dictData.check_flag)
+})
+var iloading = false
 export default {
-  props: ["bid", "loadOrg"],
+  props: ['bid', 'loadOrg'],
   data() {
     return {
-      imageUrl: "", // 证件照片
+      imageUrl: '', // 证件照片
       upLoadUrl: dataPath.upLoadStaffIdentityPic,
       formStore,
       nationsData,
       checkFlagData,
       iloading,
       managerCodeData: []
-    };
+    }
   },
   computed: {
     imageU: function() {
-      if (this.imageUrl != "") {
-        return this.imageUrl;
+      if (this.imageUrl != '') {
+        return this.imageUrl
       } else {
-        return this.formStore.formData.data.personalPhoto;
+        return this.formStore.formData.data.personalPhoto
       }
     }
   },
   created: function() {},
   methods: {
     orgCodeChange: function(val) {
-      this.loadOrg.orgCode = val;
+      this.loadOrg.orgCode = val
     },
     submitUpdate: function() {
-      var that = this;
+      var that = this
       GUtils.post(
         dataPath.updateStaffBaseInfoSelf,
         this.formStore.formData.data,
         function(data) {
-          alert("修改成功");
-          that.loadFormData();
+          alert('修改成功')
+          that.loadFormData()
         }
-      );
+      )
     },
     upLoadSuccess(response, file, fileList) {
-      console.log(["response", response]);
-      console.log(["file", file]);
-      console.log(["fileList", fileList]);
+      console.log(['response', response])
+      console.log(['file', file])
+      console.log(['fileList', fileList])
     },
     handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-      console.log(["res", res]); // res为文件路径
-      console.log(["file", file]);
-      this.formStore.formData.data.personalPhoto = res;
+      this.imageUrl = URL.createObjectURL(file.raw)
+      console.log(['res', res]) // res为文件路径
+      console.log(['file', file])
+      this.formStore.formData.data.personalPhoto = res
     },
     beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
       if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
+        this.$message.error('上传头像图片只能是 JPG 格式!')
       }
       if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
+        this.$message.error('上传头像图片大小不能超过 2MB!')
       }
-      return isJPG && isLt2M;
+      return isJPG && isLt2M
     },
     loadFormData: function(id) {
-      var that = this;
+      var that = this
       GUtils.post(
         dataPath.queryStaffBaseInfoById,
         {
           id: this.bid
         },
         function(data) {
-          formDataStore.pushData(data.resBody);
+          formDataStore.pushData(data.resBody)
           formDataStore.pushData({
             lastUpdateTime: null
-          });
-          delete formDataStore.data["lastUpdateTime"];
+          })
+          delete formDataStore.data['lastUpdateTime']
         }
-      );
+      )
     }
   },
   mounted: function() {
-    var that = this;
+    var that = this
     GUtils.post(dataPath.queryStaffUserAuth, {}, function(data) {
-      console.log(["managerCodeData", data]);
-      that.managerCodeData = data.resBody;
-    });
+      console.log(['managerCodeData', data])
+      that.managerCodeData = data.resBody
+    })
     GUtils.post(
       dataPath.queryStaffBaseInfoById,
       {
         id: this.bid
       },
       function(data) {
-        formDataStore.pushData(data.resBody);
+        formDataStore.pushData(data.resBody)
         formDataStore.pushData({
           lastUpdateTime: null
-        });
-        that.loadOrg.orgCode = that.formStore.formData.data.managerNodeCode;
-        delete formDataStore.data["lastUpdateTime"];
+        })
+        that.loadOrg.orgCode = that.formStore.formData.data.managerNodeCode
+        delete formDataStore.data['lastUpdateTime']
       }
-    );
+    )
   }
-};
+}
 </script>
 
 <style>

@@ -33,32 +33,32 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Element from "element-ui";
-import "@/theme/index.css";
-import VueExpand from "@/components/VueExpand";
-Vue.use(Element);
-Vue.use(VueExpand);
-import GUtils from "@/components/Utils.js";
-import GStoreFactory from "@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js";
-import GraceComponent from "@/ComponentPackage/GraceComponents.js";
-import dataPath from "@/API/Student/student_info_manager.js";
-Vue.use(GraceComponent);
-import updateStuBaseInfo from "./updateStuBaseInfo.vue";
-import updateStuPersonInfo from "./updateStuPersonInfo.vue";
-import updateStuUniversityInfo from "./updateStuUniversityInfo.vue";
+import Vue from 'vue'
+import Element from 'element-ui'
+import '@/theme/index.css'
+import VueExpand from '@/components/VueExpand'
+Vue.use(Element)
+Vue.use(VueExpand)
+import GUtils from '@/components/Utils.js'
+import GStoreFactory from '@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js'
+import GraceComponent from '@/ComponentPackage/GraceComponents.js'
+import dataPath from '@/API/Student/student_info_manager.js'
+Vue.use(GraceComponent)
+import updateStuBaseInfo from './updateStuBaseInfo.vue'
+import updateStuPersonInfo from './updateStuPersonInfo.vue'
+import updateStuUniversityInfo from './updateStuUniversityInfo.vue'
 
-var stuNo = "0"; // 传来的-=-=-=-=
-var baseInfoId = "0"; // 传来的
-var personalInfoBid = "0"; // 传
-var universityInfoBid = "0"; // 传
+var stuNo = '0' // 传来的-=-=-=-=
+var baseInfoId = '0' // 传来的
+var personalInfoBid = '0' // 传
+var universityInfoBid = '0' // 传
 
-var ckParams = {};
-ckParams.stuNo = "";
-ckParams.baseInfoId = "";
-ckParams.personalInfoBid = "";
-ckParams.universityInfoBid = "";
-ckParams.loginName = "";
+var ckParams = {}
+ckParams.stuNo = ''
+ckParams.baseInfoId = ''
+ckParams.personalInfoBid = ''
+ckParams.universityInfoBid = ''
+ckParams.loginName = ''
 
 export default {
   components: {
@@ -66,23 +66,23 @@ export default {
     updateStuPersonInfo,
     updateStuUniversityInfo
   },
-  props: ["ckParams"],
+  props: ['ckParams'],
   data() {
     return {
       baseInfoBid: this.ckParams.baseInfoId, // -=-=-=-=-=-=-=-=-=-审核信息的id   基本信息
       personalInfoBid: this.ckParams.personalInfoBid, // -=-=-=-=-=-=-=-=-=-审核信息的id   个人信息
       universityInfoBid: this.ckParams.universityInfoBid, // -=-=-=-=-=-=-=-=-=-审核信息的id   在校信息
-      activeNames: ["1"],
+      activeNames: ['1'],
       rows: 5,
-      checkFlag: "",
-      checkComment: "审核备注", // 审核备注
+      checkFlag: '',
+      checkComment: '审核备注', // 审核备注
       checkCommentDV: false
-    };
+    }
   },
   methods: {
     footerButton: function(state) {
-      this.checkFlag = state;
-      this.checkCommentDV = true;
+      this.checkFlag = state
+      this.checkCommentDV = true
     },
     checkFun: function() {
       GUtils.post(
@@ -94,9 +94,9 @@ export default {
           checkComment: this.checkComment
         },
         function(data) {
-          alert("审核成功");
+          alert('审核成功')
         }
-      );
+      )
     }
   },
   beforeCreate: function() {
@@ -109,7 +109,7 @@ export default {
     //				universityInfoBid = data.resBody.stuUniversityInfoId;
     //			})
   }
-};
+}
 </script>
 
 <style>

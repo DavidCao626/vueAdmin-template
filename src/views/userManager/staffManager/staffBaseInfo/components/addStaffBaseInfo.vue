@@ -141,8 +141,8 @@ export default {
 	    submitForm: function() {
 	      var that = this
 	      GUtils.post(dataPath.insertStaffBaseInfo, this.formStore.formData.data, function(data) {
-					console.log(["thatttt",that]);
-	        that.$parent.$parent.iload()
+	        console.log(['thatttt', that])
+        that.$parent.$parent.iload()
 	      })
     }
 	  }

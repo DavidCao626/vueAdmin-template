@@ -1,7 +1,5 @@
 
-
-
 var index = new Vue({
-  el: '#bodyBox',
- 
+  el: '#bodyBox'
+
 })

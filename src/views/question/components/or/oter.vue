@@ -80,7 +80,7 @@
 <style scoped>
  .el-input__inner{
 	border-color: #FFFFFF;
-	//width: 80hv;
+
 }
 .list-box  .el-input__inner:hover
 {

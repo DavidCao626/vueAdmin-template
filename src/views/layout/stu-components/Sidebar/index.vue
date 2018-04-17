@@ -1,28 +1,113 @@
 <template>
-  <scroll-bar>
-    <el-menu mode="vertical" unique-opened :default-active="$route.path" :collapse="isCollapse" background-color="#304156" text-color="#fff" active-text-color="#409EFF">
-      <sidebar-item :routes="routes"></sidebar-item>
-    </el-menu>
-  </scroll-bar>
+  <nav class="sidebar">
+    <ul class="sidebar-nav" v-if="navMenu.length">
+      <li class="sidebar-item">
+        <router-link to="/dashboard" class="sidebar-item__link">
+          <svg-icon class="sidebar-item__icon" icon-class="eye" />
+          <span>首页</span>
+        </router-link>
+      </li>
+      <li class="sidebar-item" v-for="item in navMenu" :key="item.Key">
+        <template v-if="item.disFlag=='false'">
+          <span class="sidebar-item__title">
+            <svg-icon class="sidebar-item__icon" icon-class="user" v-if="0"/>
+            <i :class="[item.icon,'sidebar-item__icon']"></i>
+            <span>{{item.title}}</span>
+          </span>
+          <sidebar-children 
+            v-if="item.children.length"
+            :childeren="item.children"
+          ></sidebar-children>
+        </template>
+      </li>
+
+    </ul>
+    <div class="legal">
+
+    </div>
+  </nav>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import SidebarItem from './SidebarItem'
-import ScrollBar from '~/components/ScrollBar'
-
+import SidebarChildren from './SidebarChildren'
 export default {
-  components: { SidebarItem, ScrollBar },
+  name: 'Sidebar',
+  components: { 'sidebar-children': SidebarChildren },
   computed: {
-    ...mapGetters([
-      'sidebar'
-    ]),
-    routes() {
-      return this.$router.options.routes
-    },
-    isCollapse() {
-      return !this.sidebar.opened
-    }
+    ...mapGetters(['navMenu'])
+  },
+  mounted: function() {
+    this.$store.dispatch('GetNavMenu').then(() => {
+      console.log(this.navMenu)
+    })
   }
 }
 </script>
+
+
+
+<style rel="stylesheet/scss" lang="scss" scoped>
+.router-link-active {
+  color: var(--color-primary);
+  .sidebar-item__icon {
+    fill: var(--color-primary);
+  }
+}
+
+.sidebar {
+  flex: 0 0 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  &-nav {
+    list-style: none;
+  }
+  &-item {
+    padding: 8px 0;
+    line-height: 1.6;
+    position: relative;
+    font-size: 18px;
+    color: var(--color-grey-dark-1);
+  }
+  &-item::before {
+    content: " ";
+    position: absolute;
+    bottom: 0;
+    left: 98px;
+    width: 43%;
+    border-top: 1px solid #e4e8eb;
+  }
+
+  &-item__link {
+    line-height: 50px;
+    //padding-left: 64px;
+  }
+  &-item__link:link,
+  &-item__link:visited,
+  &-item__title {
+    display: flex;
+    align-items: center;
+  }
+  &-item__link:hover {
+    // color: var(--color-primary);
+    background-color: #ebeef5;
+  }
+
+  &-item__icon {
+    fill: var(--color-grey-light-2);
+    color:  var(--color-grey-light-2);
+    max-width: 1.5rem;
+    max-height: 1.5rem;
+    margin: 0.8rem;
+    margin-left: 64px;
+  }
+}
+
+.legal {
+  text-align: right;
+  padding: 2.5rem;
+  color: var(--color-grey-light-2);
+  font-size: 12px;
+}
+</style>

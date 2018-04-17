@@ -159,261 +159,261 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Element from "element-ui";
-import "@/theme/index.css";
-import VueExpand from "@/components/VueExpand";
-Vue.use(Element);
-Vue.use(VueExpand);
-import GUtils from "@/components/Utils.js";
-import GStoreFactory from "@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js";
-import GraceComponent from "@/ComponentPackage/GraceComponents.js";
-import RquestPathConfig from "@/API/User/user_manager_system.js";
-import reqPath from "@/API/System/SystemManagerApi.js";
-import axios from "axios";
+import Vue from 'vue'
+import Element from 'element-ui'
+import '@/theme/index.css'
+import VueExpand from '@/components/VueExpand'
+Vue.use(Element)
+Vue.use(VueExpand)
+import GUtils from '@/components/Utils.js'
+import GStoreFactory from '@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js'
+import GraceComponent from '@/ComponentPackage/GraceComponents.js'
+import RquestPathConfig from '@/API/User/user_manager_system.js'
+import reqPath from '@/API/System/SystemManagerApi.js'
+import axios from 'axios'
 
-Vue.use(GraceComponent);
+Vue.use(GraceComponent)
 
-var pagehContainer = GStoreFactory.buildVContainer();
-var pageManagerStore = GStoreFactory.buildManagerPageStore();
+var pagehContainer = GStoreFactory.buildVContainer()
+var pageManagerStore = GStoreFactory.buildManagerPageStore()
 
-pageManagerStore.addConf("loadData", function() {
-  loadData();
-});
-pageManagerStore.addConf("workSpaceWidth", "40vw");
+pageManagerStore.addConf('loadData', function() {
+  loadData()
+})
+pageManagerStore.addConf('workSpaceWidth', '40vw')
 
-var selectTableStore = GStoreFactory.buildSelectTable();
-selectTableStore.addConf("expands", [
+var selectTableStore = GStoreFactory.buildSelectTable()
+selectTableStore.addConf('expands', [
   {
-    label: "地址",
-    attr: "address"
+    label: '地址',
+    attr: 'address'
   },
   {
-    label: "名称",
-    attr: "name"
+    label: '名称',
+    attr: 'name'
   }
-]);
-selectTableStore.addConf("isExpand", true);
-selectTableStore.addConf("isBorder", false);
-selectTableStore.addConf("isRowOperation", true);
-selectTableStore.addConf("deleteUser", {
-  method: "get",
+])
+selectTableStore.addConf('isExpand', true)
+selectTableStore.addConf('isBorder', false)
+selectTableStore.addConf('isRowOperation', true)
+selectTableStore.addConf('deleteUser', {
+  method: 'get',
   url: RquestPathConfig.deleteUserUrl
-});
-selectTableStore.addConf("deleteMoreUser", {
-  method: "post",
+})
+selectTableStore.addConf('deleteMoreUser', {
+  method: 'post',
   url: RquestPathConfig.deleteMoreUrl
-});
-selectTableStore.addConf("resetUserPwd", {
-  method: "get",
+})
+selectTableStore.addConf('resetUserPwd', {
+  method: 'get',
   url: RquestPathConfig.resetUserPwdUrl
-});
+})
 
-selectTableStore.addConf("storeLoader", {
-  method: "post",
+selectTableStore.addConf('storeLoader', {
+  method: 'post',
   url: RquestPathConfig.getUserStoreUrl
-});
+})
 
 /**
  * 快速查询表单定义
  */
-var formStore = GStoreFactory.buildServiceForm();
-formStore.addConf("isInline", true);
+var formStore = GStoreFactory.buildServiceForm()
+formStore.addConf('isInline', true)
 
 /**
  * 表单数据对象定义
  */
-var formStoreData = GStoreFactory.buildServiceFormData();
+var formStoreData = GStoreFactory.buildServiceFormData()
 formStoreData.pushData({
-  loginName: "",
-  nickName: "",
-  phoneNum: "",
-  userState: "",
-  registerTime: ""
-});
-formStoreData.pushRules({});
+  loginName: '',
+  nickName: '',
+  phoneNum: '',
+  userState: '',
+  registerTime: ''
+})
+formStoreData.pushRules({})
 
-formStore.addAttr("bindMutual", formStoreData);
+formStore.addAttr('bindMutual', formStoreData)
 
 /**
  * 全部条件查询的
  */
-var moreItemFormStore = GStoreFactory.buildServiceForm();
-moreItemFormStore.addConf("isInline", false);
-moreItemFormStore.addConf("labelWidth", "80px");
-moreItemFormStore.addConf("labelPosition", "right");
-moreItemFormStore.addAttr("bindMutual", formStoreData);
+var moreItemFormStore = GStoreFactory.buildServiceForm()
+moreItemFormStore.addConf('isInline', false)
+moreItemFormStore.addConf('labelWidth', '80px')
+moreItemFormStore.addConf('labelPosition', 'right')
+moreItemFormStore.addAttr('bindMutual', formStoreData)
 /**
  * 表单定义结束
  */
-var pageStore = GStoreFactory.buildPageStore();
-formStoreData.pushPage();
+var pageStore = GStoreFactory.buildPageStore()
+formStoreData.pushPage()
 formStoreData.pushData({
   page_total: 230
-});
-pageStore.addAttr("bindMutual", formStoreData);
+})
+pageStore.addAttr('bindMutual', formStoreData)
 
 /**
  * 改造，定义默认的名称，不需要进行名称录入
  */
-pageManagerStore.addAttr("serviceForm", formStore);
-pageManagerStore.addAttr("serviceTable", selectTableStore);
-pageManagerStore.addAttr("servicePage", pageStore);
+pageManagerStore.addAttr('serviceForm', formStore)
+pageManagerStore.addAttr('serviceTable', selectTableStore)
+pageManagerStore.addAttr('servicePage', pageStore)
 
-var tabsStore = GStoreFactory.buildTabsStore();
+var tabsStore = GStoreFactory.buildTabsStore()
 tabsStore.pushAll([
   {
-    name: "101",
-    title: "学生管理",
-    link: "form.html"
+    name: '101',
+    title: '学生管理',
+    link: 'form.html'
   },
   {
-    name: "102",
-    title: "学院管理"
+    name: '102',
+    title: '学院管理'
   }
-]);
-tabsStore.addConf("activeTab", "101");
+])
+tabsStore.addConf('activeTab', '101')
 
 // -------增加用户表单定义--------
-var addUserFormStore = GStoreFactory.buildServiceForm();
-var addUserFormData = GStoreFactory.buildServiceFormData();
+var addUserFormStore = GStoreFactory.buildServiceForm()
+var addUserFormData = GStoreFactory.buildServiceFormData()
 addUserFormData.pushData({
-  loginName: "",
-  loginPwd: "",
-  nickName: "",
-  mobilePhone: "",
-  qq: "",
-  email: "",
-  userState: "1"
-});
+  loginName: '',
+  loginPwd: '',
+  nickName: '',
+  mobilePhone: '',
+  qq: '',
+  email: '',
+  userState: '1'
+})
 var addRadioStore = GStoreFactory.buildSmallRadioStore(
   addUserFormData.data,
-  "userState"
-);
+  'userState'
+)
 addRadioStore.pushData({
-  val: "1",
-  name: "可用"
-});
+  val: '1',
+  name: '可用'
+})
 addRadioStore.pushData({
-  val: "0",
-  name: "停用"
-});
+  val: '0',
+  name: '停用'
+})
 
 addUserFormData.pushRules({
   loginName: [
     {
       required: true,
-      message: "请输入登录名",
-      trigger: "blur"
+      message: '请输入登录名',
+      trigger: 'blur'
     },
     {
       min: 4,
       max: 14,
-      message: "登录名长度必须在4到14个字符之间",
-      trigger: "blur"
+      message: '登录名长度必须在4到14个字符之间',
+      trigger: 'blur'
     }
   ],
   loginPwd: [
     {
       required: true,
-      message: "请输入密码",
-      trigger: "blur"
+      message: '请输入密码',
+      trigger: 'blur'
     },
     {
       min: 6,
       max: 18,
-      message: "密码长度必须在6到18个字符之间",
-      trigger: "blur"
+      message: '密码长度必须在6到18个字符之间',
+      trigger: 'blur'
     }
   ],
   nickName: [
     {
       min: 3,
       max: 20,
-      message: "昵称长度必须在3到20个字符之间",
-      trigger: "blur"
+      message: '昵称长度必须在3到20个字符之间',
+      trigger: 'blur'
     }
   ],
   qq: [
     {
       min: 5,
       max: 11,
-      message: "QQ号长度应在5到11个字符之间",
-      trigger: "blur"
+      message: 'QQ号长度应在5到11个字符之间',
+      trigger: 'blur'
     },
     {
       pattern: /^[0-9]*$/,
-      message: "QQ号码只能为数字",
-      trigger: "blur"
+      message: 'QQ号码只能为数字',
+      trigger: 'blur'
     }
   ],
   mobilePhone: [
     {
       min: 11,
       max: 11,
-      message: "手机号码长度为11位",
-      trigger: "blur"
+      message: '手机号码长度为11位',
+      trigger: 'blur'
     },
     {
       pattern: /^[0-9]*$/,
-      message: "手机号码只能为数字",
-      trigger: "blur"
+      message: '手机号码只能为数字',
+      trigger: 'blur'
     }
   ],
   email: [
     {
       pattern: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
-      message: "请输入正确邮箱格式",
-      trigger: "blur"
+      message: '请输入正确邮箱格式',
+      trigger: 'blur'
     }
   ]
   /* email:[{
 
 	}]*/
-});
-addUserFormStore.addAttr("bindMutual", addUserFormData);
-addUserFormStore.addConf("storeLoader", {
-  method: "post",
+})
+addUserFormStore.addAttr('bindMutual', addUserFormData)
+addUserFormStore.addConf('storeLoader', {
+  method: 'post',
   url: RquestPathConfig.addUserStoreUrl
-});
+})
 // 增加用户表单定义结束
 // --------更新用户表单定义--------
-var updateStore = GStoreFactory.buildServiceForm();
-updateStore.addConf("disabled", true);
-var updateFormData = GStoreFactory.buildServiceFormData();
+var updateStore = GStoreFactory.buildServiceForm()
+updateStore.addConf('disabled', true)
+var updateFormData = GStoreFactory.buildServiceFormData()
 
-updateFormData.pushRules();
+updateFormData.pushRules()
 updateFormData.pushData({
-  id: "",
-  loginName: "",
-  nickName: "",
-  mobilePhone: "",
-  qq: "",
-  email: "",
-  userState: ""
-});
-updateStore.addAttr("updateDate", updateFormData);
-updateStore.addAttr("updateRules", addUserFormData.rules);
-updateStore.addConf("updateUser", {
-  method: "post",
+  id: '',
+  loginName: '',
+  nickName: '',
+  mobilePhone: '',
+  qq: '',
+  email: '',
+  userState: ''
+})
+updateStore.addAttr('updateDate', updateFormData)
+updateStore.addAttr('updateRules', addUserFormData.rules)
+updateStore.addConf('updateUser', {
+  method: 'post',
   url: RquestPathConfig.updateUserUrl
-});
+})
 var updateRadioStore = GStoreFactory.buildSmallRadioStore(
   updateFormData.data,
-  "userState"
-);
+  'userState'
+)
 updateRadioStore.pushData({
-  val: "1",
-  name: "可用"
-});
+  val: '1',
+  name: '可用'
+})
 updateRadioStore.pushData({
-  val: "0",
-  name: "停用"
-});
-updateStore.addConf("updateUser", {
-  method: "post",
+  val: '0',
+  name: '停用'
+})
+updateStore.addConf('updateUser', {
+  method: 'post',
   url: RquestPathConfig.updateUserUrl
-});
+})
 export default {
   data() {
     return {
@@ -432,150 +432,150 @@ export default {
       updateUserForm: updateStore,
       options: [
         {
-          label: "不限",
-          value: ""
+          label: '不限',
+          value: ''
         },
         {
-          label: "可用",
-          value: "1"
+          label: '可用',
+          value: '1'
         },
         {
-          label: "停用",
-          value: "0"
+          label: '停用',
+          value: '0'
         }
       ]
-    };
+    }
   },
   mounted: function() {
-    var height = GUtils.getClientHeight();
-    pagehContainer.store.conf.prefHeight = height;
+    var height = GUtils.getClientHeight()
+    pagehContainer.store.conf.prefHeight = height
   },
   methods: {
     updateUserDuty: function(formName) {
-      var that = this;
+      var that = this
       that.$refs[formName].validate(valid => {
         if (valid) {
-          that.dutyTableLoading = true;
+          that.dutyTableLoading = true
           var updateUserDutyConf =
-            updateUserDutyStore.store.conf.updateUserDuty;
-          updateUserDutyConf.data = updateUserDutyStore.formData.data;
-          console.log(["updateUserDutyConf.data", updateUserDutyConf.data]);
-          that.updateUserDurtDV = false;
+            updateUserDutyStore.store.conf.updateUserDuty
+          updateUserDutyConf.data = updateUserDutyStore.formData.data
+          console.log(['updateUserDutyConf.data', updateUserDutyConf.data])
+          that.updateUserDurtDV = false
           axios(updateUserDutyConf)
             .then(function(response) {
               console.log([
-                "updateUserDutyStore",
+                'updateUserDutyStore',
                 that.updateUserDutyStore.formData.data
-              ]);
-              allotUserDuty(that.updateUserDutyStore.formData.data.userId);
+              ])
+              allotUserDuty(that.updateUserDutyStore.formData.data.userId)
               if (response.data.length == 0) {
                 that.$message({
                   showClose: true,
-                  message: "修改成功",
-                  type: "success"
-                });
+                  message: '修改成功',
+                  type: 'success'
+                })
               } else {
                 that.$message({
                   showClose: true,
                   message: response.data.body.message,
-                  type: "error"
-                });
+                  type: 'error'
+                })
               }
             })
             .catch(function(error) {
-              console.log(error);
-              that.dutyTableLoading = false;
-            });
+              console.log(error)
+              that.dutyTableLoading = false
+            })
         } else {
-          return false;
+          return false
         }
-      });
+      })
     },
     saveUserDuty: function(formName) {
-      var that = this;
+      var that = this
       that.$refs[formName].validate(valid => {
         if (valid) {
-          that.dutyTableLoading = true;
-          var saveUserDutyConfig = addUserDutyStore.store.conf.saveUserDuty;
-          saveUserDutyConfig.data = that.addUserDutyStore.formData.data;
-          that.addShow = true;
+          that.dutyTableLoading = true
+          var saveUserDutyConfig = addUserDutyStore.store.conf.saveUserDuty
+          saveUserDutyConfig.data = that.addUserDutyStore.formData.data
+          that.addShow = true
           axios(saveUserDutyConfig)
             .then(function(response) {
               if (response.data.length == 0) {
                 that.$message({
                   showClose: true,
-                  message: "分配成功",
-                  type: "success"
-                });
-                allotUserDuty(addUserDutyData.data.userId);
+                  message: '分配成功',
+                  type: 'success'
+                })
+                allotUserDuty(addUserDutyData.data.userId)
               } else {
                 that.$message({
                   showClose: true,
                   message: response.data.body.message,
-                  type: "error"
-                });
+                  type: 'error'
+                })
               }
             })
             .catch(function(error) {
-              console.log(error);
-              that.dutyTableLoading = false;
-            });
+              console.log(error)
+              that.dutyTableLoading = false
+            })
         } else {
-          return false;
+          return false
         }
-      });
+      })
     },
     getName: function(val) {
-      var t = dutyList.data;
+      var t = dutyList.data
       for (var i = 0; i < Object.keys(t).length; i++) {
-        if (t[i]["definition_code"] == val) {
+        if (t[i]['definition_code'] == val) {
           addUserDutyStore.formData.data.definitionName =
-            t[i]["definition_name"];
+            t[i]['definition_name']
         }
       }
-      console.log(this);
+      console.log(this)
     },
     getDName: function(val) {
-      var t = dutyList.data;
+      var t = dutyList.data
       for (var i = 0; i < Object.keys(t).length; i++) {
-        if (t[i]["definition_code"] == val) {
+        if (t[i]['definition_code'] == val) {
           updateUserDutyStore.formData.data.definitionName =
-            t[i]["definition_name"];
+            t[i]['definition_name']
         }
       }
-      console.log(this);
+      console.log(this)
     },
     addDutyButton: function() {
-      console.log(["addDutyButton", this.dutyTableStore.store.conf.addShow]);
-      this.addShow = false;
-      console.log(["addDutyButton", this.dutyTableStore.store.conf.addShow]);
+      console.log(['addDutyButton', this.dutyTableStore.store.conf.addShow])
+      this.addShow = false
+      console.log(['addDutyButton', this.dutyTableStore.store.conf.addShow])
     },
     handleEdit: function(index, row) {
-      var that = this;
-      this.updateUserDurtDV = true;
-      this.updateUserDutyLoading = true;
-      var rDefinitionCode = row.definition_code.toString();
+      var that = this
+      this.updateUserDurtDV = true
+      this.updateUserDutyLoading = true
+      var rDefinitionCode = row.definition_code.toString()
       updateUserDutyData.pushData({
-        userId: "",
+        userId: '',
         orgCode: [],
-        definitionName: "",
-        definitionCode: "",
-        beginDate: "",
-        expireDate: "",
-        isBandh: "Y",
-        id: ""
-      });
+        definitionName: '',
+        definitionCode: '',
+        beginDate: '',
+        expireDate: '',
+        isBandh: 'Y',
+        id: ''
+      })
       /* ---------------*/
       var getUserDConf = {
         url: RquestPathConfig.getUserDutyByIdUrl,
-        method: "post"
-      };
+        method: 'post'
+      }
       getUserDConf.data = {
         id: row.id
-      };
+      }
       axios(getUserDConf)
         .then(function(response) {
-          that.updateUserDutyLoading = false;
+          that.updateUserDutyLoading = false
           updateUserDutyData.pushData({
             userId: response.data.body.resBody.userDuty[0].userId,
             orgCode: response.data.body.resBody.orgCodeArr,
@@ -587,226 +587,226 @@ export default {
             expireDate: response.data.body.resBody.userDuty[0].expireDate,
             isBandh: response.data.body.resBody.userDuty[0].isBandh,
             id: response.data.body.resBody.userDuty[0].id
-          });
+          })
         })
         .catch(function(error) {
-          that.updateUserDutyLoading = false;
-          console.log(error);
-        });
+          that.updateUserDutyLoading = false
+          console.log(error)
+        })
 
       /* ---------------*/
     },
     handleDelete: function(index, row) {
-      var that = this;
-      that.dutyTableLoading = true;
-      var deleteUserDutyConf = dutyTableStore.store.conf.deleteUserDuty;
+      var that = this
+      that.dutyTableLoading = true
+      var deleteUserDutyConf = dutyTableStore.store.conf.deleteUserDuty
       deleteUserDutyConf.data = {
         dutyId: row.id
-      };
+      }
       axios(deleteUserDutyConf)
         .then(function(response) {
-          that.dutyTableLoading = false;
+          that.dutyTableLoading = false
           if (response.data.length == 0) {
-            allotUserDuty(row.user_id);
+            allotUserDuty(row.user_id)
             that.$message({
               showClose: true,
-              message: "删除成功",
-              type: "success"
-            });
+              message: '删除成功',
+              type: 'success'
+            })
           } else {
-            that.dutyTableLoading = false;
+            that.dutyTableLoading = false
             that.$message({
               showClose: true,
               message: response.data.body.message,
-              type: "error"
-            });
+              type: 'error'
+            })
           }
         })
         .catch(function(error) {
-          that.dutyTableLoading = false;
-        });
+          that.dutyTableLoading = false
+        })
     },
     addTab: function() {
       tabsStore.addTab({
-        name: "301",
-        title: "学生会管理"
-      });
+        name: '301',
+        title: '学生会管理'
+      })
     },
     updateUser: function(formName) {
-      var that = this;
+      var that = this
       that.$refs[formName].validate(valid => {
         if (valid) {
-          pageManagerStore.store.conf.loaddings = true;
-          that.updateUserDialogVisible = false;
-          pageManagerStore.store.conf.loaddings = true;
-          var updateConfig = updateStore.store.conf.updateUser;
-          updateConfig.data = updateStore.updateDate.data;
+          pageManagerStore.store.conf.loaddings = true
+          that.updateUserDialogVisible = false
+          pageManagerStore.store.conf.loaddings = true
+          var updateConfig = updateStore.store.conf.updateUser
+          updateConfig.data = updateStore.updateDate.data
           axios(updateConfig)
             .then(function(response) {
               if (response.data.length == 0) {
                 that.$message({
                   showClose: true,
-                  message: "更新信息成功",
-                  type: "success"
-                });
-                pageManagerStore.store.conf.loaddings = false;
-                loadData();
+                  message: '更新信息成功',
+                  type: 'success'
+                })
+                pageManagerStore.store.conf.loaddings = false
+                loadData()
               } else {
                 that.$message({
                   showClose: true,
                   message: response.data.body.message,
-                  type: "error"
-                });
-                pageManagerStore.store.conf.loaddings = false;
-                this.dialogVisible = true;
+                  type: 'error'
+                })
+                pageManagerStore.store.conf.loaddings = false
+                this.dialogVisible = true
               }
             })
             .catch(function(error) {
-              console.log(error);
-            });
+              console.log(error)
+            })
         } else {
-          return false;
+          return false
         }
-      });
+      })
     },
     addUserButton: function() {
-      this.dialogVisible = true;
+      this.dialogVisible = true
     },
     // 增加用户的方法
     saddUser: function(formName) {
-      var that = this;
+      var that = this
       that.$refs[formName].validate(valid => {
         if (valid) {
-          that.dialogVisible = false;
-          pageManagerStore.store.conf.loaddings = true;
-          var addRequestConfig = addUserFormStore.store.conf.storeLoader;
-          var addRequestData = addUserFormStore.bindMutual.data;
-          addRequestConfig.data = addRequestData;
+          that.dialogVisible = false
+          pageManagerStore.store.conf.loaddings = true
+          var addRequestConfig = addUserFormStore.store.conf.storeLoader
+          var addRequestData = addUserFormStore.bindMutual.data
+          addRequestConfig.data = addRequestData
           axios(addRequestConfig)
             .then(function(response) {
-              console.log(["response", response]);
+              console.log(['response', response])
               if (response.data.length == 0) {
                 that.$message({
                   showClose: true,
-                  message: "恭喜你，增加用户成功",
-                  type: "success"
-                });
-                loadData();
-                  pageManagerStore.store.conf.loaddings = false;
+                  message: '恭喜你，增加用户成功',
+                  type: 'success'
+                })
+                loadData()
+                pageManagerStore.store.conf.loaddings = false
               } else {
                 that.$message({
                   showClose: true,
                   message: response.data.body.message,
-                  type: "error"
-                });
-                pageManagerStore.store.conf.loaddings = false;
-                this.dialogVisible = true;
+                  type: 'error'
+                })
+                pageManagerStore.store.conf.loaddings = false
+                this.dialogVisible = true
               }
             })
             .catch(function(error) {
-              console.log(error);
-            });
+              console.log(error)
+            })
         } else {
-          return false;
+          return false
         }
-      });
+      })
     }
   },
   watch: {
-    "pageHCon.store.conf.resultHeight": function(val) {
-      this.pmanager.store.conf.workSpaceHeight = val - 4;
-      this.tabsStore.store.conf.height = val - 2;
+    'pageHCon.store.conf.resultHeight': function(val) {
+      this.pmanager.store.conf.workSpaceHeight = val - 4
+      this.tabsStore.store.conf.height = val - 2
     }
   },
   created: function() {
-    var that = this;
+    var that = this
 
-    pageManagerStore.addConf("operations", [
+    pageManagerStore.addConf('operations', [
       {
-        name: "ex",
-        title: "导入",
+        name: 'ex',
+        title: '导入',
         operator: function(servcieTable, serviceForm) {}
       },
       {
-        name: "vh",
-        title: "批量删除",
+        name: 'vh',
+        title: '批量删除',
         operator: function(servcieTable, serviceForm) {
-          pageManagerStore.store.conf.loaddings = true;
-          var arr = selectTableStore.store.conf.selects;
+          pageManagerStore.store.conf.loaddings = true
+          var arr = selectTableStore.store.conf.selects
           if (arr.length == 0) {
             that.$message({
               showClose: true,
-              message: "您没有中任何用户",
-              type: "error"
-            });
-            pageManagerStore.store.conf.loaddings = false;
+              message: '您没有中任何用户',
+              type: 'error'
+            })
+            pageManagerStore.store.conf.loaddings = false
           } else {
-            var reArr = [];
+            var reArr = []
             for (var i = 0; i < arr.length; i++) {
-              reArr.push(arr[i].id);
+              reArr.push(arr[i].id)
             }
-            var delMoreConfig = selectTableStore.store.conf.deleteMoreUser;
+            var delMoreConfig = selectTableStore.store.conf.deleteMoreUser
             delMoreConfig.data = {
               array: reArr
-            };
-            console.log(["delMoreConfig", delMoreConfig]);
+            }
+            console.log(['delMoreConfig', delMoreConfig])
             axios(delMoreConfig)
               .then(function(response) {
                 if (response.data.length == 0) {
                   that.$message({
                     showClose: true,
-                    message: "删除成功",
-                    type: "success"
-                  });
-                  loadData();
+                    message: '删除成功',
+                    type: 'success'
+                  })
+                  loadData()
                 } else {
                   that.$message({
                     showClose: true,
                     message: response.data.body.message,
-                    type: "error"
-                  });
-                  loadData();
-                  pageManagerStore.store.conf.loaddings = false;
+                    type: 'error'
+                  })
+                  loadData()
+                  pageManagerStore.store.conf.loaddings = false
                 }
               })
               .catch(function(error) {
-                pageManagerStore.store.conf.loaddings = false;
-              });
+                pageManagerStore.store.conf.loaddings = false
+              })
           }
         }
       }
-    ]);
+    ])
 
-    selectTableStore.addConf("operations", [
+    selectTableStore.addConf('operations', [
       {
-        name: "edit",
-        title: "编辑",
+        name: 'edit',
+        title: '编辑',
         operator: function(index, row) {
-          that.updateUserDialogVisible = true;
-          if (row.user_state == "可用") {
-            var state = "1";
+          that.updateUserDialogVisible = true
+          if (row.user_state == '可用') {
+            var state = '1'
           } else {
-            var state = "0";
+            var state = '0'
           }
           if (row.nick_name != null) {
-            var rNickName = row.nick_name;
+            var rNickName = row.nick_name
           } else {
-            var rNickName = "";
+            var rNickName = ''
           }
           if (row.mobile_phone != null) {
-            var rMobilePhone = row.mobile_phone;
+            var rMobilePhone = row.mobile_phone
           } else {
-            var rMobilePhone = "";
+            var rMobilePhone = ''
           }
           if (row.qq != null) {
-            var rQq = row.qq;
+            var rQq = row.qq
           } else {
-            var rQq = "";
+            var rQq = ''
           }
           if (row.email != null) {
-            var rEmail = row.email;
+            var rEmail = row.email
           } else {
-            var rEmail = "";
+            var rEmail = ''
           }
 
           updateFormData.pushData({
@@ -817,93 +817,93 @@ export default {
             qq: rQq,
             email: rEmail,
             userState: state
-          });
+          })
         }
       },
       {
-        name: "del",
-        title: "删除",
+        name: 'del',
+        title: '删除',
         operator: function(index, row) {
-          console.log(["row", row]);
-          pageManagerStore.store.conf.loaddings = true;
-          var delRequestConfig = selectTableStore.store.conf.deleteUser;
+          console.log(['row', row])
+          pageManagerStore.store.conf.loaddings = true
+          var delRequestConfig = selectTableStore.store.conf.deleteUser
           delRequestConfig.params = {
             userId: row.id
-          };
+          }
           axios(delRequestConfig)
             .then(function(response) {
               if (response.data.length == 0) {
                 that.$message({
                   showClose: true,
-                  message: "删除成功",
-                  type: "success"
-                });
-                loadData();
-                pageManagerStore.store.conf.loaddings = false;
+                  message: '删除成功',
+                  type: 'success'
+                })
+                loadData()
+                pageManagerStore.store.conf.loaddings = false
               } else {
                 that.$message({
                   showClose: true,
                   message: response.data.body.message,
-                  type: "error"
-                });
-                loadData();
-                pageManagerStore.store.conf.loaddings = false;
+                  type: 'error'
+                })
+                loadData()
+                pageManagerStore.store.conf.loaddings = false
               }
             })
             .catch(function(error) {
-              pageManagerStore.store.conf.loaddings = false;
-            });
+              pageManagerStore.store.conf.loaddings = false
+            })
         }
       },
       {
-        name: "res",
-        title: "重置密码",
+        name: 'res',
+        title: '重置密码',
         operator: function(index, row) {
-          pageManagerStore.store.conf.loaddings = true;
-          var resetUserPwd = selectTableStore.store.conf.resetUserPwd;
+          pageManagerStore.store.conf.loaddings = true
+          var resetUserPwd = selectTableStore.store.conf.resetUserPwd
           resetUserPwd.params = {
             userId: row.id
-          };
+          }
           axios(resetUserPwd)
             .then(function(response) {
               if (response.data.length == 0) {
                 that.$message({
                   showClose: true,
-                  message: "重置密码成功",
-                  type: "success"
-                });
-                pageManagerStore.store.conf.loaddings = false;
-                loadData();
+                  message: '重置密码成功',
+                  type: 'success'
+                })
+                pageManagerStore.store.conf.loaddings = false
+                loadData()
               } else {
                 that.$message({
                   showClose: true,
                   message: response.data.body.message,
-                  type: "error"
-                });
-                loadData();
-                pageManagerStore.store.conf.loaddings = false;
+                  type: 'error'
+                })
+                loadData()
+                pageManagerStore.store.conf.loaddings = false
               }
             })
             .catch(function(error) {
-              pageManagerStore.store.conf.loaddings = false;
-            });
+              pageManagerStore.store.conf.loaddings = false
+            })
         }
       }
-    ]);
+    ])
   }
-};
+}
 
 // 加载数据的方法
 function loadData() {
-  var requestData = formStore.bindMutual.data;
+  var requestData = formStore.bindMutual.data
   GUtils.post(RquestPathConfig.getUserStoreUrl, requestData, function(
     response
   ) {
-    selectTableStore.store.data = response.resBody.rData;
+    selectTableStore.store.data = response.resBody.rData
     formStoreData.pushData({
       page_total: response.totalPage
-    });
-  });
+    })
+  })
 }
 
 function allotUserDuty(id) {}

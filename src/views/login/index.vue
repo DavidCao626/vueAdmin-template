@@ -69,7 +69,6 @@ export default {
           this.$store.dispatch('Login', this.ruleLoginForm).then(() => {
             this.$router.push({ path: '/' })
           }).catch(() => {
-
           })
         } else {
           return false
