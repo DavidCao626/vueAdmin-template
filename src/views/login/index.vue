@@ -1,44 +1,44 @@
 <template>
-<div class="form-container">
-	<div class="title">
-		
-		<img src="http://xgc.imu.edu.cn/images/logo.png" height="70px">
-	<!--	<h3>学生工作管理系统</h3>-->
-	</div>
-	<el-card class="box-card  login-form ">
-		<div slot="header" class="clearfix">
-		    <span>学工系统登录</span>
-		  <router-link to="/register">  <el-button style="float: right; padding: 3px 0" type="text"> 注册新用户</el-button></router-link>
-		  </div>
+	<div class="form-container">
+		<div class="title">
 
-	  	<br />
-		<el-form id="loginForm" :model="ruleLoginForm" status-icon  :rules="rules2" ref="ruleLoginForm" label-width="80px" label-position="left">
-			
-			<el-form-item label="用户名：" prop="username">
-			    <el-input v-model="ruleLoginForm.username" name="loginName"   value="&nbsp;" placeholder="填写你的账号 最少4位"></el-input>
-			</el-form-item>
-			
-			<el-form-item label="密码：" prop="pass">
-				<el-input type="password" v-model="ruleLoginForm.pass" name="pwd" autocomplete="off" placeholder="填写你的密码"></el-input>
-			
-			</el-form-item>
-		<br />
-			<el-form-item>
-				<el-button type="success"  size="medium"  @click="submitForm('ruleLoginForm')">立即登录</el-button>
-				<el-button type="text" >忘记密码?</el-button>
-			</el-form-item>
-		</el-form>
-	</el-card>
-</div>
+			<img src="http://xgc.imu.edu.cn/images/logo.png" height="70px">
+			<!--	<h3>学生工作管理系统</h3>-->
+		</div>
+		<el-card class="box-card  login-form ">
+			<div slot="header" class="clearfix">
+				<span>学工系统登录</span>
+				<router-link to="/register">
+					<el-button style="float: right; padding: 3px 0" type="text"> 注册新用户</el-button>
+				</router-link>
+			</div>
+
+			<br />
+			<el-form id="loginForm" :model="ruleLoginForm" status-icon :rules="rules2" ref="ruleLoginForm" label-width="80px" label-position="left">
+
+				<el-form-item label="用户名：" prop="username">
+					<el-input v-model="ruleLoginForm.username" name="loginName" value="&nbsp;" placeholder="填写你的账号 最少4位"></el-input>
+				</el-form-item>
+
+				<el-form-item label="密码：" prop="pass">
+					<el-input type="password" v-model="ruleLoginForm.pass" name="pwd" autoComplete="off" placeholder="填写你的密码"></el-input>
+
+				</el-form-item>
+				<br />
+				<el-form-item>
+					<el-button type="success" size="medium" @click="submitForm('ruleLoginForm')">立即登录</el-button>
+					<el-button type="text">忘记密码?</el-button>
+				</el-form-item>
+			</el-form>
+		</el-card>
+	</div>
 </template>
 	
 	
 <script>
-
 export default {
   data() {
     return {
-
       serverMessage: {
         exType: 'error',
         message: '登录失败',
@@ -50,13 +50,10 @@ export default {
         username: ''
       },
       rules2: {
-        pass: [
-          { required: true, message: '请输入密码', trigger: 'blur' }
-        ],
+        pass: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
           { min: 4, max: 14, message: '长度在4 到 14 个字符', trigger: 'blur' }
-
         ]
       }
     }
@@ -64,7 +61,7 @@ export default {
 
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           this.$store.dispatch('Login', this.ruleLoginForm).then(() => {
             this.$router.push({ path: '/' })
@@ -76,41 +73,40 @@ export default {
       })
     }
   }
-
 }
 </script>
 <style scoped lang="scss">
- .form-container {
- 	width: 100%;
-	height: 100%;
-	
- 	background-image: url('http://news.imu.edu.cn/images/17/08/25/1aw2kev8i5/10.jpg');
- 	
-	background-size: cover;
-	background-position: center;
-	position: fixed;
-	.title {
-        font-size: 21px;
-        position: absolute;
-		right: 155px;
-		top: 130px;
-		color: #fff;
-		font-weight: 600;
-		font-family: "宋体";
-		
-		div{
-			margin-left: 80px;
-			margin-top: 20px;
-			opacity:0.8;
-		}
+.form-container {
+  width: 100%;
+  height: 100%;
+
+  background-image: url("http://news.imu.edu.cn/images/17/08/25/1aw2kev8i5/10.jpg");
+
+  background-size: cover;
+  background-position: center;
+  position: fixed;
+  .title {
+    font-size: 21px;
+    position: absolute;
+    right: 155px;
+    top: 130px;
+    color: #fff;
+    font-weight: 600;
+    font-family: "宋体";
+
+    div {
+      margin-left: 80px;
+      margin-top: 20px;
+      opacity: 0.8;
     }
-    .login-form {
-	    position: absolute;
-		right:280px;
-		top:50%;
-		transform: translatey(-60%);
-		width: 350px;
-		box-shadow:0px 5px 20px 0px #3b1900;
-    }
+  }
+  .login-form {
+    position: absolute;
+    right: 280px;
+    top: 50%;
+    transform: translatey(-60%);
+    width: 350px;
+    box-shadow: 0px 5px 20px 0px #3b1900;
+  }
 }
 </style>

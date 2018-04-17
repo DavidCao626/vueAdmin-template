@@ -235,7 +235,7 @@ export const constantRouterMap = [
       },
       {
         path: 'menuManager',
-        name: '系统用户管理',
+        name: '系统菜单管理',
         component: () => import('~/views/systemManager/menuManager/index'), hidden: true
       },
       {
