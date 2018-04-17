@@ -1,20 +1,21 @@
 <template>
     <ul class="sidebar-children">
-        <li class="sidebar-child">
-            <router-link to="/example/table" class="sidebar-child__link">
-                <span>添加用户</span>
+        <li class="sidebar-child" v-for="item in childeren" :key="item.key">
+          <template v-if="item">
+            
+            <router-link v-if="item.path_attr" v-bind:to="item.path_attr" class="sidebar-child__link">
+                <span>{{item.title}}</span>
             </router-link>
-        </li>
-        <li class="sidebar-child">
-            <router-link to="/404" class="sidebar-child__link">
-                <span>修改用户</span>
-            </router-link>
+
+          </template>
         </li>
     </ul>
 </template>
 <script>
 export default {
-  name: 'SidebarChildren'
+  name: 'SidebarChildren',
+  props: ['childeren']
+
 }
 </script>
 <style lang="scss" scoped>

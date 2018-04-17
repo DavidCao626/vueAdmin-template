@@ -1,12 +1,14 @@
-import { login, logout, getInfo } from '~/api/login'
+import { login, logout, getInfo, getNavMenu } from '~/api/login'
 import { getToken, setToken, removeToken } from '~/utils/auth'
 import { uregister } from '~/api/register'
+
 const user = {
   state: {
     token: getToken(),
     name: '',
     avatar: '',
-    roles: []
+    roles: [],
+    navMenu: []
   },
 
   mutations: {
@@ -21,18 +23,26 @@ const user = {
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
+    },
+    SET_NAVMENU: (state, navMenu) => {
+      state.navMenu = navMenu
     }
   },
 
   actions: {
-
     Register({ commit }, registerForm) {
       return new Promise((resolve, reject) => {
-        uregister(registerForm.username, registerForm.pass, registerForm.checkPass).then(response => {
-          resolve(response)
-        }).catch(error => {
-          reject(error)
-        })
+        uregister(
+          registerForm.username,
+          registerForm.pass,
+          registerForm.checkPass
+        )
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
       })
     },
 
@@ -40,44 +50,65 @@ const user = {
     Login({ commit }, userInfo) {
       // const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
-        login(userInfo.username, userInfo.pass).then(response => {
-          // const data = response.data
-          // setToken(data.token)
-          setToken('')
-          // commit('SET_TOKEN', data.token)
-          resolve(response)
-        }).catch(error => {
-          reject(error)
-        })
+        login(userInfo.username, userInfo.pass)
+          .then(response => {
+            // const data = response.data
+            // setToken(data.token)
+            setToken('')
+            // commit('SET_TOKEN', data.token)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
       })
     },
 
     // 获取用户信息
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getInfo(state.token).then(response => {
-          const data = response.data
-          commit('SET_ROLES', data.roles)
-          commit('SET_NAME', data.name)
-          commit('SET_AVATAR', data.avatar)
-          resolve(response)
-        }).catch(error => {
-          reject(error)
-        })
+        getInfo(state.token)
+          .then(response => {
+            const data = response.data
+            commit('SET_ROLES', data.roles)
+            commit('SET_NAME', data.name)
+            commit('SET_AVATAR', data.avatar)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+
+    // 获取用户组可用菜单
+    GetNavMenu({ commit, state }) {
+      return new Promise((resolve, reject) => {
+        getNavMenu(state.navMenu)
+          .then(response => {
+            const data = response.data.body.resBody
+            commit('SET_NAVMENU', data)
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
       })
     },
 
     // 登出
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
-          commit('SET_TOKEN', '')
-          commit('SET_ROLES', [])
-          removeToken()
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
+        logout(state.token)
+          .then(() => {
+            commit('SET_TOKEN', '')
+            commit('SET_ROLES', [])
+            removeToken()
+            resolve()
+          })
+          .catch(error => {
+            reject(error)
+          })
       })
     },
 

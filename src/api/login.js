@@ -19,6 +19,13 @@ export function getInfo(token) {
   })
 }
 
+export function getNavMenu(token) {
+  return request({
+    url: '/systemManagerApi/getUserMenu.do',
+    method: 'get'
+  })
+}
+
 export function logout() {
   return request({
     url: '/user/logout',

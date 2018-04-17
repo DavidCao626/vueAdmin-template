@@ -1,11 +1,6 @@
-// store.js
-import Vue from 'Vue'
-import Vuex from 'vuex'
 
 import Utils from '@/components/Utils.js'
 import qusApi from '@/API/question/questionApi.js'
-
-Vue.use(Vuex)
 
 const state = {
   baseSet: {

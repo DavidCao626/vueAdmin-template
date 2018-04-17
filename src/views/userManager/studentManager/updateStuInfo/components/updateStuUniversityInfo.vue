@@ -77,72 +77,72 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Element from "element-ui";
-import "@/theme/index.css";
-import VueExpand from "@/components/VueExpand";
-Vue.use(Element);
-Vue.use(VueExpand);
-import GUtils from "@/components/Utils.js";
-import GStoreFactory from "@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js";
-import GraceComponent from "@/ComponentPackage/GraceComponents.js";
-import dataPath from "@/API/Student/student_info_manager.js";
-import reqPath from "@/API/System/SystemManagerApi.js";
-Vue.use(GraceComponent);
+import Vue from 'vue'
+import Element from 'element-ui'
+import '@/theme/index.css'
+import VueExpand from '@/components/VueExpand'
+Vue.use(Element)
+Vue.use(VueExpand)
+import GUtils from '@/components/Utils.js'
+import GStoreFactory from '@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js'
+import GraceComponent from '@/ComponentPackage/GraceComponents.js'
+import dataPath from '@/API/Student/student_info_manager.js'
+import reqPath from '@/API/System/SystemManagerApi.js'
+Vue.use(GraceComponent)
 
 // var id = 1; //临时的数据,要修改的信息的id
 
-var formStore = GStoreFactory.buildServiceForm();
-var formDataStore = GStoreFactory.buildServiceFormData();
+var formStore = GStoreFactory.buildServiceForm()
+var formDataStore = GStoreFactory.buildServiceFormData()
 var dicts = [
-  "isUse",
-  "accommodation_type",
-  "educationalType",
-  "schoolArea",
-  "major",
-  "entranceGrade",
-  "is_bandh",
-  "check_flag"
-];
-var majorData = [];
-var educationalTypeData = [];
-var schoolAreaData = [];
-var entranceGradeData = [];
-var stateData = [];
-var checkFlagData = [];
+  'isUse',
+  'accommodation_type',
+  'educationalType',
+  'schoolArea',
+  'major',
+  'entranceGrade',
+  'is_bandh',
+  'check_flag'
+]
+var majorData = []
+var educationalTypeData = []
+var schoolAreaData = []
+var entranceGradeData = []
+var stateData = []
+var checkFlagData = []
 GUtils.post(
   dataPath.getDictByDictNames,
   {
     dicts: dicts
   },
   function(data) {
-    majorData.push(data.resBody.major);
-    educationalTypeData.push(data.resBody.educationalType);
-    schoolAreaData.push(data.resBody.schoolArea);
-    entranceGradeData.push(data.resBody.entranceGrade);
-    stateData.push(data.resBody.is_bandh);
-    checkFlagData.push(data.resBody.check_flag);
+    majorData.push(data.resBody.major)
+    educationalTypeData.push(data.resBody.educationalType)
+    schoolAreaData.push(data.resBody.schoolArea)
+    entranceGradeData.push(data.resBody.entranceGrade)
+    stateData.push(data.resBody.is_bandh)
+    checkFlagData.push(data.resBody.check_flag)
   }
-);
+)
 
 formDataStore.pushData({
   // id:"",//
 
-  stuNo: "", // 学号
+  stuNo: '', // 学号
   orgCode: [], // 所属机构
-  major: "", // 专业代码
-  majorDesc: "", // 专业描述
-  entranceDate: "", // 生效日期
-  exitDate: "", // 退出日期
-  educationalType: "", // 学制类型
-  educationalLongTime: "", // 学制时长
-  graduationDate: "", // 计划毕业日期
-  schoolArea: "", // 所属校区
-  entranceGrade: "", // 入学年级
-  state: "Y" // 是否有效
+  major: '', // 专业代码
+  majorDesc: '', // 专业描述
+  entranceDate: '', // 生效日期
+  exitDate: '', // 退出日期
+  educationalType: '', // 学制类型
+  educationalLongTime: '', // 学制时长
+  graduationDate: '', // 计划毕业日期
+  schoolArea: '', // 所属校区
+  entranceGrade: '', // 入学年级
+  state: 'Y' // 是否有效
   //		checkFlag: "", //审核状态
   //		checkComment: "" //审核备注
-});
+})
 formDataStore.pushRules({
   stuNo: [], // 学号
   orgCode: [], // 所属机构
@@ -158,30 +158,30 @@ formDataStore.pushRules({
   state: [] // 是否有效
   //		checkFlag: [], //审核状态
   //		checkComment: [] //审核备注
-});
+})
 
 // 加载要修改的源数据结束
 
-formStore.addAttr("formData", formDataStore);
+formStore.addAttr('formData', formDataStore)
 // 组织组件
 var f_org_code = GStoreFactory.buildSmallCascaderStore(
   formDataStore.data,
-  "orgCode"
-);
-f_org_code.addConf("expandTrigger", "hover");
-f_org_code.addConf("props", {
-  value: "org_code",
-  label: "org_name",
-  children: "children",
-  disabled: "disabled"
-});
+  'orgCode'
+)
+f_org_code.addConf('expandTrigger', 'hover')
+f_org_code.addConf('props', {
+  value: 'org_code',
+  label: 'org_name',
+  children: 'children',
+  disabled: 'disabled'
+})
 //	GUtils.post(reqPath.queryUserOrg, {}, function(data) {
 //		f_org_code.pushAll(data.resBody);
 //	});
 // 组织组件结束
 
 export default {
-  props: ["bid", "loadOrg"],
+  props: ['bid', 'loadOrg'],
   data() {
     return {
       formStore,
@@ -192,18 +192,18 @@ export default {
       stateData,
       entranceGradeData,
       checkFlagData
-    };
+    }
   },
   methods: {
     submitUpdate: function() {
-      var that = this;
-      this.formStore.formData.data.managerNodeCode = this.loadOrg.orgCode;
+      var that = this
+      this.formStore.formData.data.managerNodeCode = this.loadOrg.orgCode
       GUtils.post(
         dataPath.updateStuUniversityInfoSelf,
         this.formStore.formData.data,
         function(data) {
-          delete that.formStore.formData.data.managerNodeCode;
-          alert("修改成功");
+          delete that.formStore.formData.data.managerNodeCode
+          alert('修改成功')
           // 加载要修改的源数据
           GUtils.post(
             dataPath.getStudentUniversityInfoById,
@@ -211,16 +211,16 @@ export default {
               id: data.resBody.id
             },
             function(data2) {
-              console.log("updateStuUniversityInfoData", data2);
-              formDataStore.pushData(data2.resBody.baseData[0]);
+              console.log('updateStuUniversityInfoData', data2)
+              formDataStore.pushData(data2.resBody.baseData[0])
               formDataStore.pushData({
                 orgCode: data2.resBody.aOrgCode,
                 checkFlag: data2.resBody.baseData[0].checkFlag.toString()
-              });
+              })
             }
-          );
+          )
         }
-      );
+      )
     }
   },
   mounted: function() {
@@ -231,30 +231,30 @@ export default {
         id: this.bid
       },
       function(data) {
-        console.log("updateStuUniversityInfoData", data);
-        formDataStore.pushData(data.resBody.baseData[0]);
+        console.log('updateStuUniversityInfoData', data)
+        formDataStore.pushData(data.resBody.baseData[0])
         formDataStore.pushData({
           orgCode: data.resBody.aOrgCode,
           checkFlag: data.resBody.baseData[0].checkFlag.toString()
-        });
+        })
       }
-    );
+    )
   },
   watch: {
-    "loadOrg.orgCode": function(val) {
-      this.formStore.formData.data.orgCode = [];
-      console.log(["orgc", val]);
-      f_org_code.cleanData();
+    'loadOrg.orgCode': function(val) {
+      this.formStore.formData.data.orgCode = []
+      console.log(['orgc', val])
+      f_org_code.cleanData()
       GUtils.post(
         reqPath.queryCurrentOrgListByOrgCode,
         { orgCode: val },
         function(data) {
-          f_org_code.pushAll(data.resBody);
+          f_org_code.pushAll(data.resBody)
         }
-      );
+      )
     }
   }
-};
+}
 </script>
 
 <style>

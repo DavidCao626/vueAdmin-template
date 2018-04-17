@@ -46,46 +46,46 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Element from "element-ui";
-import "@/theme/index.css";
-import VueExpand from "@/components/VueExpand";
-Vue.use(Element);
-Vue.use(VueExpand);
-import GUtils from "@/components/Utils.js";
-import GStoreFactory from "@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js";
-import GraceComponent from "@/ComponentPackage/GraceComponents.js";
-import dataPath from "@/API/Student/student_info_manager.js";
-Vue.use(GraceComponent);
+import Vue from 'vue'
+import Element from 'element-ui'
+import '@/theme/index.css'
+import VueExpand from '@/components/VueExpand'
+Vue.use(Element)
+Vue.use(VueExpand)
+import GUtils from '@/components/Utils.js'
+import GStoreFactory from '@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js'
+import GraceComponent from '@/ComponentPackage/GraceComponents.js'
+import dataPath from '@/API/Student/student_info_manager.js'
+Vue.use(GraceComponent)
 
 // var id = "1";//临时数据=-----------------=-=-=-=-=传进来的
 
-var formStore = GStoreFactory.buildServiceForm();
-var formDataStore = GStoreFactory.buildServiceFormData();
-var adTypeData = [];
-var dicts = ["accommodation_type", "isUse"];
+var formStore = GStoreFactory.buildServiceForm()
+var formDataStore = GStoreFactory.buildServiceFormData()
+var adTypeData = []
+var dicts = ['accommodation_type', 'isUse']
 GUtils.post(
   dataPath.getDictByDictNames,
   {
     dicts: dicts
   },
   function(data) {
-    adTypeData.push(data.resBody.accommodation_type);
-    console.log(["dictResponseData", data]);
+    adTypeData.push(data.resBody.accommodation_type)
+    console.log(['dictResponseData', data])
   }
-);
+)
 
 formDataStore.pushData({
-  stuNo: "", // 学号
-  nameAlias: "", // 学生别名
-  postalAddress: "", // 家庭住址
-  postalCode: "", // 邮编
-  contactNo: "", // 联系电话
-  accommodationType: "", // 住宿类型
-  dormitoryNo: "", // 校舍编号
-  outsideDormitoryAddress: "", // 住宿地址
-  headPortrait: "" // 头像
-});
+  stuNo: '', // 学号
+  nameAlias: '', // 学生别名
+  postalAddress: '', // 家庭住址
+  postalCode: '', // 邮编
+  contactNo: '', // 联系电话
+  accommodationType: '', // 住宿类型
+  dormitoryNo: '', // 校舍编号
+  outsideDormitoryAddress: '', // 住宿地址
+  headPortrait: '' // 头像
+})
 formDataStore.pushRules({
   stuNo: [], // 学号
   nameAlias: [], // 学生别名
@@ -96,60 +96,60 @@ formDataStore.pushRules({
   dormitoryNo: [], // 校舍编号
   outsideDormitoryAddress: [], // 住宿地址
   headPortrait: [] // 头像
-});
-formStore.addAttr("formData", formDataStore);
+})
+formStore.addAttr('formData', formDataStore)
 export default {
-  props: ["bid"],
+  props: ['bid'],
   data() {
     return {
-      imageUrl: "", // 证件照片
+      imageUrl: '', // 证件照片
       upLoadUrl: dataPath.upLoadStuHeadPic,
       formStore: formStore,
       adTypeData: adTypeData // 住宿类型
-    };
+    }
   },
   computed: {
     imageU: function() {
-      if (this.imageUrl != "") {
-        return this.imageUrl;
+      if (this.imageUrl != '') {
+        return this.imageUrl
       } else {
-        return this.formStore.formData.data.headPortrait;
+        return this.formStore.formData.data.headPortrait
       }
     }
   },
   methods: {
     upLoadSuccess(response, file, fileList) {
-      console.log(["response", response]);
-      console.log(["file", file]);
-      console.log(["fileList", fileList]);
+      console.log(['response', response])
+      console.log(['file', file])
+      console.log(['fileList', fileList])
     },
     handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-      console.log(["res", res]); // res为文件路径
-      console.log(["file", file]);
-      this.formStore.formData.data.headPortrait = res;
+      this.imageUrl = URL.createObjectURL(file.raw)
+      console.log(['res', res]) // res为文件路径
+      console.log(['file', file])
+      this.formStore.formData.data.headPortrait = res
     },
     beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
       if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
+        this.$message.error('上传头像图片只能是 JPG 格式!')
       }
       if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
+        this.$message.error('上传头像图片大小不能超过 2MB!')
       }
-      return isJPG && isLt2M;
+      return isJPG && isLt2M
     },
     submitUpdate: function() {
-      var that = this;
+      var that = this
       GUtils.post(
         dataPath.updateStuPersonalInfoSelf,
         this.formStore.formData.data,
         function(data) {
-          alert("修改成功");
-          that.loadData();
+          alert('修改成功')
+          that.loadData()
         }
-      );
+      )
     },
     loadData() {
       GUtils.post(
@@ -158,16 +158,16 @@ export default {
           id: this.bid
         },
         function(data) {
-          formDataStore.pushData(data.resBody[0]);
-          delete formDataStore.data.lastUpdateDate;
+          formDataStore.pushData(data.resBody[0])
+          delete formDataStore.data.lastUpdateDate
         }
-      );
+      )
     }
   },
   mounted: function() {
-    this.loadData();
+    this.loadData()
   }
-};
+}
 </script>
 
 <style>
