@@ -1,8 +1,8 @@
-'use strict'
+"use strict";
 // Template version: 1.2.6
 // see http://vuejs-templates.github.io/webpack for documentation.
 
-const path = require('path')
+const path = require("path");
 
 module.exports = {
   dev: {
@@ -11,7 +11,7 @@ module.exports = {
     assetsPublicPath: "/",
     proxyTable: {
       "/act/*": {
-        target: "http://192.168.1.110:7001/StuService/",
+        target: "http://localhost:8099",
         changeOrigin: true,
         secure: false
       },

@@ -169,6 +169,7 @@ import GUtils from '@/components/Utils.js'
 import GStoreFactory from '@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js'
 import GraceComponent from '@/ComponentPackage/GraceComponents.js'
 import RquestPathConfig from '@/API/User/user_manager_system.js'
+import reqPath from '@/API/System/SystemManagerApi.js'
 import axios from 'axios'
 
 Vue.use(GraceComponent)
@@ -451,98 +452,98 @@ export default {
   },
   methods: {
     updateUserDuty: function(formName) {
-      // var that = this
-      // that.$refs[formName].validate(valid => {
-      //   if (valid) {
-      //     that.dutyTableLoading = true
-      //     var updateUserDutyConf =
-      //       updateUserDutyStore.store.conf.updateUserDuty
-      //     updateUserDutyConf.data = updateUserDutyStore.formData.data
-      //     console.log(['updateUserDutyConf.data', updateUserDutyConf.data])
-      //     that.updateUserDurtDV = false
-      //     axios(updateUserDutyConf)
-      //       .then(function(response) {
-      //         console.log([
-      //           'updateUserDutyStore',
-      //           that.updateUserDutyStore.formData.data
-      //         ])
-      //         allotUserDuty(that.updateUserDutyStore.formData.data.userId)
-      //         if (response.data.length == 0) {
-      //           that.$message({
-      //             showClose: true,
-      //             message: '修改成功',
-      //             type: 'success'
-      //           })
-      //         } else {
-      //           that.$message({
-      //             showClose: true,
-      //             message: response.data.body.message,
-      //             type: 'error'
-      //           })
-      //         }
-      //       })
-      //       .catch(function(error) {
-      //         console.log(error)
-      //         that.dutyTableLoading = false
-      //       })
-      //   } else {
-      //     return false
-      //   }
-      // })
+      var that = this
+      that.$refs[formName].validate(valid => {
+        if (valid) {
+          that.dutyTableLoading = true
+          var updateUserDutyConf =
+            updateUserDutyStore.store.conf.updateUserDuty
+          updateUserDutyConf.data = updateUserDutyStore.formData.data
+          console.log(['updateUserDutyConf.data', updateUserDutyConf.data])
+          that.updateUserDurtDV = false
+          axios(updateUserDutyConf)
+            .then(function(response) {
+              console.log([
+                'updateUserDutyStore',
+                that.updateUserDutyStore.formData.data
+              ])
+              allotUserDuty(that.updateUserDutyStore.formData.data.userId)
+              if (response.data.length == 0) {
+                that.$message({
+                  showClose: true,
+                  message: '修改成功',
+                  type: 'success'
+                })
+              } else {
+                that.$message({
+                  showClose: true,
+                  message: response.data.body.message,
+                  type: 'error'
+                })
+              }
+            })
+            .catch(function(error) {
+              console.log(error)
+              that.dutyTableLoading = false
+            })
+        } else {
+          return false
+        }
+      })
     },
     saveUserDuty: function(formName) {
-      // var that = this
-      // that.$refs[formName].validate(valid => {
-      //   if (valid) {
-      //     that.dutyTableLoading = true
-      //     var saveUserDutyConfig = addUserDutyStore.store.conf.saveUserDuty
-      //     saveUserDutyConfig.data = that.addUserDutyStore.formData.data
-      //     that.addShow = true
-      //     axios(saveUserDutyConfig)
-      //       .then(function(response) {
-      //         if (response.data.length == 0) {
-      //           that.$message({
-      //             showClose: true,
-      //             message: '分配成功',
-      //             type: 'success'
-      //           })
-      //           allotUserDuty(addUserDutyData.data.userId)
-      //         } else {
-      //           that.$message({
-      //             showClose: true,
-      //             message: response.data.body.message,
-      //             type: 'error'
-      //           })
-      //         }
-      //       })
-      //       .catch(function(error) {
-      //         console.log(error)
-      //         that.dutyTableLoading = false
-      //       })
-      //   } else {
-      //     return false
-      //   }
-      // })
+      var that = this
+      that.$refs[formName].validate(valid => {
+        if (valid) {
+          that.dutyTableLoading = true
+          var saveUserDutyConfig = addUserDutyStore.store.conf.saveUserDuty
+          saveUserDutyConfig.data = that.addUserDutyStore.formData.data
+          that.addShow = true
+          axios(saveUserDutyConfig)
+            .then(function(response) {
+              if (response.data.length == 0) {
+                that.$message({
+                  showClose: true,
+                  message: '分配成功',
+                  type: 'success'
+                })
+                allotUserDuty(addUserDutyData.data.userId)
+              } else {
+                that.$message({
+                  showClose: true,
+                  message: response.data.body.message,
+                  type: 'error'
+                })
+              }
+            })
+            .catch(function(error) {
+              console.log(error)
+              that.dutyTableLoading = false
+            })
+        } else {
+          return false
+        }
+      })
     },
     getName: function(val) {
-      // var t = dutyList.data
-      // for (var i = 0; i < Object.keys(t).length; i++) {
-      //   if (t[i]['definition_code'] == val) {
-      //     addUserDutyStore.formData.data.definitionName =
-      //       t[i]['definition_name']
-      //   }
-      // }
-      // console.log(this)
+      var t = dutyList.data
+      for (var i = 0; i < Object.keys(t).length; i++) {
+        if (t[i]['definition_code'] == val) {
+          addUserDutyStore.formData.data.definitionName =
+            t[i]['definition_name']
+        }
+      }
+      console.log(this)
     },
     getDName: function(val) {
-      // var t = dutyList.data
-      // for (var i = 0; i < Object.keys(t).length; i++) {
-      //   if (t[i]['definition_code'] == val) {
-      //     updateUserDutyStore.formData.data.definitionName =
-      //       t[i]['definition_name']
-      //   }
-      // }
-      // console.log(this)
+      var t = dutyList.data
+      for (var i = 0; i < Object.keys(t).length; i++) {
+        if (t[i]['definition_code'] == val) {
+          updateUserDutyStore.formData.data.definitionName =
+            t[i]['definition_name']
+        }
+      }
+      console.log(this)
     },
     addDutyButton: function() {
       console.log(['addDutyButton', this.dutyTableStore.store.conf.addShow])
@@ -550,79 +551,80 @@ export default {
       console.log(['addDutyButton', this.dutyTableStore.store.conf.addShow])
     },
     handleEdit: function(index, row) {
-      // var that = this
-      // this.updateUserDurtDV = true
-      // this.updateUserDutyLoading = true
-      // var rDefinitionCode = row.definition_code.toString()
-      // updateUserDutyData.pushData({
-      //   userId: '',
-      //   orgCode: [],
-      //   definitionName: '',
-      //   definitionCode: '',
-      //   beginDate: '',
-      //   expireDate: '',
-      //   isBandh: 'Y',
-      //   id: ''
-      // })
+      var that = this
+      this.updateUserDurtDV = true
+      this.updateUserDutyLoading = true
+      var rDefinitionCode = row.definition_code.toString()
+      updateUserDutyData.pushData({
+        userId: '',
+        orgCode: [],
+        definitionName: '',
+        definitionCode: '',
+        beginDate: '',
+        expireDate: '',
+        isBandh: 'Y',
+        id: ''
+      })
       /* ---------------*/
-      // var getUserDConf = {
-      //   url: RquestPathConfig.getUserDutyByIdUrl,
-      //   method: 'post'
-      // }
-      // getUserDConf.data = {
-      //   id: row.id
-      // }
-      // axios(getUserDConf)
-      //   .then(function(response) {
-      //     that.updateUserDutyLoading = false
-      //     updateUserDutyData.pushData({
-      //       userId: response.data.body.resBody.userDuty[0].userId,
-      //       orgCode: response.data.body.resBody.orgCodeArr,
-      //       definitionName:
-      //         response.data.body.resBody.userDuty[0].definitionName,
-      //       definitionCode:
-      //         response.data.body.resBody.userDuty[0].definitionCode,
-      //       beginDate: response.data.body.resBody.userDuty[0].beginDate,
-      //       expireDate: response.data.body.resBody.userDuty[0].expireDate,
-      //       isBandh: response.data.body.resBody.userDuty[0].isBandh,
-      //       id: response.data.body.resBody.userDuty[0].id
-      //     })
-      //   })
-      //   .catch(function(error) {
-      //     that.updateUserDutyLoading = false
-      //     console.log(error)
-      //   })
+      var getUserDConf = {
+        url: RquestPathConfig.getUserDutyByIdUrl,
+        method: 'post'
+      }
+      getUserDConf.data = {
+        id: row.id
+      }
+      axios(getUserDConf)
+        .then(function(response) {
+          that.updateUserDutyLoading = false
+          updateUserDutyData.pushData({
+            userId: response.data.body.resBody.userDuty[0].userId,
+            orgCode: response.data.body.resBody.orgCodeArr,
+            definitionName:
+              response.data.body.resBody.userDuty[0].definitionName,
+            definitionCode:
+              response.data.body.resBody.userDuty[0].definitionCode,
+            beginDate: response.data.body.resBody.userDuty[0].beginDate,
+            expireDate: response.data.body.resBody.userDuty[0].expireDate,
+            isBandh: response.data.body.resBody.userDuty[0].isBandh,
+            id: response.data.body.resBody.userDuty[0].id
+          })
+        })
+        .catch(function(error) {
+          that.updateUserDutyLoading = false
+          console.log(error)
+        })
+
       /* ---------------*/
     },
     handleDelete: function(index, row) {
-      // var that = this
-      // that.dutyTableLoading = true
-      // var deleteUserDutyConf = dutyTableStore.store.conf.deleteUserDuty
-      // deleteUserDutyConf.data = {
-      //   dutyId: row.id
-      // }
-      // axios(deleteUserDutyConf)
-      //   .then(function(response) {
-      //     that.dutyTableLoading = false
-      //     if (response.data.length == 0) {
-      //       allotUserDuty(row.user_id)
-      //       that.$message({
-      //         showClose: true,
-      //         message: '删除成功',
-      //         type: 'success'
-      //       })
-      //     } else {
-      //       that.dutyTableLoading = false
-      //       that.$message({
-      //         showClose: true,
-      //         message: response.data.body.message,
-      //         type: 'error'
-      //       })
-      //     }
-      //   })
-      //   .catch(function(error) {
-      //     that.dutyTableLoading = false
-      //   })
+      var that = this
+      that.dutyTableLoading = true
+      var deleteUserDutyConf = dutyTableStore.store.conf.deleteUserDuty
+      deleteUserDutyConf.data = {
+        dutyId: row.id
+      }
+      axios(deleteUserDutyConf)
+        .then(function(response) {
+          that.dutyTableLoading = false
+          if (response.data.length == 0) {
+            allotUserDuty(row.user_id)
+            that.$message({
+              showClose: true,
+              message: '删除成功',
+              type: 'success'
+            })
+          } else {
+            that.dutyTableLoading = false
+            that.$message({
+              showClose: true,
+              message: response.data.body.message,
+              type: 'error'
+            })
+          }
+        })
+        .catch(function(error) {
+          that.dutyTableLoading = false
+        })
     },
     addTab: function() {
       tabsStore.addTab({
@@ -835,7 +837,7 @@ export default {
           }
           axios(delRequestConfig)
             .then(function(response) {
-              if (response.data.length == 0) {
+              if (response.data.length === 0) {
                 that.$message({
                   showClose: true,
                   message: '删除成功',
