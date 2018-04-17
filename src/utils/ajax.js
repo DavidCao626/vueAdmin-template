@@ -1,20 +1,13 @@
 import axios from 'axios'
 import store from '../store'
-<<<<<<< HEAD
-import { getToken } from '~/utils/auth'
-=======
 import { getToken } from '@/utils/auth'
 import { Message } from 'element-ui'
 // import { Loading } from 'element-ui'
->>>>>>> ajax12
 
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
-  timeout: 15000, // 请求超时时间
-  headers: {
-    'Specify-Request-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-  }
+  timeout: 15000 // 请求超时时间
 })
 
 // request拦截器
