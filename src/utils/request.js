@@ -1,12 +1,8 @@
 import axios from 'axios'
 import store from '../store'
-<<<<<<< HEAD
-import { getToken } from '~/utils/auth'
-=======
 import { getToken } from '@/utils/auth'
 import { Message } from 'element-ui'
 // import { Loading } from 'element-ui'
->>>>>>> ajax12
 
 // 创建axios实例
 const service = axios.create({

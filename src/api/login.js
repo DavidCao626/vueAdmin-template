@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 import request from '~/utils/request'
-=======
-import request from '@/utils/request'
-// import jsonRequest from '@/utils/ajax'
->>>>>>> ajax12
 
 export function login(loginName, pwd) {
   return request({

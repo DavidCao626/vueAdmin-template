@@ -10,7 +10,6 @@ module.exports = {
     assetsSubDirectory: "static",
     assetsPublicPath: "/",
     proxyTable: {
-<<<<<<< HEAD
       "/act/*": {
         target: "http://localhost:8099",
         changeOrigin: true,
@@ -22,18 +21,6 @@ module.exports = {
         secure: false
       }
     },
-=======
-      '/act/*': {
-			  target: 'http://localhost:8001',
-				changeOrigin: true,
-				secure: false
-			},
-			'/StuService/*': {
-				target: 'http://192.168.1.110:7001',
-				changeOrigin: true,
-				secure: false
-			}},
->>>>>>> ajax12
 
     // Various Dev Server settings
     host: "localhost", // can be overwritten by process.env.HOST

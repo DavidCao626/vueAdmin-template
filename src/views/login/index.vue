@@ -63,12 +63,6 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-<<<<<<< HEAD
-          this.$store.dispatch('Login', this.ruleLoginForm).then(() => {
-            this.$router.push({ path: '/' })
-          }).catch(() => {
-          })
-=======
           this.$store
             .dispatch('Login', this.ruleLoginForm)
             .then(() => {
@@ -77,7 +71,6 @@ export default {
             .catch(err => {
               console.log(err)
             })
->>>>>>> ajax12
         } else {
           return false
         }
