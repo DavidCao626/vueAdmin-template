@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     changeLayout: function() {
-      showQuestionBox = true
+      this.showQuestionBox = true
     }
   }
 }

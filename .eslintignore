@@ -1,5 +1,4 @@
 build/*.js
 config/*.js
 src/assets
-*.vue
-*.js
+src/vendor

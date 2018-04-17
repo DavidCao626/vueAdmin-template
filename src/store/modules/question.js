@@ -2,8 +2,6 @@
 import Vue from 'Vue'
 import Vuex from 'vuex'
 
-// 引入 axios
-import axios from 'axios'
 import Utils from '@/components/Utils.js'
 import qusApi from '@/API/question/questionApi.js'
 
@@ -16,30 +14,31 @@ const state = {
       name: [],
       label: '单选题',
       required: true,
-      options: [{
-        type: 'radio',
-        label: '单选题1',
-        value: '0',
-        number_Percentage: 0
-      },
-      {
-        type: 'radio',
-        label: '单选题2',
-        value: '1',
-        number_Percentage: 0
-      },
-      {
-        type: 'radio',
-        label: '单选题3',
-        value: '2',
-        number_Percentage: 0
-      },
-      {
-        type: 'radio',
-        label: '单选题4',
-        value: '3',
-        number_Percentage: 0
-      }
+      options: [
+        {
+          type: 'radio',
+          label: '单选题1',
+          value: '0',
+          number_Percentage: 0
+        },
+        {
+          type: 'radio',
+          label: '单选题2',
+          value: '1',
+          number_Percentage: 0
+        },
+        {
+          type: 'radio',
+          label: '单选题3',
+          value: '2',
+          number_Percentage: 0
+        },
+        {
+          type: 'radio',
+          label: '单选题4',
+          value: '3',
+          number_Percentage: 0
+        }
       ]
     },
     checkbox: {
@@ -47,82 +46,89 @@ const state = {
       name: [],
       label: '多选题',
       required: true,
-      options: [{
-        type: 'checkbox',
-        label: '多选题1',
-        value: '0',
-        number_Percentage: 0
-      },
-      {
-        type: 'checkbox',
-        label: '多选题2',
-        value: '1',
-        number_Percentage: 0
-      },
-      {
-        type: 'checkbox',
-        label: '多选题3',
-        value: '2',
-        number_Percentage: 0
-      },
-      {
-        type: 'checkbox',
-        label: '多选题4',
-        value: '3',
-        number_Percentage: 0
-      }
+      options: [
+        {
+          type: 'checkbox',
+          label: '多选题1',
+          value: '0',
+          number_Percentage: 0
+        },
+        {
+          type: 'checkbox',
+          label: '多选题2',
+          value: '1',
+          number_Percentage: 0
+        },
+        {
+          type: 'checkbox',
+          label: '多选题3',
+          value: '2',
+          number_Percentage: 0
+        },
+        {
+          type: 'checkbox',
+          label: '多选题4',
+          value: '3',
+          number_Percentage: 0
+        }
       ]
     },
     input: {
       type: 'input',
       label: '填空题',
       required: false,
-      options: [{
-        type: 'input',
-        label: '',
-        value: '请填写内容'
-      }]
+      options: [
+        {
+          type: 'input',
+          label: '',
+          value: '请填写内容'
+        }
+      ]
     },
     textarea: {
       type: 'textarea',
       label: '多行填空题',
       required: false,
-      options: [{
-        type: 'textarea',
-        label: '',
-        value: '请填写内容'
-      }]
+      options: [
+        {
+          type: 'textarea',
+          label: '',
+          value: '请填写内容'
+        }
+      ]
     }
   },
   qss: {
-    'id': null,
-    'taskCode': null,
-    'startTime': null,
-    'endTime': null,
-    'availabile': null,
-    'orgCode': ['100101', '10010101', '1001010101'],
+    id: null,
+    taskCode: null,
+    startTime: null,
+    endTime: null,
+    availabile: null,
+    orgCode: ['100101', '10010101', '1001010101'],
     title: '点击添加问卷名称',
-    description: '欢迎添加调查！答卷数据仅用于统计分析，请放心填写。题目选项无对错之分，按照实际情况选择即可。感谢您的帮助！',
+    description:
+      '欢迎添加调查！答卷数据仅用于统计分析，请放心填写。题目选项无对错之分，按照实际情况选择即可。感谢您的帮助！',
     questionLists: []
   },
   results: {
-    'taskCode': null,
+    taskCode: null,
     title: '点击添加问卷名称',
-    description: '欢迎添加调查！答卷数据仅用于统计分析，请放心填写。题目选项无对错之分，按照实际情况选择即可。感谢您的帮助！',
+    description:
+      '欢迎添加调查！答卷数据仅用于统计分析，请放心填写。题目选项无对错之分，按照实际情况选择即可。感谢您的帮助！',
     questionLists: [
       {
         type: 'radio',
         label: '单选题',
-        options: [{
-          type: 'radio',
-          label: '单选题1',
-          number_Percentage: 50
-        }
+        options: [
+          {
+            type: 'radio',
+            label: '单选题1',
+            number_Percentage: 50
+          }
         ]
       }
     ]
   }
-
 }
 
 const clone = function(obj) {
@@ -154,9 +160,18 @@ const mutations = {
     const list = state.qss.questionLists[index['key']].options
     // 复制时，同样需要对引用对象进行深拷贝
 
-    const newarray = list.splice(index['optionsKey'], 1, list[index['optionsKey']], clone(list[index['optionsKey']]))
+    list.splice(
+      index['optionsKey'],
+      1,
+      list[index['optionsKey']],
+      clone(list[index['optionsKey']])
+    )
 
-    for (let i = 0; i < state.qss.questionLists[index['key']].options.length; i++) {
+    for (
+      let i = 0;
+      i < state.qss.questionLists[index['key']].options.length;
+      i++
+    ) {
       state.qss.questionLists[index['key']].options[i].value = i + ''
     }
   },
@@ -165,11 +180,15 @@ const mutations = {
     // 复制时，同样需要对引用对象进行深拷贝
 
     list.splice(index['optionsKey'], 1)
-    if (list.length == 0) {
+    if (list.length === 0) {
       state.qss.questionLists.splice(index['key'], 1)
     }
 
-    for (let i = 0; i < state.qss.questionLists[index['key']].options.length; i++) {
+    for (
+      let i = 0;
+      i < state.qss.questionLists[index['key']].options.length;
+      i++
+    ) {
       state.qss.questionLists[index['key']].options[i].value = i + ''
     }
   },
@@ -183,17 +202,31 @@ const mutations = {
         return
       }
 
-      list.splice(index['optionsKey'] - 1, 2, list[index['optionsKey']], list[index['optionsKey'] - 1])
+      list.splice(
+        index['optionsKey'] - 1,
+        2,
+        list[index['optionsKey']],
+        list[index['optionsKey'] - 1]
+      )
     } else {
       if (index['optionsKey'] >= list.length - 1) {
         alert('已经是最后一项！')
         return
       }
 
-      list.splice(index['optionsKey'], 2, list[index['optionsKey'] + 1], list[index['optionsKey']])
+      list.splice(
+        index['optionsKey'],
+        2,
+        list[index['optionsKey'] + 1],
+        list[index['optionsKey']]
+      )
     }
 
-    for (let i = 0; i < state.qss.questionLists[index['key']].options.length; i++) {
+    for (
+      let i = 0;
+      i < state.qss.questionLists[index['key']].options.length;
+      i++
+    ) {
       state.qss.questionLists[index['key']].options[i].value = i + ''
     }
   },
@@ -258,7 +291,7 @@ const getters = {
       newnode['nodeCode'] = state.qss.questionLists[i]['code']
       newnode['nodeType'] = state.qss.questionLists[i]['type']
 
-      if (typeof (state.qss.questionLists[i]['name']) === 'number') {
+      if (typeof state.qss.questionLists[i]['name'] === 'number') {
         const arrayvar = []
         arrayvar.push(state.qss.questionLists[i]['name'])
         newnode['nodeVal'] = arrayvar
@@ -275,45 +308,32 @@ const getters = {
   }
 }
 const actions = {
-
-  up: ({
-    commit
-  }, index) => {
+  up: ({ commit }, index) => {
     index.direct = 'up'
     commit('moveQuestion', index)
   },
-  down: ({
-    commit
-  }, index) => {
+  down: ({ commit }, index) => {
     index.direct = 'down'
-    commit('moveQuestion', index, );
+    commit('moveQuestion', index)
   },
-  copy: ({
-    commit
-  }, index) => {
+  copy: ({ commit }, index) => {
     commit('copyQuestion', index)
   },
-  close: ({
-    commit
-  }, index) => {
+  close: ({ commit }, index) => {
     commit('deletQuestion', index)
   },
-  updateValue: ({
-    commit
-  }, qss) => {
+  updateValue: ({ commit }, qss) => {
     commit('updateValue', qss)
   },
   // 添加按钮方法
-  addQuestion: ({
-    commit
-  }, type) => {
+  addQuestion: ({ commit }, type) => {
     commit('addQuestion', type)
   },
   // 生成问卷
   saveForm(commit) {
     var data = state.qss
     console.log(data)
-		 data['content_type'] = 'application/json'
+    data['content_type'] = 'application/json'
     Utils.post(qusApi.add, data, function(data) {
       console.log(data)
       // debugger
@@ -325,9 +345,12 @@ const actions = {
   initQuuestion(commit) {
     const ls = localStorage.getItem('taskCode')
 
-    if (!ls || ls == 'undefined') { alert('你还没taskcode！'); return }
-    var data = [{ 'taskCode': ls }]
-		 data['content_type'] = 'application/json'
+    if (!ls || ls) {
+      alert('你还没taskcode！')
+      return
+    }
+    var data = [{ taskCode: ls }]
+    data['content_type'] = 'application/json'
     Utils.post(qusApi.get, data[0], function(data) {
       console.log(data)
       if (data.resBody.questionLists.length > 0) {
@@ -360,7 +383,10 @@ const actions = {
   getResultsQuuestion(commit) {
     const ls = localStorage.getItem('taskCode')
 
-    if (!ls || ls == 'undefined') { alert('你还没taskcode！'); return }
+    if (!ls || ls === undefined) {
+      alert('你还没taskcode！')
+      return
+    }
     var data = 'taskCode=' + ls
     // data["content_type"]="application/json";
     Utils.post(qusApi.getQuestionResult, data, function(data) {
