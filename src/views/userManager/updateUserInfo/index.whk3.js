@@ -68,10 +68,11 @@ userInfoFormStore.addConf('updateUserInfo', {
   'url': RquestPathConfig.updateUserInfoUrl
 })
 var vue = new Vue({
-  data(){return {
-    userInfoFormStore: userInfoFormStore,
-    loading: false
-  }
+  data() {
+    return {
+      userInfoFormStore: userInfoFormStore,
+      loading: false
+    }
   },
   created: function() {
     console.log(['this.loading', this.loading])

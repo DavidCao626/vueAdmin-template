@@ -116,14 +116,13 @@ export default {
           var axiosConfig = this.formStore.store.conf.submitData
           axiosConfig.data = this.formStore.formData.data
 
-          GUtils.post(RquestPathConfig.updateUserPwdUrl,axiosConfig.data,function(data){
-             that.$message({
-                showClose: true,
-                message: '恭喜你，密码修改成功',
-                type: 'success'
-              })
-          });
-     
+          GUtils.post(RquestPathConfig.updateUserPwdUrl, axiosConfig.data, function(data) {
+            that.$message({
+              showClose: true,
+              message: '恭喜你，密码修改成功',
+              type: 'success'
+            })
+          })
         } else {
           console.log('error submit!!')
           return false

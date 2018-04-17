@@ -572,31 +572,31 @@ updateStore.addConf('updateUser', {
 })
 
 var vuemain = new Vue({
-  data(){
+  data() {
     return {
-    dialogVisible: false,
-    updateUserDialogVisible: false,
-  
-    pageHCon: pagehContainer,
-    pmanager: pageManagerStore,
-    serviceForm: formStore,
-    serviceTable: selectTableStore,
-    moreForm: moreItemFormStore,
-    tabsStore: tabsStore,
-    addUserForm: addUserFormStore,
-    addRadioStore: addRadioStore,
-    updateRadioStore: updateRadioStore,
-    updateUserForm: updateStore,
-    options: [{
-      label: '不限',
-      value: ''
-    }, {
-      label: '可用',
-      value: '1'
-    }, {
-      label: '停用',
-      value: '0'
-    }]
+      dialogVisible: false,
+      updateUserDialogVisible: false,
+
+      pageHCon: pagehContainer,
+      pmanager: pageManagerStore,
+      serviceForm: formStore,
+      serviceTable: selectTableStore,
+      moreForm: moreItemFormStore,
+      tabsStore: tabsStore,
+      addUserForm: addUserFormStore,
+      addRadioStore: addRadioStore,
+      updateRadioStore: updateRadioStore,
+      updateUserForm: updateStore,
+      options: [{
+        label: '不限',
+        value: ''
+      }, {
+        label: '可用',
+        value: '1'
+      }, {
+        label: '停用',
+        value: '0'
+      }]
     }
   },
   mounted: function() {

@@ -194,106 +194,106 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Element from "element-ui";
-import "@/theme/index.css";
-import VueExpand from "@/components/VueExpand";
-Vue.use(Element);
-Vue.use(VueExpand);
-import GUtils from "@/components/Utils.js";
-import GStoreFactory from "@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js";
-import GraceComponent from "@/ComponentPackage/GraceComponents.js";
-import dataPath from "@/API/Staff/staff_info_manager.js";
-import axios from "axios";
-import nations from "./nations.js";
-import updateStaffBaseInfo from "./components/updateStaffBaseInfo.vue";
-import addStaffBaseInfo from "./components/addStaffBaseInfo.vue";
-import checkStaffBaseInfo from "./components/checkStaffBaseInfo.vue";
-import reqPath from "@/API/System/SystemManagerApi.js";
-import cf from "../checkStaffInfo/components/checkStaffInfo.vue";
-Vue.use(GraceComponent);
+import Vue from 'vue'
+import Element from 'element-ui'
+import '@/theme/index.css'
+import VueExpand from '@/components/VueExpand'
+Vue.use(Element)
+Vue.use(VueExpand)
+import GUtils from '@/components/Utils.js'
+import GStoreFactory from '@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js'
+import GraceComponent from '@/ComponentPackage/GraceComponents.js'
+import dataPath from '@/API/Staff/staff_info_manager.js'
+import axios from 'axios'
+import nations from './nations.js'
+import updateStaffBaseInfo from './components/updateStaffBaseInfo.vue'
+import addStaffBaseInfo from './components/addStaffBaseInfo.vue'
+import checkStaffBaseInfo from './components/checkStaffBaseInfo.vue'
+import reqPath from '@/API/System/SystemManagerApi.js'
+import cf from '../checkStaffInfo/components/checkStaffInfo.vue'
+Vue.use(GraceComponent)
 
 // 获取码表数据
 var requestData = {
   dicts: [
-    "available",
-    "is_bandh",
-    "check_flag",
-    "sex_type",
-    "language",
-    "stu_archives_type",
-    "stu_archives_status",
-    "special_type",
-    "graduation_type",
-    "stu_degree_type",
-    "is_graduates"
+    'available',
+    'is_bandh',
+    'check_flag',
+    'sex_type',
+    'language',
+    'stu_archives_type',
+    'stu_archives_status',
+    'special_type',
+    'graduation_type',
+    'stu_degree_type',
+    'is_graduates'
   ]
-};
-var dictData = {};
-var isBandh = [];
+}
+var dictData = {}
+var isBandh = []
 
 // 获取码表数据结束
-var dutyList = [];
+var dutyList = []
 
-var pagehContainer = GStoreFactory.buildVContainer();
-var pageManagerStore = GStoreFactory.buildManagerPageStore();
-pageManagerStore.addConf("loadData", function() {
-  loadData();
-});
+var pagehContainer = GStoreFactory.buildVContainer()
+var pageManagerStore = GStoreFactory.buildManagerPageStore()
+pageManagerStore.addConf('loadData', function() {
+  loadData()
+})
 /**
  *  SelectTableStore start
  */
-var addUserDutyForm = GStoreFactory.buildServiceForm();
-var addUserDutyFormData = GStoreFactory.buildServiceFormData();
-var updateUserDutyForm = GStoreFactory.buildServiceForm();
-var updateUserDutyFormData = GStoreFactory.buildServiceFormData();
+var addUserDutyForm = GStoreFactory.buildServiceForm()
+var addUserDutyFormData = GStoreFactory.buildServiceFormData()
+var updateUserDutyForm = GStoreFactory.buildServiceForm()
+var updateUserDutyFormData = GStoreFactory.buildServiceFormData()
 
 addUserDutyFormData.pushData({
-  id: "",
-  orgName: "",
-  loginName: "",
+  id: '',
+  orgName: '',
+  loginName: '',
   orgCode: [],
-  beginDate: "",
-  expireData: "",
-  isBandh: "N",
-  definitionCode: ""
-});
+  beginDate: '',
+  expireData: '',
+  isBandh: 'N',
+  definitionCode: ''
+})
 addUserDutyFormData.pushRules({
   orgCode: []
-});
-addUserDutyForm.addAttr("formData", addUserDutyFormData);
+})
+addUserDutyForm.addAttr('formData', addUserDutyFormData)
 
 updateUserDutyFormData.pushData({
-  id: "",
-  orgName: "",
-  loginName: "",
+  id: '',
+  orgName: '',
+  loginName: '',
   orgCode: [],
-  beginDate: "",
-  expireData: "",
-  isBandh: "N",
-  definitionCode: ""
-});
+  beginDate: '',
+  expireData: '',
+  isBandh: 'N',
+  definitionCode: ''
+})
 updateUserDutyFormData.pushRules({
   orgCode: []
-});
-updateUserDutyForm.addAttr("formData", updateUserDutyFormData);
+})
+updateUserDutyForm.addAttr('formData', updateUserDutyFormData)
 
-var dutyTableData = [];
-var selectTableStore = GStoreFactory.buildSelectTable();
-selectTableStore.addConf("expands", [
+var dutyTableData = []
+var selectTableStore = GStoreFactory.buildSelectTable()
+selectTableStore.addConf('expands', [
   {
-    label: "审核备注:",
-    attr: "checkComment"
+    label: '审核备注:',
+    attr: 'checkComment'
   }
-]);
-selectTableStore.addConf("isExpand", true);
-selectTableStore.addConf("isBorder", false);
-selectTableStore.addConf("isRowOperation", true);
-var ckParams = {};
-ckParams.baseInfoBid = "";
-ckParams.universityInfoBid = "";
-ckParams.staffCode = "";
-ckParams.loginName = "";
+])
+selectTableStore.addConf('isExpand', true)
+selectTableStore.addConf('isBorder', false)
+selectTableStore.addConf('isRowOperation', true)
+var ckParams = {}
+ckParams.baseInfoBid = ''
+ckParams.universityInfoBid = ''
+ckParams.staffCode = ''
+ckParams.loginName = ''
 
 // selectTableStore.addConf("storeLoader",{"method":"get","url":RquestPathConfig.tableStoreUrl});
 /**
@@ -303,26 +303,26 @@ ckParams.loginName = "";
 /**
  * 快速查询表单定义
  */
-var formStore = GStoreFactory.buildServiceForm();
-formStore.addConf("isInline", true);
+var formStore = GStoreFactory.buildServiceForm()
+formStore.addConf('isInline', true)
 
 /**
  * 表单数据对象定义
  */
-var formStoreData = GStoreFactory.buildServiceFormData();
+var formStoreData = GStoreFactory.buildServiceFormData()
 formStoreData.pushData({
-  staffCode: "",
-  name: ""
-});
+  staffCode: '',
+  name: ''
+})
 formStoreData.pushRules({
   name: [
     {
       required: true,
-      message: "请输入活动名称",
-      trigger: "blur"
+      message: '请输入活动名称',
+      trigger: 'blur'
     }
   ]
-});
+})
 /**
  *
  */
@@ -330,51 +330,51 @@ formStoreData.pushRules({
 /**
  * 改造
  */
-formStore.addAttr("bindMutual", formStoreData);
+formStore.addAttr('bindMutual', formStoreData)
 
 /**
  * 全部条件查询的
  */
-var moreItemFormStore = GStoreFactory.buildServiceForm();
-moreItemFormStore.addConf("isInline", false);
-moreItemFormStore.addConf("labelWidth", "80px");
-moreItemFormStore.addConf("labelPosition", "right");
-moreItemFormStore.addAttr("bindMutual", formStoreData);
+var moreItemFormStore = GStoreFactory.buildServiceForm()
+moreItemFormStore.addConf('isInline', false)
+moreItemFormStore.addConf('labelWidth', '80px')
+moreItemFormStore.addConf('labelPosition', 'right')
+moreItemFormStore.addAttr('bindMutual', formStoreData)
 
 /**
  * 表单定义结束
  */
-var pageStore = GStoreFactory.buildPageStore();
-formStoreData.pushPage();
+var pageStore = GStoreFactory.buildPageStore()
+formStoreData.pushPage()
 formStoreData.pushData({
   page_total: 1
-});
-pageStore.addAttr("bindMutual", formStoreData);
+})
+pageStore.addAttr('bindMutual', formStoreData)
 
 /**
  * 改造，定义默认的名称，不需要进行名称录入
  */
-pageManagerStore.addAttr("serviceForm", formStore);
-pageManagerStore.addAttr("serviceTable", selectTableStore);
-pageManagerStore.addAttr("servicePage", pageStore);
+pageManagerStore.addAttr('serviceForm', formStore)
+pageManagerStore.addAttr('serviceTable', selectTableStore)
+pageManagerStore.addAttr('servicePage', pageStore)
 
-pageManagerStore.addConf("operations", [
+pageManagerStore.addConf('operations', [
   {
-    name: "ex",
-    title: "导入",
+    name: 'ex',
+    title: '导入',
     operator: function(servcieTable, serviceForm) {}
   },
   {
-    name: "vh",
-    title: "批量删除",
+    name: 'vh',
+    title: '批量删除',
     operator: function(servcieTable, serviceForm) {
-      var arr = selectTableStore.store.conf.selects;
+      var arr = selectTableStore.store.conf.selects
       if (arr.length == 0) {
-        alert("您没有选中任何数据");
+        alert('您没有选中任何数据')
       } else {
-        var reArr = [];
+        var reArr = []
         for (var i = 0; i < arr.length; i++) {
-          reArr.push(arr[i].id);
+          reArr.push(arr[i].id)
         }
         GUtils.post(
           dataPath.deleteMStaffBaseInfo,
@@ -383,57 +383,57 @@ pageManagerStore.addConf("operations", [
           },
           function(data) {
             // 批量删除成功
-            loadData();
+            loadData()
           }
-        );
+        )
       }
     }
   }
-]);
+])
 
-var tabsStore = GStoreFactory.buildTabsStore();
+var tabsStore = GStoreFactory.buildTabsStore()
 tabsStore.pushAll([
   {
-    name: "101",
-    title: "学生管理",
-    link: "form.html"
+    name: '101',
+    title: '学生管理',
+    link: 'form.html'
   },
   {
-    name: "102",
-    title: "学院管理"
+    name: '102',
+    title: '学院管理'
   }
-]);
-tabsStore.addConf("activeTab", "101");
+])
+tabsStore.addConf('activeTab', '101')
 
 // 组织组件
 var f_org_code = GStoreFactory.buildSmallCascaderStore(
   addUserDutyFormData.data,
-  "orgCode"
-);
-f_org_code.addConf("expandTrigger", "hover");
-f_org_code.addConf("props", {
-  value: "org_code",
-  label: "org_name",
-  children: "children",
-  disabled: "disabled"
-});
+  'orgCode'
+)
+f_org_code.addConf('expandTrigger', 'hover')
+f_org_code.addConf('props', {
+  value: 'org_code',
+  label: 'org_name',
+  children: 'children',
+  disabled: 'disabled'
+})
 GUtils.post(reqPath.queryUserOrg, {}, function(data) {
-  f_org_code.pushAll(data.resBody);
-});
+  f_org_code.pushAll(data.resBody)
+})
 var f_org_code2 = GStoreFactory.buildSmallCascaderStore(
   updateUserDutyFormData.data,
-  "orgCode"
-);
-f_org_code2.addConf("expandTrigger", "hover");
-f_org_code2.addConf("props", {
-  value: "org_code",
-  label: "org_name",
-  children: "children",
-  disabled: "disabled"
-});
+  'orgCode'
+)
+f_org_code2.addConf('expandTrigger', 'hover')
+f_org_code2.addConf('props', {
+  value: 'org_code',
+  label: 'org_name',
+  children: 'children',
+  disabled: 'disabled'
+})
 GUtils.post(reqPath.queryUserOrg, {}, function(data) {
-  f_org_code2.pushAll(data.resBody);
-});
+  f_org_code2.pushAll(data.resBody)
+})
 // 组织组件结束
 
 /**
@@ -457,7 +457,7 @@ export default {
       updateUserDutyForm,
       dutyList,
       isBandh,
-      dutyTableLoginName: "",
+      dutyTableLoginName: '',
       updateUserDutyDV: false,
       ckParams,
       chDV: false,
@@ -470,77 +470,77 @@ export default {
       addBaseInfoDV: false,
       updateBaseInfoDV: false,
       checkBaseInfoDV: false,
-      checkId: ""
-    };
+      checkId: ''
+    }
   },
   mounted: function() {
-    var that = this;
-    var height = GUtils.getClientHeight();
-    pagehContainer.store.conf.prefHeight = height;
+    var that = this
+    var height = GUtils.getClientHeight()
+    pagehContainer.store.conf.prefHeight = height
 
     GUtils.post(dataPath.getDictByDictNames, requestData, function(data) {
-      dictData = data.resBody;
-      that.isBandh = dictData.is_bandh;
-    });
+      dictData = data.resBody
+      that.isBandh = dictData.is_bandh
+    })
     GUtils.post(dataPath.queryDutyList, {}, function(data) {
-      that.dutyList = data.resBody;
-      console.log(["dutyList", data]);
-    });
+      that.dutyList = data.resBody
+      console.log(['dutyList', data])
+    })
   },
   methods: {
     scheckBaseInfo: function(formName) {
-      var that = this;
-      that.checkBaseInfoDV = false;
-      that.$refs.checkVue.submitForm(this.checkId);
+      var that = this
+      that.checkBaseInfoDV = false
+      that.$refs.checkVue.submitForm(this.checkId)
     },
     supdateBaseInfo: function(formName) {
-      var that = this;
-      console.log("确认更新");
-      console.log(["updateStaffBaseInfo", updateStaffBaseInfo]);
-      that.$refs.updateVue.submitForm();
-      this.updateBaseInfoDV = false;
+      var that = this
+      console.log('确认更新')
+      console.log(['updateStaffBaseInfo', updateStaffBaseInfo])
+      that.$refs.updateVue.submitForm()
+      this.updateBaseInfoDV = false
     },
     saddBaseInfo: function(formName) {
       // 确认增加
-      this.addBaseInfoDV = false;
-      console.log(["sadd", this]);
-      this.$refs.addVue.submitForm();
+      this.addBaseInfoDV = false
+      console.log(['sadd', this])
+      this.$refs.addVue.submitForm()
     },
     testmd: function() {
-      console.log(["testmd"]);
+      console.log(['testmd'])
     },
     formatSexType: function(row, column, cellValue) {
-      var sexDict = dictData.sex_type;
+      var sexDict = dictData.sex_type
       for (var i = 0; i < sexDict.length; i++) {
         if (sexDict[i].dict_key == cellValue) {
-          return sexDict[i].dict_desc;
+          return sexDict[i].dict_desc
         }
       }
     },
     formatCheckFlag: function(row, column, cellValue) {
-      var checkFlagDict = dictData.check_flag;
+      var checkFlagDict = dictData.check_flag
       for (var i = 0; i < checkFlagDict.length; i++) {
         if (checkFlagDict[i].dict_key == cellValue) {
-          return checkFlagDict[i].dict_desc;
+          return checkFlagDict[i].dict_desc
         }
       }
     },
     formatNation: function(row, column, cellValue) {
-      var nationsDict = nations.data;
+      var nationsDict = nations.data
       for (var i = 0; i < nationsDict.length; i++) {
         if (nationsDict[i].id == cellValue) {
-          return nationsDict[i].name;
+          return nationsDict[i].name
         }
       }
     },
     addTab: function() {
       tabsStore.addTab({
-        name: "301",
-        title: "学生会管理"
-      });
+        name: '301',
+        title: '学生会管理'
+      })
     },
     addUserDuty: function() {
-      var that = this;
+      var that = this
       GUtils.requestBody(
         dataPath.insertUserDuty,
         addUserDutyFormData.data,
@@ -551,16 +551,16 @@ export default {
               loginName: addUserDutyFormData.data.loginName
             },
             function(data) {
-              console.log(["userDutyList", data]);
-              that.dutyTableData = data.resBody;
+              console.log(['userDutyList', data])
+              that.dutyTableData = data.resBody
             }
-          );
-          that.addAndShowFlag = true;
+          )
+          that.addAndShowFlag = true
         }
-      );
+      )
     },
     deleteDuty: function(index1, row) {
-      var that = this;
+      var that = this
       GUtils.post(
         dataPath.deleteUserDuty,
         {
@@ -573,16 +573,16 @@ export default {
               loginName: that.dutyTableLoginName
             },
             function(data) {
-              console.log(["userDutyList", data]);
-              that.dutyTableData = data.resBody;
+              console.log(['userDutyList', data])
+              that.dutyTableData = data.resBody
             }
-          );
+          )
         }
-      );
+      )
     },
     updateDuty: function(index1, row) {
-      var that = this;
-      that.updateUserDutyDV = true;
+      var that = this
+      that.updateUserDutyDV = true
       GUtils.post(
         dataPath.getUserDutyById,
         {
@@ -596,12 +596,12 @@ export default {
             isBandh: data.resBody.baseData.isBandh,
             definitionCode: data.resBody.baseData.definitionCode,
             id: row.id
-          });
+          })
         }
-      );
+      )
     },
     updateUserDuty: function() {
-      var that = this;
+      var that = this
       // 确认修改
       GUtils.requestBody(
         dataPath.updateUserDuty,
@@ -613,63 +613,63 @@ export default {
               loginName: updateUserDutyFormData.data.loginName
             },
             function(data) {
-              console.log(["userDutyList", data]);
-              that.dutyTableData = data.resBody;
+              console.log(['userDutyList', data])
+              that.dutyTableData = data.resBody
             }
-          );
-          that.updateUserDutyDV = false;
+          )
+          that.updateUserDutyDV = false
         }
-      );
+      )
     },
     formatAvailable: function(row, column, cellValue) {
-      var fa = dictData.available;
+      var fa = dictData.available
       for (var i = 0; i < fa.length; i++) {
         if (fa[i].dict_key == cellValue) {
-          return fa[i].dict_desc;
+          return fa[i].dict_desc
         }
       }
     },
     formatIsBandh: function(row, column, cellValue) {
-      var fib = dictData.is_bandh;
+      var fib = dictData.is_bandh
       for (var i = 0; i < fib.length; i++) {
         if (fib[i].dict_key == cellValue) {
-          return fib[i].dict_desc;
+          return fib[i].dict_desc
         }
       }
     },
     iload: function() {
-      loadData();
+      loadData()
     },
     allotDuty: function() {
-      this.addAndShowFlag = false;
+      this.addAndShowFlag = false
     }
   },
   watch: {
-    "pageHCon.store.conf.resultHeight": function(val) {
-      this.pmanager.store.conf.workSpaceHeight = val - 4;
-      this.tabsStore.store.conf.height = val - 2;
+    'pageHCon.store.conf.resultHeight': function(val) {
+      this.pmanager.store.conf.workSpaceHeight = val - 4
+      this.tabsStore.store.conf.height = val - 2
     },
     temp1: function() {
-      console.log("temp1");
+      console.log('temp1')
     }
   },
   created: function() {
-    var that = this;
-    selectTableStore.addConf("operations", [
+    var that = this
+    selectTableStore.addConf('operations', [
       {
-        name: "edit",
-        title: "编辑",
+        name: 'edit',
+        title: '编辑',
         operator: function(index1, row) {
-          that.updateBaseInfoDV = true;
+          that.updateBaseInfoDV = true
           that.$options.components.updateStaffBaseInfo.methods.loadFormData.call(
             that.$options.components.updateStaffBaseInfo,
             row.id
-          );
+          )
         }
       },
       {
-        name: "del",
-        title: "删除",
+        name: 'del',
+        title: '删除',
         operator: function(index1, row) {
           GUtils.post(
             dataPath.deleteStaffBaseInfo,
@@ -677,19 +677,19 @@ export default {
               id: row.id
             },
             function(data) {
-              loadData();
+              loadData()
             }
-          );
+          )
         }
       },
       {
-        name: "check",
-        title: "审核",
+        name: 'check',
+        title: '审核',
         operator: function(index1, row) {
-          ckParams.baseInfoBid = row.id;
-          ckParams.universityInfoBid = "";
-          ckParams.staffCode = row.staffCode;
-          ckParams.loginName = row.loginName;
+          ckParams.baseInfoBid = row.id
+          ckParams.universityInfoBid = ''
+          ckParams.staffCode = row.staffCode
+          ckParams.loginName = row.loginName
 
           GUtils.post(
             dataPath.getStaffUniversityInfoIdBy,
@@ -697,55 +697,55 @@ export default {
               staffCode: row.staffCode
             },
             function(data) {
-              ckParams.universityInfoBid = data.resBody.staffUniversityInfoId;
-              that.chDV = true;
-              console.log(["checkParams", ckParams]);
+              ckParams.universityInfoBid = data.resBody.staffUniversityInfoId
+              that.chDV = true
+              console.log(['checkParams', ckParams])
               // 执行成功跳转页面携带上面的参数
             }
-          );
+          )
         }
       },
       {
-        name: "renzhi",
-        title: "任职",
+        name: 'renzhi',
+        title: '任职',
         operator: function(index1, row) {
-          that.dutyTableLoginName = row.loginName;
-          that.resignationDV = true;
+          that.dutyTableLoginName = row.loginName
+          that.resignationDV = true
           addUserDutyFormData.pushData({
-            orgName: "",
+            orgName: '',
             loginName: row.loginName
-          });
+          })
           updateUserDutyFormData.pushData({
             //	'id': row.id,
-            orgName: "",
+            orgName: '',
             loginName: row.loginName
-          });
+          })
           GUtils.post(
             dataPath.queryUserDutyList,
             {
               loginName: row.loginName
             },
             function(data) {
-              that.dutyTableData = data.resBody;
+              that.dutyTableData = data.resBody
             }
-          );
+          )
         }
       }
-    ]);
+    ])
   }
-};
+}
 
 function loadData() {
   GUtils.post(
     dataPath.queryStaffBaseInfoList,
     formStore.bindMutual.data,
     function(data) {
-      console.log(["loadData", data]);
-      selectTableStore.store.data = data.resBody.baseData;
+      console.log(['loadData', data])
+      selectTableStore.store.data = data.resBody.baseData
       formStoreData.pushData({
         page_total: data.resBody.totalPage
-      });
+      })
     }
-  );
+  )
 }
 </script>

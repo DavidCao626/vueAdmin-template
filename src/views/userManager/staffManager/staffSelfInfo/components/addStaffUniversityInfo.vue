@@ -54,61 +54,61 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Element from "element-ui";
-import "@/theme/index.css";
-import VueExpand from "@/components/VueExpand";
-Vue.use(Element);
-Vue.use(VueExpand);
-import GUtils from "@/components/Utils.js";
-import GStoreFactory from "@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js";
-import GraceComponent from "@/ComponentPackage/GraceComponents.js";
-import dataPath from "@/API/Staff/staff_info_manager.js";
-import reqPath from "@/API/System/SystemManagerApi.js";
-Vue.use(GraceComponent);
+import Vue from 'vue'
+import Element from 'element-ui'
+import '@/theme/index.css'
+import VueExpand from '@/components/VueExpand'
+Vue.use(Element)
+Vue.use(VueExpand)
+import GUtils from '@/components/Utils.js'
+import GStoreFactory from '@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js'
+import GraceComponent from '@/ComponentPackage/GraceComponents.js'
+import dataPath from '@/API/Staff/staff_info_manager.js'
+import reqPath from '@/API/System/SystemManagerApi.js'
+Vue.use(GraceComponent)
 var staffJobData = [
   {
-    id: "1",
-    name: "职称"
+    id: '1',
+    name: '职称'
   }
-];
+]
 var pgpostsData = [
   {
-    id: "1",
-    name: "党政职务"
+    id: '1',
+    name: '党政职务'
   }
-];
+]
 
-var formStore = GStoreFactory.buildServiceForm();
-var formDataStore = GStoreFactory.buildServiceFormData();
+var formStore = GStoreFactory.buildServiceForm()
+var formDataStore = GStoreFactory.buildServiceFormData()
 
-var dicts = ["isUse", "is_bandh", "check_flag"];
-var stateData = [];
-var checkFlagData = [];
+var dicts = ['isUse', 'is_bandh', 'check_flag']
+var stateData = []
+var checkFlagData = []
 GUtils.post(
   dataPath.getDictByDictNames,
   {
     dicts: dicts
   },
   function(data) {
-    stateData.push(data.resBody.is_bandh);
-    checkFlagData.push(data.resBody.check_flag);
+    stateData.push(data.resBody.is_bandh)
+    checkFlagData.push(data.resBody.check_flag)
   }
-);
+)
 
 formDataStore.pushData({
-  staffCode: "", // 教职工编码
+  staffCode: '', // 教职工编码
   orgCode: [], // 所属机构
-  staffJob: "", // 职称
-  personnelCode: "", // 人事编号
-  pgposts: "", // 党政职务
-  suspension: "Y", // 是否停职
-  entranceDate: "", // 生效日期
-  exitDate: "" // 失效日期
+  staffJob: '', // 职称
+  personnelCode: '', // 人事编号
+  pgposts: '', // 党政职务
+  suspension: 'Y', // 是否停职
+  entranceDate: '', // 生效日期
+  exitDate: '' // 失效日期
   // state:"Y",//是否有效
   //		checkFlag:"0",//审核
   //		checkComment:""//审核备注
-});
+})
 formDataStore.pushRules({
   staffCode: [], // 教职工编码
   orgCode: [], // 所属机构
@@ -116,8 +116,8 @@ formDataStore.pushRules({
   personnelCode: [
     {
       required: true,
-      message: "人事编码不能为空",
-      trigger: "blur"
+      message: '人事编码不能为空',
+      trigger: 'blur'
     }
   ], // 人事编号
   pgposts: [], // 党政职务
@@ -127,28 +127,28 @@ formDataStore.pushRules({
   // state:[],//是否有效
   //		checkFlag:[],//审核
   //		checkComment:[]//审核备注
-});
+})
 
-formStore.addAttr("formData", formDataStore);
+formStore.addAttr('formData', formDataStore)
 // 组织组件
 var f_org_code = GStoreFactory.buildSmallCascaderStore(
   formDataStore.data,
-  "orgCode"
-);
-f_org_code.addConf("expandTrigger", "hover");
-f_org_code.addConf("props", {
-  value: "org_code",
-  label: "org_name",
-  children: "children",
-  disabled: "disabled"
-});
+  'orgCode'
+)
+f_org_code.addConf('expandTrigger', 'hover')
+f_org_code.addConf('props', {
+  value: 'org_code',
+  label: 'org_name',
+  children: 'children',
+  disabled: 'disabled'
+})
 //	GUtils.post(reqPath.queryUserOrg, {}, function(data) {
 //		f_org_code.pushAll(data.resBody);
 //	});
 // 组织组件结束
 
 export default {
-  props: ["rule", "loadOrg"],
+  props: ['rule', 'loadOrg'],
   data() {
     return {
       formStore,
@@ -157,7 +157,7 @@ export default {
       checkFlagData,
       staffJobData,
       pgpostsData
-    };
+    }
   },
   watch: {
     //			active(){
@@ -167,36 +167,36 @@ export default {
     rule: function() {
       if (this.rule == 1) {
         // 验证
-        console.log(["universityForm", this]);
-        this.$refs["universityForm"].validate(valid => {
+        console.log(['universityForm', this])
+        this.$refs['universityForm'].validate(valid => {
           if (valid) {
-            console.log(["验证基础信息"]);
-            this.$emit("form1", "universityForm", this.formStore.formData.data);
-            this.$emit("ruleM");
-            this.$parent.$parent.ruleNum = 999;
+            console.log(['验证基础信息'])
+            this.$emit('form1', 'universityForm', this.formStore.formData.data)
+            this.$emit('ruleM')
+            this.$parent.$parent.ruleNum = 999
           } else {
-            this.$parent.$parent.ruleNum = 999;
-            return false;
+            this.$parent.$parent.ruleNum = 999
+            return false
           }
-        });
+        })
       }
     },
-    "loadOrg.orgCode": function(val) {
-      console.log(["orgc", val]);
-      f_org_code.cleanData();
+    'loadOrg.orgCode': function(val) {
+      console.log(['orgc', val])
+      f_org_code.cleanData()
       GUtils.post(
         reqPath.queryCurrentOrgListByOrgCode,
         {
           orgCode: val
         },
         function(data) {
-          f_org_code.pushAll(data.resBody);
+          f_org_code.pushAll(data.resBody)
         }
-      );
+      )
     }
   },
   methods: {}
-};
+}
 </script>
 
 <style>
