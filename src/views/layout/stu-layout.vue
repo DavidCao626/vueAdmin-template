@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import { Navbar, AppMain } from '~/views/layout/stu-components'
-import Sidebar from '~/components/Sidebar'
+import { Navbar, Sidebar, AppMain } from '~/views/layout/stu-components'
+
 export default {
   name: 'layout',
   components: {
