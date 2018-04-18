@@ -37,9 +37,6 @@ export default {
     ...mapGetters(['navMenu'])
   },
   mounted: function() {
-    this.$store.dispatch('GetNavMenu').then(() => {
-      console.log(this.navMenu)
-    })
   }
 }
 </script>

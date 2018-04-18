@@ -52,7 +52,7 @@ export default {
 <style  lang="scss" >
 @import "src/styles/core.scss"; // global css
 .container {
-  max-width: 137.14rem;
+  width: 100vw;
   min-width: 768px;
   margin: 0 auto;
 }
@@ -66,7 +66,7 @@ export default {
   display: flex;
 }
 .sidebar-container {
-  width: 250px;
+  min-width: 250px;
   margin-top: -10px;
 }
 .main-view {

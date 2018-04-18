@@ -1,4 +1,10 @@
-import { login, logout, getInfo, getNavMenu } from '~/api/login'
+import {
+  login,
+  logout,
+  getInfo,
+  getNavMenu,
+  getDutyList as getRuleList
+} from '~/api/login'
 import { getToken, setToken, removeToken } from '~/utils/auth'
 import { uregister } from '~/api/register'
 
@@ -54,7 +60,7 @@ const user = {
           .then(response => {
             // const data = response.data
             // setToken(data.token)
-            setToken('')
+            setToken('user')
             // commit('SET_TOKEN', data.token)
             resolve(response)
           })
@@ -67,12 +73,13 @@ const user = {
     // 获取用户信息
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getInfo(state.token)
+        getInfo()
           .then(response => {
-            const data = response.data
-            commit('SET_ROLES', data.roles)
-            commit('SET_NAME', data.name)
-            commit('SET_AVATAR', data.avatar)
+            const data = response.resBody[0]
+            // commit('SET_ROLES', data.roles)
+            commit('SET_NAME', data.userInfo[0].login_name)
+            commit('SET_AVATAR', data.userInfo[0].head_pic)
+
             resolve(response)
           })
           .catch(error => {
@@ -80,7 +87,32 @@ const user = {
           })
       })
     },
+    // 获取用户rule职务
+    GetDutyList({ commit, state }) {
+      return new Promise((resolve, reject) => {
+        getRuleList()
+          .then(response => {
+            const MemberDutyList = []
+            const AppointDutyList = []
+            const data = response
 
+            const members = data.resBody.MEMBER
+
+            for (let i = 0; i < members.length; i++) {
+              MemberDutyList.push(members[i])
+            }
+            const appoints = data.resBody.APPOINT
+            for (let i = 0; i < appoints.length; i++) {
+              AppointDutyList.push(appoints[i])
+            }
+            commit('SET_ROLES', { MemberDutyList, AppointDutyList })
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
     // 获取用户组可用菜单
     GetNavMenu({ commit, state }) {
       return new Promise((resolve, reject) => {

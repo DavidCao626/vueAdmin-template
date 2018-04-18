@@ -12,11 +12,9 @@
 	Vue.use(VueRouter)
 	
 	import main from './components/main.vue'
-	import login from './components/login.vue'
 	
 	const routes = [
-	  { path: '/', component: main },
-	  { path: '/login', component: login }
+	  { path: '/', component: main }
 	]
 	
 	const router = new VueRouter({
