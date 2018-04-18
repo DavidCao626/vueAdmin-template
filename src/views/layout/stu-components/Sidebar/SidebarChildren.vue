@@ -3,7 +3,7 @@
         <li class="sidebar-child" v-for="item in childeren" :key="item.key">
           <template v-if="item">
             
-            <router-link v-if="item.path_attr" v-bind:to="item.path_attr" class="sidebar-child__link">
+            <router-link v-if="item.path_attr!=null" v-bind:to="item.path_attr" class="sidebar-child__link">
                 <span>{{item.title}}</span>
             </router-link>
 
@@ -33,7 +33,7 @@ export default {
   background-color: #ebeef5;
 }
 .sidebar-child__link {
-  padding-left: 92px;
+  padding-left: 94px;
   color:var(--color-grey-dark-1);
 }
 

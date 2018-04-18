@@ -3,23 +3,22 @@
     <ul class="sidebar-nav" v-if="navMenu.length">
       <li class="sidebar-item">
         <router-link to="/dashboard" class="sidebar-item__link">
-          <svg-icon class="sidebar-item__icon" icon-class="eye" />
+          <svg-icon class="sidebar-item__icon" icon-class="home" />
           <span>首页</span>
         </router-link>
       </li>
-      <li class="sidebar-item" v-for="item in navMenu" :key="item.Key">
-        <template v-if="item.disFlag=='false'">
+      <template v-for="item in navMenu" >
+        <li  class="sidebar-item"  :key="item.Key">
+
           <span class="sidebar-item__title">
-            <svg-icon class="sidebar-item__icon" icon-class="user" v-if="0"/>
+            <svg-icon class="sidebar-item__icon" icon-class="user" v-if="0" />
             <i :class="[item.icon,'sidebar-item__icon']"></i>
             <span>{{item.title}}</span>
           </span>
-          <sidebar-children 
-            v-if="item.children.length"
-            :childeren="item.children"
-          ></sidebar-children>
-        </template>
-      </li>
+          <sidebar-children v-if="item.children.length" :childeren="item.children"></sidebar-children>
+
+        </li>
+      </template>
 
     </ul>
     <div class="legal">
@@ -96,9 +95,9 @@ export default {
 
   &-item__icon {
     fill: var(--color-grey-light-2);
-    color:  var(--color-grey-light-2);
-    max-width: 1.5rem;
-    max-height: 1.5rem;
+    color: var(--color-grey-light-2);
+    max-width: 1.2em;
+    max-height: 1.2em;
     margin: 0.8rem;
     margin-left: 64px;
   }

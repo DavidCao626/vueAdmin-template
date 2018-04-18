@@ -86,11 +86,11 @@ GUtils.post(dataPath.getDictByDictNames, {
 	  'dicts': dicts
 	}, function(data) {
 	  majorData.push(data.resBody.major)
-	educationalTypeData.push(data.resBody.educationalType)
-	schoolAreaData.push(data.resBody.schoolArea)
-	entranceGradeData.push(data.resBody.entranceGrade)
-	stateData.push(data.resBody.is_bandh)
-	checkFlagData.push(data.resBody.check_flag)
+  educationalTypeData.push(data.resBody.educationalType)
+  schoolAreaData.push(data.resBody.schoolArea)
+  entranceGradeData.push(data.resBody.entranceGrade)
+  stateData.push(data.resBody.is_bandh)
+  checkFlagData.push(data.resBody.check_flag)
 })
 
 formDataStore.pushData({

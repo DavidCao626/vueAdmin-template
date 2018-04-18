@@ -1,6 +1,6 @@
 import axios from 'axios'
 import store from '../store'
-import { getToken } from '@/utils/auth'
+import { getToken } from '~/utils/auth'
 import { Message } from 'element-ui'
 // import { Loading } from 'element-ui'
 

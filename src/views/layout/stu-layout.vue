@@ -10,6 +10,22 @@
       </div>
       <main class="main-view ">
         <app-main class="app-container"></app-main>
+
+        <div class="app-container app-footer">
+          <div class="app-footer__info">
+            <ul>
+              <li><a href="">常见问题</a></li> <li>|</li>
+              <li>关于我们</li><li>|</li>
+              <li>版权说明</li><li>|</li>
+              <li>意见反馈</li>
+            </ul>
+          </div>
+            
+          <div class="app-footer__ext">
+              Copyright &copy; 2017-2018 Tabler. All Rights Reserved.
+          </div>
+
+        </div>
       </main>
     </div>
   </div>

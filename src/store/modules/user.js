@@ -86,7 +86,7 @@ const user = {
       return new Promise((resolve, reject) => {
         getNavMenu(state.navMenu)
           .then(response => {
-            const data = response.data.body.resBody
+            const data = response.resBody
             commit('SET_NAVMENU', data)
             resolve(response)
           })
