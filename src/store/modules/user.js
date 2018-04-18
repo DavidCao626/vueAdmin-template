@@ -3,7 +3,8 @@ import {
   logout,
   getInfo,
   getNavMenu,
-  getDutyList as getRuleList
+  getDutyList as getRuleList,
+  switchDuty
 } from '~/api/login'
 import { getToken, setToken, removeToken } from '~/utils/auth'
 import { uregister } from '~/api/register'
@@ -32,6 +33,9 @@ const user = {
     },
     SET_NAVMENU: (state, navMenu) => {
       state.navMenu = navMenu
+    },
+    SET_CURRENTLY: (state, currEntly) => {
+      state.roles.AppointDutyList[0].currently = currEntly
     }
   },
 
@@ -106,6 +110,26 @@ const user = {
               AppointDutyList.push(appoints[i])
             }
             commit('SET_ROLES', { MemberDutyList, AppointDutyList })
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+    // 切换职务
+    SwitchDuty({ commit, postData }) {
+      return new Promise((resolve, reject) => {
+        switchDuty(postData)
+          .then(response => {
+            const result = response.resBody
+            if (result.status === 'Y') {
+              this.$message('职务切换成功！' + result.type)
+              commit('SET_CURRENTLY', true)
+              // item.currently = true
+            } else {
+              this.$message(result.message)
+            }
             resolve(response)
           })
           .catch(error => {

@@ -40,9 +40,9 @@ export const constantRouterMap = [
     ]
   },
   {
-    path: '/example',
+    path: '/t',
     component: stuLayout,
-    redirect: '/example/table',
+    redirect: '/t/table',
     name: '默认栏目',
     meta: { title: 'Example', icon: 'example' },
     children: [
@@ -96,11 +96,16 @@ export const constantRouterMap = [
       }
     ]
   },
-
   {
     path: '/user',
     component: stuLayout,
+    name: '用户中心',
     children: [
+      {
+        path: 'messages',
+        name: '消息中心',
+        component: () => import('~/views/userManager/messages')
+      },
       {
         path: 'updateUserPwd',
         name: '用户修改密码',
@@ -110,6 +115,16 @@ export const constantRouterMap = [
         path: 'updateUserInfo',
         name: '用户修改资料',
         component: () => import('~/views/userManager/updateUserInfo')
+      },
+      {
+        path: 'updateUserPwd',
+        name: '用户修改密码',
+        component: () => import('~/views/userManager/updateUserPwd')
+      },
+      {
+        path: 'userduty',
+        name: '任职详情',
+        component: () => import('~/views/userManager/dutyManager/showUserDuty')
       },
       {
         path: 'userSelfAuth',
@@ -128,7 +143,6 @@ export const constantRouterMap = [
       }
     ]
   },
-
   {
     path: '/student',
     component: stuLayout,
@@ -163,27 +177,32 @@ export const constantRouterMap = [
       {
         path: 'stuBaseInfo',
         name: 'stuBaseInfo',
-        component: () => import('~/views/unitViews/stuBaseInfo'), hidden: true
+        component: () => import('~/views/unitViews/stuBaseInfo'),
+        hidden: true
       },
       {
         path: 'stuPersonalInfo',
         name: 'stuPersonalInfo',
-        component: () => import('~/views/unitViews/stuPersonalInfo'), hidden: true
+        component: () => import('~/views/unitViews/stuPersonalInfo'),
+        hidden: true
       },
       {
         path: 'stuUniversityInfo',
         name: 'stuUniversityInfo',
-        component: () => import('~/views/unitViews/stuUniversityInfo'), hidden: true
+        component: () => import('~/views/unitViews/stuUniversityInfo'),
+        hidden: true
       },
       {
         path: 'staffBaseInfo',
         name: 'staffBaseInfo',
-        component: () => import('~/views/unitViews/staffBaseInfo'), hidden: true
+        component: () => import('~/views/unitViews/staffBaseInfo'),
+        hidden: true
       },
       {
         path: 'staffUniversityInfo',
         name: 'staffUniversityInfo',
-        component: () => import('~/views/unitViews/staffUniversityInfo'), hidden: true
+        component: () => import('~/views/unitViews/staffUniversityInfo'),
+        hidden: true
       }
     ]
   },
@@ -201,7 +220,9 @@ export const constantRouterMap = [
       {
         path: 'updateStaffInfo',
         name: '修改职工信息',
-        component: () => import('~/views/userManager/staffManager/updateStaffInfo/index'), hidden: true
+        component: () =>
+          import('~/views/userManager/staffManager/updateStaffInfo/index'),
+        hidden: true
       },
       {
         path: 'staffBaseInfo',
@@ -231,23 +252,29 @@ export const constantRouterMap = [
       {
         path: 'socializeClassify',
         name: '系统用户管理',
-        component: () => import('~/views/userManager/socializeClassify/index'), hidden: true
+        component: () => import('~/views/userManager/socializeClassify/index'),
+        hidden: true
       },
       {
         path: 'menuManager',
         name: '系统用户管理',
-        component: () => import('~/views/systemManager/menuManager/index'), hidden: true
+        component: () => import('~/views/systemManager/menuManager/index'),
+        hidden: true
       },
       {
         path: 'orgManager',
         name: '系统机构管理',
-        component: () => import('~/views/systemManager/orgManager/index'), hidden: true
+        component: () => import('~/views/systemManager/orgManager/index'),
+        hidden: true
       }
     ]
   },
-  { path: '/test', component: () => import('~/views/unitViews/test'), hidden: true },
+  {
+    path: '/test',
+    component: () => import('~/views/unitViews/test'),
+    hidden: true
+  },
   { path: '*', redirect: '/404', hidden: true }
-
 ]
 
 export default new Router({

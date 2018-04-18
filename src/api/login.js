@@ -27,22 +27,10 @@ export function getDutyList() {
   return request({ url: '/user/getUserDutyList.do', method: 'post' })
 }
 
-export function switchDuty(
-  dutyCode,
-  managerNodeCode,
-  officeOrgCode,
-  classifyCode,
-  resigId
-) {
+export function switchDuty(postData) {
   return request({
     url: '/duty/switchDuty.do',
     method: 'post',
-    data: {
-      dutyCode,
-      managerNodeCode,
-      officeOrgCode,
-      classifyCode,
-      resigId
-    }
+    data: postData
   })
 }

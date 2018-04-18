@@ -3,6 +3,7 @@ const getters = {
   token: function(state) {
     return state.app.token
   },
+  user: state => state.user,
   avatar: state => state.user.avatar,
   name: state => state.user.name,
   roles: state => state.user.roles,

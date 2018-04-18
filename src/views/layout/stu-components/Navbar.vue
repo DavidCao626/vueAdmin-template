@@ -20,8 +20,8 @@
             <div class="navbar-account">
 
               <div class="avatar-wrapper">
-                <router-link class="inlineBlock" to="/user">
-                 <i class="el-icon-bell message"></i>
+                <router-link class="inlineBlock" to="/user/messages">
+                 <i class="el-icon-message message"></i>
                 </router-link>
                 <el-dropdown trigger="hover">
 
@@ -30,7 +30,7 @@
                     <img :src="avatar" class="user-avatar" />
                     <div class="name">
                       <span class="name__1">{{name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="name__2">学号：No.01521</span><br/>
-                      <span class="name__2">{{roles.MemberDutyList[0].managerNodeName}} | {{roles.MemberDutyList[0].dutyName}} </span>
+                      <span class="name__2" v-if="roles.MemberDutyList.length!==0">{{roles.MemberDutyList[0].managerNodeName}} | {{roles.MemberDutyList[0].dutyName}} </span>
                     </div>
                     <i class="el-icon-caret-bottom"></i>
                   </div>
@@ -41,7 +41,7 @@
                         <i class="el-icon-date"></i>&nbsp; 账号详情
                       </el-dropdown-item>
                     </router-link>
-                    <router-link class="inlineBlock" to="/">
+                    <router-link class="inlineBlock" to="/user/userduty">
                       <el-dropdown-item>
                         <i class="el-icon-circle-check-outline"></i>&nbsp; 任职详情
                       </el-dropdown-item>
@@ -75,7 +75,11 @@ import { mapGetters } from 'vuex'
 export default {
   components: {},
   computed: {
-    ...mapGetters(['sidebar', 'avatar', 'name', 'roles'])
+    ...mapGetters(['sidebar', 'avatar', 'name', 'roles']),
+    MemberDutyList() {
+
+    }
+
   },
   methods: {
     toggleSideBar() {
