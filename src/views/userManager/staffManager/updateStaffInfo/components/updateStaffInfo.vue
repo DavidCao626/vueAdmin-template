@@ -29,8 +29,8 @@ import updateStaffBaseInfo from './updateStaffBaseInfo.vue'
 import updateStaffUniversityInfo from './updateStaffUniversityInfo.vue'
 
 // 这两个参数是传来的
-var baseInfoBid = '483'
-var universityInfoBid = '470'
+var baseInfoBid = '0'
+var universityInfoBid = '0'
 var loadOrg = {}
 loadOrg.orgCode = ''
 export default {

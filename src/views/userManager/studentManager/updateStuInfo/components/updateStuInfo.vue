@@ -34,9 +34,9 @@ import updateStuBaseInfo from './updateStuBaseInfo.vue'
 import updateStuPersonInfo from './updateStuPersonInfo.vue'
 import updateStuUniversityInfo from './updateStuUniversityInfo.vue'
 
-var baseInfoId = '65' // 传来的
-var personalInfoBid = '47' // 传
-var universityInfoBid = '54' // 传
+var baseInfoId = '0' // 传来的
+var personalInfoBid = '0' // 传
+var universityInfoBid = '0' // 传
 var loadOrg = {}
 loadOrg.orgCode = ''
 export default {

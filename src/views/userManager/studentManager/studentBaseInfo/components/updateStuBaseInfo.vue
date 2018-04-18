@@ -255,20 +255,20 @@ var requestData = {
 	var dictData = {}
 GUtils.post(dataPath.getDictByDictNames, requestData, function(data) {
 	  dictData = data.resBody
-	/* sexTypeStore.pushAllByFormat(dictData.sex_type, {
+  /* sexTypeStore.pushAllByFormat(dictData.sex_type, {
 		"val": "dict_key",
 		"name": "dict_desc"
 	});*/
-	examiniationLanguageData.push(dictData.language)
-	stuArchivesTypeData.push(dictData.stu_archives_type)
-	stuArchivesStatusData.push(dictData.stu_archives_status)
-	specialTypeData.push(dictData.special_type)
-	foreignLanguageData.push(dictData.language)
-	academicStatusData.push(dictData.academic_status)
-	stuDegreeTypeData.push(dictData.stu_degree_type)
-	graduationTypeData.push(dictData.graduation_type)
-	checkFlagData.push(dictData.check_flag)
-	isGraduatesStore.pushAllByFormat(dictData.is_graduates, {
+  examiniationLanguageData.push(dictData.language)
+  stuArchivesTypeData.push(dictData.stu_archives_type)
+  stuArchivesStatusData.push(dictData.stu_archives_status)
+  specialTypeData.push(dictData.special_type)
+  foreignLanguageData.push(dictData.language)
+  academicStatusData.push(dictData.academic_status)
+  stuDegreeTypeData.push(dictData.stu_degree_type)
+  graduationTypeData.push(dictData.graduation_type)
+  checkFlagData.push(dictData.check_flag)
+  isGraduatesStore.pushAllByFormat(dictData.is_graduates, {
 	    'val': 'dict_key',
 	    'name': 'dict_desc'
 	  })
@@ -353,12 +353,14 @@ export default {
 
 	        var responseBody = data.resBody[0]
 	        formDataStore.pushData(responseBody)
+
 	        formDataStore.pushData({
 	          'checkFlag': responseBody.checkFlag.toString(),
 	          'isGraduates': responseBody.isGraduates.toString(),
 	          'sexType': responseBody.sexType.toString(),
 	          'PGraduationName': responseBody.pgraduationName
 	        })
+	
 	        that.iload = false
 	      })
     },
