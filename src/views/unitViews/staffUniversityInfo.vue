@@ -54,83 +54,83 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Element from "element-ui";
-import "@/theme/index.css";
-import VueExpand from "@/components/VueExpand";
-Vue.use(Element);
-Vue.use(VueExpand);
-import GUtils from "@/components/Utils.js";
-import GStoreFactory from "@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js";
-import GraceComponent from "@/ComponentPackage/GraceComponents.js";
-import dataPath from "@/API/Staff/staff_info_manager.js";
-import reqPath from "@/API/System/SystemManagerApi.js";
-Vue.use(GraceComponent);
+import Vue from 'vue'
+import Element from 'element-ui'
+import '@/theme/index.css'
+import VueExpand from '@/components/VueExpand'
+Vue.use(Element)
+Vue.use(VueExpand)
+import GUtils from '@/components/Utils.js'
+import GStoreFactory from '@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js'
+import GraceComponent from '@/ComponentPackage/GraceComponents.js'
+import dataPath from '@/API/Staff/staff_info_manager.js'
+import reqPath from '@/API/System/SystemManagerApi.js'
+Vue.use(GraceComponent)
 var staffJobData = [
   {
-    id: "1",
-    name: "职称"
+    id: '1',
+    name: '职称'
   }
-];
+]
 var pgpostsData = [
   {
-    id: "1",
-    name: "党政职务"
+    id: '1',
+    name: '党政职务'
   }
-];
-var id = "1";
+]
+var id = '1'
 
-var formStore = GStoreFactory.buildServiceForm();
-var formDataStore = GStoreFactory.buildServiceFormData();
+var formStore = GStoreFactory.buildServiceForm()
+var formDataStore = GStoreFactory.buildServiceFormData()
 
-var dicts = ["isUse", "is_bandh", "check_flag"];
-var stateData = [];
-var checkFlagData = [];
+var dicts = ['isUse', 'is_bandh', 'check_flag']
+var stateData = []
+var checkFlagData = []
 GUtils.post(
   dataPath.getDictByDictNames,
   {
     dicts: dicts
   },
   function(data) {
-    stateData.push(data.resBody.is_bandh);
-    checkFlagData.push(data.resBody.check_flag);
+    stateData.push(data.resBody.is_bandh)
+    checkFlagData.push(data.resBody.check_flag)
   }
-);
+)
 
 formDataStore.pushData({
-  staffCode: "", // 教职工编码
+  staffCode: '', // 教职工编码
   orgCode: [], // 所属机构
-  staffJob: "", // 职称
-  personnelCode: "", // 人事编号
-  pgposts: "", // 党政职务
-  suspension: "Y", // 是否停职
-  entranceDate: "", // 生效日期
-  exitDate: "", // 失效日期
-  state: "Y", //是否有效
-  checkFlag: "0", //审核
-  checkComment: "" //审核备注
-});
-formDataStore.pushRules({});
+  staffJob: '', // 职称
+  personnelCode: '', // 人事编号
+  pgposts: '', // 党政职务
+  suspension: 'Y', // 是否停职
+  entranceDate: '', // 生效日期
+  exitDate: '', // 失效日期
+  state: 'Y', // 是否有效
+  checkFlag: '0', // 审核
+  checkComment: '' // 审核备注
+})
+formDataStore.pushRules({})
 
-formStore.addAttr("formData", formDataStore);
+formStore.addAttr('formData', formDataStore)
 // 组织组件
 var f_org_code = GStoreFactory.buildSmallCascaderStore(
   formDataStore.data,
-  "orgCode"
-);
-f_org_code.addConf("expandTrigger", "hover");
-f_org_code.addConf("props", {
-  value: "org_code",
-  label: "org_name",
-  children: "children",
-  disabled: "disabled"
-});
+  'orgCode'
+)
+f_org_code.addConf('expandTrigger', 'hover')
+f_org_code.addConf('props', {
+  value: 'org_code',
+  label: 'org_name',
+  children: 'children',
+  disabled: 'disabled'
+})
 GUtils.post(reqPath.queryUserOrg, {}, function(data) {
-  f_org_code.pushAll(data.resBody);
-});
+  f_org_code.pushAll(data.resBody)
+})
 
 export default {
-  props: ["bid"],
+  props: ['bid'],
   data() {
     return {
       formStore,
@@ -139,11 +139,11 @@ export default {
       checkFlagData,
       staffJobData,
       pgpostsData
-    };
+    }
   },
   methods: {
     test: function() {
-      console.log(this);
+      console.log(this)
     }
   },
   mounted: function() {
@@ -153,7 +153,7 @@ export default {
         id: this.$route.params.staffUniversityInfoCode
       },
       function(data) {
-        console.log(["loadFormData", data]);
+        console.log(['loadFormData', data])
         formDataStore.pushData({
           checkComment: data.resBody.baseData.checkComment,
           checkFlag: data.resBody.baseData.checkFlag,
@@ -166,15 +166,15 @@ export default {
           staffJob: data.resBody.baseData.staffJob,
           state: data.resBody.baseData.state,
           suspension: data.resBody.baseData.suspension
-        });
+        })
         formDataStore.pushData({
           orgCode: data.resBody.aOrgCode
-        });
-        console.log(["aOrgCode", data.resBody.aOrgCode]);
+        })
+        console.log(['aOrgCode', data.resBody.aOrgCode])
       }
-    );
+    )
   }
-};
+}
 </script>
 
 <style>

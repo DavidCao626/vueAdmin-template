@@ -75,12 +75,12 @@ formDataStore.pushData({
 	  phone: '', // 手机号
 	  email: '', // 邮箱
 	  identityNo: '', // 身份证号码
-  		checkFlag: "0", //审核状态
-  		checkComment: "", //审核备注
+  		checkFlag: '0', // 审核状态
+  		checkComment: '', // 审核备注
 	  personalPhoto: '' // 证件照片
 	})
 formDataStore.pushRules({
-	  
+	
 	})
 formStore.addAttr('formData', formDataStore)
 
@@ -113,7 +113,7 @@ export default {
 	      GUtils.post(dataPath.updateStaffBaseInfo, formStore.formData.data, function(data) {
 	        that.$parent.$parent.iLoad()
 	      })
-    },
+    }
 	  },
 	  mounted: function() {
 	    var that = this

@@ -309,7 +309,7 @@ export default {
   },
   methods: {
     getBaseInfo: function() {
-      var baseId =this.$route.params.stuBaseInfoCode
+      var baseId = this.$route.params.stuBaseInfoCode
       this.iload = true
       var that = this
       GUtils.post(
@@ -334,7 +334,6 @@ export default {
     }
   },
   mounted: function() {
-     
     this.getBaseInfo()
   }
 }
