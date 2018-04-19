@@ -10,26 +10,56 @@
             </h1>
           </slot>
         </div>
+        <div class="navbar-layout__center" v-if="0">
+          <slot name="center">
+            <input type="text" placeholder="搜索关键字" style="border:0px solid #ffffff">
+          </slot>
+        </div>
         <div class="navbar-layout__extra">
           <slot name="extra">
             <div class="navbar-account">
-              <el-dropdown class="avatar-container" trigger="click">
-                <div class="avatar-wrapper">
-                  <img src="http://wx.qlogo.cn/mmopen/srV4q1ZBhL5noVk7Qhtm9230Akc0ziabqibibHJsGhW4deMx5fY0nr0zlXQvBBOf9icWQKicuKPbG1LRRwE47FoB95dWSBl47IVFo/64"  class="user-avatar"/>
-                   <span class="name">administatro</span>
-                  <i class="el-icon-caret-bottom"></i>
-                </div>
-                <el-dropdown-menu class="user-dropdown" slot="dropdown">
-                  <router-link class="inlineBlock" to="/">
+
+              <div class="avatar-wrapper">
+                <router-link class="inlineBlock" to="/user/messages">
+                 <i class="el-icon-message message"></i>
+                </router-link>
+                <el-dropdown trigger="hover">
+
+                  <div class="avatar-container">
+
+                    <img :src="avatar" class="user-avatar" />
+                    <div class="name">
+                      <span class="name__1">{{name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="name__2">学号：No.01521</span><br/>
+                      <span class="name__2" v-if="roles.MemberDutyList.length!==0">{{roles.MemberDutyList[0].managerNodeName}} | {{roles.MemberDutyList[0].dutyName}} </span>
+                    </div>
+                    <i class="el-icon-caret-bottom"></i>
+                  </div>
+
+                  <el-dropdown-menu class="user-dropdown" slot="dropdown">
+                    <router-link class="inlineBlock" to="/user/updateUserInfo">
+                      <el-dropdown-item>
+                        <i class="el-icon-date"></i>&nbsp; 账号详情
+                      </el-dropdown-item>
+                    </router-link>
+                    <router-link class="inlineBlock" to="/user/userduty">
+                      <el-dropdown-item>
+                        <i class="el-icon-circle-check-outline"></i>&nbsp; 任职详情
+                      </el-dropdown-item>
+                    </router-link>
+                    <router-link class="inlineBlock" to="/">
+                      <el-dropdown-item>
+                        <i class="el-icon-setting"></i>&nbsp; 功能设置
+                      </el-dropdown-item>
+                    </router-link>
+                    <!-- divided -->
                     <el-dropdown-item>
-                      Home
+                      <span @click="logout" style="display:block;">
+                        <i class="el-icon-refresh"></i>&nbsp;&nbsp;退出登录</span>
                     </el-dropdown-item>
-                  </router-link>
-                  <el-dropdown-item divided>
-                    <span @click="logout" style="display:block;">LogOut</span>
-                  </el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </div>
+
             </div>
           </slot>
         </div>
@@ -43,13 +73,13 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  components: {
-  },
+  components: {},
   computed: {
-    ...mapGetters([
-      'sidebar',
-      'avatar'
-    ])
+    ...mapGetters(['sidebar', 'avatar', 'name', 'roles']),
+    MemberDutyList() {
+
+    }
+
   },
   methods: {
     toggleSideBar() {
@@ -62,25 +92,32 @@ export default {
     }
   }
 }
-
 </script>
 <style lang="scss" scoped>
 .navbar {
   background-color: #ffffff;
-  
-
+  height: 100%;
   &__inner {
-     padding: 0 65px;
+    padding: 0 65px;
   }
   &-layout {
-    height: 100%;
-    position: relative;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
   }
   &-layout__side {
-    float: left;
+    flex: 0;
   }
+  &-layout__center {
+    flex: 1;
+    padding-left: 60px;
+    color: #9a9a9a;
+  }
+
   &-logo {
-    padding-top: 20px;
     a {
       display: block;
       overflow: hidden;
@@ -102,16 +139,14 @@ export default {
   }
 
   &__inner > &-layout > &-layout__extra {
-    position: absolute;
-    right: 0;
-    top: 0;
+    height: 100%;
   }
   &__inner > &-layout > &-layout__extra,
   &__inner > &-layout &-account {
     height: 100%;
   }
 
-   .hamburger-container {
+  .hamburger-container {
     line-height: 58px;
     height: 50px;
     float: left;
@@ -123,36 +158,43 @@ export default {
     top: 16px;
     color: red;
   }
-  .avatar-container {
-    height: 50px;
-    display: inline-block;
-    position: absolute;
-    right:-5px;
-    .avatar-wrapper {
-      cursor: pointer;
-      margin-top: 5px;
-      position: relative;
-      width: 150px;
+  .avatar-wrapper {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    .user-avatar {
+      width: 40px;
       height: 40px;
-      .user-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 30%;
-        margin: 13px;
+      border-radius: 30%;
+      margin-left: 15px;
+    }
+    .avatar-container {
+      display: flex;
+      align-items: center;
+    }
+    .name {
+      margin: 10px;
+      line-height: 1.4;
+      &__1 {
+        color: var(--color-grey-dark-2);
       }
-      .name{
-         position: absolute;
-        top: 80%;
-        transform: translateY(-50%);
-      }
-      .el-icon-caret-bottom {
-        position: absolute;
-        right: -20px;
-        top: 25px;
+      &__2 {
+        color: var(--color-grey-light-2);
         font-size: 12px;
       }
     }
+    .message {
+      padding: 6px;
+      font-size: 24px;
+      color: var(--color-grey-light-1);
+      border: 1px solid var(--color-grey-light-3);
+      border-radius: 50%;
+    }
   }
+}
+.user-dropdown {
+  margin-top: -3px;
 }
 </style>
 

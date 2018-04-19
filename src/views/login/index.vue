@@ -75,7 +75,11 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style lang="scss">
+body,html{
+  margin: 0px;
+  padding: 0px;
+}
 .form-container {
   width: 100%;
   height: 100%;

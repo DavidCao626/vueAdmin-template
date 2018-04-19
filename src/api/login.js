@@ -11,24 +11,26 @@ export function login(loginName, pwd) {
   })
 }
 
-export function getInfo(token) {
-  return request({
-    url: '/user/info',
-    method: 'get',
-    params: { token }
-  })
+export function logout() {
+  return request({ url: '/user/logout.do', method: 'post' })
 }
 
 export function getNavMenu(token) {
-  return request({
-    url: '/systemManagerApi/getUserMenu.do',
-    method: 'get'
-  })
+  return request({ url: '/systemManagerApi/getUserMenu.do', method: 'get' })
 }
 
-export function logout() {
+export function getInfo(token) {
+  return request({ url: '/user/getLoginUserInfo.do', method: 'post' })
+}
+
+export function getDutyList() {
+  return request({ url: '/user/getUserDutyList.do', method: 'post' })
+}
+
+export function switchDuty(postData) {
   return request({
-    url: '/user/logout',
-    method: 'post'
+    url: '/duty/switchDuty.do',
+    method: 'post',
+    data: postData
   })
 }

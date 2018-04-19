@@ -11,10 +11,11 @@ import router from './router'
 import store from './store'
 
 import '~/icons' // icon
-//   import '~/permission' // permission control
+import '~/permission' // permission control
+import { Pagedefault } from '~/components/Pageslayout'
+Vue.component('page', Pagedefault)
 
 Vue.use(ElementUI, { locale })
-
 Vue.config.productionTip = false
 
 new Vue({

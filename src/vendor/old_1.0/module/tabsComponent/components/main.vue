@@ -1,15 +1,6 @@
 <template>
 	<div id="bodyBox">
-		<el-dialog
-		  title="您现在是访客模式，登录获取更多功能。"
-		  :visible.sync="centerDialogVisible"
-		  width="30%"
-		  center>
-	  <login-alert></login-alert>
-	  
-	  
-	    </el-dialog>
-	    
+
 	    
 		<gc-container :component-store="pageHCon">
 			<div slot="header" style="margin-bottom:1px">
@@ -88,9 +79,7 @@ export default {
   	},
 
   components: {
-    login,
     'app-nav': nav,
-    'login-alert': loginAlert
   },
 
   methods: {
