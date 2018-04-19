@@ -130,6 +130,7 @@ export default {
       console.log(['this', this])
     },
     saveInfo: function(formName) {
+      var that = this
       this.$refs[formName].validate(valid => {
         if (valid) {
           // this.loading = true;
@@ -141,7 +142,7 @@ export default {
             email: this.userInfoFormStore.formData.data.email
           }
           GUtils.post(saveDataConfig.url, saveDataConfig.data, function(data) {
-            vue.$message({
+            that.$message({
               showClose: true,
               message: '恭喜你，信息修改成功',
               type: 'success'

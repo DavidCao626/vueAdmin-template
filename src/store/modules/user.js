@@ -118,7 +118,7 @@ const user = {
       })
     },
     // 切换职务
-    SwitchDuty({ commit, postData }) {
+    SwitchDuty({ commit }, postData) {
       return new Promise((resolve, reject) => {
         switchDuty(postData)
           .then(response => {

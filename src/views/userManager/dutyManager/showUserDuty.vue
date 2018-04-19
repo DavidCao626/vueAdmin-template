@@ -39,11 +39,11 @@
                             <img src="/src/assets/img/student-man.svg" />
                             <h3>{{member.dutyName}}</h3>
                             <p>{{member.managerNodeName}}</p>
-                            <p>任期时间: 2017-6 ~ 2018-10</p>
+                            <!-- <p>任期时间: 2017-6 ~ 2018-10</p> -->
                             <br/>
 
                             <el-tooltip class="item" effect="dark" content="你当前已经切换到该角色" placement="bottom">
-                                <el-button type="primary">切换角色</el-button>
+                                <el-button type="primary"  @click="roleSwitchches(member)">切换角色</el-button>
                             </el-tooltip>
                         </div>
                     </template>
@@ -56,23 +56,23 @@
                         </el-dropdown-item> -->
                         <div class="content__box">
                             <img src="/src/assets/img/teacher-man.svg" />
-                            <h3> {{ item.dutyName }}</h3>
-                            <p>{{appoint.managerNodeName}}</p>
-                            <p>任期时间: 2017-6 ~ 2018-10</p>
+                            <h3> {{ appoint.dutyName }}</h3>
+                            <p>{{appoint.officeOrgName}}</p>
+                            <!-- <p>任期时间: 2017-6 ~ 2018-10</p> -->
                             <br/>
 
                             <el-button type="default" @click="roleSwitchches(appoint)">切换角色</el-button>
                         </div>
                     </template>
 
-                    <div class="content__box">
+                    <!-- <div class="content__box">
                         <img src="/src/assets/img/worker-man.svg" />
                         <h3>教职工</h3>
                         <p>内蒙古大学计算机学员2017级8班</p>
                         <p>任期时间: 2017-6 ~ 2018-10</p>
                         <br/>
                         <el-button type="default" @click="roleSwitchches()">切换角色</el-button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -98,8 +98,8 @@ export default {
         classifyCode: item.classifyCode,
         resigId: item.resigId
       }
-
-      this.$store.dispatch('ToggleSideBar', postData)
+      console.log(['item', item])
+      this.$store.dispatch('SwitchDuty', postData)
     }
   },
 
