@@ -34,3 +34,11 @@ export function switchDuty(postData) {
     data: postData
   })
 }
+
+export function setDefaultDuty(dutyCode) {
+  return request({
+    url: '/duty/setDefaultDuty.do',
+    method: 'post',
+    data: dutyCode
+  })
+}

@@ -35,7 +35,9 @@
                 </div>
                 <div class="content__flex">
                     <template v-for="member in user.roles.MemberDutyList">
+                     
                         <div class="content__box">
+                           <div v-if="member.currently">**</div>
                             <img src="/src/assets/img/student-man.svg" />
                             <h3>{{member.dutyName}}</h3>
                             <p>{{member.managerNodeName}}</p>
@@ -45,6 +47,7 @@
                             <el-tooltip class="item" effect="dark" content="你当前已经切换到该角色" placement="bottom">
                                 <el-button type="primary"  @click="roleSwitchches(member)">切换角色</el-button>
                             </el-tooltip>
+                                <el-button v-if="member.currently" type="primary"  @click="setDefaultDuty(member)">设为默认</el-button>
                         </div>
                     </template>
 
@@ -55,6 +58,7 @@
                                 <span v-if="appoint.officeOrgName"> {{appoint.officeOrgName}}/</span> {{ appoint.dutyName }}</p>
                         </el-dropdown-item> -->
                         <div class="content__box">
+                           <div v-if="appoint.currently">**</div>
                             <img src="/src/assets/img/teacher-man.svg" />
                             <h3> {{ appoint.dutyName }}</h3>
                             <p>{{appoint.officeOrgName}}</p>
@@ -62,6 +66,7 @@
                             <br/>
 
                             <el-button type="default" @click="roleSwitchches(appoint)">切换角色</el-button>
+                            <el-button v-if="appoint.currently" type="primary"  @click="setDefaultDuty(appoint)">设为默认</el-button>
                         </div>
                     </template>
 
@@ -100,6 +105,13 @@ export default {
       }
       console.log(['item', item])
       this.$store.dispatch('SwitchDuty', postData)
+    },
+    setDefaultDuty(item) {
+      this.$store.dispatch('SetDefaultDuty', item).then((response) => {
+        this.$message.success('设置成功')
+      }).catch((response) => {
+        this.$message.error('设置失败')
+      })
     }
   },
 

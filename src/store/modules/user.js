@@ -4,7 +4,8 @@ import {
   getInfo,
   getNavMenu,
   getDutyList as getRuleList,
-  switchDuty
+  switchDuty,
+  setDefaultDuty
 } from '~/api/login'
 import { getToken, setToken, removeToken } from '~/utils/auth'
 import { uregister } from '~/api/register'
@@ -137,6 +138,19 @@ const user = {
           })
       })
     },
+
+    SetDefaultDuty({ commit }, dutyCode) {
+      return new Promise((resolve, reject) => {
+        setDefaultDuty(dutyCode)
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
+    },
+
     // 获取用户组可用菜单
     GetNavMenu({ commit, state }) {
       return new Promise((resolve, reject) => {
