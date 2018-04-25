@@ -1,91 +1,43 @@
 <template>
-	<div>
-	<el-upload
-  class="avatar-uploader"
-  :action="upLoadUrl"
-  :show-file-list="false"
-  :on-success="handleAvatarSuccess"
-  
-  >
-  <img v-if="imageUrl" :src="imageUrl" class="avatar">
-  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-</el-upload>
-</div>
+  <div>
+    <el-date-picker format="yyyy 年 MM 月 dd 日  HH 时 mm 分 ss 秒 " value-format="yyyy-MM-dd HH:mm:ss" v-model="testData" type="datetime" placeholder="选择">
+    </el-date-picker>
+    <el-button @click="testBT">测试</el-button>
+  </div>
 </template>
 
 <script>
-	import Vue from 'vue'
-	import Element from 'element-ui'
-	import '@/theme/index.css'
-	import '@/styles/app.scss'
-	import VueExpand from '@/components/VueExpand'
-	Vue.use(Element)
-Vue.use(VueExpand)
-import GUtils from '@/components/Utils.js'
-	import GStoreFactory from '@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js'
-	import GraceComponent from '@/ComponentPackage/GraceComponents.js'
-	import dataPath from '@/API/Student/student_info_manager.js'
-	Vue.use(GraceComponent)
-//	:before-upload="beforeAvatarUpload"
+import { test } from '~/api/whktest'
 export default {
   data() {
     return {
-      imageUrl: '',
-      upLoadUrl: '/act/staff/staffExcelReader.do'
+      testData: ''
     }
   },
   methods: {
-    	upLoadSuccess(response, file, fileList) {
-    		console.log(['response', response])
-    		console.log(['file', file])
-    		console.log(['fileList', fileList])
-    	},
 
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw)
-      console.log(['res', res])// res为文件路径
-    		console.log(['file', file])
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
+    testBT() {
+      var data = {
+        'asAnswerDate': this.testData
       }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
-      }
-      return isJPG && isLt2M
+      console.log({
+        'asAnswerDate': this.testData
+      })
+      new Promise((resolve, reject) => {
+        test(data)
+          .then(response => {
+            resolve(response)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      })
     }
+
   }
 }
 </script>
 
 <style>
-	.avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    width:100px;
-    height: 100px;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 99px;
-    height: 99px;
-    line-height: 99px;
-    text-align: center;
-  }
-  .avatar {
-    width: 99px;
-    height: 99px;
-    display: block;
-  }
+
 </style>

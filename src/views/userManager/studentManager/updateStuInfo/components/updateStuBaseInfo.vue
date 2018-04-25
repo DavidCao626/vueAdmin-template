@@ -404,7 +404,7 @@ export default {
         function(data) {
           console.log(['update', data])
 
-          var responseBody = data.resBody[0]
+          var responseBody = data.resBody
           formDataStore.pushData(responseBody)
           formDataStore.pushData({
             checkFlag: responseBody.checkFlag.toString(),
