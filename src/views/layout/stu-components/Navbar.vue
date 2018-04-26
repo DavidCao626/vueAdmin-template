@@ -21,7 +21,7 @@
 
               <div class="avatar-wrapper">
                 <router-link class="inlineBlock" to="/user/messages">
-                 <i class="el-icon-message message"></i>
+                  <i class="el-icon-message message"></i>
                 </router-link>
                 <el-dropdown trigger="hover">
 
@@ -29,8 +29,9 @@
 
                     <img :src="avatar" class="user-avatar" />
                     <div class="name">
-                      <span class="name__1">{{name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="name__2">学号：No.01521</span><br/>
-                      <span class="name__2" v-if="roles.MemberDutyList.length!==0">{{roles.MemberDutyList[0].managerNodeName}} | {{roles.MemberDutyList[0].dutyName}} </span>
+                      <span class="name__1">{{name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <span class="name__2">学号：No.01521</span><br/>
+                      <span class="name__2">{{ dutyRoles['managerNodeName']}} | {{dutyRoles['dutyName']}} </span>
                     </div>
                     <i class="el-icon-caret-bottom"></i>
                   </div>
@@ -73,13 +74,36 @@
 import { mapGetters } from 'vuex'
 
 export default {
+  data(){
+    return {
+      dutyRoles
+    }
+  },
   components: {},
   computed: {
     ...mapGetters(['sidebar', 'avatar', 'name', 'roles']),
-    MemberDutyList() {
 
-    }
 
+  },
+  created:function (){
+   for (let key in this.roles) {
+        if (key.length>0) {
+          this.roles[key].forEach(element => {
+            if(element.currently===true){
+              this.dutyRoles=element
+              console.log(this.dutyRoles);
+              return element
+            }
+            else{
+              return this.roles.MemberDutyList[0]
+            }
+          });
+          
+        }else{
+          return this.roles.MemberDutyList[0]
+        }
+  }
+    
   },
   methods: {
     toggleSideBar() {
@@ -89,7 +113,7 @@ export default {
       this.$store.dispatch('LogOut').then(() => {
         location.reload() // 为了重新实例化vue-router对象 避免bug
       })
-    }
+    },
   }
 }
 </script>

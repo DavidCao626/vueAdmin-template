@@ -1,12 +1,12 @@
 <template>
 	<div>
 		<el-form size="mini" :model="formStore.formData.data" ref="addForm" :rules="formStore.formData.rules" label-width="100px" v-loading="iload">
-			<el-form-item label="管理节点" prop="managerNodeCode">
+			<!-- <el-form-item label="管理节点" prop="managerNodeCode">
 				<el-select v-model="formStore.formData.data.managerNodeCode" @change="orgCodeChange" placeholder="请选择">
 					<el-option v-for="(item,index) in managerCodeData" :key="index" :label="item.managerNodeName" :value="item.managerNodeCode">
 					</el-option>
 				</el-select>
-			</el-form-item>
+			</el-form-item> -->
 			<el-form-item label="学号">
 				<el-input size="mini" v-model="formStore.formData.data.stuNo"></el-input>
 			</el-form-item>

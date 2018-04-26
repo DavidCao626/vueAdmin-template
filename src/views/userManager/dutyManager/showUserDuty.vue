@@ -45,7 +45,7 @@
                             <br/>
 
                             <el-tooltip class="item" effect="dark" content="你当前已经切换到该角色" placement="bottom">
-                                <el-button type="primary"  @click="roleSwitchches(member)">切换角色</el-button>
+                                <el-button type="primary"  @click="roleSwitchches(member,'MemberDutyList')">切换角色</el-button>
                             </el-tooltip>
                                 <el-button v-if="member.currently" type="primary"  @click="setDefaultDuty(member)">设为默认</el-button>
                         </div>
@@ -65,7 +65,7 @@
                             <!-- <p>任期时间: 2017-6 ~ 2018-10</p> -->
                             <br/>
 
-                            <el-button type="default" @click="roleSwitchches(appoint)">切换角色</el-button>
+                            <el-button type="default" @click="roleSwitchches(appoint,'AppointDutyList')">切换角色</el-button>
                             <el-button v-if="appoint.currently" type="primary"  @click="setDefaultDuty(appoint)">设为默认</el-button>
                         </div>
                     </template>
@@ -92,19 +92,24 @@ export default {
     ...mapGetters(['user'])
   },
   methods: {
-    roleSwitchches(item) {
+    roleSwitchches(item,rolesItem) {
       if (item.currently === 'true') {
         return
       }
-      const postData = {
-        dutyCode: item.dutyCode,
-        managerNodeCode: item.managerNodeCode,
-        officeOrgCode: item.officeOrgCode,
-        classifyCode: item.classifyCode,
-        resigId: item.resigId
-      }
-      console.log(['item', item])
-      this.$store.dispatch('SwitchDuty', postData)
+      let userTempRoles= this.user.roles
+     /* console.log(userTempRoles)
+      for(e in userTempRoles) {
+        e.forEach(element => {
+          element.currently=false;
+        });
+      };
+      userTempRoles[rolesItem].item.currently=true;
+
+    
+      
+      console.log(rolesItem.tostring())*/
+      this.$store.dispatch('SwitchDuty', item)
+     
     },
     setDefaultDuty(item) {
       this.$store.dispatch('SetDefaultDuty', item).then((response) => {

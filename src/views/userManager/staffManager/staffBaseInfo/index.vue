@@ -12,7 +12,7 @@
 				</template>
 				<!-- 常用的操作-->
 				<template slot="often">
-					<el-button type="info" title="更多条件" size="mini" @click="addBaseInfoDV = true">新增</el-button>
+				
 					<el-button type="info" title="导出" size="mini">导出</el-button>
 					<el-button type="info" title="导出" size="mini">打包</el-button>
 				</template>
