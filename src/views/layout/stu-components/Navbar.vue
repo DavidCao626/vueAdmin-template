@@ -31,7 +31,7 @@
                     <div class="name">
                       <span class="name__1">{{name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <span class="name__2">学号：No.01521</span><br/>
-                      <span class="name__2">{{ dutyRoles['managerNodeName']}} | {{dutyRoles['dutyName']}} </span>
+                      <span class="name__2" v-if="dutyRoles">{{ dutyRoles['managerNodeName']}} | {{dutyRoles['dutyName']}} </span>
                     </div>
                     <i class="el-icon-caret-bottom"></i>
                   </div>
@@ -71,51 +71,46 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
-  data(){
+  data() {
     return {
       dutyRoles
-    }
+    };
   },
   components: {},
   computed: {
-    ...mapGetters(['sidebar', 'avatar', 'name', 'roles']),
-
-
+    ...mapGetters(["sidebar", "avatar", "name", "roles"])
   },
-  created:function (){
-   for (let key in this.roles) {
-        if (key.length>0) {
-          this.roles[key].forEach(element => {
-            if(element.currently===true){
-              this.dutyRoles=element
-              console.log(this.dutyRoles);
-              return element
-            }
-            else{
-              return this.roles.MemberDutyList[0]
-            }
-          });
-          
-        }else{
-          return this.roles.MemberDutyList[0]
-        }
-  }
-    
+  created: function() {
+    for (let key in this.roles) {
+      if (key.length > 0) {
+        this.roles[key].forEach(element => {
+          if (element.currently === true) {
+            this.dutyRoles = element;
+            console.log(this.dutyRoles);
+            return element;
+          } else {
+            return this.roles.MemberDutyList[0];
+          }
+        });
+      } else {
+        return this.roles.MemberDutyList[0];
+      }
+    }
   },
   methods: {
     toggleSideBar() {
-      this.$store.dispatch('ToggleSideBar')
+      this.$store.dispatch("ToggleSideBar");
     },
     logout() {
-      this.$store.dispatch('LogOut').then(() => {
-        location.reload() // 为了重新实例化vue-router对象 避免bug
-      })
-    },
+      this.$store.dispatch("LogOut").then(() => {
+        location.reload(); // 为了重新实例化vue-router对象 避免bug
+      });
+    }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .navbar {

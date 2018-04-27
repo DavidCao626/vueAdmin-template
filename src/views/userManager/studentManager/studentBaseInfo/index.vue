@@ -13,17 +13,11 @@
 				<!-- 常用的操作-->
 					<template slot="often">
 						
-            
-<el-upload
-  action="https://jsonplaceholder.typicode.com/posts/"
-  multiple
-  >
-  <el-button type="info" title="导入" size="mini">导入</el-button>
+
+<el-upload class="upload" :style="{display:'inline-block'}"  :action="importFileUrl" multiple>
+ <el-button type="info" title="导入" size="mini">导入</el-button>
 </el-upload>
-
 					
-
-
 					</template>
 				<template slot="allSearchItems">
 					<gc-form :component-store="moreForm">

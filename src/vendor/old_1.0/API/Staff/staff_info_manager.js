@@ -29,7 +29,7 @@ var requestPath = {
   insertUserDuty: bashPath + '/studentInfo/insertUserDuty.do',
   deleteUserDuty: bashPath + '/socializeClassify/deleteUserDuty.do',
   getUserDutyById: bashPath + '/studentInfo/getUserDutyById.do',
-  updateUserDuty: bashPath + '/studentInfo/updateUserDuty.do'
-
+  updateUserDuty: bashPath + '/studentInfo/updateUserDuty.do',
+ importFileUrl : bashPath +'/staff/staffExcelReader.do'
 }
 export default requestPath
