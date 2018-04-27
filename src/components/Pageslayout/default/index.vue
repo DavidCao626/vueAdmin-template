@@ -7,7 +7,11 @@
                     页面标题
                 </slot>
             </div>
+            <div v-if="this.$root.$route['meta'].hidden">
+                <Breadcrumb></Breadcrumb>
+            </div>
         </div>
+
         <!-- <el-tabs>
             <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
             <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
@@ -26,9 +30,13 @@
     </div>
 </template>
 <script>
+import Breadcrumb from '~/components/Breadcrumb'
 export default {
   name: 'Page-dafault',
-  props: ['']
+  props: [''],
+  components: {
+    Breadcrumb
+  }
 }
 </script>
 <style lang="scss" scoped>

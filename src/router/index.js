@@ -23,8 +23,8 @@ import stuLayout from '../views/layout/stu-Layout'
 **/
 export const constantRouterMap = [
   { path: '/test', component: () => import('~/views/userManager/test/index') },
-  { path: '/login', component: () => import('~/views/login'), hidden: true },
-  { path: '/404', component: () => import('~/views/404'), hidden: true },
+  { path: '/login', component: () => import('~/views/login') },
+  { path: '/404', component: () => import('~/views/404') },
   {
     path: '/register',
     component: () => import('~/views/register'),
@@ -35,9 +35,13 @@ export const constantRouterMap = [
     component: stuLayout,
     redirect: '/dashboard',
     name: 'home_index',
-    hidden: true,
+    meta: { title: '首页' },
     children: [
-      { path: 'dashboard', component: () => import('~/views/dashboard/index') }
+      {
+        path: 'dashboard',
+        meta: { title: '首页' },
+        component: () => import('~/views/dashboard/index')
+      }
     ]
   },
   {
@@ -45,7 +49,7 @@ export const constantRouterMap = [
     component: stuLayout,
     redirect: '/t/table',
     name: '默认栏目',
-    meta: { title: 'Example', icon: 'example' },
+    meta: { title: '项目管理', icon: 'example' },
     children: [
       {
         path: 'table',
@@ -56,8 +60,8 @@ export const constantRouterMap = [
       {
         path: 'tree',
         name: '树',
-        component: () => import('~/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        component: () => import('~/views/tree/tree'),
+        meta: { title: '项目计划', icon: 'tree', hidden: true }
       }
     ]
   },
@@ -66,12 +70,13 @@ export const constantRouterMap = [
     component: stuLayout,
     redirect: '/question/list',
     name: '调查问卷',
-    meta: { title: '调查问卷', icon: 'example' },
+    meta: { title: '调查问卷', icon: 'example', hidden: true },
     children: [
       {
         path: 'list',
         name: '问卷填写',
-        component: () => import('~/views/question/components/main')
+        component: () => import('~/views/question/components/main'),
+        meta: { hidden: true }
       },
       {
         path: 'show',
@@ -259,7 +264,8 @@ export const constantRouterMap = [
       {
         path: 'menuManager',
         name: '系统菜单管理',
-        component: () => import('~/views/systemManager/menuManager/index'), hidden: true
+        component: () => import('~/views/systemManager/menuManager/index'),
+        hidden: true
       },
       {
         path: 'orgManager',
