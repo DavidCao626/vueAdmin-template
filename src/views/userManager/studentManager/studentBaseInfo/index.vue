@@ -12,9 +12,12 @@
 				</template>
 				<!-- 常用的操作-->
 					<template slot="often">
-						<el-button type="info" title="更多条件" size="mini" @click="addBaseInfoBt">新增</el-button>
-						<el-button type="info" title="导入" size="mini">导入</el-button>
-						<el-button type="info" title="导出" size="mini">打包</el-button>
+						
+
+<el-upload class="upload" :style="{display:'inline-block'}"  :action="importFileUrl" multiple>
+ <el-button type="info" title="导入" size="mini">导入</el-button>
+</el-upload>
+					
 					</template>
 				<template slot="allSearchItems">
 					<gc-form :component-store="moreForm">
@@ -481,7 +484,7 @@ export default {
       //      }
       //      if (!isLt2M) {
       //        this.$message.error('上传头像图片大小不能超过 2MB!');
-      //      }
+      //      } 
       //      return isJPG && isLt2M;
     },
     checkFun: function(state) {
@@ -687,11 +690,6 @@ export default {
     var that = this
 
     pageManagerStore.addConf('operations', [
-      {
-        name: 'ex',
-        title: '导入',
-        operator: function(servcieTable, serviceForm) {}
-      },
       {
         name: 'vh',
         title: '批量删除',

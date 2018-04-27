@@ -27,7 +27,14 @@ export function getDutyList() {
   return request({ url: '/user/getUserDutyList.do', method: 'post' })
 }
 
-export function switchDuty(postData) {
+export function switchDuty(item) {
+  const postData = {
+    dutyCode: item.dutyCode,
+    managerNodeCode: item.managerNodeCode,
+    officeOrgCode: item.officeOrgCode,
+    classifyCode: item.classifyCode,
+    resigId: item.resigId
+  }
   return request({
     url: '/duty/switchDuty.do',
     method: 'post',
