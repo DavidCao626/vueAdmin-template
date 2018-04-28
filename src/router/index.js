@@ -103,6 +103,32 @@ export const constantRouterMap = [
     ]
   },
   {
+    path: '/task',
+    component: stuLayout,
+    children: [
+      {
+        path: 'addTaskProject',
+        name: '增加项目',
+        component: () => import('~/views/task/addTaskProject')
+      },
+      {
+        path: 'updateTaskProject',
+        name: '更新项目',
+        component: () => import('~/views/task/updateTaskProject')
+      },
+      {
+        path: 'addTaskNode',
+        name: '增加节点',
+        component: () => import('~/views/task/addTaskNode')
+      },
+      {
+        path: 'updateTaskNode',
+        name: '更新节点',
+        component: () => import('~/views/task/updateTaskNode')
+      }
+    ]
+  },
+  {
     path: '/user',
     component: stuLayout,
     name: '用户中心',
