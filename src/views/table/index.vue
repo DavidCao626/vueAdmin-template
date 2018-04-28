@@ -3,14 +3,23 @@
   
     <div class="weui-desktop-page__title ">用户注册表</div>
   <el-tabs >
-    <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
-    <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
-    <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-    <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
-  </el-tabs>
- <br/>
-  <div class="weui-desktop-panel">
-   
+    <el-tab-pane label="用户管理" name="first">
+    <div class="weui-desktop-panel">
+      <div class="weui-desktop-home-notice">
+        <div class="weui-desktop-home-notice__info">
+          <a href="/cgi-bin/announce?action=getannouncement&amp;announce_id=11518228081c7A0o&amp;version=&amp;lang=zh_CN" target="_blank" class="weui-desktop-home-notice__title">
+            学工系统文档手册发布
+          </a>
+        </div>
+        <div class="weui-desktop-home-notice__extra">
+          <em class="weui-desktop-home-notice__date">2018-02-10</em>
+          <a href="/cgi-bin/announcement?t=home/notice&amp;token=2058891718&amp;lang=zh_CN" target="_blank" class="weui-desktop-home-notice__readmore">更多</a>
+        </div>
+      </div>
+    </div>
+    </el-tab-pane>
+    <el-tab-pane label="配置管理" name="second">
+       <div class="weui-desktop-panel">
     <el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>
       <el-table-column align="center" label='ID' width="95">
         <template slot-scope="scope">
@@ -45,6 +54,12 @@
       </el-table-column>
     </el-table>
   </div>
+    </el-tab-pane>
+    <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
+    <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+  </el-tabs>
+ <br/>
+ 
   </div>
 </template>
 

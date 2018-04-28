@@ -1,42 +1,52 @@
 <template>
-	<div class="form-container">
-		<div class="title">
+  <div class="form-container">
+    <div class="title">
 
-			<img src="http://xgc.imu.edu.cn/images/logo.png" height="70px">
-			<!--	<h3>学生工作管理系统</h3>-->
-		</div>
-		<el-card class="box-card  login-form ">
-			<div slot="header" class="clearfix">
-				<span>学工系统登录</span>
-				<router-link to="/register">
-					<el-button style="float: right; padding: 3px 0" type="text"> 注册新用户</el-button>
+      <img src="http://xgc.imu.edu.cn/images/logo.png" height="70px">
+      <!--	<h3>学生工作管理系统</h3>-->
+    </div>
+    <el-card class="box-card  login-form ">
+      <div slot="header" class="clearfix">
+        <span>{{$t('login.title')}}</span>
+          <div style="float: right;" type="text"> <lang-select class="lang"></lang-select></div>
+      </div>
+
+      <br />
+      <el-form id="loginForm" :model="ruleLoginForm" status-icon :rules="rules2" ref="ruleLoginForm" label-width="80px" label-position="left">
+
+        <el-form-item :label="$t('login.username')" prop="username">
+          <el-input v-model="ruleLoginForm.username" name="loginName" value="&nbsp;" :placeholder="$t('login.usernamePor')"></el-input>
+        </el-form-item>
+
+        <el-form-item :label="$t('login.password')" prop="pass">
+          <el-input type="password" v-model="ruleLoginForm.pass" name="pwd" autoComplete="off" :placeholder="$t('login.passwordPor')"></el-input>
+
+        </el-form-item>
+        <br />
+        <el-form-item>
+          <el-button type="success" size="medium" @click="submitForm('ruleLoginForm')" v-waves>{{$t('login.logIn')}}</el-button>
+          <!-- <el-button type="text">忘记密码?</el-button> -->
+          &nbsp;&nbsp;
+        	<router-link to="/register">
+					<el-button style="" type="text"> {{$t('login.register')}}</el-button>
 				</router-link>
-			</div>
-
-			<br />
-			<el-form id="loginForm" :model="ruleLoginForm" status-icon :rules="rules2" ref="ruleLoginForm" label-width="80px" label-position="left">
-
-				<el-form-item label="用户名：" prop="username">
-					<el-input v-model="ruleLoginForm.username" name="loginName" value="&nbsp;" placeholder="填写你的账号 最少4位"></el-input>
-				</el-form-item>
-
-				<el-form-item label="密码：" prop="pass">
-					<el-input type="password" v-model="ruleLoginForm.pass" name="pwd" autoComplete="off" placeholder="填写你的密码"></el-input>
-
-				</el-form-item>
-				<br />
-				<el-form-item>
-					<el-button type="success" size="medium" @click="submitForm('ruleLoginForm')">立即登录</el-button>
-					<el-button type="text">忘记密码?</el-button>
-				</el-form-item>
-			</el-form>
-		</el-card>
-	</div>
+        </el-form-item>
+      </el-form>
+    </el-card>
+  </div>
 </template>
 	
 	
 <script>
+import waves from '~/directive/waves' // 水波纹指令
+import LangSelect from '~/components/LangSelect'
 export default {
+  directives: {
+    waves
+  },
+  components: {
+    LangSelect
+  },
   data() {
     return {
       serverMessage: {
@@ -63,10 +73,12 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$store.dispatch('Login', this.ruleLoginForm).then(() => {
-            this.$router.push({ path: '/' })
-          }).catch(() => {
-          })
+          this.$store
+            .dispatch('Login', this.ruleLoginForm)
+            .then(() => {
+              this.$router.push({ path: '/' })
+            })
+            .catch(() => {})
         } else {
           return false
         }
@@ -75,8 +87,17 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-body,html{
+<style lang="scss" >
+.lang .svg-icon{
+  
+    width: 1em;
+    height: 1em;
+    vertical-align: -.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+body,
+html {
   margin: 0px;
   padding: 0px;
 }

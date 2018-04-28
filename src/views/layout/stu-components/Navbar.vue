@@ -76,7 +76,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      dutyRoles
+      dutyRoles:null
     };
   },
   components: {},

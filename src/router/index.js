@@ -47,10 +47,16 @@ export const constantRouterMap = [
   {
     path: '/t',
     component: stuLayout,
-    redirect: '/t/table',
+    redirect: '/t/tables',
     name: '默认栏目',
     meta: { title: '项目管理', icon: 'example' },
     children: [
+      {
+        path: 'tables',
+        name: 'tabls',
+        component: () => import('~/views/table/complexTable'),
+        meta: { title: 'complexTable' }
+      },
       {
         path: 'table',
         name: '问卷',
