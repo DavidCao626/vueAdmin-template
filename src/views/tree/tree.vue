@@ -2,7 +2,7 @@
 <template>
   <page>
     <span slot="title">项目管理</span>
-
+    
     <div slot="panel">
       <div class="head">
         <div>
@@ -20,7 +20,7 @@
         </div>
       </div>
 
-      <tree-table :data="data" :columns="columns" :expandAll=true border></tree-table>
+      <tree-table :data="data" :columns="columns" :expandAll=false border></tree-table>
       <br/>
      <p>0:未开始</p> <p> 1:已经开始计划时间</p>
      

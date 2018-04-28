@@ -1,4 +1,3 @@
-
 <template>
   <el-table :data="formatData" :row-style="showRow" v-bind="$attrs">
     <el-table-column v-if="columns.length===0" width="150">
