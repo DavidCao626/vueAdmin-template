@@ -23,7 +23,7 @@
 			</el-form-item>
 			<el-form-item label="业务类别" prop="serviceTypeCode">
 				<el-select v-model="formStore.data.serviceTypeCode" placeholder="请选择业务类别">
-					<el-option v-for="(item,index) in serviceTypeList" :key="index" :label="item.label" :value="item.value"></el-option>
+					<el-option v-for="(item,index) in serviceTypeList" :key="index" :label="item.classifyName" :value="item.classifyCode"></el-option>
 				</el-select>
 			</el-form-item>
 		</el-form>
@@ -32,58 +32,69 @@
 </template>
 
 <script>
-	import { addTaskProject } from '~/api/task'
+	import { queryServiceTypeList,addTaskProject } from '~/api/task'
 
 	var serviceTypeList = [{
-		'label': '业务类别',
-		'value': '1001'
-	}];
-	var formStore = {};
-	formStore.data = {
-		nodeTitle: "", //节点标题
-		nodeDesc: "", //节点描述
-		planStartTime: "", //计划开始时间
-		planCompleteTime: "", //计划完成时间
-		projectNo: "", //项目编号
-		projectName: "", //项目名称
-		serviceTypeCode: "" //业务类别
+	  'classifyName': '业务类别',
+	  'classifyCode': '1001'
+	}]
+var formStore = {}
+formStore.data = {
+	  nodeTitle: '', // 节点标题
+	  nodeDesc: '', // 节点描述
+	  planStartTime: '', // 计划开始时间
+	  planCompleteTime: '', // 计划完成时间
+	  projectNo: '', // 项目编号
+	  projectName: '', // 项目名称
+	  serviceTypeCode: '' // 业务类别
 	}
 	formStore.rules = {
-		nodeTitle: [], //节点标题
-		nodeDesc: [], //节点描述
-		planStartTime: [], //计划开始时间
-		planCompleteTime: [], //计划完成时间
-		projectNo: [], //项目编号
-		projectName: [], //项目名称
-		serviceTypeCode: [] //业务类别
+	  nodeTitle: [], // 节点标题
+	  nodeDesc: [], // 节点描述
+	  planStartTime: [], // 计划开始时间
+	  planCompleteTime: [], // 计划完成时间
+	  projectNo: [], // 项目编号
+	  projectName: [], // 项目名称
+	  serviceTypeCode: [] // 业务类别
 	}
 	export default {
-		data() {
-			return {
-				formStore,
-				serviceTypeList //业务类别列表
-			}
-		},
-		methods: {
-			submitForm: function(formName) {
-				var data = this.formStore.data;
-				this.$refs[formName].validate((valid) => {
-					if(valid) {
-						new Promise((resolve, reject) => {
-							addTaskProject(data)
-								.then(response => {
-									resolve(response)
-								})
-								.catch(error => {
-									reject(error)
-								})
-						})
-					} else {
-						return false;
-					}
-				});
-			}
-		}
+	  data() {
+	    return {
+	      formStore,
+	      serviceTypeList // 业务类别列表
+	    }
+	  },
+	  methods: {
+	    submitForm: function(formName) {
+	      var data = this.formStore.data
+	      this.$refs[formName].validate((valid) => {
+	        if (valid) {
+	          new Promise((resolve, reject) => {
+	            addTaskProject(data)
+	              .then(response => {
+	                resolve(response)
+	              })
+	              .catch(error => {
+	                reject(error)
+	              })
+	          })
+	        } else {
+	          return false
+	        }
+	      })
+	    }
+	  },
+	  mounted:function(){
+	  	
+	  	new Promise((resolve, reject) => {
+	            queryServiceTypeList()
+	              .then(response => {
+	              	this.serviceTypeList = response.resBody
+	              })
+	              .catch(error => {
+	              })
+	          })
+	  }
 	}
 </script>
 
