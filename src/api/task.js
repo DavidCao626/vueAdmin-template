@@ -138,3 +138,19 @@ export function querySceneByProjectSystemSerialNo(data) {
     data: data
   })
 }
+
+export function updateTaskNodeRestrict(data) {
+  return ajax({
+    url: '/task/updateTaskNodeRestrict.do',
+    method: 'post',
+    data: data
+  })
+}
+
+export function getTaskNodeRestrictById(data) {
+  return request({
+    url: '/task/getTaskNodeRestrictById.do',
+    method: 'post',
+    data: data
+  })
+}
