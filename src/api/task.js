@@ -41,7 +41,13 @@ export function queryDutyByOrgCode(data) {
     data: data
   })
 }
-
+export function queryDutyByOrgCodeX(data) {
+  return request({
+    url: '/task/queryDutyByOrgCodeX.do',
+    method: 'post',
+    data: data
+  })
+}
 export function queryUserByDutyCodeAndOrgCode(data) {
   return request({
     url: '/task/queryUserByDutyCodeAndOrgCode.do',
@@ -49,7 +55,13 @@ export function queryUserByDutyCodeAndOrgCode(data) {
     data: data
   })
 }
-
+export function queryUserByDutyCodeAndOrgCodeX(data) {
+  return request({
+    url: '/task/queryUserByDutyCodeAndOrgCodeX.do',
+    method: 'post',
+    data: data
+  })
+}
 export function addTaskNode(data) {
   return ajax({
     url: '/task/insertTaskNode.do',
@@ -134,6 +146,22 @@ export function queryServiceTypeList() {
 export function querySceneByProjectSystemSerialNo(data) {
   return request({
     url: '/task/querySceneByProjectSystemSerialNo.do',
+    method: 'post',
+    data: data
+  })
+}
+
+export function updateTaskNodeRestrict(data) {
+  return ajax({
+    url: '/task/updateTaskNodeRestrict.do',
+    method: 'post',
+    data: data
+  })
+}
+
+export function getTaskNodeRestrictById(data) {
+  return request({
+    url: '/task/getTaskNodeRestrictById.do',
     method: 'post',
     data: data
   })
