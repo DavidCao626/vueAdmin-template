@@ -39,61 +39,70 @@
 </template>
 
 <script>
-import { addTaskProject } from '~/api/task'
+	import { queryServiceTypeList,addTaskProject } from '~/api/task'
 
-var serviceTypeList = [
-  {
-    label: '业务类别',
-    value: '1001'
-  }
-]
+	var serviceTypeList = [{
+	  'classifyName': '业务类别',
+	  'classifyCode': '1001'
+	}]
 var formStore = {}
 formStore.data = {
-  nodeTitle: '', // 节点标题
-  nodeDesc: '', // 节点描述
-  planStartTime: '', // 计划开始时间
-  planCompleteTime: '', // 计划完成时间
-  projectNo: '', // 项目编号
-  projectName: '', // 项目名称
-  serviceTypeCode: '' // 业务类别
-}
-formStore.rules = {
-  nodeTitle: [], // 节点标题
-  nodeDesc: [], // 节点描述
-  planStartTime: [], // 计划开始时间
-  planCompleteTime: [], // 计划完成时间
-  projectNo: [], // 项目编号
-  projectName: [], // 项目名称
-  serviceTypeCode: [] // 业务类别
-}
-export default {
-  data() {
-    return {
-      formStore,
-      serviceTypeList // 业务类别列表
-    }
-  },
-  methods: {
-    submitForm: function(formName) {
-      var data = this.formStore.data
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          new Promise((resolve, reject) => {
-            addTaskProject(data)
-              .then(response => {
-                resolve(response)
-              })
-              .catch(error => {
-                reject(error)
-              })
-          })
-        } else {
-          return false
-        }
-      })
-    }
-  }
-}
+	  nodeTitle: '', // 节点标题
+	  nodeDesc: '', // 节点描述
+	  planStartTime: '', // 计划开始时间
+	  planCompleteTime: '', // 计划完成时间
+	  projectNo: '', // 项目编号
+	  projectName: '', // 项目名称
+	  serviceTypeCode: '' // 业务类别
+	}
+	formStore.rules = {
+	  nodeTitle: [], // 节点标题
+	  nodeDesc: [], // 节点描述
+	  planStartTime: [], // 计划开始时间
+	  planCompleteTime: [], // 计划完成时间
+	  projectNo: [], // 项目编号
+	  projectName: [], // 项目名称
+	  serviceTypeCode: [] // 业务类别
+	}
+	export default {
+	  data() {
+	    return {
+	      formStore,
+	      serviceTypeList // 业务类别列表
+	    }
+	  },
+	  methods: {
+	    submitForm: function(formName) {
+	      var data = this.formStore.data
+	      this.$refs[formName].validate((valid) => {
+	        if (valid) {
+	          new Promise((resolve, reject) => {
+	            addTaskProject(data)
+	              .then(response => {
+	                resolve(response)
+	              })
+	              .catch(error => {
+	                reject(error)
+	              })
+	          })
+	        } else {
+	          return false
+	        }
+	      })
+	    }
+	  },
+	  mounted:function(){
+	  	
+	  	new Promise((resolve, reject) => {
+	            queryServiceTypeList()
+	              .then(response => {
+	              	this.serviceTypeList = response.resBody
+	              })
+	              .catch(error => {
+	              })
+	          })
+	  }
+	}
 </script>
 
 <style>

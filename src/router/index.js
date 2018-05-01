@@ -140,6 +140,36 @@ export const constantRouterMap = [
         path: 'updateTaskNode',
         name: '更新节点',
         component: () => import('~/views/task/updateTaskNode')
+      },
+      {
+        path: 'addTaskFacade',
+        name: '增加工序',
+        component: () => import('~/views/task/addTaskFacade')
+      },
+      {
+        path: 'updateTaskFacade',
+        name: '更新工序',
+        component: () => import('~/views/task/updateTaskFacade')
+      },
+      {
+        path: 'addTaskNodeRestrict',
+        name: '增加节点约束',
+        component: () => import('~/views/task/addTaskNodeRestrict')
+      },
+      {
+        path: 'updateTaskNodeRestrict',
+        name: '更新节点约束',
+        component: () => import('~/views/task/updateTaskNodeRestrict')
+      },
+      {
+        path: 'taskParticipant',
+        name: '配置参与者',
+        component: () => import('~/views/task/taskParticipant')
+      },
+      {
+        path: 'serviceTypeManager',
+        name: '管理业务类别',
+        component: () => import('~/views/task/serviceTypeManager')
       }
     ]
   },

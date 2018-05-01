@@ -36,192 +36,200 @@
 </template>
 
 <script>
-	import { addTaskNode, queryDutyByOrgCode, queryUserByDutyCodeAndOrgCode, queryUserOrg, getTaskNodeBySystemSerialNo, updateTaskNode } from '~/api/task'
+import {
+  addTaskNode,
+  queryDutyByOrgCode,
+  queryUserByDutyCodeAndOrgCode,
+  queryUserOrg,
+  getTaskNodeBySystemSerialNo,
+  updateTaskNode
+} from "~/api/task";
 
-	var systemSerialNo = 'N15248863838228897'; //要修改的节点编号
+var systemSerialNo = "N15248863838228897"; //要修改的节点编号
 
-	var formStore = {};
-	formStore.data = {
-		'nodeTitle': "", //节点标题
-		'nodeDesc': "", //节点描述
-		'planStartTime': "", //计划开始时间
-		'planCompleteTime': "", //计划完成时间
-		'nodeOrgCode': [], //节点所在机构
-		'liablerDutyCode': "", //责任人职务
-		'liablerId': "" //责任人id
-	};
-	formStore.rules = {
-		'nodeTitle': [], //节点标题
-		'nodeDesc': [], //节点描述
-		'planStartTime': [], //计划开始时间
-		'planCompleteTime': [], //计划完成时间
-		'nodeOrgCode': [], //节点所在机构
-		'liablerDutyCode': [], //责任人职务
-		'liablerId': [] //责任人id
-	};
+var formStore = {};
+formStore.data = {
+  nodeTitle: "", //节点标题
+  nodeDesc: "", //节点描述
+  planStartTime: "", //计划开始时间
+  planCompleteTime: "", //计划完成时间
+  nodeOrgCode: [], //节点所在机构
+  liablerDutyCode: "", //责任人职务
+  liablerId: "" //责任人id
+};
+formStore.rules = {
+  nodeTitle: [], //节点标题
+  nodeDesc: [], //节点描述
+  planStartTime: [], //计划开始时间
+  planCompleteTime: [], //计划完成时间
+  nodeOrgCode: [], //节点所在机构
+  liablerDutyCode: [], //责任人职务
+  liablerId: [] //责任人id
+};
 
-	export default {
-		data() {
-			return {
-				formStore,
-				orgList: [],
-				dutyList: [],
-				userList: [],
-				orgProps: {
-					'value': 'org_code',
-					'label': 'org_name'
-				}
-			}
-		},
-		methods: {
-			submitForm(formName) {
-				this.formStore.data.nodeOrgCode = this.formStore.data.nodeOrgCode[this.formStore.data.nodeOrgCode.length-1];
-				var data = this.formStore.data;
-				this.$refs[formName].validate((valid) => {
-					if(valid) {
-						new Promise((resolve, reject) => {
-							updateTaskNode(data)
-								.then(response => {
-                                    new Promise((resolve, reject) => {
-					var data = {
-						'systemSerialNo': systemSerialNo
-					}
-					getTaskNodeBySystemSerialNo(data)
-						.then(response => {
-							response.resBody.baseData.nodeOrgCode = response.resBody.aOrgCode;
-							this.formStore.data = response.resBody.baseData;
+export default {
+  data() {
+    return {
+      formStore,
+      orgList: [],
+      dutyList: [],
+      userList: [],
+      orgProps: {
+        value: "org_code",
+        label: "org_name"
+      }
+    };
+  },
+  methods: {
+    submitForm(formName) {
+      var data = JSON.parse(JSON.stringify(this.formStore.data));
+      data.nodeOrgCode = this.formStore.data.nodeOrgCode[
+        this.formStore.data.nodeOrgCode.length - 1
+      ];
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          new Promise((resolve, reject) => {
+            updateTaskNode(data)
+              .then(response => {
+                new Promise((resolve, reject) => {
+                  var data = {
+                    systemSerialNo: systemSerialNo
+                  };
+                  getTaskNodeBySystemSerialNo(data)
+                    .then(response => {
+                      response.resBody.baseData.nodeOrgCode =
+                        response.resBody.aOrgCode;
+                      this.formStore.data = response.resBody.baseData;
 
-							var queryDutyByOrgCodeData = {
-								'orgCode': response.resBody.aOrgCode
-							};
-							new Promise((resolve, reject) => {
-								queryDutyByOrgCode(queryDutyByOrgCodeData)
-									.then(response => {
-										resolve(response)
-										this.dutyList = response.resBody
-									})
-									.catch(error => {
-										reject(error)
-									})
-							})
-							var queryUserByDutyCodeAndOrgCodeData = {
-								'orgCode': response.resBody.aOrgCode,
-								'dutyCode': response.resBody.baseData.liablerDutyCode
-							}
-							new Promise((resolve, reject) => {
-								queryUserByDutyCodeAndOrgCode(queryUserByDutyCodeAndOrgCodeData)
-									.then(response => {
-										resolve(response)
-										this.userList = response.resBody
-									})
-									.catch(error => {
-										reject(error)
-									})
-							})
-						})
-						.catch(error => {})
-				})
+                      var queryDutyByOrgCodeData = {
+                        orgCode: response.resBody.aOrgCode
+                      };
+                      new Promise((resolve, reject) => {
+                        queryDutyByOrgCode(queryDutyByOrgCodeData)
+                          .then(response => {
+                            resolve(response);
+                            this.dutyList = response.resBody;
+                          })
+                          .catch(error => {
+                            reject(error);
+                          });
+                      });
+                      var queryUserByDutyCodeAndOrgCodeData = {
+                        orgCode: response.resBody.aOrgCode,
+                        dutyCode: response.resBody.baseData.liablerDutyCode
+                      };
+                      new Promise((resolve, reject) => {
+                        queryUserByDutyCodeAndOrgCode(
+                          queryUserByDutyCodeAndOrgCodeData
+                        )
+                          .then(response => {
+                            resolve(response);
+                            this.userList = response.resBody;
+                          })
+                          .catch(error => {
+                            reject(error);
+                          });
+                      });
+                    })
+                    .catch(error => {});
+                });
+              })
+              .catch(error => {});
+          });
+        } else {
+          return false;
+        }
+      });
+    },
+    //组织变化触发的方法,加载组织下职务
+    orgCodeChange: function(val) {
+      this.formStore.data.liablerDutyCode = "";
+      console.log(val);
+      var data = {
+        orgCode: val
+      };
+      new Promise((resolve, reject) => {
+        queryDutyByOrgCode(data)
+          .then(response => {
+            resolve(response);
+            console.log(["queryDutyByOrgCode", response]);
+            this.dutyList = response.resBody;
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
+    },
 
+    //职务被选中触发的方法加载责任人列表
+    dutyCodeChange: function(val) {
+      this.formStore.data.liablerId = "";
+      var data = {
+        orgCode: this.formStore.data.nodeOrgCode,
+        dutyCode: val
+      };
+      new Promise((resolve, reject) => {
+        queryUserByDutyCodeAndOrgCode(data)
+          .then(response => {
+            resolve(response);
+            console.log(["queryUserByDutyCodeAndOrgCode", response]);
+            this.userList = response.resBody;
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
+    }
+  },
+  mounted: function() {
+    new Promise((resolve, reject) => {
+      queryUserOrg()
+        .then(response => {
+          this.orgList = response.resBody;
+        })
+        .catch(error => {});
+    }),
+      new Promise((resolve, reject) => {
+        var data = {
+          systemSerialNo: systemSerialNo
+        };
+        getTaskNodeBySystemSerialNo(data)
+          .then(response => {
+            response.resBody.baseData.nodeOrgCode = response.resBody.aOrgCode;
+            this.formStore.data = response.resBody.baseData;
 
-
-                                })
-								.catch(error => {})
-						})
-					} else {
-						return false;
-					}
-				});
-			},
-			//组织变化触发的方法,加载组织下职务
-			orgCodeChange: function(val) {
-				this.formStore.data.liablerDutyCode = ""
-				console.log(val);
-				var data = {
-					'orgCode': val
-				}
-				new Promise((resolve, reject) => {
-					queryDutyByOrgCode(data)
-						.then(response => {
-							resolve(response)
-							console.log(["queryDutyByOrgCode", response]);
-							this.dutyList = response.resBody
-						})
-						.catch(error => {
-							reject(error)
-						})
-				})
-			},
-
-			//职务被选中触发的方法加载责任人列表
-			dutyCodeChange: function(val) {
-				this.formStore.data.liablerId = ""
-				var data = {
-					'orgCode': this.formStore.data.nodeOrgCode,
-					'dutyCode': val
-				}
-				new Promise((resolve, reject) => {
-					queryUserByDutyCodeAndOrgCode(data)
-						.then(response => {
-							resolve(response)
-							console.log(["queryUserByDutyCodeAndOrgCode", response]);
-							this.userList = response.resBody
-						})
-						.catch(error => {
-							reject(error)
-						})
-				})
-			}
-		},
-		mounted: function() {
-			new Promise((resolve, reject) => {
-					queryUserOrg()
-						.then(response => {
-							this.orgList = response.resBody;
-						})
-						.catch(error => {})
-				}),
-				new Promise((resolve, reject) => {
-					var data = {
-						'systemSerialNo': systemSerialNo
-					}
-					getTaskNodeBySystemSerialNo(data)
-						.then(response => {
-							response.resBody.baseData.nodeOrgCode = response.resBody.aOrgCode;
-							this.formStore.data = response.resBody.baseData;
-
-							var queryDutyByOrgCodeData = {
-								'orgCode': response.resBody.aOrgCode
-							};
-							new Promise((resolve, reject) => {
-								queryDutyByOrgCode(queryDutyByOrgCodeData)
-									.then(response => {
-										resolve(response)
-										this.dutyList = response.resBody
-									})
-									.catch(error => {
-										reject(error)
-									})
-							})
-							var queryUserByDutyCodeAndOrgCodeData = {
-								'orgCode': response.resBody.aOrgCode,
-								'dutyCode': response.resBody.baseData.liablerDutyCode
-							}
-							new Promise((resolve, reject) => {
-								queryUserByDutyCodeAndOrgCode(queryUserByDutyCodeAndOrgCodeData)
-									.then(response => {
-										resolve(response)
-										this.userList = response.resBody
-									})
-									.catch(error => {
-										reject(error)
-									})
-							})
-						})
-						.catch(error => {})
-				})
-		}
-
-	}
+            var queryDutyByOrgCodeData = {
+              orgCode: response.resBody.aOrgCode
+            };
+            new Promise((resolve, reject) => {
+              queryDutyByOrgCode(queryDutyByOrgCodeData)
+                .then(response => {
+                  resolve(response);
+                  this.dutyList = response.resBody;
+                })
+                .catch(error => {
+                  reject(error);
+                });
+            });
+            var queryUserByDutyCodeAndOrgCodeData = {
+              orgCode: response.resBody.aOrgCode,
+              dutyCode: response.resBody.baseData.liablerDutyCode
+            };
+            new Promise((resolve, reject) => {
+              queryUserByDutyCodeAndOrgCode(queryUserByDutyCodeAndOrgCodeData)
+                .then(response => {
+                  resolve(response);
+                  this.userList = response.resBody;
+                })
+                .catch(error => {
+                  reject(error);
+                });
+            });
+          })
+          .catch(error => {});
+      });
+  }
+};
 </script>
 
 <style>
