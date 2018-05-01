@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style  lang="scss" >
-@import "src/styles/core.scss"; // global css
+//@import "src/styles/main.scss"; // global css
 .container {
   width: 100vw;
   min-width: 768px;
