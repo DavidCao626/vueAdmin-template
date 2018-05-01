@@ -2,7 +2,7 @@ import request from '~/utils/request'
 import ajax from '~/utils/ajax'
 export function queryServiceTypeList() {
     return request({
-        url: '/task/queryServiceTypeList.do',
+        url: '/data/queryServiceTypeList.do',
         method: 'post',
         data:
             {}
@@ -11,7 +11,7 @@ export function queryServiceTypeList() {
 
 export function insertServiceType(data) {
     return request({
-        url: '/task/insertServiceType.do',
+        url: '/data/insertServiceType.do',
         method: 'post',
         data:
             data
@@ -20,7 +20,7 @@ export function insertServiceType(data) {
 
 export function updateServiceType(data) {
     return request({
-        url: '/task/updateServiceType.do',
+        url: '/data/updateServiceType.do',
         method: 'post',
         data:
             data
@@ -29,7 +29,32 @@ export function updateServiceType(data) {
 
 export function deleteServiceType(data) {
     return request({
-        url: '/task/deleteServiceType.do',
+        url: '/data/deleteServiceType.do',
+        method: 'post',
+        data:
+            data
+    })
+}
+
+export function insertServiceChildType(data) {
+    return request({
+        url: '/data/insertServiceChildType.do',
+        method: 'post',
+        data:
+            data
+    })
+}
+export function updateServiceChildType(data) {
+    return request({
+        url: '/data/updateServiceChildType.do',
+        method: 'post',
+        data:
+            data
+    })
+}
+export function deleteServiceChildType(data) {
+    return request({
+        url: '/data/deleteServiceChildType.do',
         method: 'post',
         data:
             data
