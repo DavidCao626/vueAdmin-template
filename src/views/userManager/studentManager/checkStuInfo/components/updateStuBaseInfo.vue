@@ -132,7 +132,7 @@
 				<img v-if="formStore.formData.data.personalPhoto != ''" :src="formStore.formData.data.personalPhoto" alt="加载失败" title="点击修改" height="80px" width="80px">
 				<h4 v-if="formStore.formData.data.personalPhoto == ''">未上传</h4>
 			</el-form-item>
-			<el-form-item label="审核状态">
+			<!-- <el-form-item label="审核状态">
 				<el-select v-model="formStore.formData.data.checkFlag" placeholder="请选择">
 					<el-option v-for="(item,index) in checkFlagData[0]" :key="index" :label="item.dict_desc" :value="item.dict_key">
 					</el-option>
@@ -140,7 +140,7 @@
 			</el-form-item>
 			<el-form-item label="审核备注">
 				<el-input size="mini" v-model="formStore.formData.data.checkComment"></el-input>
-			</el-form-item>
+			</el-form-item> -->
 		</el-form>
 	</div>
 </template>

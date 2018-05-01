@@ -1,11 +1,11 @@
 <template>
 
-  <div class="container" :class="{hideSidebar:!sidebar.opened}">
+  <div class="container" >
     <header class="header">
       <navbar></navbar>
     </header>
     <div class="content">
-      <div class="sidebar-container">
+      <div class="sidebar-container" v-show="!sidebar" >
         <sidebar></sidebar>
       </div>
       <main class="main-view ">
@@ -17,7 +17,8 @@
               <li><a href="">常见问题</a></li> <li>|</li>
               <li>关于我们</li><li>|</li>
               <li>版权说明</li><li>|</li>
-              <li>意见反馈</li>
+              <li>意见反馈</li><li>|</li>
+              <li>123-{{sidebar}}</li>
             </ul>
           </div>
             
@@ -43,7 +44,7 @@ export default {
   },
   computed: {
     sidebar() {
-      return this.$store.state.app.sidebar
+      return this.$root.$route['meta'].hidden
     }
   }
 }

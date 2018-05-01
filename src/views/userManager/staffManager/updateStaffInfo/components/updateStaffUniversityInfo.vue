@@ -105,6 +105,7 @@ GUtils.post(
 )
 
 formDataStore.pushData({
+  id: '',
   staffCode: '', // 教职工编码
   orgCode: [], // 所属机构
   staffJob: '', // 职称
@@ -187,6 +188,7 @@ export default {
     },
     submitUpdate: function() {
       var that = this
+
       this.formStore.formData.data.managerNodeCode = this.loadOrg.orgCode
       GUtils.post(
         dataPath.updateStaffUniversityInfoSelf,

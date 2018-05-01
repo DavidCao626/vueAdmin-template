@@ -12,9 +12,12 @@
 				</template>
 				<!-- 常用的操作-->
 				<template slot="often">
-					<el-button type="info" title="更多条件" size="mini" @click="addBaseInfoDV = true">新增</el-button>
-					<el-button type="info" title="导出" size="mini">导出</el-button>
-					<el-button type="info" title="导出" size="mini">打包</el-button>
+				
+					<el-upload class="upload" :style="{display:'inline-block'}"  :action="importFileUrl" multiple>
+ <el-button type="info" title="导入" size="mini">导入</el-button>
+</el-upload>
+
+
 				</template>
 				<template slot="allSearchItems">
 					<gc-form :component-store="moreForm">
@@ -448,6 +451,7 @@ export default {
   },
   data() {
     return {
+      importFileUrl:dataPath.importFileUrl,
       f_org_code2: f_org_code2, // 更新
       f_org_code: f_org_code,
       resignationDV: false,

@@ -23,8 +23,8 @@ import stuLayout from '../views/layout/stu-Layout'
 **/
 export const constantRouterMap = [
   { path: '/test', component: () => import('~/views/userManager/test/index') },
-  { path: '/login', component: () => import('~/views/login'), hidden: true },
-  { path: '/404', component: () => import('~/views/404'), hidden: true },
+  { path: '/login', component: () => import('~/views/login') },
+  { path: '/404', component: () => import('~/views/404') },
   {
     path: '/register',
     component: () => import('~/views/register'),
@@ -35,18 +35,28 @@ export const constantRouterMap = [
     component: stuLayout,
     redirect: '/dashboard',
     name: 'home_index',
-    hidden: true,
+    meta: { title: '首页' },
     children: [
-      { path: 'dashboard', component: () => import('~/views/dashboard/index') }
+      {
+        path: 'dashboard',
+        meta: { title: '首页' },
+        component: () => import('~/views/dashboard/index')
+      }
     ]
   },
   {
     path: '/t',
     component: stuLayout,
-    redirect: '/t/table',
+    redirect: '/t/tables',
     name: '默认栏目',
-    meta: { title: 'Example', icon: 'example' },
+    meta: { title: '项目管理', icon: 'example' },
     children: [
+      {
+        path: 'tables',
+        name: 'tabls',
+        component: () => import('~/views/table/complexTable'),
+        meta: { title: 'complexTable' }
+      },
       {
         path: 'table',
         name: '问卷',
@@ -56,8 +66,8 @@ export const constantRouterMap = [
       {
         path: 'tree',
         name: '树',
-        component: () => import('~/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        component: () => import('~/views/tree/tree'),
+        meta: { title: '项目计划', icon: 'tree', hidden: true }
       }
     ]
   },
@@ -66,12 +76,13 @@ export const constantRouterMap = [
     component: stuLayout,
     redirect: '/question/list',
     name: '调查问卷',
-    meta: { title: '调查问卷', icon: 'example' },
+    meta: { title: '调查问卷', icon: 'example', hidden: true },
     children: [
       {
         path: 'list',
         name: '问卷填写',
-        component: () => import('~/views/question/components/main')
+        component: () => import('~/views/question/components/main'),
+        meta: { hidden: true }
       },
       {
         path: 'show',
@@ -94,6 +105,62 @@ export const constantRouterMap = [
         name: '表单',
         component: () => import('~/views/form/index'),
         meta: { title: 'Form', icon: 'form' }
+      }
+    ]
+  },
+  {
+    path: '/task',
+    component: stuLayout,
+    children: [
+      {
+        path: 'addTaskProject',
+        name: '增加项目',
+        component: () => import('~/views/task/addTaskProject')
+      },
+      {
+        path: 'updateTaskProject',
+        name: '更新项目',
+        component: () => import('~/views/task/updateTaskProject')
+      },
+      {
+        path: 'addTaskNode',
+        name: '增加节点',
+        component: () => import('~/views/task/addTaskNode')
+      },
+      {
+        path: 'updateTaskNode',
+        name: '更新节点',
+        component: () => import('~/views/task/updateTaskNode')
+      },
+      {
+        path: 'addTaskFacade',
+        name: '增加工序',
+        component: () => import('~/views/task/addTaskFacade')
+      },
+      {
+        path: 'updateTaskFacade',
+        name: '更新工序',
+        component: () => import('~/views/task/updateTaskFacade')
+      },
+      {
+        path: 'addTaskNodeRestrict',
+        name: '增加节点约束',
+        component: () => import('~/views/task/addTaskNodeRestrict')
+      },
+      {
+        path: 'updateTaskNodeRestrict',
+        name: '更新节点约束',
+        component: () => import('~/views/task/updateTaskNodeRestrict')
+      },
+      {
+        path: 'taskParticipant',
+        name: '配置参与者',
+        component: () => import('~/views/task/taskParticipant')
+      },
+      {
+        path: 'serviceTypeManager',
+        name: '管理业务类别',
+        component: () => import('~/views/task/serviceTypeManager')
       }
     ]
   },
@@ -259,7 +326,8 @@ export const constantRouterMap = [
       {
         path: 'menuManager',
         name: '系统菜单管理',
-        component: () => import('~/views/systemManager/menuManager/index'), hidden: true
+        component: () => import('~/views/systemManager/menuManager/index'),
+        hidden: true
       },
       {
         path: 'orgManager',
