@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<el-form size="mini" :model="formStore.data" ref='form1' :rules='formStore.rules' label-width="80px">
-			<el-form-item label="节点标题" prop="nodeTitle">
-				<el-input size="mini" v-model="formStore.data.nodeTitle" placeholder="请输入节点标题"></el-input>
+			<el-form-item label="项目名称" prop="nodeTitle">
+				<el-input size="mini" v-model="formStore.data.nodeTitle" placeholder="请输入项目名称"></el-input>
 			</el-form-item>
 			<el-form-item label="节点描述" prop="nodeDesc">
 				<el-input size="mini" v-model="formStore.data.nodeDesc" placeholder="请输入节点标题"></el-input>
@@ -17,9 +17,6 @@
 			</el-form-item>
 			<el-form-item label="项目编号" prop="projectNo">
 				<el-input size="mini" v-model="formStore.data.projectNo" placeholder="请输入项目编号"></el-input>
-			</el-form-item>
-			<el-form-item label="项目名称" prop="projectName">
-				<el-input size="mini" v-model="formStore.data.projectName" placeholder="请输入项目名称"></el-input>
 			</el-form-item>
 			<el-form-item label="业务类别" prop="serviceTypeCode">
 				<el-select v-model="formStore.data.serviceTypeCode" placeholder="请选择业务类别">
@@ -45,7 +42,6 @@ formStore.data = {
 	  planStartTime: '', // 计划开始时间
 	  planCompleteTime: '', // 计划完成时间
 	  projectNo: '', // 项目编号
-	  projectName: '', // 项目名称
 	  serviceTypeCode: '' // 业务类别
 	}
 	formStore.rules = {
@@ -54,7 +50,6 @@ formStore.data = {
 	  planStartTime: [], // 计划开始时间
 	  planCompleteTime: [], // 计划完成时间
 	  projectNo: [], // 项目编号
-	  projectName: [], // 项目名称
 	  serviceTypeCode: [] // 业务类别
 	}
 	export default {
