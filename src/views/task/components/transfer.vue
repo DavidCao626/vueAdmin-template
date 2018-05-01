@@ -6,6 +6,7 @@
       :title="titles[0] || t('el.transfer.titles.0')"
       :default-checked="leftDefaultChecked"
       :placeholder="filterPlaceholder || t('el.transfer.filterPlaceholder')"
+      :transferHeight="transferHeight"
       @checked-change="onSourceCheckedChange">
       <slot name="left-footer"></slot>
     </transfer-panel>
@@ -26,7 +27,9 @@
       :title="titles[1] || t('el.transfer.titles.1')"
       :default-checked="rightDefaultChecked"
       :placeholder="filterPlaceholder || t('el.transfer.filterPlaceholder')"
-      @checked-change="onTargetCheckedChange">
+      @checked-change="onTargetCheckedChange"
+      :transferHeight="transferHeight"
+      >
       
       <el-button
         type="text"
@@ -35,7 +38,8 @@
         <i class="el-icon-arrow-delete"></i>
         <span >移除</span>
       </el-button>
-      <slot name="operation-slot"></slot>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <slot name="operation-slot" style="float:right"></slot>
       <slot name="right-footer"></slot>
     </transfer-panel>
   </div>
@@ -60,6 +64,9 @@ export default {
     },
 
     props: {
+      transferHeight:{
+        type:Number
+      },
       data: {
         type: Array,
         default() {
@@ -196,7 +203,6 @@ export default {
         return a
       },
       delitem() {
-        debugger
         var currentValue = this.value.slice()
         var that=this;
         this.rightChecked.forEach(function(item,index){
