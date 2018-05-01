@@ -198,15 +198,20 @@ export default {
         debugger
         var currentValue = this.value.slice()
         var that = this
+        var removeItems=[];
         this.rightChecked.forEach(item => {
-          this.valueItems = ilodash.remove(this.valueItems, function(value, index, array) {
-            return value[that.props.key] === item
-          })
-          currentValue = ilodash.remove(currentValue, function(value, index, array) {
-            return value === item
-          })
-          console.log([this.valueItems, currentValue])
+           
         })
+        ilodash.pullAllWith(this.valueItems,this.rightChecked,function(source,target){
+            console.log([source,target]);
+            return true;
+        });
+
+        ilodash.pullAllWith(currentValue,this.rightChecked,function(source,target){
+            console.log([source,target]);
+            return true;
+        });
+
         this.rightChecked.length = 0
         // const r = this.data.filter(item => currentValue.indexOf(item[this.props.key]) > -1)
         // var t = this
