@@ -52,11 +52,14 @@
 		methods: {
 			submitForm (formName) {
 				var data = this.formStore.data;
+				var that = this;
 				this.$refs[formName].validate((valid) => {
 					if(valid) {
 						new Promise((resolve, reject) => {
 							insertTaskNodeRestrict(data)
-								.then(response => {})
+								.then(response => {
+									 that.$message.success("成功!")
+								})
 								.catch(error => {})
 						})
 					} else {

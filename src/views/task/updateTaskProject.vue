@@ -70,12 +70,14 @@
 		methods: {
 			submitForm: function(formName) {
 				var data = this.formStore.data;
+				var that = this;
 				data.systemSerialNo = systemSerialNo;
 				this.$refs[formName].validate((valid) => {
 					if(valid) {
 						new Promise((resolve, reject) => {
 							updateTaskProject(data)
 								.then(response => {
+									 that.$message.success("成功!")
 									resolve(response)
 								})
 								.catch(error => {
