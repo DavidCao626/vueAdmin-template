@@ -23,7 +23,7 @@
 </template>
 
 <script>
-	import { insertTaskNodeRestrict, queryChildTaskNodeBySystemSerialNo, getDictByDictNames } from '~/api/task'
+	import { insertTaskNodeRestrict, querySameNodeBySystemSerialNo, getDictByDictNames } from '~/api/task'
 
 	var nodeNo = "P15249259149571375"; //要约束的节点
 
@@ -85,7 +85,7 @@
 				'systemSerialNo': nodeNo
 			}
 			new Promise((resolve, reject) => {
-				queryChildTaskNodeBySystemSerialNo(queryChildData)
+				querySameNodeBySystemSerialNo(queryChildData)
 					.then(response => {
 						this.nodeList = response.resBody
 					})

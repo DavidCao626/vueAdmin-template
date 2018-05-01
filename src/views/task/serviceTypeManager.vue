@@ -13,20 +13,29 @@
 					<el-tabs v-model="currentTabs" type="card">
 						<el-tab-pane name="update" label="更新业务类别">
 
-							<el-form :model="updateForm.data" :rules="updateForm.rules" ref="updateForm1" label-width="80px">
+							<el-form :model="updateForm.data" :rules="updateForm.rules" ref="updateForm1" label-width="100px">
 								<el-form-item label="业务类别编号" prop="">
 									<el-input size="mini" disabled v-model="updateForm.data.serviceTypeCode"></el-input>
 								</el-form-item>
 								<el-form-item label="业务类别名称" prop="">
 									<el-input size="mini" v-model="updateForm.data.serviceTypeName"></el-input>
 								</el-form-item>
+								
+								<el-form-item label="是否可用" prop="">
+									<el-radio-group size="mini" v-model="updateForm.data.available">
+								      <el-radio-button  label="Y">是</el-radio-button>
+								      <el-radio-button  label="N">否</el-radio-button>
+								    </el-radio-group>
+								</el-form-item>
+								
+								
 							</el-form>
 							<el-button type="success" @click="updateButton('updateForm1')">更新</el-button>
 							<!--<el-button type="danger" @click="deleteButton()">删除</el-button>-->
 						</el-tab-pane>
 						<el-tab-pane name="add" :disabled="allowAdd" label="增加子业务类别">
 
-							<el-form :model="addForm.data" :rules="addForm.rules" ref="addForm1" label-width="80px">
+							<el-form :model="addForm.data" :rules="addForm.rules" ref="addForm1" label-width="100px">
 								<el-form-item label="父业务类别" prop="">
 									<el-input size="mini" disabled v-model="addForm.data.serviceParentTypeName"></el-input>
 								</el-form-item>
@@ -34,6 +43,8 @@
 								<el-form-item label="业务类别名称" prop="">
 									<el-input size="mini" v-model="addForm.data.serviceTypeName"></el-input>
 								</el-form-item>
+								
+								
 							</el-form>
 
 							<el-button type="success" @click="addButton('addForm1')">增加</el-button>
@@ -62,6 +73,7 @@
 	updateForm.data = {
 		serviceTypeCode: "",
 		serviceTypeName: "",
+		available:"Y",
 		is_leaf: ''
 	}
 	updateForm.rules = {
@@ -100,7 +112,8 @@
 					//叶子节点调更新子节点的ajax
 					updateServiceChildType({
 							'serviceTypeName': this.updateForm.data.serviceTypeName,
-							'serviceTypeCode': this.updateForm.data.serviceTypeCode
+							'serviceTypeCode': this.updateForm.data.serviceTypeCode,
+							'available':this.updateForm.data.available
 						}).then(data => {
 							//这里重新获取节点数据
 							 that.$message.success("成功!")
@@ -113,7 +126,8 @@
 					//这里调用更新父节点的ajax
 					updateServiceType({
 						'serviceTypeName': this.updateForm.data.serviceTypeName,
-						'serviceTypeCode': this.updateForm.data.serviceTypeCode
+						'serviceTypeCode': this.updateForm.data.serviceTypeCode,
+						'available':this.updateForm.data.available
 					}).then(data => {
 						//这里重新获取节点数据
 						 that.$message.success("成功!")
@@ -122,46 +136,6 @@
 
 					})
 				}
-			},
-			deleteButton(ServiceTypeCode){
-				var that = this
-				if(this.updateForm.data.serviceTypeCode == "0"){
-					this.$message.error("请选择下级业务进行操作");
-				}else{
-					
-					if(this.updateForm.data.is_leaf == "true") {
-					//叶子节点调更新子节点的ajax
-					updateServiceChildType({
-							'serviceTypeName': this.updateForm.data.serviceTypeName,
-							'serviceTypeCode': this.updateForm.data.serviceTypeCode
-						}).then(data => {
-							//这里重新获取节点数据
-							that.loadTreeData();
-						})
-						.catch(error => {
-
-						});
-				} else {
-					//这里调用更新父节点的ajax
-					updateServiceType({
-						'serviceTypeName': this.updateForm.data.serviceTypeName,
-						'serviceTypeCode': this.updateForm.data.serviceTypeCode
-					}).then(data => {
-						//这里重新获取节点数据
-						that.loadTreeData();
-					}).catch(error => {
-
-					})
-				}
-					
-					
-				}
-				
-				
-				deleteServiceType
-				
-				deleteServiceChildType
-				
 			},
 			addButton(formName) {
 				var that = this
@@ -199,6 +173,7 @@
 				this.updateForm.data.serviceTypeCode = data.classify_code;
 				this.updateForm.data.serviceTypeName = data.classify_name;
 				this.updateForm.data.is_leaf = data.is_leaf;
+					this.updateForm.data.available = data.available;
 			},
 			loadTreeData() {
 				queryServiceTypeList().then(data => {
