@@ -72,39 +72,41 @@ var commonUtils = {
     var loadCover = Loading.service({
       'fullscreen': true
     })
-    axios.post(url, data).then(function(response) {
-      loadCover.close()
-      if (response.data.respStatus > 0) {
-        // Message({"message":"请求成功","type":"success"});
-        if (success) {
-          success.call(this, response.data.body)
+    axios
+      .post(url, data, {
+        headers: {
+          "Specify-Request-Type":
+            "application/x-www-form-urlencoded;charset=utf-8"
         }
-      } else {
-        Message({
-          'message': response.data.body.message,
-          'type': 'error'
-        })
-        if (exMethod) {
-          exMethod.call(this, 'service', response.data.body)
-        }
-      }
-      if (finallyMethod) {
-        finallyMethod()
-      }
-    }).catch(function(ex) {
-      console.error(ex)
-      loadCover.close() // console.log([ex]);
-      Message({
-        'message': ex.message,
-        'type': 'error'
       })
-      if (exMethod) {
-        exMethod.call(this, 'system', ex)
-      }
-      if (finallyMethod) {
-        finallyMethod()
-      }
-    })
+      .then(function(response) {
+        loadCover.close();
+        if (response.data.respStatus > 0) {
+          // Message({"message":"请求成功","type":"success"});
+          if (success) {
+            success.call(this, response.data.body);
+          }
+        } else {
+          Message({ message: response.data.body.message, type: "error" });
+          if (exMethod) {
+            exMethod.call(this, "service", response.data.body);
+          }
+        }
+        if (finallyMethod) {
+          finallyMethod();
+        }
+      })
+      .catch(function(ex) {
+        console.error(ex);
+        loadCover.close(); // console.log([ex]);
+        Message({ message: ex.message, type: "error" });
+        if (exMethod) {
+          exMethod.call(this, "system", ex);
+        }
+        if (finallyMethod) {
+          finallyMethod();
+        }
+      });
   },
   syncPost: function(url, data, success, exMethod) {
     ajax_hook.hookAjax({ 'open': function(arg, xhr) {
