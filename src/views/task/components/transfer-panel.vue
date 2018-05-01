@@ -10,7 +10,10 @@
       </el-checkbox>
     </p>
     
-    <div :class="['el-transfer-panel__body', hasFooter ? 'is-with-footer' : '']">
+    <div 
+    :class="['el-transfer-panel__body', hasFooter ? 'is-with-footer' : '']"
+    :style="{'height':transferHeight+'px'}"
+    >
       <el-input
         class="el-transfer-panel__filter"
         v-model="query"
@@ -28,7 +31,9 @@
         v-model="checked"
         v-show="!hasNoMatch && data.length > 0"
         :class="{ 'is-filterable': filterable }"
-        class="el-transfer-panel__list">
+        class="el-transfer-panel__list"
+         :style="{'height':(transferHeight-90)+'px'}"
+        >
         <el-checkbox
           class="el-transfer-panel__item"
           :label="item[keyProp]"
@@ -91,6 +96,12 @@ export default {
     },
 
     props: {
+      transferHeight: {
+        type: Number,
+        default() {
+          return 500
+        }
+      },
       data: {
         type: Array,
         default() {
