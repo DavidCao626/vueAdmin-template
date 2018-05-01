@@ -72,8 +72,7 @@ var commonUtils = {
     var loadCover = Loading.service({
       'fullscreen': true
     })
-    axios
-      .post(url, data, {
+    axios.post(url, data, {
         headers: {
           "Specify-Request-Type":
             "application/x-www-form-urlencoded;charset=utf-8"
