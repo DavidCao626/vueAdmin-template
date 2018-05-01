@@ -91,7 +91,7 @@ export const constantRouterMap = [
       },
       {
         path: 'results',
-        name: '填表',
+        name: '展现问卷结果',
         component: () => import('~/views/question/components/results')
       }
     ]
@@ -111,10 +111,19 @@ export const constantRouterMap = [
   {
     path: '/task',
     component: stuLayout,
+    redirect: '/task/index',
+    name: '123',
+    meta: { title: '项目管理' },
     children: [
+      {
+        path: 'index',
+        name: '所有项目',
+        component: () => import('~/views/task/index')
+      },
       {
         path: 'addTaskProject',
         name: '增加项目',
+        meta: { title: '增加项目' },
         component: () => import('~/views/task/addTaskProject')
       },
       {

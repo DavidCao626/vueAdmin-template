@@ -43,6 +43,117 @@ import {
   queryUserOrg
 } from "~/api/task";
 
+<<<<<<< HEAD
+	var parentNodeNo = '' // 上级节点编号
+var rootNodeNo = '' // 根节点编号
+
+var formStore = {}
+formStore.data = {
+	  'parentNodeNo': parentNodeNo,
+	  'rootNodeNo': rootNodeNo,
+	  'nodeTitle': '', // 节点标题
+	  'nodeDesc': '', // 节点描述
+	  'planStartTime': '', // 计划开始时间
+	  'planCompleteTime': '', // 计划完成时间
+	  'nodeOrgCode': [], // 节点所在机构
+	  'liablerDutyCode': '', // 责任人职务
+	  'liablerId': '' // 责任人id
+	}
+formStore.rules = {
+	  'nodeTitle': [], // 节点标题
+	  'nodeDesc': [], // 节点描述
+	  'planStartTime': [], // 计划开始时间
+	  'planCompleteTime': [], // 计划完成时间
+	  'nodeOrgCode': [], // 节点所在机构
+	  'liablerDutyCode': [], // 责任人职务
+	  'liablerId': [] // 责任人id
+	}
+
+export default {
+	  data() {
+	    return {
+	      formStore,
+	      orgList: [],
+	      dutyList: [],
+	      userList: [],
+	      orgProps: {
+	        'value': 'org_code',
+	        'label': 'org_name'
+	      }
+	    }
+	  },
+	  methods: {
+	    submitForm(formName) {
+	      this.formStore.data.nodeOrgCode = this.formStore.data.nodeOrgCode.pop()
+	      var data = this.formStore.data
+	      this.$refs[formName].validate((valid) => {
+	        if (valid) {
+	          new Promise((resolve, reject) => {
+	            addTaskNode(data)
+	              .then(response => {
+	              })
+	              .catch(error => {
+	              })
+	          })
+	        } else {
+	          return false
+	        }
+	      })
+	    },
+	    // 组织变化触发的方法,加载组织下职务
+	    orgCodeChange: function(val) {
+	      this.formStore.data.liablerDutyCode = ''
+	      console.log(val)
+	      var data = {
+	        'orgCode': val
+	      }
+	      new Promise((resolve, reject) => {
+	        queryDutyByOrgCode(data)
+	          .then(response => {
+	            resolve(response)
+	            console.log(['queryDutyByOrgCode', response])
+	            this.dutyList = response.resBody
+	          })
+	          .catch(error => {
+	            reject(error)
+	          })
+	      })
+	    },
+
+	    // 职务被选中触发的方法加载责任人列表
+	    dutyCodeChange: function(val) {
+	      this.formStore.data.liablerId = ''
+	      var data = {
+	        'orgCode': this.formStore.data.nodeOrgCode,
+	        'dutyCode': val
+	      }
+	      new Promise((resolve, reject) => {
+	        queryUserByDutyCodeAndOrgCode(data)
+	          .then(response => {
+	            resolve(response)
+	            console.log(['queryUserByDutyCodeAndOrgCode', response])
+	            this.userList = response.resBody
+	          })
+	          .catch(error => {
+	            reject(error)
+	          })
+	      })
+	    }
+	  },
+	  mounted: function() {
+	    new Promise((resolve, reject) => {
+	      queryUserOrg()
+	        .then(response => {
+	          this.orgList = response.resBody
+	        })
+	        .catch(error => {
+
+	        })
+	    })
+	  }
+
+	}
+=======
 var parentNodeNo = ""; // 上级节点编号
 var rootNodeNo = ""; // 根节点编号
 
@@ -149,6 +260,7 @@ export default {
     });
   }
 };
+>>>>>>> e231a6216ca55eda6307fb270465a1efdad5b187
 </script>
 
 <style>

@@ -7,7 +7,7 @@
                     页面标题
                 </slot>
             </div>
-            <div v-if="this.$root.$route['meta'].hidden">
+            <div v-if="this.$root.$route['meta'].hidden || this.Breadcrumb">
                 <Breadcrumb></Breadcrumb>
             </div>
         </div>
@@ -33,7 +33,12 @@
 import Breadcrumb from '~/components/Breadcrumb'
 export default {
   name: 'Page-dafault',
-  props: [''],
+  props: {
+    'Breadcrumb': {
+      default: false,
+      type: Boolean
+    }
+  },
   components: {
     Breadcrumb
   }
