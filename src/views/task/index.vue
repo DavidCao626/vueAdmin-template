@@ -80,7 +80,7 @@ export default {
       this.data = generateData2();
     },
     saveBlock: function() {
-      console.log(this.value3);
+      console.log(this.valueItem);
     }
   }
 };
