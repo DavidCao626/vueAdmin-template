@@ -84,6 +84,7 @@ export default {
   methods: {
     submitForm(formName) {
       var data = JSON.parse(JSON.stringify(this.formStore.data));
+      var that = this;
       data.nodeOrgCode = this.formStore.data.nodeOrgCode[
         this.formStore.data.nodeOrgCode.length - 1
       ];
@@ -91,7 +92,9 @@ export default {
         if (valid) {
           new Promise((resolve, reject) => {
             addTaskNode(data)
-              .then(response => {})
+              .then(response => {
+                that.$message.success("成功!")
+              })
               .catch(error => {});
           });
         } else {

@@ -118,6 +118,15 @@ export function queryChildTaskNodeBySystemSerialNo(data) {
     })
 }
 
+export function querySameNodeBySystemSerialNo(data) {
+  return request({
+    url: '/task/querySameNodeBySystemSerialNo.do',
+    method: 'post',
+    data: data
+  })
+}
+
+
 export function getDictByDictNames(data) {
     return request({
         url: '/systemConfApi/getDictByDictNames.do',

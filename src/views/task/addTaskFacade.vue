@@ -103,11 +103,14 @@ export default {
       data.nodeOrgCode = this.formStore.data.nodeOrgCode[
         this.formStore.data.nodeOrgCode.length - 1
       ];
+      var that = this;
       this.$refs[formName].validate(valid => {
         if (valid) {
           new Promise((resolve, reject) => {
             addTaskFacade(data)
-              .then(response => {})
+              .then(response => {
+                that.$message.success("成功!")
+              })
               .catch(error => {});
           });
         } else {

@@ -66,12 +66,14 @@ formStore.data = {
 	  },
 	  methods: {
 	    submitForm: function(formName) {
-	      var data = this.formStore.data
+				var data = this.formStore.data
+				var that = this;
 	      this.$refs[formName].validate((valid) => {
 	        if (valid) {
 	          new Promise((resolve, reject) => {
 	            addTaskProject(data)
 	              .then(response => {
+									 that.$message.success("成功!")
 	                resolve(response)
 	              })
 	              .catch(error => {

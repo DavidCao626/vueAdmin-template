@@ -1,8 +1,8 @@
 <template>
 
 	<div>
-		<el-row>
-			<el-col :span="5">
+		<el-row :gutter="20">
+			<el-col :span="5" >
 				<div>
 					<el-tree :data="treeData" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
 				</div>
@@ -10,7 +10,7 @@
 			<el-col :span="19">
 				<div>
 
-					<el-tabs v-model="currentTabs" type="border-card">
+					<el-tabs v-model="currentTabs" type="card">
 						<el-tab-pane name="update" label="更新业务类别">
 
 							<el-form :model="updateForm.data" :rules="updateForm.rules" ref="updateForm1" label-width="80px">
@@ -22,7 +22,7 @@
 								</el-form-item>
 							</el-form>
 							<el-button type="success" @click="updateButton('updateForm1')">更新</el-button>
-
+							<!--<el-button type="danger" @click="deleteButton()">删除</el-button>-->
 						</el-tab-pane>
 						<el-tab-pane name="add" :disabled="allowAdd" label="增加子业务类别">
 
@@ -103,6 +103,39 @@
 							'serviceTypeCode': this.updateForm.data.serviceTypeCode
 						}).then(data => {
 							//这里重新获取节点数据
+							 that.$message.success("成功!")
+							that.loadTreeData();
+						})
+						.catch(error => {
+
+						});
+				} else {
+					//这里调用更新父节点的ajax
+					updateServiceType({
+						'serviceTypeName': this.updateForm.data.serviceTypeName,
+						'serviceTypeCode': this.updateForm.data.serviceTypeCode
+					}).then(data => {
+						//这里重新获取节点数据
+						 that.$message.success("成功!")
+						that.loadTreeData();
+					}).catch(error => {
+
+					})
+				}
+			},
+			deleteButton(ServiceTypeCode){
+				var that = this
+				if(this.updateForm.data.serviceTypeCode == "0"){
+					this.$message.error("请选择下级业务进行操作");
+				}else{
+					
+					if(this.updateForm.data.is_leaf == "true") {
+					//叶子节点调更新子节点的ajax
+					updateServiceChildType({
+							'serviceTypeName': this.updateForm.data.serviceTypeName,
+							'serviceTypeCode': this.updateForm.data.serviceTypeCode
+						}).then(data => {
+							//这里重新获取节点数据
 							that.loadTreeData();
 						})
 						.catch(error => {
@@ -120,6 +153,15 @@
 
 					})
 				}
+					
+					
+				}
+				
+				
+				deleteServiceType
+				
+				deleteServiceChildType
+				
 			},
 			addButton(formName) {
 				var that = this
@@ -129,6 +171,7 @@
 						'serviceTypeName': this.addForm.data.serviceTypeName
 					}).then(data => {
 						//这里重新获取节点数据
+						 that.$message.success("成功!")
 						that.loadTreeData();
 					}).catch(error => {})
 				} else {
@@ -138,6 +181,7 @@
 						'serviceTypeName': this.addForm.data.serviceTypeName
 					}).then(data => {
 						//这里重新获取节点数据
+						 that.$message.success("成功!")
 						that.loadTreeData();
 					}).catch(error => {})
 				}

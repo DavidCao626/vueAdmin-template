@@ -128,6 +128,7 @@
 		},
 		methods: {
 			submitForm(formName) {
+				var that = this;
 				var data = JSON.parse(JSON.stringify(this.formStore.data));
 				data.nodeOrgCode = this.formStore.data.nodeOrgCode[
 					this.formStore.data.nodeOrgCode.length - 1
@@ -136,7 +137,9 @@
 					if(valid) {
 						new Promise((resolve, reject) => {
 							updateTaskFacade(data)
-								.then(response => {})
+								.then(response => {
+									 that.$message.success("成功!")
+								})
 								.catch(error => {})
 						})
 					} else {

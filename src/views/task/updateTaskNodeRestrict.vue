@@ -23,7 +23,7 @@
 </template>
 
 <script>
-	import { updateTaskNodeRestrict, queryChildTaskNodeBySystemSerialNo, getDictByDictNames, getTaskNodeRestrictById } from '~/api/task'
+	import { updateTaskNodeRestrict, querySameNodeBySystemSerialNo, getDictByDictNames, getTaskNodeRestrictById } from '~/api/task'
 
 	var id = "6"; //要修改的节点约束id
 
@@ -49,12 +49,15 @@
 		},
 		methods: {
 			submitForm(formName) {
+				var that = this
 				var data = this.formStore.data;
 				this.$refs[formName].validate((valid) => {
 					if(valid) {
 						new Promise((resolve, reject) => {
 							updateTaskNodeRestrict(data)
-								.then(response => {})
+								.then(response => {
+									 that.$message.success("成功!")
+								})
 								.catch(error => {})
 						})
 					} else {
@@ -87,7 +90,7 @@
 							'systemSerialNo': this.formStore.data.nodeNo
 						}
 						new Promise((resolve, reject) => {
-							queryChildTaskNodeBySystemSerialNo(queryChildData)
+							querySameNodeBySystemSerialNo(queryChildData)
 								.then(response => {
 									this.nodeList = response.resBody
 								})
