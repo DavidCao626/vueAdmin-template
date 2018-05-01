@@ -27,14 +27,15 @@
       :default-checked="rightDefaultChecked"
       :placeholder="filterPlaceholder || t('el.transfer.filterPlaceholder')"
       @checked-change="onTargetCheckedChange">
+      
       <el-button
-        type="primary"
-        :class="['el-transfer__button', hasButtonTexts ? 'is-with-texts' : '']"
+        type="text"
         @click="delitem"
         :disabled="rightChecked.length === 0">
         <i class="el-icon-arrow-delete"></i>
         <span >移除</span>
       </el-button>
+      <slot name="operation-slot"></slot>
       <slot name="right-footer"></slot>
     </transfer-panel>
   </div>
@@ -197,26 +198,18 @@ export default {
       delitem() {
         debugger
         var currentValue = this.value.slice()
-        var that = this
-        this.rightChecked.forEach(item => {
-          this.valueItems = ilodash.remove(this.valueItems, function(value, index, array) {
-            return value[that.props.key] === item
-          })
-          currentValue = ilodash.remove(currentValue, function(value, index, array) {
-            return value === item
-          })
-          console.log([this.valueItems, currentValue])
-        })
-        this.rightChecked.length = 0
-        // const r = this.data.filter(item => currentValue.indexOf(item[this.props.key]) > -1)
-        // var t = this
-        // r.forEach(function(ritem) {
-        //   t.valueItems.push(ritem)
-        // })
+        var that=this;
+        this.rightChecked.forEach(function(item,index){
+          var s=-1
+           if ((s=currentValue.indexOf(item))> -1) {
+            currentValue.splice(s,1);
+            that.valueItems.splice(s,1);
+          }
+        });
+        this.rightChecked=[];
         this.$emit('input', currentValue)
         this.$emit('change', currentValue, 'delitem', this.leftChecked)
       },
-
       addToRight() {
         let currentValue = this.value.slice()
         this.leftChecked.forEach(item => {

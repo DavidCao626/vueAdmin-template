@@ -14,8 +14,12 @@
       </div>
       <br/>
        <div class="panel-body">
-        <transfer :data="data" v-model="value4" :valueItems="value3"  targetOrder="unshift"></transfer>
-       <el-button type="text" @click="data2">2333</el-button>
+        <transfer :data="data" v-model="value4" :valueItems="value3"  targetOrder="unshift">
+            <span slot="operation-slot">
+               <el-button type="text" @click="saveBlock">保存</el-button>
+            </span>
+        </transfer>
+        <el-button type="text" @click="data2">2333</el-button>
       </div>
     </div>
      
@@ -66,6 +70,9 @@ export default {
   methods: {
     data2() {
       this.data = generateData2()
+    },
+    saveBlock:function(){
+      console.log(this.value3);
     }
   }
 
