@@ -81,3 +81,23 @@
 .weui-desktop-layout__main__hd{
   margin-bottom: 40px;
 }
+
+
+/**DavidCao**/
+.panel {
+  &-control {
+    &__float-right {
+      float: right;
+    }
+
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    margin-bottom: 1.5rem;
+  }
+  &-body {
+    clear: both;
+  }
+}
