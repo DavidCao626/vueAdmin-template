@@ -176,3 +176,29 @@ export function getTaskNodeRestrictById(data) {
     data: data
   })
 }
+
+export function saveTaskParticipant(data) {
+  return ajax({
+    url: '/task/saveTaskParticipant.do',
+    method: 'post',
+    data: data
+  })
+}
+export function getTaskParticipantB(data) {
+  return request({
+    url: '/task/getTaskParticipantB.do',
+    method: 'post',
+    data: data
+  })
+}
+/**
+ * 更具参数查询当前用户为责任人的节点
+ * @param {筛选字段} param
+ */
+export function queryNodeByParam(param) {
+  return request({
+    url: '/task/queryNodeByParam.do',
+    method: 'post',
+    data: param
+  })
+}
