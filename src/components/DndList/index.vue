@@ -93,12 +93,6 @@ export default {
     },
     pushEle(ele) {
       this.list1.push(ele)
-
-
-
-
-
-      
     }
   }
 }

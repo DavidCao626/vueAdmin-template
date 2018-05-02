@@ -21,7 +21,8 @@ import stuLayout from '../views/layout/stu-Layout'
     icon: 'svg-name'             the icon show in the sidebar,
   }
 **/
-export const constantRouterMap = [
+export const constantRouterMap =
+[
   { path: '/test', component: () => import('~/views/userManager/test/index') },
   { path: '/login', component: () => import('~/views/login') },
   { path: '/404', component: () => import('~/views/404') },
@@ -119,6 +120,11 @@ export const constantRouterMap = [
         path: 'index',
         name: '所有项目',
         component: () => import('~/views/task/index')
+      },
+      {
+        path: 'home',
+        name: '我的项目',
+        component: () => import('~/views/task/home')
       },
       {
         path: 'addTaskProject',

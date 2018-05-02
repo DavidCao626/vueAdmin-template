@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="formatData" :row-style="showRow" v-bind="$attrs">
+  <el-table :data="formatData" :row-style="showRow" v-bind="$attrs" >
     <el-table-column v-if="columns.length===0" width="150">
       <template slot-scope="scope">
         <span v-for="space in scope.row._level" class="ms-tree-space" :key="space"></span>
@@ -20,6 +20,7 @@
         {{scope.row[column.value]}}
       </template>
     </el-table-column>
+     
     <slot></slot>
   </el-table>
 </template>
@@ -56,14 +57,21 @@ export default {
       }
       const func = this.evalFunc || treeToArray
       const args = this.evalArgs ? Array.concat([tmp, this.expandAll], this.evalArgs) : [tmp, this.expandAll]
-      return func.apply(null, args)
+      const fu = func.apply(null, args)
+      console.log(fu)
+
+      return fu
     }
   },
   methods: {
     showRow: function(row) {
+      let s = null
+      if (row.row._level !== 1) {
+        s = 'background-color: rgba(255, 186, 29, 0.05);'
+      }
       const show = (row.row.parent ? (row.row.parent._expanded && row.row.parent._show) : true)
       row.row._show = show
-      return show ? 'animation:treeTableShow 1s;-webkit-animation:treeTableShow 1s;' : 'display:none;'
+      return show ? 'animation:treeTableShow 1s;-webkit-animation:treeTableShow 1s;' + s : 'display:none;'
     },
     // 切换下级是否展开
     toggleExpanded: function(trIndex) {

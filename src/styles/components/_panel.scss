@@ -1,14 +1,13 @@
 .weui-desktop-panel {
   margin-bottom: 30px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.05);
-
 }
 .weui-desktop-panel {
-  padding: 24px 40px;
+  padding: 30px;
 }
 .weui-desktop-panel__hd {
   padding: 16px 0;
@@ -23,7 +22,7 @@
 }
 .weui-desktop-panel__title__desc {
   margin-top: 10px;
-  color: #9A9A9A;
+  color: #9a9a9a;
 }
 .weui-desktop-page_simple .weui-desktop-panel {
   padding: 40px;
@@ -61,7 +60,7 @@
   white-space: nowrap;
 }
 .weui-desktop-home-notice__date {
-  color: #9A9A9A;
+  color: #9a9a9a;
   font-style: normal;
   vertical-align: middle;
   margin-left: 14px;
@@ -69,7 +68,7 @@
 .weui-desktop-home-notice__readmore {
   margin-left: 2em;
   position: relative;
-  color: #9A9A9A;
+  color: #9a9a9a;
 }
 
 .weui-desktop-page__title {
@@ -78,23 +77,51 @@
   line-height: 1;
   margin-bottom: 20px;
 }
-.weui-desktop-layout__main__hd{
+.weui-desktop-layout__main__hd {
   margin-bottom: 40px;
 }
-
 
 /**DavidCao**/
 .panel {
   &-control {
+    /*浮动布局*/
+    &__float-left {
+      float: left;
+    }
     &__float-right {
       float: right;
     }
-
     &:after {
       content: "";
       display: table;
       clear: both;
     }
+    /*flex布局*/
+    &__flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      &-left {
+        display: flex;
+        flex-shrink: 0; //不缩小。
+      }
+      &-center {
+        flex-grow: 0;
+        flex: 1;
+        margin-left: 10px;
+      }
+      &-right {
+        align-self: flex-end;
+      }
+      /*inline-blok*/
+      & .filter-container {
+      }
+
+      & .el-input__inner{
+          border-radius: 0px !important;
+      }
+    }
+
     margin-bottom: 1.5rem;
   }
   &-body {
