@@ -21,8 +21,7 @@ import stuLayout from '../views/layout/stu-Layout'
     icon: 'svg-name'             the icon show in the sidebar,
   }
 **/
-export const constantRouterMap =
-[
+export const constantRouterMap = [
   { path: '/test', component: () => import('~/views/userManager/test/index') },
   { path: '/login', component: () => import('~/views/login') },
   { path: '/404', component: () => import('~/views/404') },
@@ -34,7 +33,7 @@ export const constantRouterMap =
   {
     path: '/',
     component: stuLayout,
-    redirect: '/dashboard',
+    redirect: '/home',
     name: 'home_index',
     meta: { title: '首页' },
     children: [
@@ -42,6 +41,11 @@ export const constantRouterMap =
         path: 'dashboard',
         meta: { title: '首页' },
         component: () => import('~/views/dashboard/index')
+      },
+      {
+        path: 'home',
+        meta: { title: '控制面板' },
+        component: () => import('~/views/task/home')
       }
     ]
   },
@@ -124,6 +128,7 @@ export const constantRouterMap =
       {
         path: 'home',
         name: '我的项目',
+        meta: { title: '我的项目', hidden: true },
         component: () => import('~/views/task/home')
       },
       {

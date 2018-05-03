@@ -13,5 +13,6 @@ package-lock.json
 *.ntvs*
 *.njsproj
 *.sln
+/src/vendor/old_1.0/API/bashPath.js
+/config/dev.env.js
 src/vendor/old_1.0/API/bashPath.js
-config/dev.env.js

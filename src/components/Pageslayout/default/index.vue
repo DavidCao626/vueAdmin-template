@@ -1,16 +1,20 @@
 <template>
     <div class="Page-dafault">
-        <div class="weui-desktop-layout__main__hd">
 
-            <div class="weui-desktop-page__title ">
-                <slot name="title">
-                    页面标题
-                </slot>
+        <template v-if="$slots.title">
+
+            <div class="weui-desktop-layout__main__hd">
+                <div class="weui-desktop-page__title ">
+                    <slot name="title">
+
+                    </slot>
+                </div>
+                <div v-if="this.$root.$route['meta'].hidden  && this.Breadcrumb ">
+                    <Breadcrumb></Breadcrumb>
+                </div>
+
             </div>
-            <div v-if="this.$root.$route['meta'].hidden || this.Breadcrumb">
-                <Breadcrumb></Breadcrumb>
-            </div>
-        </div>
+        </template>
 
         <!-- <el-tabs>
             <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
@@ -34,8 +38,8 @@ import Breadcrumb from '~/components/Breadcrumb'
 export default {
   name: 'Page-dafault',
   props: {
-    'Breadcrumb': {
-      default: false,
+    Breadcrumb: {
+      default: true,
       type: Boolean
     }
   },

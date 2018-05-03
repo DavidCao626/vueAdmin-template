@@ -2,18 +2,18 @@
     <div>
 
         <tree-table :data="data" :evalFunc="func" :columns="columns" :evalArgs="args" :expandAll="expandAll" border >
-<el-table-column label="时间线" width="320">
+<el-table-column label="时间线" >
         <template slot-scope="scope">
           <el-tooltip effect="dark"  placement="bottom">
             <!-- :content="scope.row.timeLine+'ms'" -->
-             <div slot="content">开始时间:2016-1-02~2017-02-30</div>
+             <!-- <div slot="content">开始时间:2016-1-02~2017-02-30</div> -->
             <div class="processContainer">开始时间:2016-1-02~2017-02-30
-              <!--<div class="process" :style="{ width:scope.row._width * 300+'px',
+             <div class="process" :style="{ width:scope.row._width * 500+'px',
               background:scope.row._width>0.5?'rgba(233,0,0,.5)':'rgba(0,0,233,0.5)',
-              marginLeft:scope.row._marginLeft * 300+'px' }">
+              marginLeft:scope.row._marginLeft * 500+'px' }">
                 <span style="display:inline-block"></span>
                
-              </div>-->
+              </div>
               
             </div>
           </el-tooltip>

@@ -21,15 +21,16 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   line-height: 1.6;
-  font-family: -apple-system-font, BlinkMacSystemFont, "Helvetica Neue",
-    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei",
-    Arial, sans-serif;
+  // font-family: -apple-system-font, BlinkMacSystemFont, "Helvetica Neue",
+  //   "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei",
+  //   Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   font-weight: 400;
   min-height: 100vh;
   color: var(--color-grey-dark-2);
   background-color: var(--color-grey-light-4);
   margin: 0px;
-  
 }
 
 html {
@@ -84,7 +85,7 @@ a:hover {
 .app-container {
   width: 93%;
   max-width: 1600px;
-   min-width: 700px;
+  min-width: 700px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -93,16 +94,15 @@ a:hover {
   font-weight: 400;
   font-size: 12px;
   padding: 16px 0 40px;
-    border-top: none;
-  &__info{
+  border-top: none;
+  &__info {
     padding-bottom: 10px;
     margin-bottom: 8px;
     border-bottom: 1px solid var(--color-grey-light-3);
     height: 2rem;
   }
-  &__ext{
+  &__ext {
     clear: both !important;
-
   }
 
   ul {
@@ -122,6 +122,24 @@ a:hover {
       margin-top: -0.8em;
     }
   }
+}
 
-  
+.circle {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: var(--color-primary-light);
+  border-radius: 50%; /* 图形的半径 */
+  display: inline-block;
+}
+.flex {
+  display: flex !important;
+  &__0 {
+    flex: 0;
+  }
+  &__1 {
+    flex: 1;
+  }
+  &__2 {
+    flex: 2;
+  }
 }
