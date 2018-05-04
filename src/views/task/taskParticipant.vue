@@ -35,24 +35,24 @@
 </template>
 
 <script>
-import transfer from "./components/transfer";
+import transfer from './components/transfer'
 import {
   getTaskParticipantB,
   saveTaskParticipant,
   queryDutyByOrgCodeX,
   queryUserByDutyCodeAndOrgCodeX,
   queryUserOrg
-} from "~/api/task";
+} from '~/api/task'
 
-var systemSerialNo = "F15249261996285915";
-var facadeId = "6";
+var systemSerialNo = 'F15253635748313921'
+var facadeId = '6'
 
 var headFormData = {
   nodeOrgCode: [],
-  dutyCode: ""
-};
+  dutyCode: ''
+}
 
-const generateData = [];
+const generateData = []
 
 export default {
   components: {
@@ -66,88 +66,86 @@ export default {
       dutyList: [],
       orgList: [],
       orgProps: {
-        value: "org_code",
-        label: "org_name"
+        value: 'org_code',
+        label: 'org_name'
       },
       data: generateData,
       valueItem: [
-        //加载编辑时拉去服务器的加载项
+        // 加载编辑时拉去服务器的加载项
       ],
       value: []
-    };
+    }
   },
   watch: {
     valueItem: function() {
-		this.value.length=0
-      var that = this;
+      this.value.length = 0
+      var that = this
       this.valueItem.forEach(item => {
-        that.value.push(item.key);
-      });
+        that.value.push(item.key)
+      })
     }
   },
   methods: {
     saveParticipant() {
-      var that = this;
-      console.log(this.valueItem);
+      var that = this
+      console.log(this.valueItem)
 
-	  console.log("valuevalue"+this.value);
-      //提交的数据
+	  console.log('valuevalue' + this.value)
+      // 提交的数据
       var submitData = {
         systemSerialNo: systemSerialNo,
         facadeId: facadeId,
         paritcis: this.valueItem
-      };
+      }
       saveTaskParticipant(submitData)
         .then(response => {
-          that.$message.success("保存成功");
+          that.$message.success('保存成功')
 		  console.log(that.valueItem)
-   //进入页面要查询一次参与者赋给valueItem
-    getTaskParticipantB({
-      systemSerialNo: systemSerialNo
-    })
-      .then(response => {
-        if (response.resBody.length != 0) {
-          that.valueItem = response.resBody.paritcis;
-        }
-      })
-      .catch(error => {});
-
-
+          // 进入页面要查询一次参与者赋给valueItem
+          getTaskParticipantB({
+            systemSerialNo: systemSerialNo
+          })
+            .then(response => {
+              if (response.resBody.length != 0) {
+                that.valueItem = response.resBody.paritcis
+              }
+            })
+            .catch(error => {})
         })
-        .catch(error => {});
+        .catch(error => {})
     },
 
     // 组织变化触发的方法,加载组织下职务
     orgCodeChange: function(val) {
-      this.headFormData.dutyCode = "";
-      console.log(val);
+      this.headFormData.dutyCode = ''
+      console.log(val)
       var data = {
         orgCode: val
-      };
+      }
       new Promise((resolve, reject) => {
         queryDutyByOrgCodeX(data)
           .then(response => {
-            resolve(response);
-            this.dutyList = response.resBody;
+            resolve(response)
+            this.dutyList = response.resBody
           })
           .catch(error => {
-            reject(error);
-          });
-      });
+            reject(error)
+          })
+      })
     },
     queryUser: function() {
-      var that = this;
+      var that = this
       var data = {
         orgCode: this.headFormData.nodeOrgCode,
         dutyCode: this.headFormData.dutyCode
-      };
+      }
       new Promise((resolve, reject) => {
         queryUserByDutyCodeAndOrgCodeX(data)
           .then(response => {
-            resolve(response);
+            resolve(response)
 
-            const listdata = [];
-            console.log(["response", response]);
+            const listdata = []
+            console.log(['response', response])
             for (let i = 0; i < response.resBody.length; i++) {
               listdata.push({
                 key: response.resBody[i].id.toString(),
@@ -155,37 +153,36 @@ export default {
                 user_object_code: response.resBody[i].user_object_code,
                 login_name: response.resBody[i].login_name,
                 duty_code: response.resBody[i].duty_code
-              });
+              })
             }
-            console.log(["listdata", listdata]);
-            that.data = listdata;
+            console.log(['listdata', listdata])
+            that.data = listdata
           })
           .catch(error => {
-            reject(error);
-          });
-      });
+            reject(error)
+          })
+      })
     }
   },
   mounted: function() {
     new Promise((resolve, reject) => {
       queryUserOrg()
         .then(response => {
-          this.orgList = response.resBody;
+          this.orgList = response.resBody
         })
-        .catch(error => {});
-    });
+        .catch(error => {})
+    })
 
-    //进入页面要查询一次参与者赋给valueItem
-    var that = this;
+    // 进入页面要查询一次参与者赋给valueItem
+    var that = this
     getTaskParticipantB({
       systemSerialNo: systemSerialNo
     })
       .then(response => {
         if (response.resBody.length != 0) {
-          that.valueItem = response.resBody.paritcis;
+          that.valueItem = response.resBody.paritcis
         }
       })
-      .catch(error => {});
   }
-};
+}
 </script>

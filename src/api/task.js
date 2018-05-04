@@ -179,7 +179,7 @@ export function getTaskNodeRestrictById(data) {
 
 export function saveTaskParticipant(data) {
   return ajax({
-    url: '/task/saveTaskParticipant.do',
+    url: '/task/insertTaskParticipant.do',
     method: 'post',
     data: data
   })
