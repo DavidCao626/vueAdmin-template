@@ -4,8 +4,7 @@ export function addTaskProject(data) {
   return ajax({
     url: '/task/insertTaskProject.do',
     method: 'post',
-    data:
-            data
+    data: data
   })
 }
 
@@ -13,8 +12,15 @@ export function getTaskProject(data) {
   return request({
     url: '/task/getNodeTaskProjectBySystemSerialNo.do',
     method: 'post',
-    data:
-            data
+    data: data
+  })
+}
+
+export function queryNodeByLiblerld(data) {
+  return request({
+    url: '/task/queryNodeByLiblerld.do',
+    method: 'post',
+    data: data
   })
 }
 
@@ -22,8 +28,7 @@ export function updateTaskProject(data) {
   return ajax({
     url: '/task/updateTaskProject.do',
     method: 'post',
-    data:
-            data
+    data: data
   })
 }
 export function queryUserOrg() {
@@ -95,27 +100,26 @@ export function addTaskFacade(data) {
 }
 
 export function getNodeTaskFacadeBySystemSerialNo(data) {
-    return request({
-        url: '/task/getNodeTaskFacadeBySystemSerialNo.do',
-        method: 'post',
-        data: data
-    })
+  return request({
+    url: '/task/getNodeTaskFacadeBySystemSerialNo.do',
+    method: 'post',
+    data: data
+  })
 }
 export function updateTaskFacade(data) {
-    return ajax({
-        url: '/task/updateTaskFacade.do',
-        method: 'post',
-        data: data
-    })
+  return ajax({
+    url: '/task/updateTaskFacade.do',
+    method: 'post',
+    data: data
+  })
 }
 
-
 export function queryChildTaskNodeBySystemSerialNo(data) {
-    return request({
-        url: '/task/queryChildTaskNodeBySystemSerialNo.do',
-        method: 'post',
-        data: data
-    })
+  return request({
+    url: '/task/queryChildTaskNodeBySystemSerialNo.do',
+    method: 'post',
+    data: data
+  })
 }
 
 export function querySameNodeBySystemSerialNo(data) {
@@ -126,31 +130,28 @@ export function querySameNodeBySystemSerialNo(data) {
   })
 }
 
-
 export function getDictByDictNames(data) {
-    return request({
-        url: '/systemConfApi/getDictByDictNames.do',
-        method: 'post',
-        data: data
-    })
+  return request({
+    url: '/systemConfApi/getDictByDictNames.do',
+    method: 'post',
+    data: data
+  })
 }
 
 export function insertTaskNodeRestrict(data) {
-    return ajax({
-        url: '/task/insertTaskNodeRestrict.do',
-        method: 'post',
-        data: data
-    })
+  return ajax({
+    url: '/task/insertTaskNodeRestrict.do',
+    method: 'post',
+    data: data
+  })
 }
 export function queryServiceTypeList() {
-    return request({
-      url: '/task/queryServiceTypeList.do',
-        method: 'post',
-      data: {}
-    })
+  return request({
+    url: '/task/queryServiceTypeList.do',
+    method: 'post',
+    data: {}
+  })
 }
-
-
 
 export function querySceneByProjectSystemSerialNo(data) {
   return request({
@@ -192,7 +193,7 @@ export function getTaskParticipantB(data) {
 }
 /**
  * 更具参数查询当前用户为责任人的节点
- * @param {筛选字段} param 
+ * @param {筛选字段} param
  */
 export function queryNodeByParam(param) {
   return request({

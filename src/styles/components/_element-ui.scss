@@ -1,9 +1,23 @@
- //to reset element-ui default css
+//to reset element-ui default css
 .el-upload {
   input[type="file"] {
     display: none !important;
   }
 }
+.el-badge__content.is-dot{
+  height: 0.7rem;
+  width: 0.7rem;
+}
+
+
+//分页标签颜色
+.el-pagination{
+  color: var(--color-grey-light-1) !important ;
+}
+.el-pager li.active{
+  color: var(--color-grey-dark-1);
+}
+
 
 .el-upload__input {
   display: none;
@@ -27,19 +41,58 @@
     }
   }
 }
-.el-table tr{
+.el-table tr {
   color: var(--color-grey-light-2) !important ;
 
-  & th{
-   background-color: var(--color-grey-light-4) !important ;
+  & th {
+    background-color: var(--color-grey-light-4) !important ;
   }
 }
 
-.el-transfer-panel{
+//穿梭框
+.el-transfer-panel {
   width: 40%;
-  
-  
 }
-.el-transfer-panel__list.is-filterable{
+.el-transfer-panel__list.is-filterable {
   height: 50%;
+}
+
+//更多 图表
+.el-icon-more {
+  color: var(--color-grey-light-1);
+  margin: 0 10px;
+}
+.el-tabs__item {
+  color: var(--color-grey-light-1);
+}
+.el-tabs__item.is-active {
+  color: var(--color-grey-dark-2);
+}
+
+.messages {
+  .el-collapse-item__header {
+    color: var(--color-grey-light-1) !important;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 0 10px;
+  }
+  .el-collapse-item__wrap 
+  {
+padding: 0 35px;
+  }
+  & .is-active {
+    .el-collapse-item__header {
+      background-color: var(--color-grey-light-4) !important;
+      color: var(--color-grey-dark-2) !important ;
+      font-size: 15px;
+      //transition: all 0.2s ease-in-out;
+    }
+    .el-collapse-item__wrap {
+       background-color: var(--color-grey-light-4) !important;
+      
+      color: var(--color-grey-dark-2) !important ;
+      font-size: 15px;
+      //transition: all 0.2s ease-in-out;
+    }
+  }
 }

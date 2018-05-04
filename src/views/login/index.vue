@@ -15,11 +15,11 @@
       <el-form id="loginForm" :model="ruleLoginForm" status-icon :rules="rules2" ref="ruleLoginForm" label-width="80px" label-position="left">
 
         <el-form-item :label="$t('login.username')" prop="username">
-          <el-input v-model="ruleLoginForm.username" name="loginName" value="&nbsp;" :placeholder="$t('login.usernamePor')"></el-input>
+          <el-input v-model="ruleLoginForm.username" name="loginName"  :placeholder="$t('login.usernamePor')"></el-input>
         </el-form-item>
 
         <el-form-item :label="$t('login.password')" prop="pass">
-          <el-input type="password" v-model="ruleLoginForm.pass" name="pwd" autoComplete="off" :placeholder="$t('login.passwordPor')"></el-input>
+          <el-input type="password" v-model="ruleLoginForm.pass" name="pwd" :placeholder="$t('login.passwordPor')"></el-input>
 
         </el-form-item>
         <br />
@@ -56,8 +56,8 @@ export default {
         msgData: '用户名或密码不存在'
       },
       ruleLoginForm: {
-        pass: '',
-        username: ''
+        pass: '123456',
+        username: 'student'
       },
       rules2: {
         pass: [{ required: true, message: '请输入密码', trigger: 'blur' }],

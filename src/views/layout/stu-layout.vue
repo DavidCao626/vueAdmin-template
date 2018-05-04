@@ -66,6 +66,18 @@ export default {
   padding: 40px 0 80px;
   display: flex;
 }
+.page-component .page-component__nav {
+    width: 240px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    margin-top: 80px;
+    transition: padding-top .3s;
+}
+.el-scrollbar {
+    overflow: hidden;
+    position: relative;
+}
 .sidebar-container {
   min-width: 250px;
   margin-top: -10px;

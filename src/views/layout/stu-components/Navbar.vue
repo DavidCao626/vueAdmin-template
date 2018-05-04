@@ -21,22 +21,23 @@
 
               <div class="avatar-wrapper">
                 <router-link class="inlineBlock" to="/user/messages">
-                  <i class="el-icon-message message"></i>
+                 <el-badge is-dot  class="item"> <i class="el-icon-message message"></i></el-badge>
                 </router-link>
-                <el-dropdown trigger="hover">
+                &nbsp;&nbsp;
+                <el-dropdown trigger="hover" size="medium">
 
                   <div class="avatar-container">
 
                     <img :src="avatar" class="user-avatar" />
                     <div class="name">
-                      <span class="name__1">{{name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <span class="name__1">{{name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <span class="name__2">学号：No.01521</span><br/>
                       <span class="name__2" v-if="dutyRoles">{{ dutyRoles['managerNodeName']}} | {{dutyRoles['dutyName']}} </span>
                     </div>
                     <i class="el-icon-caret-bottom"></i>
                   </div>
 
-                  <el-dropdown-menu class="user-dropdown" slot="dropdown">
+                  <el-dropdown-menu class="user-dropdown" slot="dropdown" >
                     <router-link class="inlineBlock" to="/user/updateUserInfo">
                       <el-dropdown-item>
                         <i class="el-icon-date"></i>&nbsp; 账号详情
@@ -71,46 +72,46 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex'
 
 export default {
   data() {
     return {
-      dutyRoles:null
-    };
+      dutyRoles: null
+    }
   },
   components: {},
   computed: {
-    ...mapGetters(["sidebar", "avatar", "name", "roles"])
+    ...mapGetters(['sidebar', 'avatar', 'name', 'roles'])
   },
   created: function() {
-    for (let key in this.roles) {
+    for (const key in this.roles) {
       if (key.length > 0) {
         this.roles[key].forEach(element => {
           if (element.currently === true) {
-            this.dutyRoles = element;
-            console.log(this.dutyRoles);
-            return element;
+            this.dutyRoles = element
+            console.log(this.dutyRoles)
+            return element
           } else {
-            return this.roles.MemberDutyList[0];
+            return this.roles.MemberDutyList[0]
           }
-        });
+        })
       } else {
-        return this.roles.MemberDutyList[0];
+        return this.roles.MemberDutyList[0]
       }
     }
   },
   methods: {
     toggleSideBar() {
-      this.$store.dispatch("ToggleSideBar");
+      this.$store.dispatch('ToggleSideBar')
     },
     logout() {
-      this.$store.dispatch("LogOut").then(() => {
-        location.reload(); // 为了重新实例化vue-router对象 避免bug
-      });
+      this.$store.dispatch('LogOut').then(() => {
+        location.reload() // 为了重新实例化vue-router对象 避免bug
+      })
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .navbar {
