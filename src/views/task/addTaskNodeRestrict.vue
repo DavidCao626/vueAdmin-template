@@ -25,7 +25,7 @@
 <script>
 	import { insertTaskNodeRestrict, querySameNodeBySystemSerialNo, getDictByDictNames } from '~/api/task'
 
-	var nodeNo = "P15249259149571375"; //要约束的节点
+	var nodeNo = "N15253633083972953"; //要约束的节点
 
 	var formStore = {}
 	formStore.data = {

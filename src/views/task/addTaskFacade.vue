@@ -51,14 +51,9 @@ import {
   querySceneByProjectSystemSerialNo
 } from "~/api/task";
 
-var parentNodeNo = "P15249259149571375"; // 上级节点编号
-var rootNodeNo = "P15249259149571375"; // 根节点编号
-var serviceSceneList = [
-  {
-    sceneName: "业务场景",
-    sceneSeq: "1001"
-  }
-];
+var parentNodeNo = "N15253633333212490"; // 上级节点编号
+var rootNodeNo = "P15253629675345771"; // 根节点编号
+var serviceSceneList = [];
 
 var formStore = {};
 formStore.data = {
