@@ -17,6 +17,12 @@
       <el-dialog v-el-drag-dialog title="修改工序" :visible.sync="dialogTableVisibleUpdateFacade">
         <updateTaskFacade :rootNodeNo="rootNodeNo" :parentNodeNo="parentNodeNo"></updateTaskFacade>
       </el-dialog>
+       <el-dialog v-el-drag-dialog title="新增约束" :visible.sync="dialogTableVisibleAddRestrict">
+        <addTaskNodeRestrict :rootNodeNo="rootNodeNo" :parentNodeNo="parentNodeNo"></addTaskNodeRestrict>
+      </el-dialog>
+       <el-dialog v-el-drag-dialog title="修改约束" :visible.sync="dialogTableVisibleUpdateRestrict">
+        <updateTaskNodeRestrict :rootNodeNo="rootNodeNo" :parentNodeNo="parentNodeNo"></updateTaskNodeRestrict >
+      </el-dialog>
     </div>
 
     <tree-table :data="data" :evalFunc="func" :columns="columns" :evalArgs="args" :expandAll="expandAll" border>
@@ -37,9 +43,7 @@
 
             <span class="el-dropdown-link" style="margin-left: 15px;">
 
-              <el-tooltip class="item" effect="dark" content="新建" placement="bottom">
-                <el-button type="text" class="el-icon-edit"></el-button>
-              </el-tooltip>
+                <el-button type="text" class="el-icon-edit-outline"></el-button>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item @click.native="dialogTable(scope.row,'task')">任务</el-dropdown-item>
@@ -47,23 +51,29 @@
             </el-dropdown-menu>
           </el-dropdown>
             <el-tooltip class="item" effect="dark" content="修改" placement="bottom">
-              <el-button type="text" @click="updateDialog(scope.row,'P')" class="el-icon-edit-outline" size="medium"></el-button>
+              <el-button type="text" @click="updateDialog(scope.row,'P')" class="el-icon-edit" size="medium"></el-button>
             </el-tooltip>
          
+         <el-dropdown size="medium" trigger="click">
 
-          <el-tooltip class="item" effect="dark" content="配置约束" placement="bottom">
-            <el-button type="text" @click="message(scope.row)" class="el-icon-setting" size="medium"></el-button>
-          </el-tooltip>
+            <span class="el-dropdown-link" style="">
+                <el-button type="text" class="el-icon-setting"></el-button>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item @click.native="Restrict(scope.row,'add')">配置约束</el-dropdown-item>
+              <el-dropdown-item @click.native="Restrict(scope.row,'updete')">修改约束</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+
 
           <el-tooltip class="item" effect="dark" content="分配参与者" placement="bottom">
-           <router-link to="/task/taskParticipant" ><el-button type="text" @click="message(scope.row)" class="el-icon-news" size="medium"></el-button></router-link>
+           <router-link to="/task/taskParticipant" ><el-button type="text"  class="el-icon-news" size="medium"></el-button></router-link>
           </el-tooltip>
 
           <el-tooltip class="item" effect="dark" content="启动" placement="bottom">
-            <el-button type="text" @click="message(scope.row)" class="el-icon-caret-right" size="medium"></el-button>
+            <el-button type="text" @click="Start(scope.row)" class="el-icon-caret-right" size="medium"></el-button>
           </el-tooltip>
-          <el-tooltip class="item" effect="dark" content="完成" placement="bottom">
-            <el-button type="text" @click="message(scope.row)" class="el-icon-check" size="medium"></el-button>
+            <el-button type="text" @click="stop(scope.row)" class="el-icon-check" size="medium" style="margin-left: 0px;"></el-button>
           </el-tooltip>
         </template>
       </el-table-column>
@@ -77,16 +87,22 @@ import treeTable from '~/components/TreeTable'
 import treeToArray from './customEval'
 import {
   queryNodeByLiblerld,
-  queryChildTaskNodeBySystemSerialNo
+  queryChildTaskNodeBySystemSerialNo,
+  completedNode,
+  startNode
 } from '~/api/task'
 import addTaskNode from './../addTaskNode'
 import addTaskFacade from './../addTaskFacade'
 import updateTaskProject from './../updateTaskProject'
 import updateTaskNode from './../updateTaskNode'
 import updateTaskFacade from './../updateTaskFacade'
+import addTaskNodeRestrict from './../addTaskNodeRestrict'
+
+import updateTaskNodeRestrict from './../updateTaskNodeRestrict'
+
 export default {
   name: 'customTreeTableDemo',
-  components: { treeTable, addTaskNode, addTaskFacade, updateTaskFacade, updateTaskNode, updateTaskProject },
+  components: { treeTable, addTaskNode, addTaskFacade, updateTaskFacade, updateTaskNode, updateTaskProject, addTaskNodeRestrict, updateTaskNodeRestrict },
   directives: { elDragDialog },
   data() {
     return {
@@ -97,7 +113,8 @@ export default {
       dialogTableVisibleUpdateProject: false,
       dialogTableVisibleUpdateTask: false,
       dialogTableVisibleUpdateFacade: false,
-
+      dialogTableVisibleAddRestrict: false,
+      dialogTableVisibleUpdateRestrict: false,
       func: treeToArray,
       expandAll: false,
       columns: [
@@ -226,7 +243,7 @@ export default {
             timeLine: element.id,
             bgintime: element.planStartTime,
             endtime: element.planCompleteTime,
-            children: [{}]
+            children: [{}, {}]
           })
         })
         var ls = this.data.concat(l)
@@ -240,7 +257,17 @@ export default {
     })
   },
   methods: {
-
+    Restrict(item, act) {
+      if (act === 'add') {
+        this.rootNodeNo = item.rootNodeNo
+        this.parentNodeNo = item.parentNodeNo
+        this.dialogTableVisibleAddRestrict = true
+      } else {
+        this.rootNodeNo = item.rootNodeNo
+        this.parentNodeNo = item.parentNodeNo
+        this.dialogTableVisibleUpdateRestrict = true
+      }
+    },
     dialogTable(item, act) {
       if (item.type === 'P') {
         this.rootNodeNo = item.No
@@ -266,6 +293,20 @@ export default {
       } else {
         this.dialogTableVisibleUpdateFacade = true
       }
+    },
+    Start(row) {
+      new Promise((resolve, reject) => {
+        startNode(row.No).then(response => {
+          console.log(response.resBody)
+        })
+      })
+    },
+    stop(row) {
+      new Promise((resolve, reject) => {
+        completedNode(row.No).then(response => {
+          console.log(response.resBody)
+        })
+      })
     },
     message(row) {
       this.$message.info(row.nodeTitle)

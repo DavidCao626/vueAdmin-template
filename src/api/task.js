@@ -191,6 +191,21 @@ export function getTaskParticipantB(data) {
     data: data
   })
 }
+
+export function startNode(data) {
+  return request({
+    url: '/task/startNode.do ',
+    method: 'post',
+    data: data
+  })
+}
+export function completedNode(data) {
+  return request({
+    url: '/completedNode.do ',
+    method: 'post',
+    data: data
+  })
+}
 /**
  * 更具参数查询当前用户为责任人的节点
  * @param {筛选字段} param

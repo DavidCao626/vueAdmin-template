@@ -29,25 +29,26 @@ import {
   getDictByDictNames
 } from '~/api/task'
 
-var nodeNo = 'N15253633083972953' // 要约束的节点
-
-var formStore = {}
-formStore.data = {
-  nodeNo: nodeNo,
-  nodeAction: '',
-  restrictNodeNo: '',
-  restrictState: ''
-}
-formStore.rules = {
-  nodeNo: nodeNo,
-  nodeAction: [],
-  restrictNodeNo: [],
-  restrictState: []
-}
 export default {
+  props: {
+    nodeNo: 'N15253633083972953'
+  },
   data() {
     return {
-      formStore,
+      formStore: {
+        data: {
+          nodeNo: this.nodeNo,
+          nodeAction: '',
+          restrictNodeNo: '',
+          restrictState: ''
+        },
+        rules: {
+          nodeNo: this.nodeNo,
+          nodeAction: [],
+          restrictNodeNo: [],
+          restrictState: []
+        }
+      },
       nodeActionList: [],
       nodeList: [],
       restrictStateList: []
@@ -82,7 +83,7 @@ export default {
     })
 
     var queryChildData = {
-      systemSerialNo: nodeNo
+      systemSerialNo: this.nodeNo
     }
     new Promise((resolve, reject) => {
       querySameNodeBySystemSerialNo(queryChildData).then(response => {

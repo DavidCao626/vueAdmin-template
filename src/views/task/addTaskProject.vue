@@ -44,27 +44,28 @@ var serviceTypeList = [
     classifyCode: '1001'
   }
 ]
-var formStore = {}
-formStore.data = {
-  nodeTitle: '', // 节点标题
-  nodeDesc: '', // 节点描述
-  planStartTime: '', // 计划开始时间
-  planCompleteTime: '', // 计划完成时间
-  projectNo: '', // 项目编号
-  serviceTypeCode: '' // 业务类别
-}
-formStore.rules = {
-  nodeTitle: [], // 节点标题
-  nodeDesc: [], // 节点描述
-  planStartTime: [], // 计划开始时间
-  planCompleteTime: [], // 计划完成时间
-  projectNo: [], // 项目编号
-  serviceTypeCode: [] // 业务类别
-}
+
 export default {
   data() {
     return {
-      formStore,
+      formStore: {
+        data: {
+          nodeTitle: '', // 节点标题
+          nodeDesc: '', // 节点描述
+          planStartTime: '', // 计划开始时间
+          planCompleteTime: '', // 计划完成时间
+          projectNo: '', // 项目编号
+          serviceTypeCode: '' // 业务类别
+        },
+        rules: {
+          nodeTitle: [], // 节点标题
+          nodeDesc: [], // 节点描述
+          planStartTime: [], // 计划开始时间
+          planCompleteTime: [], // 计划完成时间
+          projectNo: [], // 项目编号
+          serviceTypeCode: [] // 业务类别
+        }
+      },
       serviceTypeList // 业务类别列表
     }
   },

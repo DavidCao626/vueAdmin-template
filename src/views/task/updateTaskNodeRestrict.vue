@@ -23,86 +23,81 @@
 </template>
 
 <script>
-	import { updateTaskNodeRestrict, querySameNodeBySystemSerialNo, getDictByDictNames, getTaskNodeRestrictById } from '~/api/task'
+import {
+  updateTaskNodeRestrict,
+  querySameNodeBySystemSerialNo,
+  getDictByDictNames,
+  getTaskNodeRestrictById
+} from '~/api/task'
 
-	var id = "6"; //要修改的节点约束id
+var id = '6' // 要修改的节点约束id
 
-	var formStore = {}
-	formStore.data = {
-		'nodeAction': "",
-		'restrictNodeNo': "",
-		'restrictState': ""
-	}
-	formStore.rules = {
-		'nodeAction': [],
-		'restrictNodeNo': [],
-		'restrictState': []
-	}
-	export default {
-		data() {
-			return {
-				formStore,
-				nodeActionList: [],
-				nodeList: [],
-				restrictStateList: []
-			}
-		},
-		methods: {
-			submitForm(formName) {
-				var that = this
-				var data = this.formStore.data;
-				this.$refs[formName].validate((valid) => {
-					if(valid) {
-						new Promise((resolve, reject) => {
-							updateTaskNodeRestrict(data)
-								.then(response => {
-									 that.$message.success("成功!")
-								})
-								.catch(error => {})
-						})
-					} else {
-						return false;
-					}
-				})
-			}
-		},
-		mounted: function() {
-			var dictData = {
-				'dicts': ['node_action', 'node_state']
-			}
-			new Promise((resolve, reject) => {
-				getDictByDictNames(dictData)
-					.then(response => {
-						this.nodeActionList = response.resBody.node_action;
-						this.restrictStateList = response.resBody.node_state;
-					})
-					.catch(error => {})
-			})
+var formStore = {}
+formStore.data = {
+  nodeAction: '',
+  restrictNodeNo: '',
+  restrictState: ''
+}
+formStore.rules = {
+  nodeAction: [],
+  restrictNodeNo: [],
+  restrictState: []
+}
+export default {
+  data() {
+    return {
+      formStore,
+      nodeActionList: [],
+      nodeList: [],
+      restrictStateList: []
+    }
+  },
+  methods: {
+    submitForm(formName) {
+      var that = this
+      var data = this.formStore.data
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          new Promise((resolve, reject) => {
+            updateTaskNodeRestrict(data).then(response => {
+              that.$message.success('成功!')
+            })
+          })
+        } else {
+          return false
+        }
+      })
+    }
+  },
+  mounted: function() {
+    var dictData = {
+      dicts: ['node_action', 'node_state']
+    }
+    new Promise((resolve, reject) => {
+      getDictByDictNames(dictData).then(response => {
+        this.nodeActionList = response.resBody.node_action
+        this.restrictStateList = response.resBody.node_state
+      })
+    })
 
-			var getTaskNodeRestrictByIdData = {
-				'id': id
-			}
-			new Promise((resolve, reject) => {
-				getTaskNodeRestrictById(getTaskNodeRestrictByIdData)
-					.then(response => {
-						this.formStore.data = response.resBody;
-						var queryChildData = {
-							'systemSerialNo': this.formStore.data.nodeNo
-						}
-						new Promise((resolve, reject) => {
-							querySameNodeBySystemSerialNo(queryChildData)
-								.then(response => {
-									this.nodeList = response.resBody
-								})
-								.catch(error => {})
-						})
-					})
-					.catch(error => {})
-			})
-
-		}
-
-	}
+    var getTaskNodeRestrictByIdData = {
+      id: id
+    }
+    new Promise((resolve, reject) => {
+      getTaskNodeRestrictById(getTaskNodeRestrictByIdData).then(response => {
+        this.formStore.data = response.resBody
+        var queryChildData = {
+          systemSerialNo: this.formStore.data.nodeNo
+        }
+        new Promise((resolve, reject) => {
+          querySameNodeBySystemSerialNo(queryChildData).then(response => {
+            this.nodeList = response.resBody
+          })
+        })
+      })
+    })
+  }
+}
 </script>
 
 <style>

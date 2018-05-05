@@ -75,7 +75,8 @@ export default {
     },
     // 切换下级是否展开
     toggleExpanded: function(trIndex, scope) {
-      scope.row.children.push({ 'nodeTitle': '123', 'id': '123', 'timeLine': '31' })
+      // scope.row.children.push({ 'nodeTitle': '123', 'id': '123', 'timeLine': '231' })
+
       console.log(scope)
 
       debugger
