@@ -63,18 +63,18 @@
 
 	var rdata = []
 	var data = [{
-		classify_code: "0",
-		classify_name: "业务类别",
-		is_leaf: 'false',
-		children: rdata
+	  classify_code: '0',
+	  classify_name: '业务类别',
+	  is_leaf: 'false',
+	  children: rdata
 	}]
 
 	var updateForm = {}
 	updateForm.data = {
-		serviceTypeCode: "",
-		serviceTypeName: "",
-		available:"Y",
-		is_leaf: ''
+	  serviceTypeCode: '',
+	  serviceTypeName: '',
+	  available: 'Y',
+	  is_leaf: ''
 	}
 	updateForm.rules = {
 
@@ -82,112 +82,112 @@
 
 	var addForm = {}
 	addForm.data = {
-		serviceTypeName: "",
-		serviceTypeCode: "",
-		serviceParentTypeCode: "",
-		serviceParentTypeName: "",
-		is_leaf: ''
+	  serviceTypeName: '',
+	  serviceTypeCode: '',
+	  serviceParentTypeCode: '',
+	  serviceParentTypeName: '',
+	  is_leaf: ''
 	}
 	addForm.rules = {
 
 	}
 	export default {
-		data() {
-			return {
-				defaultProps: {
-					children: 'children',
-					label: 'classify_name'
-				},
-				treeData: data,
-				updateForm,
-				addForm,
-				allowAdd: false,
-				currentTabs: "update"
-			}
-		},
-		methods: {
-			updateButton(fromName) {
-				var that = this
-				if(this.updateForm.data.is_leaf == "true") {
-					//叶子节点调更新子节点的ajax
-					updateServiceChildType({
-							'serviceTypeName': this.updateForm.data.serviceTypeName,
-							'serviceTypeCode': this.updateForm.data.serviceTypeCode,
-							'available':this.updateForm.data.available
-						}).then(data => {
-							//这里重新获取节点数据
-							 that.$message.success("成功!")
-							that.loadTreeData();
-						})
-						.catch(error => {
+	  data() {
+	    return {
+	      defaultProps: {
+	        children: 'children',
+	        label: 'classify_name'
+	      },
+	      treeData: data,
+	      updateForm,
+	      addForm,
+	      allowAdd: false,
+	      currentTabs: 'update'
+	    }
+	  },
+	  methods: {
+	    updateButton(fromName) {
+	      var that = this
+	      if (this.updateForm.data.is_leaf == 'true') {
+	        // 叶子节点调更新子节点的ajax
+	        updateServiceChildType({
+	          'serviceTypeName': this.updateForm.data.serviceTypeName,
+	          'serviceTypeCode': this.updateForm.data.serviceTypeCode,
+	          'available': this.updateForm.data.available
+	        }).then(data => {
+	          // 这里重新获取节点数据
+							 that.$message.success('成功!')
+	          that.loadTreeData()
+	        })
+	          .catch(error => {
 
-						});
-				} else {
-					//这里调用更新父节点的ajax
-					updateServiceType({
-						'serviceTypeName': this.updateForm.data.serviceTypeName,
-						'serviceTypeCode': this.updateForm.data.serviceTypeCode,
-						'available':this.updateForm.data.available
-					}).then(data => {
-						//这里重新获取节点数据
-						 that.$message.success("成功!")
-						that.loadTreeData();
-					}).catch(error => {
+	          })
+	      } else {
+	        // 这里调用更新父节点的ajax
+	        updateServiceType({
+	          'serviceTypeName': this.updateForm.data.serviceTypeName,
+	          'serviceTypeCode': this.updateForm.data.serviceTypeCode,
+	          'available': this.updateForm.data.available
+	        }).then(data => {
+	          // 这里重新获取节点数据
+						 that.$message.success('成功!')
+	          that.loadTreeData()
+	        }).catch(error => {
 
-					})
-				}
-			},
-			addButton(formName) {
-				var that = this
-				if(this.addForm.data.serviceParentTypeCode == "0") {
-					//这里增加父业务类型
-					insertServiceType({
-						'serviceTypeName': this.addForm.data.serviceTypeName
-					}).then(data => {
-						//这里重新获取节点数据
-						 that.$message.success("成功!")
-						that.loadTreeData();
-					}).catch(error => {})
-				} else {
-					//这里增加子业务类型
-					insertServiceChildType({
-						'serviceParentTypeCode': this.addForm.data.serviceParentTypeCode,
-						'serviceTypeName': this.addForm.data.serviceTypeName
-					}).then(data => {
-						//这里重新获取节点数据
-						 that.$message.success("成功!")
-						that.loadTreeData();
-					}).catch(error => {})
-				}
-			},
-			handleNodeClick(data) {
-				console.log(["点击的数据", data])
-				this.currentTabs = "update"
-				if(data.is_leaf == "true") {
-					this.allowAdd = true;
-				} else {
-					this.allowAdd = false;
-					this.addForm.data.serviceParentTypeCode = data.classify_code;
-					this.addForm.data.serviceParentTypeName = data.classify_name;
-				}
-				this.updateForm.data.serviceTypeCode = data.classify_code;
-				this.updateForm.data.serviceTypeName = data.classify_name;
-				this.updateForm.data.is_leaf = data.is_leaf;
-					this.updateForm.data.available = data.available;
-			},
-			loadTreeData() {
-				queryServiceTypeList().then(data => {
-					console.log(["treeData", data])
-					this.treeData[0].children = data.resBody;
-				}).catch(
-					error => {
+	        })
+	      }
+	    },
+	    addButton(formName) {
+	      var that = this
+	      if (this.addForm.data.serviceParentTypeCode == '0') {
+	        // 这里增加父业务类型
+	        insertServiceType({
+	          'serviceTypeName': this.addForm.data.serviceTypeName
+	        }).then(data => {
+	          // 这里重新获取节点数据
+						 that.$message.success('成功!')
+	          that.loadTreeData()
+	        }).catch(error => {})
+	      } else {
+	        // 这里增加子业务类型
+	        insertServiceChildType({
+	          'serviceParentTypeCode': this.addForm.data.serviceParentTypeCode,
+	          'serviceTypeName': this.addForm.data.serviceTypeName
+	        }).then(data => {
+	          // 这里重新获取节点数据
+						 that.$message.success('成功!')
+	          that.loadTreeData()
+	        }).catch(error => {})
+	      }
+	    },
+	    handleNodeClick(data) {
+	      console.log(['点击的数据', data])
+	      this.currentTabs = 'update'
+	      if (data.is_leaf == 'true') {
+	        this.allowAdd = true
+	      } else {
+	        this.allowAdd = false
+	        this.addForm.data.serviceParentTypeCode = data.classify_code
+	        this.addForm.data.serviceParentTypeName = data.classify_name
+	      }
+	      this.updateForm.data.serviceTypeCode = data.classify_code
+	      this.updateForm.data.serviceTypeName = data.classify_name
+	      this.updateForm.data.is_leaf = data.is_leaf
+	      this.updateForm.data.available = data.available
+	    },
+	    loadTreeData() {
+	      queryServiceTypeList().then(data => {
+	        console.log(['treeData', data])
+	        this.treeData[0].children = data.resBody
+	      }).catch(
+	        error => {
 
-					})
-			}
-		},
-		mounted: function() {
-			this.loadTreeData();
-		}
+	        })
+	    }
+	  },
+	  mounted: function() {
+	    this.loadTreeData()
+  }
 
 	}
 </script>
