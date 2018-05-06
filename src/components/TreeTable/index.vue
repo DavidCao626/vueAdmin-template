@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="data" :row-style="showRow" v-bind="$attrs">
+  <el-table :data="itemDate" :row-style="showRow" v-bind="$attrs">
     <el-table-column v-if="columns.length===0" width="150">
       <template slot-scope="scope">
         <span v-for="space in scope.row._level" class="ms-tree-space" :key="space"></span>
@@ -26,12 +26,10 @@
 </template>
 
 <script>
-import dataBuilder from './ItemFacctory'
-import { queryChildTaskNodeBySystemSerialNo } from '~/api/task'
 export default {
   name: 'treeTable',
   props: {
-    itemDate: {},
+    showIndex: 0,
     data: {
       type: Array,
       default: () => []
@@ -45,6 +43,16 @@ export default {
     expandAll: {
       type: Boolean,
       default: false
+    }
+  },
+  data() {
+    return {
+      itemDate: []
+    }
+  },
+  watch: {
+    data() {
+      this.itemDate = this.data
     }
   },
   methods: {
@@ -63,69 +71,23 @@ export default {
     },
     // 切换下级是否展开
     toggleExpanded: function(trIndex, scope) {
-      var item1 = {
-        No: 'P15256087592557662',
-        bgintime: '2018-05-01',
-        children: [],
-        creater: 'student',
-        endtime: '2018-05-22',
-        id: undefined,
-        nodeTitle: '545645',
-        parentNodeNo: null,
-        timeLine: 'timeLine',
-        type: 'P',
-        _expanded: false,
-        _level: 1,
-        _marginLeft: 0,
-        _show: true,
-        _width: 1
+      if (!scope.row._expanded) {
+        this.$emit('getItemDate', trIndex, scope)
+      } else {
+        if (this.showIndex > 0) {
+          this.$emit('closeItemDate', trIndex, this.showIndex)
+        }
+
+        scope.row._expanded = false
       }
-      //
-      var p1 = new Promise((resolve, reject) => {
-        this.$emit('getItemDate', scope.row)
-
-        queryChildTaskNodeBySystemSerialNo(scope.row.No).then(response => {
-          var l = []
-          console.log(response.resBody.dataCount)
-          if (response.resBody.data) {
-            response.resBody.data.forEach(element => {
-              var item = {
-                id: element.id,
-                nodeTitle: element.nodeTitle,
-                type: element.nodeType,
-                parentNodeNo: element.parentNodeNo,
-                No: element.systemSerialNo,
-                creater: element.creater,
-                timeLine: element.id,
-                bgintime: element.planStartTime,
-                endtime: element.planCompleteTime
-              }
-              if (element.isLeafNode === 'N') {
-                item.children = []
-              }
-              item = dataBuilder.call(item, scope.row, null)
-              l.push(item)
-            })
-            resolve(l)
-          } else {
-            reject(response)
-          }
-        })
-      })
-      p1.then(function(result) {
-        this.data.splice(trIndex + 1, 0, result)
-        console.log(this.data)
-      })
-      p1.catch(function(reason) {
-        console.log('失败：' + reason)
-      })
-
-      const record = this.data[trIndex]
-      record._expanded = !record._expanded
     },
     // 图标显示
     iconShow(index, record) {
       return index === 0 && record.children
+    },
+    show(t, scope) {
+      this.$emit('showItemDate', scope)
+      return t
     }
   }
 }

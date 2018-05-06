@@ -25,7 +25,7 @@
       </el-dialog>
     </div>
 
-    <tree-table :data="data" :evalFunc="func" :columns="columns" :evalArgs="args" :expandAll="expandAll" border>
+    <tree-table @getItemDate="getItemDate" @closeItemDate="closeItemDate" @showItemDate="showItemDate" :showIndex="showIndex" :data="data" :evalFunc="func" :columns="columns" :evalArgs="args" :expandAll="expandAll" border>
 
       <el-table-column label="完成进度">
         <template slot-scope="scope">
@@ -141,6 +141,7 @@ export default {
   directives: { elDragDialog },
   data() {
     return {
+      showIndex: 0,
       rootNodeNo: 0,
       parentNodeNo: 0,
       dialogTableVisible: false,
@@ -209,8 +210,10 @@ export default {
           if (element.isLeafNode === 'N') {
             item.children = []
           }
-          item = dataBuilder.call(null, item, null)
-          l.push(item)
+          if (element.nodeType === 'P') {
+            item = dataBuilder.call(null, item, null)
+            l.push(item)
+          }
         })
         var ls = this.data.concat(l)
         this.data = ls
@@ -218,6 +221,74 @@ export default {
     })
   },
   methods: {
+    getItemDate(trIndex, scope) {
+      var th = this
+      /* var item = {
+        No: 'P15256087592557662',
+        bgintime: '2018-05-01',
+        children: [],
+        creater: 'student',
+        endtime: '2018-05-22',
+        id: undefined,
+        nodeTitle: '545645',
+        parentNodeNo: null,
+        timeLine: 'timeLine',
+        type: 'N'
+      }()*/
+      //
+      var p1 = new Promise((resolve, reject) => {
+        queryChildTaskNodeBySystemSerialNo(scope.row.No).then(response => {
+          if (response.resBody.length > 0) {
+            response.resBody.forEach((element, index) => {
+              var item = {
+                id: element.id,
+                nodeTitle: element.nodeTitle,
+                type: element.nodeType,
+                parentNodeNo: element.parentNodeNo,
+                No: element.systemSerialNo,
+                creater: element.creater,
+                timeLine: element.id,
+                bgintime: element.planStartTime,
+                endtime: element.planCompleteTime
+              }
+              if (element.isLeafNode === 'N') {
+                item.children = []
+              }
+              item = dataBuilder(item, scope.row, null)
+              console.log(item)
+
+              th.data.splice(trIndex + 1, 0, item)
+              this.showIndex = index
+              // alert(this.showIndex)
+            })
+          } else {
+            this.showIndex = 0
+            // alert(this.showIndex)
+            reject(response)
+          }
+        })
+      })
+      p1.then(function(result) {
+        // debugger
+
+        console.log(th.data)
+      })
+      p1.catch(function(reason) {
+        console.log('失败：' + [reason])
+      })
+      const record = th.data[trIndex]
+      record._expanded = !record._expanded
+    },
+    closeItemDate(trIndex, showCount) {
+      this.data.splice(trIndex + 1, showCount + 1)
+    },
+    showItemDate(scope) {
+      new Promise((resolve, reject) => {
+        queryChildTaskNodeBySystemSerialNo(scope.No).then(response => {
+          if (!response.resBody || response.resBody.length === 0) { scope.children = null }
+        })
+      }).then().catch(() => { debugger })
+    },
     Restrict(item, act) {
       if (act === 'add') {
         this.rootNodeNo = item.rootNodeNo
