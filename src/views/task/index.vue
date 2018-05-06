@@ -14,11 +14,17 @@
           <div class="panel-control__flex-center">
 
             <!-- <router-link to="/task/addTaskProject"> </router-link> -->
-            <span  @click="changeSearchState('S')"><el-tag>进行中</el-tag></span> 
-           <span @click="changeSearchState('R')" ><el-tag type="info">未开始</el-tag></span>
-           <!-- <el-tag @click="changeSearchState" type="warning">暂停中</el-tag>-->
+            <span @click="changeSearchState('S')">
+              <el-tag>进行中</el-tag>
+            </span>
+            <span @click="changeSearchState('R')">
+              <el-tag type="info">未开始</el-tag>
+            </span>
+            <!-- <el-tag @click="changeSearchState" type="warning">暂停中</el-tag>-->
             <!-- <el-tag type="danger">未完成</el-tag> -->
-            <span @click="changeSearchState('C')"><el-tag  type="success">已完成</el-tag></span> 
+            <span @click="changeSearchState('C')">
+              <el-tag type="success">已完成</el-tag>
+            </span>
 
           </div>
           <div class="panel-control__flex-right">
@@ -29,28 +35,21 @@
         </div>
       </div>
       <div class="panel-body">
-        <customTreeTable ></customTreeTable>
+        <component :is="dynamicView" :propsData="filterData"></component>
       </div>
       <br/>
     </div>
-			 <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[10, 20, 50, 100]"
-      :page-size="pageSize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="dataCount">
+    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="dataCount">
     </el-pagination>
-			
-			
-			
+
   </page>
 </template>
 <script>
 import customTreeTable from './components/customTreeTable'
 import transfer from './components/transfer'
 import { queryNodeByLiblerldByParam } from '~/api/task'
+import { completed, noStart, search, starting } from './taskfilter'
+
 const generateData = _ => {
   const data = []
   for (let i = 1; i <= 30; i++) {
@@ -74,16 +73,22 @@ const generateData2 = function() {
 export default {
   components: {
     customTreeTable,
-    transfer
+    transfer,
+    completed,
+    noStart,
+    search,
+    starting
   },
   data() {
     return {
-    	searchState: '', // 搜索的内容状态//进行中、未开始、暂停中、已完成
-    	searchContent: '',
-    	pageSize: 10, // 一页几条
-    	dataCount: 0, // 一共多少页
-    	currentPage: 1, // 当前页
-    	searchData: {}, // 查询参数
+      dynamicView: customTreeTable,
+      filterData: [],
+      searchState: '', // 搜索的内容状态//进行中、未开始、暂停中、已完成
+      searchContent: '',
+      pageSize: 10, // 一页几条
+      dataCount: 0, // 一共多少页
+      currentPage: 1, // 当前页
+      searchData: {}, // 查询参数
       data: generateData(),
       valueItem: [
         // 加载编辑时拉去服务器的加载项
@@ -103,8 +108,7 @@ export default {
     }
   },
   methods: {
-
-  	 handleSizeChange(val) {
+    handleSizeChange(val) {
       this.pageSize = val
       this.queryData()
     },
@@ -116,31 +120,34 @@ export default {
       this.data = generateData2()
     },
     changeSearchState: function(state) {
-    	if (this.searchState == state) {
-    		this.searchState = ''
-    	} else {
-    		this.searchState = state
-    	}
-    	// 执行一次查询
-    	this.saveBlock()
+      if (this.searchState == state) {
+        this.searchState = ''
+      } else {
+        this.searchState = state
+      }
+      // 执行一次查询
+      this.saveBlock()
     },
     saveBlock: function() {
-    	// 查询
-    	if (this.searchState != '') {
-    		this.searchData.state = this.searchState
-    	}
-    	if (this.searchContent != '') {
-    		this.searchData.Content = this.searchContent
-    	}
-    	this.searchData.currentPage = this.currentPage
-    	this.searchData.pageSize = this.pageSize
-    	this.queryData()
+      // 查询
+      if (this.searchState != '') {
+        this.searchData.state = this.searchState
+      }
+      if (this.searchContent != '') {
+        this.searchData.Content = this.searchContent
+      }
+      this.searchData.currentPage = this.currentPage
+      this.searchData.pageSize = this.pageSize
+      this.queryData()
     },
     queryData: function() {
-      var	requestData = this.searchData
-    	queryNodeByLiblerldByParam(requestData).then(data => {
-    		console.log(['请求到的节点列表数据', data])
-    	})
+      var requestData = this.searchData
+      var t = this
+      // this.dynamicView = search// 切换搜索组件
+      queryNodeByLiblerldByParam(requestData).then(data => {
+        t.filterData = data.resBody.data
+        console.log(['请求到的节点列表数据', data])
+      })
     }
   }
 }

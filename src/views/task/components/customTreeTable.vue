@@ -139,6 +139,12 @@ export default {
     updateTaskNodeRestrict
   },
   directives: { elDragDialog },
+  props: {
+    propsData: {
+      type: Array,
+      default: []
+    }
+  },
   data() {
     return {
       showIndex: 0,
@@ -189,36 +195,68 @@ export default {
       args: [null, null, 'timeLine']
     }
   },
-  mounted: function() {
-    new Promise((resolve, reject) => {
-      queryNodeByLiblerld().then(response => {
-        var l = []
-        console.log(response.resBody.dataCount)
-        response.resBody.data.forEach(element => {
-          var item = {
-            id: element.id,
-            nodeTitle: element.nodeTitle,
-            type: element.nodeType,
-            parentNodeNo: element.parentNodeNo,
-            No: element.systemSerialNo,
-            creater: element.creater,
-            timeLine: element.id,
-            bgintime: element.planStartTime,
-            endtime: element.planCompleteTime,
-            _expanded: false
-          }
-          if (element.isLeafNode === 'N') {
-            item.children = []
-          }
-          if (element.nodeType === 'P') {
-            item = dataBuilder.call(null, item, null)
-            l.push(item)
-          }
-        })
-        var ls = this.data.concat(l)
-        this.data = ls
+  watch: {
+    propsData() {
+      this.data = []
+      var l = []
+      this.propsData.forEach(element => {
+        var item = {
+          id: element.id,
+          nodeTitle: element.nodeTitle,
+          type: element.nodeType,
+          parentNodeNo: element.parentNodeNo,
+          No: element.systemSerialNo,
+          creater: element.creater,
+          timeLine: 45,
+          bgintime: element.planStartTime,
+          endtime: element.planCompleteTime,
+          _expanded: false
+        }
+        // debugger
+        if (element.isLeafNode === 'N') {
+          item.children = []
+        }
+        if (element.nodeType === 'P') {
+          item = dataBuilder.call(null, item, 'timeLine')
+          l.push(item)
+        }
       })
-    })
+      var ls = this.data.concat(l)
+      this.data = ls
+    }
+  },
+  mounted: function() {
+    if (this.propsData.length === 0) {
+      new Promise((resolve, reject) => {
+        queryNodeByLiblerld().then(response => {
+          var l = []
+          console.log(response.resBody.dataCount)
+          response.resBody.data.forEach(element => {
+            var item = {
+              id: element.id,
+              nodeTitle: element.nodeTitle,
+              type: element.nodeType,
+              parentNodeNo: element.parentNodeNo,
+              No: element.systemSerialNo,
+              creater: element.creater,
+              timeLine: 84,
+              bgintime: element.planStartTime,
+              endtime: element.planCompleteTime,
+              _expanded: false
+            }
+            if (element.isLeafNode === 'N') {
+              item.children = []
+            }
+            if (element.nodeType === 'P') {
+              item = dataBuilder.call(null, item, null)
+              l.push(item)
+            }
+          })
+          var ls = this.data.concat(l)
+          this.data = ls
+        })
+      })
+    }
   },
   methods: {
     getItemDate(trIndex, scope) {
@@ -247,14 +285,14 @@ export default {
                 parentNodeNo: element.parentNodeNo,
                 No: element.systemSerialNo,
                 creater: element.creater,
-                timeLine: element.id,
+                timeLine: 62,
                 bgintime: element.planStartTime,
                 endtime: element.planCompleteTime
               }
               if (element.isLeafNode === 'N') {
                 item.children = []
               }
-              item = dataBuilder(item, scope.row, null)
+              item = dataBuilder(item, scope.row, 'timeLine')
               console.log(item)
 
               th.data.splice(trIndex + 1, 0, item)
@@ -281,13 +319,6 @@ export default {
     },
     closeItemDate(trIndex, showCount) {
       this.data.splice(trIndex + 1, showCount + 1)
-    },
-    showItemDate(scope) {
-      new Promise((resolve, reject) => {
-        queryChildTaskNodeBySystemSerialNo(scope.No).then(response => {
-          if (!response.resBody || response.resBody.length === 0) { scope.children = null }
-        })
-      }).then().catch(() => { debugger })
     },
     Restrict(item, act) {
       if (act === 'add') {
