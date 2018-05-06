@@ -33,7 +33,7 @@ export const constantRouterMap = [
   {
     path: '/',
     component: stuLayout,
-    redirect: '/home',
+    redirect: '/task',
     name: 'home_index',
     meta: { title: '首页' },
     children: [
