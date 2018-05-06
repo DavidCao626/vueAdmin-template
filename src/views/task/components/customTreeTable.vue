@@ -232,7 +232,7 @@ export default {
     new Promise((resolve, reject) => {
       queryNodeByLiblerld().then(response => {
         var l = []
-        response.resBody.forEach(element => {
+        response.resBody.data.forEach(element => {
           l.push({
             id: element.id,
             nodeTitle: element.nodeTitle,

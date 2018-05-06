@@ -217,3 +217,12 @@ export function queryNodeByParam(param) {
     data: param
   })
 }
+
+
+export function queryNodeByLiblerldByParam(param) {
+  return request({
+    url: '/task/queryNodeByLiblerldByParam.do',
+    method: 'post',
+    data: param
+  })
+}
