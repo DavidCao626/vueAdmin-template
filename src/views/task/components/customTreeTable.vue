@@ -73,7 +73,13 @@
           <el-tooltip class="item" effect="dark" content="启动" placement="bottom">
             <el-button type="text" @click="Start(scope.row)" class="el-icon-caret-right" size="medium"></el-button>
           </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="停止" placement="bottom">
             <el-button type="text" @click="stop(scope.row)" class="el-icon-check" size="medium" style="margin-left: 0px;"></el-button>
+          </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="详情" placement="bottom">
+              <router-link to="/task/nodeDate" >
+                <el-button type="text" class="el-icon-arrow-right" size="medium" style="margin-left: 0px;"></el-button>
+              </router-link>
           </el-tooltip>
         </template>
       </el-table-column>
