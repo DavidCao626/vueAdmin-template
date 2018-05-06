@@ -50,7 +50,7 @@
 <script>
 import customTreeTable from './components/customTreeTable'
 import transfer from './components/transfer'
-import {queryNodeByLiblerldByParam} from  '~/api/task'
+import { queryNodeByLiblerldByParam } from '~/api/task'
 const generateData = _ => {
   const data = []
   for (let i = 1; i <= 30; i++) {
@@ -78,12 +78,12 @@ export default {
   },
   data() {
     return {
-    	searchState:"",//搜索的内容状态//进行中、未开始、暂停中、已完成
-    	searchContent:"",
-    	pageSize:10,//一页几条
-    	dataCount:0,//一共多少页
-    	currentPage:1,//当前页
-    	searchData:{},//查询参数
+    	searchState: '', // 搜索的内容状态//进行中、未开始、暂停中、已完成
+    	searchContent: '',
+    	pageSize: 10, // 一页几条
+    	dataCount: 0, // 一共多少页
+    	currentPage: 1, // 当前页
+    	searchData: {}, // 查询参数
       data: generateData(),
       valueItem: [
         // 加载编辑时拉去服务器的加载项
@@ -103,44 +103,43 @@ export default {
     }
   },
   methods: {
-  	
+
   	 handleSizeChange(val) {
-        this.pageSize = val;
-        this.queryData();
-      },
-      handleCurrentChange(val) {
-       this.currentPage = val;
-       this.queryData();
-      },
+      this.pageSize = val
+      this.queryData()
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val
+      this.queryData()
+    },
     data2() {
       this.data = generateData2()
     },
-    changeSearchState:function(state){
-    	if(this.searchState == state){
-    		this.searchState = "";	
-    	}else{
-    		this.searchState=state;
+    changeSearchState: function(state) {
+    	if (this.searchState == state) {
+    		this.searchState = ''
+    	} else {
+    		this.searchState = state
     	}
-    	//执行一次查询
-    	this.saveBlock();
+    	// 执行一次查询
+    	this.saveBlock()
     },
     saveBlock: function() {
-    	//查询
-    	if(this.searchState != ""){
-    		this.searchData.state = this.searchState;
+    	// 查询
+    	if (this.searchState != '') {
+    		this.searchData.state = this.searchState
     	}
-    	if(this.searchContent != ""){
-    		this.searchData.Content = this.searchContent;
+    	if (this.searchContent != '') {
+    		this.searchData.Content = this.searchContent
     	}
-    	this.searchData.currentPage = this.currentPage;
-    	this.searchData.pageSize = this.pageSize;
-    	this.queryData();
-    	
+    	this.searchData.currentPage = this.currentPage
+    	this.searchData.pageSize = this.pageSize
+    	this.queryData()
     },
-    queryData:function(){
-    var	requestData  = this.searchData;
-    	queryNodeByLiblerldByParam(requestData).then(data=>{
-    		console.log(["请求到的节点列表数据",data]);
+    queryData: function() {
+      var	requestData = this.searchData
+    	queryNodeByLiblerldByParam(requestData).then(data => {
+    		console.log(['请求到的节点列表数据', data])
     	})
     }
   }

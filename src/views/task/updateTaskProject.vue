@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import {queryServiceTypeList, updateTaskProject, getTaskProject } from '~/api/task'
+import { queryServiceTypeList, updateTaskProject, getTaskProject } from '~/api/task'
 
 export default {
   props: {
@@ -101,7 +101,7 @@ export default {
 	        .catch(error => {
 	          reject(error)
 	        })
-			}),
+    }),
 			    new Promise((resolve, reject) => {
       queryServiceTypeList()
         .then(response => {

@@ -32,8 +32,8 @@ import {
 export default {
   props: {
     nodeNo: {
-      type:String,
-      default:'N15255746693951251'
+      type: String,
+      default: 'N15255746693951251'
     }
   },
   data() {
