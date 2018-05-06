@@ -44,8 +44,7 @@ import {
   queryUserOrg
 } from '~/api/task'
 
-var systemSerialNo = 'F15253635748313921'
-var facadeId = '6'
+var systemSerialNo = 'F15255740819458509'
 
 var headFormData = {
   nodeOrgCode: [],
@@ -94,7 +93,6 @@ export default {
       // 提交的数据
       var submitData = {
         systemSerialNo: systemSerialNo,
-        facadeId: facadeId,
         paritcis: this.valueItem
       }
       saveTaskParticipant(submitData)

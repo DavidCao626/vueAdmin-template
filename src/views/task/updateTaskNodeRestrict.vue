@@ -30,7 +30,7 @@ import {
   getTaskNodeRestrictById
 } from '~/api/task'
 
-var id = '6' // 要修改的节点约束id
+var id = '9' // 要修改的节点约束id
 
 var formStore = {}
 formStore.data = {
