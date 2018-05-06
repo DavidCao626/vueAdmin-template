@@ -1,3 +1,3 @@
- var bashPath = "/act";
-//var bashPath = '/act'
-export default bashPath
+//var bashPath="/StuService"
+var bashPath = "/act"
+export default bashPath;

@@ -23,77 +23,75 @@
 </template>
 
 <script>
-	import { insertTaskNodeRestrict, querySameNodeBySystemSerialNo, getDictByDictNames } from '~/api/task'
+import {
+  insertTaskNodeRestrict,
+  querySameNodeBySystemSerialNo,
+  getDictByDictNames
+} from '~/api/task'
 
-	var nodeNo = "N15253633083972953"; //要约束的节点
+export default {
+  props: {
+    nodeNo: 'N15253633083972953'
+  },
+  data() {
+    return {
+      formStore: {
+        data: {
+          nodeNo: this.nodeNo,
+          nodeAction: '',
+          restrictNodeNo: '',
+          restrictState: ''
+        },
+        rules: {
+          nodeNo: this.nodeNo,
+          nodeAction: [],
+          restrictNodeNo: [],
+          restrictState: []
+        }
+      },
+      nodeActionList: [],
+      nodeList: [],
+      restrictStateList: []
+    }
+  },
+  methods: {
+    submitForm(formName) {
+      var data = this.formStore.data
+      var that = this
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          new Promise((resolve, reject) => {
+            insertTaskNodeRestrict(data).then(response => {
+              that.$message.success('成功!')
+            })
+          })
+        } else {
+          return false
+        }
+      })
+    }
+  },
+  mounted: function() {
+    var dictData = {
+      dicts: ['node_action', 'node_state']
+    }
+    new Promise((resolve, reject) => {
+      getDictByDictNames(dictData).then(response => {
+        this.nodeActionList = response.resBody.node_action
+        this.restrictStateList = response.resBody.node_state
+      })
+    })
 
-	var formStore = {}
-	formStore.data = {
-		'nodeNo': nodeNo,
-		'nodeAction': "",
-		'restrictNodeNo': "",
-		'restrictState': ""
-	}
-	formStore.rules = {
-		'nodeNo': nodeNo,
-		'nodeAction': [],
-		'restrictNodeNo': [],
-		'restrictState': []
-	}
-	export default {
-		data() {
-			return {
-				formStore,
-				nodeActionList: [],
-				nodeList: [],
-				restrictStateList: []
-			}
-		},
-		methods: {
-			submitForm (formName) {
-				var data = this.formStore.data;
-				var that = this;
-				this.$refs[formName].validate((valid) => {
-					if(valid) {
-						new Promise((resolve, reject) => {
-							insertTaskNodeRestrict(data)
-								.then(response => {
-									 that.$message.success("成功!")
-								})
-								.catch(error => {})
-						})
-					} else {
-						return false;
-					}
-				})
-			}
-		},
-		mounted: function() {
-			var dictData = {
-				'dicts': ['node_action', 'node_state']
-			}
-			new Promise((resolve, reject) => {
-				getDictByDictNames(dictData)
-					.then(response => {
-						this.nodeActionList = response.resBody.node_action;
-						this.restrictStateList = response.resBody.node_state;
-					})
-					.catch(error => {})
-			})
-
-			var queryChildData = {
-				'systemSerialNo': nodeNo
-			}
-			new Promise((resolve, reject) => {
-				querySameNodeBySystemSerialNo(queryChildData)
-					.then(response => {
-						this.nodeList = response.resBody
-					})
-					.catch(error => {})
-			})
-		}
-
-	}
+    var queryChildData = {
+      systemSerialNo: this.nodeNo
+    }
+    new Promise((resolve, reject) => {
+      querySameNodeBySystemSerialNo(queryChildData).then(response => {
+        this.nodeList = response.resBody
+      })
+    })
+  }
+}
 </script>
 
 <style>

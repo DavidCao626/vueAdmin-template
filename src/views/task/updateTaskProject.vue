@@ -29,79 +29,81 @@
 </template>
 
 <script>
-	import { updateTaskProject, getTaskProject } from '~/api/task'
+import { updateTaskProject, getTaskProject } from '~/api/task'
 
-	// 这个是要修改的项目的项目编号
-	var systemSerialNo = 'P15255341433235448';
-
-	var serviceTypeList = [{
-	  'label': '业务类别',
-	  'value': '1001'
-	}]
-var formStore = {}
-formStore.data = {
-	  nodeTitle: '', // 节点标题
-	  nodeDesc: '', // 节点描述
-	  planStartTime: '', // 计划开始时间
-	  planCompleteTime: '', // 计划完成时间
-	  projectNo: '', // 项目编号
-	  serviceTypeCode: '' // 业务类别
-	}
-	formStore.rules = {
-	  nodeTitle: [], // 节点标题
-	  nodeDesc: [], // 节点描述
-	  planStartTime: [], // 计划开始时间
-	  planCompleteTime: [], // 计划完成时间
-	  projectNo: [], // 项目编号
-	  serviceTypeCode: [] // 业务类别
-	}
-	export default {
-	  data() {
-	    return {
-	      formStore,
-	      serviceTypeList // 业务类别列表
-	    }
-	  },
-	  methods: {
-	    submitForm: function(formName) {
-	      var data = this.formStore.data
-			var that = this
-			data.systemSerialNo = systemSerialNo
-			this.$refs[formName].validate((valid) => {
-	        if (valid) {
-	          new Promise((resolve, reject) => {
-	            updateTaskProject(data)
-	              .then(response => {
-									 that.$message.success('成功!')
-	                resolve(response)
-	              })
-	              .catch(error => {
-	                reject(error)
-	              })
-	          })
-	        } else {
-	          return false
-				}
-	      })
-		}
-	  },
-	  mounted: function() {
-	    new Promise((resolve, reject) => {
+export default {
+  props: {
+    systemSerialNo: {
+      type: Number,
+      default: 1001
+    }
+  },
+  data() {
+    return {
+      formStore: {
+        data: {
+          nodeTitle: '', // 节点标题
+          nodeDesc: '', // 节点描述
+          planStartTime: '', // 计划开始时间
+          planCompleteTime: '', // 计划完成时间
+          projectNo: '', // 项目编号
+          serviceTypeCode: '' // 业务类别
+        },
+        rules: {
+          nodeTitle: [], // 节点标题
+          nodeDesc: [], // 节点描述
+          planStartTime: [], // 计划开始时间
+          planCompleteTime: [], // 计划完成时间
+          projectNo: [], // 项目编号
+          serviceTypeCode: [] // 业务类别
+        }
+      },
+      serviceTypeList: {
+        label: '业务类别',
+        value: '1001'
+      } // 业务类别列表
+    }
+  },
+  methods: {
+    submitForm: function(formName) {
+      var data = this.formStore.data
+      var that = this
+      data.systemSerialNo = this.systemSerialNo
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          new Promise((resolve, reject) => {
+            updateTaskProject(data)
+              .then(response => {
+                that.$message.success('成功!')
+                resolve(response)
+              })
+              .catch(error => {
+                reject(error)
+              })
+          })
+        } else {
+          return false
+        }
+      })
+    }
+  },
+  mounted: function() {
+    new Promise((resolve, reject) => {
       var data = {
-        'systemSerialNo': systemSerialNo
+        systemSerialNo: this.systemSerialNo
       }
 	      getTaskProject(data)
 	        .then(response => {
 	          resolve(response)
 	          console.log(['updateTaskProjectData', response])
-						this.formStore.data = response.resBody
-				})
+          this.formStore.data = response.resBody
+        })
 	        .catch(error => {
 	          reject(error)
 	        })
 	    })
 	  }
-	}
+}
 </script>
 
 <style>

@@ -13,7 +13,7 @@
     <el-table-column v-else v-for="(column, index) in columns" :key="column.value" :label="column.text" :width="column.width">
       <template slot-scope="scope">
         <span v-if="index === 0" v-for="space in scope.row._level" class="ms-tree-space" :key="space"></span>
-        <span class="tree-ctrl" v-if="iconShow(index,scope.row)" @click="toggleExpanded(scope.$index)">
+        <span class="tree-ctrl" v-if="iconShow(index,scope.row)" @click="toggleExpanded(scope.$index,scope)">
           <i v-if="!scope.row._expanded" class="el-icon-plus"></i>
           <i v-else class="el-icon-minus"></i>
         </span>
@@ -74,7 +74,12 @@ export default {
       return show ? 'animation:treeTableShow 1s;-webkit-animation:treeTableShow 1s;' + s : 'display:none;'
     },
     // 切换下级是否展开
-    toggleExpanded: function(trIndex) {
+    toggleExpanded: function(trIndex, scope) {
+      // scope.row.children.push({ 'nodeTitle': '123', 'id': '123', 'timeLine': '231' })
+
+      console.log(scope)
+
+      debugger
       const record = this.formatData[trIndex]
       record._expanded = !record._expanded
     },
