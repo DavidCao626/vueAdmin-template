@@ -20,7 +20,7 @@
 			</el-form-item>
 			<el-form-item label="业务类别" prop="serviceTypeCode">
 				<el-select v-model="formStore.data.serviceTypeCode" placeholder="请选择业务类别">
-					<el-option v-for="(item,index) in serviceTypeList" :key="index" :label="item.label" :value="item.value"></el-option>
+					<el-option v-for="(item,index) in serviceTypeList" :key="index" :label="item.classifyName" :value="item.classifyCode"></el-option>
 				</el-select>
 			</el-form-item>
 		</el-form>
@@ -29,13 +29,13 @@
 </template>
 
 <script>
-import { updateTaskProject, getTaskProject } from '~/api/task'
+import {queryServiceTypeList, updateTaskProject, getTaskProject } from '~/api/task'
 
 export default {
   props: {
     systemSerialNo: {
-      type: Number,
-      default: 1001
+      type: String,
+      default: 'P15255736419785625'
     }
   },
   data() {
@@ -101,7 +101,13 @@ export default {
 	        .catch(error => {
 	          reject(error)
 	        })
-	    })
+			}),
+			    new Promise((resolve, reject) => {
+      queryServiceTypeList()
+        .then(response => {
+          this.serviceTypeList = response.resBody
+        })
+    })
 	  }
 }
 </script>

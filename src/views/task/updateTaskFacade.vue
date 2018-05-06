@@ -61,7 +61,7 @@
 <script>
 	import { updateTaskFacade, queryDutyByOrgCode, queryUserByDutyCodeAndOrgCode, queryUserOrg, getNodeTaskFacadeBySystemSerialNo, querySceneByProjectSystemSerialNo } from '~/api/task'
 
-	var systemSerialNo = 'F15249094929620750' // 要修改的工序
+	var systemSerialNo = 'F15255740819458509' // 要修改的工序
 
 var resolverList = [{
 	  'label': '外观类',
