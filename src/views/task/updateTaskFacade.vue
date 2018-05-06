@@ -30,27 +30,27 @@
 					<el-option v-for="(item,index) in userList" :key="index" :label="item.nick_name" :value="item.id"></el-option>
 				</el-select>
 			</el-form-item>
-			<el-form-item label='请选择外观类' prop='facadeResolverClass'>
+			<!-- <el-form-item label='请选择外观类' prop='facadeResolverClass'>
 				<el-select v-model="formStore.data.facadeResolverClass" placeholder="请选择外观类">
 					<el-option v-for="(item,index) in resolverList" :key="index" :label="item.label" :value="item.value"></el-option>
 				</el-select>
-			</el-form-item>
-			<el-form-item label='外观的访问地址' prop='facadeResolverUrl'>
+			</el-form-item> -->
+			<!-- <el-form-item label='外观的访问地址' prop='facadeResolverUrl'>
 				<el-input size="mini" v-model="formStore.data.facadeResolverUrl" placeholder="请输入外观的访问地址"></el-input>
-			</el-form-item>
-			<el-form-item label='工序的线程编号' prop='facadeSequenece'>
+			</el-form-item> -->
+			<!-- <el-form-item label='工序的线程编号' prop='facadeSequenece'>
 				<el-input size="mini" v-model="formStore.data.facadeSequenece" placeholder="请输入工序的线程编号"></el-input>
-			</el-form-item>
+			</el-form-item> -->
 			<el-form-item label='请选择业务场景' prop='serviceSceneCode'>
 				<el-select v-model="formStore.data.serviceSceneCode" placeholder="请选择业务场景">
-					<el-option v-for="(item,index) in serviceSceneList" :key="index" :label="item.label" :value="item.value"></el-option>
+					<el-option v-for="(item,index) in serviceSceneList" :key="index" :label="item.sceneName" :value="item.sceneSeq"></el-option>
 				</el-select>
 			</el-form-item>
-			<el-form-item label='请选择业务类型' prop='serviceTypeCode'>
+			<!-- <el-form-item label='请选择业务类型' prop='serviceTypeCode'>
 				<el-select v-model="formStore.data.facadeResolverClass" placeholder="请选择业务类型">
 					<el-option v-for="(item,index) in serviceTypeList" :key="index" :label="item.label" :value="item.value"></el-option>
 				</el-select>
-			</el-form-item>
+			</el-form-item> -->
 		</el-form>
 		<el-button type="success" size="mini" @click="submitForm('form1')">提交</el-button>
 
@@ -59,183 +59,198 @@
 </template>
 
 <script>
-	import { updateTaskFacade, queryDutyByOrgCode, queryUserByDutyCodeAndOrgCode, queryUserOrg, getNodeTaskFacadeBySystemSerialNo } from '~/api/task'
+import {
+  updateTaskFacade,
+  queryDutyByOrgCode,
+  queryUserByDutyCodeAndOrgCode,
+  queryUserOrg,
+  getNodeTaskFacadeBySystemSerialNo,
+  querySceneByProjectSystemSerialNo
+} from "~/api/task";
 
-	var systemSerialNo = "F15249094929620750"; //要修改的工序
+var systemSerialNo = "F15255362062802593"; //要修改的工序
 
-	var parentNodeNo = ''; //上级节点编号
-	var rootNodeNo = ''; //根节点编号
-	var resolverList = [{
-		'label': '外观类',
-		'value': '1001'
-	}];
-	var serviceSceneList = [{
-		'label': '业务场景',
-		'value': '1001'
-	}];
-	var serviceTypeList = [{
-		'label': '业务类型',
-		'value': '1001'
-	}];
+var parentNodeNo = ""; //上级节点编号
+var rootNodeNo = ""; //根节点编号
+var resolverList = [
+  {
+    label: "外观类",
+    value: "1001"
+  }
+];
+var serviceSceneList = [
+  {
+    label: "业务场景",
+    value: "1001"
+  }
+];
+var serviceTypeList = [
+  {
+    label: "业务类型",
+    value: "1001"
+  }
+];
 
-	var formStore = {};
-	formStore.data = {
-		'systemSerialNo': systemSerialNo,
-		'parentNodeNo': parentNodeNo,
-		'rootNodeNo': rootNodeNo,
-		'nodeTitle': "", //节点标题
-		'nodeDesc': "", //节点描述
-		'planStartTime': "", //计划开始时间
-		'planCompleteTime': "", //计划完成时间
-		'nodeOrgCode': [], //节点所在机构
-		'liablerDutyCode': "", //责任人职务
-		'liablerId': "", //责任人id
-		'facadeResolverClass': "", //外观类
-		'facadeResolverUrl': "", //外观访问地址
-		'facadeSequenece': "", //工序的线程编号
-		'serviceSceneCode': "", //业务场景
-		'serviceTypeCode': "" //业务类型
-	};
-	formStore.rules = {
-		'nodeTitle': [], //节点标题
-		'nodeDesc': [], //节点描述
-		'planStartTime': [], //计划开始时间
-		'planCompleteTime': [], //计划完成时间
-		'nodeOrgCode': [], //节点所在机构
-		'liablerDutyCode': [], //责任人职务
-		'liablerId': [], //责任人id
-		'facadeResolverClass': [], //外观类
-		'facadeResolverUrl': [], //外观访问地址
-		'facadeSequenece': [], //工序的线程编号
-		'serviceSceneCode': [], //业务场景
-		'serviceTypeCode': [] //业务类型
-	};
-	export default {
-		data() {
-			return {
-				formStore,
-				resolverList,
-				serviceSceneList,
-				serviceTypeList,
-				orgList: [],
-				dutyList: [],
-				userList: [],
-				orgProps: {
-					'value': 'org_code',
-					'label': 'org_name'
-				}
-			}
-		},
-		methods: {
-			submitForm(formName) {
-				var that = this;
-				var data = JSON.parse(JSON.stringify(this.formStore.data));
-				data.nodeOrgCode = this.formStore.data.nodeOrgCode[
-					this.formStore.data.nodeOrgCode.length - 1
-				];
-				this.$refs[formName].validate((valid) => {
-					if(valid) {
-						new Promise((resolve, reject) => {
-							updateTaskFacade(data)
-								.then(response => {
-									 that.$message.success("成功!")
-								})
-								.catch(error => {})
-						})
-					} else {
-						return false;
-					}
-				});
-			},
-			//组织变化触发的方法,加载组织下职务
-			orgCodeChange: function(val) {
-				this.formStore.data.liablerDutyCode = ""
-				console.log(val);
-				var data = {
-					'orgCode': val
-				}
-				new Promise((resolve, reject) => {
-					queryDutyByOrgCode(data)
-						.then(response => {
-							resolve(response)
-							console.log(["queryDutyByOrgCode", response]);
-							this.dutyList = response.resBody
-						})
-						.catch(error => {
-							reject(error)
-						})
-				})
-			},
+var formStore = {};
+formStore.data = {
+  systemSerialNo: systemSerialNo,
+  parentNodeNo: parentNodeNo,
+  rootNodeNo: rootNodeNo,
+  nodeTitle: "", //节点标题
+  nodeDesc: "", //节点描述
+  planStartTime: "", //计划开始时间
+  planCompleteTime: "", //计划完成时间
+  nodeOrgCode: [], //节点所在机构
+  liablerDutyCode: "", //责任人职务
+  liablerId: "", //责任人id
+  serviceSceneCode: "" //业务场景
+};
+formStore.rules = {
+  nodeTitle: [], //节点标题
+  nodeDesc: [], //节点描述
+  planStartTime: [], //计划开始时间
+  planCompleteTime: [], //计划完成时间
+  nodeOrgCode: [], //节点所在机构
+  liablerDutyCode: [], //责任人职务
+  liablerId: [], //责任人id
+  serviceSceneCode: [] //业务场景
+};
+export default {
+  data() {
+    return {
+      formStore,
+      resolverList,
+      serviceSceneList,
+      serviceTypeList,
+      orgList: [],
+      dutyList: [],
+      userList: [],
+      orgProps: {
+        value: "org_code",
+        label: "org_name"
+      }
+    };
+  },
+  methods: {
+    submitForm(formName) {
+      var that = this;
+      var data = JSON.parse(JSON.stringify(this.formStore.data));
+      data.nodeOrgCode = this.formStore.data.nodeOrgCode[
+        this.formStore.data.nodeOrgCode.length - 1
+      ];
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          new Promise((resolve, reject) => {
+            updateTaskFacade(data)
+              .then(response => {
+                that.$message.success("成功!");
+              })
+              .catch(error => {});
+          });
+        } else {
+          return false;
+        }
+      });
+    },
+    //组织变化触发的方法,加载组织下职务
+    orgCodeChange: function(val) {
+      this.formStore.data.liablerDutyCode = "";
+      console.log(val);
+      var data = {
+        orgCode: val
+      };
+      new Promise((resolve, reject) => {
+        queryDutyByOrgCode(data)
+          .then(response => {
+            resolve(response);
+            console.log(["queryDutyByOrgCode", response]);
+            this.dutyList = response.resBody;
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
+    },
 
-			//职务被选中触发的方法加载责任人列表
-			dutyCodeChange: function(val) {
-				this.formStore.data.liablerId = ""
-				var data = {
-					'orgCode': this.formStore.data.nodeOrgCode,
-					'dutyCode': val
-				}
-				new Promise((resolve, reject) => {
-					queryUserByDutyCodeAndOrgCode(data)
-						.then(response => {
-							resolve(response)
-							console.log(["queryUserByDutyCodeAndOrgCode", response]);
-							this.userList = response.resBody
-						})
-						.catch(error => {
-							reject(error)
-						})
-				})
-			}
-		},
-		mounted: function() {
-			new Promise((resolve, reject) => {
-					queryUserOrg()
-						.then(response => {
-							this.orgList = response.resBody;
-						})
-						.catch(error => {})
-				})
-				var getNodeTaskFacadeData = {
-					'systemSerialNo': systemSerialNo
-				}
-			new Promise((resolve, reject) => {
-					getNodeTaskFacadeBySystemSerialNo(getNodeTaskFacadeData)
-						.then(response => {
-							response.resBody.baseData.nodeOrgCode = response.resBody.aOrgCode;
-							this.formStore.data = response.resBody.baseData;
-							var queryDutyByOrgCodeData = {
-								'orgCode': response.resBody.aOrgCode
-							};
-							new Promise((resolve, reject) => {
-								queryDutyByOrgCode(queryDutyByOrgCodeData)
-									.then(response => {
-										resolve(response)
-										this.dutyList = response.resBody
-									})
-									.catch(error => {
-										reject(error)
-									})
-							})
-							var queryUserByDutyCodeAndOrgCodeData = {
-								'orgCode': response.resBody.aOrgCode,
-								'dutyCode': response.resBody.baseData.liablerDutyCode
-							}
-							new Promise((resolve, reject) => {
-								queryUserByDutyCodeAndOrgCode(queryUserByDutyCodeAndOrgCodeData)
-									.then(response => {
-										resolve(response)
-										this.userList = response.resBody
-									})
-									.catch(error => {
-										reject(error)
-									})
-							})
-						})
-						.catch(error => {})
-				})
-		}
-
-	}
+    //职务被选中触发的方法加载责任人列表
+    dutyCodeChange: function(val) {
+      this.formStore.data.liablerId = "";
+      var data = {
+        orgCode: this.formStore.data.nodeOrgCode,
+        dutyCode: val
+      };
+      new Promise((resolve, reject) => {
+        queryUserByDutyCodeAndOrgCode(data)
+          .then(response => {
+            resolve(response);
+            console.log(["queryUserByDutyCodeAndOrgCode", response]);
+            this.userList = response.resBody;
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
+    }
+  },
+  mounted: function() {
+    var that = this;
+    new Promise((resolve, reject) => {
+      queryUserOrg()
+        .then(response => {
+          this.orgList = response.resBody;
+        })
+        .catch(error => {});
+    });
+    var getNodeTaskFacadeData = {
+      systemSerialNo: systemSerialNo
+    };
+    new Promise((resolve, reject) => {
+      getNodeTaskFacadeBySystemSerialNo(getNodeTaskFacadeData)
+        .then(response => {
+          response.resBody.baseData.nodeOrgCode = response.resBody.aOrgCode;
+          this.formStore.data = response.resBody.baseData;
+          var queryDutyByOrgCodeData = {
+            orgCode: response.resBody.aOrgCode
+          };
+          var querySceneData = {
+            systemSerialNo: response.resBody.baseData.rootNodeNo
+          };
+          new Promise((resolve, reject) => {
+            querySceneByProjectSystemSerialNo(querySceneData)
+              .then(response => {
+                that.serviceSceneList = response.resBody;
+              })
+              .catch(error => {});
+          });
+          new Promise((resolve, reject) => {
+            queryDutyByOrgCode(queryDutyByOrgCodeData)
+              .then(response => {
+                resolve(response);
+                this.dutyList = response.resBody;
+              })
+              .catch(error => {
+                reject(error);
+              });
+          });
+          var queryUserByDutyCodeAndOrgCodeData = {
+            orgCode: response.resBody.aOrgCode,
+            dutyCode: response.resBody.baseData.liablerDutyCode
+          };
+          new Promise((resolve, reject) => {
+            queryUserByDutyCodeAndOrgCode(queryUserByDutyCodeAndOrgCodeData)
+              .then(response => {
+                resolve(response);
+                this.userList = response.resBody;
+              })
+              .catch(error => {
+                reject(error);
+              });
+          });
+        })
+        .catch(error => {});
+    });
+  }
+};
 </script>
 
 <style>

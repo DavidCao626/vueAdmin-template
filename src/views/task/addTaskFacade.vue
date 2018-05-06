@@ -51,8 +51,8 @@ import {
   querySceneByProjectSystemSerialNo
 } from "~/api/task";
 
-var parentNodeNo = "N15253633333212490"; // 上级节点编号
-var rootNodeNo = "P15253629675345771"; // 根节点编号
+var parentNodeNo = "P15255341433235448"; // 上级节点编号
+var rootNodeNo = "P15255341433235448"; // 根节点编号
 var serviceSceneList = [];
 
 var formStore = {};
@@ -95,9 +95,9 @@ export default {
   methods: {
     submitForm(formName) {
       var data = JSON.parse(JSON.stringify(this.formStore.data));
-      data.nodeOrgCode = this.formStore.data.nodeOrgCode[
-        this.formStore.data.nodeOrgCode.length - 1
-      ];
+      // data.nodeOrgCode = this.formStore.data.nodeOrgCode[
+      //   this.formStore.data.nodeOrgCode.length - 1
+      // ];
       var that = this;
       this.$refs[formName].validate(valid => {
         if (valid) {

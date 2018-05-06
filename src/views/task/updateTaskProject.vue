@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<el-form size="mini" :model="formStore.data" ref='form1' :rules='formStore.rules' label-width="80px">
-			<el-form-item label="项目名称" prop="noteTitle">
-				<el-input size="mini" v-model="formStore.data.noteTitle" placeholder="请输入节点标题"></el-input>
+			<el-form-item label="项目名称" prop="nodeTitle">
+				<el-input size="mini" v-model="formStore.data.nodeTitle" placeholder="请输入节点标题"></el-input>
 			</el-form-item>
 			<el-form-item label="节点描述" prop="nodeDesc">
 				<el-input size="mini" v-model="formStore.data.nodeDesc" placeholder="请输入节点标题"></el-input>
@@ -24,7 +24,7 @@
 				</el-select>
 			</el-form-item>
 		</el-form>
-		<el-button type="success" size="mini" @click="submitForm">提交</el-button>
+		<el-button type="success" size="mini" @click="submitForm('form1')">提交</el-button>
 	</div>
 </template>
 
@@ -32,7 +32,7 @@
 	import { updateTaskProject, getTaskProject } from '~/api/task'
 
 	// 这个是要修改的项目的项目编号
-	var systemSerialNo = '1001';
+	var systemSerialNo = 'P15255341433235448';
 
 	var serviceTypeList = [{
 	  'label': '业务类别',
@@ -40,7 +40,7 @@
 	}]
 var formStore = {}
 formStore.data = {
-	  noteTitle: '', // 节点标题
+	  nodeTitle: '', // 节点标题
 	  nodeDesc: '', // 节点描述
 	  planStartTime: '', // 计划开始时间
 	  planCompleteTime: '', // 计划完成时间
@@ -48,7 +48,7 @@ formStore.data = {
 	  serviceTypeCode: '' // 业务类别
 	}
 	formStore.rules = {
-	  noteTitle: [], // 节点标题
+	  nodeTitle: [], // 节点标题
 	  nodeDesc: [], // 节点描述
 	  planStartTime: [], // 计划开始时间
 	  planCompleteTime: [], // 计划完成时间
@@ -94,6 +94,7 @@ formStore.data = {
 	        .then(response => {
 	          resolve(response)
 	          console.log(['updateTaskProjectData', response])
+						this.formStore.data = response.resBody
 				})
 	        .catch(error => {
 	          reject(error)

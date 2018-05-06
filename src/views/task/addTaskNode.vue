@@ -43,8 +43,8 @@ import {
   queryUserOrg
 } from "~/api/task";
 
-var parentNodeNo = "P15253629675345771"; // 上级节点编号
-var rootNodeNo = "P15253629675345771"; // 根节点编号
+var parentNodeNo = "P15255341433235448"; // 上级节点编号
+var rootNodeNo = "P15255341433235448"; // 根节点编号
 
 var formStore = {};
 formStore.data = {
