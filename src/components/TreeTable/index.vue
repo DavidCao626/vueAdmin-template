@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="formatData" :row-style="showRow" v-bind="$attrs" >
+  <el-table :data="itemDate" :row-style="showRow" v-bind="$attrs">
     <el-table-column v-if="columns.length===0" width="150">
       <template slot-scope="scope">
         <span v-for="space in scope.row._level" class="ms-tree-space" :key="space"></span>
@@ -20,20 +20,19 @@
         {{scope.row[column.value]}}
       </template>
     </el-table-column>
-     
+
     <slot></slot>
   </el-table>
 </template>
 
 <script>
-
-import treeToArray from './eval'
 export default {
   name: 'treeTable',
   props: {
+    showIndex: 0,
     data: {
-      type: [Array, Object],
-      required: true
+      type: Array,
+      default: () => []
     },
     columns: {
       type: Array,
@@ -46,21 +45,14 @@ export default {
       default: false
     }
   },
-  computed: {
-    // 格式化数据源
-    formatData: function() {
-      let tmp
-      if (!Array.isArray(this.data)) {
-        tmp = [this.data]
-      } else {
-        tmp = this.data
-      }
-      const func = this.evalFunc || treeToArray
-      const args = this.evalArgs ? Array.concat([tmp, this.expandAll], this.evalArgs) : [tmp, this.expandAll]
-      const fu = func.apply(null, args)
-      console.log(fu)
-
-      return fu
+  data() {
+    return {
+      itemDate: []
+    }
+  },
+  watch: {
+    data() {
+      this.itemDate = this.data
     }
   },
   methods: {
@@ -69,65 +61,80 @@ export default {
       if (row.row._level !== 1) {
         s = 'background-color: rgba(255, 186, 29, 0.05);'
       }
-      const show = (row.row.parent ? (row.row.parent._expanded && row.row.parent._show) : true)
+      const show = row.row.parent
+        ? row.row.parent._expanded && row.row.parent._show
+        : true
       row.row._show = show
-      return show ? 'animation:treeTableShow 1s;-webkit-animation:treeTableShow 1s;' + s : 'display:none;'
+      return show
+        ? 'animation:treeTableShow 1s;-webkit-animation:treeTableShow 1s;' + s
+        : 'display:none;'
     },
     // 切换下级是否展开
     toggleExpanded: function(trIndex, scope) {
-      // scope.row.children.push({ 'nodeTitle': '123', 'id': '123', 'timeLine': '231' })
+      if (!scope.row._expanded) {
+        this.$emit('getItemDate', trIndex, scope)
+      } else {
+        if (this.showIndex > 0) {
+          this.$emit('closeItemDate', trIndex, this.showIndex)
+        }
 
-      console.log(scope)
-
-      const record = this.formatData[trIndex]
-      record._expanded = !record._expanded
+        scope.row._expanded = false
+      }
     },
     // 图标显示
     iconShow(index, record) {
-      return (index === 0 && record.children && record.children.length > 0)
+      return index === 0 && record.children
     }
   }
 }
 </script>
 <style rel="stylesheet/css">
-  @keyframes treeTableShow {
-    from {opacity: 0;}
-    to {opacity: 1;}
+@keyframes treeTableShow {
+  from {
+    opacity: 0;
   }
-  @-webkit-keyframes treeTableShow {
-    from {opacity: 0;}
-    to {opacity: 1;}
+  to {
+    opacity: 1;
   }
+}
+@-webkit-keyframes treeTableShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 </style>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
-  $color-blue: #2196F3;
-  $space-width: 18px;
-  .ms-tree-space {
-    position: relative;
-    top: 1px;
-    display: inline-block;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1;
-    width: $space-width;
-    height: 14px;
-    &::before {
-      content: ""
-    }
+$color-blue: #2196f3;
+$space-width: 18px;
+.ms-tree-space {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  width: $space-width;
+  height: 14px;
+  &::before {
+    content: "";
   }
-  .processContainer{
-    width: 100%;
-    height: 100%;
-  }
-  table td {
-    line-height: 26px;
-  }
+}
+.processContainer {
+  width: 100%;
+  height: 100%;
+}
+table td {
+  line-height: 26px;
+}
 
-  .tree-ctrl{
-    position: relative;
-    cursor: pointer;
-    color: $color-blue;
-    margin-left: -$space-width;
-  }
+.tree-ctrl {
+  position: relative;
+  cursor: pointer;
+  color: $color-blue;
+  margin-left: -$space-width;
+}
 </style>

@@ -44,7 +44,6 @@ import {
   queryUserOrg
 } from '~/api/task'
 
-var systemSerialNo = 'F15255740819458509'
 
 var headFormData = {
   nodeOrgCode: [],
@@ -54,6 +53,12 @@ var headFormData = {
 const generateData = []
 
 export default {
+   props: {
+    systemSerialNo: {
+      type: String,
+      default: '0'
+    }
+  },
   components: {
     transfer
   },
@@ -92,7 +97,7 @@ export default {
 	  console.log('valuevalue' + this.value)
       // 提交的数据
       var submitData = {
-        systemSerialNo: systemSerialNo,
+        systemSerialNo: this.systemSerialNo,
         paritcis: this.valueItem
       }
       saveTaskParticipant(submitData)
@@ -101,7 +106,7 @@ export default {
 		  console.log(that.valueItem)
           // 进入页面要查询一次参与者赋给valueItem
           getTaskParticipantB({
-            systemSerialNo: systemSerialNo
+            systemSerialNo: this.systemSerialNo
           })
             .then(response => {
               if (response.resBody.length != 0) {
@@ -174,10 +179,10 @@ export default {
     // 进入页面要查询一次参与者赋给valueItem
     var that = this
     getTaskParticipantB({
-      systemSerialNo: systemSerialNo
+      systemSerialNo: this.systemSerialNo
     })
       .then(response => {
-        if (response.resBody.length != 0) {
+        if (response.resBody!=null&&response.resBody.length != 0) {
           that.valueItem = response.resBody.paritcis
         }
       })

@@ -1,19 +1,14 @@
-
-'use strict'
 import Vue from 'vue'
-export default function treeToArray(data, expandAll, parent, level, item) {
-  const marLTemp = []
-  let tmp = []
-  if (Array.from(data).length == 0 && parent) {
-    parent._expanded = false
-  }
-  Array.from(data).forEach(function(record) {
+var databuilder = function() {
+  var marLTemp = []
+  return function (record, parent, item) {
+    //debugger
     if (record._expanded === undefined) {
-      Vue.set(record, '_expanded', expandAll)
+      Vue.set(record, '_expanded', false)
     }
     let _level = 1
-    if (level !== undefined && level !== null) {
-      _level = level + 1
+    if (parent) {
+      _level = parent._level + 1
     }
     Vue.set(record, '_level', _level)
     // 如果有父元素
@@ -38,19 +33,10 @@ export default function treeToArray(data, expandAll, parent, level, item) {
       Vue.set(record, '_marginLeft', 0)
       Vue.set(record, '_width', 1)
     }
-    tmp.push(record)
-
-    if (record.children) {
-      const children = treeToArray(
-        record.children,
-        expandAll,
-        record,
-        _level,
-        item
-      )
-      tmp = tmp.concat(children)
-    }
-  })
-  console.log(['temp', tmp])
-  return tmp
+    return record
+  }
 }
+
+var result = databuilder()
+
+export default result

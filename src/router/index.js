@@ -33,7 +33,7 @@ export const constantRouterMap = [
   {
     path: '/',
     component: stuLayout,
-    redirect: '/home',
+    redirect: '/task',
     name: 'home_index',
     meta: { title: '首页' },
     children: [
@@ -130,6 +130,12 @@ export const constantRouterMap = [
         name: '我的项目',
         meta: { title: '我的项目', hidden: true },
         component: () => import('~/views/task/home')
+      },
+      {
+        path: 'nodeDate',
+        name: '节点数据',
+        meta: { title: '我的项目', hidden: true },
+        component: () => import('~/views/task/taskDataPages')
       },
       {
         path: 'addTaskProject',

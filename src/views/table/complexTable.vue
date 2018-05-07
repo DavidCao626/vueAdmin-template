@@ -217,13 +217,13 @@ export default {
   },
   methods: {
     getList() {
-     // this.listLoading = true
+      // this.listLoading = true
     //   fetchList(this.listQuery).then(response => {
     //     this.list = response.data.items
     //     this.total = response.data.total
     //     this.listLoading = false
     //   })
-    this.listLoading = false
+      this.listLoading = false
     },
     handleFilter() {
       this.listQuery.page = 1

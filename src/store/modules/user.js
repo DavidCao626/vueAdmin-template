@@ -36,7 +36,7 @@ const user = {
       state.navMenu = navMenu
     },
     SET_CURRENTLY: (state, currEntly) => {
-      state.roles= currEntly
+      state.roles = currEntly
     }
   },
 
@@ -123,19 +123,16 @@ const user = {
       return new Promise((resolve, reject) => {
         switchDuty(postData)
           .then(response => {
-            
-            
             const result = response.resBody
             if (result.status === 'Y') {
-              
-             // debugger
-             // this.$message('职务切换成功！' + result.type)
-              location.reload();
+              // debugger
+              // this.$message('职务切换成功！' + result.type)
+              location.reload()
 
-              //commit('SET_CURRENTLY',postData )
+              // commit('SET_CURRENTLY',postData )
               // item.currently = true
             } else {
-            //  this.$message(result.message)
+              //  this.$message(result.message)
             }
             resolve(response)
           })

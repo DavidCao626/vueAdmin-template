@@ -118,7 +118,9 @@ export function queryChildTaskNodeBySystemSerialNo(data) {
   return request({
     url: '/task/queryChildTaskNodeBySystemSerialNo.do',
     method: 'post',
-    data: data
+    data: {
+      systemSerialNo: data
+    }
   })
 }
 
@@ -217,7 +219,6 @@ export function queryNodeByParam(param) {
     data: param
   })
 }
-
 
 export function queryNodeByLiblerldByParam(param) {
   return request({

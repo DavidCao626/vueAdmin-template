@@ -92,12 +92,12 @@ export default {
     ...mapGetters(['user'])
   },
   methods: {
-    roleSwitchches(item,rolesItem) {
+    roleSwitchches(item, rolesItem) {
       if (item.currently === 'true') {
         return
       }
-      let userTempRoles= this.user.roles
-     /* console.log(userTempRoles)
+      const userTempRoles = this.user.roles
+      /* console.log(userTempRoles)
       for(e in userTempRoles) {
         e.forEach(element => {
           element.currently=false;
@@ -105,11 +105,8 @@ export default {
       };
       userTempRoles[rolesItem].item.currently=true;
 
-    
-      
       console.log(rolesItem.tostring())*/
       this.$store.dispatch('SwitchDuty', item)
-     
     },
     setDefaultDuty(item) {
       this.$store.dispatch('SetDefaultDuty', item).then((response) => {

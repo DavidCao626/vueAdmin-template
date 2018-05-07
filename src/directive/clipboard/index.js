@@ -9,5 +9,5 @@ if (window.Vue) {
   Vue.use(install); // eslint-disable-line
 }
 
-Clipboard.install = instal/Users/davidcao/Downloads/vue-element-admin-master/src/directive/clipboard/clipboard.jsl
+Clipboard.install = instal / Users / davidcao / Downloads / vue - element - admin - master / src / directive / clipboard / clipboard.jsl
 export default Clipboard

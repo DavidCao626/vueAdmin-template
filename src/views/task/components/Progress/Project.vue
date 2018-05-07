@@ -10,23 +10,25 @@
                 </div>
                 <div>
                     <div class="circle">
-                    </div>  <br/>
-                    已消耗<br/>183天
+                    </div> <br/> 已消耗
+                    <br/>183天
                 </div>
                 <div>
                     <div class="circle" style="background-color:#e4e8eb;">
-                    </div>  <br/>
-                    剩余<br/>177天</div>
+                    </div> <br/> 剩余
+                    <br/>177天</div>
             </div>
         </div>
 
         <div class="flex__1">
-            昨日进度
-            <el-progress :percentage="80" color="#8e71c7"></el-progress>
-            昨日完成
-            <el-progress :percentage="100" status="success"></el-progress>
-            昨日未完成
-            <el-progress :percentage="50" status="exception"></el-progress>
+            <slot>
+                昨日进度
+                <el-progress :percentage="80" color="#8e71c7"></el-progress>
+                昨日完成
+                <el-progress :percentage="100" status="success"></el-progress>
+                昨日未完成
+                <el-progress :percentage="50" status="exception"></el-progress>
+            </slot>
         </div>
     </div>
 </template>
@@ -43,8 +45,8 @@
       margin-top: 10px;
     }
   }
-  .flex__1{
-      margin: 0 20px;
+  .flex__1 {
+    margin: 0 20px;
   }
 }
 </style>
