@@ -68,7 +68,6 @@ import {
   querySceneByProjectSystemSerialNo
 } from "~/api/task";
 
-var systemSerialNo = "F15255740819458509"; // 要修改的工序
 
 var resolverList = [
   {
@@ -91,7 +90,7 @@ var serviceTypeList = [
 
 var formStore = {};
 formStore.data = {
-  systemSerialNo: systemSerialNo,
+  systemSerialNo: "",
   nodeTitle: "", // 节点标题
   nodeDesc: "", // 节点描述
   planStartTime: "", // 计划开始时间
@@ -121,16 +120,74 @@ formStore.rules = {
 };
 export default {
   props: {
-    systemSerialNo: {
+    systemSerialNoProp: {
       type: String,
       default: "P15255736419785625"
     }
   },
+watch:{
+  systemSerialNoProp(val,oldval){
+    alert(val)
+    this.formStore.data.systemSerialNo = val
+   var that = this;
+    new Promise((resolve, reject) => {
+      queryUserOrg().then(response => {
+        this.orgList = response.resBody;
+      });
+    });
+    var getNodeTaskFacadeData = {
+      systemSerialNo: this.formStore.data.systemSerialNo
+    };
+    new Promise((resolve, reject) => {
+      getNodeTaskFacadeBySystemSerialNo(getNodeTaskFacadeData).then(
+        response => {
+          response.resBody.baseData.nodeOrgCode = response.resBody.aOrgCode;
+          this.formStore.data = response.resBody.baseData;
+          var queryDutyByOrgCodeData = {
+            orgCode: response.resBody.aOrgCode
+          };
+          var querySceneData = {
+            systemSerialNo: response.resBody.baseData.rootNodeNo
+          };
+          new Promise((resolve, reject) => {
+            querySceneByProjectSystemSerialNo(querySceneData).then(response => {
+              that.serviceSceneList = response.resBody;
+            });
+          });
+          new Promise((resolve, reject) => {
+            queryDutyByOrgCode(queryDutyByOrgCodeData)
+              .then(response => {
+                resolve(response);
+                this.dutyList = response.resBody;
+              })
+              .catch(error => {
+                reject(error);
+              });
+          });
+          var queryUserByDutyCodeAndOrgCodeData = {
+            orgCode: response.resBody.aOrgCode,
+            dutyCode: response.resBody.baseData.liablerDutyCode
+          };
+          new Promise((resolve, reject) => {
+            queryUserByDutyCodeAndOrgCode(queryUserByDutyCodeAndOrgCodeData)
+              .then(response => {
+                resolve(response);
+                this.userList = response.resBody;
+              })
+              .catch(error => {
+                reject(error);
+              });
+          });
+        }
+      );
+    });
+  }
+},
   data() {
     return {
       formStore: {
         data: {
-          systemSerialNo: this.systemSerialNo,
+          systemSerialNo: this.systemSerialNoProp,
           nodeTitle: "", // 节点标题
           nodeDesc: "", // 节点描述
           planStartTime: "", // 计划开始时间
@@ -238,7 +295,7 @@ export default {
       });
     });
     var getNodeTaskFacadeData = {
-      systemSerialNo: this.systemSerialNo
+      systemSerialNo: this.formStore.data.systemSerialNo
     };
     new Promise((resolve, reject) => {
       getNodeTaskFacadeBySystemSerialNo(getNodeTaskFacadeData).then(

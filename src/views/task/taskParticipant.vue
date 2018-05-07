@@ -54,9 +54,14 @@ const generateData = []
 
 export default {
    props: {
-    systemSerialNo: {
+    systemSerialNoProp: {
       type: String,
       default: '0'
+    }
+  },
+  watch:{
+    systemSerialNoProp(val,oldval){
+       this.systemSerialNo = val;
     }
   },
   components: {
@@ -64,6 +69,7 @@ export default {
   },
   data() {
     return {
+      systemSerialNo:this.systemSerialNoProp,
       submitData: [],
       headFormData,
       orgList: [],

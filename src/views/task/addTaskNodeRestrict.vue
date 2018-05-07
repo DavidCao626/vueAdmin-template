@@ -31,22 +31,47 @@ import {
 
 export default {
   props: {
-    nodeNo: {
+    nodeNoProp: {
       type: String,
       default: 'N15255746693951251'
     }
+  },
+  watch:{
+    nodeNoProp(val,oldval){
+      this.formStore.data.nodeNo = val;
+
+        var dictData = {
+      dicts: ['node_action', 'node_state']
+    }
+    new Promise((resolve, reject) => {
+      getDictByDictNames(dictData).then(response => {
+        this.nodeActionList = response.resBody.node_action
+        this.restrictStateList = response.resBody.node_state
+      })
+    })
+
+    var queryChildData = {
+      systemSerialNo: this.nodeNo
+    }
+    new Promise((resolve, reject) => {
+      querySameNodeBySystemSerialNo(queryChildData).then(response => {
+        this.nodeList = response.resBody
+      })
+    })
+    }
+
   },
   data() {
     return {
       formStore: {
         data: {
-          nodeNo: this.nodeNo,
+          nodeNo: this.nodeNoProp,
           nodeAction: '',
           restrictNodeNo: '',
           restrictState: ''
         },
         rules: {
-          nodeNo: this.nodeNo,
+          nodeNo: [],
           nodeAction: [],
           restrictNodeNo: [],
           restrictState: []

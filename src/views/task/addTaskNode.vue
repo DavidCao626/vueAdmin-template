@@ -45,21 +45,29 @@ import {
 
 export default {
   props: {
-    rootNodeNo: {
+    rootNodeNoProp: {
       type: String,
       default: '0'
     },
-    parentNodeNo: {
+    parentNodeNoProp: {
       type: String,
       default: '0'
+    }
+  },  watch: {
+    parentNodeNoProp: function(val, oldval) {
+      alert(val)
+      this.formStore.data.parentNodeNo = val;
+    },
+    rootNodeNoProp: function(val, oldval) {
+      this.formStore.data.rootNodeNo = val;
     }
   },
   data() {
     return {
       formStore: {
         data: {
-          parentNodeNo: this.parentNodeNo,
-          rootNodeNo: this.rootNodeNo,
+          parentNodeNo: this.parentNodeNoProp,
+          rootNodeNo: this.rootNodeNoProp,
           nodeTitle: '', // 节点标题
           nodeDesc: '', // 节点描述
           planStartTime: '', // 计划开始时间

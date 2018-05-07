@@ -3,29 +3,35 @@
 
     <div class="components-container">
       <el-dialog v-el-drag-dialog title="新建子任务" :visible.sync="dialogTableVisible">
-        <addTaskNode :rootNodeNo="rootNodeNo" :parentNodeNo="parentNodeNo"></addTaskNode>
+        <addTaskNode :rootNodeNoProp="rootNodeNo" :parentNodeNoProp="parentNodeNo"></addTaskNode>
       </el-dialog>
       <el-dialog v-el-drag-dialog title="新建工序" :visible.sync="dialogTableVisibleFacade">
-        <addTaskFacade :rootNodeNo="rootNodeNo" :parentNodeNo="parentNodeNo"></addTaskFacade>
+        <addTaskFacade :rootNodeNoProp="rootNodeNo" :parentNodeNoProp="parentNodeNo"></addTaskFacade>
       </el-dialog>
       <el-dialog v-el-drag-dialog title="修改项目" :visible.sync="dialogTableVisibleUpdateProject">
-        <updateTaskProject :systemSerialNo="systemSerialNo"></updateTaskProject>
+        <updateTaskProject :systemSerialNoProp="systemSerialNo"></updateTaskProject>
       </el-dialog>
       <el-dialog v-el-drag-dialog title="修改任务" :visible.sync="dialogTableVisibleUpdateTask">
-        <updateTaskNode :systemSerialNo="systemSerialNo"></updateTaskNode>
+        <updateTaskNode :systemSerialNoProp="systemSerialNo"></updateTaskNode>
       </el-dialog>
       <el-dialog v-el-drag-dialog title="修改工序" :visible.sync="dialogTableVisibleUpdateFacade">
-        <updateTaskFacade :rootNodeNo="rootNodeNo" :parentNodeNo="parentNodeNo"></updateTaskFacade>
+        <updateTaskFacade :rootNodeNoProp="rootNodeNo" :parentNodeNoProp="parentNodeNo"></updateTaskFacade>
       </el-dialog>
       <el-dialog v-el-drag-dialog title="新增约束" :visible.sync="dialogTableVisibleAddRestrict">
-        <addTaskNodeRestrict :rootNodeNo="rootNodeNo" :parentNodeNo="parentNodeNo"></addTaskNodeRestrict>
+        <addTaskNodeRestrict :rootNodeNoProp="rootNodeNo" :parentNodeNoProp="parentNodeNo"></addTaskNodeRestrict>
       </el-dialog>
       <el-dialog v-el-drag-dialog title="修改约束" :visible.sync="dialogTableVisibleUpdateRestrict">
-        <updateTaskNodeRestrict :rootNodeNo="rootNodeNo" :parentNodeNo="parentNodeNo"></updateTaskNodeRestrict>
+        <updateTaskNodeRestrict :rootNodeNoProp="rootNodeNo" :parentNodeNoProp="parentNodeNo"></updateTaskNodeRestrict>
       </el-dialog>
       <el-dialog v-el-drag-dialog title="分配参与者" :visible.sync="dialogTableVisibleMParticipant">
-        <taskParticipant :systemSerialNo="systemSerialNo"></taskParticipant>
+        <taskParticipant :systemSerialNoProp="systemSerialNo"></taskParticipant>
       </el-dialog>
+
+        <el-dialog v-el-drag-dialog :title="dialogTitle" :visible.sync="dialogShow">
+          <keep-alive>
+            <component :is="dynamicView" :rootNodeNoProp="rootNodeNo" :parentNodeNoProp="parentNodeNo"  :systemSerialNoProp="systemSerialNo"></component>
+            </keep-alive>
+        </el-dialog>
 
     </div>
 
@@ -157,6 +163,9 @@ export default {
   },
   data() {
     return {
+      dynamicView:addTaskNode,
+      dialogShow:false,
+      dialogTitle:'',
       showIndex: 0,
       rootNodeNo: 0,
       parentNodeNo: 0,
@@ -359,22 +368,47 @@ export default {
       }
   console.log(["新建子节点上级节点的编号 " ,item.No]);
       if (act === 'task') {
-        this.dialogTableVisible = true
-      } else {
-        this.dialogTableVisibleFacade = true
+        //this.dialogTableVisible = true
+        this.dynamicView=addTaskNode
+        this.dialogShow=true
+        this.dialogTitle="新建任务"
+
+      } else if(act === 'facade'){
+        this.dynamicView=addTaskFacade
+        this.dialogShow=true
+        this.dialogTitle="新建工序"
+
+      } else if(act === 'restrict'){
+        this.dynamicView=addTaskNodeRestrict
+        this.dialogShow=true
+        this.dialogTitle="新建约束"
+      } else if(act ==='participant'){
+this.dynamicView=taskParticipant
+        this.dialogShow=true
+        this.dialogTitle="配置参与者"
       }
     },
     updateDialog(row) {
       this.rootNodeNo = row.rootNodeNo
       this.parentNodeNo = row.parentNodeNo
       this.systemSerialNo = row.No
+
       if (row.type === 'P') {
-        this.dialogTableVisibleUpdateProject = true
+         this.dynamicView=updateTaskProject
+        this.dialogShow=true
+        this.dialogTitle="更新项目"
       } else if (row.type === 'N') {
-        this.dialogTableVisibleUpdateTask = true
+         this.dynamicView=updateTaskNode
+        this.dialogShow=true
+        this.dialogTitle="更新节点"
       } else {
-        this.dialogTableVisibleUpdateFacade = true
+          this.dynamicView=updateTaskFacade
+        this.dialogShow=true
+        this.dialogTitle="更新工序"
       }
+
+
+
     },
     Start(row) {
       new Promise((resolve, reject) => {

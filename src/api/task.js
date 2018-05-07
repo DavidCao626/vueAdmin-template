@@ -33,7 +33,7 @@ export function updateTaskProject(data) {
 }
 export function queryUserOrg() {
   return request({
-    url: '/systemManagerApi/getCurrentOrgList.do',
+    url: '/systemManagerApi/getCurrentOrgListAndOwner.do',
     method: 'post',
     data: {}
   })

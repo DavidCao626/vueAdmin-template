@@ -47,13 +47,62 @@ import {
 
 export default {
   props: {
-    systemSerialNo: {
+    systemSerialNoProp: {
       type: String,
       default: 'N15255746693951251'
     }
   },
+watch:{
+systemSerialNoProp(val,oldval){
+  this.systemSerialNo = val
+   new Promise((resolve, reject) => {
+      queryUserOrg().then(response => {
+        this.orgList = response.resBody
+      })
+    }),
+    new Promise((resolve, reject) => {
+      var data = {
+        systemSerialNo: this.systemSerialNo
+      }
+      getTaskNodeBySystemSerialNo(data).then(response => {
+        response.resBody.baseData.nodeOrgCode = response.resBody.aOrgCode
+        this.formStore.data = response.resBody.baseData
+
+        var queryDutyByOrgCodeData = {
+          orgCode: response.resBody.aOrgCode
+        }
+        new Promise((resolve, reject) => {
+          queryDutyByOrgCode(queryDutyByOrgCodeData)
+            .then(response => {
+              resolve(response)
+              this.dutyList = response.resBody
+            })
+            .catch(error => {
+              reject(error)
+            })
+        })
+        var queryUserByDutyCodeAndOrgCodeData = {
+          orgCode: response.resBody.aOrgCode,
+          dutyCode: response.resBody.baseData.liablerDutyCode
+        }
+        new Promise((resolve, reject) => {
+          queryUserByDutyCodeAndOrgCode(queryUserByDutyCodeAndOrgCodeData)
+            .then(response => {
+              resolve(response)
+              this.userList = response.resBody
+            })
+            .catch(error => {
+              reject(error)
+            })
+        })
+      })
+    })
+}
+
+},
   data() {
     return {
+      systemSerialNo:this.systemSerialNoProp,
       formStore: {
         data: {
           nodeTitle: '', // 节点标题

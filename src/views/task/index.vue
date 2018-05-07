@@ -139,7 +139,7 @@ export default {
     queryData: function() {
       var requestData = this.searchData
       var t = this
-      // this.dynamicView = search// 切换搜索组件
+       this.dynamicView = noStart// 切换搜索组件
       queryNodeByLiblerldByParam(requestData).then(data => {
         t.filterData = data.resBody.data
         t.dataCount = data.resBody.dataCount

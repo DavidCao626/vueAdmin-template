@@ -33,13 +33,39 @@ import { queryServiceTypeList, updateTaskProject, getTaskProject } from '~/api/t
 
 export default {
   props: {
-    systemSerialNo: {
+    systemSerialNoProp: {
       type: String,
       default: 'P15255736419785625'
     }
   },
+watch:{
+  systemSerialNoProp(val,oldval){
+      this.systemSerialNo = val;
+       new Promise((resolve, reject) => {
+      var data = {
+        systemSerialNo: this.systemSerialNo
+      }
+	      getTaskProject(data)
+	        .then(response => {
+	          resolve(response)
+	          console.log(['updateTaskProjectData', response])
+          this.formStore.data = response.resBody
+        })
+	        .catch(error => {
+	          reject(error)
+	        })
+    }),
+			    new Promise((resolve, reject) => {
+      queryServiceTypeList()
+        .then(response => {
+          this.serviceTypeList = response.resBody
+        })
+    })
+  }
+},
   data() {
     return {
+      systemSerialNo:this.systemSerialNoProp,
       formStore: {
         data: {
           nodeTitle: '', // 节点标题
