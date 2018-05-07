@@ -16,3 +16,5 @@ package-lock.json
 /src/vendor/old_1.0/API/bashPath.js
 /config/dev.env.js
 .eslintignore
+src/vendor/old_1.0/API/bashPath.js
+config/dev.env.js
