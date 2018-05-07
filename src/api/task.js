@@ -201,7 +201,7 @@ export function startNode(data) {
 }
 export function completedNode(data) {
   return request({
-    url: '/completedNode.do ',
+    url: '/task/completedNode.do ',
     method: 'post',
     data: data
   })

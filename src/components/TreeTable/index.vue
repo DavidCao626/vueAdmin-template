@@ -79,7 +79,6 @@ export default {
 
       console.log(scope)
 
-      debugger
       const record = this.formatData[trIndex]
       record._expanded = !record._expanded
     },

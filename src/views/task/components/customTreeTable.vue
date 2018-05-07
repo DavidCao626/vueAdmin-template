@@ -296,14 +296,14 @@ export default {
     },
     Start(row) {
       new Promise((resolve, reject) => {
-        startNode(row.No).then(response => {
+        startNode({systemSerialNo:row.No}).then(response => {
           console.log(response.resBody)
         })
       })
     },
     stop(row) {
       new Promise((resolve, reject) => {
-        completedNode(row.No).then(response => {
+        completedNode({systemSerialNo:row.No}).then(response => {
           console.log(response.resBody)
         })
       })
