@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import app from './modules/app'
 import user from './modules/user'
 import question from './modules/question'
+import task from "./modules/task";
 
 import getters from './getters'
 
@@ -12,9 +13,10 @@ const store = new Vuex.Store({
   modules: {
     app,
     user,
-    question
+    question,
+    task
   },
   getters
-})
+});
 
 export default store

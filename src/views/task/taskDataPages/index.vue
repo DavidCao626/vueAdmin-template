@@ -117,8 +117,8 @@
           <div class="clearfix"></div>
 
           <!-- 数据表 -->
-          <el-table ref="multipleTable" :data="tableDataTodo" tooltip-effect="dark" style="width: 100%" :key='key' fit highlight-current-row @selection-change="handleSelectionChange">
-            <el-table-column type="selection" width="55">
+          <el-table ref="multipleTable" :data="tableData3" tooltip-effect="dark" style="width: 100%" :key='key' fit highlight-current-row @selection-change="handleSelectionChange">
+            <el-table-column type="selection" width="50">
             </el-table-column>
             <el-table-column label="用户对象编号" width="120" prop="apply_user_classify_no">
             </el-table-column>
@@ -178,140 +178,132 @@
   </page>
 </template>
 <script>
-import { getNodeInfo, queryTodo, queryDone,approveRecord} from "~/api/taskData";
-import { ProjectProgress } from "~/views/task/components/Progress";
-import elDragDialog from "~/directive/el-dragDialog"; // base on element-ui
-const defaultFormThead = ["date", "name"];
-
+import { ProjectProgress } from '~/views/task/components/Progress'
+import elDragDialog from '~/directive/el-dragDialog' // base on element-ui
+const defaultFormThead = ['姓名', '账号']
 export default {
   directives: { elDragDialog },
   components: { ProjectProgress },
   data() {
     return {
- nodeNo: "P15256613348894831", //----这是传过来的节点编号
+      nodeNo: 'P15256613348894831', // ----这是传过来的节点编号
 
-      approveRecordData:{
-opinion:"",
-applyStatus:"",
-nodeNo:this.nodeNo,
-blocks:[]
+      approveRecordData: {
+        opinion: '',
+        applyStatus: '',
+        nodeNo: this.nodeNo,
+        blocks: []
       },
-      pagination: { dataCount: 0, currentPage: 1, pageSize: 10 }, //未审核分页
-      pagination2: { dataCount: 0, currentPage: 1, pageSize: 10 }, //已审核分页
-     
+      pagination: { dataCount: 0, currentPage: 1, pageSize: 10 }, // 未审核分页
+      pagination2: { dataCount: 0, currentPage: 1, pageSize: 10 }, // 已审核分页
+
       nodeInfo: {},
       dialogTableVisible: false,
       data: [],
-      activeName: "second",
+      activeName: 'second',
       tableDataTodo: [],
       tableDataDone: [],
       multipleSelection: [],
       key: 1, // table key
-      formTheadOptions: ["date", "name", "address"],
+      formTheadOptions: ['date', 'name', 'address'],
       checkboxVal: defaultFormThead, // checkboxVal
       formThead: defaultFormThead // 默认表头 Default header
-    };
+    }
   },
   methods: {
-    //下面是未审核的分页事件
+    // 下面是未审核的分页事件
     handleSizeChange(val) {
-      this.pagination.pageSize = val;
-      this.queryTodoData();
+      this.pagination.pageSize = val
+      this.queryTodoData()
     },
     handleCurrentChange(val) {
-      this.pagination.currentPage = val;
-      this.queryTodoData();
+      this.pagination.currentPage = val
+      this.queryTodoData()
     },
-    //下面是已审核的分页事件
+    // 下面是已审核的分页事件
     handleSizeChange2(val) {
-      this.pagination2.pageSize = val;
-      this.queryDoneData();
+      this.pagination2.pageSize = val
+      this.queryDoneData()
     },
     handleCurrentChange2(val) {
-      this.pagination2.currentPage = val;
-      this.queryDoneData();
+      this.pagination2.currentPage = val
+      this.queryDoneData()
     },
     handleClose(tag) {
-      this.multipleSelection.splice(this.multipleSelection.indexOf(tag), 1);
+      this.multipleSelection.splice(this.multipleSelection.indexOf(tag), 1)
     },
     toggleSelection(rows) {
       if (rows) {
         rows.forEach(row => {
-          this.$refs.multipleTable.toggleRowSelection(row);
-        });
+          this.$refs.multipleTable.toggleRowSelection(row)
+        })
       } else {
-        this.$refs.multipleTable.clearSelection();
+        this.$refs.multipleTable.clearSelection()
       }
     },
     handleSelectionChange(val) {
-      this.multipleSelection = val;
+      this.multipleSelection = val
 
-    console.log(val);
-
+      console.log(val)
     },
-    onSubmit(){
-        
-        // for(var i =0;i<this.multipleSelection.length,i++ ){
-        //   var d = {recordId:this.multipleSelection[i].id,applyDataNo:this.multipleSelection[i].data_no,userHashCode:this.multipleSelection[i].apply_user_hash_code}
-        //     this.approveRecordData.blocks.push(d);
-        // }
+    onSubmit() {
+      // for(var i =0;i<this.multipleSelection.length,i++ ){
+      //   var d = {recordId:this.multipleSelection[i].id,applyDataNo:this.multipleSelection[i].data_no,userHashCode:this.multipleSelection[i].apply_user_hash_code}
+      //     this.approveRecordData.blocks.push(d);
+      // }
 
-        var submitData = {
-          
-        }
-
-
+      var submitData = {}
     },
     handleClick(tab, event) {
-      console.log(tab, event);
+      console.log(tab, event)
     },
     showVisible() {
-      this.dialogTableVisible = true;
+      this.dialogTableVisible = true
     },
     hideVisible() {
-      this.dialogTableVisible = false;
+      this.dialogTableVisible = false
     },
     queryTodoData() {
-      var that = this;
-      var queryTodeConfig = this.pagination;
-      queryTodeConfig.nodeNo = this.nodeNo;
+      var that = this
+      var queryTodeConfig = this.pagination
+      queryTodeConfig.nodeNo = this.nodeNo
       queryTodo(queryTodeConfig).then(response => {
-        that.tableDataTodo = response.resBody.resultList;
-        that.pagination.dataCount = response.resBody.page.totalRecord;
-      });
+        that.tableDataTodo = response.resBody.resultList
+        that.pagination.dataCount = response.resBody.page.totalRecord
+      })
     },
     queryDoneData() {
-      var that = this;
-      var queryDoneConfig = this.pagination2;
-      queryDoneConfig.nodeNo = this.nodeNo;
+      var that = this
+      var queryDoneConfig = this.pagination2
+      queryDoneConfig.nodeNo = this.nodeNo
       queryDone(queryDoneConfig).then(response => {
-        that.tableDataDone = response.resBody.resultList;
-        that.pagination2.dataCount = response.resBody.page.totalRecord;
-      });
+        that.tableDataDone = response.resBody.resultList
+        that.pagination2.dataCount = response.resBody.page.totalRecord
+      })
     }
   },
   watch: {
     checkboxVal(valArr) {
       this.formThead = this.formTheadOptions.filter(
         i => valArr.indexOf(i) >= 0
-      );
-      this.key = this.key + 1; // 为了保证table 每次都会重渲 In order to ensure the table will be re-rendered each time
+      )
+      this.key = this.key + 1 // 为了保证table 每次都会重渲 In order to ensure the table will be re-rendered each time
     }
   },
   mounted() {
-    var that = this;
-    //获取节点信息
+    var that = this
+    // 获取节点信息
     var getNodeInfoConfig = {
       nodeNo: this.nodeNo
-    };
+    }
     getNodeInfo(getNodeInfoConfig).then(response => {
-      this.nodeInfo = response.resBody;
-    });
-    this.queryTodoData();
-    this.queryDoneData();
-    //--------------------------
+      this.nodeInfo = response.resBody
+    })
+    this.queryTodoData()
+    this.queryDoneData()
+    // --------------------------
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 
