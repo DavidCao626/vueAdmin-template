@@ -224,6 +224,22 @@ export function queryNodeByLiblerldByParam(param) {
   return request({
     url: '/task/queryNodeByLiblerldByParam.do',
     method: 'post',
+    data: paramparam
+  })
+}
+
+export function queryAnmeldenTypeList(param) {
+  return ajax({
+    url: '/task/queryAnmeldenTypeList',
+    method: 'post',
     data: param
   })
 }
+export function submitProjectApplySurface(param) {
+  return ajax({
+    url: '/taskRecord/submitProjectApplySurface.do',
+    method: 'post',
+    data: param
+  })
+}
+

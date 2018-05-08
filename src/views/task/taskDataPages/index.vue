@@ -105,7 +105,7 @@
 
           <!-- 数据表 -->
           <el-table ref="multipleTable" :data="tableData3" tooltip-effect="dark" style="width: 100%" :key='key' fit highlight-current-row @selection-change="handleSelectionChange">
-            <el-table-column type="selection" width="55">
+            <el-table-column type="selection" width="50">
             </el-table-column>
             <el-table-column :key='fruit' v-for='fruit in formThead' :label="fruit">
               <template slot-scope="scope">
@@ -156,7 +156,7 @@
 <script>
 import { ProjectProgress } from '~/views/task/components/Progress'
 import elDragDialog from '~/directive/el-dragDialog' // base on element-ui
-const defaultFormThead = ['date', 'name']
+const defaultFormThead = ['姓名', '账号']
 export default {
   directives: { elDragDialog },
   components: { ProjectProgress },

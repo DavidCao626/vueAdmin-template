@@ -132,6 +132,18 @@ export const constantRouterMap = [
         component: () => import('~/views/task/home')
       },
       {
+        path: 'styleData',
+        name: '外观数据',
+        meta: { title: '外观数据', hidden: true },
+        component: () => import('~/views/taskStyleData/projectApply')
+      },
+      {
+        path: 'style',
+        name: '外观主页',
+        meta: { title: '外观主页', hidden: true },
+        component: () => import('~/views/taskStyleData/home')
+      },
+      {
         path: 'nodeDate',
         name: '节点数据',
         meta: { title: '我的项目', hidden: true },

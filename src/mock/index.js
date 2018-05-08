@@ -1,12 +1,17 @@
 import Mock from 'mockjs'
-import loginAPI from './login'
+import taskAPi from './task'
 
- Mock.setup({
-   timeout: '350-600'
- })
+Mock.setup({
+  timeout: '350-600'
+})
+const response = function(rsp) {
+  return { respStatus: 1, body: rsp }
+}
 
-// 登录相关
-Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
-Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)
+Mock.mock(
+  /\/task\/queryAnmeldenTypeList/,
+  'post',
+  response(taskAPi.queryAnmeldenTypeList)
+)
 
 export default Mock

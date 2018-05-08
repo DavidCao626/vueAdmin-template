@@ -8,6 +8,10 @@ const getters = {
   avatar: state => state.user.avatar,
   name: state => state.user.name,
   roles: state => state.user.roles,
-  navMenu: state => state.user.navMenu
+  navMenu: state => state.user.navMenu,
+
+  task: state => state.task,
+  taskStyleData: state => state.task.taskStyleData,
+  taskStyleDataFamily: state => state.task.taskStyleData.fromData.family
 }
 export default getters
