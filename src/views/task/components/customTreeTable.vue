@@ -27,15 +27,15 @@
         <taskParticipant :systemSerialNoProp="systemSerialNo"></taskParticipant>
       </el-dialog>
 
-        <el-dialog v-el-drag-dialog :title="dialogTitle" :visible.sync="dialogShow">
-          <keep-alive>
-            <component :is="dynamicView" :rootNodeNoProp="rootNodeNo" :parentNodeNoProp="parentNodeNo"  :systemSerialNoProp="systemSerialNo"></component>
-            </keep-alive>
-        </el-dialog>
+      <el-dialog v-el-drag-dialog :title="dialogTitle" :visible.sync="dialogShow">
+        <keep-alive>
+          <component :is="dynamicView" :rootNodeNoProp="rootNodeNo" :parentNodeNoProp="parentNodeNo" :systemSerialNoProp="systemSerialNo"></component>
+        </keep-alive>
+      </el-dialog>
 
     </div>
 
-    <tree-table @getItemDate="getItemDate" @closeItemDate="closeItemDate"  :showIndex="showIndex" :data="data" :evalFunc="func" :columns="columns" :evalArgs="args" :expandAll="expandAll" border>
+    <tree-table @getItemDate="getItemDate" @closeItemDate="closeItemDate" :showIndex="showIndex" :data="data" :evalFunc="func" :columns="columns" :evalArgs="args" :expandAll="expandAll" border>
 
       <el-table-column label="完成进度">
         <template slot-scope="scope">
@@ -81,14 +81,12 @@
             </router-link>
           </el-tooltip> -->
 
-        <!-- 王红坤 -->
-        <el-tooltip class="item" effect="dark" content="分配参与者" placement="bottom">
-             <el-button type="text" class="el-icon-news" @click="mParticipant(scope.row)" size="medium"></el-button>
+          <!-- 王红坤 -->
+          <el-tooltip class="item" effect="dark" content="分配参与者" placement="bottom">
+            <el-button type="text" class="el-icon-news" @click="mParticipant(scope.row)" size="medium"></el-button>
           </el-tooltip>
 
-
-
-        <!-- 王红坤结束 -->
+          <!-- 王红坤结束 -->
           <el-tooltip class="item" effect="dark" content="启动" placement="bottom">
             <el-button type="text" @click="Start(scope.row)" class="el-icon-caret-right" size="medium"></el-button>
           </el-tooltip>
@@ -182,9 +180,8 @@ export default {
       expandAll: false,
       columns: [
         {
-          text: '项目名称',
-          value: 'nodeTitle',
-          width: 500
+          text: '项目名' ,        
+          value: 'nodeTitle'
         },
         {
           text: '类型',

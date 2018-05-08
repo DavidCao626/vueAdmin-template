@@ -13,10 +13,10 @@
               <div class="grid-content bg-purple">{{nodeInfo.node_title}}</div>
             </el-col>
             <el-col :span="2" :offset="1">
-              <div class="grid-content bg-purple">审批人：</div>
+              <div class="grid-content bg-purple">创建人：</div>
             </el-col>
             <el-col :span="6">
-              <div class="grid-content bg-purple-light">审批人是什么</div>
+              <div class="grid-content bg-purple-light">{{nodeInfo.creator_name}}</div>
             </el-col>
           </el-row>
           <br/>
@@ -78,9 +78,6 @@
           <el-form label-width="100px" label-position="top">
             <el-form-item label="* 审批意见">
               <el-input type="textarea" v-model="approveRecordData.opinion"></el-input>
-            </el-form-item>
-            <el-form-item label="备注">
-              <el-input type="textarea"></el-input>
             </el-form-item>
             <el-form-item label="* 是否同意">
               <el-radio-group v-model="approveRecordData.applyStatus">
@@ -178,24 +175,36 @@
   </page>
 </template>
 <script>
-import { ProjectProgress } from '~/views/task/components/Progress'
-import elDragDialog from '~/directive/el-dragDialog' // base on element-ui
-const defaultFormThead = ['姓名', '账号']
+import {
+  getNodeInfo,
+  queryTodo,
+  queryDone,
+  approveRecord
+} from "~/api/taskData";
+import { ProjectProgress } from "~/views/task/components/Progress";
+import elDragDialog from "~/directive/el-dragDialog"; // base on element-ui
+const defaultFormThead = ["date", "name"];
+
 export default {
   directives: { elDragDialog },
   components: { ProjectProgress },
+  props:{
+    nodeNoProp:{
+      type:String,
+      default:"P15256613348894831"
+    }
+  },
   data() {
     return {
-      nodeNo: 'P15256613348894831', // ----这是传过来的节点编号
-
+      nodeNo: this.nodeNoProp, //----这是传过来的节点编号
       approveRecordData: {
-        opinion: '',
-        applyStatus: '',
-        nodeNo: this.nodeNo,
+        opinion: "",
+        applyStatus: "Y",
+        nodeNo: this.nodeNoProp,
         blocks: []
       },
-      pagination: { dataCount: 0, currentPage: 1, pageSize: 10 }, // 未审核分页
-      pagination2: { dataCount: 0, currentPage: 1, pageSize: 10 }, // 已审核分页
+      pagination: { dataCount: 0, currentPage: 1, pageSize: 10 }, //未审核分页
+      pagination2: { dataCount: 0, currentPage: 1, pageSize: 10 }, //已审核分页
 
       nodeInfo: {},
       dialogTableVisible: false,
@@ -242,17 +251,25 @@ export default {
       }
     },
     handleSelectionChange(val) {
-      this.multipleSelection = val
+      this.multipleSelection = val;
 
-      console.log(val)
+      console.log(val);
     },
     onSubmit() {
-      // for(var i =0;i<this.multipleSelection.length,i++ ){
-      //   var d = {recordId:this.multipleSelection[i].id,applyDataNo:this.multipleSelection[i].data_no,userHashCode:this.multipleSelection[i].apply_user_hash_code}
-      //     this.approveRecordData.blocks.push(d);
-      // }
-
-      var submitData = {}
+      var that = this;
+      for (var i = 0; i < this.multipleSelection.length; i++) {
+        var d = {
+          recordId: this.multipleSelection[i].id,
+          applyDataNo: this.multipleSelection[i].data_no,
+          userHashCode: this.multipleSelection[i].apply_user_hash_code
+        };
+        this.approveRecordData.blocks.push(d);
+      }
+      approveRecord(this.approveRecordData).then(data => {
+         that.approveRecordData.blocks=[];
+        that.queryTodoData();
+        that.queryDoneData();
+      });
     },
     handleClick(tab, event) {
       console.log(tab, event)
