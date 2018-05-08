@@ -5,25 +5,25 @@ const task = {
     taskStyleData: {
       fromData: {
         family: {
-          unitCode: '123',
+          unitCode: "123",
           data: {
             familyPopulation: 0,
-            familyAddress: '',
-            familyCapitaincome: '',
-            naturalHazard: '',
-            isSingleParent: 'N',
-            anmeldenType: '',
-            familyDebt: ''
+            familyAddress: "",
+            familyCapitaincome: "",
+            naturalHazard: "",
+            isSingleParent: "N",
+            anmeldenType: "",
+            familyDebt: ""
           }
         },
         projectApply: {
-          unitCode: '1234',
+          unitCode: "1234",
           data: {
-            applyProject: '',
-            serviceType: '',
-            childServiceType: '',
-            evaluationType: '',
-            applyReason: ''
+            applyProject: "",
+            serviceType: "",
+            childServiceType: "",
+            evaluationType: "",
+            applyReason: ""
           }
         }
       }
@@ -32,55 +32,61 @@ const task = {
 
   mutations: {
     SET_TASKSTYLEDATA: (state, taskStyleData) => {
-      state.taskStyleData.push(taskStyleData)
+      state.taskStyleData.push(taskStyleData);
     },
     SET_TASKSTYLEDATA_FROMDATA: (state, fromData) => {
-      state.taskStyleData.fromData.push(fromData)
+      state.taskStyleData.fromData.push(fromData);
     },
     updatetaskStyleDataFamily: (state, fromData) => {
-      state.taskStyleData.fromData.family = fromData
+      state.taskStyleData.fromData.family = fromData;
+    },
+    updatetaskStyleDataprojectApply: (state, fromData) => {
+      state.taskStyleData.fromData.projectApply = fromData;
     }
   },
 
   actions: {
     updatetaskStyleDataFamily: ({ commit }, qss) => {
-      commit('updatetaskStyleDataFamily', qss)
+      commit("updatetaskStyleDataFamily", qss);
+    },
+    updatetaskStyleDataprojectApply: ({ commit }, qss) => {
+      commit("updatetaskStyleDataprojectApply", qss);
     },
     addStyleData({ commit }, taskStyleName) {
-      const s = {}
-      s[taskStyleName] = {}
-      commit('SET_TASKSTYLEDATA_FROMDATA', { taskStyleName: [] })
+      const s = {};
+      s[taskStyleName] = {};
+      commit("SET_TASKSTYLEDATA_FROMDATA", { taskStyleName: [] });
     },
 
     getAnmeldenTypeList({ commit }, taskStyleName) {
       return new Promise((resolve, reject) => {
         queryAnmeldenTypeList()
           .then(response => {
-            const s = {}
-            s[taskStyleName] = { AnmeldenTypeList: response }
+            const s = {};
+            s[taskStyleName] = { AnmeldenTypeList: response };
             debugger;
-            commit('SET_TASKSTYLEDATA_FROMDATA', s)
+            commit("SET_TASKSTYLEDATA_FROMDATA", s);
             debugger;
-            resolve(response)
+            resolve(response);
           })
           .catch(error => {
-            reject(error)
-          })
-      })
+            reject(error);
+          });
+      });
     },
 
     addData({ commit }, data) {
       return new Promise((resolve, reject) => {
         submitProjectApplySurface(data)
           .then(response => {
-            resolve(response)
+            resolve(response);
           })
           .catch(error => {
-            reject(error)
-          })
-      })
+            reject(error);
+          });
+      });
     }
   }
-}
+};
 
 export default task

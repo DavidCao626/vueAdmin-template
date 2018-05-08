@@ -12,6 +12,7 @@ const getters = {
 
   task: state => state.task,
   taskStyleData: state => state.task.taskStyleData,
-  taskStyleDataFamily: state => state.task.taskStyleData.fromData.family
+  taskStyleDataFamily: state => state.task.taskStyleData.fromData.family,
+  projectApply: state => state.task.taskStyleData.fromData.projectApply
 }
 export default getters

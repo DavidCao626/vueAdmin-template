@@ -16,7 +16,7 @@
 			<el-form-item prop="isSingleParent" label="是否单亲">
 				<el-radio-group v-model="taskStyleDataFamily.data.isSingleParent">
 					<el-radio-button v-for="(item,index) in isSingleParentData" :key="index" :label="item.value">{{item.label}}</el-radio-button>
-					<el-radio-button label="N"></el-radio-button>
+	
 				</el-radio-group>
 			</el-form-item>
 			<el-form-item prop="anmeldenType" label="户口类型">
