@@ -3,21 +3,21 @@
 		
 		<el-form :model="formData.data" :rules="formData.rules" ref="form1" label-width="" size="mini">
 			<el-form-item prop="applyProject" label="项目名称">
-				<el-input v-model="formData.data.appkyProject"></el-input>
+				<el-select v-model="formData.data.serviceType" @change="getServiceTypeList">
+					<el-option v-for="(item,index) in projectList" :key="index" :value="item.systemSerialNo" :label="item.projectName"></el-option>
+				</el-select>
 			</el-form-item>
 			<el-form-item prop="serviceType" label="业务类别">
-				<el-select v-model="formData.data.serviceType">
-					<el-option v-for="(item,index) in anmeldenTypeList" :key="index" :label="item.label" :value="item.value">
-					</el-option>
+				<el-select v-model="formData.data.serviceType" @change="getChildService">
+					<el-option v-for="(item,index) in serviceTypeList" :key="index" :value="item.serviceTypeCode" :label="item.servuceTypeName"></el-option>
 				</el-select>
 			</el-form-item>
 			<el-form-item prop="childServiceType" label="子业务类别">
 				<el-select v-model="formData.data.childServiceType">
-					<el-option v-for="(item,index) in anmeldenTypeList" :key="index" :label="item.label" :value="item.value">
-					</el-option>
+						<el-option v-for="(item,index) in serviceCTypeList" :key="index" :value="item.classifyCode" :label="item.classifyName"></el-option>
 				</el-select>
 			</el-form-item>
-			<el-form-item prop="evaluationType" label="关联测评类别">
+		<el-form-item prop="evaluationType" label="关联测评类别">
 				<el-select v-model="formData.data.evaluationType">
 					<el-option v-for="(item,index) in anmeldenTypeList" :key="index" :label="item.label" :value="item.value">
 					</el-option>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+	import { queryProjectList, getProjectInfoByNodeNo, queryChildService} from "~/api/task";
 		var anmeldenTypeList = [{
 		'label': '数据',
 		'value': 'nc'
@@ -39,10 +40,13 @@
 		'label': '数据',
 		'value': 'cz'
 	}]
+	
 	export default{
-        data(){
-            return {
-        anmeldenTypeList,
+		data(){
+			return {
+				projectList:[],
+				serviceTypeList:[],
+				serviceCTypeList:[],
 				formData:{
 					data:{
 						applyProject:"",
@@ -50,16 +54,33 @@
 						childServiceType:"",
 						evaluationType:"",
 						applyReason:""
+						
 					},
 					rules:{
-						
 					}
 				}
-				
-				
 			}
+		},
+		methods:{
+			getServiceTypeList(val){
+				var that = this
+				getProjectInfoByNodeNo({"nodeNo":val}).then(data=>{
+					that.serviceTypeList = data.resBody;
+				})
+			},
+			getChildService(val){
+					var that = this
+				queryChildService({'serviceTypeCode':val}).then(data=>{
+					that.serviceCTypeList = data.resBody;
+				})
+			}
+		},
+		mounted:function(){
+			var that = this
+			queryProjectList({}).then(data=>{
+				that.projectList = data.resBody;
+			})
 		}
-		
 	}
 </script>
 

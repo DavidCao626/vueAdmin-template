@@ -227,3 +227,25 @@ export function queryNodeByLiblerldByParam(param) {
     data: param
   })
 }
+
+export function queryProjectList(param) {
+  return request({
+    url: '/task/queryProjectList.do',
+    method: 'post',
+    data: param
+  })
+}
+export function getProjectInfoByNodeNo(param) {
+  return request({
+    url: '/task/getProjectInfoByNodeNo.do',
+    method: 'post',
+    data: param
+  })
+}
+export function queryChildService(param) {
+  return request({
+    url: '/task/queryChildService.do',
+    method: 'post',
+    data: param
+  })
+}
