@@ -96,11 +96,11 @@
         <el-tab-pane label="待审核数据" name="second">
           <!-- 表格列内容伸缩 -->
           <div class="filter-container" style="float:right;">
-            <el-checkbox-group v-model="checkboxVal">
+            <!-- <el-checkbox-group v-model="checkboxVal">
               <el-checkbox label="user_object_name">用户类别</el-checkbox>
               <el-checkbox label="apply_status">申请状态</el-checkbox>
               <el-checkbox label="org_name">申请人机构</el-checkbox>
-            </el-checkbox-group>
+            </el-checkbox-group> -->
           </div>
           <!-- 按钮区域 -->
           <div style="margin-bottom:10px;">
@@ -151,11 +151,7 @@
             </el-table-column>
             <el-table-column label="申请人机构" width="120" prop="org_name">
             </el-table-column>
-            <el-table-column label="操作人" width="120" prop="operator">
-            </el-table-column>
             <el-table-column label="操作时间" width="120" prop="operation_time">
-            </el-table-column>
-            <el-table-column label="操作类型" width="120" prop="operation_method">
             </el-table-column>
             <el-table-column label="操作" width="190">
               <template slot-scope="scope">
