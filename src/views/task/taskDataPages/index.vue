@@ -97,7 +97,7 @@
           <!-- 表格列内容伸缩 -->
           <div class="filter-container" style="float:right;">
             <!-- <el-checkbox-group v-model="checkboxVal">
-              <el-checkbox label="user_object_name">用户类别</el-checkbox>
+              <el-checkbox label="user_object_name">用户类别</el-checkbox> 
               <el-checkbox label="apply_status">申请状态</el-checkbox>
               <el-checkbox label="org_name">申请人机构</el-checkbox>
             </el-checkbox-group> -->
