@@ -183,8 +183,7 @@ export default {
       columns: [
         {
           text: '项目名称',
-          value: 'nodeTitle',
-          width: 500
+          value: 'nodeTitle'
         },
         {
           text: '类型',
