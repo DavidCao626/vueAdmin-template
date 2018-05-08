@@ -129,7 +129,7 @@
 				</el-date-picker>
 			</el-form-item>
 			<el-form-item label="个人证件照片">
-								<el-upload class="avatar-uploader" :action="upLoadUrl" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+				<el-upload class="avatar-uploader" :action="upLoadUrl" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
 					<img v-if="imageU" :src="imageU" class="avatar">
 					<i v-else class="el-icon-plus avatar-uploader-icon"></i>
 				</el-upload>
@@ -148,303 +148,366 @@
 </template>
 
 <script>
-	import Vue from 'vue'
-	import Element from 'element-ui'
-	import '@/theme/index.css'
-	import VueExpand from '@/components/VueExpand'
-	Vue.use(Element)
-Vue.use(VueExpand)
-import GUtils from '@/components/Utils.js'
-	import GStoreFactory from '@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js'
-	import GraceComponent from '@/ComponentPackage/GraceComponents.js'
-	import dataPath from '@/API/Student/student_info_manager.js'
-	import nations from '../nations.js'
-	import politicalStatus from '../politicalStatus.js'
-	Vue.use(GraceComponent)
+import Vue from "vue";
+import Element from "element-ui";
+import "@/theme/index.css";
+import VueExpand from "@/components/VueExpand";
+Vue.use(Element);
+Vue.use(VueExpand);
+import GUtils from "@/components/Utils.js";
+import GStoreFactory from "@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js";
+import GraceComponent from "@/ComponentPackage/GraceComponents.js";
+import dataPath from "@/API/Student/student_info_manager.js";
+import nations from "../nations.js";
+import politicalStatus from "../politicalStatus.js";
+Vue.use(GraceComponent);
 
-var formStore = GStoreFactory.buildServiceForm()
-var formDataStore = GStoreFactory.buildServiceFormData()
+var formStore = GStoreFactory.buildServiceForm();
+var formDataStore = GStoreFactory.buildServiceFormData();
 formDataStore.pushData({
-	  stuNo: '', // 学号
-	  name: '', // 姓名
-	  namePhoneticize: '', // 名字拼音
-	  identityNo: '', // 身份证号
-	  sexType: '1', // 性别
-	  nation: '', // 民族
-	  nativePlace: '', // 籍贯
-	  politicalStatus: '', // 政治面貌
-	  examinationDistrict: '', // 所在考区
-	  PGraduationName: '', // 毕业学校
-	  collegeEntranceScore: '', // 高考成绩
-	  admissionNo: '', // 录取号码
-	  collegeEntranceNo: '', // 高考考生号
-	  examiniationLanguage: '', // 考试语种
-	  admissionDate: '', // 入学日期
-	  stuArchivesType: '', // 学籍类型
-	  stuArchivesStatus: '', // 学籍状态
-	  specialType: '', // 特殊类型
-	  foreignLanguage: '', // 外语语种
-	  isGraduates: '1', // 是否应届生
-	  academicStatus: '', // 学业状态
-	  graduationType: '', // 毕业类型
-	  graduationCertificateNo: '', // 毕业证书号
-	  stuDegreeType: '', // 学位类型
-	  degreeCertificateNo: '', // 学位编号
-	  graduationDate: '', // 毕业日期
-	  leaveDate: '', // 离校日期
-	  degreeSendDate: '', // 学位授予日期
-	  personalPhoto: '', // 个人证件照片
-	  checkFlag: '0', // 审核状态
-	  checkComment: '' // 审核备注
-	})
+  stuNo: "", // 学号
+  name: "", // 姓名
+  namePhoneticize: "", // 名字拼音
+  identityNo: "", // 身份证号
+  sexType: "1", // 性别
+  nation: "", // 民族
+  nativePlace: "", // 籍贯
+  politicalStatus: "", // 政治面貌
+  examinationDistrict: "", // 所在考区
+  PGraduationName: "", // 毕业学校
+  collegeEntranceScore: "", // 高考成绩
+  admissionNo: "", // 录取号码
+  collegeEntranceNo: "", // 高考考生号
+  examiniationLanguage: "", // 考试语种
+  admissionDate: "", // 入学日期
+  stuArchivesType: "", // 学籍类型
+  stuArchivesStatus: "", // 学籍状态
+  specialType: "", // 特殊类型
+  foreignLanguage: "", // 外语语种
+  isGraduates: "1", // 是否应届生
+  academicStatus: "", // 学业状态
+  graduationType: "", // 毕业类型
+  graduationCertificateNo: "", // 毕业证书号
+  stuDegreeType: "", // 学位类型
+  degreeCertificateNo: "", // 学位编号
+  graduationDate: "", // 毕业日期
+  leaveDate: "", // 离校日期
+  degreeSendDate: "", // 学位授予日期
+  personalPhoto: "", // 个人证件照片
+  checkFlag: "0", // 审核状态
+  checkComment: "" // 审核备注
+});
 formDataStore.pushRules({
-	  stuNo: [], // 学号
-	  name: [], // 姓名
-	  namePhoneticize: [], // 名字拼音
-	  identityNo: [], // 身份证号
-	  sexType: [], // 性别
-	  nation: [], // 民族
-	  nativePlace: [], // 籍贯
-	  politicalStatus: [], // 政治面貌
-	  examinationDistrict: [], // 所在考区
-	  PGraduationName: [], // 毕业学校
-	  collegeEntranceScore: [], // 高考成绩
-	  admissionNo: [], // 录取号码
-	  collegeEntranceNo: [], // 高考考生号
-	  examiniationLanguage: [], // 考试语种
-	  admissionDate: [], // 入学日期
-	  stuArchivesType: [], // 学籍类型
-	  stuArchivesStatus: [], // 学籍状态
-	  specialType: [], // 特殊类型
-	  foreignLanguage: [], // 外语语种
-	  isGraduates: [], // 是否应届生
-	  academicStatus: [], // 学业状态
-	  graduationType: [], // 毕业类型
-	  graduationCertificateNo: [], // 毕业证书号
-	  stuDegreeType: [], // 学位类型
-	  degreeCertificateNo: [], // 学位编号
-	  graduationDate: [], // 毕业日期
-	  leaveDate: [], // 离校日期
-	  degreeSendDate: [], // 学位授予日期
-	  personalPhoto: [], // 个人证件照片
-	  checkFlag: [], // 审核状态
-	  checkComment: [] // 审核备注
-	})
-formStore.addAttr('formData', formDataStore)
+  stuNo: [], // 学号
+  name: [], // 姓名
+  namePhoneticize: [], // 名字拼音
+  identityNo: [], // 身份证号
+  sexType: [], // 性别
+  nation: [], // 民族
+  nativePlace: [], // 籍贯
+  politicalStatus: [], // 政治面貌
+  examinationDistrict: [], // 所在考区
+  PGraduationName: [], // 毕业学校
+  collegeEntranceScore: [], // 高考成绩
+  admissionNo: [], // 录取号码
+  collegeEntranceNo: [], // 高考考生号
+  examiniationLanguage: [], // 考试语种
+  admissionDate: [], // 入学日期
+  stuArchivesType: [], // 学籍类型
+  stuArchivesStatus: [], // 学籍状态
+  specialType: [], // 特殊类型
+  foreignLanguage: [], // 外语语种
+  isGraduates: [], // 是否应届生
+  academicStatus: [], // 学业状态
+  graduationType: [], // 毕业类型
+  graduationCertificateNo: [], // 毕业证书号
+  stuDegreeType: [], // 学位类型
+  degreeCertificateNo: [], // 学位编号
+  graduationDate: [], // 毕业日期
+  leaveDate: [], // 离校日期
+  degreeSendDate: [], // 学位授予日期
+  personalPhoto: [], // 个人证件照片
+  checkFlag: [], // 审核状态
+  checkComment: [] // 审核备注
+});
+formStore.addAttr("formData", formDataStore);
 
 // var sexTypeStore = GStoreFactory.buildSmallRadioStore(formDataStore.data, 'sexType');
 
-var isGraduatesStore = GStoreFactory.buildSmallRadioStore(formStore.formData.data, 'isGraduates')
+var isGraduatesStore = GStoreFactory.buildSmallRadioStore(
+  formStore.formData.data,
+  "isGraduates"
+);
 
-var examiniationLanguageData = []
-var stuArchivesTypeData = []
-var stuArchivesStatusData = []
-var specialTypeData = []
-var foreignLanguageData = []
-var academicStatusData = []
-var graduationTypeData = []
-var stuDegreeTypeData = []
-var checkFlagData = []
-var nationsData = nations.data
-var politicalStatusData = politicalStatus.data
+var examiniationLanguageData = [];
+var stuArchivesTypeData = [];
+var stuArchivesStatusData = [];
+var specialTypeData = [];
+var foreignLanguageData = [];
+var academicStatusData = [];
+var graduationTypeData = [];
+var stuDegreeTypeData = [];
+var checkFlagData = [];
+var nationsData = nations.data;
+var politicalStatusData = politicalStatus.data;
 // 定义是否应届组件结束
 // 获取码表数据
 var requestData = {
-	  'dicts': ['check_flag', 'sex_type', 'language', 'stu_archives_type', 'stu_archives_status', 'special_type', 'graduation_type', 'stu_degree_type', 'is_graduates', 'academic_status']
-	}
-	var dictData = {}
+  dicts: [
+    "check_flag",
+    "sex_type",
+    "language",
+    "stu_archives_type",
+    "stu_archives_status",
+    "special_type",
+    "graduation_type",
+    "stu_degree_type",
+    "is_graduates",
+    "academic_status"
+  ]
+};
+var dictData = {};
 GUtils.post(dataPath.getDictByDictNames, requestData, function(data) {
-	  dictData = data.resBody
+  dictData = data.resBody;
   /* sexTypeStore.pushAllByFormat(dictData.sex_type, {
 		"val": "dict_key",
 		"name": "dict_desc"
 	});*/
-  examiniationLanguageData.push(dictData.language)
-  stuArchivesTypeData.push(dictData.stu_archives_type)
-  stuArchivesStatusData.push(dictData.stu_archives_status)
-  specialTypeData.push(dictData.special_type)
-  foreignLanguageData.push(dictData.language)
-  academicStatusData.push(dictData.academic_status)
-  stuDegreeTypeData.push(dictData.stu_degree_type)
-  graduationTypeData.push(dictData.graduation_type)
-  checkFlagData.push(dictData.check_flag)
+  examiniationLanguageData.push(dictData.language);
+  stuArchivesTypeData.push(dictData.stu_archives_type);
+  stuArchivesStatusData.push(dictData.stu_archives_status);
+  specialTypeData.push(dictData.special_type);
+  foreignLanguageData.push(dictData.language);
+  academicStatusData.push(dictData.academic_status);
+  stuDegreeTypeData.push(dictData.stu_degree_type);
+  graduationTypeData.push(dictData.graduation_type);
+  checkFlagData.push(dictData.check_flag);
   isGraduatesStore.pushAllByFormat(dictData.is_graduates, {
-	    'val': 'dict_key',
-	    'name': 'dict_desc'
-	  })
-})
+    val: "dict_key",
+    name: "dict_desc"
+  });
+});
 // 获取码表数据结束
 
-var nativePlaceData = []
+var nativePlaceData = [];
 GUtils.post(dataPath.getNativePlaceData, {}, function(data) {
-	  nativePlaceData.push(data.resBody)
-})
+  nativePlaceData.push(data.resBody);
+});
 
 export default {
-	  props: ['baseInfoId'],
-	  data() {
-	    return {
-	      formStore: formStore,
-	      imageUrl: '', // 证件照片
-	      upLoadUrl: dataPath.upLoadStuidentityPic,
-	      // sexTypeStore: sexTypeStore,
-	      nationsData: nationsData,
-	      politicalStatusData: politicalStatusData,
-	      examiniationLanguageData: examiniationLanguageData,
-	      stuArchivesTypeData: stuArchivesTypeData,
-	      stuArchivesStatusData: stuArchivesStatusData,
-	      specialTypeData: specialTypeData,
-	      foreignLanguageData: foreignLanguageData,
-	      isGraduatesStore: isGraduatesStore,
-	      academicStatusData: academicStatusData,
-	      graduationTypeData: graduationTypeData,
-	      stuDegreeTypeData: stuDegreeTypeData,
-	      checkFlagData: checkFlagData,
-	      nativePlaceData: nativePlaceData,
-	      loading: false,
-	      bid: '0',
-	      iload: false
-	    }
-	  },
-	  computed: {
-	    imageU: function() {
-	      if (this.imageUrl != '') {
-	        return this.imageUrl
-	      } else {
-	        return this.formStore.formData.data.personalPhoto
-	      }
-	    }
-	  },
-	  methods: {
-	    upLoadSuccess(response, file, fileList) {
-	      console.log(['response', response])
-	      console.log(['file', file])
-	      console.log(['fileList', fileList])
-	    },
-	    handleAvatarSuccess(res, file) {
-	      this.imageUrl = URL.createObjectURL(file.raw)
-	      console.log(['res', res]) // res为文件路径
-	      console.log(['file', file])
-	      this.formStore.formData.data.personalPhoto = res
-	    },
-	    beforeAvatarUpload(file) {
-	      const isJPG = file.type === 'image/jpeg'
-	      const isLt2M = file.size / 1024 / 1024 < 2
-	      if (!isJPG) {
-	        this.$message.error('上传头像图片只能是 JPG 格式!')
-	      }
-	      if (!isLt2M) {
-	        this.$message.error('上传头像图片大小不能超过 2MB!')
-	      }
-	      return isJPG && isLt2M
-	    },
-	    testbt: function() {
-	      console.log(this)
-	    },
-	    getBaseInfo: function() {
-	      console.log(['updatethis', this])
-	      var baseId = this.bid
-	      this.iload = true
-	      var that = this
-	      GUtils.post(dataPath.queryStudentBaseInfoById, {
-	        'id': baseId
-	      }, function(data) {
-	        console.log(['update', data])
-
-	        var responseBody = data.resBody[0]
-	        formDataStore.pushData(responseBody)
-
-	        formDataStore.pushData({
-	          'checkFlag': responseBody.checkFlag.toString(),
-	          'isGraduates': responseBody.isGraduates.toString(),
-	          'sexType': responseBody.sexType.toString(),
-	          'PGraduationName': responseBody.pgraduationName
-	        })
-	
-	        that.iload = false
-	      })
-    },
-	    updateStuBaseInfoSubmit: function() {
-	      // ref=addForm
-	      var that = this
-	      console.log(that)
-	      GUtils.post(dataPath.updateStudentBaseInfo, this.formStore.formData.data, function(data) {
-	        // 修改成功加载数据
-	        that.loading = true
-
-	        console.log(['that.loading', that.loading])
-	        console.log(['子组件的updateStuBaseInfoSubmit方法执行了'])
-	        //	that.$emit('iloadData');
-	        that.$parent.$parent.iiloadData()
-	      })
+  props: ["baseInfoId"],
+  data() {
+    return {
+      formStore: formStore,
+      imageUrl: "", // 证件照片
+      upLoadUrl: dataPath.upLoadStuidentityPic,
+      // sexTypeStore: sexTypeStore,
+      nationsData: nationsData,
+      politicalStatusData: politicalStatusData,
+      examiniationLanguageData: examiniationLanguageData,
+      stuArchivesTypeData: stuArchivesTypeData,
+      stuArchivesStatusData: stuArchivesStatusData,
+      specialTypeData: specialTypeData,
+      foreignLanguageData: foreignLanguageData,
+      isGraduatesStore: isGraduatesStore,
+      academicStatusData: academicStatusData,
+      graduationTypeData: graduationTypeData,
+      stuDegreeTypeData: stuDegreeTypeData,
+      checkFlagData: checkFlagData,
+      nativePlaceData: nativePlaceData,
+      loading: false,
+      bid: "0",
+      iload: false
+    };
+  },
+  computed: {
+    imageU: function() {
+      if (this.imageUrl != "") {
+        return this.imageUrl;
+      } else {
+        return this.formStore.formData.data.personalPhoto;
+      }
     }
-	  },
-	  watch: {
-	    baseInfoId: function() {
-	      console.log(['baseinfoId子组件', this.baseInfoId])
+  },
+  methods: {
+    upLoadSuccess(response, file, fileList) {
+      console.log(["response", response]);
+      console.log(["file", file]);
+      console.log(["fileList", fileList]);
+    },
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+      console.log(["res", res]); // res为文件路径
+      console.log(["file", file]);
+      this.formStore.formData.data.personalPhoto = res;
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG 格式!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
+    },
+    testbt: function() {
+      console.log(this);
+    },
+    getBaseInfo: function() {
+      console.log(["updatethis", this]);
+      var baseId = this.bid;
+      this.iload = true;
+      var that = this;
+      GUtils.post(
+        dataPath.queryStudentBaseInfoById,
+        {
+          id: baseId
+        },
+        function(data) {
+          console.log(["update", data]);
 
-	      if (this.baseInfoId != null) {
-	        this.bid = this.baseInfoId
-	      }
-	      this.getBaseInfo()
-	    }
-	  },
-	  created: function() {
-	    console.log(['created', this.baseInfoId])
-	    var that = this
-	    this.iload = true
-	    GUtils.post(dataPath.queryStudentBaseInfoById, {
-	      'id': this.baseInfoId
-	    }, function(data) {
-	      // 修改成功加载数据
-	      console.log(['update', data])
-	      var responseBody = data.resBody[0]
-	      formDataStore.pushData(responseBody)
-	      formDataStore.pushData({
-	        'checkFlag': responseBody.checkFlag.toString(),
-	        'isGraduates': responseBody.isGraduates.toString(),
-	        'sexType': responseBody.sexType.toString(),
-	        'PGraduationName': responseBody.pgraduationName
-	      })
-	      that.iload = false
-	    })
+          var responseBody = data.resBody[0];
+          formDataStore.pushData(responseBody);
+
+          formDataStore.pushData({
+            PGraduationName: responseBody.pgraduationName
+					});
+					
+				   if (responseBody.checkFlag == null) {
+          that.$message.error("您要修改的信息不完善,继续修改可能会出现异常");
+        } else {
+          formDataStore.pushData({
+            checkFlag: responseBody.checkFlag.toString()
+          });
+        }
+        if (responseBody.isGraduates == null) {
+          that.$message.error("您要修改的信息不完善,继续修改可能会出现异常");
+        } else {
+          formDataStore.pushData({
+            isGraduates: responseBody.isGraduates.toString()
+          });
+        }
+        if (responseBody.sexType == null) {
+          that.$message.error("您要修改的信息不完善,继续修改可能会出现异常");
+        } else {
+          formDataStore.pushData({
+            sexType: responseBody.sexType.toString()
+          });
+        }
+
+
+          that.iload = false;
+        }
+      );
+    },
+    updateStuBaseInfoSubmit: function() {
+      // ref=addForm
+      var that = this;
+      console.log(that);
+      GUtils.post(
+        dataPath.updateStudentBaseInfo,
+        this.formStore.formData.data,
+        function(data) {
+          // 修改成功加载数据
+          that.loading = true;
+
+          console.log(["that.loading", that.loading]);
+          console.log(["子组件的updateStuBaseInfoSubmit方法执行了"]);
+          //	that.$emit('iloadData');
+          that.$parent.$parent.iiloadData();
+        }
+      );
+    }
+  },
+  watch: {
+    baseInfoId: function() {
+      console.log(["baseinfoId子组件", this.baseInfoId]);
+
+      if (this.baseInfoId != null) {
+        this.bid = this.baseInfoId;
+      }
+      this.getBaseInfo();
+    }
+  },
+  created: function() {
+    console.log(["created", this.baseInfoId]);
+    var that = this;
+    this.iload = true;
+    GUtils.post(
+      dataPath.queryStudentBaseInfoById,
+      {
+        id: this.baseInfoId
+      },
+      function(data) {
+        // 修改成功加载数据
+        console.log(["update", data]);
+        var responseBody = data.resBody[0];
+        formDataStore.pushData(responseBody);
+        formDataStore.pushData({
+          PGraduationName: responseBody.pgraduationName
+        });
+        if (responseBody.checkFlag == null) {
+          that.$message.error("您要修改的信息不完善,继续修改可能会出现异常");
+        } else {
+          formDataStore.pushData({
+            checkFlag: responseBody.checkFlag.toString()
+          });
+        }
+        if (responseBody.isGraduates == null) {
+          that.$message.error("您要修改的信息不完善,继续修改可能会出现异常");
+        } else {
+          formDataStore.pushData({
+            isGraduates: responseBody.isGraduates.toString()
+          });
+        }
+        if (responseBody.sexType == null) {
+          that.$message.error("您要修改的信息不完善,继续修改可能会出现异常");
+        } else {
+          formDataStore.pushData({
+            sexType: responseBody.sexType.toString()
+          });
+        }
+        that.iload = false;
+      }
+    );
   }
-
-	}
+};
 </script>
 
 <style>
-	.but {
-		padding: 0;
-		float: right;
-	}
-	
-	.avatar-uploader .el-upload {
-		border: 1px dashed #d9d9d9;
-		border-radius: 6px;
-		cursor: pointer;
-		position: relative;
-		overflow: hidden;
-		width: 400px;
-		height: 200px;
-	}
-	
-	.avatar-uploader .el-upload:hover {
-		border-color: #409EFF;
-	}
-	
-	.avatar-uploader-icon {
-		font-size: 28px;
-		color: #8c939d;
-		width: 400px;
-		height: 200px;
-		line-height: 200px;
-		text-align: center;
-	}
-	
-	.avatar {
-		width: 400px;
-		height: 200px;
-		display: block;
-	}
+.but {
+  padding: 0;
+  float: right;
+}
+
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  width: 400px;
+  height: 200px;
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 400px;
+  height: 200px;
+  line-height: 200px;
+  text-align: center;
+}
+
+.avatar {
+  width: 400px;
+  height: 200px;
+  display: block;
+}
 </style>

@@ -114,7 +114,7 @@
           <div class="clearfix"></div>
 
           <!-- 数据表 -->
-          <el-table ref="multipleTable" :data="tableData3" tooltip-effect="dark" style="width: 100%" :key='key' fit highlight-current-row @selection-change="handleSelectionChange">
+          <el-table ref="multipleTable" :data="tableDataTodo" tooltip-effect="dark" style="width: 100%" :key='key' fit highlight-current-row @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="50">
             </el-table-column>
             <el-table-column label="用户对象编号" width="120" prop="apply_user_classify_no">
@@ -184,19 +184,13 @@ const defaultFormThead = ["date", "name"];
 export default {
   directives: { elDragDialog },
   components: { ProjectProgress },
-  props:{
-    nodeNoProp:{
-      type:String,
-      default:"P15256613348894831"
-    }
-  },
   data() {
     return {
-      nodeNo: this.nodeNoProp, //----这是传过来的节点编号
+      nodeNo: this.$route.query.nodeNoProp, //----这是传过来的节点编号
       approveRecordData: {
         opinion: "",
         applyStatus: "Y",
-        nodeNo: this.nodeNoProp,
+        nodeNo: this.$route.query.nodeNoProp,
         blocks: []
       },
       pagination: { dataCount: 0, currentPage: 1, pageSize: 10 }, //未审核分页
@@ -252,6 +246,11 @@ export default {
       console.log(val);
     },
     onSubmit() {
+      if( this.multipleSelection.length == 0){
+        this.$message.error("您没有选择任何数据!");
+        return;
+      }
+
       var that = this;
       for (var i = 0; i < this.multipleSelection.length; i++) {
         var d = {

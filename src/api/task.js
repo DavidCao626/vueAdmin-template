@@ -224,7 +224,7 @@ export function queryNodeByLiblerldByParam(param) {
   return request({
     url: '/task/queryNodeByLiblerldByParam.do',
     method: 'post',
-    data: paramparam
+    data: param
   })
 }
 
