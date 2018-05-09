@@ -35,7 +35,7 @@
 
     </div>
 
-    <tree-table @getItemDate="getItemDate" @closeItemDate="closeItemDate" :showIndex="showIndex" :data="data" :evalFunc="func" :columns="columns" :evalArgs="args" :expandAll="expandAll" border>
+    <tree-table v-loading="treeTableDV" @getItemDate="getItemDate" @closeItemDate="closeItemDate" :showIndex="showIndex" :data="data" :evalFunc="func" :columns="columns" :evalArgs="args" :expandAll="expandAll" border>
 
       <el-table-column label="完成进度" width="100">
         <template slot-scope="scope">
@@ -122,11 +122,16 @@
         <!-- 王红坤结束 -->
         <template slot-scope="scope">
           <el-tooltip class="item" effect="dark" content="详情" placement="bottom">
+<<<<<<< HEAD
             <router-link to="/task/nodeDate">
               <el-button type="text" size="small" style="margin-left: 0px;">
                
                 <i class="el-icon-arrow-right el-icon--right"></i>
               </el-button>
+=======
+            <router-link :to="{path:'/task/nodeDate',query:{'nodeNoProp':scope.row.No}}">
+              <el-button type="text" class="el-icon-arrow-right" size="medium" style="margin-left: 0px;"></el-button>
+>>>>>>> b88602f7a1bdc87501d2d336842f78361e487277
             </router-link>
           </el-tooltip>
         </template>
@@ -156,23 +161,6 @@ import taskParticipant from "./../taskParticipant";
 import updateTaskNodeRestrict from "./../updateTaskNodeRestrict";
 import dataBuilder from "./ItemFacctory";
 
-// var itemData = {
-//   No: 'P15256087592557662',
-//   bgintime: '2018-05-01',
-//   children: [],
-//   creater: 'student',
-//   endtime: '2018-05-22',
-//   id: undefined,
-//   nodeTitle: '测试项目1',
-//   parentNodeNo: null,
-//   timeLine: undefined,
-//   type: 'P',
-//   _expanded: false,
-//   _level: 1,
-//   _marginLeft: 0,
-//   _show: true,
-//   _width: 1
-// }
 
 export default {
   name: "customTreeTableDemo",
@@ -193,9 +181,16 @@ export default {
   },
   data() {
     return {
+<<<<<<< HEAD
       dynamicView: addTaskNode,
       dialogShow: false,
       dialogTitle: "",
+=======
+      treeTableDV:false,
+      dynamicView:addTaskNode,
+      dialogShow:false,
+      dialogTitle:'',
+>>>>>>> b88602f7a1bdc87501d2d336842f78361e487277
       showIndex: 0,
       rootNodeNo: 0,
       parentNodeNo: 0,
@@ -278,6 +273,7 @@ export default {
   mounted: function() {
     if (this.propsData.length === 0) {
       new Promise((resolve, reject) => {
+        this.treeTableDV = true
         queryNodeByLiblerld().then(response => {
           var l = [];
           this.$emit("dataCount", response.resBody.dataCount);
@@ -297,6 +293,7 @@ export default {
             if (element.isLeafNode === "N") {
               item.children = [];
             }
+<<<<<<< HEAD
             item = dataBuilder.call(null, item, null);
             l.push(item);
           });
@@ -304,6 +301,19 @@ export default {
           this.data = ls;
         });
       });
+=======
+            if (element.isLeafNode === 'N') {
+              item.children = []
+            }
+              item = dataBuilder.call(null, item, null)
+              l.push(item)
+              this.treeTableDV = false;
+          })
+          var ls = this.data.concat(l)
+          this.data = ls
+        })
+      })
+>>>>>>> b88602f7a1bdc87501d2d336842f78361e487277
     }
   },
   methods: {
@@ -330,7 +340,9 @@ export default {
       }()*/
       //
       var p1 = new Promise((resolve, reject) => {
+        th.treeTableDV=true
         queryChildTaskNodeBySystemSerialNo(scope.row.No).then(response => {
+          th.treeTableDV = false
           if (response.resBody.length > 0) {
             response.resBody.forEach((element, index) => {
               var item = {
