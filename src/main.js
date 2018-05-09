@@ -22,8 +22,8 @@ Vue.component('page', Pagedefault)
 
 Vue.use(ElementUI, {
   i18n: (key, value) => i18n.t(key, value),
-  size: 'small'
-})
+  size: 'medium'
+});
 // register global utility filters.
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
