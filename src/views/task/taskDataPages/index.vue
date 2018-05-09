@@ -114,7 +114,7 @@
           <div class="clearfix"></div>
 
           <!-- 数据表 -->
-          <el-table ref="multipleTable" :data="tableData3" tooltip-effect="dark" style="width: 100%" :key='key' fit highlight-current-row @selection-change="handleSelectionChange">
+          <el-table ref="multipleTable" :data="tableDataTodo" tooltip-effect="dark" style="width: 100%" :key='key' fit highlight-current-row @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="50">
             </el-table-column>
             <el-table-column label="用户对象编号" width="120" prop="apply_user_classify_no">
