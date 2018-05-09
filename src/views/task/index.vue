@@ -34,7 +34,7 @@
           </div>
         </div>
       </div>
-      <div class="panel-body">
+      <div class="panel-body" style="    border: 1px #e8e8e8 solid;">
         <component :is="dynamicView" :propsData="filterData" @dataCount="getDataCount"></component>
       </div>
       <br/>

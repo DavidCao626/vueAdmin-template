@@ -35,7 +35,8 @@
 
     </div>
 
-    <tree-table v-loading="treeTableDV" @getItemDate="getItemDate" @closeItemDate="closeItemDate" :showIndex="showIndex" :data="data" :evalFunc="func" :columns="columns" :evalArgs="args" :expandAll="expandAll" border>
+    <tree-table v-loading="treeTableDV" @getItemDate="getItemDate" @closeItemDate="closeItemDate" 
+    :showIndex="showIndex" :data="data" :evalFunc="func" :columns="columns" :evalArgs="args" :expandAll="expandAll" >
 
       <el-table-column label="完成进度" width="100">
         <template slot-scope="scope">
@@ -51,7 +52,7 @@
         <template slot-scope="scope">
           <el-dropdown size="medium" trigger="click">
 
-            <span class="el-dropdown-link" style="margin-left: 15px;">
+            <span class="el-dropdown-link" >
 
               <el-button type="text" plain size="small">
                 创建
@@ -64,7 +65,7 @@
             </el-dropdown-menu>
           </el-dropdown>
           <el-tooltip class="item" effect="dark" content="修改" placement="bottom">
-            <el-button type="text" plain @click="updateDialog(scope.row,'P')" size="small"> 创建
+            <el-button type="text" plain @click="updateDialog(scope.row,'P')" size="small"> 修改
               <i class="el-icon-edit el-icon--right"></i>
             </el-button>
           </el-tooltip>
@@ -73,8 +74,8 @@
 
             <span class="el-dropdown-link" style="">
               <el-button type="text" plain size="small">
-                修改
-                <i class="el-icon-setting el-icon--right"></i>
+                配置
+                <!-- <i class="el-icon-setting el-icon--right"></i> -->
               </el-button>
             </span>
             <el-dropdown-menu slot="dropdown">
@@ -93,7 +94,7 @@
           <el-tooltip class="item" effect="dark" content="分配参与者" placement="bottom">
             <el-button type="text" plain @click="mParticipant(scope.row)" size="small">
               参与者
-              <i class="el-icon-news el-icon--right"></i>
+              <!-- <i class="el-icon-news el-icon--right"></i> -->
             </el-button>
           </el-tooltip>
         </template>
@@ -106,11 +107,12 @@
           <el-tooltip class="item" effect="dark" content="启动" placement="bottom">
             <el-button type="text" @click="Start(scope.row)" size="small">
               启动
-              <i class="el-icon-caret-right el-icon--right"></i>
+              <i class="el-icon-caret-right"></i>
             </el-button>
           </el-tooltip>
+         
           <el-tooltip class="item" effect="dark" content="停止" placement="bottom">
-            <el-button type="text" @click="stop(scope.row)" size="small" style="margin-left: 0px;">
+            &nbsp;&nbsp; <el-button type="text" @click="stop(scope.row)" size="small" style="margin-left: 0px;">
               停止
               <i class="el-icon-check el-icon--right"></i>
             </el-button>
@@ -122,16 +124,8 @@
         <!-- 王红坤结束 -->
         <template slot-scope="scope">
           <el-tooltip class="item" effect="dark" content="详情" placement="bottom">
-<<<<<<< HEAD
-            <router-link to="/task/nodeDate">
-              <el-button type="text" size="small" style="margin-left: 0px;">
-               
-                <i class="el-icon-arrow-right el-icon--right"></i>
-              </el-button>
-=======
             <router-link :to="{path:'/task/nodeDate',query:{'nodeNoProp':scope.row.No}}">
               <el-button type="text" class="el-icon-arrow-right" size="medium" style="margin-left: 0px;"></el-button>
->>>>>>> b88602f7a1bdc87501d2d336842f78361e487277
             </router-link>
           </el-tooltip>
         </template>
@@ -181,16 +175,10 @@ export default {
   },
   data() {
     return {
-<<<<<<< HEAD
-      dynamicView: addTaskNode,
-      dialogShow: false,
-      dialogTitle: "",
-=======
       treeTableDV:false,
       dynamicView:addTaskNode,
       dialogShow:false,
       dialogTitle:'',
->>>>>>> b88602f7a1bdc87501d2d336842f78361e487277
       showIndex: 0,
       rootNodeNo: 0,
       parentNodeNo: 0,
@@ -293,15 +281,6 @@ export default {
             if (element.isLeafNode === "N") {
               item.children = [];
             }
-<<<<<<< HEAD
-            item = dataBuilder.call(null, item, null);
-            l.push(item);
-          });
-          var ls = this.data.concat(l);
-          this.data = ls;
-        });
-      });
-=======
             if (element.isLeafNode === 'N') {
               item.children = []
             }
@@ -313,7 +292,6 @@ export default {
           this.data = ls
         })
       })
->>>>>>> b88602f7a1bdc87501d2d336842f78361e487277
     }
   },
   methods: {
