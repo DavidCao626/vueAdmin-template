@@ -21,7 +21,9 @@
 
               <div class="avatar-wrapper">
                 <router-link class="inlineBlock" to="/user/messages">
-                 <el-badge   class="item" :value="1"> <i class="el-icon-message message"></i></el-badge>
+                  <el-badge class="item" :value="messageCount">
+                    <i class="el-icon-message message"></i>
+                  </el-badge>
                 </router-link>
                 &nbsp;&nbsp;
                 <el-dropdown trigger="hover" size="medium">
@@ -37,7 +39,7 @@
                     <i class="el-icon-caret-bottom"></i>
                   </div>
 
-                  <el-dropdown-menu class="user-dropdown" slot="dropdown" >
+                  <el-dropdown-menu class="user-dropdown" slot="dropdown">
                     <router-link class="inlineBlock" to="/user/updateUserInfo">
                       <el-dropdown-item>
                         <i class="el-icon-date"></i>&nbsp; 账号详情
@@ -72,46 +74,56 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
+import { mapGetters } from "vuex";
+import { queryUserNoticeCountByStatus } from "~/api/notice";
 export default {
   data() {
     return {
+      messageCount: "",
       dutyRoles: null
-    }
+    };
   },
   components: {},
   computed: {
-    ...mapGetters(['sidebar', 'avatar', 'name', 'roles'])
+    ...mapGetters(["sidebar", "avatar", "name", "roles"])
+  },
+  mounted: function() {
+    var that = this;
+    queryUserNoticeCountByStatus({
+      status: "N"
+    }).then(data => {
+      // 查未读数量
+      that.messageCount = data.resBody.count;
+    });
   },
   created: function() {
     for (const key in this.roles) {
       if (key.length > 0) {
         this.roles[key].forEach(element => {
           if (element.currently === true) {
-            this.dutyRoles = element
-            console.log(this.dutyRoles)
-            return element
+            this.dutyRoles = element;
+            console.log(this.dutyRoles);
+            return element;
           } else {
-            return this.roles.MemberDutyList[0]
+            return this.roles.MemberDutyList[0];
           }
-        })
+        });
       } else {
-        return this.roles.MemberDutyList[0]
+        return this.roles.MemberDutyList[0];
       }
     }
   },
   methods: {
     toggleSideBar() {
-      this.$store.dispatch('ToggleSideBar')
+      this.$store.dispatch("ToggleSideBar");
     },
     logout() {
-      this.$store.dispatch('LogOut').then(() => {
-        location.reload() // 为了重新实例化vue-router对象 避免bug
-      })
+      this.$store.dispatch("LogOut").then(() => {
+        location.reload(); // 为了重新实例化vue-router对象 避免bug
+      });
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .navbar {

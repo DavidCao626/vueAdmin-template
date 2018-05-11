@@ -64,7 +64,7 @@
             </el-dropdown-menu>
           </el-dropdown>
           <el-tooltip class="item" effect="dark" content="修改" placement="bottom">
-            <el-button type="text" plain @click="updateDialog(scope.row,'P')" size="small"> 创建
+            <el-button type="text" plain @click="updateDialog(scope.row,'P')" size="small"> 修改
               <i class="el-icon-edit el-icon--right"></i>
             </el-button>
           </el-tooltip>
@@ -73,7 +73,7 @@
 
             <span class="el-dropdown-link" style="">
               <el-button type="text" plain size="small">
-                修改
+                约束
                 <i class="el-icon-setting el-icon--right"></i>
               </el-button>
             </span>
