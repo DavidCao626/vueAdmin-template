@@ -6,9 +6,7 @@
 			<div class="panel-control">
 				<div class="panel-control__flex">
 					<div class="panel-control__flex-left">
-						<el-badge :value="allNumber" :max="99" class="item">
-							<el-button size="small" plain @click="queryAllData">全部</el-button>
-						</el-badge>
+						<el-button size="small" type="text" style="color:#8d8d8d" @click="queryDataByStatus('')"> 全部({{allNumber}})</el-button>
 						&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
 						<el-badge :value="noReadNumber" :max="99" class="item">
 							<el-button size="small" plain @click="queryDataByStatus('N')">未读</el-button>
@@ -22,8 +20,8 @@
 					</div>
 					<div class="panel-control__flex-right" style="margin-right:20px;">
 
-						<el-input placeholder="消息标题或内容" style="width:255px;">
-							<i slot="suffix" class="el-input__icon el-icon-search" @click="search"></i>
+						<el-input placeholder="消息标题或内容" v-model="currentShowContent" style="width:255px;">
+							<i slot="suffix" class="el-input__icon el-icon-search" @click="queryDataByStatus('')"></i>
 						</el-input>
 					</div>
 				</div>
@@ -35,7 +33,7 @@
 				</div>
 				<el-collapse accordion>
 
-					<el-collapse-item :name="index"  v-for="(notice,index) in noticeData" :key="index">
+					<el-collapse-item :name="index" v-for="(notice,index) in noticeData" :key="index">
 						<template slot="title" @click="messageShow(notice)">
 							<template v-if="isScreening==true">
 								<el-checkbox :true-label="12"></el-checkbox>
@@ -45,7 +43,7 @@
 								<div class="circle messages-readState" :class="{'messages-readState__true':(notice.status=='Y')}" @click="readSwitch(notice.id,notice)"></div>
 							</el-tooltip>
 							&nbsp;
-							<span  class="messages-title">{{notice.title}}</span>
+							<span class="messages-title">{{notice.title}}</span>
 
 							<!-- <span class="messages-mark" @click.stop="markSwitch">
                                 <i class="el-icon-star-off" :class="{'messages-mark__true':isMarkForMessage}"></i>
@@ -72,209 +70,221 @@
 	</page>
 </template>
 <script>
-	import { changeNoticeState, queryUserNoticeByStatus, queryUserNotice, queryUserNoticeCountByStatus, queryUserNoticeCount } from '~/api/notice'
+import {
+  changeNoticeState,
+  queryUserNoticeByStatus,
+  queryUserNotice,
+  queryUserNoticeCountByStatus,
+  queryUserNoticeCount
+} from "~/api/notice";
 
-	var noticeData = [{
-	  title: '',
-	  content: '',
-	  sendTime: '',
-	  source: '',
-	  userDutyCode: '',
-	  userId: '',
-	  status: '',
-	  id: 0
+var noticeData = [
+  {
+    title: "",
+    content: "",
+    sendTime: "",
+    source: "",
+    userDutyCode: "",
+    userId: "",
+    status: "",
+    id: 0
+  }
+];
 
-	}]
-
-	export default {
-	  data() {
-	    return {
-	      currentShowState: 'A',
-	      currentPage: 1,
-	      dataCount: 0,
-	      pageSize: 10,
-	      noticeData,
-	      noReadNumber: 22, // 未读数量
-	      ReadNumber: 58, // 已读数量
-	      allNumber: 80, // 全部数量
-	      // messagesMarkCount: 8,//收藏
-	      isReadForMessage: false,
-	      // isMarkForMessage: false,
-	      isScreening: false
-	    }
+export default {
+  data() {
+    return {
+      currentShowState: "",
+      currentShowContent: "",
+      currentPage: 1,
+      dataCount: 0,
+      pageSize: 10,
+      noticeData,
+      noReadNumber: 0, // 未读数量
+      ReadNumber: 0, // 已读数量
+      allNumber: 0, // 全部数量
+      // messagesMarkCount: 8,//收藏
+      isReadForMessage: false,
+      // isMarkForMessage: false,
+      isScreening: false
+    };
   },
 
-	  methods: {
-	    search() {},
-	    messageShow(itme) {
-	      console.log('你点开了该消息')
-      // ToDo: itme.isReadForMessage = true
-      if (itme.status == 'Y') {
-	        return // 如果该消息已读直接return，不再执行以下未读处理逻辑
-      }
-	      this.noReadNumber--
-	      this.ReadNumber++
-	      itme.status = 'Y' // 真实数据情况下去改变以上item循环元素中对应的值
+  methods: {
+    search() {
+      // this.currentShowState
+      // this.currentShowContent
     },
-	    readSwitch(itemID, notice) {
-	      // ToDo: 拿到行内id
-	      if (notice.status == 'N') {
-	        this.noReadNumber--
-	        this.ReadNumber++
-	        this.$message({
-	          message: '标为已读状态',
-	          type: 'success'
-	        })
-	        notice.status = 'Y'
-	        this.changeNoticeStatus(itemID, 'Y')
-	      } else {
-	        this.noReadNumber++
-	        this.ReadNumber--
-	        this.$message({
-	          message: '已取消已读状态',
-	          type: 'info'
-	        })
-	        notice.status = 'N'
-	        this.changeNoticeStatus(itemID, 'N')
-	      }
-	    },
-	    markSwitch(itemID) {
-	      // ToDo: 拿到行内id
-	      if (this.isMarkForMessage) {
-	        this.isMarkForMessage = false
-	        this.$message({
-	          message: '已取消收藏',
-	          type: 'info'
-	        })
-	      } else {
-	        this.isMarkForMessage = true
-	        this.$message({
-	          message: '收藏成功',
-	          type: 'success'
-	        })
-	      }
-	    },
-	    handleSizeChange(val) {
-	      this.pageSize = val
-	      if (this.currentShowState == 'A') {
-	        this.queryAllData()
-	      }
-	      if (this.currentShowState == 'Y') {
-	        this.queryDataByStatus('Y')
-	      }
-	      if (this.currentShowState == 'N') {
-	        this.queryDataByStatus('N')
-	      }
-	    },
-	    handleCurrentChange(val) {
-	      this.currentPage = val
-	      if (this.currentShowState == 'A') {
-	        this.queryAllData()
-	      }
-	      if (this.currentShowState == 'Y') {
-	        this.queryDataByStatus('Y')
-	      }
-	      if (this.currentShowState == 'N') {
-	        this.queryDataByStatus('N')
-	      }
-	    },
-	    queryAllData() {
-	      this.currentShowState = 'A'
-	      var that = this
-	      queryUserNotice({
-	        'currentPage': this.currentPage,
-	        'pageSize': this.pageSize
-	      }).then(data => {
-	        // 查全部通知
-	        that.noticeData = data.resBody.baseData
-	        that.dataCount = data.resBody.dataCount
-	      })
-	    },
-	    queryDataByStatus(status) {
-	      this.currentShowState = status
-	      var that = this
-	      queryUserNoticeByStatus({
-	        'status': status,
-	        'currentPage': this.currentPage,
-	        'pageSize': this.pageSize
-	      }).then(data => {
-        that.noticeData = data.resBody.baseData
-	        that.dataCount = data.resBody.dataCount
-      })
-	    },
-	    changeNoticeStatus(id, status) {
-	      console.log('执行了改变')
-	      var that = this
-	      changeNoticeState({ 'id': id, 'status': status }).then(data => {
-	        if (that.currentShowState == 'A') {
-	          that.queryAllData()
-	        }
-	        if (that.currentShowState == 'Y') {
-	          that.queryDataByStatus('Y')
-	        }
-	        if (that.currentShowState == 'N') {
-	          that.queryDataByStatus('N')
-	        }
-	      })
-	    }
-	  },
-	  mounted: function() {
-	    var that = this
-	    queryUserNoticeCountByStatus({
-	      'status': 'Y'
-	    }).then(data => {
-	      // 查已读数量
-	      that.ReadNumber = data.resBody.count
-	    })
-	    queryUserNoticeCountByStatus({
-	      'status': 'N'
-	    }).then(data => {
-	      // 查未读数量
-	      that.noReadNumber = data.resBody.count
-	    })
-	    queryUserNoticeCount().then(data => {
-	      // 查全部数量
-	      that.allNumber = data.resBody.count
-	    })
-	    this.queryAllData()
-	}
-	}
+    messageShow(itme) {
+      console.log("你点开了该消息");
+      // ToDo: itme.isReadForMessage = true
+      if (itme.status == "Y") {
+        return; // 如果该消息已读直接return，不再执行以下未读处理逻辑
+      }
+      this.noReadNumber--;
+      this.ReadNumber++;
+      itme.status = "Y"; // 真实数据情况下去改变以上item循环元素中对应的值
+    },
+    readSwitch(itemID, notice) {
+      // ToDo: 拿到行内id
+      if (notice.status == "N") {
+        this.noReadNumber--;
+        this.ReadNumber++;
+        this.$message({
+          message: "标为已读状态",
+          type: "success"
+        });
+        notice.status = "Y";
+        this.changeNoticeStatus(itemID, "Y");
+      } else {
+        this.noReadNumber++;
+        this.ReadNumber--;
+        this.$message({
+          message: "已取消已读状态",
+          type: "info"
+        });
+        notice.status = "N";
+        this.changeNoticeStatus(itemID, "N");
+      }
+    },
+    markSwitch(itemID) {
+      // ToDo: 拿到行内id
+      if (this.isMarkForMessage) {
+        this.isMarkForMessage = false;
+        this.$message({
+          message: "已取消收藏",
+          type: "info"
+        });
+      } else {
+        this.isMarkForMessage = true;
+        this.$message({
+          message: "收藏成功",
+          type: "success"
+        });
+      }
+    },
+    handleSizeChange(val) {
+      this.pageSize = val;
+      if (this.currentShowState == "") {
+        this.queryDataByStatus("");
+      }
+      if (this.currentShowState == "Y") {
+        this.queryDataByStatus("Y");
+      }
+      if (this.currentShowState == "N") {
+        this.queryDataByStatus("N");
+      }
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      if (this.currentShowState == "") {
+        this.queryDataByStatus("");
+      }
+      if (this.currentShowState == "Y") {
+        this.queryDataByStatus("Y");
+      }
+      if (this.currentShowState == "N") {
+        this.queryDataByStatus("N");
+      }
+    },
+    queryAllData() {
+      this.currentShowState = "";
+      var that = this;
+      queryUserNotice({
+        currentPage: this.currentPage,
+        pageSize: this.pageSize
+      }).then(data => {
+        // 查全部通知
+        that.noticeData = data.resBody.baseData;
+        that.dataCount = data.resBody.dataCount;
+      });
+    },
+    queryDataByStatus(status) {
+      this.currentShowState = status;
+      var that = this;
+      queryUserNoticeByStatus({
+        status: status,
+        currentPage: this.currentPage,
+        pageSize: this.pageSize,
+        content: this.currentShowContent
+      }).then(data => {
+        that.noticeData = data.resBody.baseData;
+        that.dataCount = data.resBody.dataCount;
+      });
+    },
+    changeNoticeStatus(id, status) {
+      console.log("执行了改变");
+      var that = this;
+      changeNoticeState({ id: id, status: status }).then(data => {
+        if (that.currentShowState == "") {
+          this.queryDataByStatus("");
+        }
+        if (that.currentShowState == "Y") {
+          that.queryDataByStatus("Y");
+        }
+        if (that.currentShowState == "N") {
+          that.queryDataByStatus("N");
+        }
+      });
+    }
+  },
+  mounted: function() {
+    var that = this;
+    queryUserNoticeCountByStatus({
+      status: "Y"
+    }).then(data => {
+      // 查已读数量
+      that.ReadNumber = data.resBody.count;
+    });
+    queryUserNoticeCountByStatus({
+      status: "N"
+    }).then(data => {
+      // 查未读数量
+      that.noReadNumber = data.resBody.count;
+    });
+    queryUserNoticeCount().then(data => {
+      // 查全部数量
+      that.allNumber = data.resBody.count;
+    });
+    this.queryDataByStatus("");
+  }
+};
 </script>
 <style lang="scss" scoped>
-	.messages {
-		color: #8d8d8d;
-		&-time {
-			float: right;
-			margin-right: 20px;
-			font-size: 13px;
-		}
-		&-author {
-			float: right;
-			margin-right: 20px;
-			font-size: 13px;
-		}
-		&-readState {
-			background-color: red;
-			&__true {
-				background-color: #e4e8eb;
-			}
-		}
-		&-mark {
-			float: right;
-			margin-right: 20px;
-			font-size: 18px;
-			color: var(--color-grey-light-2);
-			&__true {
-				color: rgb(247, 186, 42);
-			}
-			&__true:before {
-				content: "\E637";
-			}
-		}
-		&-pagination {
-			margin-top: 30px;
-			margin-bottom: 40px;
-			float: right;
-		}
-	}
+.messages {
+  color: #8d8d8d;
+  &-time {
+    float: right;
+    margin-right: 20px;
+    font-size: 13px;
+  }
+  &-author {
+    float: right;
+    margin-right: 20px;
+    font-size: 13px;
+  }
+  &-readState {
+    background-color: red;
+    &__true {
+      background-color: #e4e8eb;
+    }
+  }
+  &-mark {
+    float: right;
+    margin-right: 20px;
+    font-size: 18px;
+    color: var(--color-grey-light-2);
+    &__true {
+      color: rgb(247, 186, 42);
+    }
+    &__true:before {
+      content: "\E637";
+    }
+  }
+  &-pagination {
+    margin-top: 30px;
+    margin-bottom: 40px;
+    float: right;
+  }
+}
 </style>

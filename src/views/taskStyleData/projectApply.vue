@@ -88,9 +88,8 @@ export default {
       });
     },
     getChildService(val) {
-      debugger;
       var that = this;
-      queryChildService({ serviceTypeCode: val }).then(data => {
+      queryChildService({ 'serviceTypeCode': val }).then(data => {
         that.serviceCTypeList = data.resBody;
       });
     }
