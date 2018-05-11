@@ -122,16 +122,8 @@
         <!-- 王红坤结束 -->
         <template slot-scope="scope">
           <el-tooltip class="item" effect="dark" content="详情" placement="bottom">
-<<<<<<< HEAD
-            <router-link to="/task/nodeDate">
-              <el-button type="text" size="small" style="margin-left: 0px;">
-               
-                <i class="el-icon-arrow-right el-icon--right"></i>
-              </el-button>
-=======
             <router-link :to="{path:'/task/nodeDate',query:{'nodeNoProp':scope.row.No}}">
               <el-button type="text" class="el-icon-arrow-right" size="medium" style="margin-left: 0px;"></el-button>
->>>>>>> b88602f7a1bdc87501d2d336842f78361e487277
             </router-link>
           </el-tooltip>
         </template>
@@ -181,16 +173,10 @@ export default {
   },
   data() {
     return {
-<<<<<<< HEAD
-      dynamicView: addTaskNode,
-      dialogShow: false,
-      dialogTitle: "",
-=======
       treeTableDV:false,
       dynamicView:addTaskNode,
       dialogShow:false,
       dialogTitle:'',
->>>>>>> b88602f7a1bdc87501d2d336842f78361e487277
       showIndex: 0,
       rootNodeNo: 0,
       parentNodeNo: 0,
@@ -293,15 +279,6 @@ export default {
             if (element.isLeafNode === "N") {
               item.children = [];
             }
-<<<<<<< HEAD
-            item = dataBuilder.call(null, item, null);
-            l.push(item);
-          });
-          var ls = this.data.concat(l);
-          this.data = ls;
-        });
-      });
-=======
             if (element.isLeafNode === 'N') {
               item.children = []
             }
@@ -313,7 +290,6 @@ export default {
           this.data = ls
         })
       })
->>>>>>> b88602f7a1bdc87501d2d336842f78361e487277
     }
   },
   methods: {

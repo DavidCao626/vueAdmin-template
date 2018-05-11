@@ -251,9 +251,9 @@ export function getProjectInfoByNodeNo(param) {
   })
 }
 export function queryChildService(param) {
-  debugger
   return request({
     url: '/task/queryChildService.do',
+    method: 'post',
     data: param
   })
 }

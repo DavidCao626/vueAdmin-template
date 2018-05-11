@@ -21,7 +21,7 @@
 
               <div class="avatar-wrapper">
                 <router-link class="inlineBlock" to="/user/messages">
-                 <el-badge is-dot  class="item"> <i class="el-icon-message message"></i></el-badge>
+                 <el-badge   class="item" :value="1"> <i class="el-icon-message message"></i></el-badge>
                 </router-link>
                 &nbsp;&nbsp;
                 <el-dropdown trigger="hover" size="medium">
