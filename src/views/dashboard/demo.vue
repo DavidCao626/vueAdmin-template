@@ -8,12 +8,13 @@
                 </div>
                 <div class="table-body">
                     <el-table :data="tableData" style="width: 100%" size="medium" :stripe='false' highlight-current-row @current-change="handleCurrentChange">
-                        <el-table-column type="selection" width="55">
+                        <el-table-column type="selection" width="33">
                         </el-table-column>
 
-                        <el-table-column type="index" width="50">
+                        <el-table-column type="index" width="30" >
+                            
                         </el-table-column>
-                        <el-table-column prop="date" label="日期" width="150">
+                        <el-table-column sortable prop="date" label="日期" width="150">
                         </el-table-column>
                         <el-table-column label="配送信息">
                             <el-table-column prop="name" label="姓名" width="120">
@@ -23,7 +24,7 @@
                                 </el-table-column>
                                 <el-table-column prop="city" label="市区" width="120">
                                 </el-table-column>
-                                <el-table-column prop="address" label="地址" width="300">
+                                <el-table-column prop="address" label="地址" width="">
                                 </el-table-column>
                                 <el-table-column prop="zip" label="邮编" width="120">
                                 </el-table-column>

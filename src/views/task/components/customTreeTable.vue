@@ -303,7 +303,10 @@ export default {
     },
     //王红坤结束
     getItemDate(trIndex, scope) {
+      
+
       var th = this;
+      th.treeTableDV=true
       /* var item = {
         No: 'P15256087592557662',
         bgintime: '2018-05-01',
@@ -318,7 +321,7 @@ export default {
       }()*/
       //
       var p1 = new Promise((resolve, reject) => {
-        th.treeTableDV=true
+        
         queryChildTaskNodeBySystemSerialNo(scope.row.No).then(response => {
           th.treeTableDV = false
           if (response.resBody.length > 0) {
@@ -362,7 +365,10 @@ export default {
       record._expanded = !record._expanded;
     },
     closeItemDate(trIndex, showCount) {
+      //console.log(trIndex+showCount)
+     // debugger
       this.data.splice(trIndex + 1, showCount + 1);
+
     },
     Restrict(item, act) {
       if (act === "add") {
