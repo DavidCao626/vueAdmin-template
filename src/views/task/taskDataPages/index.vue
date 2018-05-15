@@ -119,13 +119,31 @@
             </el-table-column>
             <el-table-column label="用户对象编号" width="120" prop="apply_user_classify_no">
             </el-table-column>
-            <el-table-column label="申请项目编号" width="120" prop="apply_project">
+            <el-table-column label="申请信息">
+              <el-table-column label="申请项目编号" width="120" prop="apply_project">
+              </el-table-column>
+              <el-table-column label="业务类别" width="120" prop="classify_name">
+              </el-table-column>
+              <el-table-column label="申请人机构" width="120" prop="org_name">
+              </el-table-column>
+              <el-table-column label="申请理由" prop="apply_reason">
+              </el-table-column>
             </el-table-column>
-            <el-table-column label="业务类别" width="120" prop="classify_name">
+            <el-table-column label="互评情况">
+              <el-table-column label="同意" width="120" prop="apply_project">
+              </el-table-column>
+              <el-table-column label="不同意" width="120" prop="classify_name">
+              </el-table-column>
             </el-table-column>
-            <el-table-column label="申请人机构" width="120" prop="org_name">
+
+            <el-table-column label="组评结果">
+              <el-table-column label="同意" width="120" prop="apply_project">
+              </el-table-column>
+              <el-table-column label="不同意" width="120" prop="classify_name">
+              </el-table-column>
             </el-table-column>
-            <el-table-column label="申请理由" prop="apply_reason">
+
+            <el-table-column label="操作" width="120" prop="apply_project">
             </el-table-column>
           </el-table>
           <!-- 分页 -->
@@ -141,17 +159,33 @@
 
             <el-table-column label="用户对象编号" width="120" prop="apply_user_classify_no">
             </el-table-column>
-            <el-table-column label="申请项目编号" width="120" prop="apply_project">
+            <el-table-column label="申请信息">
+              <el-table-column label="申请项目编号" width="120" prop="apply_project">
+              </el-table-column>
+              <el-table-column label="申请理由" width="120" prop="apply_reason">
+              </el-table-column>
+              <el-table-column label="申请状态" width="120" prop="apply_status">
+              </el-table-column>
+              <el-table-column label="业务类别" width="120" prop="classify_name">
+              </el-table-column>
+              <el-table-column label="申请人机构" width="120" prop="org_name">
+              </el-table-column>
             </el-table-column>
-            <el-table-column label="申请理由" width="120" prop="apply_reason">
+            <el-table-column label="互评情况">
+              <el-table-column label="同意" width="120" prop="apply_project">
+              </el-table-column>
+              <el-table-column label="不同意" width="120" prop="classify_name">
+              </el-table-column>
             </el-table-column>
-            <el-table-column label="申请状态" width="120" prop="apply_status">
+
+            <el-table-column label="组评结果">
+              <el-table-column label="同意" width="120" prop="apply_project">
+              </el-table-column>
+              <el-table-column label="不同意" width="120" prop="classify_name">
+              </el-table-column>
             </el-table-column>
-            <el-table-column label="业务类别" width="120" prop="classify_name">
-            </el-table-column>
-            <el-table-column label="申请人机构" width="120" prop="org_name">
-            </el-table-column>
-            <el-table-column label="操作时间" width="120" prop="operation_time">
+
+            <el-table-column label="审批时间" width="120" prop="operation_time">
             </el-table-column>
             <el-table-column label="操作" width="190">
               <template slot-scope="scope">
@@ -199,45 +233,45 @@ export default {
       nodeInfo: {},
       dialogTableVisible: false,
       data: [],
-      activeName: 'second',
+      activeName: "second",
       tableDataTodo: [],
       tableDataDone: [],
       multipleSelection: [],
       key: 1, // table key
-      formTheadOptions: ['date', 'name', 'address'],
+      formTheadOptions: ["date", "name", "address"],
       checkboxVal: defaultFormThead, // checkboxVal
       formThead: defaultFormThead // 默认表头 Default header
-    }
+    };
   },
   methods: {
     // 下面是未审核的分页事件
     handleSizeChange(val) {
-      this.pagination.pageSize = val
-      this.queryTodoData()
+      this.pagination.pageSize = val;
+      this.queryTodoData();
     },
     handleCurrentChange(val) {
-      this.pagination.currentPage = val
-      this.queryTodoData()
+      this.pagination.currentPage = val;
+      this.queryTodoData();
     },
     // 下面是已审核的分页事件
     handleSizeChange2(val) {
-      this.pagination2.pageSize = val
-      this.queryDoneData()
+      this.pagination2.pageSize = val;
+      this.queryDoneData();
     },
     handleCurrentChange2(val) {
-      this.pagination2.currentPage = val
-      this.queryDoneData()
+      this.pagination2.currentPage = val;
+      this.queryDoneData();
     },
     handleClose(tag) {
-      this.multipleSelection.splice(this.multipleSelection.indexOf(tag), 1)
+      this.multipleSelection.splice(this.multipleSelection.indexOf(tag), 1);
     },
     toggleSelection(rows) {
       if (rows) {
         rows.forEach(row => {
-          this.$refs.multipleTable.toggleRowSelection(row)
-        })
+          this.$refs.multipleTable.toggleRowSelection(row);
+        });
       } else {
-        this.$refs.multipleTable.clearSelection()
+        this.$refs.multipleTable.clearSelection();
       }
     },
     handleSelectionChange(val) {
@@ -246,7 +280,7 @@ export default {
       console.log(val);
     },
     onSubmit() {
-      if( this.multipleSelection.length == 0){
+      if (this.multipleSelection.length == 0) {
         this.$message.error("您没有选择任何数据!");
         return;
       }
@@ -261,61 +295,61 @@ export default {
         this.approveRecordData.blocks.push(d);
       }
       approveRecord(this.approveRecordData).then(data => {
-         that.approveRecordData.blocks=[];
+        that.approveRecordData.blocks = [];
         that.queryTodoData();
         that.queryDoneData();
       });
     },
     handleClick(tab, event) {
-      console.log(tab, event)
+      console.log(tab, event);
     },
     showVisible() {
-      this.dialogTableVisible = true
+      this.dialogTableVisible = true;
     },
     hideVisible() {
-      this.dialogTableVisible = false
+      this.dialogTableVisible = false;
     },
     queryTodoData() {
-      var that = this
-      var queryTodeConfig = this.pagination
-      queryTodeConfig.nodeNo = this.nodeNo
+      var that = this;
+      var queryTodeConfig = this.pagination;
+      queryTodeConfig.nodeNo = this.nodeNo;
       queryTodo(queryTodeConfig).then(response => {
-        that.tableDataTodo = response.resBody.resultList
-        that.pagination.dataCount = response.resBody.page.totalRecord
-      })
+        that.tableDataTodo = response.resBody.resultList;
+        that.pagination.dataCount = response.resBody.page.totalRecord;
+      });
     },
     queryDoneData() {
-      var that = this
-      var queryDoneConfig = this.pagination2
-      queryDoneConfig.nodeNo = this.nodeNo
+      var that = this;
+      var queryDoneConfig = this.pagination2;
+      queryDoneConfig.nodeNo = this.nodeNo;
       queryDone(queryDoneConfig).then(response => {
-        that.tableDataDone = response.resBody.resultList
-        that.pagination2.dataCount = response.resBody.page.totalRecord
-      })
+        that.tableDataDone = response.resBody.resultList;
+        that.pagination2.dataCount = response.resBody.page.totalRecord;
+      });
     }
   },
   watch: {
     checkboxVal(valArr) {
       this.formThead = this.formTheadOptions.filter(
         i => valArr.indexOf(i) >= 0
-      )
-      this.key = this.key + 1 // 为了保证table 每次都会重渲 In order to ensure the table will be re-rendered each time
+      );
+      this.key = this.key + 1; // 为了保证table 每次都会重渲 In order to ensure the table will be re-rendered each time
     }
   },
   mounted() {
-    var that = this
+    var that = this;
     // 获取节点信息
     var getNodeInfoConfig = {
       nodeNo: this.nodeNo
-    }
+    };
     getNodeInfo(getNodeInfoConfig).then(response => {
-      this.nodeInfo = response.resBody
-    })
-    this.queryTodoData()
-    this.queryDoneData()
+      this.nodeInfo = response.resBody;
+    });
+    this.queryTodoData();
+    this.queryDoneData();
     // --------------------------
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 
