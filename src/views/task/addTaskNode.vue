@@ -34,19 +34,29 @@ export default {
   props: {
     rootNodeNoProp: {
       type: String,
-      default: "P15263734043798326"
+      default: "0"
     },
     parentNodeNoProp: {
       type: String,
-      default: "P15263734043798326"
+      default: "0"
     }
   },
   watch: {
     parentNodeNoProp: function(val, oldval) {
       this.formStore.data.parentNodeNo = val;
+       new Promise((resolve, reject) => {
+      queryChildOrg().then(response => {
+        this.orgList = response.resBody;
+      });
+    });
     },
     rootNodeNoProp: function(val, oldval) {
       this.formStore.data.rootNodeNo = val;
+       new Promise((resolve, reject) => {
+      queryChildOrg().then(response => {
+        this.orgList = response.resBody;
+      });
+    });
     }
   },
   data() {

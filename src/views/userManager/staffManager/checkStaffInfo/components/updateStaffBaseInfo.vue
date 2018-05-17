@@ -114,7 +114,22 @@ export default {
 	      checkFlagData,
 	      iloading
 	    }
-	  },
+		},
+		watch:{
+			bid:function(){
+			var that = this
+	    GUtils.post(dataPath.queryStaffBaseInfoById, {
+	      'id': this.bid
+	    }, function(data) {
+	      formDataStore.pushData(data.resBody)
+	      formDataStore.pushData({
+	        lastUpdateTime: null
+	      })
+	      delete formDataStore.data['lastUpdateTime']
+	    })
+			}
+		},
+
 	  methods: {
 	    submitForm: function() {
 	      var that = this

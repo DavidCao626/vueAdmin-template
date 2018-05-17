@@ -18,7 +18,7 @@
         <updateTaskFacade :rootNodeNoProp="rootNodeNo" :parentNodeNoProp="parentNodeNo"></updateTaskFacade>
       </el-dialog>
       <el-dialog v-el-drag-dialog title="新增约束" :visible.sync="dialogTableVisibleAddRestrict">
-        <addTaskNodeRestrict :rootNodeNoProp="rootNodeNo" :parentNodeNoProp="parentNodeNo"></addTaskNodeRestrict>
+        <addTaskNodeRestrict :nodeNoProp="systemSerialNo"></addTaskNodeRestrict>
       </el-dialog>
       <el-dialog v-el-drag-dialog title="修改约束" :visible.sync="dialogTableVisibleUpdateRestrict">
         <updateTaskNodeRestrict :rootNodeNoProp="rootNodeNo" :parentNodeNoProp="parentNodeNo"></updateTaskNodeRestrict>
@@ -244,6 +244,7 @@ export default {
           timeLine: 45,
           bgintime: element.planStartTime,
           endtime: element.planCompleteTime,
+            rootNodeNo:element.rootNodeNo,
           _expanded: false
         };
         // debugger
@@ -277,6 +278,7 @@ export default {
               timeLine: 84,
               bgintime: element.planStartTime,
               endtime: element.planCompleteTime,
+              rootNodeNo:element.rootNodeNo,
               _expanded: false
             };
             if (element.isLeafNode === "N") {
@@ -300,6 +302,7 @@ export default {
     mParticipant(item) {
       //分配参与者
       this.systemSerialNo = item.No;
+      alert("eqweqwe"+this.systemSerialNo)
       this.dialogTableVisibleMParticipant = true;
     },
     //王红坤结束
@@ -372,13 +375,14 @@ export default {
 
     },
     Restrict(item, act) {
+      alert(item.No)
       if (act === "add") {
-        this.rootNodeNo = item.rootNodeNo;
-        this.parentNodeNo = item.parentNodeNo;
+        this.systemSerialNo = item.No;
+        //this.parentNodeNo = item.parentNodeNo;
         this.dialogTableVisibleAddRestrict = true;
       } else {
-        this.rootNodeNo = item.rootNodeNo;
-        this.parentNodeNo = item.parentNodeNo;
+         this.systemSerialNo = item.No;
+        //this.parentNodeNo = item.parentNodeNo;
         this.dialogTableVisibleUpdateRestrict = true;
       }
     },
@@ -396,6 +400,7 @@ export default {
         this.dynamicView = addTaskNode;
         this.dialogShow = true;
         this.dialogTitle = "新建任务";
+        //alert(item.rootNodeNo)
       } else if (act === "facade") {
         this.dynamicView = addTaskFacade;
         this.dialogShow = true;

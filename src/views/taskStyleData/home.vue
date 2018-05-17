@@ -36,12 +36,13 @@ export default {
   },
   methods: {
     submit() {
-      alert(this.$route.query.id)
+     // alert(this.$route.query.pno)
       var fromData = this.taskStyleData.fromData
 
       this.$store
         .dispatch('addData', {
-          facadeSequenece: this.$route.query.id,
+         facadeSequenece: this.$route.query.pno,
+          //facadeSequenece:'F201805181037237082170',
           unitBeans: [
             { unitCode: fromData.family.unitCode, mapBean: fromData.family.data },
             { unitCode: fromData.projectApply.unitCode, mapBean: fromData.projectApply.data }
