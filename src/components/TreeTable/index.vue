@@ -71,12 +71,13 @@ export default {
     },
     // 切换下级是否展开
     toggleExpanded: function(trIndex, scope) {
+        //debugger
       if (!scope.row._expanded) {
         this.$emit('getItemDate', trIndex, scope)
       } else {
-        if (this.showIndex > 0) {
+        //if (this.showIndex > 0) {
           this.$emit('closeItemDate', trIndex, this.showIndex)
-        }
+       // }
 
         scope.row._expanded = false
       }

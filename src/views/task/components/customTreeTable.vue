@@ -35,7 +35,8 @@
 
     </div>
 
-    <tree-table v-loading="treeTableDV" @getItemDate="getItemDate" @closeItemDate="closeItemDate" :showIndex="showIndex" :data="data" :evalFunc="func" :columns="columns" :evalArgs="args" :expandAll="expandAll" border>
+    <tree-table v-loading="treeTableDV" @getItemDate="getItemDate" @closeItemDate="closeItemDate" 
+    :showIndex="showIndex" :data="data" :evalFunc="func" :columns="columns" :evalArgs="args" :expandAll="expandAll" >
 
       <el-table-column label="完成进度" width="100">
         <template slot-scope="scope">
@@ -51,7 +52,7 @@
         <template slot-scope="scope">
           <el-dropdown size="medium" trigger="click">
 
-            <span class="el-dropdown-link" style="margin-left: 15px;">
+            <span class="el-dropdown-link" >
 
               <el-button type="text" plain size="small">
                 创建
@@ -93,7 +94,7 @@
           <el-tooltip class="item" effect="dark" content="分配参与者" placement="bottom">
             <el-button type="text" plain @click="mParticipant(scope.row)" size="small">
               参与者
-              <i class="el-icon-news el-icon--right"></i>
+              <!-- <i class="el-icon-news el-icon--right"></i> -->
             </el-button>
           </el-tooltip>
         </template>
@@ -106,11 +107,12 @@
           <el-tooltip class="item" effect="dark" content="启动" placement="bottom">
             <el-button type="text" @click="Start(scope.row)" size="small">
               启动
-              <i class="el-icon-caret-right el-icon--right"></i>
+              <i class="el-icon-caret-right"></i>
             </el-button>
           </el-tooltip>
+         
           <el-tooltip class="item" effect="dark" content="停止" placement="bottom">
-            <el-button type="text" @click="stop(scope.row)" size="small" style="margin-left: 0px;">
+            &nbsp;&nbsp; <el-button type="text" @click="stop(scope.row)" size="small" style="margin-left: 0px;">
               停止
               <i class="el-icon-check el-icon--right"></i>
             </el-button>
@@ -261,6 +263,7 @@ export default {
       new Promise((resolve, reject) => {
         this.treeTableDV = true
         queryNodeByLiblerld().then(response => {
+          this.treeTableDV = false;
           var l = [];
           this.$emit("dataCount", response.resBody.dataCount);
           response.resBody.data.forEach(element => {
@@ -289,7 +292,7 @@ export default {
           var ls = this.data.concat(l)
           this.data = ls
         })
-      })
+      }).catch(error=>{this.treeTableDV = false})
     }
   },
   methods: {
@@ -301,7 +304,10 @@ export default {
     },
     //王红坤结束
     getItemDate(trIndex, scope) {
+      
+
       var th = this;
+      th.treeTableDV=true
       /* var item = {
         No: 'P15256087592557662',
         bgintime: '2018-05-01',
@@ -316,7 +322,7 @@ export default {
       }()*/
       //
       var p1 = new Promise((resolve, reject) => {
-        th.treeTableDV=true
+        
         queryChildTaskNodeBySystemSerialNo(scope.row.No).then(response => {
           th.treeTableDV = false
           if (response.resBody.length > 0) {
@@ -360,7 +366,10 @@ export default {
       record._expanded = !record._expanded;
     },
     closeItemDate(trIndex, showCount) {
+      //console.log(trIndex+showCount)
+     // debugger
       this.data.splice(trIndex + 1, showCount + 1);
+
     },
     Restrict(item, act) {
       if (act === "add") {
