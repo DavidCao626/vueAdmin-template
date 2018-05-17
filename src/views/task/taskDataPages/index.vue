@@ -134,12 +134,16 @@
               </el-table-column>
               <el-table-column label="不同意" width="120" prop="classify_name">
               </el-table-column>
+              <el-table-column label="支持率" width="120" prop="classify_name">
+              </el-table-column>
             </el-table-column>
 
             <el-table-column label="组评结果">
               <el-table-column label="同意" width="120" prop="apply_project">
               </el-table-column>
               <el-table-column label="不同意" width="120" prop="classify_name">
+              </el-table-column>
+              <el-table-column label="支持率" width="120" prop="classify_name">
               </el-table-column>
             </el-table-column>
 
@@ -162,7 +166,7 @@
             <el-table-column label="申请信息">
               <el-table-column label="申请项目编号" width="120" prop="apply_project">
               </el-table-column>
-              <el-table-column label="申请理由" width="120" prop="apply_reason">
+              <el-table-column label="申请理由"  prop="apply_reason">
               </el-table-column>
               <el-table-column label="申请状态" width="120" prop="apply_status">
               </el-table-column>
@@ -176,12 +180,16 @@
               </el-table-column>
               <el-table-column label="不同意" width="120" prop="classify_name">
               </el-table-column>
+                <el-table-column label="支持率" width="120" prop="classify_name">
+              </el-table-column>
             </el-table-column>
 
             <el-table-column label="组评结果">
               <el-table-column label="同意" width="120" prop="apply_project">
               </el-table-column>
               <el-table-column label="不同意" width="120" prop="classify_name">
+              </el-table-column>
+              <el-table-column label="支持率" width="120" prop="classify_name">
               </el-table-column>
             </el-table-column>
 

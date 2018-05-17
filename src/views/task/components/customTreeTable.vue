@@ -54,9 +54,9 @@
 
             <span class="el-dropdown-link" >
 
-              <el-button type="text" plain size="small">
+              <el-button type="text"  size="medium">
                 创建
-                <i class="el-icon-arrow-down el-icon--right"></i>
+                <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
               </el-button>
             </span>
             <el-dropdown-menu slot="dropdown">
@@ -65,15 +65,15 @@
             </el-dropdown-menu>
           </el-dropdown>
           <el-tooltip class="item" effect="dark" content="修改" placement="bottom">
-            <el-button type="text" plain @click="updateDialog(scope.row,'P')" size="small"> 修改
-              <i class="el-icon-edit el-icon--right"></i>
+            <el-button type="text"  @click="updateDialog(scope.row,'P')" size="medium"> 修改
+              <!-- <i class="el-icon-edit el-icon--right"></i> -->
             </el-button>
           </el-tooltip>
 
           <el-dropdown size="medium" trigger="click">
 
             <span class="el-dropdown-link" style="">
-              <el-button type="text" plain size="small">
+              <el-button type="text"  size="medium">
                 配置
                 <!-- <i class="el-icon-setting el-icon--right"></i> -->
               </el-button>
@@ -92,7 +92,7 @@
 
           <!-- 王红坤 -->
           <el-tooltip class="item" effect="dark" content="分配参与者" placement="bottom">
-            <el-button type="text" plain @click="mParticipant(scope.row)" size="small">
+            <el-button type="text" plain @click="mParticipant(scope.row)" size="medium">
               参与者
               <!-- <i class="el-icon-news el-icon--right"></i> -->
             </el-button>
@@ -107,14 +107,14 @@
           <el-tooltip class="item" effect="dark" content="启动" placement="bottom">
             <el-button type="text" @click="Start(scope.row)" size="small">
               启动
-              <i class="el-icon-caret-right"></i>
+             
             </el-button>
           </el-tooltip>
          
           <el-tooltip class="item" effect="dark" content="停止" placement="bottom">
             &nbsp;&nbsp; <el-button type="text" @click="stop(scope.row)" size="small" style="margin-left: 0px;">
-              停止
-              <i class="el-icon-check el-icon--right"></i>
+   停止
+                       <!--   <i class="el-icon-check el-icon--right"></i> -->
             </el-button>
           </el-tooltip>
 
