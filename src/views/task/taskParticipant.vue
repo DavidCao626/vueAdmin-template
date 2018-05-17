@@ -82,6 +82,14 @@ export default {
             reject(error);
           });
       });
+        var that = this;
+    getTaskParticipantB({
+      systemSerialNo: that.systemSerialNo
+    }).then(response => {
+      if (response.resBody != null && response.resBody.length != 0) {
+        that.valueItem = response.resBody.paritcis;
+      }
+    });
     }
   },
   components: {

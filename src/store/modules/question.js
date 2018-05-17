@@ -328,8 +328,8 @@ const actions = {
   saveForm(commit) {
     var data = state.qss
     console.log(data)
-    data['content_type'] = 'application/json'
-    Utils.post(qusApi.add, data, function(data) {
+   // data['content_type'] = 'application/json'
+    Utils.requestBody(qusApi.add, data, function(data) {
       console.log(data)
       // debugger
       alert('添加成功,任务代号：' + data.resBody.taskCode)
