@@ -256,7 +256,7 @@ export function queryChildService(param) {
     method: 'post',
     data: param
   })
-  
+
 }
 export function submitProjectApplySurface(param) {
   return ajax({
