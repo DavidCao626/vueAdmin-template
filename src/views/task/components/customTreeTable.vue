@@ -74,8 +74,8 @@
 
             <span class="el-dropdown-link" style="">
               <el-button type="text" plain size="small">
-                约束
-                <i class="el-icon-setting el-icon--right"></i>
+                配置
+                <!-- <i class="el-icon-setting el-icon--right"></i> -->
               </el-button>
             </span>
             <el-dropdown-menu slot="dropdown">
