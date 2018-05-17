@@ -5,12 +5,13 @@
 
 			<div class="panel-body">
 				<el-form size="mini" :model="formStore.data" ref='form1' :rules='formStore.rules' label-width="80px">
-					<el-form-item label="项目名称" prop="nodeTitle">
-						<el-input size="mini" v-model="formStore.data.nodeTitle" placeholder="请输入项目名称"></el-input>
-					</el-form-item>
+					 <el-form-item label="项目名称" prop="projectName">
+						<el-input size="mini" v-model="formStore.data.projectName" placeholder="请输入项目名称"></el-input>
+					</el-form-item
+          ><!--
 					<el-form-item label="节点描述" prop="nodeDesc">
 						<el-input size="mini" v-model="formStore.data.nodeDesc" placeholder="请输入节点标题"></el-input>
-					</el-form-item>
+					</el-form-item> -->
 					<el-form-item label="计划开始时间" prop="planStartTime">
 						<el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="formStore.data.planStartTime" type="date" placeholder="计划开始时间">
 						</el-date-picker>
@@ -50,16 +51,18 @@ export default {
     return {
       formStore: {
         data: {
-          nodeTitle: '', // 节点标题
-          nodeDesc: '', // 节点描述
+          // nodeTitle: '', // 节点标题
+          // nodeDesc: '', // 节点描述
+          projectName:"",
           planStartTime: '', // 计划开始时间
           planCompleteTime: '', // 计划完成时间
           projectNo: '', // 项目编号
           serviceTypeCode: '' // 业务类别
         },
         rules: {
-          nodeTitle: [], // 节点标题
-          nodeDesc: [], // 节点描述
+          // nodeTitle: [], // 节点标题
+          // nodeDesc: [], // 节点描述
+          projectName:[],
           planStartTime: [], // 计划开始时间
           planCompleteTime: [], // 计划完成时间
           projectNo: [], // 项目编号

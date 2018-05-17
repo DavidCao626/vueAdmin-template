@@ -263,6 +263,7 @@ export default {
       new Promise((resolve, reject) => {
         this.treeTableDV = true
         queryNodeByLiblerld().then(response => {
+          this.treeTableDV = false;
           var l = [];
           this.$emit("dataCount", response.resBody.dataCount);
           response.resBody.data.forEach(element => {
@@ -291,7 +292,7 @@ export default {
           var ls = this.data.concat(l)
           this.data = ls
         })
-      })
+      }).catch(error=>{this.treeTableDV = false})
     }
   },
   methods: {

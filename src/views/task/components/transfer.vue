@@ -24,14 +24,14 @@
 </template>
 
 <script>
-import ElButton from 'element-ui/packages/button'
-import Emitter from 'element-ui/src/mixins/emitter'
-import Locale from 'element-ui/src/mixins/locale'
-import TransferPanel from './transfer-panel.vue'
-import Migrating from 'element-ui/src/mixins/migrating'
+import ElButton from "element-ui/packages/button";
+import Emitter from "element-ui/src/mixins/emitter";
+import Locale from "element-ui/src/mixins/locale";
+import TransferPanel from "./transfer-panel.vue";
+import Migrating from "element-ui/src/mixins/migrating";
 
 export default {
-  name: 'ElTransfer',
+  name: "ElTransfer",
 
   mixins: [Emitter, Locale, Migrating],
 
@@ -41,61 +41,65 @@ export default {
   },
 
   props: {
+    operation: {
+      type: Object
+    },
+
     transferHeight: {
       type: Number
     },
     data: {
       type: Array,
       default() {
-        return []
+        return [];
       }
     },
     valueItems: {
       type: Array,
       default() {
-        return []
+        return [];
       }
     },
     titles: {
       type: Array,
       default() {
-        return []
+        return [];
       }
     },
     buttonTexts: {
       type: Array,
       default() {
-        return []
+        return [];
       }
     },
     filterPlaceholder: {
       type: String,
-      default: ''
+      default: ""
     },
     filterMethod: Function,
     leftDefaultChecked: {
       type: Array,
       default() {
-        return []
+        return [];
       }
     },
     rightDefaultChecked: {
       type: Array,
       default() {
-        return []
+        return [];
       }
     },
     renderContent: Function,
     value: {
       type: Array,
       default() {
-        return []
+        return [];
       }
     },
     format: {
       type: Object,
       default() {
-        return {}
+        return {};
       }
     },
     filterable: Boolean,
@@ -103,10 +107,10 @@ export default {
       type: Object,
       default() {
         return {
-          label: 'label',
-          key: 'key',
-          disabled: 'disabled'
-        }
+          label: "label",
+          key: "key",
+          disabled: "disabled"
+        };
       }
     }
   },
@@ -115,28 +119,28 @@ export default {
     return {
       leftChecked: [],
       rightChecked: []
-    }
+    };
   },
 
   computed: {
     sourceData() {
-      return this.data
+      return this.data;
     },
 
     targetData() {
       // this.data.filter(item => this.value.indexOf(item[this.props.key]) > -1);
 
-      return this.valueItems
+      return this.valueItems;
     },
 
     hasButtonTexts() {
-      return this.buttonTexts.length === 2
+      return this.buttonTexts.length === 2;
     }
   },
 
   watch: {
     value(val) {
-      this.dispatch('ElFormItem', 'el.form.change', val)
+      this.dispatch("ElFormItem", "el.form.change", val);
     }
   },
 
@@ -144,71 +148,76 @@ export default {
     getMigratingConfig() {
       return {
         props: {
-          'footer-format': 'footer-format is renamed to format.'
+          "footer-format": "footer-format is renamed to format."
         }
-      }
+      };
     },
 
     onSourceCheckedChange(val) {
-      this.leftChecked = val
+      this.leftChecked = val;
     },
 
     onTargetCheckedChange(val) {
-      this.rightChecked = val
+      this.rightChecked = val;
     },
 
     addToLeft() {
-      const currentValue = this.value.slice()
+      const currentValue = this.value.slice();
       this.rightChecked.forEach(item => {
-        const index = currentValue.indexOf(item)
+        const index = currentValue.indexOf(item);
         if (index > -1) {
-          currentValue.splice(index, 1)
+          currentValue.splice(index, 1);
         }
-      })
-      this.$emit('input', currentValue)
-      this.$emit('change', currentValue, 'left', this.rightChecked)
+      });
+      this.$emit("input", currentValue);
+      this.$emit("change", currentValue, "left", this.rightChecked);
     },
     getItemFromData(key) {
-      const t = this
-      let a
+      const t = this;
+      let a;
       this.data.forEach(item => {
         if (item[t.props.key] === key) {
-          a = item
-          return
+          a = item;
+          return;
         }
-      })
-      return a
+      });
+      return a;
     },
     delitem() {
-      var currentValue = this.value.slice()
-      var that = this
+      var items = [];
+      var currentValue = this.value.slice();
+      var that = this;
       this.rightChecked.forEach(function(item, index) {
-        var s = -1
+        var s = -1;
         if ((s = currentValue.indexOf(item)) > -1) {
-          currentValue.splice(s, 1)
-          that.valueItems.splice(s, 1)
+          currentValue.splice(s, 1);
+          that.valueItems.splice(s, 1);
+             items.push(that.getItemFromData(item));
         }
-      })
-      this.rightChecked = []
-      this.$emit('input', currentValue)
-      this.$emit('change', currentValue, 'delitem', this.leftChecked)
+      });
+         var result = this.operation.remove.call(this.$parent, items);
+         items=[]
+      this.rightChecked = [];
+      this.$emit("input", currentValue);
+      this.$emit("change", currentValue, "delitem", this.leftChecked);
     },
     addToRight() {
-      let currentValue = this.value.slice()
+      console.log(["zthis",this]);
+       var items = [];
+      let currentValue = this.value.slice();
+       var that = this;
       this.leftChecked.forEach(item => {
         if (this.value.indexOf(item) === -1) {
-          this.valueItems.push(this.getItemFromData(item))
-          currentValue = currentValue.concat(item)
+          this.valueItems.push(that.getItemFromData(item));
+          currentValue = currentValue.concat(item);
+          items.push(this.getItemFromData(item));
         }
-      })
-      // const r = this.data.filter(item => currentValue.indexOf(item[this.props.key]) > -1)
-      // var t = this
-      // r.forEach(function(ritem) {
-      //   t.valueItems.push(ritem)
-      // })
-      this.$emit('input', currentValue)
-      this.$emit('change', currentValue, 'right', this.leftChecked)
+      });
+        var result = this.operation.add.call(this.$parent, items);
+        items=[]
+      this.$emit("input", currentValue);
+      this.$emit("change", currentValue, "right", this.leftChecked);
     }
   }
-}
+};
 </script>

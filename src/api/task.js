@@ -256,11 +256,34 @@ export function queryChildService(param) {
     method: 'post',
     data: param
   })
+
 }
 export function submitProjectApplySurface(param) {
   return ajax({
     url: '/taskRecord/submitProjectApplySurface.do',
     method: 'post',
     data: param
+  })
+} 
+export function deleteTaskParticipant(param) {
+  return ajax({
+    url: '/task/deleteTaskParticipant.do',
+    method: 'post',
+    data: param
+  })
+}
+
+export function queryAlltaskDefFacade(param) {
+  return request({
+    url: '/task/queryAlltaskDefFacade.do',
+    method: 'post',
+    data: param
+  })
+}
+
+export function queryChildOrg() {
+  return request({
+    url: '/task/queryChildOrg.do',
+    method: 'post'
   })
 }
