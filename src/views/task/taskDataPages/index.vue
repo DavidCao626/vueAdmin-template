@@ -96,11 +96,12 @@
         <el-tab-pane label="待审核数据" name="second">
           <!-- 表格列内容伸缩 -->
           <div class="filter-container" style="float:right;">
-            <!-- <el-checkbox-group v-model="checkboxVal">
-              <el-checkbox label="user_object_name">用户类别</el-checkbox> 
-              <el-checkbox label="apply_status">申请状态</el-checkbox>
-              <el-checkbox label="org_name">申请人机构</el-checkbox>
-            </el-checkbox-group> -->
+            <el-checkbox-group v-model="checkboxVal">
+              <el-checkbox label="apply_user_classify_no">用户对象编号</el-checkbox> 
+              <el-checkbox label="apply_info">申请信息</el-checkbox>
+              <el-checkbox label="huping_info">互评情况</el-checkbox>
+               <el-checkbox label="zuping_info">组评情况</el-checkbox>
+            </el-checkbox-group> 
           </div>
           <!-- 按钮区域 -->
           <div style="margin-bottom:10px;">
@@ -119,17 +120,17 @@
             </el-table-column>
             <el-table-column label="用户对象编号" width="120" prop="apply_user_classify_no">
             </el-table-column>
-            <el-table-column label="申请信息">
+            <el-table-column label="申请信息" prop="apply_info">
               <el-table-column label="申请项目编号" width="120" prop="apply_project">
               </el-table-column>
               <el-table-column label="业务类别" width="120" prop="classify_name">
               </el-table-column>
               <el-table-column label="申请人机构" width="120" prop="org_name">
               </el-table-column>
-              <el-table-column label="申请理由" prop="apply_reason">
+              <el-table-column label="申请理由" prop="F15268161353002809-201807.data.applyReason">
               </el-table-column>
             </el-table-column>
-            <el-table-column label="互评情况">
+            <el-table-column label="互评情况" prop="huping_info">
               <el-table-column label="同意" width="120" prop="apply_project">
               </el-table-column>
               <el-table-column label="不同意" width="120" prop="classify_name">
@@ -138,7 +139,7 @@
               </el-table-column>
             </el-table-column>
 
-            <el-table-column label="组评结果">
+            <el-table-column label="组评结果" prop="zuping_info">
               <el-table-column label="同意" width="120" prop="apply_project">
               </el-table-column>
               <el-table-column label="不同意" width="120" prop="classify_name">
@@ -221,7 +222,7 @@ import {
 } from "~/api/taskData";
 import { ProjectProgress } from "~/views/task/components/Progress";
 import elDragDialog from "~/directive/el-dragDialog"; // base on element-ui
-const defaultFormThead = ["date", "name"];
+const defaultFormThead = ["apply_user_classify_no", "apply_info", "huping_info", "zuping_info"];
 
 export default {
   directives: { elDragDialog },
@@ -242,11 +243,16 @@ export default {
       dialogTableVisible: false,
       data: [],
       activeName: "second",
-      tableDataTodo: [],
+      tableDataTodo: [ {
+          apply_user_classify_no: 'fruit-1',
+          apply_info: 'apple-10',
+          huping_info: 'banana-10',
+          zuping_info: 'orange-10'
+        }],
       tableDataDone: [],
       multipleSelection: [],
       key: 1, // table key
-      formTheadOptions: ["date", "name", "address"],
+      formTheadOptions: ["apply_user_classify_no", "apply_info"],
       checkboxVal: defaultFormThead, // checkboxVal
       formThead: defaultFormThead // 默认表头 Default header
     };
