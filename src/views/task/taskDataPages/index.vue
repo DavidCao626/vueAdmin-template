@@ -94,15 +94,6 @@
       </div>
       <el-tabs v-model="activeName" @tab-click="handleClick" tabPosition="top" type="border-card">
         <el-tab-pane label="待审核数据" name="second">
-          <!-- 表格列内容伸缩 -->
-          <div class="filter-container" style="float:right;">
-            <el-checkbox-group v-model="checkboxVal">
-              <el-checkbox label="apply_user_classify_no">用户对象编号</el-checkbox> 
-              <el-checkbox label="apply_info">申请信息</el-checkbox>
-              <el-checkbox label="huping_info">互评情况</el-checkbox>
-               <el-checkbox label="zuping_info">组评情况</el-checkbox>
-            </el-checkbox-group> 
-          </div>
           <!-- 按钮区域 -->
           <div style="margin-bottom:10px;">
             <!-- <el-button  type="default" class="el-icon-circle-chec" plain @click="toggleSelection([tableData3[1], tableData3[2]])">
@@ -115,42 +106,15 @@
           <div class="clearfix"></div>
 
           <!-- 数据表 -->
-          <el-table ref="multipleTable" :data="tableDataTodo" tooltip-effect="dark" style="width: 100%" :key='key' fit highlight-current-row @selection-change="handleSelectionChange">
-            <el-table-column type="selection" width="50">
-            </el-table-column>
-            <el-table-column label="用户对象编号" width="120" prop="apply_user_classify_no">
-            </el-table-column>
-            <el-table-column label="申请信息" prop="apply_info">
-              <el-table-column label="申请项目编号" width="120" prop="apply_project">
-              </el-table-column>
-              <el-table-column label="业务类别" width="120" prop="classify_name">
-              </el-table-column>
-              <el-table-column label="申请人机构" width="120" prop="org_name">
-              </el-table-column>
-              <el-table-column label="申请理由" prop="F15268161353002809-201807.data.applyReason">
-              </el-table-column>
-            </el-table-column>
-            <el-table-column label="互评情况" prop="huping_info">
-              <el-table-column label="同意" width="120" prop="apply_project">
-              </el-table-column>
-              <el-table-column label="不同意" width="120" prop="classify_name">
-              </el-table-column>
-              <el-table-column label="支持率" width="120" prop="classify_name">
-              </el-table-column>
-            </el-table-column>
+          <dynamicTable :data="tableDataTodo" :tableHeader="tableHeader" isdynamic style="width: 100%">
+              <el-table-column label="操作" width="155">
+                 <template slot-scope="scope">
+                    <el-button size="medium" type="text" class="el-icon-arrow-right" > 详情</el-button>
+                </template>
+             </el-table-column>
+          </dynamicTable>
 
-            <el-table-column label="组评结果" prop="zuping_info">
-              <el-table-column label="同意" width="120" prop="apply_project">
-              </el-table-column>
-              <el-table-column label="不同意" width="120" prop="classify_name">
-              </el-table-column>
-              <el-table-column label="支持率" width="120" prop="classify_name">
-              </el-table-column>
-            </el-table-column>
-
-            <el-table-column label="操作" width="120" prop="apply_project">
-            </el-table-column>
-          </el-table>
+         
           <!-- 分页 -->
           <div style="margin-top: 20px">
             <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pagination.currentPage" :page-sizes="[10, 50, 100, 200]" :page-size="pagination.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pagination.dataCount">
@@ -222,11 +186,11 @@ import {
 } from "~/api/taskData";
 import { ProjectProgress } from "~/views/task/components/Progress";
 import elDragDialog from "~/directive/el-dragDialog"; // base on element-ui
-const defaultFormThead = ["apply_user_classify_no", "apply_info", "huping_info", "zuping_info"];
+import dynamicTable from "~/components/DynamicTable"; // base on element-ui
 
 export default {
   directives: { elDragDialog },
-  components: { ProjectProgress },
+  components: { ProjectProgress,dynamicTable },
   data() {
     return {
       nodeNo: this.$route.query.nodeNoProp, //----这是传过来的节点编号
@@ -251,10 +215,56 @@ export default {
         }],
       tableDataDone: [],
       multipleSelection: [],
-      key: 1, // table key
-      formTheadOptions: ["apply_user_classify_no", "apply_info"],
-      checkboxVal: defaultFormThead, // checkboxVal
-      formThead: defaultFormThead // 默认表头 Default header
+
+      tableHeader:[
+        {
+          label: "用户对象编号",
+          width: 120,
+          prop: "apple",
+          children: []
+        },
+        {
+          label: "互评情况",
+          prop: "huping_info",
+          children: [
+            {
+              label: "同意",
+              width: 120,
+              prop: "huping_ok"
+            },
+            {
+              label: "不同意",
+              width: 120,
+              prop: "huping_no"
+            },
+            {
+              label: "支持率",
+              width: 120,
+              prop: "huping_percentage"
+            }
+          ]
+        },{
+          label: "组评情况",
+          prop: "zuping_info",
+          children: [
+            {
+              label: "同意",
+              width: 120,
+              prop: "zuping_ok"
+            },
+            {
+              label: "不同意",
+              width: 120,
+              prop: "zuping_no"
+            },
+            {
+              label: "支持率",
+              width: 120,
+              prop: "zuping_percentage"
+            }
+          ]
+        }
+      ]
     };
   },
   methods: {
