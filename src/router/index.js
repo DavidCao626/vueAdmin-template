@@ -100,6 +100,11 @@ export const constantRouterMap = [
         component: () => import("~/views/question/components/show")
       },
       {
+        path: "showTask",
+        name: "填表task",
+        component: () => import("~/views/question/components/showTask")
+      },
+      {
         path: "results",
         name: "展现问卷结果",
         component: () => import("~/views/question/components/results")

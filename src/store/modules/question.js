@@ -340,9 +340,9 @@ const actions = {
   initQuuestion(commit) {
     const ls = localStorage.getItem('taskCode')
 
-    if (!ls || ls) {
-      alert('你还没taskcode！')
-      return
+    if (!ls || ls === undefined) {
+      alert("你还没taskcode！");
+      return;
     }
     var data = [{ taskCode: ls }]
     data['content_type'] = 'application/json'

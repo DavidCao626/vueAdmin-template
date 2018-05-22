@@ -1,32 +1,63 @@
 <template>
-	<div class="question-box">
-		<div class="question-show">
-			<item :isShow="1">
+
+  <div class="question-box">
+    <div class="question-show">
+     	<item :isShow="1">
 
 			</item>
-		</div>
-	</div>
+
+    </div>
+
+  </div>
 
 </template>
 
 <script>
-import Item from './question/edit/custom-question-item.vue'
+import Item from "./question/edit/custom-question-item.vue";
 export default {
-  name: 'question-show',
+  name: "question-show",
   data() {
-    return {}
+    return {
+      tableData6: [
+        {
+          id: "12987122",
+          name: "王小虎",
+          amount3: []
+        },
+        {
+          id: "12987123",
+          name: "王小虎",
+          amount3: []
+        },
+        {
+          id: "12987124",
+          name: "王小虎",
+          amount3: []
+        },
+        {
+          id: "12987125",
+          name: "王小虎",
+          amount3: []
+        },
+        {
+          id: "12987126",
+          name: "王小虎",
+          amount3: []
+        }
+      ]
+    };
   },
   mounted: function() {
     // ajax初始化灌入数据
-    this.$store.dispatch('initQuuestion')
+    this.$store.dispatch("initQuuestion");
   },
   components: {
     Item
   }
-}
+};
 </script>
-<style scoped>
-.question-box {
+<style scoped lang="scss">
+· .question-box {
   height: 100vh;
   background-image: url(https://image.wjx.cn/images/newimg/wjx-exam/webchat/new/banner-wechat-ks.jpg);
   background-size: cover;
@@ -36,5 +67,7 @@ export default {
   padding: 15vh;
   width: 90vh;
   margin: 0 auto;
+}
+.showStyleTable {
 }
 </style>
