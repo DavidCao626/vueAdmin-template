@@ -38,6 +38,7 @@ export default {
   },
   watch:{
     nodeNoProp(val,oldval){
+      alert(val)
       this.formStore.data.nodeNo = val;
 
         var dictData = {
@@ -51,7 +52,7 @@ export default {
     })
 
     var queryChildData = {
-      systemSerialNo: this.nodeNo
+      systemSerialNo: this.nodeNoProp
     }
     new Promise((resolve, reject) => {
       querySameNodeBySystemSerialNo(queryChildData).then(response => {
@@ -111,7 +112,7 @@ export default {
     })
 
     var queryChildData = {
-      systemSerialNo: this.nodeNo
+      systemSerialNo: this.formStore.data.nodeNo
     }
     new Promise((resolve, reject) => {
       querySameNodeBySystemSerialNo(queryChildData).then(response => {

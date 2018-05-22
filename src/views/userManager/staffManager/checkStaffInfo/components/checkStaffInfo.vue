@@ -3,12 +3,12 @@
 		<el-card class="boxCard">
 			<el-collapse v-model="activeNames">
 				<el-collapse-item title="基本信息" name="1">
-					 <update-staff-base-info :bid="baseInfoBid"></update-staff-base-info>
+					<update-staff-base-info :bid="baseInfoBid"></update-staff-base-info>
 				</el-collapse-item>
 				<el-collapse-item title="在校信息" name="2">
-					 <update-staff-university-info :bid="universityInfoBid"></update-staff-university-info>
+					<update-staff-university-info :bid="universityInfoBid"></update-staff-university-info>
 				</el-collapse-item>
-	
+
 			</el-collapse>
 			<div class="but">
 				<br/>
@@ -22,91 +22,117 @@
 		<el-dialog title="审核信息" :visible.sync="checkCommentDV" width="40vw" top="5vh">
 			<el-input type="textarea" resize="none" :rows="rows" v-model="checkComment"></el-input>
 			<span slot="footer" class="dialog-footer">
-						<el-button size="small" @click="checkFun">确定</el-button>
-				    <el-button size="small" @click="checkCommentDV = false">取消</el-button>
-  				</span>
+				<el-button size="small" @click="checkFun">确定</el-button>
+				<el-button size="small" @click="checkCommentDV = false">取消</el-button>
+			</span>
 		</el-dialog>
 
 	</div>
 </template>
 
 <script>
-	import Vue from 'vue'
-	import Element from 'element-ui'
-	import '@/theme/index.css'
-	import VueExpand from '@/components/VueExpand'
-	Vue.use(Element)
-Vue.use(VueExpand)
-import GUtils from '@/components/Utils.js'
-	import GStoreFactory from '@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js'
-	import GraceComponent from '@/ComponentPackage/GraceComponents.js'
-	import dataPath from '@/API/Staff/staff_info_manager.js'
-	Vue.use(GraceComponent)
-import updateStaffBaseInfo from './updateStaffBaseInfo.vue'
-	import updateStaffUniversityInfo from './updateStaffUniversityInfo.vue'
-	
-	// 这四个参数是传来的
-	var baseInfoBid = '0'
-var universityInfoBid = '0'
-var staffCode = '0'
-var loginName = '0'
+import Vue from "vue";
+import Element from "element-ui";
+import "@/theme/index.css";
+import VueExpand from "@/components/VueExpand";
+Vue.use(Element);
+Vue.use(VueExpand);
+import GUtils from "@/components/Utils.js";
+import GStoreFactory from "@/ElementDataFactory/ComponentStoreFactoryRelase1.0.js";
+import GraceComponent from "@/ComponentPackage/GraceComponents.js";
+import dataPath from "@/API/Staff/staff_info_manager.js";
+Vue.use(GraceComponent);
+import updateStaffBaseInfo from "./updateStaffBaseInfo.vue";
+import updateStaffUniversityInfo from "./updateStaffUniversityInfo.vue";
 
-var ckParams = {}
-ckParams.baseInfoBid = ''
-ckParams.universityInfoBid = ''
-ckParams.staffCode = ''
-ckParams.loginName = ''
+// 这四个参数是传来的
+var baseInfoBid = "0";
+var universityInfoBid = "0";
+var staffCode = "0";
+var loginName = "0";
+
+var ckParams = {};
+ckParams.baseInfoBid = "";
+ckParams.universityInfoBid = "";
+ckParams.staffCode = "";
+ckParams.loginName = "";
 export default {
-	  components: {
-	    updateStaffBaseInfo,
-	    updateStaffUniversityInfo
-	  },
-	  props: ['ckParams'],
-	  data() {
-	    return {
-	      baseInfoBid: this.ckParams.baseInfoBid, // -=-=-=-=-=-=-=-=-=-审核信息的id   基本信息
-	      universityInfoBid: this.ckParams.universityInfoBid, // -=-=-=-=-=-=-=-=-=-审核信息的id   在校信息
-	      staffCode: this.ckParams.staffCode, // =-=-=-=-=-=-=-=-职工编码
-	      loginName: this.ckParams.loginName,
-	      activeNames: ['1'],
-	      rows: 5,
-	      checkFlag: '',
-	      checkComment: '审核备注', // 审核备注
-	      checkCommentDV: false
-	    }
-	  },
-	  methods: {
-	    footerButton: function(state) {
-	      this.checkFlag = state
-	      this.checkCommentDV = true
-	    },
-	    checkFun: function() {
-	      GUtils.post(dataPath.checkStaffInfo, {
-	        'universityInfoId': this.ckParams.universityInfoBid,
-	        'loginName': this.loginName,
-	        'staffCode': this.staffCode,
-	        'checkFlag': this.checkFlag,
-	        'checkComment': this.checkComment
-	      }, function(data) {
-	        alert('审核成功')
-      })
-	    }
-	  }
-	}
+  components: {
+    updateStaffBaseInfo,
+    updateStaffUniversityInfo
+  },
+  props: ["ckParams"],
+  watch: {
+    "ckParams.baseInfoBid": function(val, oldval) {
+      if (val != "") {
+        this.baseInfoBid = val;
+      }
+    },
+    "ckParams.universityInfoBid": function(val, oldval) {
+      if (val != "") {
+        this.universityInfoBid = val;
+      }
+		},
+		"ckParams.staffCode": function(val, oldval) {
+      if (val != "") {
+        this.staffCode = val;
+      }
+		},
+		"ckParams.loginName": function(val, oldval) {
+      if (val != "") {
+        this.loginName = val;
+      }
+    }
+  },
+  data() {
+    return {
+      baseInfoBid: this.ckParams.baseInfoBid, // -=-=-=-=-=-=-=-=-=-审核信息的id   基本信息
+      universityInfoBid: this.ckParams.universityInfoBid, // -=-=-=-=-=-=-=-=-=-审核信息的id   在校信息
+      staffCode: this.ckParams.staffCode, // =-=-=-=-=-=-=-=-职工编码
+      loginName: this.ckParams.loginName,
+      activeNames: ["1"],
+      rows: 5,
+      checkFlag: "",
+      checkComment: "审核备注", // 审核备注
+      checkCommentDV: false
+    };
+  },
+  methods: {
+    footerButton: function(state) {
+      this.checkFlag = state;
+      this.checkCommentDV = true;
+    },
+    checkFun: function() {
+      GUtils.post(
+        dataPath.checkStaffInfo,
+        {
+          universityInfoId: this.ckParams.universityInfoBid,
+          loginName: this.loginName,
+          staffCode: this.staffCode,
+          checkFlag: this.checkFlag,
+          checkComment: this.checkComment
+        },
+        function(data) {
+          alert("审核成功");
+        }
+      );
+    }
+  }
+};
 </script>
 
 <style>
-	.boxCard {
-		width: 70vw;
-		margin-left: auto;
-		margin-right: auto;
-	}
-	
-	.but {
-		padding: 0;
-		float: right;
-	}
-	/*.el-icon-arrow-left:before {
+.boxCard {
+  width: 70vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.but {
+  padding: 0;
+  float: right;
+}
+/*.el-icon-arrow-left:before {
     content: "\E606";
 }*/
 </style>

@@ -156,7 +156,12 @@ GUtils.post(reqPath.queryUserOrg, {}, function(data) {
 //	});
 
 export default {
-	  props: ['bid'],
+	  props: {
+    bid: {
+      type: String,
+      default: "0"
+    }
+  },
 	  data() {
 	    return {
 	      formStore,
@@ -166,7 +171,33 @@ export default {
 	      staffJobData,
 	      pgpostsData
 	    }
-	  },
+		},
+		watch:{
+			bid:function(val,oldval){
+				GUtils.post(dataPath.queryStaffUniversityInfoById, {
+	      'id': val
+	    }, function(data) {
+	      console.log(['loadFormData', data])
+	      formDataStore.pushData({
+	        checkComment: data.resBody.baseData.checkComment,
+	        checkFlag: data.resBody.baseData.checkFlag,
+	        entranceDate: data.resBody.baseData.entranceDate,
+	        exitDate: data.resBody.baseData.exitDate,
+	        // data.resBody.baseData.id,
+	        personnelCode: data.resBody.baseData.personnelCode,
+	        pgposts: data.resBody.baseData.pgposts,
+	        staffCode: data.resBody.baseData.staffCode,
+	        staffJob: data.resBody.baseData.staffJob,
+	        state: data.resBody.baseData.state,
+	        suspension: data.resBody.baseData.suspension
+	      })
+	      formDataStore.pushData({
+	        orgCode: data.resBody.aOrgCode
+	      })
+	      console.log(['aOrgCode', data.resBody.aOrgCode])
+	    })
+			}
+		},
 	  methods: {
 	    test: function() {
 	      console.log(this)

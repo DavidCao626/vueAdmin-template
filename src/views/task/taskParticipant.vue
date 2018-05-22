@@ -60,6 +60,7 @@ export default {
   },
   watch: {
     systemSerialNoProp(val, oldval) {
+      alert("123123"+val)
       this.systemSerialNo = val;
       var data = { systemSerialNo: this.systemSerialNo };
       new Promise((resolve, reject) => {
