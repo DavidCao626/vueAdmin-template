@@ -243,6 +243,26 @@ export default {
               prop: "huping_percentage"
             }
           ]
+        },{
+          label: "组评情况",
+          prop: "zuping_info",
+          children: [
+            {
+              label: "同意",
+              width: 120,
+              prop: "zuping_ok"
+            },
+            {
+              label: "不同意",
+              width: 120,
+              prop: "zuping_no"
+            },
+            {
+              label: "支持率",
+              width: 120,
+              prop: "zuping_percentage"
+            }
+          ]
         }
       ]
     };
