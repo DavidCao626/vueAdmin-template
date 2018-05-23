@@ -337,9 +337,13 @@ const actions = {
     })
   },
   // 初始化问卷-
-  initQuuestion(commit) {
-    const ls = localStorage.getItem('taskCode')
-
+  initQuuestion(commit, taskCode) {
+    let ls=null
+    if (!taskCode || taskCode === undefined) {
+       ls = localStorage.getItem('taskCode')
+    } else {
+      ls = taskCode
+    }
     if (!ls || ls === undefined) {
       alert("你还没taskcode！");
       return;

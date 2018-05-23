@@ -48,8 +48,10 @@ export default {
     };
   },
   mounted: function() {
-    // ajax初始化灌入数据
-    this.$store.dispatch("initQuuestion");
+    let taskCode=this.$route.query.taskCode;
+    
+    // ajax初始化灌入数据   initQuuestion
+    this.$store.dispatch("initQuuestion",taskCode);
   },
   components: {
     Item
