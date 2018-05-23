@@ -114,7 +114,7 @@
 								<!-- <el-col :xs="8" :sm="10"> -->
 									<div >
 									<el-radio-group v-model="value.name">
-										<el-radio class="question-radio" :label="optionsKey">
+										<el-radio class="question-radio" :label="question.value">
 											<span style="margin: 10px;">{{question.label}}</span>
 										</el-radio>
 									</el-radio-group>
