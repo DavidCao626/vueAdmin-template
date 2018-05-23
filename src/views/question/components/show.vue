@@ -49,7 +49,7 @@ export default {
   },
   mounted: function() {
     let taskCode=this.$route.query.taskCode;
-    
+    alert(taskCode)
     // ajax初始化灌入数据   initQuuestion
     this.$store.dispatch("initQuuestion",taskCode);
   },

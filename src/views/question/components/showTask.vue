@@ -2,7 +2,10 @@
   <el-card class="box-card" style="width:800px">
     <div class="showStyleTable">
       	<h3>{{question.description}}</h3>
-        <br/>
+ 
+
+{{question}}
+
       <el-table :data="tableData6" border>
         <el-table-column prop="id" label="编号" width="180">
         </el-table-column>
@@ -59,6 +62,11 @@ export default {
     };
   },
   computed: {
+    tableData6(){
+      console.log(this.question);
+      return 0
+      debugger
+    },
     question: {
       get() {
         return this.$store.getters["getQss"];
