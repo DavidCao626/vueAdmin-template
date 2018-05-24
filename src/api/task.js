@@ -287,3 +287,18 @@ export function queryChildOrg() {
     method: 'post'
   })
 }
+
+export function autoCreate() {
+  return request({
+    url: '/task/autoCreate.do',
+    method: 'post'
+  })
+}
+
+export function autoCreateFacade() {
+  return request({
+    url: '/task/autoCreateFacade.do',
+    method: 'post'
+  })
+}
+

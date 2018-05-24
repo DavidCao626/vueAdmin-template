@@ -40,8 +40,8 @@
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item @click.native="dialogTable(scope.row,'task')">创建任务</el-dropdown-item>
               <el-dropdown-item @click.native="dialogTable(scope.row,'facade')">创建工序</el-dropdown-item>
-               <el-dropdown-item @click.native="updateDialog(scope.row,'P')">修改项目</el-dropdown-item>
-                 <el-dropdown-item @click.native="Restrict(scope.row,'add')">配置约束</el-dropdown-item>
+               <!-- <el-dropdown-item @click.native="updateDialog(scope.row,'P')">修改项目</el-dropdown-item>
+                 <el-dropdown-item @click.native="Restrict(scope.row,'add')">配置约束</el-dropdown-item> -->
                  <el-dropdown-item @click.native="Restrict(scope.row,'updete')">修改约束</el-dropdown-item>
                      <el-dropdown-item @click.native="dialogTable(scope.row,'participant')">分配参与者</el-dropdown-item>
                                 <el-dropdown-item @click.native="Start(scope.row)">启动项目</el-dropdown-item>
@@ -81,7 +81,9 @@ import {
   queryNodeByLiblerld,
   queryChildTaskNodeBySystemSerialNo,
   completedNode,
-  startNode
+  startNode,
+  autoCreateFacade, // 自动创建工序
+  autoCreate// 自动创建任务
 } from '~/api/task'
 import addTaskNode from './../addTaskNode'
 import addTaskFacade from './../addTaskFacade'
@@ -132,6 +134,10 @@ export default {
       expandAll: false,
       columns: [
         {
+          text: '项目名称',
+          value: 'projectName'
+        },
+        {
           text: '项目流程',
           value: 'nodeTitle'
         },
@@ -156,9 +162,9 @@ export default {
           width: 200
         },
         {
-          text: '项目负责人',
+          text: '创建人',
           value: 'creater',
-          width: 120
+          width: 100
         },
         {
           text: '开始时间',
@@ -194,6 +200,7 @@ export default {
           bgintime: element.planStartTime,
           endtime: element.planCompleteTime,
           rootNodeNo: element.rootNodeNo,
+          projectName: element.projectName,
           _expanded: false
         }
         // debugger
@@ -230,6 +237,7 @@ export default {
               bgintime: element.planStartTime,
               endtime: element.planCompleteTime,
               rootNodeNo: element.rootNodeNo,
+              projectName: element.projectName,
               _expanded: false
             }
             if (element.isLeafNode === 'N') {
@@ -292,6 +300,7 @@ export default {
                 nodeOrgCode: element.nodeOrgCode,
                 timeLine: 62,
                 bgintime: element.planStartTime,
+                projectName: element.projectName,
                 endtime: element.planCompleteTime
               }
               if (element.isLeafNode === 'N') {
@@ -392,6 +401,7 @@ export default {
       new Promise((resolve, reject) => {
         startNode({ systemSerialNo: row.No }).then(response => {
           console.log(response.resBody)
+          this.$message.success('操作成功')
         })
       })
     },
@@ -399,6 +409,7 @@ export default {
       new Promise((resolve, reject) => {
         completedNode({ systemSerialNo: row.No }).then(response => {
           console.log(response.resBody)
+          this.$message.success('操作成功')
         })
       })
     },

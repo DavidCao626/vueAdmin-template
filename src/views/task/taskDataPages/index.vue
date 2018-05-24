@@ -220,12 +220,12 @@ export default {
           children: [
             {
               label: '同意',
-              width: 120,
+              width: 80,
               prop: 'bjhpY.selectionNum'
             },
             {
               label: '不同意',
-              width: 120,
+              width: 80,
               prop: 'bjhpN.selectionNum'
             }
           ]
@@ -235,8 +235,8 @@ export default {
           checked: true,
           prop: 'xzpi',
           children: [
-            { label: '同意', width: 120, prop: 'xzpyY.selectionNum' },
-            { label: '不同意', width: 120, prop: 'xzpyN.selectionNum' }
+            { label: '同意', width: 80, prop: 'xzpyY.selectionNum' },
+            { label: '不同意', width: 80, prop: 'xzpyN.selectionNum' }
           ]
         },
         {
@@ -244,8 +244,8 @@ export default {
           checked: true,
           prop: 'spqk',
           children: [
-            { label: '状态', width: 120, prop: 'examine_status' },
-            { label: '审批人', width: 120, prop: 'examine_user_id' }
+            { label: '状态', width: 80, prop: 'examine_status' },
+            { label: '审批人', width: 80, prop: 'examine_user_id' }
           ]
         }
       ],
@@ -301,12 +301,12 @@ export default {
           children: [
             {
               label: '同意',
-              width: 120,
+              width: 80,
               prop: 'bjhpY.selectionNum'
             },
             {
               label: '不同意',
-              width: 120,
+              width: 80,
               prop: 'bjhpN.selectionNum'
             }
           ]
@@ -316,8 +316,8 @@ export default {
           checked: true,
           prop: 'xzpi',
           children: [
-            { label: '同意', width: 120, prop: 'xzpyY.selectionNum' },
-            { label: '不同意', width: 120, prop: 'xzpyN.selectionNum' }
+            { label: '同意', width: 80, prop: 'xzpyY.selectionNum' },
+            { label: '不同意', width: 80, prop: 'xzpyN.selectionNum' }
           ]
         },
         {
@@ -325,7 +325,7 @@ export default {
           prop: 'spqk',
           checked: true,
           children: [
-            { label: '状态', width: 120, prop: 'examine_status' },
+            { label: '状态', width: 80, prop: 'examine_status' },
             { label: '审批人', width: 120, prop: 'examine_user_id' }
           ]
         }
