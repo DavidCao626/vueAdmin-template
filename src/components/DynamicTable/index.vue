@@ -9,6 +9,9 @@
     </template>
 
     <el-table :data="data" :key='key' border fit highlight-current-row style="width: 100%">
+       <slot name="left-column">
+
+       </slot>
       <el-table-column :key='index' v-for='(fruit,index) in formThead' :label="fruit.label" :width="fruit.width" :prop="fruit.prop">
         <template v-if="fruit.children">
           <el-table-column v-for='(fitem,index) in fruit.children' :key='index' :label="fitem.label" :width="fitem.width" :prop="fitem.prop">
