@@ -87,7 +87,7 @@
 				<div v-if="value.type === 'radio' " class="question-content-wrap">
 
 					<div v-for="(question,optionsKey) in value.options">
-						<el-row>
+						<el-row> 
 
 							<template v-if="isShow==0">
 								<el-col :xs="8" :sm="10">
@@ -111,14 +111,15 @@
 								</el-col>
 							</template>
 							<template v-if="isShow==1">
-								<el-col :xs="8" :sm="10">
+								<!-- <el-col :xs="8" :sm="10"> -->
+									<div >
 									<el-radio-group v-model="value.name">
-										<el-radio class="question-radio" :label="optionsKey">
+										<el-radio class="question-radio" :label="question.value">
 											<span style="margin: 10px;">{{question.label}}</span>
 										</el-radio>
 									</el-radio-group>
-
-								</el-col>
+								</div>
+								<!-- </el-col> -->
 							</template>
 
 							<template v-if="isShow==2">
@@ -135,7 +136,7 @@
 
 							</template>
 
-						</el-row>
+						 </el-row>
 					</div>
 				</div>
 				<!-- 多选题 -->

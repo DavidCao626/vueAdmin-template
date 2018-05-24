@@ -11,7 +11,7 @@ module.exports = {
     assetsPublicPath: "/",
     proxyTable: {
       "/act/*": {
-        target: "http://localhost:8099",
+        target: "http://localhost:8001",
         changeOrigin: true,
         secure: false
       },

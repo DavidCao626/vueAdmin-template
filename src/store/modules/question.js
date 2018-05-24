@@ -328,7 +328,7 @@ const actions = {
   saveForm(commit) {
     var data = state.qss
     console.log(data)
-   // data['content_type'] = 'application/json'
+   //data['content_type'] = 'application/json'
     Utils.requestBody(qusApi.add, data, function(data) {
       console.log(data)
       // debugger
@@ -337,9 +337,13 @@ const actions = {
     })
   },
   // 初始化问卷-
-  initQuuestion(commit) {
-    const ls = localStorage.getItem('taskCode')
-
+  initQuuestion(commit, taskCode) {
+    let ls=null
+    if (!taskCode || taskCode === undefined) {
+       ls = localStorage.getItem('taskCode')
+    } else {
+      ls = taskCode
+    }
     if (!ls || ls === undefined) {
       alert("你还没taskcode！");
       return;
@@ -361,11 +365,11 @@ const actions = {
   // 提交问卷
   subForm(commit) {
     var data = this.getters['getQssToAjax1']
-    data['content_type'] = 'application/json'
-    Utils.post(qusApi.submitQuestionResult, data, function(data) {
-      console.log(data)
-      state.qss = data.resBody
-    })
+    //data['content_type'] = 'application/json'
+    Utils.requestBody(qusApi.submitQuestionResult, data, function(data) {
+      console.log(data);
+      state.qss = data.resBody;
+    });
   },
   updetaForm(commit) {
     var data = state.qss
