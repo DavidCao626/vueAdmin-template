@@ -106,7 +106,13 @@
           <div class="clearfix"></div>
 
           <!-- 数据表 -->
-          <dynamicTable :data="tableDataTodo" :tableHeader="tableTodoHeader" isdynamic style="width: 100%">
+          <dynamicTable :data="tableDataTodo"  @selection-change="handleSelectionChange" :tableHeader="tableTodoHeader" isdynamic style="width: 100%">
+             <template slot="left-column">
+               <el-table-column
+                  type="selection"
+                  width="55">
+                </el-table-column>
+            </template>
             <el-table-column label="操作" width="155">
               <template slot-scope="scope">
                 <el-button size="medium" type="text" class="el-icon-arrow-right"> 详情</el-button>
@@ -121,16 +127,17 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="已审核数据" name="third">
-          <div style="margin-bottom:10px;">
+          <div style="margin-bottom:35px;">
             <!-- <el-button  type="default" class="el-icon-circle-chec" plain @click="toggleSelection([tableData3[1], tableData3[2]])">
               全选
             </el-button> -->
-            <el-button type="info" class="el-icon-edit-outline" plain @click="showVisible">
+            <!-- <el-button type="info" class="el-icon-edit-outline" plain @click="showVisible">
               审核
-            </el-button>
+            </el-button> -->
           </div>
           <!-- 数据表 -->
           <dynamicTable :data="tableDataDone" :tableHeader="tableDoneHeader" isdynamic style="width: 100%">
+           
             <el-table-column label="操作" width="155">
               <template slot-scope="scope">
                 <el-button size="medium" type="text" class="el-icon-arrow-right"> 详情</el-button>

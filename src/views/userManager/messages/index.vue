@@ -8,14 +8,14 @@
 					<div class="panel-control__flex-left">
 						<el-button size="small" type="text" style="color:#8d8d8d" @click="queryDataByStatus('')"> 全部({{allNumber}})</el-button>
 						&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
-						<el-badge :value="noReadNumber" :max="99" class="item">
+						<!-- <el-badge :value="noReadNumber" :max="99" class="item">
 							<el-button size="small" plain @click="queryDataByStatus('N')">未读</el-button>
-						</el-badge>
+						</el-badge> -->
 						&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
 
 						<!-- <el-button size="small" type="text" style="color:#8d8d8d"> 已收藏({{messagesMarkCount}})</el-button>
                         &nbsp; &nbsp;&nbsp; -->
-						<el-button size="small" type="text" style="color:#8d8d8d" @click="queryDataByStatus('Y')"> 已读({{ReadNumber}})</el-button>
+						<!-- <el-button size="small" type="text" style="color:#8d8d8d" @click="queryDataByStatus('Y')"> 已读({{ReadNumber}})</el-button> -->
 
 					</div>
 					<div class="panel-control__flex-right" style="margin-right:20px;">

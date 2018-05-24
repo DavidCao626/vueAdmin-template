@@ -8,7 +8,7 @@
       </div>
     </template>
 
-    <el-table :data="data" :key='key' border fit highlight-current-row style="width: 100%">
+    <el-table :data="data" :key='key' border fit highlight-current-row style="width: 100%"  @selection-change="handleSelectionChange">
        <slot name="left-column">
 
        </slot>
@@ -58,6 +58,11 @@ export default {
       this.checkboxVal.push(element.prop);
     });
 //debugger
+  },
+  methods:{
+    handleSelectionChange(selection){
+      this.$emit('selection-change',selection)
+    }
   },
   watch: {
     checkboxVal(valArr) {
