@@ -2,41 +2,15 @@
   <div>
 
     <div class="components-container">
-      <el-dialog v-el-drag-dialog title="新建子任务" :visible.sync="dialogTableVisible">
-        <addTaskNode :rootNodeNoProp="rootNodeNo" :parentNodeNoProp="parentNodeNo"></addTaskNode>
-      </el-dialog>
-      <el-dialog v-el-drag-dialog title="新建工序" :visible.sync="dialogTableVisibleFacade">
-        <addTaskFacade :rootNodeNoProp="rootNodeNo" :parentNodeNoProp="parentNodeNo"></addTaskFacade>
-      </el-dialog>
-      <el-dialog v-el-drag-dialog title="修改项目" :visible.sync="dialogTableVisibleUpdateProject">
-        <updateTaskProject :systemSerialNoProp="systemSerialNo"></updateTaskProject>
-      </el-dialog>
-      <el-dialog v-el-drag-dialog title="修改任务" :visible.sync="dialogTableVisibleUpdateTask">
-        <updateTaskNode :systemSerialNoProp="systemSerialNo"></updateTaskNode>
-      </el-dialog>
-      <el-dialog v-el-drag-dialog title="修改工序" :visible.sync="dialogTableVisibleUpdateFacade">
-        <updateTaskFacade :rootNodeNoProp="rootNodeNo" :parentNodeNoProp="parentNodeNo"></updateTaskFacade>
-      </el-dialog>
-      <el-dialog v-el-drag-dialog title="新增约束" :visible.sync="dialogTableVisibleAddRestrict">
-        <addTaskNodeRestrict :nodeNoProp="systemSerialNo"></addTaskNodeRestrict>
-      </el-dialog>
-      <el-dialog v-el-drag-dialog title="修改约束" :visible.sync="dialogTableVisibleUpdateRestrict">
-        <updateTaskNodeRestrict :rootNodeNoProp="rootNodeNo" :parentNodeNoProp="parentNodeNo"></updateTaskNodeRestrict>
-      </el-dialog>
-      <el-dialog v-el-drag-dialog title="分配参与者" :visible.sync="dialogTableVisibleMParticipant">
-        <taskParticipant :systemSerialNoProp="systemSerialNo"></taskParticipant>
-      </el-dialog>
-
       <el-dialog v-el-drag-dialog :title="dialogTitle" :visible.sync="dialogShow">
-        <keep-alive>
+         <keep-alive>
           <component :is="dynamicView" :rootNodeNoProp="rootNodeNo" :parentNodeNoProp="parentNodeNo" :systemSerialNoProp="systemSerialNo"></component>
-        </keep-alive>
+         </keep-alive>
       </el-dialog>
 
     </div>
 
-    <tree-table v-loading="treeTableDV" @getItemDate="getItemDate" @closeItemDate="closeItemDate" 
-    :showIndex="showIndex" :data="data" :evalFunc="func" :columns="columns" :evalArgs="args" :expandAll="expandAll" >
+    <tree-table v-loading="treeTableDV" @getItemDate="getItemDate" @closeItemDate="closeItemDate" :showIndex="showIndex" :data="data" :evalFunc="func" :columns="columns" :evalArgs="args" :expandAll="expandAll">
 
       <el-table-column label="完成进度" width="100">
         <template slot-scope="scope">
@@ -52,9 +26,9 @@
         <template slot-scope="scope">
           <el-dropdown size="medium" trigger="click">
 
-            <span class="el-dropdown-link" >
+            <span class="el-dropdown-link">
 
-              <el-button type="text"  size="medium">
+              <el-button type="text" size="medium">
                 创建
                 <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
               </el-button>
@@ -65,7 +39,7 @@
             </el-dropdown-menu>
           </el-dropdown>
           <el-tooltip class="item" effect="dark" content="修改" placement="bottom">
-            <el-button type="text"  @click="updateDialog(scope.row,'P')" size="medium"> 修改
+            <el-button type="text" @click="updateDialog(scope.row,'P')" size="medium"> 修改
               <!-- <i class="el-icon-edit el-icon--right"></i> -->
             </el-button>
           </el-tooltip>
@@ -73,7 +47,7 @@
           <el-dropdown size="medium" trigger="click">
 
             <span class="el-dropdown-link" style="">
-              <el-button type="text"  size="medium">
+              <el-button type="text" size="medium">
                 配置
                 <!-- <i class="el-icon-setting el-icon--right"></i> -->
               </el-button>
@@ -92,7 +66,7 @@
 
           <!-- 王红坤 -->
           <el-tooltip class="item" effect="dark" content="分配参与者" placement="bottom">
-            <el-button type="text" plain @click="mParticipant(scope.row)" size="medium">
+            <el-button type="text" plain @click="dialogTable(scope.row,'participant')" size="medium">
               参与者
               <!-- <i class="el-icon-news el-icon--right"></i> -->
             </el-button>
@@ -101,20 +75,21 @@
 
       </el-table-column>
 
-      <el-table-column label="操作"  width="120">
+      <el-table-column label="操作" width="120">
         <!-- 王红坤结束 -->
         <template slot-scope="scope">
           <el-tooltip class="item" effect="dark" content="启动" placement="bottom">
             <el-button type="text" @click="Start(scope.row)" size="small">
               启动
-             
+
             </el-button>
           </el-tooltip>
-         
+
           <el-tooltip class="item" effect="dark" content="停止" placement="bottom">
-            &nbsp;&nbsp; <el-button type="text" @click="stop(scope.row)" size="small" style="margin-left: 0px;">
-   停止
-                       <!--   <i class="el-icon-check el-icon--right"></i> -->
+            &nbsp;&nbsp;
+            <el-button type="text" @click="stop(scope.row)" size="small" style="margin-left: 0px;">
+              停止
+              <!--   <i class="el-icon-check el-icon--right"></i> -->
             </el-button>
           </el-tooltip>
 
@@ -155,7 +130,6 @@ import taskParticipant from "./../taskParticipant";
 import updateTaskNodeRestrict from "./../updateTaskNodeRestrict";
 import dataBuilder from "./ItemFacctory";
 
-
 export default {
   name: "customTreeTableDemo",
   components: {
@@ -175,10 +149,10 @@ export default {
   },
   data() {
     return {
-      treeTableDV:false,
-      dynamicView:addTaskNode,
-      dialogShow:false,
-      dialogTitle:'',
+      treeTableDV: false,
+      dynamicView: addTaskNode,
+      dialogShow: false,
+      dialogTitle: "",
       showIndex: 0,
       rootNodeNo: 0,
       parentNodeNo: 0,
@@ -195,8 +169,17 @@ export default {
       expandAll: false,
       columns: [
         {
-          text: "项目名",
+          text: "项目流程",
           value: "nodeTitle"
+        },
+        {
+          text: "组织机构",
+          value: "nodeOrgCode"
+        },
+        {
+          text: "任务状态",
+          value: "nodeState",
+          width:80
         },
         {
           text: "类型",
@@ -241,10 +224,12 @@ export default {
           parentNodeNo: element.parentNodeNo,
           No: element.systemSerialNo,
           creater: element.creater,
+          nodeState: element.nodeState,
+          nodeOrgCode: element.nodeOrgCode,
           timeLine: 45,
           bgintime: element.planStartTime,
           endtime: element.planCompleteTime,
-            rootNodeNo:element.rootNodeNo,
+          rootNodeNo: element.rootNodeNo,
           _expanded: false
         };
         // debugger
@@ -262,7 +247,7 @@ export default {
   mounted: function() {
     if (this.propsData.length === 0) {
       new Promise((resolve, reject) => {
-        this.treeTableDV = true
+        this.treeTableDV = true;
         queryNodeByLiblerld().then(response => {
           this.treeTableDV = false;
           var l = [];
@@ -275,26 +260,30 @@ export default {
               parentNodeNo: element.parentNodeNo,
               No: element.systemSerialNo,
               creater: element.creater,
+              nodeState: element.nodeState,
+              nodeOrgCode: element.nodeOrgCode,
               timeLine: 84,
               bgintime: element.planStartTime,
               endtime: element.planCompleteTime,
-              rootNodeNo:element.rootNodeNo,
+              rootNodeNo: element.rootNodeNo,
               _expanded: false
             };
             if (element.isLeafNode === "N") {
               item.children = [];
             }
-            if (element.isLeafNode === 'N') {
-              item.children = []
+            if (element.isLeafNode === "N") {
+              item.children = [];
             }
-              item = dataBuilder.call(null, item, null)
-              l.push(item)
-              this.treeTableDV = false;
-          })
-          var ls = this.data.concat(l)
-          this.data = ls
-        })
-      }).catch(error=>{this.treeTableDV = false})
+            item = dataBuilder.call(null, item, null);
+            l.push(item);
+            this.treeTableDV = false;
+          });
+          var ls = this.data.concat(l);
+          this.data = ls;
+        });
+      }).catch(error => {
+        this.treeTableDV = false;
+      });
     }
   },
   methods: {
@@ -302,15 +291,14 @@ export default {
     mParticipant(item) {
       //分配参与者
       this.systemSerialNo = item.No;
-      alert("eqweqwe"+this.systemSerialNo)
+      alert("eqweqwe" + this.systemSerialNo);
+       this.dynamicView = taskParticipant
       this.dialogTableVisibleMParticipant = true;
     },
     //王红坤结束
     getItemDate(trIndex, scope) {
-      
-
       var th = this;
-      th.treeTableDV=true
+      th.treeTableDV = true;
       /* var item = {
         No: 'P15256087592557662',
         bgintime: '2018-05-01',
@@ -325,9 +313,8 @@ export default {
       }()*/
       //
       var p1 = new Promise((resolve, reject) => {
-        
         queryChildTaskNodeBySystemSerialNo(scope.row.No).then(response => {
-          th.treeTableDV = false
+          th.treeTableDV = false;
           if (response.resBody.length > 0) {
             response.resBody.forEach((element, index) => {
               var item = {
@@ -338,6 +325,8 @@ export default {
                 rootNodeNo: element.rootNodeNo,
                 No: element.systemSerialNo,
                 creater: element.creater,
+                nodeState: element.nodeState,
+                nodeOrgCode: element.nodeOrgCode,
                 timeLine: 62,
                 bgintime: element.planStartTime,
                 endtime: element.planCompleteTime
@@ -370,18 +359,17 @@ export default {
     },
     closeItemDate(trIndex, showCount) {
       //console.log(trIndex+showCount)
-     // debugger
+      // debugger
       this.data.splice(trIndex + 1, showCount + 1);
-
     },
     Restrict(item, act) {
-      alert(item.No)
+      alert(item.No);
       if (act === "add") {
         this.systemSerialNo = item.No;
         //this.parentNodeNo = item.parentNodeNo;
         this.dialogTableVisibleAddRestrict = true;
       } else {
-         this.systemSerialNo = item.No;
+        this.systemSerialNo = item.No;
         //this.parentNodeNo = item.parentNodeNo;
         this.dialogTableVisibleUpdateRestrict = true;
       }
@@ -394,6 +382,9 @@ export default {
         this.rootNodeNo = item.rootNodeNo;
         this.parentNodeNo = item.No;
       }
+      this.systemSerialNo = item.No;
+      //  this.dynamicView = taskParticipant
+      // this.dialogTableVisibleMParticipant = true;
       console.log(["新建子节点上级节点的编号 ", item.No]);
       if (act === "task") {
         //this.dialogTableVisible = true

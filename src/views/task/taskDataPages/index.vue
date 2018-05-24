@@ -106,7 +106,11 @@
           <div class="clearfix"></div>
 
           <!-- 数据表 -->
-          <dynamicTable :data="tableDataTodo" :tableHeader="tableTodoHeader" isdynamic style="width: 100%">
+          <dynamicTable :data="tableDataTodo" @selection-change="handleSelectionChange" :tableHeader="tableTodoHeader" isdynamic style="width: 100%">
+            <template slot="left-column">
+              <el-table-column type="selection" width="55">
+              </el-table-column>
+            </template>
             <el-table-column label="操作" width="155">
               <template slot-scope="scope">
                 <el-button size="medium" type="text" class="el-icon-arrow-right"> 详情</el-button>
@@ -121,16 +125,17 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="已审核数据" name="third">
-          <div style="margin-bottom:10px;">
+          <div style="margin-bottom:35px;">
             <!-- <el-button  type="default" class="el-icon-circle-chec" plain @click="toggleSelection([tableData3[1], tableData3[2]])">
               全选
             </el-button> -->
-            <el-button type="info" class="el-icon-edit-outline" plain @click="showVisible">
+            <!-- <el-button type="info" class="el-icon-edit-outline" plain @click="showVisible">
               审核
-            </el-button>
+            </el-button> -->
           </div>
           <!-- 数据表 -->
           <dynamicTable :data="tableDataDone" :tableHeader="tableDoneHeader" isdynamic style="width: 100%">
+
             <el-table-column label="操作" width="155">
               <template slot-scope="scope">
                 <el-button size="medium" type="text" class="el-icon-arrow-right"> 详情</el-button>
@@ -169,7 +174,7 @@ export default {
         opinion: "",
         applyStatus: "Y",
         nodeNo: this.$route.query.nodeNoProp,
-        blocks: []
+        items: []
       },
       pagination: { dataCount: 0, currentPage: 1, pageSize: 10 }, //未审核分页
       pagination2: { dataCount: 0, currentPage: 1, pageSize: 10 }, //已审核分页
@@ -192,7 +197,7 @@ export default {
         {
           label: "用户对象编号",
           width: 120,
-          prop: "apple",
+          prop: "ywsq-201807.data.applyUserClassifyNo",
           children: []
         },
         {
@@ -254,13 +259,21 @@ export default {
             { label: "同意", width: 120, prop: "xzpyY.selectionNum" },
             { label: "不同意", width: 120, prop: "xzpyN.selectionNum" }
           ]
+        },
+        {
+          label: "审批情况",
+          prop: "spqk",
+          children: [
+            { label: "状态", width: 120, prop: "examine_status" },
+            { label: "审批人", width: 120, prop: "examine_user_id" }
+          ]
         }
       ],
       tableDoneHeader: [
         {
           label: "用户对象编号",
           width: 120,
-          prop: "apple",
+          prop: "ywsq-201807.data.applyUserClassifyNo",
           children: []
         },
         {
@@ -306,12 +319,12 @@ export default {
             {
               label: "同意",
               width: 120,
-              prop: "bjhpY"
+              prop: "bjhpY.selectionNum"
             },
             {
               label: "不同意",
               width: 120,
-              prop: "bjhpN"
+              prop: "bjhpN.selectionNum"
             }
           ]
         },
@@ -319,8 +332,16 @@ export default {
           label: "小组评议",
           prop: "xzpi",
           children: [
-            { label: "同意", width: 120, prop: "xzpyY" },
-            { label: "不同意", width: 120, prop: "xzpyN" }
+            { label: "同意", width: 120, prop: "xzpyY.selectionNum" },
+            { label: "不同意", width: 120, prop: "xzpyN.selectionNum" }
+          ]
+        },
+        {
+          label: "审批情况",
+          prop: "spqk",
+          children: [
+            { label: "状态", width: 120, prop: "examine_status" },
+            { label: "审批人", width: 120, prop: "examine_user_id" }
           ]
         }
       ]
@@ -371,23 +392,24 @@ export default {
 
       var that = this;
       for (var i = 0; i < this.multipleSelection.length; i++) {
-        var d = {
-          recordId: this.multipleSelection[i].id,
-          applyDataNo: this.multipleSelection[i].data_no,
-          userHashCode: this.multipleSelection[i].apply_user_hash_code
-        };
-        this.approveRecordData.blocks.push(d);
+        this.approveRecordData.items.push(this.multipleSelection[i].id);
       }
       approveRecord(this.approveRecordData).then(data => {
-        that.approveRecordData.blocks = [];
+        this.$message.success("操作成功")
+        that.approveRecordData.items = [];
         that.queryTodoData();
         that.queryDoneData();
+         that.dialogTableVisible = false;
       });
     },
     handleClick(tab, event) {
       console.log(tab, event);
     },
     showVisible() {
+      if (this.multipleSelection.length == 0) {
+        this.$message.error("请选择数据后进行操作!");
+        return;
+      }
       this.dialogTableVisible = true;
     },
     hideVisible() {
