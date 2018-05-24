@@ -81,15 +81,20 @@
           <div class="clearfix"></div>
 
           <!-- 数据表 -->
-          <dynamicTable :data="tableDataTodo" :tableHeader="tableHeader" isdynamic style="width: 100%">
-              <el-table-column label="操作" width="155">
-                 <template slot-scope="scope">
-                    <el-button size="medium" type="text" class="el-icon-arrow-right" > 详情</el-button>
-                </template>
-             </el-table-column>
+          <dynamicTable :data="tableDataTodo"  @selection-change="handleSelectionChange" :tableHeader="tableTodoHeader" isdynamic style="width: 100%">
+             <template slot="left-column">
+               <el-table-column
+                  type="selection"
+                  width="55">
+                </el-table-column>
+            </template>
+            <el-table-column label="操作" width="155">
+              <template slot-scope="scope">
+                <el-button size="medium" type="text" class="el-icon-arrow-right"> 详情</el-button>
+              </template>
+            </el-table-column>
           </dynamicTable>
 
-         
           <!-- 分页 -->
           <div style="margin-top: 20px">
             <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pagination.currentPage" :page-sizes="[10, 50, 100, 200]" :page-size="pagination.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pagination.dataCount">
@@ -97,50 +102,23 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="已审核数据" name="third">
-
+          <div style="margin-bottom:35px;">
+            <!-- <el-button  type="default" class="el-icon-circle-chec" plain @click="toggleSelection([tableData3[1], tableData3[2]])">
+              全选
+            </el-button> -->
+            <!-- <el-button type="info" class="el-icon-edit-outline" plain @click="showVisible">
+              审核
+            </el-button> -->
+          </div>
           <!-- 数据表 -->
-          <el-table ref="multipleTable" :data="tableDataDone" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChange">
-
-            <el-table-column label="用户对象编号" width="120" prop="apply_user_classify_no">
-            </el-table-column>
-            <el-table-column label="申请信息">
-              <el-table-column label="申请项目编号" width="120" prop="apply_project">
-              </el-table-column>
-              <el-table-column label="申请理由"  prop="apply_reason">
-              </el-table-column>
-              <el-table-column label="申请状态" width="120" prop="apply_status">
-              </el-table-column>
-              <el-table-column label="业务类别" width="120" prop="classify_name">
-              </el-table-column>
-              <el-table-column label="申请人机构" width="120" prop="org_name">
-              </el-table-column>
-            </el-table-column>
-            <el-table-column label="互评情况">
-              <el-table-column label="同意" width="120" prop="apply_project">
-              </el-table-column>
-              <el-table-column label="不同意" width="120" prop="classify_name">
-              </el-table-column>
-                <el-table-column label="支持率" width="120" prop="classify_name">
-              </el-table-column>
-            </el-table-column>
-
-            <el-table-column label="组评结果">
-              <el-table-column label="同意" width="120" prop="apply_project">
-              </el-table-column>
-              <el-table-column label="不同意" width="120" prop="classify_name">
-              </el-table-column>
-              <el-table-column label="支持率" width="120" prop="classify_name">
-              </el-table-column>
-            </el-table-column>
-
-            <el-table-column label="审批时间" width="120" prop="operation_time">
-            </el-table-column>
-            <el-table-column label="操作" width="190">
+          <dynamicTable :data="tableDataDone" :tableHeader="tableDoneHeader" isdynamic style="width: 100%">
+           
+            <el-table-column label="操作" width="155">
               <template slot-scope="scope">
-                <el-button size="medium" type="text" class="el-icon-refresh" @click="showVisible"> 重审</el-button>
+                <el-button size="medium" type="text" class="el-icon-arrow-right"> 详情</el-button>
               </template>
             </el-table-column>
-          </el-table>
+          </dynamicTable>
           <!-- 分页 -->
           <div style="margin-top: 20px">
             <el-pagination @size-change="handleSizeChange2" @current-change="handleCurrentChange2" :current-page="pagination2.currentPage" :page-sizes="[10, 50, 100, 200]" :page-size="pagination2.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pagination2.dataCount">
@@ -165,7 +143,7 @@ import dynamicTable from "~/components/DynamicTable"; // base on element-ui
 
 export default {
   directives: { elDragDialog },
-  components: { ProjectProgress,dynamicTable },
+  components: { ProjectProgress, dynamicTable },
   data() {
     return {
       nodeNo: this.$route.query.nodeNoProp, //----这是传过来的节点编号
@@ -173,7 +151,7 @@ export default {
         opinion: "",
         applyStatus: "Y",
         nodeNo: this.$route.query.nodeNoProp,
-        blocks: []
+        items: []
       },
       pagination: { dataCount: 0, currentPage: 1, pageSize: 10 }, //未审核分页
       pagination2: { dataCount: 0, currentPage: 1, pageSize: 10 }, //已审核分页
@@ -182,66 +160,171 @@ export default {
       dialogTableVisible: false,
       data: [],
       activeName: "second",
-      tableDataTodo: [ {
-          apply_user_classify_no: 'fruit-1',
-          apply_info: 'apple-10',
-          huping_info: 'banana-10',
-          zuping_info: 'orange-10'
-        }],
+      tableDataTodo: [
+        {
+          apply_user_classify_no: "fruit-1",
+          apply_info: "apple-10",
+          huping_info: "banana-10",
+          zuping_info: "orange-10"
+        }
+      ],
       tableDataDone: [],
       multipleSelection: [],
-
-      tableHeader:[
+      tableTodoHeader: [
         {
           label: "用户对象编号",
           width: 120,
-          prop: "apple",
+          prop: "ywsq-201807.data.applyUserClassifyNo",
           children: []
         },
         {
-          label: "互评情况",
+          label: "业务申请",
           prop: "huping_info",
           children: [
             {
-              label: "同意",
+              label: "申请人",
               width: 120,
-              prop: "huping_ok"
+              prop: "apply_user_id"
             },
             {
-              label: "不同意",
+              label: "所在机构",
               width: 120,
-              prop: "huping_no"
+              prop: "apply_user_org"
             },
             {
-              label: "支持率",
+              label: "业务类别",
               width: 120,
-              prop: "huping_percentage"
+              prop: "ywsq-201807.data.serviceType"
+            },
+            {
+              label: "子业务",
+              width: 120,
+              prop: "ywsq-201807.data.childServiceType"
+            },
+            {
+              label: "申请时间",
+              width: 120,
+              prop: "apply_time"
+            },
+            {
+              label: "申请人职务",
+              width: 120,
+              prop: "apply_user_duty"
             }
           ]
-        },{
-          label: "组评情况",
-          prop: "zuping_info",
+        },
+        {
+          label: "班级互评",
+          prop: "bjhp",
           children: [
             {
               label: "同意",
               width: 120,
-              prop: "zuping_ok"
+              prop: "bjhpY.selectionNum"
             },
             {
               label: "不同意",
               width: 120,
-              prop: "zuping_no"
+              prop: "bjhpN.selectionNum"
+            }
+          ]
+        },
+        {
+          label: "小组评议",
+          prop: "xzpi",
+          children: [
+            { label: "同意", width: 120, prop: "xzpyY.selectionNum" },
+            { label: "不同意", width: 120, prop: "xzpyN.selectionNum" }
+          ]
+        },
+        {
+          label: "审批情况",
+          prop: "spqk",
+          children: [
+            { label: "状态", width: 120, prop: "examine_status" },
+            { label: "审批人", width: 120, prop: "examine_user_id" }
+          ]
+        }
+      ],
+      tableDoneHeader: [
+        {
+          label: "用户对象编号",
+          width: 120,
+          prop: "ywsq-201807.data.applyUserClassifyNo",
+          children: []
+        },
+        {
+          label: "业务申请",
+          prop: "huping_info",
+          children: [
+            {
+              label: "申请人",
+              width: 120,
+              prop: "apply_user_id"
             },
             {
-              label: "支持率",
+              label: "所在机构",
               width: 120,
-              prop: "zuping_percentage"
+              prop: "apply_user_org"
+            },
+            {
+              label: "业务类别",
+              width: 120,
+              prop: "ywsq-201807.data.serviceType"
+            },
+            {
+              label: "子业务",
+              width: 120,
+              prop: "ywsq-201807.data.childServiceType"
+            },
+            {
+              label: "申请时间",
+              width: 120,
+              prop: "apply_time"
+            },
+            {
+              label: "申请人职务",
+              width: 120,
+              prop: "apply_user_duty"
             }
+          ]
+        },
+        {
+          label: "班级互评",
+          prop: "bjhp",
+          children: [
+            {
+              label: "同意",
+              width: 120,
+              prop: "bjhpY.selectionNum"
+            },
+            {
+              label: "不同意",
+              width: 120,
+              prop: "bjhpN.selectionNum"
+            }
+          ]
+        },
+        {
+          label: "小组评议",
+          prop: "xzpi",
+          children: [
+            { label: "同意", width: 120, prop: "xzpyY.selectionNum" },
+            { label: "不同意", width: 120, prop: "xzpyN.selectionNum" }
+          ]
+        },
+        {
+          label: "审批情况",
+          prop: "spqk",
+          children: [
+            { label: "状态", width: 120, prop: "examine_status" },
+            { label: "审批人", width: 120, prop: "examine_user_id" }
           ]
         }
       ]
     };
   },
+  computed: {},
   methods: {
     // 下面是未审核的分页事件
     handleSizeChange(val) {
@@ -286,23 +369,24 @@ export default {
 
       var that = this;
       for (var i = 0; i < this.multipleSelection.length; i++) {
-        var d = {
-          recordId: this.multipleSelection[i].id,
-          applyDataNo: this.multipleSelection[i].data_no,
-          userHashCode: this.multipleSelection[i].apply_user_hash_code
-        };
-        this.approveRecordData.blocks.push(d);
+        this.approveRecordData.items.push(this.multipleSelection[i].id);
       }
       approveRecord(this.approveRecordData).then(data => {
-        that.approveRecordData.blocks = [];
+        this.$message.success("操作成功")
+        that.approveRecordData.items = [];
         that.queryTodoData();
         that.queryDoneData();
+         that.dialogTableVisible = false;
       });
     },
     handleClick(tab, event) {
       console.log(tab, event);
     },
     showVisible() {
+      if (this.multipleSelection.length == 0) {
+        this.$message.error("请选择数据后进行操作!");
+        return;
+      }
       this.dialogTableVisible = true;
     },
     hideVisible() {
@@ -314,6 +398,45 @@ export default {
       queryTodeConfig.nodeNo = this.nodeNo;
       queryTodo(queryTodeConfig).then(response => {
         that.tableDataTodo = response.resBody.resultList;
+        for (var i = 0; i < response.resBody.resultList.length; i++) {
+          if (response.resBody.resultList[i]["bjhp-201710"] != null) {
+            if (
+              (response.resBody.resultList[i][
+                "bjhp-201710"
+              ].data.items[0].itemValue =
+                "Y")
+            ) {
+              that.tableDataTodo[i].bjhpY =
+                response.resBody.resultList[i]["bjhp-201710"].data.items[0];
+              that.tableDataTodo[i].bjhpN =
+                response.resBody.resultList[i]["bjhp-201710"].data.items[1];
+            } else {
+              that.tableDataTodo[i].bjhpY =
+                response.resBody.resultList[i]["bjhp-201710"].data.items[1];
+              that.tableDataTodo[i].bjhpN =
+                response.resBody.resultList[i]["bjhp-201710"].data.items[0];
+            }
+          }
+          if (response.resBody.resultList[i]["xzpy-201710"] != null) {
+            if (
+              (response.resBody.resultList[i][
+                "xzpy-201710"
+              ].data.items[0].itemValue =
+                "Y")
+            ) {
+              that.tableDataTodo[i].xzpyY =
+                response.resBody.resultList[i]["xzpy-201710"].data.items[0];
+              that.tableDataTodo[i].xzpyN =
+                response.resBody.resultList[i]["xzpy-201710"].data.items[1];
+            } else {
+              that.tableDataTodo[i].xzpyY =
+                response.resBody.resultList[i]["xzpy-201710"].data.items[1];
+              that.tableDataTodo[i].xzpyN =
+                response.resBody.resultList[i]["xzpy-201710"].data.items[0];
+            }
+          }
+        }
+        console.log(that.tableDataTodo);
         that.pagination.dataCount = response.resBody.page.totalRecord;
       });
     },
@@ -323,6 +446,44 @@ export default {
       queryDoneConfig.nodeNo = this.nodeNo;
       queryDone(queryDoneConfig).then(response => {
         that.tableDataDone = response.resBody.resultList;
+        for (var i = 0; i < response.resBody.resultList.length; i++) {
+          if (response.resBody.resultList[i]["bjhp-201710"] != null) {
+            if (
+              (response.resBody.resultList[i][
+                "bjhp-201710"
+              ].data.items[0].itemValue =
+                "Y")
+            ) {
+              that.tableDataDone[i].bjhpY =
+                response.resBody.resultList[i]["bjhp-201710"].data.items[0];
+              that.tableDataDone[i].bjhpN =
+                response.resBody.resultList[i]["bjhp-201710"].data.items[1];
+            } else {
+              that.tableDataDone[i].bjhpY =
+                response.resBody.resultList[i]["bjhp-201710"].data.items[1];
+              that.tableDataDone[i].bjhpN =
+                response.resBody.resultList[i]["bjhp-201710"].data.items[0];
+            }
+          }
+          if (response.resBody.resultList[i]["xzpy-201710"] != null) {
+            if (
+              (response.resBody.resultList[i][
+                "xzpy-201710"
+              ].data.items[0].itemValue =
+                "Y")
+            ) {
+              that.tableDataDone[i].xzpyY =
+                response.resBody.resultList[i]["xzpy-201710"].data.items[0];
+              that.tableDataDone[i].xzpyN =
+                response.resBody.resultList[i]["xzpy-201710"].data.items[1];
+            } else {
+              that.tableDataDone[i].xzpyY =
+                response.resBody.resultList[i]["xzpy-201710"].data.items[1];
+              that.tableDataDone[i].xzpyN =
+                response.resBody.resultList[i]["xzpy-201710"].data.items[0];
+            }
+          }
+        }
         that.pagination2.dataCount = response.resBody.page.totalRecord;
       });
     }
@@ -351,5 +512,4 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-
 </style>

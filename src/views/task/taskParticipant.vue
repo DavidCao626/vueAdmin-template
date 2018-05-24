@@ -1,29 +1,6 @@
 <template>
 
   <div>
-    <!-- <el-form :model="headFormData" label-width="80px">
-      <el-row>
-        <el-col :span="8">
-          <el-form-item label='组织'>
-            <el-cascader :change-on-select='true' expand-trigger="click" :props="orgProps" :options="orgList" v-model="headFormData.nodeOrgCode" @change="orgCodeChange">
-            </el-cascader>
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item label='职务'>
-            <el-select v-model="headFormData.dutyCode" placeholder="请选择职务">
-              <el-option v-for="(item,index) in dutyList" :key="index" :label="item.duty_name" :value="item.duty_code"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item label=''>
-            <el-button type="success" size="small" @click="queryUser">查询</el-button>
-          </el-form-item>
-        </el-col>
-      </el-row>
-    </el-form> -->
-
     <transfer :data="data" v-model="value" :transferHeight="300" :operation="operation" :titles="['用户列表', '参与者']" filterable :valueItems="valueItem">
       <span slot="operation-slot">
         <!-- <el-button type="primary" size="small" @click="saveParticipant">保存提交</el-button> -->
@@ -55,12 +32,19 @@ export default {
   props: {
     systemSerialNoProp: {
       type: String,
-      default: "0"
+      default: ""
     }
   },
   watch: {
+     valueItem: function() {
+      this.value.length = 0;
+      var that = this;
+      this.valueItem.forEach(item => {
+        that.value.push(item.key);
+      });
+    },
     systemSerialNoProp(val, oldval) {
-      alert("123123"+val)
+      
       this.systemSerialNo = val;
       var data = { systemSerialNo: this.systemSerialNo };
       new Promise((resolve, reject) => {
@@ -159,15 +143,6 @@ export default {
       ],
       value: []
     };
-  },
-  watch: {
-    valueItem: function() {
-      this.value.length = 0;
-      var that = this;
-      this.valueItem.forEach(item => {
-        that.value.push(item.key);
-      });
-    }
   },
   methods: {
     saveParticipant() {
