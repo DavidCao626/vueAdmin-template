@@ -3,8 +3,8 @@
     <template v-if="this.isdynamic && this.tableHeader.length>0">
       <div class="filter-container" style="text-align: right;margin-top: -35px;margin-bottom: 10px;">
         <el-checkbox-group v-model="checkboxVal">
-          <el-checkbox v-for="(fruit1,index) in tableHeader" :key='index' :label="fruit1.prop">{{fruit1.label}}</el-checkbox>
-        </el-checkbox-group>
+          <el-checkbox v-for="(fruit1,index) in tableHeader" :key='index' v-model="fruit1.isShow" :label="fruit1.prop">{{fruit1.label}}</el-checkbox>
+        </el-checkbox-group> 
       </div>
     </template>
 
@@ -28,9 +28,9 @@
 <script>
 export default {
   props: {
-    isdynamic:{
-      type:Boolean,
-      default:false
+    isdynamic: {
+      type: Boolean,
+      default: false
     },
     tableHeader: {
       type: Array,
@@ -47,40 +47,40 @@ export default {
       formTheadOptions: [],
       checkboxVal: [], // checkboxVal
       formThead: this.tableHeader // 默认表头 Default header
-    };
+    }
   },
   computed: {},
   mounted() {
-  
-
     this.tableHeader.forEach(element => {
-      this.formTheadOptions.push(element.prop);
-      this.checkboxVal.push(element.prop);
-    });
-//debugger
+      this.formTheadOptions.push(element.prop)
+      if (element.checked) {
+        this.checkboxVal.push(element.prop)
+      }
+    })
+    // debugger
   },
-  methods:{
-    handleSelectionChange(selection){
-      this.$emit('selection-change',selection)
+  methods: {
+    handleSelectionChange(selection) {
+      this.$emit('selection-change', selection)
     }
   },
   watch: {
     checkboxVal(valArr) {
       const formTheadData = this.formTheadOptions.filter(
         i => valArr.indexOf(i) >= 0
-      );
-      this.key = this.key + 1; // 为了保证table 每次都会重渲 In order to ensure the table will be re-rendered each time
-      let temValue = [];
+      )
+      this.key = this.key + 1 // 为了保证table 每次都会重渲 In order to ensure the table will be re-rendered each time
+      const temValue = []
       formTheadData.forEach(item => {
         this.tableHeader.forEach(tableHeaderItem => {
           if (tableHeaderItem.prop === item) {
-            temValue.push(tableHeaderItem);
+            temValue.push(tableHeaderItem)
           }
-        });
-      });
-      this.formThead = temValue;
+        })
+      })
+      this.formThead = temValue
     }
   }
-};
+}
 </script>
 
