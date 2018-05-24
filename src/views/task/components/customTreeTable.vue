@@ -53,8 +53,8 @@
               </el-button>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item @click.native="Restrict(scope.row,'add')">配置约束</el-dropdown-item>
-              <el-dropdown-item @click.native="Restrict(scope.row,'updete')">修改约束</el-dropdown-item>
+              <el-dropdown-item @click.native="dialogTable(scope.row,'restrict')">配置约束</el-dropdown-item>
+              <el-dropdown-item @click.native="dialogTable(scope.row,'restrict')">修改约束</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
 
@@ -118,7 +118,9 @@ import {
   queryNodeByLiblerld,
   queryChildTaskNodeBySystemSerialNo,
   completedNode,
-  startNode
+  startNode,
+  autoCreateFacade,//自动创建工序
+  autoCreate//自动创建任务
 } from "~/api/task";
 import addTaskNode from "./../addTaskNode";
 import addTaskFacade from "./../addTaskFacade";
@@ -169,6 +171,10 @@ export default {
       expandAll: false,
       columns: [
         {
+          text:"项目名称",
+          value:"projectName"
+        },
+        {
           text: "项目流程",
           value: "nodeTitle"
         },
@@ -192,7 +198,7 @@ export default {
           width: 200
         },
         {
-          text: "项目负责人",
+          text: "创建人",
           value: "creater",
           width: 100
         },
@@ -230,6 +236,7 @@ export default {
           bgintime: element.planStartTime,
           endtime: element.planCompleteTime,
           rootNodeNo: element.rootNodeNo,
+          projectName:element.projectName,
           _expanded: false
         };
         // debugger
@@ -266,6 +273,7 @@ export default {
               bgintime: element.planStartTime,
               endtime: element.planCompleteTime,
               rootNodeNo: element.rootNodeNo,
+              projectName:element.projectName,
               _expanded: false
             };
             if (element.isLeafNode === "N") {
@@ -292,7 +300,6 @@ export default {
       //分配参与者
       this.systemSerialNo = item.No;
       alert("eqweqwe" + this.systemSerialNo);
-       this.dynamicView = taskParticipant
       this.dialogTableVisibleMParticipant = true;
     },
     //王红坤结束
@@ -329,6 +336,7 @@ export default {
                 nodeOrgCode: element.nodeOrgCode,
                 timeLine: 62,
                 bgintime: element.planStartTime,
+                projectName:element.projectName,
                 endtime: element.planCompleteTime
               };
               if (element.isLeafNode === "N") {
@@ -429,6 +437,7 @@ export default {
       new Promise((resolve, reject) => {
         startNode({ systemSerialNo: row.No }).then(response => {
           console.log(response.resBody);
+          this.$message.success("操作成功");
         });
       });
     },
@@ -436,6 +445,7 @@ export default {
       new Promise((resolve, reject) => {
         completedNode({ systemSerialNo: row.No }).then(response => {
           console.log(response.resBody);
+           this.$message.success("操作成功");
         });
       });
     },

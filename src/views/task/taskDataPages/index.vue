@@ -106,10 +106,12 @@
           <div class="clearfix"></div>
 
           <!-- 数据表 -->
-          <dynamicTable :data="tableDataTodo" @selection-change="handleSelectionChange" :tableHeader="tableTodoHeader" isdynamic style="width: 100%">
-            <template slot="left-column">
-              <el-table-column type="selection" width="55">
-              </el-table-column>
+          <dynamicTable :data="tableDataTodo"  @selection-change="handleSelectionChange" :tableHeader="tableTodoHeader" isdynamic style="width: 100%">
+             <template slot="left-column">
+               <el-table-column
+                  type="selection"
+                  width="55">
+                </el-table-column>
             </template>
             <el-table-column label="操作" width="155">
               <template slot-scope="scope">
@@ -135,7 +137,7 @@
           </div>
           <!-- 数据表 -->
           <dynamicTable :data="tableDataDone" :tableHeader="tableDoneHeader" isdynamic style="width: 100%">
-
+           
             <el-table-column label="操作" width="155">
               <template slot-scope="scope">
                 <el-button size="medium" type="text" class="el-icon-arrow-right"> 详情</el-button>
@@ -242,12 +244,12 @@ export default {
           children: [
             {
               label: "同意",
-              width: 120,
+              width: 80,
               prop: "bjhpY.selectionNum"
             },
             {
               label: "不同意",
-              width: 120,
+              width: 80,
               prop: "bjhpN.selectionNum"
             }
           ]
@@ -256,16 +258,16 @@ export default {
           label: "小组评议",
           prop: "xzpi",
           children: [
-            { label: "同意", width: 120, prop: "xzpyY.selectionNum" },
-            { label: "不同意", width: 120, prop: "xzpyN.selectionNum" }
+            { label: "同意", width: 80, prop: "xzpyY.selectionNum" },
+            { label: "不同意", width: 80, prop: "xzpyN.selectionNum" }
           ]
         },
         {
           label: "审批情况",
           prop: "spqk",
           children: [
-            { label: "状态", width: 120, prop: "examine_status" },
-            { label: "审批人", width: 120, prop: "examine_user_id" }
+            { label: "状态", width: 80, prop: "examine_status" },
+            { label: "审批人", width: 80, prop: "examine_user_id" }
           ]
         }
       ],
@@ -318,12 +320,12 @@ export default {
           children: [
             {
               label: "同意",
-              width: 120,
+              width: 80,
               prop: "bjhpY.selectionNum"
             },
             {
               label: "不同意",
-              width: 120,
+              width: 80,
               prop: "bjhpN.selectionNum"
             }
           ]
@@ -332,15 +334,15 @@ export default {
           label: "小组评议",
           prop: "xzpi",
           children: [
-            { label: "同意", width: 120, prop: "xzpyY.selectionNum" },
-            { label: "不同意", width: 120, prop: "xzpyN.selectionNum" }
+            { label: "同意", width: 80, prop: "xzpyY.selectionNum" },
+            { label: "不同意", width: 80, prop: "xzpyN.selectionNum" }
           ]
         },
         {
           label: "审批情况",
           prop: "spqk",
           children: [
-            { label: "状态", width: 120, prop: "examine_status" },
+            { label: "状态", width: 80, prop: "examine_status" },
             { label: "审批人", width: 120, prop: "examine_user_id" }
           ]
         }
