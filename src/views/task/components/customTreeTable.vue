@@ -40,9 +40,9 @@
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item @click.native="dialogTable(scope.row,'task')">创建任务</el-dropdown-item>
               <el-dropdown-item @click.native="dialogTable(scope.row,'facade')">创建工序</el-dropdown-item>
-               <!-- <el-dropdown-item @click.native="updateDialog(scope.row,'P')">修改项目</el-dropdown-item>
-                 <el-dropdown-item @click.native="Restrict(scope.row,'add')">配置约束</el-dropdown-item> -->
-                 <el-dropdown-item @click.native="Restrict(scope.row,'updete')">修改约束</el-dropdown-item>
+             <el-dropdown-item @click.native="updateDialog(scope.row,'P')">修改项目</el-dropdown-item>
+                  <!--  <el-dropdown-item @click.native="Restrict(scope.row,'add')">配置约束</el-dropdown-item> -->
+                 <!-- <el-dropdown-item @click.native="Restrict(scope.row,'updete')">修改约束</el-dropdown-item> -->
                      <el-dropdown-item @click.native="dialogTable(scope.row,'participant')">分配参与者</el-dropdown-item>
                                 <el-dropdown-item @click.native="Start(scope.row)">启动项目</el-dropdown-item>
 
