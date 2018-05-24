@@ -106,10 +106,12 @@
           <div class="clearfix"></div>
 
           <!-- 数据表 -->
-          <dynamicTable :data="tableDataTodo" @selection-change="handleSelectionChange" :tableHeader="tableTodoHeader" isdynamic style="width: 100%">
-            <template slot="left-column">
-              <el-table-column type="selection" width="55">
-              </el-table-column>
+          <dynamicTable :data="tableDataTodo"  @selection-change="handleSelectionChange" :tableHeader="tableTodoHeader" isdynamic style="width: 100%">
+             <template slot="left-column">
+               <el-table-column
+                  type="selection"
+                  width="55">
+                </el-table-column>
             </template>
             <el-table-column label="操作" width="155">
               <template slot-scope="scope">
@@ -135,7 +137,7 @@
           </div>
           <!-- 数据表 -->
           <dynamicTable :data="tableDataDone" :tableHeader="tableDoneHeader" isdynamic style="width: 100%">
-
+           
             <el-table-column label="操作" width="155">
               <template slot-scope="scope">
                 <el-button size="medium" type="text" class="el-icon-arrow-right"> 详情</el-button>

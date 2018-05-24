@@ -292,7 +292,6 @@ export default {
       //分配参与者
       this.systemSerialNo = item.No;
       alert("eqweqwe" + this.systemSerialNo);
-       this.dynamicView = taskParticipant
       this.dialogTableVisibleMParticipant = true;
     },
     //王红坤结束
