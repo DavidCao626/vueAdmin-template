@@ -4,7 +4,7 @@
 		<div slot="panel" class="panel">
 
 			<div class="panel-body">
-				<el-form size="mini" :model="formStore.data" ref='form1' :rules='formStore.rules' label-width="80px">
+				<el-form size="mini" :model="formStore.data" ref='form1' :rules='formStore.rules' label-width="100px" style="width:20vw">
 					 <el-form-item label="项目名称" prop="projectName">
 						<el-input size="mini" v-model="formStore.data.projectName" placeholder="请输入项目名称"></el-input>
 					</el-form-item
@@ -53,7 +53,7 @@ export default {
         data: {
           // nodeTitle: '', // 节点标题
           // nodeDesc: '', // 节点描述
-          projectName:"",
+          projectName: '',
           planStartTime: '', // 计划开始时间
           planCompleteTime: '', // 计划完成时间
           projectNo: '', // 项目编号
@@ -62,7 +62,7 @@ export default {
         rules: {
           // nodeTitle: [], // 节点标题
           // nodeDesc: [], // 节点描述
-          projectName:[],
+          projectName: [],
           planStartTime: [], // 计划开始时间
           planCompleteTime: [], // 计划完成时间
           projectNo: [], // 项目编号

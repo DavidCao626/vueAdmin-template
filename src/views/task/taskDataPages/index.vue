@@ -7,39 +7,41 @@
         <el-col :span="2">
           <div class="grid-content bg-purple">节点名称：</div>
         </el-col>
+        
         <el-col :span="2">
-          <div class="grid-content bg-purple">{{nodeInfo.node_title}}</div>
+          <div class="grid-content bg-purple rcol">{{nodeInfo.node_title}}</div>
+        </el-col>
+         <!-- <el-col :span="2">
+          <div class="grid-content bg-purple">节点描述：</div>
         </el-col>
         <el-col :span="2">
-          <div class="grid-content bg-purple">创建人：</div>
+          <div class="grid-content bg-purple rcol">{{nodeInfo.node_desc}}</div>
+        </el-col> -->
+        <el-col :span="2">
+          <div class="grid-content bg-purple">节点责任人：</div>
         </el-col>
         <el-col :span="2">
-          <div class="grid-content bg-purple-light">{{nodeInfo.creator_name}}</div>
+          <div class="grid-content bg-purple-light rcol">{{nodeInfo.creator_name?nodeInfo.creator_name:'无'}}</div>
         </el-col>
         <el-col :span="2">
           <div class="grid-content bg-purple">开始时间：</div>
         </el-col>
         <el-col :span="2">
-          <div class="grid-content bg-purple">{{nodeInfo.plan_start_time}}</div>
+          <div class="grid-content bg-purple rcol">{{nodeInfo.plan_start_time}}</div>
         </el-col>
         <el-col :span="2">
           <div class="grid-content bg-purple">结束时间：</div>
         </el-col>
         <el-col :span="2">
-          <div class="grid-content bg-purple-light">{{nodeInfo.plan_complete_time}}</div>
+          <div class="grid-content bg-purple-light ">{{nodeInfo.plan_complete_time}}</div>
         </el-col>
-        <el-col :span="2">
-          <div class="grid-content bg-purple">节点描述：</div>
-        </el-col>
-        <el-col :span="2">
-          <div class="grid-content bg-purple">{{nodeInfo.node_desc}}</div>
-        </el-col>
-        <el-col :span="2">
+       
+        <!-- <el-col :span="2">
           <div class="grid-content bg-purple">创建时间</div>
         </el-col>
         <el-col :span="2">
           <div class="grid-content bg-purple">{{nodeInfo.create_time}}</div>
-        </el-col>
+        </el-col> -->
       </el-row>
     </div>
     <div>
@@ -173,181 +175,191 @@ export default {
       updateDataDV: false,
       nodeNo: this.$route.query.nodeNoProp, //----这是传过来的节点编号
       approveRecordData: {
-        opinion: "",
-        applyStatus: "Y",
+        opinion: '',
+        applyStatus: 'Y',
         nodeNo: this.$route.query.nodeNoProp,
         items: []
       },
-      pagination: { dataCount: 0, currentPage: 1, pageSize: 10 }, //未审核分页
-      pagination2: { dataCount: 0, currentPage: 1, pageSize: 10 }, //已审核分页
+      pagination: { dataCount: 0, currentPage: 1, pageSize: 10 }, // 未审核分页
+      pagination2: { dataCount: 0, currentPage: 1, pageSize: 10 }, // 已审核分页
 
       nodeInfo: {},
       dialogTableVisible: false,
       data: [],
-      activeName: "second",
+      activeName: 'second',
       tableDataTodo: [
         {
-          apply_user_classify_no: "fruit-1",
-          apply_info: "apple-10",
-          huping_info: "banana-10",
-          zuping_info: "orange-10"
+          apply_user_classify_no: 'fruit-1',
+          apply_info: 'apple-10',
+          huping_info: 'banana-10',
+          zuping_info: 'orange-10'
         }
       ],
       tableDataDone: [],
       multipleSelection: [],
       tableTodoHeader: [
         {
-          label: "用户对象编号",
+          label: '用户对象编号',
           width: 120,
-          prop: "ywsq-201807.data.applyUserClassifyNo",
-          children: []
+          prop: 'ywsq-201807.data.applyUserClassifyNo',
+          children: [],
+          checked: false
         },
         {
-          label: "业务申请",
-          prop: "huping_info",
+          label: '业务申请',
+          prop: 'huping_info',
+          checked: true,
           children: [
             {
-              label: "申请人",
+              label: '申请人',
               width: 120,
-              prop: "apply_user_id"
+              prop: 'apply_user_id'
             },
             {
-              label: "所在机构",
+              label: '所在机构',
               width: 120,
-              prop: "apply_user_org"
+              prop: 'apply_user_org'
             },
             {
-              label: "业务类别",
+              label: '业务类别',
               width: 120,
-              prop: "ywsq-201807.data.serviceType"
+              prop: 'ywsq-201807.data.serviceType'
             },
             {
-              label: "子业务",
+              label: '子业务',
               width: 120,
-              prop: "ywsq-201807.data.childServiceType"
+              prop: 'ywsq-201807.data.childServiceType'
             },
             {
-              label: "申请时间",
+              label: '申请时间',
               width: 120,
-              prop: "apply_time"
+              prop: 'apply_time'
             },
             {
-              label: "申请人职务",
+              label: '申请人职务',
               width: 120,
-              prop: "apply_user_duty"
+              prop: 'apply_user_duty'
             }
           ]
         },
         {
-          label: "班级互评",
-          prop: "bjhp",
+          label: '班级互评',
+          prop: 'bjhp',
+          checked: true,
           children: [
             {
-              label: "同意",
+              label: '同意',
               width: 80,
-              prop: "bjhpY.selectionNum"
+              prop: 'bjhpY.selectionNum'
             },
             {
-              label: "不同意",
+              label: '不同意',
               width: 80,
-              prop: "bjhpN.selectionNum"
+              prop: 'bjhpN.selectionNum'
             }
           ]
         },
         {
-          label: "小组评议",
-          prop: "xzpi",
+          label: '小组评议',
+          checked: true,
+          prop: 'xzpi',
           children: [
-            { label: "同意", width: 80, prop: "xzpyY.selectionNum" },
-            { label: "不同意", width: 80, prop: "xzpyN.selectionNum" }
+            { label: '同意', width: 80, prop: 'xzpyY.selectionNum' },
+            { label: '不同意', width: 80, prop: 'xzpyN.selectionNum' }
           ]
         },
         {
-          label: "审批情况",
-          prop: "spqk",
+          label: '审批情况',
+          checked: true,
+          prop: 'spqk',
           children: [
-            { label: "状态", width: 80, prop: "examine_status" },
-            { label: "审批人", width: 80, prop: "examine_user_id" }
+            { label: '状态', width: 80, prop: 'examine_status' },
+            { label: '审批人', width: 80, prop: 'examine_user_id' }
           ]
         }
       ],
       tableDoneHeader: [
         {
-          label: "用户对象编号",
+          label: '用户对象编号',
           width: 120,
-          prop: "ywsq-201807.data.applyUserClassifyNo",
+          prop: 'ywsq-201807.data.applyUserClassifyNo',
+          checked: false,
           children: []
         },
         {
-          label: "业务申请",
-          prop: "huping_info",
+          label: '业务申请',
+          prop: 'huping_info',
+          checked: true,
           children: [
             {
-              label: "申请人",
+              label: '申请人',
               width: 120,
-              prop: "apply_user_id"
+              prop: 'apply_user_id'
             },
             {
-              label: "所在机构",
+              label: '所在机构',
               width: 120,
-              prop: "apply_user_org"
+              prop: 'apply_user_org'
             },
             {
-              label: "业务类别",
+              label: '业务类别',
               width: 120,
-              prop: "ywsq-201807.data.serviceType"
+              prop: 'ywsq-201807.data.serviceType'
             },
             {
-              label: "子业务",
+              label: '子业务',
               width: 120,
-              prop: "ywsq-201807.data.childServiceType"
+              prop: 'ywsq-201807.data.childServiceType'
             },
             {
-              label: "申请时间",
+              label: '申请时间',
               width: 120,
-              prop: "apply_time"
+              prop: 'apply_time'
             },
             {
-              label: "申请人职务",
+              label: '申请人职务',
               width: 120,
-              prop: "apply_user_duty"
+              prop: 'apply_user_duty'
             }
           ]
         },
         {
-          label: "班级互评",
-          prop: "bjhp",
+          label: '班级互评',
+          prop: 'bjhp',
+          checked: true,
           children: [
             {
-              label: "同意",
+              label: '同意',
               width: 80,
-              prop: "bjhpY.selectionNum"
+              prop: 'bjhpY.selectionNum'
             },
             {
-              label: "不同意",
+              label: '不同意',
               width: 80,
-              prop: "bjhpN.selectionNum"
+              prop: 'bjhpN.selectionNum'
             }
           ]
         },
         {
-          label: "小组评议",
-          prop: "xzpi",
+          label: '小组评议',
+          checked: true,
+          prop: 'xzpi',
           children: [
-            { label: "同意", width: 80, prop: "xzpyY.selectionNum" },
-            { label: "不同意", width: 80, prop: "xzpyN.selectionNum" }
+            { label: '同意', width: 80, prop: 'xzpyY.selectionNum' },
+            { label: '不同意', width: 80, prop: 'xzpyN.selectionNum' }
           ]
         },
         {
-          label: "审批情况",
-          prop: "spqk",
+          label: '审批情况',
+          prop: 'spqk',
+          checked: true,
           children: [
-            { label: "状态", width: 80, prop: "examine_status" },
-            { label: "审批人", width: 120, prop: "examine_user_id" }
+            { label: '状态', width: 80, prop: 'examine_status' },
+            { label: '审批人', width: 120, prop: 'examine_user_id' }
           ]
         }
       ]
-    };
+    }
   },
   computed: {},
   methods: {
@@ -378,188 +390,196 @@ that.queryDoneData();
     },
     // 下面是未审核的分页事件
     handleSizeChange(val) {
-      this.pagination.pageSize = val;
-      this.queryTodoData();
+      this.pagination.pageSize = val
+      this.queryTodoData()
     },
     handleCurrentChange(val) {
-      this.pagination.currentPage = val;
-      this.queryTodoData();
+      this.pagination.currentPage = val
+      this.queryTodoData()
     },
     // 下面是已审核的分页事件
     handleSizeChange2(val) {
-      this.pagination2.pageSize = val;
-      this.queryDoneData();
+      this.pagination2.pageSize = val
+      this.queryDoneData()
     },
     handleCurrentChange2(val) {
-      this.pagination2.currentPage = val;
-      this.queryDoneData();
+      this.pagination2.currentPage = val
+      this.queryDoneData()
     },
     handleClose(tag) {
-      this.multipleSelection.splice(this.multipleSelection.indexOf(tag), 1);
+      this.multipleSelection.splice(this.multipleSelection.indexOf(tag), 1)
     },
     toggleSelection(rows) {
       if (rows) {
         rows.forEach(row => {
-          this.$refs.multipleTable.toggleRowSelection(row);
-        });
+          this.$refs.multipleTable.toggleRowSelection(row)
+        })
       } else {
-        this.$refs.multipleTable.clearSelection();
+        this.$refs.multipleTable.clearSelection()
       }
     },
     handleSelectionChange(val) {
-      this.multipleSelection = val;
+      this.multipleSelection = val
 
-      console.log(val);
+      console.log(val)
     },
     onSubmit() {
       if (this.multipleSelection.length == 0) {
-        this.$message.error("您没有选择任何数据!");
-        return;
+        this.$message.error('您没有选择任何数据!')
+        return
       }
 
-      var that = this;
+      var that = this
       for (var i = 0; i < this.multipleSelection.length; i++) {
-        this.approveRecordData.items.push(this.multipleSelection[i].id);
+        this.approveRecordData.items.push(this.multipleSelection[i].id)
       }
       approveRecord(this.approveRecordData).then(data => {
-        this.$message.success("操作成功");
-        that.approveRecordData.items = [];
-        that.queryTodoData();
-        that.queryDoneData();
-        that.dialogTableVisible = false;
-      });
+        this.$message.success('操作成功')
+        that.approveRecordData.items = []
+        that.queryTodoData()
+        that.queryDoneData()
+        that.dialogTableVisible = false
+      })
     },
     handleClick(tab, event) {
-      console.log(tab, event);
+      console.log(tab, event)
     },
     showVisible() {
       if (this.multipleSelection.length == 0) {
-        this.$message.error("请选择数据后进行操作!");
-        return;
+        this.$message.error('请选择数据后进行操作!')
+        return
       }
-      this.dialogTableVisible = true;
+      this.dialogTableVisible = true
     },
     hideVisible() {
-      this.dialogTableVisible = false;
+      this.dialogTableVisible = false
     },
     queryTodoData() {
-      var that = this;
-      var queryTodeConfig = this.pagination;
-      queryTodeConfig.nodeNo = this.nodeNo;
+      var that = this
+      var queryTodeConfig = this.pagination
+      queryTodeConfig.nodeNo = this.nodeNo
       queryTodo(queryTodeConfig).then(response => {
-        that.tableDataTodo = response.resBody.resultList;
+        that.tableDataTodo = response.resBody.resultList
         for (var i = 0; i < response.resBody.resultList.length; i++) {
-          if (response.resBody.resultList[i]["bjhp-201710"] != null) {
+          if (response.resBody.resultList[i]['bjhp-201710'] != null) {
             if (
               (response.resBody.resultList[i][
-                "bjhp-201710"
+                'bjhp-201710'
               ].data.items[0].itemValue =
-                "Y")
+                'Y')
             ) {
               that.tableDataTodo[i].bjhpY =
-                response.resBody.resultList[i]["bjhp-201710"].data.items[0];
+                response.resBody.resultList[i]['bjhp-201710'].data.items[0]
               that.tableDataTodo[i].bjhpN =
-                response.resBody.resultList[i]["bjhp-201710"].data.items[1];
+                response.resBody.resultList[i]['bjhp-201710'].data.items[1]
             } else {
               that.tableDataTodo[i].bjhpY =
-                response.resBody.resultList[i]["bjhp-201710"].data.items[1];
+                response.resBody.resultList[i]['bjhp-201710'].data.items[1]
               that.tableDataTodo[i].bjhpN =
-                response.resBody.resultList[i]["bjhp-201710"].data.items[0];
+                response.resBody.resultList[i]['bjhp-201710'].data.items[0]
             }
           }
-          if (response.resBody.resultList[i]["xzpy-201710"] != null) {
+          if (response.resBody.resultList[i]['xzpy-201710'] != null) {
             if (
               (response.resBody.resultList[i][
-                "xzpy-201710"
+                'xzpy-201710'
               ].data.items[0].itemValue =
-                "Y")
+                'Y')
             ) {
               that.tableDataTodo[i].xzpyY =
-                response.resBody.resultList[i]["xzpy-201710"].data.items[0];
+                response.resBody.resultList[i]['xzpy-201710'].data.items[0]
               that.tableDataTodo[i].xzpyN =
-                response.resBody.resultList[i]["xzpy-201710"].data.items[1];
+                response.resBody.resultList[i]['xzpy-201710'].data.items[1]
             } else {
               that.tableDataTodo[i].xzpyY =
-                response.resBody.resultList[i]["xzpy-201710"].data.items[1];
+                response.resBody.resultList[i]['xzpy-201710'].data.items[1]
               that.tableDataTodo[i].xzpyN =
-                response.resBody.resultList[i]["xzpy-201710"].data.items[0];
+                response.resBody.resultList[i]['xzpy-201710'].data.items[0]
             }
           }
         }
-        console.log(that.tableDataTodo);
-        that.pagination.dataCount = response.resBody.page.totalRecord;
-      });
+        console.log(that.tableDataTodo)
+        that.pagination.dataCount = response.resBody.page.totalRecord
+      })
     },
     queryDoneData() {
-      var that = this;
-      var queryDoneConfig = this.pagination2;
-      queryDoneConfig.nodeNo = this.nodeNo;
+      var that = this
+      var queryDoneConfig = this.pagination2
+      queryDoneConfig.nodeNo = this.nodeNo
       queryDone(queryDoneConfig).then(response => {
-        that.tableDataDone = response.resBody.resultList;
+        that.tableDataDone = response.resBody.resultList
         for (var i = 0; i < response.resBody.resultList.length; i++) {
-          if (response.resBody.resultList[i]["bjhp-201710"] != null) {
+          if (response.resBody.resultList[i]['bjhp-201710'] != null) {
             if (
               (response.resBody.resultList[i][
-                "bjhp-201710"
+                'bjhp-201710'
               ].data.items[0].itemValue =
-                "Y")
+                'Y')
             ) {
               that.tableDataDone[i].bjhpY =
-                response.resBody.resultList[i]["bjhp-201710"].data.items[0];
+                response.resBody.resultList[i]['bjhp-201710'].data.items[0]
               that.tableDataDone[i].bjhpN =
-                response.resBody.resultList[i]["bjhp-201710"].data.items[1];
+                response.resBody.resultList[i]['bjhp-201710'].data.items[1]
             } else {
               that.tableDataDone[i].bjhpY =
-                response.resBody.resultList[i]["bjhp-201710"].data.items[1];
+                response.resBody.resultList[i]['bjhp-201710'].data.items[1]
               that.tableDataDone[i].bjhpN =
-                response.resBody.resultList[i]["bjhp-201710"].data.items[0];
+                response.resBody.resultList[i]['bjhp-201710'].data.items[0]
             }
           }
-          if (response.resBody.resultList[i]["xzpy-201710"] != null) {
+          if (response.resBody.resultList[i]['xzpy-201710'] != null) {
             if (
               (response.resBody.resultList[i][
-                "xzpy-201710"
+                'xzpy-201710'
               ].data.items[0].itemValue =
-                "Y")
+                'Y')
             ) {
               that.tableDataDone[i].xzpyY =
-                response.resBody.resultList[i]["xzpy-201710"].data.items[0];
+                response.resBody.resultList[i]['xzpy-201710'].data.items[0]
               that.tableDataDone[i].xzpyN =
-                response.resBody.resultList[i]["xzpy-201710"].data.items[1];
+                response.resBody.resultList[i]['xzpy-201710'].data.items[1]
             } else {
               that.tableDataDone[i].xzpyY =
-                response.resBody.resultList[i]["xzpy-201710"].data.items[1];
+                response.resBody.resultList[i]['xzpy-201710'].data.items[1]
               that.tableDataDone[i].xzpyN =
-                response.resBody.resultList[i]["xzpy-201710"].data.items[0];
+                response.resBody.resultList[i]['xzpy-201710'].data.items[0]
             }
           }
         }
-        that.pagination2.dataCount = response.resBody.page.totalRecord;
-      });
+        that.pagination2.dataCount = response.resBody.page.totalRecord
+      })
     }
   },
   watch: {
     checkboxVal(valArr) {
       this.formThead = this.formTheadOptions.filter(
         i => valArr.indexOf(i) >= 0
-      );
-      this.key = this.key + 1; // 为了保证table 每次都会重渲 In order to ensure the table will be re-rendered each time
+      )
+      this.key = this.key + 1 // 为了保证table 每次都会重渲 In order to ensure the table will be re-rendered each time
     }
   },
   mounted() {
-    var that = this;
+    var that = this
     // 获取节点信息
     var getNodeInfoConfig = {
       nodeNo: this.nodeNo
-    };
+    }
     getNodeInfo(getNodeInfoConfig).then(response => {
-      this.nodeInfo = response.resBody;
-    });
-    this.queryTodoData();
-    this.queryDoneData();
+      this.nodeInfo = response.resBody
+    })
+    this.queryTodoData()
+    this.queryDoneData()
     // --------------------------
   }
-};
+}
 </script>
-<style lang="scss" scoped>
+<style >
+.weui-desktop-panel {
+  padding: 20px;
+}
+.rcol {
+  border-right: solid #ddd 2px;
+  margin-right: 25px;
+  margin-left: -25px;
+}
 </style>
