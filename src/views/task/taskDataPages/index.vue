@@ -3,69 +3,44 @@
     <div slot="title">节点信息</div>
 
     <div slot="panel">
-      <ProjectProgress>
-        <div style="max-width:800px">
-          <el-row>
-            <el-col :span="2" :offset="1">
+      <el-row>
+         <el-col :span="2">
               <div class="grid-content bg-purple">节点名称：</div>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="2">
               <div class="grid-content bg-purple">{{nodeInfo.node_title}}</div>
             </el-col>
-            <el-col :span="2" :offset="1">
+            <el-col :span="2" >
               <div class="grid-content bg-purple">创建人：</div>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="2">
               <div class="grid-content bg-purple-light">{{nodeInfo.creator_name}}</div>
             </el-col>
-          </el-row>
-          <br/>
-          <el-row>
-            <el-col :span="2" :offset="1">
+            <el-col :span="2" >
               <div class="grid-content bg-purple">开始时间：</div>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="2">
               <div class="grid-content bg-purple">{{nodeInfo.plan_start_time}}</div>
             </el-col>
-            <el-col :span="2" :offset="1">
+            <el-col :span="2" >
               <div class="grid-content bg-purple">结束时间：</div>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="2">
               <div class="grid-content bg-purple-light">{{nodeInfo.plan_complete_time}}</div>
             </el-col>
-          </el-row>
-          <br/>
-          <el-row>
-            <el-col :span="2" :offset="1">
+            <el-col :span="2" >
               <div class="grid-content bg-purple">节点描述：</div>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="2">
               <div class="grid-content bg-purple">{{nodeInfo.node_desc}}</div>
             </el-col>
-            <!-- <el-col :span="2" :offset="1">
-              <div class="grid-content bg-purple">审批人：</div>
-            </el-col>
-            <el-col :span="6">
-              <div class="grid-content bg-purple-light">刘能</div>
-            </el-col> -->
-          </el-row>
-          <br/>
-          <el-row>
-            <el-col :span="2" :offset="1">
+             <el-col :span="2" >
               <div class="grid-content bg-purple">创建时间</div>
             </el-col>
-            <el-col :span="6">
+            <el-col :span="2">
               <div class="grid-content bg-purple">{{nodeInfo.create_time}}</div>
             </el-col>
-            <!-- <el-col :span="2" :offset="1">
-              <div class="grid-content bg-purple">审批人：</div>
-            </el-col>
-            <el-col :span="6">
-              <div class="grid-content bg-purple-light">刘能</div>
-            </el-col> -->
-          </el-row>
-        </div>
-      </ProjectProgress>
+      </el-row>
     </div>
     <div>
       <div class="components-container">
