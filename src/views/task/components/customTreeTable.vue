@@ -2,7 +2,7 @@
   <div>
 
     <div class="components-container">
-      <el-dialog v-el-drag-dialog :title="dialogTitle" :visible.sync="dialogShow">
+      <el-dialog v-el-drag-dialog :title="dialogTitle" :visible.sync="dialogShow" width="30vw">
         <keep-alive>
           <component :is="dynamicView" :rootNodeNoProp="rootNodeNo" :parentNodeNoProp="parentNodeNo" :systemSerialNoProp="systemSerialNo"></component>
         </keep-alive>
@@ -66,8 +66,8 @@
 </template>
 
 <style>
-.el-dropdown-menu .el-popper .el-dropdown-menu--medium{
-  margin-top: -20px;
+.el-popper[x-placement^=bottom]{
+  margin-top: 0px;
 }
 </style>
 

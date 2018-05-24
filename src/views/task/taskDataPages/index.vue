@@ -7,11 +7,18 @@
         <el-col :span="2">
           <div class="grid-content bg-purple">节点名称：</div>
         </el-col>
+        
         <el-col :span="2">
           <div class="grid-content bg-purple rcol">{{nodeInfo.node_title}}</div>
         </el-col>
+         <!-- <el-col :span="2">
+          <div class="grid-content bg-purple">节点描述：</div>
+        </el-col>
         <el-col :span="2">
-          <div class="grid-content bg-purple">创建人：</div>
+          <div class="grid-content bg-purple rcol">{{nodeInfo.node_desc}}</div>
+        </el-col> -->
+        <el-col :span="2">
+          <div class="grid-content bg-purple">节点责任人：</div>
         </el-col>
         <el-col :span="2">
           <div class="grid-content bg-purple-light rcol">{{nodeInfo.creator_name?nodeInfo.creator_name:'无'}}</div>
@@ -26,20 +33,15 @@
           <div class="grid-content bg-purple">结束时间：</div>
         </el-col>
         <el-col :span="2">
-          <div class="grid-content bg-purple-light rcol">{{nodeInfo.plan_complete_time}}</div>
+          <div class="grid-content bg-purple-light ">{{nodeInfo.plan_complete_time}}</div>
         </el-col>
-        <el-col :span="2">
-          <div class="grid-content bg-purple">节点描述：</div>
-        </el-col>
-        <el-col :span="2">
-          <div class="grid-content bg-purple rcol">{{nodeInfo.node_desc}}</div>
-        </el-col>
-        <el-col :span="2">
+       
+        <!-- <el-col :span="2">
           <div class="grid-content bg-purple">创建时间</div>
         </el-col>
         <el-col :span="2">
           <div class="grid-content bg-purple">{{nodeInfo.create_time}}</div>
-        </el-col>
+        </el-col> -->
       </el-row>
     </div>
     <div>
@@ -519,9 +521,9 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style >
 .weui-desktop-panel {
-  padding: 15px;
+  padding: 20px;
 }
 .rcol {
   border-right: solid #ddd 2px;
