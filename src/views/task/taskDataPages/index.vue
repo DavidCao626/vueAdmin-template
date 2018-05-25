@@ -21,7 +21,7 @@
           <div class="grid-content bg-purple">节点责任人：</div>
         </el-col>
         <el-col :span="2">
-          <div class="grid-content bg-purple-light rcol">{{nodeInfo.creator_name?nodeInfo.creator_name:'无'}}</div>
+          <div class="grid-content bg-purple-light rcol">{{nodeInfo.liabler_name?nodeInfo.liabler_name:'无'}}</div>
         </el-col>
         <el-col :span="2">
           <div class="grid-content bg-purple">开始时间：</div>
@@ -97,6 +97,7 @@
           <div class="clearfix"></div>
 
           <!-- 数据表 -->
+
           <dynamicTable :data="tableDataTodo" @selection-change="handleSelectionChange" :tableHeader="tableTodoHeader" isdynamic style="width: 100%">
             <template slot="left-column">
               <el-table-column type="selection" width="55">
@@ -104,7 +105,8 @@
             </template>
             <el-table-column label="操作" width="155">
               <template slot-scope="scope">
-                <el-button size="medium" type="text" class="el-icon-arrow-right"> 详情</el-button>
+                <el-button size="medium" type="text" @click="updateData(scope.row)"> 修改</el-button>
+                  <!-- <el-button size="medium" type="text" @click="updateData(scope.row)"> 修改</el-button> -->
               </template>
             </el-table-column>
           </dynamicTable>
@@ -372,7 +374,8 @@ export default {
       data.data={"dataNo":this.tempItem['ywsq-201807'].dataNo,"childServiceType":this.updateForm.childServiceType};
       modifyTaskRecordMappedData(data).then(data=>{
         that.$message.success("修改成功")
-that.queryDoneData();
+         that.updateDataDV = false;
+        that.queryDoneData();
       })
     },
     updateData(row) {

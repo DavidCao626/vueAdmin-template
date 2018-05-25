@@ -12,7 +12,7 @@
 
     <tree-table v-loading="treeTableDV" @getItemDate="getItemDate" @closeItemDate="closeItemDate" :showIndex="showIndex" :data="data" :evalFunc="func" :columns="columns" :evalArgs="args" :expandAll="expandAll">
 
-      <el-table-column label="完成进度" width="120">
+      <!-- <el-table-column label="完成进度" width="120">
         <template slot-scope="scope">
 
           <div class="processContainer">
@@ -21,7 +21,7 @@
             <el-progress v-if="scope.row.timeLine<100" :percentage="scope.row.timeLine"></el-progress>
           </div>
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
       <el-table-column label="操作" width="150">
         <!-- 王红坤结束 -->
@@ -138,7 +138,8 @@ export default {
         },
         {
           text: "项目流程",
-          value: "nodeTitle"
+          value: "nodeTitle",
+          width:120
         },
         {
           text: "组织机构",
@@ -155,11 +156,7 @@ export default {
           value: "type",
           width: 50
         },
-        {
-          text: "编号",
-          value: "No",
-          width: 200
-        },
+        
         {
           text: "创建人",
           value: "creater",
