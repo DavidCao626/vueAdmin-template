@@ -23,6 +23,11 @@ import stuLayout from "../views/layout/stu-Layout";
 **/
 export const constantRouterMap = [
   { path: "/test", component: () => import("~/views/userManager/test/index") },
+  {
+    path: "/whktest",
+    component: () =>
+      import("~/views/publicNotice/test")
+  },
   { path: "/login", component: () => import("~/views/login") },
   { path: "/404", component: () => import("~/views/404") },
   {
