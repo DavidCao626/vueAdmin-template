@@ -256,7 +256,6 @@ export function queryChildService(param) {
     method: 'post',
     data: param
   })
-
 }
 export function submitProjectApplySurface(param) {
   return ajax({
@@ -264,7 +263,7 @@ export function submitProjectApplySurface(param) {
     method: 'post',
     data: param
   })
-} 
+}
 export function deleteTaskParticipant(param) {
   return ajax({
     url: '/task/deleteTaskParticipant.do',
@@ -288,17 +287,14 @@ export function queryChildOrg() {
   })
 }
 
-export function autoCreate() {
-  return request({
-    url: '/task/autoCreate.do',
-    method: 'post'
-  })
+export function autoCreate(data) {
+  return request({ url: '/task/autoCreate.do', method: 'post', data: data })
 }
 
-export function autoCreateFacade() {
+export function autoCreateFacade(data) {
   return request({
     url: '/task/autoCreateFacade.do',
-    method: 'post'
+    method: 'post',
+    data: data
   })
 }
-
