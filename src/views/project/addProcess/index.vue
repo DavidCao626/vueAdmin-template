@@ -3,12 +3,12 @@
         <div slot="title">新建项目</div>
         <div slot="panel">
 
-            <el-steps :active="active" simple>
+            <el-steps :active="active" simple  finish-status="success">
                 <el-step title="填写项目信息" icon="el-icon-edit">
                 </el-step>
-                <el-step title="项目配置" icon="el-icon-picture">
+                <el-step title="配置计划" icon="el-icon-picture">
                 </el-step>
-                <el-step title="启动下发" icon="el-icon-upload">
+                <el-step title="任务下发" icon="el-icon-upload">
                 </el-step>
 
             </el-steps>
@@ -19,9 +19,11 @@
             </keep-alive>
             <br/>
             <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
-                <el-col :span="6">
+                <el-col :span="7">
                     <el-button ref="back" @click="back">上一步</el-button>
-                    <el-button ref="next" @click="next" autofocus>下一步</el-button>
+                    <el-button ref="next" v-if="active==0">保存项目</el-button>
+                    <el-button ref="back" v-if="active==0" @click="next">保存并配置计划</el-button>
+                    <el-button ref="back" v-else @click="next">下一步</el-button>
                 </el-col>
             </el-row>
         </div>
