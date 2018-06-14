@@ -21,7 +21,7 @@
           <div class="grid-content bg-purple">节点责任人：</div>
         </el-col>
         <el-col :span="2">
-          <div class="grid-content bg-purple-light rcol">{{nodeInfo.creator_name?nodeInfo.creator_name:'无'}}</div>
+          <div class="grid-content bg-purple-light rcol">{{nodeInfo.liabler_name?nodeInfo.liabler_name:'无'}}</div>
         </el-col>
         <el-col :span="2">
           <div class="grid-content bg-purple">开始时间：</div>
@@ -45,6 +45,20 @@
       </el-row>
     </div>
     <div>
+
+      <el-dialog v-el-drag-dialog title="修改数据" :visible.sync="updateDataDV">
+        <el-form label-width="100px" :model="updateForm" >
+          <el-form-item label="子业务类别" prop="childServiceType">
+            <el-select v-model="updateForm.childServiceType">
+              <el-option v-for="(item,index) in serviceCTypeList" :key="index" :value="item.classifyCode" :label="item.classifyName"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="updateBt">修改</el-button>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
+
       <div class="components-container">
         <el-dialog v-el-drag-dialog title="审批数据" :visible.sync="dialogTableVisible">
           <div>
@@ -83,6 +97,7 @@
           <div class="clearfix"></div>
 
           <!-- 数据表 -->
+
           <dynamicTable :data="tableDataTodo" @selection-change="handleSelectionChange" :tableHeader="tableTodoHeader" isdynamic style="width: 100%">
             <template slot="left-column">
               <el-table-column type="selection" width="55">
@@ -90,7 +105,8 @@
             </template>
             <el-table-column label="操作" width="155">
               <template slot-scope="scope">
-                <el-button size="medium" type="text" class="el-icon-arrow-right"> 详情</el-button>
+                <el-button size="medium" type="text" @click="updateData(scope.row)"> 修改</el-button>
+                  <!-- <el-button size="medium" type="text" @click="updateData(scope.row)"> 修改</el-button> -->
               </template>
             </el-table-column>
           </dynamicTable>
@@ -115,7 +131,8 @@
 
             <el-table-column label="操作" width="155">
               <template slot-scope="scope">
-                <el-button size="medium" type="text" class="el-icon-arrow-right"> 详情</el-button>
+                <!-- <el-button size="medium" type="text" class="el-icon-arrow-right"> 详情</el-button> -->
+                <el-button size="medium" type="text" @click="updateData(scope.row)"> 修改</el-button>
               </template>
             </el-table-column>
           </dynamicTable>
@@ -136,17 +153,29 @@ import {
   queryTodo,
   queryDone,
   approveRecord
-} from '~/api/taskData'
-import { ProjectProgress } from '~/views/task/components/Progress'
-import elDragDialog from '~/directive/el-dragDialog' // base on element-ui
-import dynamicTable from '~/components/DynamicTable' // base on element-ui
+} from "~/api/taskData";
+import {
+  queryProjectList,
+  getProjectInfoByNodeNo,
+  queryChildService,
+  modifyTaskRecordMappedData
+} from "~/api/task";
+import { ProjectProgress } from "~/views/task/components/Progress";
+import elDragDialog from "~/directive/el-dragDialog"; // base on element-ui
+import dynamicTable from "~/components/DynamicTable"; // base on element-ui
 
 export default {
   directives: { elDragDialog },
   components: { ProjectProgress, dynamicTable },
   data() {
     return {
-      nodeNo: this.$route.query.nodeNoProp, // ----这是传过来的节点编号
+      tempItem:{},
+      updateForm: {
+        childServiceType: ""
+      },
+      serviceCTypeList: [],
+      updateDataDV: false,
+      nodeNo: this.$route.query.nodeNoProp, //----这是传过来的节点编号
       approveRecordData: {
         opinion: '',
         applyStatus: 'Y',
@@ -336,6 +365,32 @@ export default {
   },
   computed: {},
   methods: {
+    updateBt(){
+      var that = this
+      var data={}
+      data.nodeNo =this.tempItem.node_no;
+      data.unitCode = this.tempItem['ywsq-201807'].unit;
+      data.dataNo=this.tempItem['ywsq-201807'].dataNo;
+      data.data={"dataNo":this.tempItem['ywsq-201807'].dataNo,"childServiceType":this.updateForm.childServiceType};
+      modifyTaskRecordMappedData(data).then(data=>{
+        that.$message.success("修改成功")
+         that.updateDataDV = false;
+        that.queryDoneData();
+      })
+    },
+    updateData(row) {
+      console.log(row);
+      this.tempItem = row;
+      this.updateDataDV = true;
+      this.updateForm.childServiceType =
+        row["ywsq-201807"].data.childServiceType;
+      var that = this;
+      queryChildService({
+        serviceTypeCode: row["ywsq-201807"].data.serviceType
+      }).then(data => {
+        that.serviceCTypeList = data.resBody;
+      });
+    },
     // 下面是未审核的分页事件
     handleSizeChange(val) {
       this.pagination.pageSize = val

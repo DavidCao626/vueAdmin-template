@@ -1,5 +1,6 @@
 import request from '~/utils/request'
 import ajax from '~/utils/ajax'
+import Axios from 'axios'
 export function addTaskProject(data) {
   return ajax({
     url: '/task/insertTaskProject.do',
@@ -288,12 +289,23 @@ export function queryChildOrg() {
 }
 
 export function autoCreate(data) {
-  return request({ url: '/task/autoCreate.do', method: 'post', data: data })
+  return request({
+    url: '/task/autoCreate.do',
+    method: 'post',
+    data: data
+  })
 }
 
 export function autoCreateFacade(data) {
   return request({
     url: '/task/autoCreateFacade.do',
+    method: 'post',
+    data: data
+  })
+}
+export function modifyTaskRecordMappedData(data) {
+  return ajax({
+    url: '/taskRecord/modifyTaskRecordMappedData.do',
     method: 'post',
     data: data
   })
