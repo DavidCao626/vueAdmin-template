@@ -29,7 +29,7 @@
 </template>
 <script>
 import base from './base.vue'
-import config from './../control/state'
+import config from './../control/state/meesageState'
 import start from './start.vue'
 export default {
   components: {
@@ -82,10 +82,21 @@ export default {
           this.active++
           break
         case 2:
-          this.active++
-          break
-        case 3:
-          this.active = 0
+          this.$confirm('你即将执行任务下发操作, 是否确定继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          })
+            .then(() => {
+              this.active = 0
+              this.$message({
+                type: 'success',
+                message: '任务已经开始执行!'
+              })
+              this.$router.push('/project/control')// 跳转路由
+            })
+            .catch(() => {
+            })
           break
       }
     }
