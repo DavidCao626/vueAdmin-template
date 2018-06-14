@@ -42,6 +42,7 @@ export default {
       console.log(file)
     },
     onSuccess() {
+      console.log(["上传文件",this.fileList2])
       this.$emit('onSuccess', this.fileList2) // 上传成功把成功的地址列表返回去
     }
   }
