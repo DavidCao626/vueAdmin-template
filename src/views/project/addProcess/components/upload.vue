@@ -37,6 +37,7 @@ export default {
   methods: {
     handleRemove(file, fileList) {
       console.log(file, fileList)
+       this.$emit('handleRemove', fileList) // 上传成功把成功的地址列表返回去
     },
     handlePreview(file) {
       console.log(file)

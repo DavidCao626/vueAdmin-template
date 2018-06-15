@@ -27,7 +27,7 @@
     </el-form-item>
 
     <el-form-item label="项目附件:">
-      <form-upload style="width: 30%;" :url="uploadUrl" @onSuccess="formUploadOnSuccess"></form-upload>
+      <form-upload style="width: 30%;" :url="uploadUrl" @handleRemove="fileRemove" @onSuccess="formUploadOnSuccess"></form-upload>
     </el-form-item>
   </el-form>
 
@@ -96,6 +96,16 @@ export default {
       this.form.planStartTime = value[0];
       console.log("结束时间" + value[1]);
       this.form.planCompleteTime = value[1];
+    },
+    fileRemove(files){
+ console.log(["文件删除后的列表",files]);
+      var fileList = [];
+      fileList = files;
+      var AttachmentIds = [];
+      for(var i = 0; i < fileList.length;i++){
+        AttachmentIds[i] = fileList[i].response.body.resBody[0].fileId
+      }
+      this.form.projectAttachmentId = AttachmentIds;
     },
     formUploadOnSuccess(files) {
       console.log(["文件成功上传后的列表",files]);
