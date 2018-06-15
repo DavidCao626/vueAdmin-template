@@ -3,6 +3,10 @@
 
         <el-form ref="form" label-position="right" label-width="220px" style="margin: 20px;">
 
+              <el-form-item label="分配给下级节点的可用计划天数:">
+               <el-input-number  style=" margin-top: 10px" size="small" v-model="start.plannedDays" :min="0"  label="描述文字">
+              </el-input-number>
+            </el-form-item>
             <el-form-item label="分配给下级节点的开始时间:">
                 <el-date-picker disabled v-model="start.bginDate" type="date" placeholder="选择日期">
                 </el-date-picker>
@@ -28,6 +32,7 @@ export default {
   data() {
     return {
       start: {
+        plannedDays: 30,
         bginDate: '2018-06-01',
         endDate: '2018-07-01',
         datalistType: '0', // 0全部下级节点，1部分

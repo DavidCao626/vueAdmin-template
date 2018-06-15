@@ -77,10 +77,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="5">
-          <span v-if="item.nodeId==1">已分配 {{getCountDays}} 天 /</span>
+          <!-- <span v-if="item.nodeId==1">已分配 {{getCountDays}} 天 /</span>
           <span v-if="item.nodeId==1">剩余可分配
-            <strong style="color:red">{{ getProjectStatusRemainingCountDays}}</strong> 天</span>
-          <div style="height:25px"></div>
+            <strong style="color:red">{{ getProjectStatusRemainingCountDays}}</strong> 天</span>-->
+          <div style="height:25px"></div> 
           <template v-if="item.nodeId==1&&item.nodeStatus!=2">
             <el-button type="primary" @click="config">配置计划</el-button>
           </template>
@@ -91,7 +91,8 @@
               <div style="text-align: right; margin-top: 10px">
                 <el-button type="primary" size="mini" @click="saveDays(item.nodeId)">保存</el-button>
               </div>
-              <el-button type="text" slot="reference">调整天数</el-button>
+              <el-button v-if="item.nodeStatus==1" type="text" slot="reference">调整天数</el-button>
+              <el-button v-else type="text"  disabled slot="reference">调整天数</el-button>
             </el-popover>
           </template>
           <template v-if="item.nodeRunType=='手动'&&item.nodeId!=1">

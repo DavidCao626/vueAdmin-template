@@ -1,69 +1,85 @@
 <template>
-    <div>
-        <span>&nbsp;&nbsp;项目开始时间： <strong >{{ProjectStatusBeginDate}}</strong></span>
-        <span>&nbsp;&nbsp;项目结束时间：  <strong>{{ProjectStatusEndDate}}</strong></span>
-        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          当前已分配：   <strong >{{getCountDays}}</strong> 天 </span>
-        <span>&nbsp;&nbsp;剩余可分配： 
-            <strong style="color:red">{{ getProjectStatusRemainingCountDays}}</strong> 天</span>
+  <div>
+    <span>&nbsp;&nbsp;项目开始时间：
+      <strong>{{ProjectStatusBeginDate}}</strong>
+    </span>
+    <span>&nbsp;&nbsp;项目结束时间：
+      <strong>{{ProjectStatusEndDate}}</strong>
+    </span>
+    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总共
+      <strong>{{ProjectStatusCountDays}}</strong>天&nbsp;&nbsp;&nbsp; 当前已分配：
+      <strong>{{getCountDays}}</strong> 天 </span>
+    <span>&nbsp;&nbsp;剩余可分配：
+      <strong style="color:red">{{ getProjectStatusRemainingCountDays}}</strong> 天</span>
 
-        <div style="height:25px"></div>
-        <el-form label-position="top" ref="form"  label-width="100px" style="margin-left:30px; margin-right:30px;">
+    <div style="height:25px"></div>
+    <el-form label-position="top" ref="form" label-width="100px" style="margin-left:30px; margin-right:30px;">
 
-            <el-row class="data-rows" :gutter="0" v-for="(item,index) in ProjectStatusData" :key="index" style="border-bottom: 1px solid rgb(230, 230, 230);margin-bottom: 15px;">
+      <el-row class="data-rows" :gutter="0" v-for="(item,index) in ProjectStatusData" :key="index" style="border-bottom: 1px solid rgb(230, 230, 230);margin-bottom: 15px;">
 
-                <el-col :span="7">
+        <el-col :span="6">
 
-                    <div :class="getStateOfCircle(item.nodeStatus)">
+          <div :class="getStateOfCircle(item.nodeStatus)">
 
-                        <div class="state-circle-text">
-                            <template v-if="item.nodeRunType=='手动'">
-                                <el-badge :value="item.nodeRunType" class="item">
-                                    <strong>{{item.nodeId}}</strong><br> {{item.nodeName}}
-                                </el-badge>
-                            </template>
-                            <template v-else>
-                                <el-badge :value="item.nodeRunType" class="item">
-                                    <strong>{{item.nodeId}}</strong><br> {{item.nodeName}}
-                                </el-badge>
-                            </template>
-                        </div>
+            <div class="state-circle-text">
+              <template v-if="item.nodeRunType=='手动'">
+                <el-badge :value="item.nodeRunType" class="item">
+                  <strong>{{item.nodeId}}</strong><br> {{item.nodeName}}
+                </el-badge>
+              </template>
+              <template v-else>
+                <el-badge :value="item.nodeRunType" class="item">
+                  <strong>{{item.nodeId}}</strong><br> {{item.nodeName}}
+                </el-badge>
+              </template>
+            </div>
 
-                    </div>
+          </div>
 
-                </el-col>
+        </el-col>
 
-                <el-col :span="8">
-                    
-                    <el-form-item>
-                        <div slot="label">
-                            计划分配天数
-                        </div>
+        <el-col :span="6">
 
-                        <template>
-                           <el-input-number style=" margin-top: 10px" size="mini" v-model="item.plannedDays" :min="0" :max="getProjectStatusRemainingCountDays+item.plannedDays" label="描述文字"></el-input-number>
-               
-                        </template>
-                    </el-form-item>
-                </el-col>
+          <el-form-item>
+            <div slot="label">
+              计划分配天数
+            </div>
 
-                <el-col :span="8">
+            <template v-if="item.nodeRunType=='手动'">
+              <el-input-number disabled style=" margin-top: 10px" size="mini" v-model="item.plannedDays" :min="0" :max="getProjectStatusRemainingCountDays+item.plannedDays" label="描述文字">
+              </el-input-number>
 
-                    <el-form-item label="计划结束时间">
-                        {{item.plannedEndDate==''?'未配置':item.plannedEndDate}}
-                    </el-form-item>
-                </el-col>
+            </template>
+            <template v-else>
+              <el-input-number  style=" margin-top: 10px" size="mini" v-model="item.plannedDays" :min="0" :max="getProjectStatusRemainingCountDays+item.plannedDays" label="描述文字">
+              </el-input-number>
+            </template>
+          </el-form-item>
+        </el-col>
 
-            </el-row>
-            <div class="line"></div>
-            <!-- <span  class="dialog-footer" style="float:right"> 
+        <el-col :span="6">
+          <el-form-item label="计划开始时间">
+            {{item.plannedBeginDate==''?'未配置':item.plannedBeginDate}}
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="6">
+
+          <el-form-item label="计划结束时间">
+            {{item.plannedEndDate==''?'未配置':item.plannedEndDate}}
+          </el-form-item>
+        </el-col>
+
+      </el-row>
+      <div class="line"></div>
+      <!-- <span  class="dialog-footer" style="float:right"> 
                 <el-button>返 回</el-button>
                 <el-button type="primary">下 一 步</el-button>
             </span>
             <br style="float:none"/> -->
-        </el-form>
+    </el-form>
 
-    </div>
+  </div>
 </template>
 
 <script>
@@ -98,7 +114,6 @@ export default {
   },
   data() {
     return {
-
       ProjectStatusBeginDate: '2018-06-01', // 项目总开始时间
       ProjectStatusEndDate: '2018-09-01', // 项目总开始时间
       ProjectStatusCountDays: 246, // 项目总天数
