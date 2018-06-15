@@ -37,6 +37,28 @@ export function updateProject(data) {
 }
 
 /**
+ * 设置工作项时间
+ * @param {*} data 
+ */
+export function updateWorkItemTime(data) {
+    return ajax({
+        url: '/project/updateWorkItemTime.do',
+        method: 'post',
+        data: data
+    })
+}
+/**
+ * 下发任务
+ * @param {} data 
+ */
+export function dispenseChildTask(data) {
+    return ajax({
+        url: '/project/dispenseChildTask.do',
+        method: 'post',
+        data: data
+    })
+}
+/**
  * 删除项目
  * @param {*} data 
  */
@@ -67,6 +89,29 @@ export function queryServiceTypeList() {
     return request({
         url: '/project/queryServiceTypeList.do',
         method: 'post'
+    })
+}
+
+/**
+ * 查询工作项
+ * @param {*} data 
+ */
+export function queryWorkItem(data) {
+    return request({
+        url: '/project/queryWorkItem.do',
+        method: 'post',
+        data: data
+    })
+}
+/**
+ * 根据项目id获取项目
+ * @param {*} data 
+ */
+export function getProjectById(data) {
+    return request({
+        url: '/project/getProjectById.do',
+        method: 'post',
+        data: data
     })
 }
 

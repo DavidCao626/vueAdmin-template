@@ -115,6 +115,10 @@
 <script>
 import formData from '../../addProcess/components/Data'
 import formDisabledSelect from '../../addProcess/components/disabledSelect'
+import {
+  queryWorkItem
+} from "~/api/project";
+
 export default {
   components: {
     formData,
@@ -133,6 +137,7 @@ export default {
     }
   },
   methods: {
+    
     getStateOfCircle(State) {
       if (State === 0) return 'state-circle'
       else if (State === 1) return 'state-circle ' + 'state-circle__run'

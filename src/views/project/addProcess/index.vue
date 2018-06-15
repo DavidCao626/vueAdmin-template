@@ -15,7 +15,7 @@
       <br/>
       <keep-alive>
         <!-- 上一步下一步 不会删除里面内容 -->
-        <component ref="component" :is="componentId"></component>
+        <component ref="component" :propScopeId="scopeId" :propProjectId="projectId"  :is="componentId"></component>
       </keep-alive>
       <br/>
       <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
@@ -37,8 +37,10 @@ import {
   insertProject,
   insertProjectAndRun,
   updateProject,
+  updateWorkItemTime,
   deleteProject,
   queryUserProject,
+  dispenseChildTask,//下发任务
   queryServiceTypeList
 } from "~/api/project";
 export default {
@@ -49,6 +51,8 @@ export default {
   },
   data() {
     return {
+      projectId:0,
+      scopeId:0,
       active: 0,
       componentId: "one-base"
     };
@@ -80,8 +84,37 @@ export default {
         });
       });
     },
+    updateWorkItem(){
+      var tempData = this.$refs["component"].ProjectStatusData;
+      console.log([tempData]);
+      var requestData = [];
+      for(var i = 0;i<tempData.length;i++){
+        if(tempData[i].itemType != "手动"){
+          var item = {
+            'id':tempData[i].id,
+            'scopeId':tempData[i].scopeId,
+            'planTimeLong':tempData[i].planTimeLong
+          }
+          requestData.push(item)
+        }
+      }
+      new Promise((resolve, reject) => {
+        updateWorkItemTime({itemBeans:requestData}).then(response => {
+          this.$message.success("保存成功");
+        });
+      });
+    },
     saveProjectAndRun() {
       console.log(["保存并运行", this]);
+       var submitData = this.$refs["component"].form;
+      new Promise((resolve, reject) => {
+        insertProjectAndRun(submitData).then(response => {
+          this.$message.success("保存成功");
+          this.projectId = response.resBody.project.id;
+          this.scopeId = response.resBody.scope.id;
+          console.log(["this.scopeId",this.scopeId])
+        });
+      });
     },
     back() {
       switch (this.active) {
@@ -104,6 +137,7 @@ export default {
           break;
         case 1:
           this.active++;
+          this.updateWorkItem();
           break;
         case 2:
           this.$confirm("你即将执行任务下发操作, 是否确定继续?", "提示", {
