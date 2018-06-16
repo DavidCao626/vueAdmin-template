@@ -416,14 +416,14 @@ export const constantRouterMap = [
         component: () => import('~/views/project/control/index')
       },
       {
-        path: 'showTask',
-        name: '填表task',
-        component: () => import('~/views/question/components/showTask')
+        path: 'todo',
+        name: '我的待办',
+        component: () => import('~/views/project/todo/index')
       },
       {
-        path: 'results',
-        name: '展现问卷结果',
-        component: () => import('~/views/question/components/results')
+        path: 'my',
+        name: '我的项目',
+        component: () => import('~/views/project/index')
       }
     ]
   }
