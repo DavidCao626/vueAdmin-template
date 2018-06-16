@@ -55,13 +55,11 @@ export default {
   },
   watch: {
     value() {
-      debugger
       this.value7 = this.value
     }
   },
   methods: {
     onChange() {
-      debugger
       this.$emit('onChange', this.value7)
     }
   }

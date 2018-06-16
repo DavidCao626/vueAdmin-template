@@ -8,11 +8,11 @@
               </el-input-number>
             </el-form-item>
             <el-form-item label="分配给下级节点的开始时间:">
-                <el-date-picker disabled v-model="start.bginDate" type="date" placeholder="选择日期">
+                <el-date-picker  v-model="start.planStartTime" type="date" placeholder="选择日期">
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="分配给下级节点的结束时间:">
-                <el-date-picker disabled v-model="start.endDate" type="date" placeholder="选择日期">
+                <el-date-picker  v-model="start.planComplteTime" type="date" placeholder="选择日期">
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="生效节点:">
@@ -33,8 +33,8 @@ export default {
     return {
       start: {
         plannedDays: 30,
-        bginDate: '2018-06-01',
-        endDate: '2018-07-01',
+        planStartTime: '2018-06-01',
+        planComplteTime: '2018-07-01',
         datalistType: '0', // 0全部下级节点，1部分
         datalist: []
       }

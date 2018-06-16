@@ -12,7 +12,7 @@
       </el-input>
     </el-form-item>
     <el-form-item label="业务类型:">
-      <form-disabled-select v-model="form.projectServiceType" :optionData="serviceTypeList"></form-disabled-select>
+      <form-disabled-select :value="form.projectServiceType" :optionData="serviceTypeList"></form-disabled-select>
     </el-form-item>
     <el-form-item label="项目时间:">
       <el-col :span="11">
