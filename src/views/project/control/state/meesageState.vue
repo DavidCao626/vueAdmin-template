@@ -19,17 +19,17 @@
 
         <el-col :span="6">
 
-          <div :class="getStateOfCircle(item.nodeStatus)">
+          <div :class="getStateOfCircle(item.item.state)">
 
             <div class="state-circle-text">
-              <template v-if="item.itemType=='手动'">
-                <el-badge :value="item.itemType" class="item">
-                  <strong>{{item.nodeId}}</strong><br> {{item.stepName}}
+              <template v-if="item.item.itemType=='手动'">
+                <el-badge :value="item.item.itemType" class="item">
+                  <strong>{{item.item.nodeId}}</strong><br> {{item.item.stepName}}
                 </el-badge>
               </template>
               <template v-else>
-                <el-badge :value="item.itemType" class="item">
-                  <strong>{{item.nodeId}}</strong><br> {{item.stepName}}
+                <el-badge :value="item.item.itemType" class="item">
+                  <strong>{{item.item.nodeId}}</strong><br> {{item.item.stepName}}
                 </el-badge>
               </template>
             </div>
@@ -45,13 +45,13 @@
               计划分配天数
             </div>
 
-            <template v-if="item.itemType=='手动'">
-              <el-input-number disabled style=" margin-top: 10px" size="mini" v-model="item.planTimeLong" :min="0" :max="getProjectStatusRemainingCountDays+item.plannedDays" label="描述文字">
+            <template v-if="item.item.itemType=='手动'">
+              <el-input-number disabled style=" margin-top: 10px" size="mini" v-model="item.item.planTimeLong" :min="0" :max="getProjectStatusRemainingCountDays+item.plannedDays" label="描述文字">
               </el-input-number>
 
             </template>
             <template v-else>
-              <el-input-number style=" margin-top: 10px" size="mini" v-model="item.planTimeLong" :min="0" :max="getProjectStatusRemainingCountDays+item.plannedDays" label="描述文字">
+              <el-input-number style=" margin-top: 10px" size="mini" v-model="item.item.planTimeLong" :min="0" :max="getProjectStatusRemainingCountDays+item.plannedDays" label="描述文字">
               </el-input-number>
             </template>
           </el-form-item>
@@ -59,14 +59,14 @@
 
         <el-col :span="6">
           <el-form-item label="计划开始时间">
-            {{item.planStartTime==''?'未配置':item.planStartTime}}
+            {{item.startTime==''?'未配置':item.startTime}}
           </el-form-item>
         </el-col>
 
         <el-col :span="6">
 
           <el-form-item label="计划结束时间">
-            {{item.planCompleteTime==''?'未配置':item.planCompleteTime}}
+            {{item.endTime==''?'未配置':item.endTime}}
           </el-form-item>
         </el-col>
 
@@ -85,7 +85,11 @@
 <script>
 import formData from "../../addProcess/components/Data";
 import formDisabledSelect from "../../addProcess/components/disabledSelect";
-import { queryWorkItem, getProjectById } from "~/api/project";
+import {
+  queryWorkItem,
+  getProjectById,
+  queryWorkTimeView
+} from "~/api/project";
 export default {
   components: {
     formData,
@@ -107,6 +111,53 @@ export default {
     //this.loadWorkItem();
   },
   methods: {
+    loadWorkTime() {
+      new Promise((resolve, reject) => {
+        var requestData = { scopeId: this.scopeId };
+        //var requestData = { scopeId: 66 };
+        queryWorkTimeView(requestData).then(response => {
+        
+          var tempData = [];
+          var i = 0;
+          var responseTemp = response.resBody
+          for(var key in responseTemp){
+            tempData[i] = responseTemp[key]
+            i++;
+          }
+          console.log(tempData);
+          for (var i = 0; i < tempData.length; i++) {
+            tempData[i].item.nodeId = i + 1;
+            if (tempData[i].item.itemType == "manual") {
+              tempData[i].item.itemType = "手动";
+            } else {
+              tempData[i].item.itemType = "自动";
+            }
+          }
+           this.ProjectStatusData = tempData;
+        });
+      });
+    },
+
+    loadWorkItem() {
+      new Promise((resolve, reject) => {
+        var requestData = { scopeId: this.scopeId };
+        //var requestData = { scopeId: 66 };
+        queryWorkItem(requestData).then(response => {
+          var tempData = [];
+          tempData = response.resBody;
+          for (var i = 0; i < tempData.length; i++) {
+            tempData[i].nodeId = i + 1;
+            if (tempData[i].itemType == "manual") {
+              tempData[i].itemType = "手动";
+            } else {
+              tempData[i].itemType = "自动";
+            }
+          }
+          console.log(["workItem数据", tempData]);
+          this.ProjectStatusData = tempData;
+        });
+      });
+    },
     getDays(date1, date2) {
       var date1Str = date1.split("-"); //将日期字符串分隔为数组,数组元素分别为年.月.日
       //根据年 . 月 . 日的值创建Date对象
@@ -140,26 +191,6 @@ export default {
       });
     },
 
-    loadWorkItem() {
-      new Promise((resolve, reject) => {
-        var requestData = { scopeId: this.scopeId };
-        //var requestData = { scopeId: 66 };
-        queryWorkItem(requestData).then(response => {
-          var tempData = [];
-          tempData = response.resBody;
-          for (var i = 0; i < tempData.length; i++) {
-            tempData[i].nodeId = i + 1;
-            if (tempData[i].itemType == "manual") {
-              tempData[i].itemType = "手动";
-            } else {
-              tempData[i].itemType = "自动";
-            }
-          }
-          console.log(["workItem数据", tempData]);
-          this.ProjectStatusData = tempData;
-        });
-      });
-    },
     getStateOfCircle(State) {
       if (State === "C") return "state-circle";
       else if (State === "S") return "state-circle " + "state-circle__run";
@@ -174,7 +205,8 @@ export default {
   watch: {
     propScopeId: function(newValue, oldValue) {
       this.scopeId = newValue;
-      this.loadWorkItem();
+      //this.loadWorkItem();
+      this.loadWorkTime();
     },
     propProjectId: function(newValue, oldValue) {
       this.projectId = newValue;
@@ -192,148 +224,6 @@ export default {
       ProjectStatusRemainingCountDays: 2, // 未分配可用天数
 
       ProjectStatusData: [
-        {
-          nodeId: 1,
-          nodeName: "配置计划",
-          nodeRunType: "手动",
-          nodeStatus: 1, // 0未启动，1运行中，2已完成
-          plannedDays: 30,
-          plannedBeginDate: "2018-06-01",
-          plannedEndDate: "2018-06-01",
-          actualBeginDate: "2018-06-01",
-          actualEndDate: "2018-06-01",
-          actualDays: 30,
-          actionItems: [
-            {
-              actionName: "配置计划",
-              actionUrl: "#/project/control"
-            }
-          ]
-        },
-        {
-          nodeId: 2,
-          nodeName: "学校汇总",
-          nodeRunType: "自动",
-          nodeStatus: 0, // 0未启动，1运行中，2已完成
-          plannedDays: 30,
-          plannedBeginDate: "2018-06-01", // '2018-06-01',
-          plannedEndDate: "2018-06-01", // '2018-06-01',
-          actualBeginDate: "2018-06-01", // '2018-06-01',
-          actualEndDate: "", // '2018-06-01',
-          actualDays: 14,
-          actionItems: [
-            {
-              actionName: "调整天数",
-              actionUrl: "#"
-            }
-          ]
-        },
-        {
-          nodeId: 3,
-          nodeName: "配置组评",
-          nodeRunType: "手动",
-          nodeStatus: 0, // 0未启动，1运行中，2已完成
-          plannedDays: 0,
-          plannedBeginDate: "",
-          plannedEndDate: "",
-          actualBeginDate: "",
-          actualEndDate: "",
-          actualDays: 0,
-          actionItems: [
-            {
-              actionName: "配置评议人员",
-              actionUrl: "#"
-            }
-          ]
-        },
-        {
-          nodeId: 4,
-          nodeName: "学校评议",
-          nodeRunType: "自动",
-          nodeStatus: 0, // 0未启动，1运行中，2已完成
-          plannedDays: 30,
-          plannedBeginDate: "",
-          plannedEndDate: "",
-          actualBeginDate: "",
-          actualEndDate: "",
-          actualDays: 0,
-          actionItems: {
-            actionName: "调整天数",
-            actionUrl: "#"
-          }
-        },
-        {
-          nodeId: 5,
-          nodeName: "预审",
-          nodeRunType: "手动",
-          nodeStatus: 0, // 0未启动，1运行中，2已完成
-          plannedDays: 30,
-          plannedBeginDate: "2018-06-01",
-          plannedEndDate: "2018-06-01",
-          actualBeginDate: "2018-06-01",
-          actualEndDate: "2018-06-01",
-          actualDays: 0,
-          actionItems: [
-            {
-              actionName: "查看预审数据",
-              actionUrl: "#"
-            }
-          ]
-        },
-        {
-          nodeId: 6,
-          nodeName: "公示",
-          nodeRunType: "手动",
-          nodeStatus: 0, // 0未启动，1运行中，2已完成
-          plannedDays: 30,
-          plannedBeginDate: "",
-          plannedEndDate: "",
-          actualBeginDate: "",
-          actualEndDate: "",
-          actualDays: 0,
-          actionItems: [
-            {
-              actionName: "查看公示名单",
-              actionUrl: "#"
-            }
-          ]
-        },
-        {
-          nodeId: 7,
-          nodeName: "终审",
-          nodeRunType: "手动",
-          nodeStatus: 0, // 0未启动，1运行中，2已完成
-          plannedDays: 30,
-          plannedBeginDate: "2018-06-01",
-          plannedEndDate: "2018-06-01",
-          actualBeginDate: "2018-06-01",
-          actualEndDate: "2018-06-01",
-          actualDays: 0,
-          actionItems: [
-            {
-              actionName: "查看终审数据",
-              actionUrl: "#"
-            }
-          ]
-        },
-        {
-          nodeId: 8,
-          nodeName: "结束",
-          nodeRunType: "手动",
-          nodeStatus: 0, // 0未启动，1运行中，2已完成
-          plannedDays: 30,
-          plannedBeginDate: "2018-06-01",
-          plannedEndDate: "2018-06-01",
-          actualBeginDate: "2018-06-01",
-          actualEndDate: "2018-06-01",
-          actualDays: 0,
-          actionItems: [
-            {
-              actionName: "结束项目",
-              actionUrl: "#"
-            }
-          ]
-        },
         {
           nodeId: 9,
           nodeName: "归档",

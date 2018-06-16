@@ -5,25 +5,22 @@
       <el-row class="data-rows" :gutter="0" v-for="(item,index) in ProjectStatusData" :key="index" style="border-bottom: 1px solid rgb(230, 230, 230);margin-bottom: 15px;">
         <el-col :span="3">
 
-          <div :class="getStateOfCircle(item.nodeStatus)">
+          <div :class="getStateOfCircle(item.item.state)">
 
             <div class="state-circle-text">
-              <template v-if="item.nodeRunType=='手动'">
-                <el-badge :value="item.nodeRunType" class="item">
-                  <strong>{{item.nodeId}}</strong><br> {{item.nodeName}}
+              <template v-if="item.item.itemType=='手动'">
+                <el-badge :value="item.item.itemType" class="item">
+                  <strong>{{item.item.nodeId}}</strong><br> {{item.item.stepName}}
                 </el-badge>
               </template>
               <template v-else>
-                <el-badge :value="item.nodeRunType" class="item">
-                  <strong>{{item.nodeId}}</strong><br> {{item.nodeName}}
+                <el-badge :value="item.item.itemType" class="item">
+                  <strong>{{item.item.nodeId}}</strong><br> {{item.item.stepName}}
                 </el-badge>
               </template>
             </div>
-
           </div>
-
         </el-col>
-
         <el-col :span="3">
           <el-form-item>
             <div slot="label">
@@ -42,19 +39,19 @@
               </el-popover>
             </template> -->
             <template>
-              {{item.plannedDays}}
+              {{item.item.planTimeLong}}
             </template>
           </el-form-item>
         </el-col>
         <el-col :span="4">
           <template v-if="item.nodeStatus!=0">
             <el-form-item label="实际开始时间">
-              {{item.actualBeginDate==''?'-':item.actualBeginDate}}
+              {{item.item.realStartTime==''?'-':item.item.realStartTime}}
             </el-form-item>
           </template>
           <template v-else>
             <el-form-item label="计划开始时间">
-              {{item.plannedBeginDate==''?'未配置':item.plannedBeginDate}}
+              {{item.startTime==''?'未配置':item.startTime}}
             </el-form-item>
           </template>
 
@@ -62,18 +59,18 @@
         <el-col :span="4">
           <template v-if="item.nodeStatus!=0">
             <el-form-item label="实际结束时间">
-              {{item.actualEndDate==''?'进行中...':item.actualEndDate}}
+              {{item.item.realEndTime==''?'进行中...':item.item.realEndTime}}
             </el-form-item>
           </template>
           <template v-else>
             <el-form-item label="计划结束时间">
-              {{item.plannedEndDate==''?'未配置':item.plannedEndDate}}
+              {{item.endTime==''?'未配置':item.endTime}}
             </el-form-item>
           </template>
         </el-col>
         <el-col :span="4">
           <el-form-item label="实际已用天数">
-            {{item.actualDays}}
+            {{item.item.realTimeLong}}
           </el-form-item>
         </el-col>
         <el-col :span="5">
@@ -81,26 +78,26 @@
           <span v-if="item.nodeId==1">剩余可分配
             <strong style="color:red">{{ getProjectStatusRemainingCountDays}}</strong> 天</span>-->
           <div style="height:25px"></div> 
-          <template v-if="item.nodeId==1&&item.nodeStatus!=2">
+          <!-- <template v-if="item.nodeId==1&&item.nodeStatus!=2">
             <el-button type="primary" @click="config">配置计划</el-button>
-          </template>
-          <template v-if="item.nodeRunType=='自动'&& item.nodeStatus!=2">
-            <el-popover placement="top" width="160"   :ref="'popover'+item.nodeId"  >
+          </template> -->
+          <template v-if="item.item.itemType=='自动'&& item.item.nodeStatus!='F'">
+            <el-popover placement="top" width="160"   :ref="'popover'+item.item.nodeId"  >
               <p>请输入调整后的天数</p>
-              <el-input-number style=" margin-top: 10px" size="small" v-model="item.plannedDays" :min="0" :max="getProjectStatusRemainingCountDays+item.plannedDays" label="描述文字"></el-input-number>
+              <el-input-number style=" margin-top: 10px" size="small" v-model="item.item.planTimeLong" :min="0" :max="getProjectStatusRemainingCountDays+item.item.planTimeLong" label="描述文字"></el-input-number>
               <div style="text-align: right; margin-top: 10px">
-                <el-button type="primary" size="mini" @click="saveDays(item.nodeId)">保存</el-button>
+                <el-button type="primary" size="mini" @click="saveDays(item)">保存</el-button>
               </div>
-              <el-button v-if="item.nodeStatus==1" type="text" slot="reference">调整天数</el-button>
+              <el-button v-if="item.item.nodeStatus=='S'" type="text" slot="reference">调整天数</el-button>
               <el-button v-else type="text"  disabled slot="reference">调整天数</el-button>
             </el-popover>
           </template>
-          <template v-if="item.nodeRunType=='手动'&&item.nodeId!=1">
-            <template v-if="item.nodeStatus==1">
-              <el-button v-for="(action,index) in item.actionItems" :key="index">{{action.actionName}}</el-button>
+          <template v-if="item.item.itemType=='手动'">
+            <template v-if="item.item.state=='S'">
+              <el-button type="text" >操作1</el-button>
             </template>
             <template v-else>
-              <el-button v-for="(action,index) in item.actionItems" disabled :key="index">{{action.actionName}}</el-button>
+              <el-button disabled type="text" >操作</el-button>
             </template>
           </template>
 
@@ -115,9 +112,7 @@
 <script>
 import formData from '../../addProcess/components/Data'
 import formDisabledSelect from '../../addProcess/components/disabledSelect'
-import {
-  queryWorkItem
-} from "~/api/project";
+import { queryWorkItem, getProjectById ,queryWorkTimeView} from "~/api/project";
 
 export default {
   components: {
@@ -136,11 +131,61 @@ export default {
       return this.ProjectStatusCountDays - this.getCountDays
     }
   },
+  mounted:function(){
+    this.loadWorkTime();
+  },
   methods: {
-    
+        loadWorkTime() {
+      new Promise((resolve, reject) => {
+        var requestData = { scopeId: this.scopeId };
+        //var requestData = { scopeId: 66 };
+        queryWorkTimeView(requestData).then(response => {
+        
+          var tempData = [];
+          var i = 0;
+          var responseTemp = response.resBody
+          for(var key in responseTemp){
+            tempData[i] = responseTemp[key]
+            i++;
+          }
+          console.log(tempData);
+          for (var i = 0; i < tempData.length; i++) {
+            tempData[i].item.nodeId = i + 1;
+            if (tempData[i].item.itemType == "manual") {
+              tempData[i].item.itemType = "手动";
+            } else {
+              tempData[i].item.itemType = "自动";
+            }
+          }
+           this.ProjectStatusData = tempData;
+        });
+      });
+    },
+
+    // loadWorkItem() {
+    //   new Promise((resolve, reject) => {
+    //     var requestData = { scopeId: this.scopeId };
+    //     //var requestData = { scopeId: 66 };
+    //     queryWorkItem(requestData).then(response => {
+    //       var tempData = [];
+    //       tempData = response.resBody;
+    //       for (var i = 0; i < tempData.length; i++) {
+    //         tempData[i].nodeId = i + 1;
+    //         if (tempData[i].itemType == "manual") {
+    //           tempData[i].itemType = "手动";
+    //         } else {
+    //           tempData[i].itemType = "自动";
+    //         }
+    //       }
+    //       console.log(["workItem数据", tempData]);
+    //       this.ProjectStatusData = tempData;
+    //     });
+    //   });
+    // },
+
     getStateOfCircle(State) {
-      if (State === 0) return 'state-circle'
-      else if (State === 1) return 'state-circle ' + 'state-circle__run'
+      if (State === 'C') return 'state-circle'
+      else if (State === 'S') return 'state-circle ' + 'state-circle__run'
       else return 'state-circle ' + 'state-circle__ok'
     },
     handleChange(value) {
@@ -160,6 +205,7 @@ export default {
   },
   data() {
     return {
+      scopeId:this.$route.query.scopeId,
       ProjectStatusBeginDate: '2018-06-01', // 项目总开始时间
       ProjectStatusEndDate: '2018-09-01', // 项目总开始时间
       ProjectStatusCountDays: 246, // 项目总天数

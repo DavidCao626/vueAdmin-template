@@ -102,6 +102,18 @@ export function queryWorkItem(data) {
         method: 'post',
         data: data
     })
+} 
+
+/**
+ * 工作项时间视图
+ * @param {*} data 
+ */
+export function queryWorkTimeView(data) {
+    return request({
+        url: '/project/queryWorkTimeView.do',
+        method: 'post',
+        data: data
+    })
 }
 /**
  * 根据项目id获取项目
