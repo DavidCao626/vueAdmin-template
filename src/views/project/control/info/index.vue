@@ -80,7 +80,8 @@ export default {
         getProjectById(requestData).then(response => {
           console.log(["第三个页面项目基本信息", response.resBody]);
           this.form = response.resBody;
-          this.serviceType = response.projectServiceType;
+          this.serviceType = response.resBody.projectServiceType;
+          console.log(["this.serviceType",this.serviceType])
           this.form.endDateCount = this.getDays(
             response.resBody.planStartTime,
             response.resBody.planCompleteTime

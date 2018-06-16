@@ -127,5 +127,36 @@ export function getProjectById(data) {
     })
 }
 
+/**
+ * 查询当前登录用户的代办
+ */
+export function queryUserPending() {
+    return request({
+        url: '/project/queryUserPending.do',
+        method: 'post'
+    })
+}
+/**
+ * 根据代码获取项目信息
+ */
+export function getProjectByCode(data) {
+    return request({
+        url: '/project/getProjectByCode.do',
+        method: 'post',
+        data:data
+    })
+}
+/**
+ * 完成一个代办
+ * @param {*} data 
+ */
+export function completePending(data) {
+    return request({
+        url: '/project/completePending.do',
+        method: 'post',
+        data: data
+    })
+}
+
 var uploadAttachmentUrl = "act/publicNotice/uploadAttachment.do";
 export { uploadAttachmentUrl }

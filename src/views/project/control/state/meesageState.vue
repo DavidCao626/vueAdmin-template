@@ -225,6 +225,9 @@ export default {
 
       ProjectStatusData: [
         {
+          item:{
+            state:""
+          },
           nodeId: 9,
           nodeName: "归档",
           nodeRunType: "手动",

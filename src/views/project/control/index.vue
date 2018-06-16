@@ -28,7 +28,7 @@
       <br/>
       <keep-alive>
         <!-- 上一步下一步 不会删除里面内容 -->
-        <component :is="componentId" style="height:45vh; overflow:scroll;"></component>
+        <component  :is="componentId" :propScopeId="scopeId" :propProjectId="projectId" :propPendId = "pendId" style="height:45vh; overflow:scroll;"></component>
       </keep-alive>
 
       <span slot="footer" class="dialog-footer">
@@ -54,7 +54,10 @@ export default {
     return {
       centerConfigDialogVisible: false,
       componentId: projectMessageState,
-      active: 0
+      active: 0,
+      scopeId:0,
+      projectId:0,
+      pendId:0,
     }
   },
   watch: {
@@ -108,8 +111,11 @@ export default {
           break
       }
     },
-    onConfig() {
-      this.centerConfigDialogVisible = true
+    onConfig(scopeId,projectId,pendId) {
+        this.scopeId = scopeId;
+        this.projectId = projectId;
+        this.pendId = pendId;
+        this.centerConfigDialogVisible = true
     }
   }
 }

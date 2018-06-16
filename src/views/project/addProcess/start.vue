@@ -17,7 +17,7 @@
             </el-form-item>
             <el-form-item label="生效节点:">
                 <el-radio v-model="start.datalistType" label="0" border>全部子节点</el-radio>
-                <el-radio v-model="start.datalistType" label="1" border>部分子节点</el-radio>
+                <!-- <el-radio v-model="start.datalistType" label="1" border>部分子节点</el-radio> -->
             </el-form-item>
             <transfer v-show="start.datalistType==1"></transfer>
             <br/><br/><br/><br/>

@@ -20,6 +20,9 @@
     watch:{
       optionData:function(newValue,oldValue){
         this.options = newValue
+      },
+      value:function(newValue,oldValue){
+        this.value3=this.value
       }
     },
     data() {
