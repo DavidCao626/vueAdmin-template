@@ -44,7 +44,6 @@
             <div slot="label">
               计划分配天数
             </div>
-
             <template v-if="item.item.itemType=='手动'">
               <el-input-number disabled style=" margin-top: 10px" size="mini" v-model="item.item.planTimeLong" :min="0" :max="getProjectStatusRemainingCountDays+item.plannedDays" label="描述文字">
               </el-input-number>
@@ -83,13 +82,13 @@
 </template>
 
 <script>
-import formData from "../../addProcess/components/Data";
-import formDisabledSelect from "../../addProcess/components/disabledSelect";
+import formData from '../../addProcess/components/Data'
+import formDisabledSelect from '../../addProcess/components/disabledSelect'
 import {
   queryWorkItem,
   getProjectById,
   queryWorkTimeView
-} from "~/api/project";
+} from '~/api/project'
 export default {
   components: {
     formData,
@@ -97,120 +96,121 @@ export default {
   },
   computed: {
     getCountDays() {
-      let tempDays = 0; // 已分配计划天数
+      let tempDays = 0 // 已分配计划天数
       this.ProjectStatusData.forEach(item => {
-        tempDays = tempDays + Number(item.plannedDays);
-      });
-      return tempDays;
+        tempDays = tempDays + Number(item.plannedDays)
+      })
+      return tempDays
     },
     getProjectStatusRemainingCountDays() {
-      return this.ProjectStatusCountDays - this.getCountDays;
+      return this.ProjectStatusCountDays - this.getCountDays
     }
   },
   mounted: function() {
-    //this.loadWorkItem();
+    debugger
+    this.loadWorkItem()
   },
   methods: {
     loadWorkTime() {
       new Promise((resolve, reject) => {
-        var requestData = { scopeId: this.scopeId };
-        //var requestData = { scopeId: 66 };
+        debugger
+        var requestData = { scopeId: this.scopeId }
+        // var requestData = { scopeId: 66 };
         queryWorkTimeView(requestData).then(response => {
-        
-          var tempData = [];
-          var i = 0;
+          var tempData = []
+          var i = 0
           var responseTemp = response.resBody
-          for(var key in responseTemp){
+          for (var key in responseTemp) {
             tempData[i] = responseTemp[key]
-            i++;
+            i++
           }
-          console.log(tempData);
+          console.log(tempData)
           for (var i = 0; i < tempData.length; i++) {
-            tempData[i].item.nodeId = i + 1;
-            if (tempData[i].item.itemType == "manual") {
-              tempData[i].item.itemType = "手动";
+            tempData[i].item.nodeId = i + 1
+            if (tempData[i].item.itemType == 'manual') {
+              tempData[i].item.itemType = '手动'
             } else {
-              tempData[i].item.itemType = "自动";
+              tempData[i].item.itemType = '自动'
             }
           }
-           this.ProjectStatusData = tempData;
-        });
-      });
+          this.ProjectStatusData = tempData
+        })
+      })
     },
 
     loadWorkItem() {
       new Promise((resolve, reject) => {
-        var requestData = { scopeId: this.scopeId };
-        //var requestData = { scopeId: 66 };
+        var requestData = { scopeId: this.scopeId }
+        // var requestData = { scopeId: 66 };
         queryWorkItem(requestData).then(response => {
-          var tempData = [];
-          tempData = response.resBody;
+          var tempData = []
+          tempData = response.resBody
           for (var i = 0; i < tempData.length; i++) {
-            tempData[i].nodeId = i + 1;
-            if (tempData[i].itemType == "manual") {
-              tempData[i].itemType = "手动";
+            tempData[i].nodeId = i + 1
+            if (tempData[i].itemType == 'manual') {
+              tempData[i].itemType = '手动'
             } else {
-              tempData[i].itemType = "自动";
+              tempData[i].itemType = '自动'
             }
           }
-          console.log(["workItem数据", tempData]);
-          this.ProjectStatusData = tempData;
-        });
-      });
+          console.log(['workItem数据', tempData])
+          this.ProjectStatusData = tempData
+        })
+      })
     },
     getDays(date1, date2) {
-      var date1Str = date1.split("-"); //将日期字符串分隔为数组,数组元素分别为年.月.日
-      //根据年 . 月 . 日的值创建Date对象
-      var date1Obj = new Date(date1Str[0], date1Str[1] - 1, date1Str[2]);
-      var date2Str = date2.split("-");
-      var date2Obj = new Date(date2Str[0], date2Str[1] - 1, date2Str[2]);
-      var t1 = date1Obj.getTime();
-      var t2 = date2Obj.getTime();
-      var dateTime = 1000 * 60 * 60 * 24; //每一天的毫秒数
-      var minusDays = Math.floor((t2 - t1) / dateTime); //计算出两个日期的天数差
-      var days = Math.abs(minusDays); //取绝对值
-      return days;
+      var date1Str = date1.split('-') // 将日期字符串分隔为数组,数组元素分别为年.月.日
+      // 根据年 . 月 . 日的值创建Date对象
+      var date1Obj = new Date(date1Str[0], date1Str[1] - 1, date1Str[2])
+      var date2Str = date2.split('-')
+      var date2Obj = new Date(date2Str[0], date2Str[1] - 1, date2Str[2])
+      var t1 = date1Obj.getTime()
+      var t2 = date2Obj.getTime()
+      var dateTime = 1000 * 60 * 60 * 24 // 每一天的毫秒数
+      var minusDays = Math.floor((t2 - t1) / dateTime) // 计算出两个日期的天数差
+      var days = Math.abs(minusDays) // 取绝对值
+      return days
     },
     loadProject() {
       new Promise((resolve, reject) => {
         var requestData = {
           projectId: this.projectId
-        };
+        }
         getProjectById(requestData).then(response => {
-          console.log(["这是项目数据", response.resBody]);
-          this.ProjectStatusBeginDate = response.resBody.planStartTime; // 项目总开始时间
-          this.ProjectStatusEndDate = response.resBody.planCompleteTime; // 项目总开始时间
+          console.log(['这是项目数据', response.resBody])
+          this.ProjectStatusBeginDate = response.resBody.planStartTime // 项目总开始时间
+          this.ProjectStatusEndDate = response.resBody.planCompleteTime // 项目总开始时间
           var dayCount = this.getDays(
             response.resBody.planStartTime,
             response.resBody.planCompleteTime
-          );
-          console.log(dayCount);
-          this.ProjectStatusCountDays = dayCount; // 项目总天数
-          this.ProjectStatusRemainingCountDays = 999; // 未分配可用天数
-        });
-      });
+          )
+          console.log(dayCount)
+          this.ProjectStatusCountDays = dayCount // 项目总天数
+          this.ProjectStatusRemainingCountDays = 999 // 未分配可用天数
+        })
+      })
     },
 
     getStateOfCircle(State) {
-      if (State === "C") return "state-circle";
-      else if (State === "S") return "state-circle " + "state-circle__run";
-      else return "state-circle " + "state-circle__ok";
+      if (State === 'C') return 'state-circle'
+      else if (State === 'S') return 'state-circle ' + 'state-circle__run'
+      else return 'state-circle ' + 'state-circle__ok'
     },
     handleChange(value) {
-      console.log(value);
+      console.log(value)
     }
   },
 
-  props: ["propScopeId", "propProjectId"],
+  props: ['propScopeId', 'propProjectId'],
   watch: {
     propScopeId: function(newValue, oldValue) {
-      this.scopeId = newValue;
-      //this.loadWorkItem();
-      this.loadWorkTime();
+      this.scopeId = newValue
+      // this.loadWorkItem();
+      this.loadWorkTime()
     },
     propProjectId: function(newValue, oldValue) {
-      this.projectId = newValue;
-      this.loadProject();
+      this.projectId = newValue
+      this.loadProject()
     }
   },
 
@@ -218,37 +218,37 @@ export default {
     return {
       scopeId: this.propScopeId,
       projectId: this.propProjectId,
-      ProjectStatusBeginDate: "2018-06-01", // 项目总开始时间
-      ProjectStatusEndDate: "2018-09-01", // 项目总开始时间
+      ProjectStatusBeginDate: '2018-06-01', // 项目总开始时间
+      ProjectStatusEndDate: '2018-09-01', // 项目总开始时间
       ProjectStatusCountDays: 246, // 项目总天数
       ProjectStatusRemainingCountDays: 2, // 未分配可用天数
 
       ProjectStatusData: [
         {
-          item:{
-            state:""
+          item: {
+            state: ''
           },
           nodeId: 9,
-          nodeName: "归档",
-          nodeRunType: "手动",
+          nodeName: '归档',
+          nodeRunType: '手动',
           nodeStatus: 0, // 0未启动，1运行中，2已完成
           plannedDays: 30,
-          plannedBeginDate: "2018-06-01",
-          plannedEndDate: "2018-06-01",
-          actualBeginDate: "2018-06-01",
-          actualEndDate: "2018-06-01",
+          plannedBeginDate: '2018-06-01',
+          plannedEndDate: '2018-06-01',
+          actualBeginDate: '2018-06-01',
+          actualEndDate: '2018-06-01',
           actualDays: 0,
           actionItems: [
             {
-              actionName: "查看归档数据",
-              actionUrl: "#"
+              actionName: '查看归档数据',
+              actionUrl: '#'
             }
           ]
         }
       ]
-    };
+    }
   }
-};
+}
 </script>
 <style scoped>
 .state-circle {

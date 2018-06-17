@@ -111,14 +111,14 @@
 </template>
 
 <script>
-import formData from "../../addProcess/components/Data";
-import formDisabledSelect from "../../addProcess/components/disabledSelect";
+import formData from '../../addProcess/components/Data'
+import formDisabledSelect from '../../addProcess/components/disabledSelect'
 import {
   queryWorkItem,
   getProjectById,
   queryWorkTimeView,
   completePending
-} from "~/api/project";
+} from '~/api/project'
 
 export default {
   components: {
@@ -127,44 +127,44 @@ export default {
   },
   computed: {
     getCountDays() {
-      let tempDays = 0; // 已分配计划天数
+      let tempDays = 0 // 已分配计划天数
       this.ProjectStatusData.forEach(item => {
-        tempDays = tempDays + Number(item.plannedDays);
-      });
-      return tempDays;
+        tempDays = tempDays + Number(item.plannedDays)
+      })
+      return tempDays
     },
     getProjectStatusRemainingCountDays() {
-      return this.ProjectStatusCountDays - this.getCountDays;
+      return this.ProjectStatusCountDays - this.getCountDays
     }
   },
   mounted: function() {
-    this.loadWorkTime();
+    this.loadWorkTime()
   },
   methods: {
     loadWorkTime() {
       new Promise((resolve, reject) => {
-        var requestData = { scopeId: this.scopeId };
-        //var requestData = { scopeId: 66 };
+        var requestData = { scopeId: this.scopeId }
+        debugger
         queryWorkTimeView(requestData).then(response => {
-          var tempData = [];
-          var i = 0;
-          var responseTemp = response.resBody;
+          var tempData = []
+          var i = 0
+          var responseTemp = response.resBody
           for (var key in responseTemp) {
-            tempData[i] = responseTemp[key];
-            i++;
+            tempData[i] = responseTemp[key]
+            i++
           }
-          console.log(tempData);
+          console.log(tempData)
           for (var i = 0; i < tempData.length; i++) {
-            tempData[i].item.nodeId = i + 1;
-            if (tempData[i].item.itemType == "manual") {
-              tempData[i].item.itemType = "手动";
+            tempData[i].item.nodeId = i + 1
+            if (tempData[i].item.itemType == 'manual') {
+              tempData[i].item.itemType = '手动'
             } else {
-              tempData[i].item.itemType = "自动";
+              tempData[i].item.itemType = '自动'
             }
           }
-          this.ProjectStatusData = tempData;
-        });
-      });
+          this.ProjectStatusData = tempData
+        })
+      })
     },
 
     // loadWorkItem() {
@@ -188,75 +188,74 @@ export default {
     //   });
     // },
     tempButton() {
-      //完成代办
-      console.log(["完成代办", this.pendId]);
+      // 完成代办
+      console.log(['完成代办', this.pendId])
       new Promise((resolve, reject) => {
-        var requestData = { pendingId: this.pendId };
+        var requestData = { pendingId: this.pendId }
         completePending(requestData).then(response => {
-          console.log(["完成代办", response]);
-            this.loadWorkTime();
-        });
-      });
+          console.log(['完成代办', response])
+          this.loadWorkTime()
+        })
+      })
     },
     getStateOfCircle(State) {
-      if (State === "C") return "state-circle";
-      else if (State === "S") return "state-circle " + "state-circle__run";
-      else return "state-circle " + "state-circle__ok";
+      if (State === 'C') return 'state-circle'
+      else if (State === 'S') return 'state-circle ' + 'state-circle__run'
+      else return 'state-circle ' + 'state-circle__ok'
     },
     handleChange(value) {
-      console.log(value);
+      console.log(value)
     },
     saveDays(nodeID) {
       // 保存天数成功!
       this.$message({
-        type: "success",
-        message: "保存天数成功!"
-      });
+        type: 'success',
+        message: '保存天数成功!'
+      })
       // this.$refs['popover' + nodeID].value = false  关闭弹出层。暂时不能使用
     },
     config() {
-      var scopeId = this.$route.query.scopeId;
-      var projectId = this.$route.query.projectId;
-      var pendId = this.$route.query.pendId;
+      var scopeId = this.$route.query.scopeId
+      var projectId = this.$route.query.projectId
+      var pendId = this.$route.query.pendId
 
-
-      this.$emit("onConfig",scopeId,projectId,pendId);
+      this.$emit('onConfig', scopeId, projectId, pendId)
     }
   },
   data() {
     return {
       scopeId: this.$route.query.scopeId,
       pendId: this.$route.query.pendId,
-      ProjectStatusBeginDate: "2018-06-01", // 项目总开始时间
-      ProjectStatusEndDate: "2018-09-01", // 项目总开始时间
+      ProjectStatusBeginDate: '2018-06-01', // 项目总开始时间
+      ProjectStatusEndDate: '2018-09-01', // 项目总开始时间
       ProjectStatusCountDays: 246, // 项目总天数
       ProjectStatusRemainingCountDays: 2, // 未分配可用天数
       ProjectStatusData: [
         {
           item: {
-            state: ""
+            state: ''
           },
           nodeId: 9,
-          nodeName: "归档",
-          nodeRunType: "手动",
+          nodeName: '归档',
+          nodeRunType: '手动',
           nodeStatus: 0, // 0未启动，1运行中，2已完成
           plannedDays: 30,
-          plannedBeginDate: "2018-06-01",
-          plannedEndDate: "2018-06-01",
-          actualBeginDate: "2018-06-01",
-          actualEndDate: "2018-06-01",
+          plannedBeginDate: '2018-06-01',
+          plannedEndDate: '2018-06-01',
+          actualBeginDate: '2018-06-01',
+          actualEndDate: '2018-06-01',
           actualDays: 0,
           actionItems: [
             {
-              actionName: "查看归档数据",
-              actionUrl: "#"
+              actionName: '查看归档数据',
+              actionUrl: '#'
             }
           ]
         }
       ]
-    };
+    }
   }
-};
+}
 </script>
 <style scoped>
 .state-circle {

@@ -30,9 +30,9 @@
   </page>
 </template>
 <script>
-import base from "./base.vue";
-import config from "./../control/state/meesageState";
-import start from "./start.vue";
+import base from './base.vue'
+import config from './../control/state/meesageState'
+import start from './start.vue'
 import {
   insertProject,
   insertProjectAndRun,
@@ -40,148 +40,152 @@ import {
   updateWorkItemTime,
   deleteProject,
   queryUserProject,
-  dispenseChildTask, //下发任务
+  dispenseChildTask, // 下发任务
   queryServiceTypeList
-} from "~/api/project";
+} from '~/api/project'
 export default {
   components: {
-    "one-base": base,
-    "tow-config": config,
-    "three-start": start
+    'one-base': base,
+    'tow-config': config,
+    'three-start': start
   },
   data() {
     return {
       projectId: 0,
       scopeId: 0,
       active: 0,
-      componentId: "one-base"
-    };
+      componentId: 'one-base'
+    }
   },
   watch: {
     active() {
       switch (this.active) {
         case 0:
-          this.componentId = "one-base";
-          break;
+          this.componentId = 'one-base'
+          break
         case 1:
-          this.componentId = "tow-config";
-          break;
+          this.componentId = 'tow-config'
+          break
         case 2:
-          this.componentId = "three-start";
-          break;
+          this.componentId = 'three-start'
+          break
       }
     }
   },
 
   methods: {
     dispenseChildTask() {
-      console.log(["下发任务", this.$refs["component"].start]);
-      var start = this.$refs["component"].start;
-      var requestData = {};
-      requestData.scopeId = this.scopeId;
-      requestData.planStartTime = start.planStartTime;
-      requestData.planComplteTime = start.planComplteTime;
-      requestData.orgCodes = [];
+      console.log(['下发任务', this.$refs['component'].start])
+      var start = this.$refs['component'].start
+      var requestData = {}
+      requestData.scopeId = this.scopeId
+      requestData.planStartTime = start.planStartTime
+      requestData.planComplteTime = start.planComplteTime
+      requestData.orgCodes = []
 
       new Promise((resolve, reject) => {
         dispenseChildTask(requestData).then(response => {
-          this.$message.success(["下发任务完成", response]);
-        });
-      });
+          this.$message.success(['下发任务完成', response])
+        })
+      })
     },
     saveProject() {
-      //保存项目
-      console.log(["保存项目", this.$refs["component"].form]);
-      var submitData = this.$refs["component"].form;
+      // 保存项目
+      console.log(['保存项目', this.$refs['component'].form])
+      var submitData = this.$refs['component'].form
       new Promise((resolve, reject) => {
         insertProject(submitData).then(response => {
-          this.$message.success("保存成功");
-        });
-      });
+          this.$message.success('保存成功')
+        })
+      })
     },
     updateWorkItem() {
-      var tempData = this.$refs["component"].ProjectStatusData;
-      console.log([tempData]);
-      var requestData = [];
+      var tempData = this.$refs['component'].ProjectStatusData
+      console.log([tempData])
+      var requestData = []
       for (var i = 0; i < tempData.length; i++) {
-        if (tempData[i].item.itemType != "手动") {
+        if (tempData[i].item.itemType != '手动') {
           var item = {
             id: tempData[i].item.id,
             scopeId: tempData[i].item.scopeId,
             planTimeLong: tempData[i].item.planTimeLong,
-            stepKey:tempData[i].item.stepKey
-          };
-          requestData.push(item);
+            stepKey: tempData[i].item.stepKey
+          }
+          requestData.push(item)
         }
       }
       new Promise((resolve, reject) => {
         updateWorkItemTime({ itemBeans: requestData }).then(response => {
-          this.$message.success("保存成功");
-        });
-      });
+          this.$message.success('保存成功')
+        })
+      })
     },
-    saveProjectAndRun() {
-      console.log(["保存并运行", this]);
-      var submitData = this.$refs["component"].form;
+    saveProjectAndRun(successCallBack) {
+      console.log(['保存并运行', this])
+      var submitData = this.$refs['component'].form
       new Promise((resolve, reject) => {
         insertProjectAndRun(submitData).then(response => {
-          this.$message.success("保存成功");
-          this.projectId = response.resBody.project.id;
-          this.scopeId = response.resBody.scope.id;
-          console.log(["this.scopeId", this.scopeId]);
-        });
-      });
+          this.$message.success('保存成功')
+          this.projectId = response.resBody.project.id
+          this.scopeId = response.resBody.scope.id
+          console.log(['this.scopeId', this.scopeId])
+          successCallBack()
+        })
+      })
     },
     back() {
       switch (this.active) {
         case 0:
-          this.$router.back(-1);
-          break;
+          this.$router.back(-1)
+          break
         case 1:
-          this.active--;
-          break;
+          this.active--
+          break
         case 2:
-          this.active--;
-          break;
+          this.active--
+          break
       }
     },
     next() {
       switch (this.active) {
         case 0:
-          this.active++;
-          this.saveProjectAndRun();
-          break;
+          var that = this
+          this.saveProjectAndRun(function() {
+            debugger
+            that.active++
+          })
+          break
         case 1:
-          this.active++;
-          this.updateWorkItem();
-          break;
+          this.active++
+          this.updateWorkItem()
+          break
         case 2:
-          this.$confirm("你即将执行任务下发操作, 是否确定继续?", "提示", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            type: "warning"
+          this.$confirm('你即将执行任务下发操作, 是否确定继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
           })
             .then(() => {
-              this.dispenseChildTask();
-              this.active = 0;
+              this.dispenseChildTask()
+              this.active = 0
               this.$message({
-                type: "success",
-                message: "任务已经开始执行!"
-              });
+                type: 'success',
+                message: '任务已经开始执行!'
+              })
               this.$router.push({
-                path: "/project/control",
+                path: '/project/control',
                 query: {
                   projectId: this.projectId,
                   scopeId: this.scopeId
                 }
-              }); // 跳转路由
+              }) // 跳转路由
             })
-            .catch(() => {});
-          break;
+            .catch(() => {})
+          break
       }
     }
   }
-};
+}
 </script>
 <style>
 </style>
