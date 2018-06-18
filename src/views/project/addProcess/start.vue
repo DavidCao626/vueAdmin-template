@@ -2,7 +2,7 @@
   <page class="page" :breadcrumb="false">
     <div slot="title">新建项目</div>
     <div slot="panel">
-      <el-steps active="2" simple finish-status="success">
+      <el-steps :active="2" simple finish-status="success">
         <el-step title="填写项目信息" icon="el-icon-edit">
         </el-step>
         <el-step title="配置计划" icon="el-icon-picture">
@@ -63,7 +63,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       // 路由请求加载完成后执行函数体，参数vm就是当前组件的实例。
-      if (to.query.projectId && !vm.projectId) {
+      if (to.query.projectId) {
         vm.projectId = to.query.projectId
         // todo 如果路由参数projectId 有值，则是修改项目下发任务页面
         // ajax 根据projectId读取下发任务信息

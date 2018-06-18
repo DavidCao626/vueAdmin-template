@@ -2,7 +2,7 @@
     <page>
         <div slot="title">项目配置计划</div>
         <div slot="panel">
-            <el-steps active="1" simple finish-status="success">
+            <el-steps :active="1" simple finish-status="success">
                 <el-step title="填写项目信息" icon="el-icon-edit">
                 </el-step>
                 <el-step title="配置计划" icon="el-icon-picture">
@@ -85,9 +85,12 @@
 
                     </el-row>
                     <div class="line"></div>
-                    <el-button ref="next" @click="onSave">保存配置</el-button>
-                    <el-button ref="back" @click="onSaveAndNext" type="primary">保存并下发任务</el-button>
-
+                    <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
+                        <el-col :span="7">
+                            <el-button ref="next" @click="onSave">保存配置</el-button>
+                            <el-button ref="back" @click="onSaveAndNext" type="primary">保存并下发任务</el-button>
+                        </el-col>
+                    </el-row>
                 </el-form>
 
             </div>
@@ -120,7 +123,7 @@ export default {
       console.log('保存并下发任务!')
       this.$router.push({
         name: '项目下发任务',
-        query: { projectId: '123' }
+        query: { projectId: this.projectId }
       })
       // 跳转到配置下发任务路由，把项目id传递过去
     },
@@ -134,7 +137,7 @@ export default {
 
       this.$router.push({
         path: '/project/control',
-        query: { projectId: '123' }
+        query: { projectId: this.projectId }
       }) // 跳转到 项目控制台
     },
     getStateOfCircle(State) {
@@ -149,7 +152,8 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       // 路由请求加载完成后执行函数体，参数vm就是当前组件的实例。
-      if (to.query.projectId && !vm.projectId) {
+      debugger
+      if (to.query.projectId) {
         vm.projectId = to.query.projectId
         // ajax读取项目信息
       } else {

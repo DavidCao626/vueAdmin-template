@@ -2,7 +2,7 @@
   <page class="page" :breadcrumb="false">
     <div slot="title">新建项目</div>
     <div slot="panel">
-      <el-steps active="0" simple finish-status="success">
+      <el-steps :active="0" simple finish-status="success">
         <el-step title="填写项目信息" icon="el-icon-edit">
         </el-step>
         <el-step title="配置计划" icon="el-icon-picture">
@@ -82,10 +82,10 @@ export default {
     // 不在next函数内的代码是路由请求阶段，此处代码获取不了页面vue示例和dom树
     next(vm => {
       // 路由请求加载完成后执行函数体，参数vm就是当前组件的实例。
-      if (to.query.projectID) {
-        // todo 如果路由参数projectID 有值，则是修改项目页面
-        // ajax 根据projectID读取项目信息
-        console.log('ajax 根据projectID读取项目信息')
+      if (to.query.projectId) {
+        // todo 如果路由参数projectId 有值，则是修改项目页面
+        // ajax 根据projectId读取项目信息
+        console.log('ajax 根据projectId读取项目信息')
         vm.form.tyleId = '001' // ajax读取成功后，数据赋值示例
       }
     })
@@ -95,7 +95,7 @@ export default {
       console.log('保存并配置!')
       this.$router.push({
         name: '项目配置计划',
-        query: { projectID: '123' }
+        query: { projectId: '123' }
       })
       // 跳转到配置计划路由，把创建成功的项目id传递过去
     },
@@ -109,7 +109,7 @@ export default {
 
       this.$router.push({
         path: '/project/control',
-        query: { projectID: '123' }
+        query: { projectId: '123' }
       }) // 跳转到 项目控制台
     },
     formDataOnChange(value) {
