@@ -1,6 +1,6 @@
 <template>
     <div>
-         <div class="weui-desktop-page__title" style="font-size:18px">项目基本信息</div>
+        <div class="weui-desktop-page__title" style="font-size:18px">项目基本信息</div>
         <el-form ref="form" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
 
             <el-form-item label="项目名称:">
@@ -48,10 +48,11 @@ export default {
     formData,
     formDisabledSelect
   },
+  props: ['projectId'],
   data() {
     return {
       form: {
-        name: '2018年上学期2017级贫困学生建档项目',
+        name: '',
         tyleId: '001', // 业务类别id
         date1: '2018-06-1',
         endDate: '2018-09-1',
@@ -64,7 +65,14 @@ export default {
     }
   },
   methods: {
-
+    getAjaxDate(projectId) {
+      var th = this
+      // ajax读取项目信息
+      th.form.name = '2018年上学期2017级贫困学生建档项目'
+    }
+  },
+  mounted() {
+    this.getAjaxDate(this.projectId)
   }
 }
 </script>

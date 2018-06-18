@@ -1,0 +1,1827 @@
+[33mcommit 13a98b6e3f1e037dbbcb97c8b2c1cb63232ecc45[m[33m ([m[1;36mHEAD -> [m[1;32mhebing[m[33m, [m[1;31morigin/hebing[m[33m, [m[1;32mold-hebing[m[33m)[m
+Author: chengbinTechnology <definedPerson@163.com>
+Date:   Sun Jun 17 15:48:57 2018 +0800
+
+    sdfsdfsdfs
+
+[33mcommit 2bb9f22b8a04f769041ea022b84b3ce44bdb0af5[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Sat Jun 16 23:30:32 2018 +0800
+
+    whk
+    
+    Signed-off-by: 嘻嘻哈哈 <wahwl@qq.com>
+
+[33mcommit eefba70cc466499cb8f310aa7adb8421c3c82df6[m
+Merge: d74c5e3 5673796
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Sat Jun 16 15:27:04 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit d74c5e359af4adb6de196a4fb3cc33d3eff0a65e[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Sat Jun 16 15:26:56 2018 +0800
+
+    待办和项目列表
+
+[33mcommit 567379632b12825ba1627d62e51d43de1718f099[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Sat Jun 16 15:21:50 2018 +0800
+
+    whk
+    
+    Signed-off-by: 嘻嘻哈哈 <wahwl@qq.com>
+
+[33mcommit 0b59134a2d02d1299d2a1094883911baf2b45ee5[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Sat Jun 16 00:14:20 2018 +0800
+
+    whk
+    
+    Signed-off-by: 嘻嘻哈哈 <wahwl@qq.com>
+
+[33mcommit a8b4d5749562a82a9aa1b798cf6df1403473d6e4[m
+Merge: 35d74c9 9f8aeca
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Fri Jun 15 12:51:29 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit 35d74c939f674b259e754f098c828db6d3d30d46[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Fri Jun 15 12:51:18 2018 +0800
+
+    修正程斌反馈控制面板问题
+
+[33mcommit 9f8aeca7b909fe732c5bd6b5a965ca85a9634e1e[m
+Merge: 278daef f953955
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Fri Jun 15 09:53:33 2018 +0800
+
+    whk
+
+[33mcommit 278daef287d3a946bedc9f5012d6fc00f6f9ff9b[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu Jun 14 23:56:55 2018 +0800
+
+    whk
+
+[33mcommit f9539558a10a37b640240baab2c4b894a0aaae31[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu Jun 14 23:26:52 2018 +0800
+
+    whk
+
+[33mcommit 66537a08ff3ef72617ea1f431812abdde6d73f0f[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu Jun 14 14:08:01 2018 +0800
+
+    修正项目控制台
+
+[33mcommit 9f087ca2207d66ac6e6ad7363cff8716c396f77c[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu Jun 14 13:56:40 2018 +0800
+
+    完成项目控制台
+
+[33mcommit 66438877ddbc5152d89e4587c8de64d07ebb320f[m
+Merge: b2612d1 560b455
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu Jun 14 13:26:36 2018 +0800
+
+    ttt
+    
+    Signed-off-by: DavidCao <davidcao@DavidCaodeiMac.local>
+
+[33mcommit b2612d1b1d4c26c4a7389f44bb76fa6bc9d95da4[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed Jun 13 23:54:12 2018 +0800
+
+    增加项目控制台
+
+[33mcommit 560b4550e70786cd5c0f06e087bc8632c9489f0a[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 29 18:23:41 2018 +0800
+
+    whk
+
+[33mcommit 7c4c25f99a83f5a75448dc41bef381dde6887633[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Sun May 27 09:32:47 2018 +0800
+
+    5
+
+[33mcommit 85e5ee0de766d441fa600e0fb0e6fccfef4764f4[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Fri May 25 10:08:10 2018 +0800
+
+    whk
+    
+    Signed-off-by: 嘻嘻哈哈 <wahwl@qq.com>
+
+[33mcommit 896aecc64c238cd336faef73bd421c5a037f2ed5[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu May 24 20:35:37 2018 +0800
+
+    whk
+
+[33mcommit 173ec7a8b4d818ae460033ebf640f3a4c1ed1daf[m
+Merge: 233dafb d9e9e5a
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu May 24 17:30:39 2018 +0800
+
+    whk
+
+[33mcommit 233dafb09d7e6aaa896d8a725f7f87d9ae8b58f3[m
+Merge: 703388e 093f851
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu May 24 15:32:31 2018 +0800
+
+    whk
+
+[33mcommit d9e9e5a8a2ec6247c16fa1516af4e71ac57ffd6e[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu May 24 16:10:09 2018 +0800
+
+    修复优化任务
+
+[33mcommit 31ab11bccacc773d50b0ce357a327f23c957a878[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu May 24 15:45:29 2018 +0800
+
+    贮藏室约束
+
+[33mcommit f0eff9e3324adfcc34d9ed83e714d70299096ad2[m
+Merge: 1dd732c 1e63462
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu May 24 15:43:51 2018 +0800
+
+    合并冲突
+    
+    Signed-off-by: DavidCao <davidcao@DavidCaodeiMac.local>
+
+[33mcommit 1dd732c27be9d8f5905ea7e9c52ae708d31fd8e0[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu May 24 15:40:23 2018 +0800
+
+    更新动态列表组件
+
+[33mcommit 1e63462ff08f648827e55bc5e14102fdb938723e[m
+Merge: 703388e 093f851
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu May 24 15:32:31 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit 703388efa357aba02e05f84bfda258ebf3e47738[m
+Merge: f7001dc 8e39946
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu May 24 13:51:23 2018 +0800
+
+    whk
+
+[33mcommit 093f8511c233e39da1ed9bd444ca4df075c766d0[m
+Merge: 55b6611 c898f72
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu May 24 14:25:09 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit c898f72d0656b7e8bdbc883d8cd7b3316e8c5bb1[m
+Merge: f7001dc 8e39946
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu May 24 13:51:23 2018 +0800
+
+    whk
+
+[33mcommit f7001dcb6a004c4468d7f2fe1fe947e52268cae0[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu May 24 11:44:15 2018 +0800
+
+    whkSigned-off-by: 嘻嘻哈哈 <wahwl@qq.com>
+
+[33mcommit 55b6611521c8bcec219f8463e524d2e247a44eb8[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu May 24 12:04:40 2018 +0800
+
+    ok
+
+[33mcommit 8e3994636116cc004a733ed5d384fbc0b1ac28eb[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu May 24 11:44:15 2018 +0800
+
+    whk
+    
+    Signed-off-by: 嘻嘻哈哈 <wahwl@qq.com>
+
+[33mcommit cc0a62ca8bd8554daddce6cf57132787edbd588d[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu May 24 11:14:50 2018 +0800
+
+    w
+
+[33mcommit e3980084a55d9e81e2542369b7b29e38c4a2026d[m
+Merge: 9d54e79 5853272
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu May 24 10:56:51 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit 9d54e798a3196ebe365c8fdb89c688c73a6c03a3[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu May 24 10:56:32 2018 +0800
+
+    whk
+
+[33mcommit 5853272d8c3972a4face2a42a11026d43821bf03[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu May 24 10:55:43 2018 +0800
+
+    更新动态列表格
+
+[33mcommit 8159af6f3ed8061622a278613cc6e38dc9cb068b[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed May 23 16:46:04 2018 +0800
+
+    update .gitignore
+
+[33mcommit 07de7ddcff72147cec015ff3ddf31cb9132545b6[m
+Author: chengbinTechnology <definedPerson@163.com>
+Date:   Wed May 23 16:35:18 2018 +0800
+
+    wwww
+
+[33mcommit 63e7a690def6b2f97cb4387ce806b04c4878fd98[m
+Merge: 90ed762 f13b732
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed May 23 15:51:48 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit 90ed762489fe74f5830bc95b2d0356cc6e875b17[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed May 23 15:46:12 2018 +0800
+
+    提交数据
+
+[33mcommit 22ac0af797f28b4cc0b581a119ece857557eb209[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed May 23 15:38:42 2018 +0800
+
+    提交问卷数据
+
+[33mcommit f13b7329f9c47a03be3cce96c22c741df96c4abd[m
+Merge: 6e49d81 bd0f492
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 22 12:22:31 2018 +0800
+
+    1
+
+[33mcommit 6e49d81bec8e93f436cdc400c82f8d74f8101b0a[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 22 12:19:47 2018 +0800
+
+    whk
+
+[33mcommit bd0f492cee6513a5829baf277fdd2da1c64e4b7c[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue May 22 12:13:44 2018 +0800
+
+    动态表格测试数据测试
+
+[33mcommit f7679064f8e73ba449e9dd02b2ef2503c67d9f6c[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue May 22 12:10:15 2018 +0800
+
+    动态列表格组件封装
+
+[33mcommit 0559a418ec71074a76bc6a6e0ef20a16443201a7[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue May 22 10:21:09 2018 +0800
+
+    问券修改
+
+[33mcommit cab5115698e83ee10cfa749bb5a642b16408cbaf[m
+Merge: 7b5ec15 6bffe9e
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue May 22 10:20:22 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit 6bffe9e7ab8b2fe9e6c2eb64525fc018b92fb940[m
+Merge: 0e09a7c 4140f86
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 22 10:03:17 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit 0e09a7c6fa3cecf92b7fb54658e523c900274f95[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu May 17 15:33:51 2018 +0800
+
+    whk
+
+[33mcommit 7b5ec1581962ba7e079c03da1ca7a65a69a0fc01[m
+Merge: 21d0350 4140f86
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu May 17 16:08:36 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit 21d0350f8dfcb6f708f45339248bcbf8f64ad78e[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu May 17 16:04:04 2018 +0800
+
+    优化内容
+
+[33mcommit 4140f86b3c781a8ab740ba6106d977cb9c0db340[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu May 17 15:33:51 2018 +0800
+
+    quest
+
+[33mcommit 6c2f0f169783df4ea203f8f31b1aa3ad57745f27[m
+Merge: 7b6d958 ef14ad5
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu May 17 09:40:24 2018 +0800
+
+    w
+
+[33mcommit 7b6d958292e5f0d01fc70f0ac17e6d86a4ce5fc0[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu May 17 09:38:42 2018 +0800
+
+    www
+
+[33mcommit 5adfe92ef9f74d07afa780b3c3201d748d5324a7[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu May 17 09:38:06 2018 +0800
+
+    修改各种表单
+
+[33mcommit 736ae703459d9ae891e7d18eac9c76826c268189[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue May 15 09:58:44 2018 +0800
+
+    审批表格多表头提交
+
+[33mcommit 89bf07376fcae07aa0dc4ce2c76d8e2f5f5de00c[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Fri May 11 10:04:30 2018 +0800
+
+    whk
+
+[33mcommit ef14ad5a95b04471bf4ecc204e38e74dcd7eacbd[m
+Merge: 42a8d73 2d59855
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Fri May 11 10:03:25 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit 42a8d737a6a3d625c8f66a8ef5039552c8172759[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Fri May 11 10:03:16 2018 +0800
+
+    tt
+
+[33mcommit 2d598555ac0b8ae7eca44d09d1e9c61f0bf37e0a[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Fri May 11 09:16:15 2018 +0800
+
+    whk
+
+[33mcommit 81757a250e31c8acf6b64deca556db4c51179718[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed May 9 19:30:07 2018 +0800
+
+    修复task table
+
+[33mcommit fba37cf465f87424ab844b09347df0fff31e9e50[m
+Merge: 0d29603 b88602f
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed May 9 19:04:46 2018 +0800
+
+    合并
+    
+    Signed-off-by: DavidCao <davidcao@DavidCaodeiMac.local>
+
+[33mcommit 0d296038142ca790a804a0a5e20a63f76fbc45e5[m
+Merge: 195be1e d78e27c
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed May 9 19:00:55 2018 +0800
+
+    Merge branch 'dev' into hebing
+
+[33mcommit 195be1efeb9446b08b57b978c5bef6dbd2e8c6be[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed May 9 19:00:45 2018 +0800
+
+    修复task table
+
+[33mcommit d78e27cbac9471a80d0e5e0e0fe5f7c2e305378e[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed May 9 19:00:20 2018 +0800
+
+    table封装
+
+[33mcommit b88602f7a1bdc87501d2d336842f78361e487277[m
+Merge: 30e81b1 fb9b964
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Wed May 9 18:58:09 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit 30e81b1e73d2ff2da78d752dfd5f4f156fe73a8b[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 8 15:04:56 2018 +0800
+
+    asas
+
+[33mcommit fb9b964745671a47cbfa72bb7b0ae7a1261f9649[m
+Merge: d18b0a0 5cdb5b6
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed May 9 16:26:06 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit d18b0a070bc657a9d8a79719b9653537e4a01afc[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed May 9 16:26:00 2018 +0800
+
+    修改提示
+
+[33mcommit 5cdb5b66564f7c67d38cee5557f038ddcf3170c9[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 8 15:04:56 2018 +0800
+
+    asas
+
+[33mcommit dc596dc93015f657b52c4e8a0ea2979327501ffa[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 8 14:27:18 2018 +0800
+
+    jkl
+
+[33mcommit 72f2ce2778a9d01bb19afa3bb758dd550e30698b[m
+Merge: ae99d1f 88ba679
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue May 8 14:10:40 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit ae99d1faaf9ff295cdda30174b5f7aa1091be802[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue May 8 14:10:21 2018 +0800
+
+    提交外观
+
+[33mcommit 88ba67970a91e621e4db53704d7adfff479c70f1[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 8 13:42:49 2018 +0800
+
+    q
+
+[33mcommit aafd34a6bc787b6ec65589bf0ffa4da4aba6fabf[m
+Merge: 3ca437b 118e42f
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue May 8 13:40:50 2018 +0800
+
+    初始化mock.js
+    
+    Signed-off-by: DavidCao <davidcao@DavidCaodeiMac.local>
+
+[33mcommit 118e42f8ea18f2244e768431b3482e9523f390f0[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 8 13:36:36 2018 +0800
+
+    1
+
+[33mcommit 258d4e7f569c4782bda929b9c002681dd1d7950f[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 8 13:35:25 2018 +0800
+
+    as
+
+[33mcommit 3ca437b021d0ffcb4e32389285d8413667e1b0b7[m
+Merge: 378c798 3b864ef
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue May 8 13:29:06 2018 +0800
+
+    合并分支
+    
+    Signed-off-by: DavidCao <davidcao@DavidCaodeiMac.local>
+
+[33mcommit 3b864efb5296f534326c4cfd9f744e6cdb0f580f[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue May 8 13:23:07 2018 +0800
+
+    task vuex循环渲染组件
+
+[33mcommit 378c7984e818fc4342eae7350196fabf765b79f8[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 8 13:09:41 2018 +0800
+
+    whk
+
+[33mcommit 7d94d9bbd025d455145014dd59d33f63d437d0e1[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue May 8 01:09:36 2018 +0800
+
+    初始化mock.js
+
+[33mcommit 0a34d696239db24ccf479d0a357e21f6d0b4020d[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 8 00:14:48 2018 +0800
+
+    whk
+
+[33mcommit ba7af57a0c74ac2f5ccdf0e5a070bbd2ef603f93[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Mon May 7 21:34:46 2018 +0800
+
+    whk
+
+[33mcommit df88fcc5eafdccd8f3b7b5442e74b26f1358547f[m
+Merge: 82465a1 f1915a1
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Mon May 7 14:48:50 2018 +0800
+
+    whk
+
+[33mcommit 82465a19f7b3437ab776476694cbedac5ed04c3d[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Mon May 7 09:00:58 2018 +0800
+
+    1
+
+[33mcommit f1915a10bcbc94d4f1b22cdec85da283751fa812[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Mon May 7 06:19:01 2018 +0800
+
+    home 更新
+
+[33mcommit 96c7cfa579836441a6235941103ba4cb07f38a40[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Mon May 7 06:17:17 2018 +0800
+
+    查询接口完成
+
+[33mcommit 14a23f0dbf1985fede4dc6c124b3c1a1ff17d014[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Mon May 7 05:24:47 2018 +0800
+
+    task树提交
+
+[33mcommit 1ba8706d74df6d292a5b46f13050bc2057cafaf2[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Mon May 7 03:25:03 2018 +0800
+
+    修复懒加载树
+
+[33mcommit 1994c8f0ad48c4ff7c53624220f8f073660e7c8a[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Sun May 6 18:05:24 2018 +0800
+
+    nodeDada  更新
+
+[33mcommit ee946c3456be16bda75d09ec429c1bdbba2f29d3[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Sun May 6 15:37:16 2018 +0800
+
+    nodeData、
+
+[33mcommit 0b5c6bcd04480d5ddc96c4b24f110aacf5865dd2[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Sun May 6 17:59:15 2018 +0800
+
+    节点列表分页
+
+[33mcommit 26ea71dd89fe010031ae4aa4f6e7c339765ef9aa[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Sun May 6 12:13:13 2018 +0800
+
+    表单变更
+
+[33mcommit 68333ed23c5cad14572238c38f6ea4ddeca96c67[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Sun May 6 10:39:43 2018 +0800
+
+    表单更改
+
+[33mcommit 06e5340057fc455826f41555dc7f3b649f641948[m
+Merge: 859c0b0 37a719c
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Sun May 6 10:26:20 2018 +0800
+
+    11
+
+[33mcommit 859c0b02bc0b70cf1311cb7dd392bda36fb93026[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Sun May 6 09:58:47 2018 +0800
+
+    表单更改
+
+[33mcommit 37a719cab868daf784dead8c2d0e5d6f415cb4da[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Sun May 6 00:16:18 2018 +0800
+
+    update .gitignore
+
+[33mcommit 1980036d9d115b21e24d075d781d67aa16331d77[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Sat May 5 23:41:35 2018 +0800
+
+    task界面功能更新
+
+[33mcommit d1941a511a1423b86dd96818f89ac0b80ae1adc1[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Sat May 5 19:31:44 2018 +0800
+
+    修复task界面
+
+[33mcommit 8151251c4b99d58f4abb0260be52b3c6556fc688[m
+Merge: b80de18 31db0b4
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Fri May 4 10:26:33 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit 31db0b4d5ace2d3abcf6e8128aabeaae8ea3696e[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Fri May 4 10:22:51 2018 +0800
+
+    q
+
+[33mcommit b80de18b6b82d885c6a39f63cb3f10c3095231e5[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Fri May 4 10:21:53 2018 +0800
+
+    修改message注释信息
+    
+    Signed-off-by: DavidCao <davidcao@DavidCaodeiMac.local>
+
+[33mcommit 0d552d585ef8982460d61a521ecdd9dacaff7c78[m
+Merge: c5dda6e ce77bea
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Fri May 4 10:17:51 2018 +0800
+
+    Merge branches 'hebing' and 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit c5dda6ee4b7b26567c147a90df7bd909ae3ad8e6[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Fri May 4 10:15:34 2018 +0800
+
+    表单更新
+
+[33mcommit ce77bea8fa418d320a9319459c4ac91471419827[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu May 3 19:03:30 2018 +0800
+
+    删除测试内容
+
+[33mcommit e80e5f7e3daf8f22f30c0a1e24b5390da981345b[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu May 3 18:49:52 2018 +0800
+
+    完成通知消息基础前端模版
+
+[33mcommit de8d5bbd40838552ba67dac0cd5ad2713d5eecd6[m
+Merge: 9d85e9b 97d7e40
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed May 2 16:31:16 2018 +0800
+
+    合并项目管理视图
+    
+    Signed-off-by: DavidCao <davidcao@DavidCaodeiMac.local>
+
+[33mcommit 9d85e9bde5deb16477328d82695c0d79b9ef5fd4[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed May 2 16:22:35 2018 +0800
+
+    项目列表视图修复
+
+[33mcommit 97d7e40c1f569c244215385116ef71f32ab8178d[m
+Merge: a15a52c 52e6e07
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Wed May 2 16:15:18 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit a15a52c29502d2bd61f1a82ef335925ef55a2314[m
+Merge: 09d38f9 176639e
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 1 16:04:43 2018 +0800
+
+    修改增加项目和更新项目表单
+
+[33mcommit 52e6e07a7e9091d49d4692fbcb7c39ad1903bfdf[m
+Merge: 09d38f9 176639e
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 1 16:04:43 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit 09d38f9ba881070a0bb6776f2d82080908974897[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 1 13:40:30 2018 +0800
+
+    业务类别管理是否可用按钮
+
+[33mcommit 176639e6c80a891ad002e7fa7082e00812d01943[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue May 1 15:58:46 2018 +0800
+
+    穿梭save修复
+
+[33mcommit eaad507edab300c968e09cbb91577477f7ba62aa[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue May 1 15:57:47 2018 +0800
+
+    穿梭框改造后完成
+
+[33mcommit cdff924bb9ecd064e5505df9623b285e1a2b24da[m
+Merge: 5482ffd 3177232
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue May 1 14:28:15 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit 5482ffd3882c50ea10307cfad39c99095dd3d78e[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue May 1 14:28:01 2018 +0800
+
+    忽略git
+
+[33mcommit 3177232cddf3f777fc372faf05432cbe36edc277[m
+Merge: 9c3ef97 3b6314e
+Author: chengbinTechnology <definedPerson@163.com>
+Date:   Tue May 1 14:08:19 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit 9c3ef97f80e842221de930956c40d71dc201f920[m
+Author: chengbinTechnology <definedPerson@163.com>
+Date:   Tue May 1 14:08:02 2018 +0800
+
+    ffff
+
+[33mcommit 3b6314e3cf63cbd0f1318d14862a029a03c28b10[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 1 13:40:30 2018 +0800
+
+    业务类别下拉框
+
+[33mcommit 156808037550cbaadd63c330cca010ea8ae05847[m
+Merge: a212fe9 f6165b6
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 1 13:32:40 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit a212fe9289345d53c5d2ebd8b5a540712a08f055[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 1 13:32:23 2018 +0800
+
+    增加消息提示
+
+[33mcommit f6165b69b80edfe63c65c004a3db706035ec6e69[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue May 1 13:06:30 2018 +0800
+
+    修复合并
+
+[33mcommit be01d80b63bae2328831083c718455f6842232cc[m
+Merge: c53e508 f6165b6
+Author: chengbinTechnology <definedPerson@163.com>
+Date:   Tue May 1 12:59:39 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit c53e508fc250a0a64b2cea261bc37cfab08a1b72[m
+Author: chengbinTechnology <definedPerson@163.com>
+Date:   Tue May 1 12:59:32 2018 +0800
+
+    hhh
+
+[33mcommit 6b90f74815ac1f0378ea7b10850f16bdc7790d81[m
+Merge: 3e7a3b1 e231a62
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue May 1 12:55:28 2018 +0800
+
+    合并更改
+    
+    Signed-off-by: DavidCao <davidcao@DavidCaodeiMac.local>
+
+[33mcommit 3e7a3b1959d7286c31b0635b91c21a49a36bca9a[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue May 1 12:51:34 2018 +0800
+
+    增加项目管理
+
+[33mcommit 465db62ea6ef7c409ce4d32de39e1338ee7715f7[m
+Merge: 89fe757 6b90f74
+Author: chengbinTechnology <definedPerson@163.com>
+Date:   Tue May 1 12:48:32 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit 89fe75782c4501eb62fcebd94095b400fcf19625[m
+Merge: 23d945c e231a62
+Author: chengbinTechnology <definedPerson@163.com>
+Date:   Tue May 1 12:45:20 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit e231a6216ca55eda6307fb270465a1efdad5b187[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue May 1 10:48:43 2018 +0800
+
+    增加表单
+
+[33mcommit 23d945c2532515ed7c17c0afcfcf0c98256bbe77[m
+Author: chengbinTechnology <definedPerson@163.com>
+Date:   Tue May 1 10:42:23 2018 +0800
+
+    hhjj
+
+[33mcommit eed8b7e907062603d0afda8b0475c1b334dfd2c6[m
+Merge: bb8a4ca a241677
+Author: chengbinTechnology <definedPerson@163.com>
+Date:   Tue May 1 10:39:11 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit bb8a4ca5a4807a43772e5f3c40ef49385eb226f9[m
+Author: chengbinTechnology <definedPerson@163.com>
+Date:   Tue May 1 10:38:44 2018 +0800
+
+    eeee
+
+[33mcommit a24167756ca263fa5bc95decd8458fb410d428c3[m
+Merge: 1b479dc a8cb4e0
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Mon Apr 30 22:02:42 2018 +0800
+
+    增加表单
+
+[33mcommit 1b479dca14ed7d49c470357df40c49728569f4e8[m
+Merge: 5978748 d33ac7e
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Mon Apr 30 09:50:15 2018 +0800
+
+    增加表单
+
+[33mcommit a8cb4e0a148f74546432c0d8d03b9c2f7885e0a5[m
+Merge: 5978748 d33ac7e
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Mon Apr 30 09:50:15 2018 +0800
+
+    s
+
+[33mcommit 5978748a3f8f14e5091456b86c62d5b559cdba18[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Sat Apr 28 22:43:15 2018 +0800
+
+    新增表单
+
+[33mcommit d33ac7eef0e151fbc80cdad8412028459ec0e30a[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Sat Apr 28 22:43:15 2018 +0800
+
+    新增表单
+
+[33mcommit 4a0910b630fccc0c0b96b96f03898b27e2ed1d5d[m
+Merge: f471914 d4dc222
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Sat Apr 28 13:30:07 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit f4719144fef56d1e685ac37109543fa12a2187d1[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Sat Apr 28 13:29:45 2018 +0800
+
+    增加节点，项目表单
+
+[33mcommit d4dc222d71023ca53564cb15c44c2ac6d604929f[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Sat Apr 28 12:16:29 2018 +0800
+
+    增加多个第三方组件，增加多国语言功能
+
+[33mcommit 96dd101ae2e4ede40d752f8002d8bebf9f2eccd8[m
+Merge: 8aebe68 1805e87
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Fri Apr 27 15:08:50 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit 8aebe6821898a10abbbc599732b51b263d0924e2[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Fri Apr 27 15:08:34 2018 +0800
+
+    更新git屏蔽规则
+
+[33mcommit ad9fef353d8bcc87f0e77cd6621887d0ebea0e12[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Fri Apr 27 15:07:58 2018 +0800
+
+    更新git屏蔽规则
+
+[33mcommit 1805e87b88c5c3d8f3de82ed2757a94e46e3e25d[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Fri Apr 27 15:07:21 2018 +0800
+
+    切换职务问题
+
+[33mcommit 672e9983ce7a3d4f06a99649cfd3a4a7cd417040[m
+Merge: 9833ec4 264a772
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Fri Apr 27 09:34:31 2018 +0800
+
+    Merge branch 'hebing' of gitee.com:Davidcao/vueAdmin-template into hebing
+
+[33mcommit 264a7721322ee91ea08b52b56faabeaa16b9c1d1[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Fri Apr 27 05:58:59 2018 +0800
+
+    增加路径标示
+
+[33mcommit 68e704f70dcd4dc00e3b8da3047015f6526cfd39[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Fri Apr 27 05:41:40 2018 +0800
+
+     完成隐藏菜单
+
+[33mcommit 96178608588f88a0902a4b372dbd93ba23e28b01[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Fri Apr 27 05:11:06 2018 +0800
+
+    项目管理模块视图
+
+[33mcommit 9833ec4ce4a63239ffbb50e6dcd5cda458260563[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Fri Apr 27 01:39:46 2018 +0800
+
+    登录获取默认的任职（切换任职刷新）
+
+[33mcommit 59eeb0eeb6ea254156cb488b255d93774c7cc683[m
+Merge: 2960d48 2a93de6
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu Apr 26 10:36:42 2018 +0800
+
+    Merge branch 'old-to-new_stu-web' into hebing
+
+[33mcommit 2a93de601a19c6ab39a8dd8b4f0bb81a02af430a[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed Apr 25 18:03:25 2018 +0800
+
+    新增树表格
+
+[33mcommit 2960d48e413ffa42f80d05333c456491b424bf7c[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Wed Apr 25 18:00:34 2018 +0800
+
+    合并
+
+[33mcommit 045a86d1e5dce087bcc8595a53f02d0baaf566ac[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu Apr 19 15:41:38 2018 +0800
+
+    切换职务  设置默认职务
+
+[33mcommit 4910f531634fdf59dd3763e8656f6e59dd83cd47[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu Apr 19 12:04:24 2018 +0800
+
+    切换职务
+
+[33mcommit d529449921377eba7ba80b4e33607db24c74e593[m
+Merge: 308294f 9ac2edb
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Thu Apr 19 09:07:02 2018 +0800
+
+    合并
+    
+    Signed-off-by: 嘻嘻哈哈 <wahwl@qq.com>
+
+[33mcommit 9ac2edbb883590b552ae98e0e51f5ee0d3e79b48[m[33m ([m[1;31morigin/old-to-new_stu-web[m[33m)[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu Apr 19 04:16:52 2018 +0800
+
+    组织切换代码结构初始化完成，注册page全局组件
+
+[33mcommit 276ff1b675db692c3dd98e8418a41adefdca555e[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu Apr 19 01:08:12 2018 +0800
+
+    采用css filex布局 重新修正头部样式
+
+[33mcommit 308294f36cd4615e4ae6500166174190c35e7fc5[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Wed Apr 18 23:04:55 2018 +0800
+
+    修改bug
+
+[33mcommit 9c4e67892c52ec59d5964205164e2835ae969cf7[m
+Merge: 73185af 0e4c9b5
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Wed Apr 18 10:28:20 2018 +0800
+
+    合并
+
+[33mcommit 0e4c9b5daec50cb756c68369b1586523a2c117d5[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed Apr 18 09:46:00 2018 +0800
+
+    菜单icon及footer添加
+
+[33mcommit 73185af8483c2517446f3f656c3ca2657af6d430[m
+Merge: 5780084 ae00ccf
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue Apr 17 21:43:41 2018 +0800
+
+    合并axios
+
+[33mcommit 59f76748f098596d06959e3a3dded7394cc260ad[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue Apr 17 19:55:52 2018 +0800
+
+    合并ajax修改
+
+[33mcommit f69a2bcdec1eb00f1f6ad9d8d91770fbd56d9249[m
+Merge: 5780084 ae00ccf
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue Apr 17 19:55:10 2018 +0800
+
+    合并ajax请求方式
+    
+    Signed-off-by: DavidCao <davidcao@DavidCaodeiMac.local>
+
+[33mcommit 5780084225961912a11d686bf765b06268ebc9df[m
+Merge: 6b85503 9e06ee5
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue Apr 17 19:31:49 2018 +0800
+
+    旧版本迁移
+    
+    Signed-off-by: 嘻嘻哈哈 <wahwl@qq.com>
+
+[33mcommit 9e06ee561112152578974b99a9463783a6d376fb[m
+Merge: a20e5a0 e38718f
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue Apr 17 19:04:44 2018 +0800
+
+    合并菜单管理
+    
+    Signed-off-by: 嘻嘻哈哈 <wahwl@qq.com>
+
+[33mcommit 6b85503fd7f7e89bb76d5c6efe3399d5762bf40b[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue Apr 17 19:00:19 2018 +0800
+
+    router新版本迁移
+
+[33mcommit e38718ff7d88d548ddff1a97a4a5a84e51e557bd[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue Apr 17 18:53:16 2018 +0800
+
+    菜单请求后台数据，完成基本渲染
+
+[33mcommit a20e5a033fca786f0cf6b4b8049218ebefba421f[m
+Merge: 23acc35 5481a47
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue Apr 17 18:51:10 2018 +0800
+
+    Merge branch 'old-to-new_stu-web' of gitee.com:Davidcao/vueAdmin-template into old-to-new_stu-web
+
+[33mcommit 23acc353e9e7dc83d792c9e912fad73b40f4b83b[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Tue Apr 17 18:50:40 2018 +0800
+
+    路由
+
+[33mcommit 11fc9fbd797be174fdf9e9993bcd5b631d59d2de[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue Apr 17 16:23:34 2018 +0800
+
+    团队成员开发配置文件更新
+
+[33mcommit 2b96e367cd6bb58cdc5a8abf59912e413ca82aab[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Tue Apr 17 16:22:53 2018 +0800
+
+    更改个人环境开发配置，有利于团队协作
+
+[33mcommit 5481a477931197248a54731c8eef81b326a6ab15[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Mon Apr 16 11:47:11 2018 +0800
+
+    合并旧版本修改
+
+[33mcommit b848346ff8a21f6572e026267fd8829330a45572[m
+Merge: 1077ed4 71613ea
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Mon Apr 16 11:46:17 2018 +0800
+
+    合并旧版本修改
+    
+    Signed-off-by: DavidCao <davidcao@DavidCaodeiMac.local>
+
+[33mcommit 1077ed4050f897d18fbfd6761857d1387fc04bd2[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Mon Apr 16 11:38:32 2018 +0800
+
+    完成菜单样式信息
+
+[33mcommit 71613ea569e3491a6c9c9e50d82a25144577b2e0[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Sun Apr 15 09:31:17 2018 +0800
+
+    迁移
+
+[33mcommit 4353a04d56e8526c6cf8b3ac5518386fbc8edf01[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Fri Apr 13 11:00:16 2018 +0800
+
+    调查问卷模块迁移
+
+[33mcommit 65f41b9007fa9fc44a76d2788cd7f1498f1066cc[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu Apr 12 21:45:36 2018 +0800
+
+    多页版本迁移单页面版本，整合路由
+
+[33mcommit c6af808f71970f4b2c7c4cc49e14c6a161d43d45[m
+Merge: 635e6e6 d6be8d8
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu Apr 12 15:01:00 2018 +0800
+
+    Merge branch 'stu-dev' into old-to-new_stu-web
+
+[33mcommit d6be8d862f9e883701a0aed04e69791274784d58[m[33m ([m[1;31morigin/stu-dev[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mstu-dev[m[33m)[m
+Merge: cb8d95d 039e639
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu Apr 12 12:17:46 2018 +0800
+
+    合并readme
+
+[33mcommit cb8d95d5eba558469747c7dd720bf8345fbc18f0[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu Apr 12 12:13:04 2018 +0800
+
+    updeta readmin
+
+[33mcommit 635e6e6707203eea4809c3a9a29ca69880e092bf[m
+Merge: d6c0067 039e639
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu Apr 12 11:41:51 2018 +0800
+
+    Merge branch 'stu-dev' of gitee.com:Davidcao/vueAdmin-template into old-to-new_stu-web
+
+[33mcommit d6c0067e313a333a3a7b1bbd240ffe21dd175988[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Thu Apr 12 11:37:36 2018 +0800
+
+    old files import
+
+[33mcommit ae00ccfbf8a7fe65603e68efc4fe3624fa26b69e[m
+Author: chengbinTechnology <definedPerson@163.com>
+Date:   Thu Apr 12 09:05:08 2018 +0800
+
+    22222
+
+[33mcommit 039e639a5de8f0610e31a13705398a02515860d0[m
+Author: DavidCao <83303851@qq.com>
+Date:   Thu Apr 12 00:49:43 2018 +0800
+
+    更新 README-zh.md
+
+[33mcommit 07f32959a9a506a05d415679e30b6d977a7cecfe[m
+Author: chengbinTechnology <definedPerson@163.com>
+Date:   Thu Apr 12 00:10:17 2018 +0800
+
+    hhhh
+
+[33mcommit 6eff81d11fc459be085446ab964fc88e70d59e4d[m
+Author: chengbinTechnology <definedPerson@163.com>
+Date:   Thu Apr 12 00:02:55 2018 +0800
+
+    commint
+
+[33mcommit 758977fba17230e30452a3e2e713531c2eb56f21[m
+Author: chengbinTechnology <definedPerson@163.com>
+Date:   Thu Apr 12 00:00:57 2018 +0800
+
+    Ajax
+
+[33mcommit 33e715b26493d8fda73ee6e0dcce158f86cf4bc4[m
+Author: chengbinTechnology <definedPerson@163.com>
+Date:   Thu Apr 12 00:00:26 2018 +0800
+
+    AjaxRequest
+
+[33mcommit 51ba0d79888d71e10db80b82f8fee50ec53b20ac[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Wed Apr 11 23:24:32 2018 +0800
+
+    w
+
+[33mcommit 916535dc317f78c04f92dddf33435024e411b716[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Wed Apr 11 23:17:21 2018 +0800
+
+    ww
+
+[33mcommit 4b76982591bbb3cc4f1d8265e5cb487fb61074b9[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Wed Apr 11 22:43:14 2018 +0800
+
+    注册
+
+[33mcommit d48adf808cff213ab05641f89c05c457245d3c45[m
+Author: DavidCao <83303851@qq.com>
+Date:   Wed Apr 11 20:59:16 2018 +0800
+
+    更新 README-zh.md
+
+[33mcommit b02b2427678743dc89063b2d18978a52309d2aa8[m
+Author: DavidCao <83303851@qq.com>
+Date:   Wed Apr 11 20:57:56 2018 +0800
+
+    更新 README-zh.md
+
+[33mcommit 911d87503c882c320765f706daa4420a823b33bb[m
+Author: DavidCao <83303851@qq.com>
+Date:   Wed Apr 11 20:56:04 2018 +0800
+
+    更新 README.md
+
+[33mcommit 5414e7fc0a1525f4320288d8fd14ea39545b3046[m
+Author: 嘻嘻哈哈 <wahwl@qq.com>
+Date:   Wed Apr 11 16:35:33 2018 +0800
+
+[33mcommit b7c52091ba52b59d33bb052586d040563471a0a6[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed Apr 11 16:12:55 2018 +0800
+
+[33mcommit 2682060e5253a03fd330a640529185ce58443ad8[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed Apr 11 15:20:27 2018 +0800
+
+    标题修改
+
+[33mcommit 50bcdcba910df0858830b139457ecfb30f45456f[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Wed Apr 11 12:32:14 2018 +0800
+
+    test
+
+[33mcommit d0f31684c39f7579e231d014d66aa041bc3e1c57[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Mon Apr 9 17:34:04 2018 +0800
+
+    调整首页css
+
+[33mcommit 7df45ea77b97172798a20b9a57035738f3207dc8[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Mon Apr 9 03:55:32 2018 +0800
+
+    主flex布局完成
+
+[33mcommit dd309eef503b23d25d845b8d088445299f25f2d1[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Sun Apr 8 20:48:22 2018 +0800
+
+    完成临时头像区域代码
+
+[33mcommit de746beb1e30cff82b71b6f2c1a6338346e04990[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Sun Apr 8 17:28:50 2018 +0800
+
+    完成头部nvabar logo显示效果
+
+[33mcommit 5990ca5a62a2200073a61e4611a103d6ba57f200[m
+Author: DavidCao <davidcao@DavidCaodeiMac.local>
+Date:   Sun Apr 8 11:57:47 2018 +0800
+
+    学工系统基础layou初始化完毕
+
+[33mcommit 6fa3f1041cc86aa32233acb0f5f0af57a0f7f9c1[m
+Author: sole <lovecanghai@gmail.com>
+Date:   Mon Mar 12 10:17:24 2018 +0800
+
+    fix[request.js]: error mesaage (#65)
+    
+    fix
+
+[33mcommit 2c7586ccb87aa8eb39cd2b99a9e632af916ff5d7[m
+Author: Pan <panfree23@gmail.com>
+Date:   Wed Jan 24 15:01:25 2018 +0800
+
+    feat[menu]: add alwaysShow option
+
+[33mcommit 3b733bda4cc863cbf1d867688c970122ddf90a4e[m
+Author: Pan <panfree23@gmail.com>
+Date:   Mon Jan 22 18:02:28 2018 +0800
+
+    chore[devtool]: set cheap-source-map to default
+
+[33mcommit b8b28d3e799381b47f5c3f2315dd110cc6988ec9[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Jan 19 15:35:40 2018 +0800
+
+    perf[css]: perf login-container css
+
+[33mcommit 15edbf08beea05c0ca2bb271aebeae165a1adb94[m
+Author: Pan <panfree23@gmail.com>
+Date:   Mon Jan 15 13:27:03 2018 +0800
+
+    rm babel-plugin-dynamic-import-node
+
+[33mcommit 79c7160d01ffca368af010a1cfd59f416ee8b8cf[m[33m ([m[1;31morigin/feature/dynamic-import-node[m[33m)[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Jan 5 13:21:14 2018 +0800
+
+    perf[permission]:set role => roles
+
+[33mcommit c2271d0bf590c0030b91fda5203f09c789d5175c[m
+Author: Pan <panfree23@gmail.com>
+Date:   Wed Jan 3 13:43:02 2018 +0800
+
+    fix[sidebar]: fixed nest menu and noDropdown item bug
+
+[33mcommit 374bf49c6cebacc6d6470ccd27eb72a3ab5b05fe[m
+Author: Pan <panfree23@gmail.com>
+Date:   Tue Jan 2 10:07:55 2018 +0800
+
+    update LICENSE
+
+[33mcommit cc069d18a49cb26f81f3dd84ce5dd93c007759a5[m
+Author: Pan <panfree23@gmail.com>
+Date:   Wed Dec 20 11:43:32 2017 +0800
+
+    refactor router
+
+[33mcommit 2161d22630d8ef52ca99785b68c8b9a0699954ef[m
+Author: Pan <panfree23@gmail.com>
+Date:   Wed Dec 20 10:28:41 2017 +0800
+
+    refactor
+
+[33mcommit c053fa53c8f44b8912228138808013eb040c60ff[m
+Author: ChasLui <402430161@qq.com>
+Date:   Tue Jan 9 17:45:32 2018 +0800
+
+    fixed: closed element (#47)
+
+[33mcommit 89d04fe7c22ac63ec9f85c6deadeec6a3b73c064[m
+Author: Pan <panfree23@gmail.com>
+Date:   Tue Dec 19 18:26:40 2017 +0800
+
+    fix:fixed bug in old browsers
+
+[33mcommit b15cdeaa1ec1f52c7fb4704f8a3b6f596f0fd46d[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Dec 15 11:39:43 2017 +0800
+
+    set allChunks:false
+
+[33mcommit 8df9d9a3279216953ce1ec8fc39eb4f469ab9b32[m
+Author: Pan <panfree23@gmail.com>
+Date:   Thu Dec 14 17:12:48 2017 +0800
+
+    add build:report script
+
+[33mcommit 5b7aafacc410191c86a4a287b59828361d94b461[m
+Author: Pan <panfree23@gmail.com>
+Date:   Thu Dec 14 17:06:39 2017 +0800
+
+    fix some bugs
+
+[33mcommit 12012e3b24d050d439c1b9daf78a907ad2ec61fe[m
+Author: Pan <panfree23@gmail.com>
+Date:   Thu Dec 14 16:41:09 2017 +0800
+
+    perf
+
+[33mcommit cade4f944920384dd647d660d8e100b281e89d43[m
+Author: Pan <panfree23@gmail.com>
+Date:   Thu Dec 14 16:07:10 2017 +0800
+
+    refactor build
+
+[33mcommit 2325e7651bce47fc7fefdd39c38392e90d840fe5[m
+Author: Pan <panfree23@gmail.com>
+Date:   Mon Dec 11 14:21:03 2017 +0800
+
+    perf[chore]:set travis notifications:false
+
+[33mcommit 5639a2a2cbbf73163b7b0ff4b42669ca67b74b41[m
+Author: Pan <panfree23@gmail.com>
+Date:   Mon Dec 11 13:43:09 2017 +0800
+
+    add[chore]:add travis
+
+[33mcommit 8ab770e9dee0c0771213e0cf4b4e3aeccbbcc1d3[m
+Author: Pan <panfree23@gmail.com>
+Date:   Mon Dec 11 13:39:58 2017 +0800
+
+    lint:format code
+
+[33mcommit bb0b37e0ebb21515eabdd181b404a62c9b222815[m[33m ([m[1;33mtag: v3.0.0[m[33m)[m
+Author: Pan <panfree23@gmail.com>
+Date:   Thu Nov 30 11:42:54 2017 +0800
+
+    fix:rm key
+
+[33mcommit a17c1eb20607190fce216d674ad069d1f725ec58[m
+Author: Pan <panfree23@gmail.com>
+Date:   Wed Nov 29 09:54:18 2017 +0800
+
+    perf:refine code
+
+[33mcommit 37085484d125c90940a0af695312ff11db92768f[m
+Author: Pan <panfree23@gmail.com>
+Date:   Wed Nov 29 09:51:10 2017 +0800
+
+    typo:change to en
+
+[33mcommit 11abac3211107ff33b55f04aaef10679291100ba[m
+Author: Pan <panfree23@gmail.com>
+Date:   Wed Nov 29 09:46:55 2017 +0800
+
+    bump:update vue version
+
+[33mcommit b97b370f0408b77d7da11e6a3e9faa2c1b56ada0[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Nov 24 17:21:32 2017 +0800
+
+    perf:format code
+
+[33mcommit 37b6253e14223f9236af0c6344d0d060f9c7cd58[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Nov 24 17:08:30 2017 +0800
+
+    feat:add tree demo
+
+[33mcommit 868673778ea396d93336d4a036d183be0b4788d7[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Nov 24 16:34:33 2017 +0800
+
+    perf:rm role
+
+[33mcommit 86096e4eabd6e442aef626db5e1a336504821e51[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Nov 24 16:30:40 2017 +0800
+
+    refactor:router&&sidemenu
+
+[33mcommit 29ec7f8a1853fe1395ac5c1282f1bcf9c014ca80[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Nov 24 14:46:19 2017 +0800
+
+    feat:add showPwd
+
+[33mcommit 890cfe586036853be551c3adfe70970565c368d0[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Nov 24 14:29:43 2017 +0800
+
+    refactor:refine icons
+
+[33mcommit dcd3e316589e5d04e9286341110c672bfe3da2f0[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Nov 24 14:08:06 2017 +0800
+
+    refactor:refine SvgIcon
+
+[33mcommit e431fa97142dd3555379fb8af4ab85fefe1c1d0e[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Nov 24 14:03:56 2017 +0800
+
+    refactor:add transition
+
+[33mcommit 4332f026426df5ecef437c077618793d11c5593c[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Nov 24 14:01:54 2017 +0800
+
+    refactor:change layout
+
+[33mcommit cd047c5ac4c802aac4988f377ce9539a6c6c9dad[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Nov 24 13:50:31 2017 +0800
+
+    refactor: update element-ui 2.0
+
+[33mcommit 3abc6b14c6c1216d2e05175e8d608b4af974ede7[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Nov 24 13:50:09 2017 +0800
+
+    refactor:change fetch => fetch
+
+[33mcommit 52bfe11bb7c18301e6d161af948d3314be44f37a[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Nov 24 11:40:03 2017 +0800
+
+    bump:update package version
+
+[33mcommit 4009b5a743934a2ee8fefd54798a4c70b1a1d7a3[m
+Author: 花裤衩 <panfree23@gmail.com>
+Date:   Mon Nov 27 18:02:42 2017 +0800
+
+    Update README-zh.md
+
+[33mcommit 1e1125d0ac7d3e3c4456ca2eccd736ccaab81b24[m
+Author: 花裤衩 <panfree23@gmail.com>
+Date:   Mon Nov 27 18:02:14 2017 +0800
+
+    Update README.md
+
+[33mcommit dec0a64ae2c1ebaa8d7ca911143311754e5c3ca6[m
+Author: 花裤衩 <panfree23@gmail.com>
+Date:   Tue Oct 31 21:22:32 2017 -0500
+
+    Update README-zh.md
+
+[33mcommit a88f2232fca60ce1d781adb84442aa614a9614db[m
+Author: 花裤衩 <panfree23@gmail.com>
+Date:   Tue Oct 31 21:22:13 2017 -0500
+
+    Update README.md
+
+[33mcommit 576e37762acb47ba1d7083006b1ed9d1a72579cd[m
+Author: Pan <panfree23@gmail.com>
+Date:   Wed Oct 25 17:37:42 2017 +0800
+
+    fix: next to login when token is not right
+
+[33mcommit 9788cdab23076b81aec308ccaa873dd6c61bc02f[m
+Author: Pan <panfree23@gmail.com>
+Date:   Thu Oct 19 12:44:52 2017 +0800
+
+    fix: import MessageBox
+
+[33mcommit a1f4cb5d1e6cbd91fb31472356d0ee119bb6ffc1[m
+Author: Pan <panfree23@gmail.com>
+Date:   Wed Oct 18 15:28:59 2017 +0800
+
+    doc: update readme add Extra
+
+[33mcommit 48043c12ca084303670d49f4c5752ec33456d568[m
+Merge: 05ed30b 9abd44f
+Author: 花裤衩 <panfree23@gmail.com>
+Date:   Wed Oct 18 02:24:12 2017 -0500
+
+    Merge pull request #23 from PanJiaChen/refactor/remove_permission-control
+    
+    refactor: remove_permission-control
+
+[33mcommit 9abd44f562ad437d4994b51a6be35ff9bf5d4cfd[m[33m ([m[1;31morigin/refactor/remove_permission-control[m[33m)[m
+Author: Pan <panfree23@gmail.com>
+Date:   Wed Oct 18 15:05:30 2017 +0800
+
+    refactor: remove_permission-control
+
+[33mcommit 05ed30b5e96d8e87919501fc504535906cd4f0ed[m[33m ([m[1;31morigin/permission-control[m[33m)[m
+Author: Pan <panfree23@gmail.com>
+Date:   Sun Oct 8 11:20:00 2017 +0800
+
+    Fix:fix autoprefixer explanation
+
+[33mcommit c031f0920325d32e1ead7068c39a92b1b2ad2b00[m
+Author: 花裤衩 <panfree23@gmail.com>
+Date:   Fri Sep 29 09:43:43 2017 +0800
+
+    Update README-zh.md
+
+[33mcommit b2e3b556d6624e8a3c60341b8c6deed35c83e73b[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Sep 15 14:08:39 2017 +0800
+
+    add : HashedModuleIdsPlugin
+
+[33mcommit 02f58e0eb3933b444eaacd8b84ef003ee41157f6[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Sep 15 14:05:43 2017 +0800
+
+    refine : readme
+
+[33mcommit 1e2d4a74aad7e1221bec281b4721136717c90dd8[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Sep 15 14:02:03 2017 +0800
+
+    refine : readme
+
+[33mcommit dd5be71d0c559402d6a0314b45239f181f494522[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Sep 15 13:53:44 2017 +0800
+
+    add: MIT LICENSE
+
+[33mcommit ee35d1c0a49f35851058c91005e88c21fca09ee7[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Sep 15 13:50:00 2017 +0800
+
+    refine: table demo add status
+
+[33mcommit 3f4e9cc50fc531b443e69bfde3fbeda022509042[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Sep 15 13:45:09 2017 +0800
+
+    refine: convert chinese to english
+
+[33mcommit 3a3cfcc69afb567d3244b68e265cce1548c8f99c[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Sep 15 13:43:52 2017 +0800
+
+    refine : router/index.js
+
+[33mcommit 635a43bae3f2e024d556f2649dc40ab096096d08[m
+Author: Pan <panfree23@gmail.com>
+Date:   Tue Sep 12 10:39:58 2017 +0800
+
+    add tips
+
+[33mcommit fec12a5775e4f0dcacecfe88a4a2e3eff7bb95f2[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Sep 8 15:55:35 2017 +0800
+
+    Update url-loader config
+
+[33mcommit 682841ac39b45cb9ac4dc0b086bcad6010fb010f[m[33m ([m[1;33mtag: v1.0.0[m[33m)[m
+Merge: f6e8859 25a4be5
+Author: 花裤衩 <panfree23@gmail.com>
+Date:   Wed Aug 30 18:15:04 2017 +0800
+
+    Merge pull request #13 from PanJiaChen/feature/refactor
+    
+    Feature/refactor
+
+[33mcommit 25a4be5a9301e12a4baa4ce8ed9697a3503377c0[m
+Author: Pan <panfree23@gmail.com>
+Date:   Wed Aug 30 18:13:44 2017 +0800
+
+    user username to login
+
+[33mcommit b44c7384dc8332e8354e8aba20cc3c0fc6dd314d[m
+Author: Pan <panfree23@gmail.com>
+Date:   Wed Aug 30 17:42:06 2017 +0800
+
+    refactor
+
+[33mcommit f6e885991692320f7a02eebe0f6f2c7e58460fb4[m
+Author: Pan <panfree23@gmail.com>
+Date:   Tue Aug 29 14:39:59 2017 +0800
+
+    rm name
+
+[33mcommit 6e859e0f58cef30b596227484640fcaedda6a838[m
+Author: Pan <panfree23@gmail.com>
+Date:   Tue Aug 29 14:38:08 2017 +0800
+
+    dev add favicon.ico
+
+[33mcommit f65e714e9ebd831b215a6879f44032534aec3c0e[m
+Author: Pan <panfree23@gmail.com>
+Date:   Tue Aug 29 14:33:04 2017 +0800
+
+    延迟请求超时时间
+
+[33mcommit 115b2b0f7db2cb05d3c0abb1fd416302e0869603[m
+Author: 花裤衩 <panfree23@gmail.com>
+Date:   Wed Aug 16 09:56:01 2017 +0800
+
+    Update fetch.js
+
+[33mcommit 3a81401739d80ac02886685e92a171112c64490a[m
+Author: Pan <panfree23@gmail.com>
+Date:   Mon Aug 7 16:42:38 2017 +0800
+
+    refine build config
+
+[33mcommit 972b305e482ba772c1fe4cc3fa44d12e7a166709[m
+Author: Pan <panfree23@gmail.com>
+Date:   Tue Aug 1 15:49:04 2017 +0800
+
+    add editorconfig
+
+[33mcommit 428b78595291df508ab619cda560bf9bf86ebd3a[m
+Author: Pan <panfree23@gmail.com>
+Date:   Wed Jul 26 13:32:48 2017 +0800
+
+    fix levelbar bug
+
+[33mcommit 99c47994a72958abbeadf53e2ddc636ab10b5ad6[m
+Author: Pan <panfree23@gmail.com>
+Date:   Thu Jul 20 14:28:37 2017 +0800
+
+    fix typo
+
+[33mcommit 822c59bdba0d5d27c315a6bb80ec1b847f0d3b8e[m
+Author: Pan <panfree23@gmail.com>
+Date:   Thu Jul 20 14:27:47 2017 +0800
+
+    fix cookie token bug
+
+[33mcommit 4321f5845f9068419cbf2be1ba5d87be9d0a47c3[m
+Author: 花裤衩 <panfree23@gmail.com>
+Date:   Wed Jul 19 16:17:45 2017 +0800
+
+    Update README.md
+
+[33mcommit 8d102a2a3d6d5a4d781eac8035eb65f57b98b7bf[m
+Author: 花裤衩 <panfree23@gmail.com>
+Date:   Wed Jul 19 16:17:35 2017 +0800
+
+    Update README.md
+
+[33mcommit a3f5b3391e533cc390ae4c2a89df21bd9a2ec699[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Jul 14 14:02:16 2017 +0800
+
+    add lost ngprogress css
+
+[33mcommit bba1dd08c5af4e52133534ab115fc38390126533[m
+Author: 花裤衩 <panfree23@gmail.com>
+Date:   Tue Jul 4 17:44:59 2017 +0800
+
+    Update README.md
+
+[33mcommit 6a7124bf9c5207862c15ff735c986aebab614123[m
+Author: Pan <panfree23@gmail.com>
+Date:   Tue Jul 4 16:13:02 2017 +0800
+
+    refine code
+
+[33mcommit 25b9a81c7df427fbb55d67fb48c908bd79e99945[m
+Author: Pan <panfree23@gmail.com>
+Date:   Tue Jul 4 15:13:02 2017 +0800
+
+    update readme
+
+[33mcommit 026d0b06a587b750292e524d918daafd210fb77d[m
+Author: 花裤衩 <panfree23@gmail.com>
+Date:   Tue Jul 4 15:03:10 2017 +0800
+
+    Update README.md
+
+[33mcommit 354a31b4b13ebaf73c36253c5798244bf0537d39[m
+Author: Pan <panfree23@gmail.com>
+Date:   Tue Jul 4 10:40:52 2017 +0800
+
+    refine readme
+
+[33mcommit 7efffb9f477a243edf022486156d59e94a21c817[m
+Author: Pan <panfree23@gmail.com>
+Date:   Mon Jul 3 14:40:33 2017 +0800
+
+    refine code
+
+[33mcommit 2e13d6110709161580fb3367f66af4c7b2bed042[m
+Author: Pan <panfree23@gmail.com>
+Date:   Mon Jul 3 14:02:42 2017 +0800
+
+    refine
+
+[33mcommit 7cc541a15aa40ccbd4ff5d318d85ce642c5fdda1[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Jun 30 14:29:49 2017 +0800
+
+    refine
+
+[33mcommit bcceb545d99adc3a2f9f950fbaf35f622dddef8e[m
+Author: Pan <panfree23@gmail.com>
+Date:   Fri Jun 30 11:01:04 2017 +0800
+
+    fix postcss bug
+
+[33mcommit c51c7fec5f5be8fcb0d5182a159e4d468506a142[m
+Author: Pan <panfree23@gmail.com>
+Date:   Wed Jun 28 23:02:22 2017 +0800
+
+    refine
+
+[33mcommit 2bc84413e3a31693578e2267ffa32f7aa139f47b[m
+Author: Pan <panfree23@gmail.com>
+Date:   Mon Jun 26 18:45:30 2017 +0800
+
+    add example page
+
+[33mcommit 40a5977d1fab286ebea8245f5bef8bf871e74228[m
+Author: Pan <panfree23@gmail.com>
+Date:   Mon Jun 26 18:03:05 2017 +0800
+
+    :tangerine:
+
+[33mcommit 472cbb6d65902a91a66e00d2916521b9e78ea6df[m
+Author: Pan <panfree23@gmail.com>
+Date:   Mon Jun 26 15:43:11 2017 +0800
+
+    add easy-mock
+
+[33mcommit c528bd8ad0e61884e219efcbf2b1832f7991dc7e[m
+Author: Pan <panfree23@gmail.com>
+Date:   Mon Jun 26 13:38:24 2017 +0800
+
+    init

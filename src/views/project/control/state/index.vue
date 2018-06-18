@@ -29,18 +29,6 @@
             <div slot="label">
               计划天数
             </div>
-
-            <!-- <template v-if="item.nodeRunType=='自动' && item.nodeStatus!=2">
-              <el-popover placement="top" width="160">
-                <p>修改计划天数</p>
-                <el-input-number style=" margin-top: 10px" size="small" v-model="item.plannedDays" :min="0" :max="getProjectStatusRemainingCountDays+item.plannedDays" label="描述文字"></el-input-number>
-                 <div style="text-align: right; margin-top: 10px">
-                                <el-button size="mini" type="text" @click="visible2 = false">取消</el-button>
-                                <el-button type="primary" size="mini" @click="visible2 = false">确定</el-button>
-                            </div>
-                <el-button slot="reference" type="text">{{item.plannedDays}}</el-button>
-              </el-popover>
-            </template> -->
             <template>
               {{item.plannedDays}}
             </template>
@@ -147,12 +135,15 @@ export default {
         type: 'success',
         message: '保存天数成功!'
       })
-      // this.$refs['popover' + nodeID].value = false  关闭弹出层。暂时不能使用
     },
     config() {
-      this.$emit('onConfig')
+      this.$router.push({
+        name: '项目配置计划',
+        query: { projectId: this.projectId }
+      })
     }
   },
+  props: ['projectId'],
   data() {
     return {
       ProjectStatusBeginDate: '2018-06-01', // 项目总开始时间

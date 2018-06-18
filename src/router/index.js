@@ -23,11 +23,7 @@ import stuLayout from '../views/layout/stu-Layout'
 **/
 export const constantRouterMap = [
   { path: '/test', component: () => import('~/views/userManager/test/index') },
-  {
-    path: '/whktest',
-    component: () =>
-      import('~/views/publicNotice/test')
-  },
+  { path: '/whktest', component: () => import('~/views/publicNotice/test') },
   { path: '/login', component: () => import('~/views/login') },
   { path: '/404', component: () => import('~/views/404') },
   {
@@ -400,14 +396,14 @@ export const constantRouterMap = [
   {
     path: '/project',
     component: stuLayout,
-    redirect: '/project/control',
+    redirect: '/project/process',
     name: '项目管理',
     meta: { title: '项目管理', icon: 'example', hidden: false },
     children: [
       {
         path: 'process',
-        name: '新建项目步骤',
-        component: () => import('~/views/project/addProcess/index'),
+        name: '新建项目',
+        component: () => import('~/views/project/addProcess/base.vue'),
         meta: { hidden: false }
       },
       {
@@ -416,14 +412,19 @@ export const constantRouterMap = [
         component: () => import('~/views/project/control/index')
       },
       {
-        path: 'showTask',
-        name: '填表task',
-        component: () => import('~/views/question/components/showTask')
+        path: 'config',
+        name: '项目配置计划',
+        component: () => import('~/views/project/addProcess/config')
       },
       {
-        path: 'results',
-        name: '展现问卷结果',
-        component: () => import('~/views/question/components/results')
+        path: 'start',
+        name: '项目下发任务',
+        component: () => import('~/views/project/addProcess/Start')
+      },
+      {
+        path: 'startMessage',
+        name: '项目下发任务弹窗',
+        component: () => import('~/views/project/control/state')
       }
     ]
   }
