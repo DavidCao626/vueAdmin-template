@@ -11,13 +11,13 @@
         </el-step>
       </el-steps>
       <br/>
-      <ProjectInfoForm :form="projectInfo" @onSave="onSave" @onSaveAndNext="onSaveAndNext"></ProjectInfoForm>
+      <ProjectInfoForm ></ProjectInfoForm>
     </div>
   </page>
 </template>
 
 <script>
-import store from './_store'
+import store from './_store/index.js'
 
 import { mapGetters } from 'vuex'
 import ProjectInfoForm from './_components/ProjectInfoForm'
@@ -44,15 +44,15 @@ export default {
   mounted() {
 
   },
-   beforeRouteEnter(to, from, next) {
+  beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.$store.dispatch(
-        "$_project/getProjectInfoData",
+        '$_project/configGet',
         to.query.projectId
       ).then((result) => {
         console.log(result)
       })
-    });
+    })
   },
   methods: {
     onSaveAndNext(e) {
@@ -65,7 +65,7 @@ export default {
     onSave(e) {
       this.$store.commit('$_project/setProjectInfoData', e)
       this.$store.dispatch(
-        "$_project/getProjectInfoData",
+        '$_project/getProjectInfoData',
         to.query.projectId
       ).then((result) => {
         console.log(result)

@@ -152,7 +152,6 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       // 路由请求加载完成后执行函数体，参数vm就是当前组件的实例。
-
       if (to.query.projectId) {
         vm.projectId = to.query.projectId
         // ajax读取项目信息
