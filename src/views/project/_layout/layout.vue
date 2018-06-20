@@ -17,7 +17,7 @@ export default {
   destroyed() {
     const STORE_KEY = "$_project";
     if (STORE_KEY in this.$store._modules.root._children) {
-    //  this.$store.unregisterModule(STORE_KEY);
+      this.$store.unregisterModule(STORE_KEY);
     }
   }
 };
