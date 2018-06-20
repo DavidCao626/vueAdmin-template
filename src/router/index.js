@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from 'vue';
+import Router from 'vue-router';
 
 // in development-env not use lazy-loading, because lazy-loading too many pages will cause webpack hot update too slow. so only in production use lazy-loading;
 // detail: https://panjiachen.github.io/vue-element-admin-site/#/lazy-loading
@@ -8,7 +8,8 @@ Vue.use(Router)
 
 /* Layout */
 // import Layout from '../views/layout/Layout'
-import stuLayout from '../views/layout/stu-Layout'
+import stuLayout from '../views/layout/stu-Layout';
+
 /**
 * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
 * alwaysShow: true               if set true, will always show the root menu, whatever its child routes length
@@ -22,8 +23,6 @@ import stuLayout from '../views/layout/stu-Layout'
   }
 **/
 export const constantRouterMap = [
-  { path: '/test', component: () => import('~/views/userManager/test/index') },
-  { path: '/whktest', component: () => import('~/views/publicNotice/test') },
   { path: '/login', component: () => import('~/views/login') },
   { path: '/404', component: () => import('~/views/404') },
   {
@@ -52,6 +51,36 @@ export const constantRouterMap = [
         path: 'demo',
         meta: { title: 'Demo' },
         component: () => import('~/views/dashboard/demo')
+      }
+    ]
+  },
+  {
+    path: '/project',
+    redirect: '/project/process',
+    component: stuLayout,
+    name: '项目管理',
+    meta: { title: '项目管理', icon: 'example', hidden: false },
+    children: [
+      {
+        path: 'process',
+        name: '新建项目',
+        component: () => import('~/views/project/base.vue'),
+        meta: { hidden: false }
+      },
+      {
+        path: 'control',
+        name: '项目控制台',
+        component: () => import('~/views/project/index')
+      },
+      {
+        path: 'config',
+        name: '项目配置计划',
+        component: () => import('~/views/project/config')
+      },
+      {
+        path: 'start',
+        name: '项目下发任务',
+        component: () => import('~/views/project/start')
       }
     ]
   },
@@ -392,42 +421,7 @@ export const constantRouterMap = [
     component: () => import('~/views/unitViews/test'),
     hidden: true
   },
-  { path: '*', redirect: '/404', hidden: true },
-  {
-    path: '/project',
-    component: stuLayout,
-    redirect: '/project/process',
-    name: '项目管理',
-    meta: { title: '项目管理', icon: 'example', hidden: false },
-    children: [
-      {
-        path: 'process',
-        name: '新建项目',
-        component: () => import('~/views/project/addProcess/base.vue'),
-        meta: { hidden: false }
-      },
-      {
-        path: 'control',
-        name: '项目控制台',
-        component: () => import('~/views/project/control/index')
-      },
-      {
-        path: 'config',
-        name: '项目配置计划',
-        component: () => import('~/views/project/addProcess/config')
-      },
-      {
-        path: 'start',
-        name: '项目下发任务',
-        component: () => import('~/views/project/addProcess/Start')
-      },
-      {
-        path: 'startMessage',
-        name: '项目下发任务弹窗',
-        component: () => import('~/views/project/control/state')
-      }
-    ]
-  }
+  { path: '*', redirect: '/404', hidden: true }
 ]
 
 export default new Router({

@@ -41,8 +41,9 @@
 </template>
 
 <script>
-import formData from '../../addProcess/components/Data'
-import formDisabledSelect from '../../addProcess/components/disabledSelect'
+
+import formData from './_components/ProjectDate'
+import formDisabledSelect from './_components/ProjectTypeSelect'
 export default {
   components: {
     formData,
