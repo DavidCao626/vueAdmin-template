@@ -42,8 +42,8 @@
 
 <script>
 
-import formData from './_components/ProjectDate'
-import formDisabledSelect from './_components/ProjectTypeSelect'
+import formData from './ProjectDate'
+import formDisabledSelect from './ProjectTypeSelect'
 export default {
   components: {
     formData,
@@ -64,16 +64,6 @@ export default {
           '“2018年上学期2017级贫困学生建档项目开始了，请各级学院老师提前做好准备！”'
       }
     }
-  },
-  methods: {
-    getAjaxDate(projectId) {
-      var th = this
-      // ajax读取项目信息
-      th.form.name = '2018年上学期2017级贫困学生建档项目'
-    }
-  },
-  mounted() {
-    this.getAjaxDate(this.projectId)
   }
 }
 </script>

@@ -1,3 +1,1 @@
-export default {
-
-}
+export const setBase1 = state => { };

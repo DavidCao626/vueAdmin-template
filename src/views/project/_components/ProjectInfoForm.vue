@@ -40,9 +40,9 @@
   </div>
 </template>
 <script>
-import ProjectDate from '../_components/ProjectDate';
-import ProjectTypeSelect from '../_components/ProjectTypeSelect';
-import ProjectAttachmentUplad from '../_components/ProjectAttachmentUplad';
+import ProjectDate from './ProjectDate';
+import ProjectTypeSelect from './ProjectTypeSelect';
+import ProjectAttachmentUplad from './ProjectAttachmentUplad';
 
 export default {
   name: 'projectInfoForm',
@@ -73,11 +73,24 @@ export default {
     ProjectAttachmentUplad
   },
   methods: {
-    onSave() {
-      this.$emit('onSave', this.form)
+    onSaveAndNext(e) {
+      console.log('保存并配置!' + [e])
+      this.$router.push({
+        name: '项目配置计划',
+        query: { projectId: '123' }
+      })
     },
-    onSaveAndNext() {
-      this.$emit('onSaveAndNext', this.form)
+    onSave(e) {
+      console.log('保存项目!' + [e])
+      // TODO Ajax保存项目
+      this.$message({
+        type: 'success', // type:error 错误消息
+        message: '保存成功!'
+      })
+      this.$router.push({
+        path: '/project/control',
+        query: { projectId: '123' }
+      }) // 跳转到 项目控制台
     },
     formDataOnChange(value) {
       console.log('开始时间' + value[0])
