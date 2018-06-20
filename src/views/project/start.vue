@@ -46,7 +46,7 @@
 
 
 <script>
-import transfer from './components/transfer.vue'
+import transfer from './_components/ProjectParticipantsTransfer.vue'
 export default {
   data() {
     return {
