@@ -1,6 +1,5 @@
 
-const projectInfoData = reject => {}
+export const projectInfoData = reject => {}
 
-export default {
-  projectInfoData
-}
+
+export const projectInfoData1 = reject => { }

@@ -1,4 +1,3 @@
-import config from './config.js'
-import base from './base.js'
-import _lodash from 'lodash'
-export default _lodash.assign(config, base)
+import * as config from './config.js'
+import * as base from './base.js'
+export default Object.assign(config, base);
