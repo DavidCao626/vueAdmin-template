@@ -6,6 +6,14 @@ const configGet = ({ commit, state }, projectId) =>
     console.log('doit')
   })
 
+const configInit = ({ commit, state }) => {
+  var configList = [4, 5, 6]
+  setTimeout(() => {
+    commit('setConfig', configList)
+  }, 5000)
+}
+
 export default {
-  configGet
+  configGet,
+  configInit
 }

@@ -5,3 +5,8 @@ export const projectInfoData = (state) => {
 }
 
 export const projectInfoData1 = state => {}
+
+export const getConfig = state => {
+  console.log(['getconfig'])
+  return state.config.config_list
+}
