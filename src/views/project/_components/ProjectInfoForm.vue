@@ -78,7 +78,7 @@ export default {
     ...mapGetters({
       form: state.namespace + "/getProjectFormData",
       uploadAttrUrl: state.namespace + "/getUploadAttrUrl",
-      options: "$_project/getServiceTypeList"
+      options: state.namespace + "/getServiceTypeList"
     })
   },
   data(){
@@ -86,7 +86,7 @@ export default {
   },
   methods: {
    ...mapActions({
-      queryServiceTypeList: state.namespace + "$/queryServiceTypeList" 
+      queryServiceTypeList: state.namespace + "/queryServiceTypeList" 
     }),
     onSaveAndNext(e) {
       // console.log('保存并配置!' + [e])
@@ -106,7 +106,7 @@ export default {
       //   path: '/project/control',
       //   query: { projectId: '123' }
       // }) // 跳转到 项目控制台
-      this.queryServiceTypeList();
+     // this.queryServiceTypeList();
       this.iopt = this.options
       console.log(this.options);
 

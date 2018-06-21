@@ -1,5 +1,6 @@
 
-export const base_project = { 
+export const baseproject = { 
+    serviceTypeList: [],
     projectFormData : {
         projectId: 0,
         projectName: "",
@@ -11,6 +12,6 @@ export const base_project = {
         isSendPublicNotice: "Y",
         projectAttachmentId: []
     },
-    uploadAttrUrl: "",
-    serviceTypeList: [{ classifyName: "哈哈sss", classifyCode: "333333" }]
+    uploadAttrUrl: ""
+   
  }

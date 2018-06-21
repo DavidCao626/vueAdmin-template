@@ -9,5 +9,5 @@ export default {
   actions,
   getters,
   mutations,
-  namespace:"$_project"
+  namespace: 'project'
 }

@@ -1,13 +1,13 @@
 //获取项目表单信息
 export const getProjectFormData = state => {
-    return state.base_project.projectFormData
+    return state.baseproject.projectFormData
 };
 
 export const getUploadAttrUrl = state => { 
-    return state.base_project.uploadAttrUrl;
+    return state.baseproject.uploadAttrUrl;
 }
 
-export const getServiceTypeList = state => { 
-    console.log(["baseGetter",state.base_project.serviceTypeList])
-    return state.base_project.serviceTypeList
+export const getServiceTypeList = (state) =>(id) => { 
+    console.log(["baseGetter",state.baseproject.serviceTypeList])
+    return state.baseproject.serviceTypeList
 }

@@ -4,8 +4,10 @@
     <div slot="panel">
       <ProjectAddSteps :active="0"></ProjectAddSteps>
       <br/>
-      {{options}}
-      <ProjectInfoForm ></ProjectInfoForm>
+     
+      {{getConfig}}
+      {{opt}}
+      <!-- <ProjectInfoForm ></ProjectInfoForm> -->
     </div>
   </page>
 </template>
@@ -14,20 +16,22 @@
 import { mapGetters } from 'vuex'
 import ProjectInfoForm from './_components/ProjectInfoForm'
 import ProjectAddSteps from './_components/ProjectAddSteps'
-
+import store from './_store/index.js'
 export default {
   name: 'projectBase',
   components: {
-    ProjectInfoForm,
+    // ProjectInfoForm,
     ProjectAddSteps
   },
   data() {
     return {}
   },
   computed: {
+    opt(){return store.getters.getServiceTypeList(1)},
     ...mapGetters({
-      projectInfo: '$_project/projectInfoData',
-       options: "$_project/getServiceTypeList"
+       projectInfo: 'project/projectInfoData',
+        getConfig: 'project/getConfig'
+       // ioptions: 'project/getServiceTypeList'
     })
   },
   mounted() {
@@ -37,7 +41,7 @@ export default {
     next(vm => {
       
       vm.$store.dispatch(
-        '$_project/configGet',
+        'project/configGet',
         to.query.projectId
       ).then((result) => {
         console.log(result)
