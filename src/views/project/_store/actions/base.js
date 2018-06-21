@@ -10,17 +10,17 @@ const insertOrUpdateProject = ({ commit, state }, projectData) =>{
 }
 //查询业务类别列表调用mutations赋值给state
 const queryServiceTypeList = ({ commit, state }) => {
-  // new Promise(resolve => { 
-  //   api.queryServiceTypeList().then(response => { 
-  //     commit("setServiceTypeList",response.resBody)
-  //   })
-  // })  "item.classifyName" :value="item.classifyCode"
-  var s = [4,5,6]
-  setTimeout(() => {
-    console.log("sssss")
-    commit("setServiceTypeList", s)
+  new Promise(resolve => { 
+    api.queryServiceTypeList().then(response => { 
+      commit("setServiceTypeList",response.resBody)
+    })
+  }) 
+  // var s = [4,5,6]
+  // setTimeout(() => {
+  //   console.log("sssss")
+  //   commit("setServiceTypeList", s)
    
-  }, 5000)
+  // }, 5000)
 }
 export default {
   insertOrUpdateProject,

@@ -7,7 +7,7 @@ export const getUploadAttrUrl = state => {
     return state.baseproject.uploadAttrUrl;
 }
 
-export const getServiceTypeList = (state) =>(id) => { 
+export const getServiceTypeList = (state) => { 
     console.log(["baseGetter",state.baseproject.serviceTypeList])
     return state.baseproject.serviceTypeList
 }

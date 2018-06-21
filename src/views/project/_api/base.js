@@ -14,7 +14,7 @@ const insertOrUpdateProject = data =>
         })
     })
 //附件上传地址
-const uploadAttrUrl = "act/project/uploadAttachment"
+const uploadAttrUrl = "act/project/uploadAttachment.do"
 //获取业务类别
 const queryServiceTypeList = () =>
     new Promise(resolve => {

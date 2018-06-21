@@ -5,9 +5,7 @@
       <ProjectAddSteps :active="0"></ProjectAddSteps>
       <br/>
      
-      {{getConfig}}
-      {{opt}}
-      <!-- <ProjectInfoForm ></ProjectInfoForm> -->
+      <ProjectInfoForm ></ProjectInfoForm>
     </div>
   </page>
 </template>
@@ -20,7 +18,7 @@ import store from './_store/index.js'
 export default {
   name: 'projectBase',
   components: {
-    // ProjectInfoForm,
+     ProjectInfoForm,
     ProjectAddSteps
   },
   data() {

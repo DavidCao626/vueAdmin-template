@@ -1,5 +1,5 @@
 <template>
-    <el-select v-model="value3" :disabled="disabled" placeholder="请选择">
+    <el-select v-model="value3" :disabled="disabled" placeholder="请选择" @change="selectChange">
         <el-option v-for="item in options" :key="item.value" :label="item.classifyName" :value="item.classifyCode">
         </el-option>
     </el-select>
@@ -25,6 +25,12 @@
     data() {
       return {
         value3: this.value
+      }
+    },
+    methods:{
+      selectChange(val){
+        console.log(["业务类别下拉框选中的val",val])
+          this.$emit("",val)
       }
     },
     watch: {

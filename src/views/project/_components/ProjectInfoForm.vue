@@ -12,8 +12,7 @@
         </el-input>
       </el-form-item>
       <el-form-item label="业务类型:">
-          {{options}}
-        <ProjectTypeSelect :value="form.projectServiceType" :options="options" :disabled="isProjectTypeSelectDisDisabled"></ProjectTypeSelect>
+        <ProjectTypeSelect @selectValue="selectValue" :value="form.projectServiceType" :options="ioptions" :disabled="isProjectTypeSelectDisDisabled"></ProjectTypeSelect>
       </el-form-item>
       <el-form-item label="项目时间:">
         <el-col :span="11">
@@ -24,7 +23,7 @@
         <el-switch v-model="form.isSendPublicNotice" active-value="Y" inactive-value="N"></el-switch>
       </el-form-item>
       <el-form-item label="项目内容:">
-        <el-input type="textarea" :autosize="{ minRows: 3}" v-model="form.desc"></el-input>
+        <el-input type="textarea" :autosize="{ minRows: 3}" v-model="form.projectDesc"></el-input>
       </el-form-item>
       
       <el-form-item label="项目附件:">
@@ -78,7 +77,7 @@ export default {
     ...mapGetters({
       form: state.namespace + "/getProjectFormData",
       uploadAttrUrl: state.namespace + "/getUploadAttrUrl",
-      options: state.namespace + "/getServiceTypeList"
+      ioptions: state.namespace + "/getServiceTypeList"
     })
   },
   data(){
@@ -107,10 +106,8 @@ export default {
       //   query: { projectId: '123' }
       // }) // 跳转到 项目控制台
      // this.queryServiceTypeList();
-      this.iopt = this.options
-      console.log(this.options);
-
-
+      
+      console.log(this.form);
     },
     formDataOnChange(value) {
       console.log("开始时间" + value[0]);
@@ -118,8 +115,17 @@ export default {
       console.log("结束时间" + value[1]);
       this.form.planCompleteTime = value[1];
     },
+    selectValue(val){
+      console.log(["外下拉框选中的val",val])
+      this.form.projectServiceType = val;
+    },
     formUploadOnSuccess(files) {
-      console.log("文件成功上传后的列表" + files);
+      console.log(["文件成功上传后的列表" , files]);    
+      var tempArr = []
+      for(var i = 0;i<files.length;i++){
+        tempArr[i] = files[i].response.body.resBody.fileId
+      }
+      this.projectAttachmentId = tempArr;
     }
   }
 };
