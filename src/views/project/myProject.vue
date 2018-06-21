@@ -22,7 +22,13 @@
           </el-table-column>
           <el-table-column prop="name" label="项目名称">
           </el-table-column>
-          <el-table-column prop="type" label="项目类型" width="180">
+          <el-table-column prop="type" label="项目类型" width="180" 
+          :filters="[{ text: '贫困建档', value: '贫困建档' }, { text: '奖学金', value: '奖学金' },{ text: '助学金', value: '助学金' },{ text: '资助', value: '资助' }]" 
+          :filter-method="filterType" 
+          filter-placement="bottom-end">
+            <template slot-scope="scope">
+              <el-tag type="info" disable-transitions>{{scope.row.type}}</el-tag>
+            </template>
           </el-table-column>
           <el-table-column prop="node" label="工作项" width="180">
           </el-table-column>
@@ -90,6 +96,15 @@ export default {
       return this.tableData.filter(element => {
         return element.name.match(this.filterText);
       });
+    }
+  },
+  methods: {
+    filterType(value, row) {
+      return row.type === value;
+    },
+    filterHandler(value, row, column) {
+      const property = column["property"];
+      return row[property] === value;
     }
   }
 };
