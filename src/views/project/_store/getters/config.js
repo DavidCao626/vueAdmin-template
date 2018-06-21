@@ -1,5 +1,7 @@
 
-export const projectInfoData = reject => {}
+export const projectInfoData = (state) => {
+  console.log(['info', state])
+  return state.base_projectFormData
+}
 
-
-export const projectInfoData1 = reject => { }
+export const projectInfoData1 = state => {}
