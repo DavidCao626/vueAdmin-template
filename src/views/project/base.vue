@@ -4,6 +4,7 @@
     <div slot="panel">
       <ProjectAddSteps :active="0"></ProjectAddSteps>
       <br/>
+      {{projectInfo.name}}
       <ProjectInfoForm ></ProjectInfoForm>
     </div>
   </page>
@@ -41,6 +42,6 @@ export default {
       })
     })
   }
- 
+
 }
 </script>
