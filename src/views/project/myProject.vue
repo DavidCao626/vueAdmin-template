@@ -22,10 +22,7 @@
           </el-table-column>
           <el-table-column prop="name" label="项目名称">
           </el-table-column>
-          <el-table-column prop="type" label="项目类型" width="180" 
-          :filters="[{ text: '贫困建档', value: '贫困建档' }, { text: '奖学金', value: '奖学金' },{ text: '助学金', value: '助学金' },{ text: '资助', value: '资助' }]" 
-          :filter-method="filterType" 
-          filter-placement="bottom-end">
+          <el-table-column prop="type" label="项目类型" width="180" :filters="[{ text: '贫困建档', value: '贫困建档' }, { text: '奖学金', value: '奖学金' },{ text: '助学金', value: '助学金' },{ text: '资助', value: '资助' }]" :filter-method="filterType" filter-placement="bottom-end">
             <template slot-scope="scope">
               <el-tag type="info" disable-transitions>{{scope.row.type}}</el-tag>
             </template>
@@ -37,6 +34,11 @@
           <el-table-column prop="days2" label="剩余天数" width="120">
           </el-table-column>
         </el-table>
+        <div style="margin-top: 20px">
+          <el-pagination style="float: right" background layout="prev, pager, next" :total="1000">
+          </el-pagination>
+          <div class="clearfix"></div>
+        </div>
       </template>
 
     </div>
