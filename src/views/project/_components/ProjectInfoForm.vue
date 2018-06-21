@@ -112,6 +112,7 @@ console.log(this.form);
       };
       this.insertOrUpdateAndNext(requestData).then(response=>{
         this.$message.success("保存成功!");
+        this.form.id = response.resBody.projectId
         console.log(["insertOrUpdateAndNext",response])
         this.$router.push({
           name:"projectConfig",
