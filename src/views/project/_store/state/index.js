@@ -1,3 +1,4 @@
 
 import * as config from './config.js'
-export default Object.assign({}, config)
+import * as base from './base.js'
+export default Object.assign(base, config)

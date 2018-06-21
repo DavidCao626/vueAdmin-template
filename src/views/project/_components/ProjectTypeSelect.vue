@@ -1,6 +1,6 @@
 <template>
     <el-select v-model="value3" :disabled="disabled" placeholder="请选择">
-        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item. id">
+        <el-option v-for="item in options" :key="item.value" :label="item.classifyName" :value="item.classifyCode">
         </el-option>
     </el-select>
 </template>
@@ -16,26 +16,14 @@
       'disabled': {
         type: Boolean,
         default: false
+      },
+      'options':{
+        type:Array,
+        default:[]
       }
     },
     data() {
       return {
-        options: [{
-          id: '001',
-          label: '贫困建档'
-        }, {
-          id: '002',
-          label: '助学金'
-        }, {
-          id: '003',
-          label: '奖学金'
-        }, {
-          id: '004',
-          label: '助学贷款'
-        }, {
-          id: '005',
-          label: '其他'
-        }],
         value3: this.value
       }
     },

@@ -2,7 +2,7 @@ import request from '~/utils/request'
 import ajax from '~/utils/ajax'
 
 
-
+//增加或者更新项目
 const insertOrUpdateProject = data =>
     new Promise(resolve => {
         ajax({
@@ -13,7 +13,21 @@ const insertOrUpdateProject = data =>
             resolve(response)
         })
     })
+//附件上传地址
+const uploadAttrUrl = "act/project/uploadAttachment"
+//获取业务类别
+const queryServiceTypeList = () =>
+    new Promise(resolve => {
+        request({
+            url: '/project/queryServiceTypeList.do',
+            method: 'post'
+        }).then(response => {
+            resolve(response)
+        })
+    })
 
 export default {
-    insertOrUpdateProject
+    insertOrUpdateProject,
+    uploadAttrUrl,
+    queryServiceTypeList
 };

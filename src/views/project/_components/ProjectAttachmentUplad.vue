@@ -1,6 +1,6 @@
 <template>
 
-    <el-upload class="upload-demo" :action="url" drag :on-preview="handlePreview" :accept="accept" :on-remove="handleRemove" :file-list="fileList2" list-type="picture" @on-success="onSuccess">
+    <el-upload class="upload-demo" :action="url" drag :on-preview="handlePreview" :accept="accept" :on-remove="handleRemove" :file-list="fileList2" list-type="picture" :on-success="onSuccess">
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处，或
             <em>点击上传</em>
@@ -41,8 +41,8 @@ export default {
     handlePreview(file) {
       console.log(file)
     },
-    onSuccess() {
-      this.$emit('onSuccess', this.fileList2) // 上传成功把成功的地址列表返回去
+    onSuccess(response,file,fileList) {
+      this.$emit('onSuccess', fileList) // 上传成功把成功的地址列表返回去
     }
   }
 }

@@ -8,5 +8,6 @@ export default {
   state,
   actions,
   getters,
-  mutations
+  mutations,
+  namespace:"$_project"
 }

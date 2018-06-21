@@ -3,7 +3,8 @@
 </template>
 <script>
 import store from "../_store/index.js";
-
+import api from "../_api/base.js";
+import { mapActions, mapMutations } from "vuex";
 export default {
   created() {
     const STORE_KEY = "$_project";
@@ -11,8 +12,18 @@ export default {
       this.$store.registerModule(STORE_KEY, store);
     }
   },
-  mounted(){
-
+  methods: {
+    ...mapMutations({
+      setUploadAttrUrl: store.namespace + "/setUploadAttrUrl"
+    }),
+    ...mapActions({
+      queryServiceTypeList: store.namespace + "/queryServiceTypeList"
+    })
+  },
+  mounted() {
+    //附件上传地址
+    this.setUploadAttrUrl(api.uploadAttrUrl);
+    this.queryServiceTypeList();
   },
   destroyed() {
     const STORE_KEY = "$_project";

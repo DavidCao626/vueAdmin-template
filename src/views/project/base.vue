@@ -4,7 +4,7 @@
     <div slot="panel">
       <ProjectAddSteps :active="0"></ProjectAddSteps>
       <br/>
-      {{projectInfo.name}}
+      {{options}}
       <ProjectInfoForm ></ProjectInfoForm>
     </div>
   </page>
@@ -26,7 +26,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      projectInfo: '$_project/projectInfoData'
+      projectInfo: '$_project/projectInfoData',
+       options: "$_project/getServiceTypeList"
     })
   },
   mounted() {
@@ -34,6 +35,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
+      
       vm.$store.dispatch(
         '$_project/configGet',
         to.query.projectId
