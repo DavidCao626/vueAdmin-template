@@ -1,12 +1,19 @@
+import request from '~/utils/request'
+import ajax from '~/utils/ajax'
 
 
-const getProjectInfoDataById = projectId =>
+
+const insertOrUpdateProject = data =>
     new Promise(resolve => {
-       resolve()
-    });
-
+        ajax({
+            url: '/project/insertOrUpdateProject.do',
+            method: 'post',
+            data: data
+        }).then(response => {
+            resolve(response)
+        })
+    })
 
 export default {
-    getProjectInfoDataById,
-    addProjectInfoData
+    insertOrUpdateProject
 };
