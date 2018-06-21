@@ -30,7 +30,7 @@
     methods:{
       selectChange(val){
         console.log(["业务类别下拉框选中的val",val])
-          this.$emit("",val)
+          this.$emit("selectValue",val)
       }
     },
     watch: {

@@ -10,8 +10,10 @@ export const baseproject = {
         planStartTime: "",
         planCompleteTime: "",
         isSendPublicNotice: "Y",
-        projectAttachmentId: []
+        projectAttachmentId: [],
+        attrDetailBean:[]
     },
+    tempProjectId:"",//临时储存当前项目id
     uploadAttrUrl: ""
    
  }

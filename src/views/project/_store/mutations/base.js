@@ -12,3 +12,13 @@ export const setServiceTypeList = (state, st) => {
 export const setUploadAttrUrl = (state,url) => { 
     state.baseproject.uploadAttrUrl = url
 }
+
+//储存临时项目id
+export const setTempProjectId = (state, id) => { 
+    state.baseproject.tempProjectId = id;
+}
+
+//设置项目表单内容表单
+export const setProjectFormData = (state, projectFormData) => {
+    state.baseproject.projectFormData= projectFormData
+}

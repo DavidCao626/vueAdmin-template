@@ -18,7 +18,7 @@ export const projectRouter = {
     },
     {
       path: "config",
-      name: "项目配置计划",
+      name: "projectConfig",
       component: () => import("../config")
     },
     { path: "start", name: "项目下发任务", component: () => import("../start") }
