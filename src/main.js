@@ -7,6 +7,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 import App from './App'
 import router from './router'
+
 import store from './store'
 
 import i18n from './lang' // 对应lang目录 提供多语言支持
@@ -14,6 +15,7 @@ import '~/icons' // icon
  import '~/permission' // permission control
 
 // import './mock' // simulation data
+
 
 import * as filters from './filters' // global filters
 

@@ -42,9 +42,9 @@
     </div>
 </template>
 <script>
-import Breadcrumb from '~/components/Breadcrumb'
+import Breadcrumb from "~/components/Breadcrumb";
 export default {
-  name: 'Page-dafault',
+  name: "Page-dafault",
   props: {
     Breadcrumb: {
       default: true,
@@ -53,19 +53,18 @@ export default {
   },
   computed: {
     route() {
-      console.log(this.$route)
+      console.log(this.$route);
 
-      console.log(this)
+      console.log(this);
 
-      debugger
-      return '123123123'
+      debugger;
+      return "123123123";
     }
   },
   components: {
     Breadcrumb
   }
-}
+};
 </script>
 <style lang="scss" scoped>
-
 </style>
