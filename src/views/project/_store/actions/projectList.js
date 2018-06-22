@@ -18,7 +18,14 @@ const getDictByDictNames = ({ commit, state }, params) => new Promise(resolve =>
     })
 })
 
+const getDispenseTaskScopeByProjectCode = ({ commit, state }, params) => new Promise(resolve => {
+    api.getDispenseTaskScopeByProjectCode(params).then(response => {
+        //console.log(["getDispenseTaskScopeByProjectCodeAction", response])
+        resolve(response)
+    })
+})
 export default {
     queryUserProject,
-    getDictByDictNames
+    getDictByDictNames,
+    getDispenseTaskScopeByProjectCode
 }

@@ -89,15 +89,24 @@ export default {
   },
   methods: {
     ...mapActions({
-      queryProjectList: store.namespace + "/queryUserProject"
+      queryProjectList: store.namespace + "/queryUserProject",
+      getDispenseTaskScopeByProjectCode:
+        store.namespace + "/getDispenseTaskScopeByProjectCode"
     }),
     showDetail(row, event, column) {
       console.log(row);
       if (row.projectState == "S") {
         //已经开始跳控制台
-        this.$router.push({
-          name: "项目控制台",
-          params: {}
+        this.getDispenseTaskScopeByProjectCode({
+          projectSystemCode: row.projectSystemCode
+        }).then(response => {
+          console.log(["dis" , response]);
+          this.$router.push({
+            name: "项目控制台",
+            params: {
+              'scopeId':response.resBody.id
+            }
+          });
         });
       } else if (row.projectState == "R") {
         //未开始跳更新页面

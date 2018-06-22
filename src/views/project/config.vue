@@ -39,9 +39,10 @@ export default {
   beforeRouteEnter(to, from, next) {
     console.log(['config', to, from])
     next(vm => {
-      debugger
       var scopeId = commons.getRouterParam(to, 'scopeId')
       var itemId = commons.getRouterParam(to, 'itemId')
+      console.log(["scopeId",scopeId])
+        console.log(["itemId",itemId])
       if (scopeId == null || itemId == null) {
         console.log('没有传递scopeid and itemId,该页面不能访问')
       } else {

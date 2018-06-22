@@ -17,7 +17,16 @@ const queryUserProject = data =>
         data: data
     })
 
+//根据项目编号查询根实例 
+const getDispenseTaskScopeByProjectCode = data =>
+    request({
+        url: '/project/getDispenseTaskScopeByProjectCode.do',
+        method: 'post',
+        data: data
+    })
+
 export default {
     queryUserProject,
-    getDictByDictNames
+    getDictByDictNames,
+    getDispenseTaskScopeByProjectCode
 }
