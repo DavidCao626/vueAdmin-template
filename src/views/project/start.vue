@@ -13,6 +13,8 @@
 <script>
 import ProjectAddSteps from './_components/ProjectAddSteps.vue'
 import ProjectStart from './_components/ProjectStart.vue'
+import commons from '~/utils/common.js'
+import store from './_store/index.js'
 export default {
   data() {
     return {
@@ -21,17 +23,12 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      // 路由请求加载完成后执行函数体，参数vm就是当前组件的实例。
-      if (to.query.projectId) {
-        vm.projectId = to.query.projectId
-        // todo 如果路由参数projectId 有值，则是修改项目下发任务页面
-        // ajax 根据projectId读取下发任务信息
-        console.log('ajax 根据projectId读取下发任务信息')
+      var scopeId = commons.getRouterParam(to, 'scopeId')
+      var itemId = commons.getRouterParam(to, 'itemId')
+      if (scopeId == null || itemId == null) {
+        console.log('没有传递scopeid and itemId,该页面不能访问')
       } else {
-        console.log('没有传递项目id,该页面不能访问')
-        vm.$router.push({
-          name: '新建项目'
-        }) // 跳转到新建项目页面
+        console.log([scopeId, itemId])
       }
     })
   },
