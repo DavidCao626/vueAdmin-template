@@ -15,13 +15,20 @@ export default {
   methods: {
     ...mapActions({
       initConfig: store.namespace + '/configInit',
-      queryServiceTypeList: store.namespace + '/queryServiceTypeList'
+      queryServiceTypeList: store.namespace + '/queryServiceTypeList',
+      getDictByDictNames:store.namespace + '/getDictByDictNames'
     }),
     ...mapMutations({
       setUploadAttrUrl:store.namespace+'/setUploadAttrUrl'
     })
   },
   mounted() {
+    //查询码表
+    var getDictParams = {
+      dicts :['node_state','pend_state']
+    }
+    this.getDictByDictNames(getDictParams);
+
     //查询业务类别列表
     this.queryServiceTypeList();
     //设置上传地址
