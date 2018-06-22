@@ -1,7 +1,7 @@
 
 export const projectInfoData = (state) => {
   console.log(['info', state])
-  return state.base_projectFormData
+  return state.baseproject.FormData
 }
 
 export const projectInfoData1 = state => {}

@@ -1,6 +1,6 @@
 <template>
   <div class="block">
-    <el-date-picker v-model="value7" type="daterange" @change="onChange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
+    <el-date-picker v-model="value7" type="daterange"  @change="onChange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
 
     </el-date-picker>
   </div>

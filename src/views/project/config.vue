@@ -37,6 +37,7 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
+    console.log(['config', to, from])
     next(vm => {
       debugger
       var scopeId = commons.getRouterParam(to, 'scopeId')

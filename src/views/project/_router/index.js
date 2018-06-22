@@ -1,14 +1,19 @@
 export const projectRouter = {
   path: '/project',
-  redirect: '/project/add',
+  redirect: '/project/my',
   name: '项目管理',
   component: () => import('../_layout/layout.vue'),
   meta: { title: '项目管理', icon: 'example', hidden: false },
   children: [
     {
+      path: 'my',
+      name: '我的项目',
+      component: () => import('../myProject')
+    },
+    { path: 'todos', name: '我的待办', component: () => import('../myTodos') },
+    {
       path: 'add',
-      name: 'add',
-      title: '新建项目',
+      name: '新建项目',
       component: () => import('../base.vue'),
       meta: { hidden: false }
     },
@@ -19,8 +24,7 @@ export const projectRouter = {
     },
     {
       path: 'config',
-      name: 'project_config',
-      title: '配置计划',
+      name: 'projectConfig',
       component: () => import('../config')
     },
     { path: 'start', name: 'project_start', title: '下发任务', component: () => import('../start') }

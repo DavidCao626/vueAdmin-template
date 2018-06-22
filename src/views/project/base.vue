@@ -4,44 +4,58 @@
     <div slot="panel">
       <ProjectAddSteps :active="0"></ProjectAddSteps>
       <br/>
-      {{projectInfo.name}}
-      <ProjectInfoForm ></ProjectInfoForm>
+
+      <ProjectInfoForm></ProjectInfoForm>
     </div>
   </page>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import ProjectInfoForm from './_components/ProjectInfoForm'
-import ProjectAddSteps from './_components/ProjectAddSteps'
-
+import { mapGetters, mapActions } from "vuex";
+import ProjectInfoForm from "./_components/ProjectInfoForm";
+import ProjectAddSteps from "./_components/ProjectAddSteps";
+import store from "./_store/index.js";
 export default {
-  name: 'projectBase',
+  name: "projectBase",
   components: {
     ProjectInfoForm,
     ProjectAddSteps
   },
   data() {
-    return {}
+    return {};
   },
-  computed: {
-    ...mapGetters({
-      projectInfo: '$_project/projectInfoData'
+  methods: {
+    ...mapActions({
+      getProjectInfo: store.namespace + "/getProjectById"
     })
   },
-  mounted() {
-
-  },
+  computed: {},
+  mounted() {},
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      vm.$store.dispatch(
-        '$_project/configGet',
-        to.query.projectId
-      ).then((result) => {
-        console.log(result)
-      })
-    })
+      console.log(["to", to]);
+      console.log(["from", from]);
+      console.log(["next", next]);
+      if (to.query.projectId != undefined) {
+        console.log(to.query.projectId);
+        let projectId = to.query.projectId;
+        if (projectId != "" && projectId != null) {
+          vm.getProjectInfo(projectId);
+        }
+      } else if (to.params.projectId != undefined) {
+        console.log(to.params.projectId);
+        let projectId = to.params.projectId;
+        if (projectId != "" && projectId != null) {
+          vm.getProjectInfo(projectId);
+        }
+      }
+      // vm.$store.dispatch(
+      //   'project/configGet',
+      //   to.query.projectId
+      // ).then((result) => {
+      //   console.log(result)
+      // })
+    });
   }
-
-}
+};
 </script>

@@ -10,6 +10,7 @@ const configInit = ({ commit, state }) => {
   var configList = [4, 5, 6]
   setTimeout(() => {
     commit('setConfig', configList)
+    //commit("setServiceTypeList", configList)
   }, 5000)
 }
 
