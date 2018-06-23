@@ -1,5 +1,6 @@
 <template>
-    <page :Breadcrumb="true">
+    <page :Breadcrumb="0">
+        <div slot="title">公告信息</div>
         <div slot="panel">
             <div class="body-title">
                 <h2>{{noticeInfo.baseData.title}}</h2>

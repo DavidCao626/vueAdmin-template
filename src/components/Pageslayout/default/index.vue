@@ -26,6 +26,9 @@
 
                     </slot>
                 </template>
+                <!-- <div class="extra_info" v-if="!$slots.tabs">
+                    <el-button icon="el-icon-arrow-left" circle @click="go(-1)"></el-button>
+                </div> -->
             </div>
 
         </template>
@@ -53,13 +56,13 @@ export default {
   },
   computed: {
     route() {
-      console.log(this.$route);
-
-      console.log(this);
-
-      debugger;
       return "123123123";
     }
+  },
+  methods:{
+      go(i){
+         this.router.go(i)
+      }
   },
   components: {
     Breadcrumb
@@ -67,4 +70,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.extra_info {
+  margin-bottom: 20px;
+  text-align: right;
+  margin-top: -50px;
+  line-height: 40px;
+}
 </style>
