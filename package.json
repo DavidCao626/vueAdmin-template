@@ -18,6 +18,7 @@
     "js-calendar": "^1.2.3",
     "js-cookie": "2.2.0",
     "mockjs": "^1.0.1-beta3",
+    "moment": "^2.22.2",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "validate.js": "^0.12.0",

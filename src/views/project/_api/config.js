@@ -8,6 +8,14 @@ const queryScopeConfigDataView = (data) => {
   })
 }
 
+const queryScopeDataView = data => {
+  return request({
+    url: '/project/queryScopeDataView.do',
+    method: 'post',
+    data: data
+  })
+}
+
 const updateScopePlanTimeLong = (data) => {
   return ajax({
     url: '/project/updateScopePlanTimeLong.do',
@@ -27,5 +35,6 @@ const updateScopePlanTimeLongAndNext = data => {
 export default {
   queryScopeConfigDataView,
   updateScopePlanTimeLong,
-  updateScopePlanTimeLongAndNext
+  updateScopePlanTimeLongAndNext,
+  queryScopeDataView
 }

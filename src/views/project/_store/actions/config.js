@@ -10,7 +10,7 @@ const configInit = ({ commit, state }) => {
   var configList = [4, 5, 6]
   setTimeout(() => {
     commit('setConfig', configList)
-    //commit("setServiceTypeList", configList)
+    // commit("setServiceTypeList", configList)
   }, 5000)
 }
 
@@ -48,10 +48,27 @@ const queryScopeConfigInfo = ({ commit, state }, data) => {
   })
 }
 
+const queryScopeDataView = ({ commit, state }, data) => {
+  api
+    .queryScopeDataView(data)
+    .then(result => {
+      commit('changeScopeDateView', result.resBody)
+    })
+    .catch(ex => {
+      console.log(ex)
+    })
+}
+
+const changeScopeItemDateHour = ({ commit, state }, data) => {
+  commit('changeScopeWorkItemHour', data)
+}
+
 export default {
   configGet,
   configInit,
   queryScopeConfigInfo,
   updateScopePlanTimeLong,
-  updateScopePlanTimeLongAndNext
+  updateScopePlanTimeLongAndNext,
+  queryScopeDataView,
+  changeScopeItemDateHour
 }

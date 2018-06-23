@@ -34,7 +34,7 @@ export default {
     //设置上传地址
     this.setUploadAttrUrl(api.uploadAttrUrl);
     
-    this.initConfig();
+    //this.initConfig();
   },
   destroyed() {
     const STORE_KEY = store.namespace
