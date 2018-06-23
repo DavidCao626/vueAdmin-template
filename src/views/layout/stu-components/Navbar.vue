@@ -5,7 +5,7 @@
         <div class="navbar-layout__side">
           <slot name="side">
             <h1 class="navbar-logo">
-              <a href="/" title="学生工作管理系统">
+              <a href="#/" title="学生工作管理系统">
               </a>
             </h1>
           </slot>

@@ -22,8 +22,13 @@ export const messagesRouter = {
         },
         {
           path: "list",
-          name: "公告列表",
+          name: "公告管理列表",
           component: () => import("../announce/list")
+        },
+        {
+          path: "showlist",
+          name: "公告列表",
+          component: () => import("../announce/showList")
         },
         {
           path: "show",
@@ -50,8 +55,13 @@ export const messagesRouter = {
         },
         {
           path: "list",
-          name: "公示列表",
+          name: "公示管理列表",
           component: () => import("../notice/list")
+        },
+        {
+          path: "showlist",
+          name: "公示列表",
+          component: () => import("../notice/showList")
         },
         {
           path: "show",
