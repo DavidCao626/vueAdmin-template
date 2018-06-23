@@ -17,9 +17,17 @@ const getDictByDictNames = ({ commit, state }, params) =>
         })
     })    
 
+const getPublicNoticeById = ({ commit, state }, params) =>
+    new Promise(resolve => { 
+        api.getPublicNoticeById(params).then(response => {
+            console.log(["getPublicNoticeByIdAction",response])
+            resolve(response);
+        })
+    })    
 
 export default {
     queryPublicNoticeA,
-    getDictByDictNames
+    getDictByDictNames,
+    getPublicNoticeById
 }
 
