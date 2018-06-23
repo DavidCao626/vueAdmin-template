@@ -43,7 +43,7 @@
   max-width: 100%;
   color: #353535;
 }
-.weui-desktop-home-notice__title:before {
+.weui-desktop-home-notice__title:before1 {
   background-image: url("data:image/svg+xml;charset=utf8, %3Csvg width='16' height='19' viewBox='0 0 16 19' xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3Enotification%3C/title%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M5 17c.046.156 0 .325 0 1 0 .334 1.008 1 2 1h2c.982 0 2-.672 2-1 0-.676-.045-.844 0-1H5z' fill='%239A9A9A'/%3E%3Cpath d='M1.05 15h13.518a8.462 8.462 0 0 0-.172-.659 8.803 8.803 0 0 0-.832-1.934 6.74 6.74 0 0 0-.537-.783l-.219-.274V11l.004-5.088C13.04 3.358 10.75 1 7.808 1c-2.333 0-4.663 2.384-5 5.06v5.29l-.218.274a6.74 6.74 0 0 0-.537.784 8.801 8.801 0 0 0-.833 1.933 8.453 8.453 0 0 0-.17.659z' stroke='%239A9A9A' stroke-width='2'/%3E%3C/g%3E%3C/svg%3E");
   width: 16px;
   height: 19px;
@@ -78,7 +78,7 @@
   margin-bottom: 20px;
 }
 .weui-desktop-layout__main__hd {
-  margin-bottom: 40px;
+  margin-bottom: 25px;
 }
 
 /**DavidCao**/
@@ -126,5 +126,33 @@
   }
   &-body {
     clear: both;
+  }
+}
+.page {
+  &-box {
+    display: flex;
+    &__0 {
+      flex: 0;
+    }
+    &__1 {
+      flex: 1.2;
+    }
+    &__2 {
+      flex: 2;
+    }
+    &__block {
+      margin: 0px 20px 20px auto;
+      padding: 25px;
+      background-color: #ffffff;
+      border-radius: 3px;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+
+      box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.05);
+    }
+    &__block:hover {
+      box-shadow: 0 2px 7px 3px rgba(0, 0, 0, 0.05);
+      transition: all 0.1s ease-in-out;
+    }
   }
 }

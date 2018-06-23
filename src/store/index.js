@@ -4,6 +4,7 @@ import app from './modules/app'
 import user from './modules/user'
 import question from './modules/question'
 import task from "./modules/task";
+import bashboard from "./modules/bashboard";
 
 import getters from './getters'
 
@@ -14,7 +15,8 @@ const store = new Vuex.Store({
     app,
     user,
     question,
-    task
+    task,
+    bashboard
   },
   getters
 });

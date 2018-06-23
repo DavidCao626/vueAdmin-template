@@ -53,8 +53,7 @@ export default {
 <style  lang="scss" >
 //@import "src/styles/main.scss"; // global css
 .container {
-  width: 100vw;
-  min-width: 768px;
+  min-width: 1300;
   margin: 0 auto;
 }
 .header {
