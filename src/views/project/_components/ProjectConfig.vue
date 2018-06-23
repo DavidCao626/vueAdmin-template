@@ -7,9 +7,9 @@
             <strong>{{scopeInfo.planEndTime}}</strong>
         </span>
         <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总共
-            <strong>{{scopeConfig.scopePlanTimeLong}}</strong>小时&nbsp;&nbsp;&nbsp; 剩余：
-            <strong>{{scopeConfig.scopeUsableTimeLong}}</strong> 小时</span>
-        <span>&nbsp;&nbsp;当前计划用：<strong style="color:red">{{scopeConfig.scopeAllocationedTimeLong}}</strong> 小时</span>
+            <strong>{{scopeDayCount.scopePlanTimeLong}}</strong>天&nbsp;&nbsp;&nbsp; 剩余：
+            <strong>{{scopeDayCount.scopeUsableTimeLong}}</strong> 天</span>
+        <span>&nbsp;&nbsp;当前计划用：<strong style="color:red">{{scopeDayCount.scopeAllocationedTimeLong}}</strong> 天</span>
 
         <div style="height:25px"></div>
         <el-form label-position="top" ref="form" label-width="100px" style="margin-left:30px; margin-right:30px;">
@@ -28,7 +28,6 @@
                                 </el-badge>
                             </template>
                         </div>
-
                     </div>
 
                 </el-col>
@@ -36,31 +35,51 @@
                 <el-col :span="6">
 
                     <el-form-item>
-                        <div slot="label">
-                            计划用时
-                        </div>
+                       
 
                         <template v-if="item.item.itemType=='manual'">
+                           <!--<div slot="label">
+                            计划用时
+                            </div> -->
+                            <!--
                             <el-input-number disabled style=" margin-top: 10px" size="mini" v-model="item.item.planTimeLong" :min="0"  label="小时">
                             </el-input-number>
+                            -->
                         </template>
                         <template v-else>
-                            <el-input-number style=" margin-top: 10px" size="mini" v-model="item.item.planTimeLong" :min="0"  label="小时">
+                            <div slot="label">
+                            计划用时
+                            </div>
+                            <el-input-number style=" margin-top: 10px" size="mini" v-model="item.planTimeDay" :min="0" @change="handleChange(item.stepKey,$event)"  label="小时">
                             </el-input-number>
                         </template>
                     </el-form-item>
                 </el-col>
 
                 <el-col :span="6">
-                    <el-form-item label="预计开始时间">
-                        {{item.startTime==''?'未配置':item.startTime}}
-                    </el-form-item>
+                    <template v-if="item.item.itemType=='manual'">
+                        <!--<el-form-item else label="预计开始时间" >
+                        {{item.startTime==''?'未配置':formatMoment(item.startTime)}}
+                         </el-form-item> -->
+                    </template>
+                     <template v-else >
+                        <el-form-item else label="预计开始时间" >
+                                 {{item.start==''?'未配置':formatMoment(item.start)}}
+                         </el-form-item> 
+                    </template>
                 </el-col>
 
                 <el-col :span="6">
-                    <el-form-item label="预计结束时间">
-                        {{item.endTime==''?'未配置':item.endTime}}
-                    </el-form-item>
+                    <template v-if="item.item.itemType=='manual'">
+                        <!--<el-form-item else label="预计开始时间" >
+                        {{item.startTime==''?'未配置':formatMoment(item.startTime)}}
+                         </el-form-item> -->
+                    </template>
+                     <template v-else >
+                        <el-form-item label="预计结束时间">
+                           {{item.end==''?'未配置':formatMoment(item.end)}}
+                        </el-form-item>
+                    </template>
                 </el-col>
 
             </el-row>
@@ -82,6 +101,7 @@ import formDisabledSelect from './ProjectTypeSelect'
 import { mapGetters, mapActions } from 'vuex'
 import store from '../_store/index.js'
 import commons from '~/utils/common.js'
+import moment from 'moment'
 
 export default {
   components: {
@@ -95,31 +115,34 @@ export default {
     ...mapGetters({
       scopeInfo: store.namespace + '/getScopeConfigInfoScope',
       scopeWorkItems: store.namespace + '/getScopeConfigInfoWorkItems',
-      scopeConfig: store.namespace + '/getScopeConfigInfo'
+      scopeConfig: store.namespace + '/getScopeConfigInfo',
+      scopeDayCount:store.namespace+"/getScopeConfigCountDay"
     })
   },
   methods: {
     ...mapActions({
       updateScopePlanTimeLong: store.namespace + '/updateScopePlanTimeLong',
-      updateScopePlanTimeLongAndNext: store.namespace + '/updateScopePlanTimeLongAndNext'
+      updateScopePlanTimeLongAndNext: store.namespace + '/updateScopePlanTimeLongAndNext',
+      changeScopeItemHour: store.namespace + '/changeScopeItemDateHour'
     }),
+    formatMoment: function(time) {
+      return moment(time).second(0).minute(0).format('YYYY-MM-DD HH:mm:ss')
+    },
     onSaveAndNext() {
       console.log('保存并下发任务!')
       var planItems = {}
-      debugger
       for (var i = 0; i < this.scopeWorkItems.length; i++) {
         var workItem = this.scopeWorkItems[i]
         planItems[workItem.item.stepKey] = workItem.item.planTimeLong
       }
       var itemId = commons.getRouterParam(this.$route, 'itemId')
       this.updateScopePlanTimeLongAndNext({ 'scopeId': this.scopeInfo.id, 'itemId': itemId, 'planItems': planItems }).then(result => {
-        this.$router.push({
+       console.log([this.scopeInfo.id,result.resBody.id]);
+       this.$router.push({
           name: 'project_start',
           params: { scopeId: this.scopeInfo.id, itemId: result.resBody.id }
         })
       })
-
-      // 跳转到配置下发任务路由，把项目id传递过去
     },
     onSave() {
       console.log('保存配置!')
@@ -138,8 +161,8 @@ export default {
       else if (State === 'E') return 'state-circle ' + 'state-circle__ex'
       else return 'state-circle ' + 'state-circle__ok'
     },
-    handleChange(value) {
-      console.log(value)
+    handleChange(param, value) {
+      this.changeScopeItemHour({'itemKey': param,'timeLong' : value});
     }
   }
 }

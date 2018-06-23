@@ -30,7 +30,7 @@ export default {
       setConfig: store.namespace + '/setConfig'
     }),
     ...mapActions({
-      queryScopeConfigInfo: store.namespace + '/queryScopeConfigInfo'
+      queryScopeConfigInfo: store.namespace + '/queryScopeDataView'
     }),
     doExecute: function() {
       this.setConfig([7, 8, 9])
