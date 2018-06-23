@@ -1,21 +1,26 @@
-import { queryAnmeldenTypeList, submitProjectApplySurface } from '~/api/task'
+import api from '~/api/dashboard'
 
 const bashboard = {
   state: {
-    // taskStyleData: {
-    // }
+
   },
 
   mutations: {
-    // SET_TASKSTYLEDATA: (state, taskStyleData) => {
-    //     state.taskStyleData.push(taskStyleData);
-    // },
-  },
 
+  },
   actions: {
-    // updatetaskStyleDataFamily: ({ commit }, qss) => {
-    //     commit("updatetaskStyleDataFamily", qss);
-    // },
+    pullPublicNoticeA: ({ commit, state }) =>
+      new Promise(resolve => {
+        api.pullPublicNotice({'type':'A','currentPage':1,'pageSize':3}).then(response => {
+          resolve(response)
+        })
+      }),
+    pullPublicNoticeP: ({ commit, state }) =>
+      new Promise(resolve => {
+        api.pullPublicNotice({ 'type': "P", 'currentPage': 1, 'pageSize': 3 }).then(response => {
+          resolve(response)
+        })
+      })
   }
 };
 

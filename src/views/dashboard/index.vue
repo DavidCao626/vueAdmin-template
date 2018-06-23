@@ -51,6 +51,7 @@
 
 <script>
 import listbody from "./_components/ListBody";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     listbody
@@ -120,6 +121,11 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      pullPublicNoticeA: "pullPublicNoticeA",
+      pullPublicNoticeP: "pullPublicNoticeP"
+    }),
+
     onRowClick(row, event, column) {
       alert(row.id, event, column);
       //跳转到待办处理页面
@@ -127,6 +133,45 @@ export default {
     goShowTodo(id) {
       //跳转到待办处理页面
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.pullPublicNoticeA().then(response => {
+        console.log(["123123",response])
+        vm.announceDate = [];
+        var resp = response.resBody.baseData;
+        var temp = {
+          title: "",
+          url: "",
+          urlParams: {},
+          date: ""
+        };
+        resp.array.forEach(element => {
+          temp.title = element.title;
+          temp.url = "/messages/announce/show"; //详情地址
+          temp.urlParams = { publicNoticeId: element.id };
+          temp.date = element.publicTime;
+          vm.announceDate.push(temp);
+        });
+      });
+      vm.pullPublicNoticeP().then(response => {
+        vm.noticeDate = [];
+        var resp = response.resBody.baseData;
+        var temp = {
+          title: "",
+          url: "",
+          urlParams: {},
+          date: ""
+        };
+        resp.array.forEach(element => {
+          temp.title = element.title;
+          temp.url = "/messages/notice/show"; //详情地址
+          temp.urlParams = { publicNoticeId: element.id };
+          temp.date = element.publicTime;
+          vm.noticeDate.push(temp);
+        });
+      });
+    });
   }
 };
 </script>
