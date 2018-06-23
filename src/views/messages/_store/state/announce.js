@@ -1,1 +1,3 @@
-export const announce = {};
+export const announce = {
+    publicNoticeState :[]
+};

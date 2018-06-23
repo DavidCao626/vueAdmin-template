@@ -40,10 +40,17 @@ export default {
 
      
     },
-    ...mapActions({}),
+    ...mapActions({
+    getDictByDictNames:store.namespace + "/getDictByDictNames"
+
+    }),
     ...mapMutations({})
   },
-  mounted() {},
+  mounted() {
+    var par = []
+    par[0]="public_notice_state"
+    this.getDictByDictNames({'dicts':par})
+  },
   destroyed() {
     const STORE_KEY = store.namespace;
     if (STORE_KEY in this.$store._modules.root._children) {

@@ -15,17 +15,17 @@
       </div>
     </div>
     <template>
-      <el-table :data="tableData" style="width: 100%">
+      <el-table @row-click="showDetail"  class="i-cursor" :data="tableData" style="width: 100%">
         <!-- <el-table-column prop="id" label="#编号" width="60">
         </el-table-column> -->
-        <el-table-column prop="title" label="公告名称">
+        <el-table-column  prop="title" label="公告名称">
         </el-table-column>
-        <el-table-column prop="state" label="公告状态" width="180">
-          <template slot-scope="scope">
+        <el-table-column prop="state" :formatter="stateFormatter" label="公告状态" width="120">
+          <!-- <template slot-scope="scope">
             <el-tag type="info" disable-transitions>{{scope.row.state}}</el-tag>
-          </template>
+          </template> -->
         </el-table-column>
-        <el-table-column prop="files" :formatter="filesFormatter" label="是否存在附件">
+        <el-table-column prop="files" align="center" :formatter="filesFormatter" label="是否存在附件">
         </el-table-column>
         <el-table-column prop="createdTime" label="创建时间">
         </el-table-column>
@@ -80,14 +80,28 @@ export default {
       return this.tableData.filter(element => {
         return element.name.match(this.filterText);
       });
-    }
+    },
+    ...mapGetters({
+      publicNoticeState: store.namespace + "/getPublicNoticeState"
+    })
   },
   methods: {
+    showDetail(row, event, column) {
+     alert("我要跳转到详情,这是我的Id : " + row.id)
+    },
     filesFormatter(row, column, cellValue, index) {
       if (cellValue == null) {
         return "否";
       } else {
         return "是";
+      }
+    },
+    stateFormatter(row, column, cellValue, index) {
+      var list = this.publicNoticeState;
+      for (var i = 0; i < list.length; i++) {
+        if (cellValue == list[i].dict_key) {
+          return list[i].dict_desc;
+        }
       }
     },
     queryData() {
@@ -130,4 +144,7 @@ export default {
 };
 </script>
 <style scoped>
+.i-cursor:hover {
+  cursor: pointer;
+}
 </style>

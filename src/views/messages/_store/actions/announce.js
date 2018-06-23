@@ -10,8 +10,16 @@ const queryPublicNoticeA = ({ commit, state }, data) =>
     })
 // const queryPublicNoticeState = ({ commit, state }) =>
 // new Promise    
+const getDictByDictNames = ({ commit, state }, params) =>
+    new Promise(resolve => { 
+        api.getDictByDictNames(params).then(response => { 
+            commit("setPublicNoticeState", response.resBody.public_notice_state)
+        })
+    })    
+
 
 export default {
-    queryPublicNoticeA
+    queryPublicNoticeA,
+    getDictByDictNames
 }
 
