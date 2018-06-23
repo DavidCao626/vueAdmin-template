@@ -38,12 +38,16 @@ export default {
         this.$router.push({ path: "/messages/notice/list" });
       }
     },
-    ...mapActions({}),
+    ...mapActions({
+    getDictByDictNames:store.namespace + "/getDictByDictNames"
+
+    }),
     ...mapMutations({})
   },
-  mounted() {},
-  beforeRouteEnter(to, from, next) {
-    next(vm => {});
+  mounted() {
+    var par = []
+    par[0]="public_notice_state"
+    this.getDictByDictNames({'dicts':par})
   },
   destroyed() {
     const STORE_KEY = store.namespace;

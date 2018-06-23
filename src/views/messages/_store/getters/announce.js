@@ -1,8 +1,5 @@
 
-export const getAnnounce = state => {
-  return state.announce;
-};
 
-export const getAnnounceList = state => {
-  return state.announce.list;
+export const getPublicNoticeState = state => {
+  return state.announce.publicNoticeState;
 };

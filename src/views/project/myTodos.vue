@@ -64,7 +64,9 @@ export default {
       console.log(row);
       this.$router.push({
         name: "项目控制台",
-        params: {}
+        params: {
+          'scopeId':row.scope_id
+        }
       });
     },
     stateFormatter(row, column, cellValue, index) {
