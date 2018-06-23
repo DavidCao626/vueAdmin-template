@@ -25,14 +25,13 @@ export const constantRouterMap = [
   {
     path: "/",
     component: stuLayout,
-    redirect: "/components/filtrates/data",
+    redirect: "/dashboard",
     name: "home_index",
     meta: { title: "首页" },
     children: [
       componentsRouter,
       projectRouter,
       messagesRouter,
-      
       {
         path: "dashboard",
         meta: { title: "首页" },

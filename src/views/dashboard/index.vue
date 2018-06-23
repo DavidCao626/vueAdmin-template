@@ -1,114 +1,132 @@
 <template>
   <div class="dashboard">
-    <div class="weui-desktop-panel">
+
+    <div class="page-box">
+      <div class="page-box__2">
+        <div class="page-box__block flex">
+          <div class="page-box__1">
+            <listbody title="公告栏" titleUrl="/messages/announce/list" :titleUrlParams="announceDate.urlParams" :data="announceDate"></listbody>
+          </div>
+        </div>
+
+      </div>
+      <div class="page-box__1">
+        <div class="page-box__block">
+          <listbody title="公示栏" titleUrl="/messages/notice/list" :titleUrlParams="noticeDate.urlParams" :data="noticeDate"></listbody>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="page-box__block">
       <div class="weui-desktop-home-notice">
         <div class="weui-desktop-home-notice__info">
-          <a href="/cgi-bin/announce?action=getannouncement&amp;announce_id=11518228081c7A0o&amp;version=&amp;lang=zh_CN" target="_blank" class="weui-desktop-home-notice__title">
-            学工系统文档手册发布
+          <a href="#" class="weui-desktop-home-notice__title " style=" font-size: 16px;">
+            我未处理的待办
           </a>
         </div>
         <div class="weui-desktop-home-notice__extra">
-          <em class="weui-desktop-home-notice__date">2018-02-10</em>
-          <a href="/cgi-bin/announcement?t=home/notice&amp;token=2058891718&amp;lang=zh_CN" target="_blank" class="weui-desktop-home-notice__readmore">更多</a>
+          <router-link :to="{path:'/project/todos'}" target="_blank" class="weui-desktop-home-notice__readmore">
+            全部待办
+          </router-link>
         </div>
       </div>
+      <br>
+      <el-table :data="tableData" style="width: 100%" @row-click="onRowClick">
+        <el-table-column prop="name" label="待办名称">
+        </el-table-column>
+        <el-table-column prop="type" label="待办类别" width="180">
+        </el-table-column>
+        <el-table-column prop="date" label="时间" width="180">
+        </el-table-column>
+        <el-table-column label="操作" width="100">
+          <template slot-scope="scope">
+            <el-button size="mini" @click="goShowTodo(scope.row.id)">查看</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
-
-    <div class="weui-desktop-panel">
-      <div class="weui-desktop-home-notice">
-        <div class="weui-desktop-home-notice__info">
-          <a href="/cgi-bin/announce?action=getannouncement&amp;announce_id=11518228081c7A0o&amp;version=&amp;lang=zh_CN" target="_blank" class="weui-desktop-home-notice__title">
-            学工系统文档手册发布
-          </a>
-        </div>
-        <div class="weui-desktop-home-notice__extra">
-          <em class="weui-desktop-home-notice__date">2018-02-10</em>
-          <a href="/cgi-bin/announcement?t=home/notice&amp;token=2058891718&amp;lang=zh_CN" target="_blank" class="weui-desktop-home-notice__readmore">更多</a>
-        </div>
-      </div>
-    </div>
-
   </div>
 </template>
 
 <script>
+import listbody from "./_components/ListBody";
 export default {
+  components: {
+    listbody
+  },
   data() {
     return {
-      ruleForm: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      },
-      rules: {
-        name: [
-          { required: true, message: "请输入活动名称", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
-        ],
-        region: [
-          { required: true, message: "请选择活动区域", trigger: "change" }
-        ],
-        date1: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择日期",
-            trigger: "change"
-          }
-        ],
-        date2: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择时间",
-            trigger: "change"
-          }
-        ],
-        type: [
-          {
-            type: "array",
-            required: true,
-            message: "请至少选择一个活动性质",
-            trigger: "change"
-          }
-        ],
-        resource: [
-          { required: true, message: "请选择活动资源", trigger: "change" }
-        ],
-        desc: [{ required: true, message: "请填写活动形式", trigger: "blur" }]
-      }
+      announceDate: [
+        {
+          title: "标题1",
+          url: "/messages/announce/show",
+          urlParams: { id: 1 },
+          date: "2018-06-01"
+        },
+        {
+          title: "标题2",
+          url: "/messages/announce/show",
+          urlParams: { id: 2 },
+          date: "2018-06-01"
+        },
+        {
+          title: "标题3",
+          url: "/messages/announce/show",
+          urlParams: { id: 3 },
+          date: "2018-06-01"
+        }
+      ],
+      noticeDate: [
+        {
+          title: "公示1",
+          url: "/messages/notice/show",
+          urlParams: { nid: 1 },
+          date: "2018-06-01"
+        },
+        {
+          title: "公示2",
+          url: "/messages/notice/show",
+          urlParams: { nid: 2 },
+          date: "2018-06-01"
+        },
+        {
+          title: "公示3",
+          url: "/messages/notice/show",
+          urlParams: { nid: 3 },
+          date: "2018-06-01"
+        }
+      ],
+      tableData: [
+        {
+          id: 1,
+          date: "2016-05-02",
+          type: "贫困建档",
+          name: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          id: 2,
+          date: "2016-05-04",
+          type: "贫困建档",
+          name: "上海市普陀区金沙江路 1517 弄"
+        },
+        {
+          id: 3,
+          date: "2016-05-01",
+          type: "学生填表",
+          name: "上海市普陀区金沙江路 1519 弄"
+        }
+      ]
     };
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          alert("submit!");
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
+    onRowClick(row, event, column) {
+      alert(row.id, event, column);
+      //跳转到待办处理页面
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+    goShowTodo(id) {
+      //跳转到待办处理页面
     }
   }
 };
 </script>
-
-<style rel="stylesheet/scss" lang="scss" scoped>
-.dashboard {
-  & {
-  }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
-  }
-}
-</style>

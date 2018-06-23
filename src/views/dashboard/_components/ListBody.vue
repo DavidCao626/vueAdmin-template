@@ -1,0 +1,86 @@
+<template>
+    <div>
+        <div class="weui-desktop-home-notice">
+            <div class="weui-desktop-home-notice__info">
+
+                <router-link :to="{path:titleUrl,params:titleUrlParams}" target="_blank" class="weui-desktop-home-notice__title title">
+                    {{title}}
+                </router-link>
+            </div>
+            <div class="weui-desktop-home-notice__extra">
+                <router-link :to="{path:titleUrl,params:titleUrlParams}" target="_blank" class="weui-desktop-home-notice__readmore">
+                    更多
+                </router-link>
+            </div>
+        </div>
+        <hr color="#f6f8f9" class="line" />
+        <div>
+            <ul class="olli">
+                <template v-for="(i,index) in data">
+                    <router-link :to="i.url" target="_blank">
+                        <li>{{i.title}}
+                            <small>{{i.date}}
+                            </small>
+                        </li>
+                    </router-link>
+                </template>
+            </ul>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+  props: {
+    title: {
+      type: String,
+      default: "公告栏"
+    },
+    titleUrl: {
+      type: String,
+      default: "/"
+    },
+    titleUrlParams:{
+      type: Object,
+      default:function(){
+          return {}
+      }
+    },
+    data: {
+      type: Array,
+      default: function() {
+        return [
+          {
+            title: "默认标题",
+            url: "/",
+            date: ""
+          }
+        ];
+      }
+    }
+  }
+};
+</script>
+
+
+<style rel="stylesheet/scss" lang="scss" scoped>
+.line {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.olli {
+  margin: 0 20px;
+  line-height: 35px;
+  font-size: 15px;
+  color: #666;
+  & small {
+    color: #999;
+    float: right;
+    font-size: 14px;
+    margin-right: -20px;
+  }
+}
+.title {
+  font-size: 16px;
+}
+</style>
