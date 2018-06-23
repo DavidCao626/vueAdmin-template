@@ -18,19 +18,21 @@ Vue.use(Router);
 import _lodash from "lodash";
 import { projectRouter } from "~/views/project/_router/index";
 import { messagesRouter } from "~/views/messages/_router/index";
+import { componentsRouter } from "~/components/_router";
 const registerRouterModules = [];
-
 import stuLayout from "../views/layout/stu-Layout";
 export const constantRouterMap = [
   {
     path: "/",
     component: stuLayout,
-    redirect: "/dashboard",
+    redirect: "/components/filtrates/data",
     name: "home_index",
     meta: { title: "首页" },
     children: [
+      componentsRouter,
       projectRouter,
       messagesRouter,
+      
       {
         path: "dashboard",
         meta: { title: "首页" },
@@ -394,7 +396,7 @@ export const constantRouterMap = [
   },
   { path: "*", redirect: "/404", hidden: true }
 ];
-
+console.log(constantRouterMap);
 export default new Router({
   // mode: 'history', //后端支持可开
   scrollBehavior: () => ({ y: 0 }),
