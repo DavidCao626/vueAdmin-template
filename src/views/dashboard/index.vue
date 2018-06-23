@@ -5,14 +5,14 @@
       <div class="page-box__2">
         <div class="page-box__block flex">
           <div class="page-box__1">
-            <listbody title="公告栏" titleUrl="/messages/announce/list" :titleUrlParams="announceDate.urlParams" :data="announceDate"></listbody>
+            <listbody title="公告栏" :titleUrl="announceMoreUrl" :data="announceDate"></listbody>
           </div>
         </div>
 
       </div>
       <div class="page-box__1">
         <div class="page-box__block">
-          <listbody title="公示栏" titleUrl="/messages/notice/list" :titleUrlParams="noticeDate.urlParams" :data="noticeDate"></listbody>
+          <listbody title="公示栏" :titleUrl="noticeMoreUrl" :data="noticeDate"></listbody>
 
         </div>
 
@@ -33,13 +33,13 @@
       </div>
       <br>
       <el-table :data="tableData" style="width: 100%" @row-click="onRowClick">
-        <el-table-column prop="name" label="待办名称">
+        <el-table-column prop="item_name" label="待办名称" min-width="180">
         </el-table-column>
-        <el-table-column prop="type" label="待办类别" width="180">
+        <el-table-column prop="projectInfo.project_service_type_name" label="所属项目业务" min-width="120">
         </el-table-column>
-        <el-table-column prop="date" label="时间" width="180">
+        <el-table-column prop="over_time" label="结束时间" min-width="120">
         </el-table-column>
-        <el-table-column label="操作" width="100">
+        <el-table-column label="操作" min-width="100">
           <template slot-scope="scope">
             <el-button size="mini" @click="goShowTodo(scope.row.id)">查看</el-button>
           </template>
@@ -58,6 +58,8 @@ export default {
   },
   data() {
     return {
+      announceMoreUrl: "/",
+      noticeMoreUrl: "/",
       announceDate: [
         {
           title: "标题1",
@@ -123,30 +125,43 @@ export default {
   methods: {
     ...mapActions({
       pullPublicNoticeA: "pullPublicNoticeA",
-      pullPublicNoticeP: "pullPublicNoticeP"
+      pullPublicNoticeP: "pullPublicNoticeP",
+      queryUserPending: "queryUserPending"
     }),
 
     onRowClick(row, event, column) {
-      alert(row.id, event, column);
       //跳转到待办处理页面
+      this.$router.push({
+        name: "项目控制台",
+        params: {
+          scopeId: row.id
+        }
+      });
     },
     goShowTodo(id) {
       //跳转到待办处理页面
+      this.$router.push({
+        name: "项目控制台",
+        params: {
+          scopeId: id
+        }
+      });
     }
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.pullPublicNoticeA().then(response => {
-        console.log(["123123",response])
+        console.log(["123123", response]);
         vm.announceDate = [];
         var resp = response.resBody.baseData;
-        var temp = {
-          title: "",
-          url: "",
-          urlParams: {},
-          date: ""
-        };
-        resp.array.forEach(element => {
+
+        resp.forEach(element => {
+          var temp = {
+            title: "",
+            url: "",
+            urlParams: {},
+            date: ""
+          };
           temp.title = element.title;
           temp.url = "/messages/announce/show"; //详情地址
           temp.urlParams = { publicNoticeId: element.id };
@@ -157,19 +172,23 @@ export default {
       vm.pullPublicNoticeP().then(response => {
         vm.noticeDate = [];
         var resp = response.resBody.baseData;
-        var temp = {
-          title: "",
-          url: "",
-          urlParams: {},
-          date: ""
-        };
-        resp.array.forEach(element => {
+
+        resp.forEach(element => {
+          var temp = {
+            title: "",
+            url: "",
+            urlParams: {},
+            date: ""
+          };
           temp.title = element.title;
           temp.url = "/messages/notice/show"; //详情地址
           temp.urlParams = { publicNoticeId: element.id };
           temp.date = element.publicTime;
           vm.noticeDate.push(temp);
         });
+      });
+      vm.queryUserPending().then(response => {
+        vm.tableData = response.resBody.baseData;
       });
     });
   }

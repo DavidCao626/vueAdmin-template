@@ -1,5 +1,5 @@
 <template>
-    <page :Breadcrumb="0">
+    <page>
         <div slot="title">公告信息</div>
         <div slot="panel">
             <div class="body-title">
@@ -35,6 +35,7 @@ export default {
   mounted() {},
   computed: {},
   beforeRouteEnter(to, from, next) {
+    console.log(["show",to])
     next(vm => {
       if (to.query.publicNoticeId != undefined) {
         let publicNoticeId = to.query.publicNoticeId;

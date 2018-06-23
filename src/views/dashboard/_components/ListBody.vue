@@ -3,12 +3,12 @@
         <div class="weui-desktop-home-notice">
             <div class="weui-desktop-home-notice__info">
 
-                <router-link :to="{path:titleUrl,params:titleUrlParams}" target="_blank" class="weui-desktop-home-notice__title title">
+                <router-link :to="{path:titleUrl}"  class="weui-desktop-home-notice__title title">
                     {{title}}
                 </router-link>
             </div>
             <div class="weui-desktop-home-notice__extra">
-                <router-link :to="{path:titleUrl,params:titleUrlParams}" target="_blank" class="weui-desktop-home-notice__readmore">
+                <router-link :to="{path:titleUrl}"  class="weui-desktop-home-notice__readmore">
                     更多
                 </router-link>
             </div>
@@ -17,7 +17,7 @@
         <div>
             <ul class="olli">
                 <template v-for="(i,index) in data">
-                    <router-link :to="i.url" target="_blank">
+                    <router-link :to="{path:i.url,query:i.urlParams}">
                         <li>{{i.title}}
                             <small>{{i.date}}
                             </small>
@@ -53,7 +53,8 @@ export default {
           {
             title: "默认标题",
             url: "/",
-            date: ""
+            date: "",
+            urlParams:{}
           }
         ];
       }

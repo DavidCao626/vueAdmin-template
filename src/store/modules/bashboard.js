@@ -20,7 +20,13 @@ const bashboard = {
         api.pullPublicNotice({ 'type': "P", 'currentPage': 1, 'pageSize': 3 }).then(response => {
           resolve(response)
         })
+      }),
+    queryUserPending : ({ commit, state }) => new Promise(resolve => {
+      api.queryUserPending({'currentPage':1,'pageSize':99999 }).then(response => {
+        console.log(["queryUserPendingAction", response])
+        resolve(response)
       })
+    })
   }
 };
 
