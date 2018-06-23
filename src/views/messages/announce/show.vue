@@ -2,25 +2,65 @@
     <page :Breadcrumb="true">
         <div slot="panel">
             <div class="body-title">
-                <h2>公告标题</h2>
-                <p>发表时间：2018年5月8日 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布者：内蒙古大学学生管理处</p>
+                <h2>{{noticeInfo.baseData.title}}</h2>
+                <p>发表时间：{{noticeInfo.baseData.publicTime}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布者：{{noticeInfo.baseData.createdUserId}}</p>
             </div>
             <div class="body">
-                这是内容啊啊啊啊啊啊啊啊啊啊啊
+               {{noticeInfo.baseData.content}}
             </div>
+            
         </div>
     </page>
 </template>
 
 <script>
+//
+import { mapGetters, mapMutations, mapActions } from "vuex";
+import store from "../_store/index.js";
 export default {
-
-}
+  data() {
+    return {
+        noticeInfo:{
+            baseData:{},
+            files:[]
+        }
+    };
+  },
+  methods: {
+    ...mapActions({
+      getPublicNoticeById: store.namespace + "/getPublicNoticeById"
+    })
+  },
+  mounted() {},
+  computed: {},
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (to.query.publicNoticeId != undefined) {
+        let publicNoticeId = to.query.publicNoticeId;
+        if (publicNoticeId != "" && publicNoticeId != null) {
+          vm.getPublicNoticeById({ id: publicNoticeId }).then(response=>{
+              vm.noticeInfo = response.resBody;
+          });
+        }
+      } else if (to.params.publicNoticeId != undefined) {
+        let publicNoticeId = to.params.publicNoticeId;
+        if (publicNoticeId != "" && publicNoticeId != null) {
+         vm.getPublicNoticeById({ id: publicNoticeId }).then(response=>{
+              vm.noticeInfo = response.resBody;
+          });
+        }
+      }else{
+          alert("非法进入页面")
+          vm.$router.go(-1)
+      }
+    });
+  }
+};
 </script>
 
 <style>
-.body-title{
-    text-align: center;
-    color: #222;
+.body-title {
+  text-align: center;
+  color: #222;
 }
 </style>

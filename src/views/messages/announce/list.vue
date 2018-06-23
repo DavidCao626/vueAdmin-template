@@ -25,7 +25,7 @@
             <el-tag type="info" disable-transitions>{{scope.row.state}}</el-tag>
           </template> -->
         </el-table-column>
-        <el-table-column prop="files" align="center" :formatter="filesFormatter" label="是否存在附件">
+        <el-table-column prop="attachment" align="center" :formatter="filesFormatter" label="是否存在附件">
         </el-table-column>
         <el-table-column prop="createdTime" label="创建时间">
         </el-table-column>
@@ -87,7 +87,13 @@ export default {
   },
   methods: {
     showDetail(row, event, column) {
-     alert("我要跳转到详情,这是我的Id : " + row.id)
+     //alert("我要跳转到详情,这是我的Id : " + row.id)
+     this.$router.push({
+       name:"公告详情",
+       params:{
+         publicNoticeId:row.id
+       }
+     })
     },
     filesFormatter(row, column, cellValue, index) {
       if (cellValue == null) {

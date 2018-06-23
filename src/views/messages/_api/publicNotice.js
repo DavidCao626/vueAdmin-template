@@ -16,8 +16,16 @@ const queryPublicNotice = data =>
         method: 'post',
         data:data
     })    
+//根据id获取公告/公示
+const getPublicNoticeById = data =>
+    request({
+        url: "/publicNotice/getPublicNoticeById.do",
+        method: "post",
+        data:data
+    })    
 
 export default {
     queryPublicNotice,
-    getDictByDictNames
+    getDictByDictNames,
+    getPublicNoticeById
 }
