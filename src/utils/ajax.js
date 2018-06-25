@@ -1,51 +1,58 @@
-import axios from 'axios'
-import store from '../store'
-import { getToken } from '~/utils/auth'
-import { Message } from 'element-ui'
+import axios from "axios";
+import store from "../store";
+import { getToken } from "~/utils/auth";
+import { Message } from "element-ui";
+import { Loading } from "element-ui";
 // import { Loading } from 'element-ui'
 
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
   timeout: 15000 // 请求超时时间
-})
-
+});
+let loading;
 // request拦截器
 service.interceptors.request.use(
   config => {
     if (store.getters.token) {
-      config.headers['X-Token'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+      config.headers["X-Token"] = getToken(); // 让每个请求携带自定义token 请根据实际情况自行修改
     }
-    return config
+    loading = Loading.service({
+      text: "数据加载中...",
+      target: "#app-main"
+    });
+    return config;
   },
   error => {
     // Do something with request error
-    console.log(error) // for debug
-    Promise.reject(error)
+    console.error(error); // for debug
+    Promise.reject(error);
   }
-)
+);
 
 service.interceptors.response.use(
   response => {
+    loading.close();
     if (response.data.respStatus > 0) {
-      return response.data.body
+      return response.data.body;
     } else {
       Message({
         message: response.data.body.message,
-        type: 'error'
-      })
-      return Promise.reject(response.data.body)
+        type: "error"
+      });
+      return Promise.reject(response.data.body);
     }
   },
   error => {
-    console.log(error)
+    console.log(error);
+    loading.close();
     Message({
       message: error.message,
-      type: 'error'
-    })
-    return Promise.reject(error)
+      type: "error"
+    });
+    return Promise.reject(error);
   }
-)
+);
 
 // respone拦截器
 // service.interceptors.response.use(
@@ -89,4 +96,4 @@ service.interceptors.response.use(
 //   }
 // )
 
-export default service
+export default service;

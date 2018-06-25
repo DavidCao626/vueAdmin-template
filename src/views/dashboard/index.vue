@@ -146,7 +146,7 @@ export default {
           urlParams: {},
           date: ""
         };
-        resp.array.forEach(element => {
+        resp.forEach(element => {
           temp.title = element.title;
           temp.url = "/messages/announce/show"; //详情地址
           temp.urlParams = { publicNoticeId: element.id };
@@ -163,7 +163,8 @@ export default {
           urlParams: {},
           date: ""
         };
-        resp.array.forEach(element => {
+        console.log(resp)
+        resp.forEach(element => {
           temp.title = element.title;
           temp.url = "/messages/notice/show"; //详情地址
           temp.urlParams = { publicNoticeId: element.id };
