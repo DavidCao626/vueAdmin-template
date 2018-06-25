@@ -116,7 +116,7 @@ export default {
       scopeInfo: store.namespace + '/getScopeConfigInfoScope',
       scopeWorkItems: store.namespace + '/getScopeConfigInfoWorkItems',
       scopeConfig: store.namespace + '/getScopeConfigInfo',
-      scopeDayCount:store.namespace+"/getScopeConfigCountDay"
+      scopeDayCount: store.namespace + '/getScopeConfigCountDay'
     })
   },
   methods: {
@@ -137,7 +137,7 @@ export default {
       }
       var itemId = commons.getRouterParam(this.$route, 'itemId')
       this.updateScopePlanTimeLongAndNext({ 'scopeId': this.scopeInfo.id, 'itemId': itemId, 'planItems': planItems }).then(result => {
-       console.log([this.scopeInfo.id,result.resBody.id]);
+        console.log([this.scopeInfo.id, result.resBody.id])
        this.$router.push({
           name: 'project_start',
           params: { scopeId: this.scopeInfo.id, itemId: result.resBody.id }
@@ -162,7 +162,7 @@ export default {
       else return 'state-circle ' + 'state-circle__ok'
     },
     handleChange(param, value) {
-      this.changeScopeItemHour({'itemKey': param,'timeLong' : value});
+      this.changeScopeItemHour({ 'itemKey': param, 'timeLong': value })
     }
   }
 }

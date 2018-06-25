@@ -4,36 +4,45 @@
         <el-form ref="form" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
 
             <el-form-item label="项目名称:">
-                <p>{{form.name}}</p>
+                <p>{{projectInfo.projectName}}</p>
             </el-form-item>
             <el-form-item label="业务类型:">
-                <form-disabled-select v-model="form.tyleId"></form-disabled-select>
+                {{projectInfo.projectServiceTypeName}}
             </el-form-item>
             <el-form-item label="项目开始时间:">
-                <p>{{form.date1}}</p>
+                <p>{{projectInfo.planStartTime}}</p>
             </el-form-item>
             <el-form-item label="项目结束时间:">
-
-                <el-row :gutter="0">
-                    <el-col :span="2">
-                        <p>{{form.endDate}}</p>
-                    </el-col>
-                    <el-col :span="3">
-                        <p>剩余
-                            <strong style="color:red">{{form.endDateCount}}</strong> 天结束</p>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-button size="mini" plain>延期</el-button>
-                    </el-col>
-                </el-row>
-            </el-form-item>
-
-            <el-form-item label="项目内容:">
-                <p>{{form.desc}}</p>
+                        <p>{{projectInfo.planCompleteTime}}</p>
             </el-form-item>
 
             <el-form-item label="项目附件:">
-                <p v-for="(file,index) in form.files" :key="index">{{file.name}}</p>
+                <p v-for="(file,index) in projectInfo.files" :key="index">
+                    <a :href="file.userPath" target="_blank">{{file.userFileName}}</a>
+                    </p>
+            </el-form-item>
+             <el-form-item label="当前任务环节:">
+                        <p>{{scopeInfo.scopeName}}</p>
+            </el-form-item>
+
+             <el-form-item label="环节开始时间:">
+                        <p>{{scopeInfo.planStartTime}}</p>
+            </el-form-item>
+             <el-form-item label="环节结束时间:">
+                        <p>{{scopeInfo.planEndTime}}</p>
+            </el-form-item>
+          
+            <el-form-item label="已用时长:">
+                <span style="color:red">{{scopeInfo.useredDay}}天</span>
+            </el-form-item>
+            <el-form-item label="环节可用时长:">
+                <span style="color:red">{{scopeInfo.useabledDay}}天</span>
+            </el-form-item>
+             <el-form-item label="任需时长:">
+                <span style="color:red">{{scopeInfo.neededDay}}天</span>
+            </el-form-item>
+            <el-form-item label="预计超时时长:">
+                <span style="color:red">{{scopeInfo.delayDay}}天</span>
             </el-form-item>
         </el-form>
 
@@ -44,26 +53,25 @@
 
 import formData from './ProjectDate'
 import formDisabledSelect from './ProjectTypeSelect'
+import { mapGetters, mapActions } from 'vuex'
+import store from '../_store/index.js'
+import commons from '~/utils/common.js'
+import moment from 'moment'
 export default {
   components: {
     formData,
     formDisabledSelect
   },
-  props: ['projectId'],
   data() {
     return {
-      form: {
-        name: '',
-        tyleId: '001', // 业务类别id
-        date1: '2018-06-1',
-        endDate: '2018-09-1',
-        endDateCount: '90',
-        delivery: true,
-        files: [{ name: '2018年上学期2017级贫困学生建档项目.doc' }, { name: '新版学工系统建档操作手册.doc' }],
-        desc:
-          '“2018年上学期2017级贫困学生建档项目开始了，请各级学院老师提前做好准备！”'
-      }
+      form: {}
     }
+  },
+  computed: {
+    ...mapGetters({
+      projectInfo: store.namespace + '/getInteratedProjectInfo',
+      scopeInfo: store.namespace + '/getInteratedScopeInfo'
+    })
   }
 }
 </script>

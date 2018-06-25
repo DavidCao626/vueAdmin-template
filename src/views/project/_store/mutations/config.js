@@ -1,5 +1,5 @@
-import _lodash from "lodash";
-import moment from "moment"
+import _lodash from 'lodash'
+import moment from 'moment'
 export const setConfig = (state, configs) => {
   state.config.config_list = configs
 }
@@ -17,8 +17,8 @@ const _computeItemsTime = (items) => {
     if (!(value.item.position === 'start')) {
       var pitem = items[value.previousKey]
       value.start = pitem.end
-      if (value.item.planTimeLong!=null) {
-        console.log([value.item.stepKey, value.item.planTimeLong])
+      if (value.item.planTimeLong != null) {
+        // console.log([value.item.stepKey, value.item.planTimeLong])
         value.end = moment(value.start).add(value.item.planTimeLong, 'H')
       }
     }
@@ -34,7 +34,7 @@ export const changeScopeWorkItemHour = (state, hourData) => {
   console.log([timeLong, oldTimeLong, difTimeLong])
   state.scopeDateViewInfo.scopeAllocationedTimeLong = state.scopeDateViewInfo.scopeAllocationedTimeLong + difTimeLong
   item.item.planTimeLong = timeLong
-  _computeItemsTime(items);
+  _computeItemsTime(items)
 }
 
 export const setScopeDispenseView = (state, viewData) => {
