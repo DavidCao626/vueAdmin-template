@@ -7,7 +7,14 @@ const queryPublicNoticeP = ({ commit, state }, data) =>
             resolve(response)
         })
     })
-
+const pullPublicNoticeP = ({ commit, state }, params) =>
+    new Promise(resolve => {
+        params.type = "P"
+        api.pullPublicNotice(params).then(response => {
+            resolve(response)
+        })
+    })
 export default {
-    queryPublicNoticeP
+    queryPublicNoticeP,
+    pullPublicNoticeP
 }

@@ -1,17 +1,20 @@
 <template>
-    <page :Breadcrumb="0">
-        <div slot="title">公告信息</div>
-        <div slot="panel">
-            <div class="body-title">
-                <h2>{{noticeInfo.baseData.title}}</h2>
-                <p>发表时间：{{noticeInfo.baseData.publicTime}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布者：{{noticeInfo.baseData.createdUserId}}</p>
-            </div>
-            <div class="body">
-               {{noticeInfo.baseData.content}}
-            </div>
-            
-        </div>
-    </page>
+  <page>
+    <div slot="title">公告信息</div>
+    <div slot="panel">
+      <div class="body-title">
+        <h2>{{noticeInfo.baseData.title}}</h2>
+        <p>发表时间：{{noticeInfo.baseData.publicTime}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布者：{{noticeInfo.baseData.createdUserId}}</p>
+      </div>
+      <div class="body">
+        {{noticeInfo.baseData.content}}
+      </div>
+      <div>
+          附件:</br>
+          <a v-for="(item,index) in noticeInfo.baseData.files" :download="item.userFileName" :key="index" :href="item.userPath">{{item.userFileName}}</a>
+      </div>
+    </div>
+  </page>
 </template>
 
 <script>
@@ -21,10 +24,9 @@ import store from "../_store/index.js";
 export default {
   data() {
     return {
-        noticeInfo:{
-            baseData:{},
-            files:[]
-        }
+      noticeInfo: {
+        baseData: {}
+      }
     };
   },
   methods: {
@@ -35,24 +37,25 @@ export default {
   mounted() {},
   computed: {},
   beforeRouteEnter(to, from, next) {
+    console.log(["show", to]);
     next(vm => {
       if (to.query.publicNoticeId != undefined) {
         let publicNoticeId = to.query.publicNoticeId;
         if (publicNoticeId != "" && publicNoticeId != null) {
-          vm.getPublicNoticeById({ id: publicNoticeId }).then(response=>{
-              vm.noticeInfo = response.resBody;
+          vm.getPublicNoticeById({ id: publicNoticeId }).then(response => {
+            vm.noticeInfo = response.resBody;
           });
         }
       } else if (to.params.publicNoticeId != undefined) {
         let publicNoticeId = to.params.publicNoticeId;
         if (publicNoticeId != "" && publicNoticeId != null) {
-         vm.getPublicNoticeById({ id: publicNoticeId }).then(response=>{
-              vm.noticeInfo = response.resBody;
+          vm.getPublicNoticeById({ id: publicNoticeId }).then(response => {
+            vm.noticeInfo = response.resBody;
           });
         }
-      }else{
-          alert("非法进入页面")
-          vm.$router.go(-1)
+      } else {
+        alert("非法进入页面");
+        vm.$router.go(-1);
       }
     });
   }

@@ -7,7 +7,7 @@ const _getHourDay = (timeLong) => {
 
 export const getDispenseView = state => {
   var dispenseView = state.dispenseView
-  return dispenseView;
+  return dispenseView; 
 }
 export const getDispenseLiablerRule = state => {
   var ruleMap = state.dispenseView.deployPack.liaRuleMap
