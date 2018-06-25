@@ -65,7 +65,7 @@ export default {
       this.$router.push({
         name: "项目控制台",
         params: {
-          'scopeId':row.scope_id
+          scopeId: row.scope_id
         }
       });
     },
@@ -98,8 +98,13 @@ export default {
       });
     }
   },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.queryData();
+    });
+  },
   mounted() {
-    this.queryData();
+    //this.queryData();
   }
 };
 </script>

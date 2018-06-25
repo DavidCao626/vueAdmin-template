@@ -8,6 +8,12 @@ const getDictByDictNames = data =>
         method: 'post',
         data: data
     })
+const pullPublicNotice = data =>
+    request({
+        url: "/publicNotice/pullPublicNotice.do",
+        method: 'post',
+        data: data
+    })
 
     //查询公告/公示
 const queryPublicNotice = data =>
@@ -27,5 +33,6 @@ const getPublicNoticeById = data =>
 export default {
     queryPublicNotice,
     getDictByDictNames,
-    getPublicNoticeById
+    getPublicNoticeById,
+    pullPublicNotice
 }
