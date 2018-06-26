@@ -14,10 +14,13 @@
           </el-table-column>
           <el-table-column prop="real_start_time" label="开始时间" min-width="120">
           </el-table-column>
-          <el-table-column prop="over_time" label="结束时间" min-width="120">
+          <el-table-column prop="over_time" label="结束时间" :formatter="overTimeFormatter" min-width="120">
+              <template slot-scope="scope">
+               <span v-html="overTimeFormatter(scope.row)"></span>
+              </template>
           </el-table-column>
-          <el-table-column prop="create_time" label="创建时间" width="120">
-          </el-table-column>
+          <!-- <el-table-column prop="create_time" label="创建时间" width="120">
+          </el-table-column> -->
           <el-table-column prop="state" :formatter="stateFormatter" label="状态" min-width="80">
           </el-table-column>
         </el-table>
@@ -33,6 +36,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import store from "./_store/index.js";
+import moment from "moment"
 export default {
   data() {
     return {
@@ -65,7 +69,7 @@ export default {
       this.$router.push({
         name: "项目控制台",
         params: {
-          'scopeId':row.scope_id
+          scopeId: row.scope_id
         }
       });
     },
@@ -76,6 +80,20 @@ export default {
           return list[i].dict_desc;
         }
       }
+    },
+    // overTimeFormatter(row, column, cellValue, index) {
+    //   var date = cellValue;
+    //   if (date == undefined) {
+    //     return "";
+    //   }
+    //   return moment(date).format("YYYY-MM-DD HH:mm:ss");
+    // },
+     overTimeFormatter(row) {
+      var date = row.over_time;
+      if (date == undefined) {
+        return "";
+      }
+      return moment(date).format("YYYY-MM-DD HH:mm:ss");
     },
     handleSizeChange(val) {
       this.pageSize = val;
@@ -94,12 +112,18 @@ export default {
       };
       this.queryPend(requestData).then(response => {
         this.tableData = response.resBody.baseData;
+        console.log(["tableData", moment(this.tableData[0].over_time).format("YYYY-MM-DD HH:mm:ss")])
         this.dataTotal = response.resBody.pageInfo.totalRecord;
       });
     }
   },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.queryData();
+    });
+  },
   mounted() {
-    this.queryData();
+    //this.queryData();
   }
 };
 </script>

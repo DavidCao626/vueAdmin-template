@@ -156,9 +156,13 @@ export default {
         this.dataTotal = response.resBody.pageInfo.totalRecord;
       });
     }
+  },beforeRouteEnter(to,from,next){
+      next(vm=>{
+          vm.queryData();
+      })
   },
   mounted() {
-    this.queryData();
+   // this.queryData();
   }
 };
 </script>

@@ -58,8 +58,8 @@ export default {
   },
   data() {
     return {
-      announceMoreUrl: "/",
-      noticeMoreUrl: "/",
+      announceMoreUrl: "/messages/announce/showlist",
+      noticeMoreUrl: "/messages/notice/showlist",
       announceDate: [
         {
           title: "标题1",
