@@ -8,6 +8,15 @@ const queryScopeIntegeratedDateView = data => {
   })
 }
 
+const updateWorkItemDayLong = data => {
+  return request({
+    url: '/project/updateWorkItemDayLong.do',
+    method: 'post',
+    data: data
+  })
+}
+
 export default {
-  queryScopeIntegeratedDateView
+  queryScopeIntegeratedDateView,
+  updateWorkItemDayLong
 }

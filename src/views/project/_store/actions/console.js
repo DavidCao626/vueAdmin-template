@@ -10,6 +10,18 @@ const queryScopeIntegeratedDateView = ({ commit, state }, data) => {
     })
 }
 
+const updateItemPlanDay = ({ commit, state }, data) => {
+  api
+    .updateWorkItemDayLong(data)
+    .then(result => {
+      commit('setScopeIntegeratedDispenseView', result.resBody)
+    })
+    .catch(ex => {
+      console.log(ex)
+    })
+}
+
 export default {
-  queryScopeIntegeratedDateView
+  queryScopeIntegeratedDateView,
+  updateItemPlanDay
 }

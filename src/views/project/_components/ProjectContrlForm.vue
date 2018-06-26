@@ -9,12 +9,12 @@
             <div class="state-circle-text">
               <template v-if="item.item.itemType=='manual'">
                 <el-badge :value="'手动'" class="item">
-                  <strong>{{item.item.id}}</strong><br> {{item.item.stepName}}
+                <br>{{item.item.stepName}}
                 </el-badge>
               </template>
               <template v-else>
                 <el-badge :value="'自动'" class="item">
-                  <strong>{{item.item.id}}</strong><br> {{item.item.stepName}}
+                 <br>{{item.item.stepName}}
                 </el-badge>
               </template>
             </div>
@@ -24,16 +24,19 @@
         </el-col>
 
         <el-col :span="3">
-          <el-form-item>
+          <el-form-item >
+            <template v-if="item.item.itemType!=='manual'">
             <div slot="label">
-              计划天数
+              计划（天）
             </div>
             <template>
               {{item.planTimeDay}}
             </template>
+            </template>
           </el-form-item>
         </el-col>
         <el-col :span="4">
+          <template v-if="item.item.itemType!=='manual'">
           <template v-if="(item.item.state==='S' || item.item.state==='F')">
             <el-form-item label="实际开始时间">
               {{item.start==''?'-':item.start}}
@@ -44,9 +47,10 @@
               {{item.start==''?'未配置':item.start}}
             </el-form-item>
           </template>
-
+          </template>
         </el-col>
         <el-col :span="4">
+          <template v-if="item.item.itemType!=='manual'">
           <template v-if="(item.item.state==='F')">
             <el-form-item label="实际结束时间">
               {{item.end==''?'进行中...':item.end}}
@@ -57,16 +61,16 @@
               {{item.end==''?'未配置':item.end}}
             </el-form-item>
           </template>
+          </template>
         </el-col>
         <el-col :span="4">
           
-          <el-form-item label="实际用时" v-if="item.item.state==='F'">
-            {{item.item.realTimeLong}}
+          <el-form-item label="实际用时(小时)" v-if="item.item.state==='F'">
+            {{item.usedHourLong}}
           </el-form-item>
-           <el-form-item label="计划用时" v-else>
-            {{item.item.planTimeLong}}
+           <el-form-item label="已用时（小时）" v-else-if="item.item.state==='S'">
+            {{item.usedHourLong}}
           </el-form-item>
-
         </el-col>
         <el-col :span="5">
           <!-- <span v-if="item.nodeId==1">已分配 {{getCountDays}} 天 /</span>
@@ -74,16 +78,16 @@
             <strong style="color:red">{{ getProjectStatusRemainingCountDays}}</strong> 天</span>-->
           <div style="height:25px"></div> 
           <template v-if="item.item.itemType==='manual'" >
-            <el-button type="primary" :disabled="getItemEnableState(item)"  @click="config">操作</el-button>
+            <el-button type="primary" :disabled="getItemEnableState(item)"  @click="handle(item)">操作</el-button>
           </template>
           <template v-else>
             <el-popover placement="top" width="160"  :ref="'popover'+item.item.id"  >
-              <p>请输入调整后的天数</p>
+              <p>调整保存后、将重新调整当前和后续节点的执行计划</p>
               <el-input-number style=" margin-top: 10px" size="small" v-model="item.planTimeDay" :min="0" label="描述文字"></el-input-number>
               <div style="text-align: right; margin-top: 10px">
-                <el-button type="primary" size="mini" >保存</el-button>
+                <el-button type="primary" size="mini" @click="updateItemPlanDayHandler(item)" >保存</el-button>
               </div>
-              <el-button  type="text" slot="reference">调整天数</el-button>
+              <el-button  type="text" :disabled="getItemEnableState(item)" slot="reference">调整天数</el-button>
             </el-popover>
           </template>
           <template >
@@ -105,8 +109,8 @@ import formData from './ProjectDate'
 import formDisabledSelect from './ProjectTypeSelect'
 import { mapGetters, mapActions } from 'vuex'
 import store from '../_store/index.js'
-import commons from '~/utils/common.js'
 import moment from 'moment'
+import _lodash from 'lodash'
 export default {
   components: {
     formData,
@@ -114,12 +118,15 @@ export default {
   },
   computed: {
     ...mapGetters({
-      items: store.namespace + '/getInteratedItems'
+      items: store.namespace + '/getInteratedItems',
+      scopeInfo: store.namespace + '/getInteratedScopeInfo'
     })
   },
   methods: {
+    ...mapActions({
+      updateItemPlanDay: store.namespace + '/updateItemPlanDay'
+    }),
     getItemEnableState: function(item) {
-      debugger
       if (item.item.state === 'S') {
         return false
       } else {
@@ -134,6 +141,29 @@ export default {
     },
     handleChange(value) {
       console.log(value)
+    },
+    handle: function(item) {
+      console.log(item.item.id)
+      console.log(this.scopeInfo.id)
+      var pathName = item.action
+      if (!pathName) {
+        this.$message({ 'message': '未知的业务路径！' })
+        return false
+      }
+      if (_lodash.startsWith(pathName, '/')) {
+        this.$router.push({
+          path: pathName,
+          query: { scopeId: this.scopeInfo.id, itemId: item.item.id }
+        })
+      } else {
+        this.$router.push({
+          name: pathName,
+          params: { scopeId: this.scopeInfo.id, itemId: item.item.id }
+        })
+      }
+    },
+    updateItemPlanDayHandler: function(item) {
+      this.updateItemPlanDay({ 'itemId': item.item.id, 'dayLong': item.planTimeDay })
     },
     saveDays(nodeID) {
       // 保存天数成功!
