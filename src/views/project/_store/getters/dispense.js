@@ -8,8 +8,9 @@ export const getDispenseView = state => {
   var dispenseView = state.dispenseView
   return dispenseView
 }
+// TODO 调整为上级的liaRuleMap
 export const getDispenseLiablerRule = state => {
-  var ruleMap = state.dispenseView.deployPack.liaRuleMap
+  var ruleMap = state.dispenseView.deployLiabilityMap
   var ruleKey = state.dispenseView.deployPack.rule
   var rule = ruleMap[ruleKey]
   return rule
