@@ -14,11 +14,16 @@
       <el-form-item label="业务类型:">
         <ProjectTypeSelect @selectValue="selectValue" :value="form.projectServiceType" :options="ioptions" :disabled="isProjectTypeSelectDisDisabled"></ProjectTypeSelect>
       </el-form-item>
-      <el-form-item label="项目时间:">
-        <el-col :span="11">
-          <project-date :value="dataArr" @onChange="formDataOnChange"></project-date>
-        </el-col>
-      </el-form-item>
+
+      <el-form-item label="计划开始日期">
+				<el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planStartTime" type="date" placeholder="选择日期">
+				</el-date-picker>
+			</el-form-item>
+      <el-form-item label="计划结束日期">
+				<el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planCompleteTime" type="date" placeholder="选择日期">
+				</el-date-picker>
+			</el-form-item>
+
       <el-form-item label="是否生成公告:">
         <el-switch v-model="form.isSendPublicNotice" active-value="Y" inactive-value="N"></el-switch>
       </el-form-item>

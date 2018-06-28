@@ -41,7 +41,7 @@
         </el-table-column>
         <el-table-column label="操作" min-width="100">
           <template slot-scope="scope">
-            <el-button size="mini" @click="goShowTodo(scope.row.id)">查看</el-button>
+            <el-button size="mini" @click="goShowTodo(scope.row.scope_id)">查看</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -134,7 +134,7 @@ export default {
       this.$router.push({
         name: "项目控制台",
         params: {
-          scopeId: row.id
+          scopeId: row.scope_id
         }
       });
     },
