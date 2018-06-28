@@ -15,6 +15,11 @@ export const componentsRouter = {
           component: () => import("./Filtrates/Data/demo.vue")
         }
       ]
+    },
+    {
+      path: "TimeLine",
+      name: "过滤组件",
+      component: () => import("./TimeLine/index.vue")
     }
   ]
 };
