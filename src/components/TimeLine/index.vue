@@ -70,7 +70,7 @@
                 <tr>
                     <td class="timeline-box">
                         <span class="timeline-serial ">
-                            <i class="el-icon-loading"></i>
+                            <i class="el-icon-location-outline"></i>
                         </span>
                         <div class="timeline-line timeline-blur"></div>
                     </td>
@@ -101,17 +101,17 @@
                                     <span>
 
                                         <el-tooltip class="item" effect="dark" content="下发任务该环节意思是给学院分发项目任务" placement="right">
-                                            <span class="tag-title">下发任务&nbsp;
+                                            <span class="tag-title">下发任务
                                                 <small class="el-icon-question"></small>
                                             </span>
 
                                         </el-tooltip>
                                     </span>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i>计划2天</i>
+                                    <span>计划2天</span>
 
                                 </div>
-                                <div class="tag-description">实际开始时间：2017-02-05 22:00 ~ 实际结束时间：2018-07-01 00:00</div>
+                                <div class="tag-description">实际开始时间：2017-02-05 22:00 ~ 实际结束时间：2018-07-01 00:00 </div>
+                                
                             </div>
                             <div class="tag-flex tag-flex-direction__column" style="margin-left:20px;">
                                 <el-button type="warning">下发任务</el-button>
@@ -358,7 +358,7 @@ export default {
     }
   }
   .tag-title i,small {
-    color: #777;
+    color: #ccc;
   }
 }
 .tag:before,
