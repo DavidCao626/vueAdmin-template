@@ -16,24 +16,24 @@
       </el-form-item>
 
       <el-form-item label="计划开始日期">
-				<el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planStartTime" type="date" placeholder="选择日期">
-				</el-date-picker>
-			</el-form-item>
-      <el-form-item label="计划结束日期">
-				<el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planCompleteTime" type="date" placeholder="选择日期">
-				</el-date-picker>
-			</el-form-item>
-
-      <el-form-item label="是否生成公告:">
-        <el-switch v-model="form.isSendPublicNotice" active-value="Y" inactive-value="N"></el-switch>
+        <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planStartTime" type="date" placeholder="选择日期">
+        </el-date-picker>
       </el-form-item>
-      <el-form-item label="项目内容:">
-        <!-- <el-input type="textarea" :autosize="{ minRows: 3}" v-model="form.projectDesc"></el-input> -->
-        <tinymce :height="300" v-model="form.projectDesc" id='tinymce'></tinymce>
+      <el-form-item label="计划结束日期">
+        <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planCompleteTime" type="date" placeholder="选择日期">
+        </el-date-picker>
       </el-form-item>
 
       <el-form-item label="项目附件:">
         <ProjectAttachmentUplad :fileList2="form.attrDetailBean" :url="uploadAttrUrl" style="width: 30%;" @onSuccess="formUploadOnSuccess"></ProjectAttachmentUplad>
+      </el-form-item>
+
+      <el-form-item label="是否生成公告:">
+        <el-switch v-model="form.isSendPublicNotice" active-value="Y" inactive-value="N"></el-switch>
+      </el-form-item>
+      <el-form-item label="公告内容:" v-show="form.isSendPublicNotice=='Y'?true:false">
+        <!-- <el-input type="textarea" :autosize="{ minRows: 3}" v-model="form.projectDesc"></el-input> -->
+        <tinymce :height="300" v-model="form.projectDesc" id='tinymce'></tinymce>
       </el-form-item>
     </el-form>
     <br/>
@@ -46,7 +46,7 @@
   </div>
 </template>
 <script>
-import tinymce from "~/components/Tinymce"
+import tinymce from "~/components/Tinymce";
 import ProjectDate from "./ProjectDate";
 import ProjectTypeSelect from "./ProjectTypeSelect";
 import ProjectAttachmentUplad from "./ProjectAttachmentUplad";
@@ -101,10 +101,10 @@ export default {
     ...mapActions({
       queryServiceTypeList: state.namespace + "/queryServiceTypeList",
       insertOrUpdateProject: state.namespace + "/insertOrUpdateProject",
-      insertOrUpdateAndNext:state.namespace +"/insertOrUpdateAndNext"
+      insertOrUpdateAndNext: state.namespace + "/insertOrUpdateAndNext"
     }),
     onSaveAndNext(e) {
-console.log(this.form);
+      console.log(this.form);
       var t = this.form;
       var requestData = {
         projectName: t.projectName,
@@ -118,19 +118,18 @@ console.log(this.form);
         projectAttachmentId: t.projectAttachmentId,
         attrDetailBean: null
       };
-      this.insertOrUpdateAndNext(requestData).then(response=>{
+      this.insertOrUpdateAndNext(requestData).then(response => {
         this.$message.success("保存成功!");
-        this.form.id = response.resBody.projectId
-        console.log(["insertOrUpdateAndNext",response])
+        this.form.id = response.resBody.projectId;
+        console.log(["insertOrUpdateAndNext", response]);
         this.$router.push({
-          name:"projectConfig",
-          params:{
-            'itemId':response.resBody.itemId,
-            'scopeId':response.resBody.scopeId
+          name: "projectConfig",
+          params: {
+            itemId: response.resBody.itemId,
+            scopeId: response.resBody.scopeId
           }
-        })
+        });
       });
-
     },
     onSave(e) {
       console.log(this.form);
@@ -147,9 +146,9 @@ console.log(this.form);
         projectAttachmentId: t.projectAttachmentId,
         attrDetailBean: null
       };
-      this.insertOrUpdateProject(requestData).then(response=>{
-        console.log(["!!!",response]);
-        this.form.id = response.resBody.id
+      this.insertOrUpdateProject(requestData).then(response => {
+        console.log(["!!!", response]);
+        this.form.id = response.resBody.id;
         this.$message.success("保存成功!");
       });
     },
