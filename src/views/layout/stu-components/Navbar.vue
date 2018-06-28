@@ -33,7 +33,7 @@
                     <img :src="avatar" class="user-avatar" />
                     <div class="name">
                       <span class="name__1">{{name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      <span class="name__2">学号：No.01521</span><br/>
+                      <!-- <span class="name__2">学号：No.01521</span> --><br/>
                       <span class="name__2" v-if="dutyRoles">{{ dutyRoles['managerNodeName']}} | {{dutyRoles['dutyName']}} </span>
                     </div>
                     <i class="el-icon-caret-bottom"></i>
