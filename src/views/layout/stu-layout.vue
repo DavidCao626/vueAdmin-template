@@ -6,10 +6,10 @@
     </header>
     <div class="content">
       <div class="sidebar-container" v-show="!sidebar" >
-        <sidebar></sidebar>
+        <sidebar style="height: 80vh;overflow:scroll;overflow-x: hidden;overflow-y: hidden;"></sidebar>
       </div>
-      <main class="main-view ">
-        <app-main class="app-container"></app-main>
+      <main class="main-view " >
+        <app-main class="app-container" ></app-main>
 
         <div class="app-container app-footer">
           <div class="app-footer__info">
@@ -83,6 +83,7 @@ export default {
 }
 .main-view {
   min-height: calc(100vh - 80px - 71px - 80px);
+ // overflow:scroll;overflow-x: hidden;
   flex: 1;
 }
 

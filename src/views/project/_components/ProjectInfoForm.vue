@@ -23,7 +23,8 @@
         <el-switch v-model="form.isSendPublicNotice" active-value="Y" inactive-value="N"></el-switch>
       </el-form-item>
       <el-form-item label="项目内容:">
-        <el-input type="textarea" :autosize="{ minRows: 3}" v-model="form.projectDesc"></el-input>
+        <!-- <el-input type="textarea" :autosize="{ minRows: 3}" v-model="form.projectDesc"></el-input> -->
+        <tinymce :height="300" v-model="form.projectDesc" id='tinymce'></tinymce>
       </el-form-item>
 
       <el-form-item label="项目附件:">
@@ -40,6 +41,7 @@
   </div>
 </template>
 <script>
+import tinymce from "~/components/Tinymce"
 import ProjectDate from "./ProjectDate";
 import ProjectTypeSelect from "./ProjectTypeSelect";
 import ProjectAttachmentUplad from "./ProjectAttachmentUplad";
@@ -71,7 +73,8 @@ export default {
   components: {
     ProjectDate,
     ProjectTypeSelect,
-    ProjectAttachmentUplad
+    ProjectAttachmentUplad,
+    tinymce
   },
   computed: {
     dataArr() {
