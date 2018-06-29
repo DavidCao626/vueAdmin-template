@@ -46,6 +46,13 @@ export const projectRouter = {
       title: "下发任务",
       component: () => import("../start"),
       meta: { hidden: true }
+    },
+    {
+      path: "studentForm",
+      name: "student_Form",
+      title: "学生申请表",
+      component: () => import("../styles/studentForm.vue"),
+      meta: { hidden: true }
     }
   ]
 };
