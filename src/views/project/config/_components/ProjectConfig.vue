@@ -9,7 +9,7 @@
                 <div class="timeline-line"></div>
             </td>
             <td>
-                <div class="timeline-box-header__title">
+                <div class="timeline-box-header__title2" >
                     <h3>
                         <!-- 已用 1.6天，环节可用 33.4天，任需时长：31天，预计超时：0天。 -->
                         {{ProjectInfo}}
@@ -175,6 +175,7 @@ export default {
   }
 }
 .timeline {
+    margin: 20px;
   &-serial {
     @include serial {
       height: 30px;
@@ -218,6 +219,14 @@ export default {
     &-header__title {
       background-image: linear-gradient(-269deg, #fd924b 14%, #ffcf43 100%);
       color: #fff;
+      margin-left: -40px;
+      margin-top: 10px;
+      height: 40px;
+      padding: 8px 40px;
+      border-radius: 0 20px 20px 0;
+    }
+    &-header__title2 {
+      color: #444;
       margin-left: -40px;
       margin-top: 10px;
       height: 40px;
