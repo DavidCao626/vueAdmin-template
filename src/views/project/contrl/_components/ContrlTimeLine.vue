@@ -10,37 +10,33 @@
             <td>
                 <div class="timeline-box-header__title">
                     <h3>
-                        <!-- 已用 1.6天，环节可用 33.4天，任需时长：31天，预计超时：0天。 -->
-                        {{ProjectInfo}}
+                         已用{{scopeInfo.useredDay}}天，环节可用 {{scopeInfo.useabledDay}}天，任需时长：{{scopeInfo.neededDay}}天，预计超时：{{scopeInfo.delayDay}}天。
                     </h3>
                 </div>
             </td>
         </tr>
-        <template v-for="(item,index) in ProjectItemsData">
-            <tr v-if="item.ProjectStatus==2">
+        <template v-for="(item,index) in items">
+            <tr v-if="item.item.state=='F'" :key="index">
                 <td class="timeline-box">
                     <span class="timeline-serial">
                         <i class="el-icon-check"></i>
                     </span>
-                    <div class="timeline-line "></div>
+                    <div class="timeline-line" v-if="item.item.postion!=='complete'"></div>
                 </td>
                 <td>
                     <div class="tag tag-flex">
                         <div class="tag-flex tag-flex-direction__column">
                             <div class=" tag-flex tag-flex-justify__content">
                                 <span>
-                                    <el-tooltip class="item" effect="dark" :content="item.ProjectItemDesc" placement="right">
-                                        <span class="tag-title">{{item.ProjectItemName}}
+                                    <el-tooltip class="item" effect="dark" :content="item.item.stepName" placement="right">
+                                        <span class="tag-title">{{item.item.stepName}}
                                             <small class="el-icon-question"></small>
                                         </span>
-
                                     </el-tooltip>
                                 </span>
-                                <span></span>
-
+                               <span v-if="item.item.itemType=='automatic'">计划{{item.planTimeDay}}天</span>
                             </div>
-                            <div class="tag-description">实际用时（3小时）</div>
-
+                            <div class="tag-description">实际用时（{{item.usedHourLong}}小时）</div>
                         </div>
                         <div class="tag-flex status-mark" style="margin-left:20px;">
                             <!-- 已完成图标 -->
@@ -50,78 +46,76 @@
                 </td>
             </tr>
 
-            <tr v-else-if="item.ProjectStatus==1">
+            <tr v-else-if="item.item.state=='S'" :key="index">
                 <td class="timeline-box">
                     <span class="timeline-serial__runing ">
                         <i class="el-icon-location"></i>
                     </span>
-                    <div class="timeline-line timeline-blur"></div>
+                    <div class="timeline-line timeline-blur" v-if="item.item.position!=='complete'"></div>
                 </td>
                 <td>
                     <div class="tag tag-flex">
                         <div class="tag-flex tag-flex-direction__column">
                             <div class=" tag-flex tag-flex-justify__content">
                                 <span>
-                                    <el-tooltip class="item" effect="dark" :content="item.ProjectItemDesc" placement="right">
-                                        <span class="tag-title">{{item.ProjectItemName}}
+                                     <el-tooltip class="item" effect="dark" :content="item.item.stepName" placement="right">
+                                        <span class="tag-title">{{item.item.stepName}}
                                             <small class="el-icon-question"></small>
                                         </span>
 
                                     </el-tooltip>
                                 </span>
-                                <span v-if="item.ProjectItemType==1">实际执行2天</span>
+                                <span v-if="item.item.itemType=='automatic'">计划{{item.planTimeDay}}天</span>
                             </div>
-                            <div class="tag-description" v-if="item.ProjectItemType==1">实际开始时间：2017-02-05 22:00 ~ 计划结束时间：2018-07-01 00:00 </div>
-
+                            <div class="tag-description" v-if="item.item.itemType=='automatic'">实际开始时间： {{item.start==''?'-':item.start}} ~ 计划结束时间：{{item.end==''?'未配置':item.end}} </div>
+                            <div class="tag-description">已用（{{item.usedHourLong}}小时）</div>
                         </div>
                         <div class="tag-flex tag-flex-direction__column" style="margin-left:20px;">
-
-                            <el-button type="warning" v-if="item.ProjectItemType==0"  @click="config(item)">操作</el-button>
-
-                            <el-popover placement="top" width="160" :ref="'popover'+item.nodeId" v-else >
+                            <el-button type="warning" v-if="item.item.itemType=='manual'"  @click="handle(item)">操作</el-button>
+                            <el-popover placement="top" width="160" :ref="'popover'+item.item.id" v-else >
                                 <p>请输入调整后的天数</p>
-                                <el-input-number style=" margin-top: 10px" size="small" v-model="item.plannedDays"></el-input-number>
+                                <el-input-number style=" margin-top: 10px" size="small" v-model="item.planTimeDay"></el-input-number>
                                 <div style="text-align: right; margin-top: 10px">
-                                    <el-button type="primary" size="mini" @click="saveDays(item.nodeId)">保存</el-button>
+                                    <el-button type="primary" size="mini" @click="updateItemPlanDayHandler(item)">保存</el-button>
                                 </div>
-                                <el-button type="warning" slot="reference">调整天数</el-button>
+                                <el-button type="warning" :disabled="getItemEnableState(item)"  slot="reference">调整天数</el-button>
                             </el-popover>
                         </div>
                     </div>
                 </td>
             </tr>
 
-            <tr v-else-if="item.ProjectStatus==0">
+            <tr v-else-if="item.item.state=='C'" :key="index">
                 <td class="timeline-box">
                     <span class="timeline-serial timeline-blur">
                         <i class="el-icon-time"></i>
                     </span>
-                    <div class="timeline-line timeline-blur" v-if="index!=(ProjectItemsData.length-1)"></div>
+                    <div class="timeline-line timeline-blur" v-if="item.item.postion!=='complete'"></div>
                 </td>
                 <td>
                     <div class="tag tag-flex">
                         <div class="tag-flex tag-flex-direction__column">
                             <div class=" tag-flex tag-flex-justify__content">
                                 <span>
-                                    <el-tooltip class="item" effect="dark" :content="item.ProjectItemDesc" placement="right">
-                                        <span class="tag-title">{{item.ProjectItemName}}
+                                    <el-tooltip class="item" effect="dark" :content="item.item.stepName" placement="right">
+                                        <span class="tag-title">{{item.item.stepName}}
                                             <small class="el-icon-question"></small>
                                         </span>
                                     </el-tooltip>
                                 </span>
-                                <span v-if="item.ProjectItemType==0">计划2天</span>
+                              <span v-if="item.item.itemType=='automatic'">计划{{item.planTimeDay}}天</span>
                             </div>
-                            <div class="tag-description" v-if="item.ProjectItemType==0">计划开始时间：2017-02-05 22:00 ~ 计划结束时间：2018-07-01 00:00 </div>
+                            <div class="tag-description" v-if="item.item.itemType=='automatic'">计划开始时间：2017-02-05 22:00 ~ 计划结束时间：2018-07-01 00:00 </div>
                         </div>
-                        <div class="tag-flex tag-flex-direction__column" style="margin-left:20px;" v-if="item.ProjectItemType==0">
+                        <div class="tag-flex tag-flex-direction__column" style="margin-left:20px;" v-if="item.item.itemType=='automatic'">
 
-                            <el-popover placement="top" width="160" :ref="'popover'+item.nodeId">
+                            <el-popover placement="top" width="160" :ref="'popover'+item.item.id">
                                 <p>请输入调整后的天数</p>
-                                <el-input-number style=" margin-top: 10px" size="small" v-model="item.plannedDays"></el-input-number>
+                                <el-input-number style=" margin-top: 10px" size="small" v-model="item.planTimeDay"></el-input-number>
                                 <div style="text-align: right; margin-top: 10px">
-                                    <el-button type="primary" size="mini" @click="saveDays(item.nodeId)">保存</el-button>
+                                    <el-button type="primary" size="mini">保存</el-button>
                                 </div>
-                                <el-button slot="reference">调整天数</el-button>
+                                <el-button type="warning" :disabled="getItemEnableState(item)"  slot="reference">调整天数</el-button>
                             </el-popover>
 
                         </div>
@@ -138,63 +132,65 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+import store from '../../_store/index.js'
+import moment from 'moment'
+import _lodash from 'lodash'
 export default {
-  data() {
-    return {
-      ProjectInfo:
-        " 已用 1.6天，环节可用 33.4天，任需时长：31天，预计超时：0天。",
-      ProjectItemsData: [
-        {
-          nodeId: 0,
-          ProjectStatus: 2, //已结束
-          ProjectItemType: 0, //环节类型 0手动，1自动
-          plannedDays: 0, //计划天数
-          ProjectItemName: "配置计划", //环节名字
-          ProjectItemDesc: "环节说明：下发任务该环节意思是给学院分发项目任务" //环节说明
-        },
-        {
-          nodeId: 1,
-          ProjectStatus: 1, //进行中
-          plannedDays: 0, //计划天数
-          ProjectItemType: 0, //环节类型 0手动，1自动
-          ProjectItemName: "学校推荐", //环节名字
-          ProjectItemDesc: "下发任务该环节意思是给学院分发项目任务" //环节说明
-        },
-        {
-          nodeId: 2,
-          ProjectStatus: 0, //未开始
-          plannedDays: 0, //计划天数
-          ProjectItemType: 0, //环节类型 0手动，1自动
-          ProjectItemName: "预审", //环节名字
-          ProjectItemDesc: "预审数据" //环节说明
-        },
-        {
-          nodeId: 3,
-          ProjectStatus: 0, //未开始
-          plannedDays: 0, //计划天数
-          ProjectItemType: 1, //环节类型 0手动，1自动
-          ProjectItemName: "公示", //环节名字
-          ProjectItemDesc: "公示数据" //环节说明
-        },
-        {
-          nodeId: 4,
-          ProjectStatus: 0, //未开始
-          plannedDays: 0, //计划天数
-          ProjectItemType: 0, //环节类型 0手动，1自动
-          ProjectItemName: "终审", //环节名字
-          ProjectItemDesc: "终审环节说明" //环节说明
-        }
-      ]
-    };
+   components: {
+  },
+  computed: {
+    ...mapGetters({
+      items: store.namespace + '/getInteratedItems',
+      scopeInfo: store.namespace + '/getInteratedScopeInfo'
+    })
   },
   methods: {
-    saveDays(nodeId) {
-      //保存天数
-      alert(nodeId)
+    ...mapActions({
+      updateItemPlanDay: store.namespace + '/updateItemPlanDay'
+    }),
+    getItemEnableState: function(item) {
+      if (item.item.state === 'S') {
+        return false
+      } else {
+        return true
+      }
     },
-    config(item){
-     //操作
-     alert(item.nodeId)
+    getStateOfCircle(State) {
+      if (State === 'C') return 'state-circle'
+      else if (State === 'S') return 'state-circle ' + 'state-circle__run'
+      else if (State === 'E') return 'state-circle ' + 'state-circle__run'
+      else return 'state-circle ' + 'state-circle__ok'
+    },
+    handleChange(value) {
+      console.log(value)
+    },
+    handle: function(item) {
+      console.log(item.item.id)
+      console.log(this.scopeInfo.id)
+      var pathName = item.action
+      if (!pathName) {
+        this.$message({ 'message': '未知的业务路径！' })
+        return false
+      }
+      if (_lodash.startsWith(pathName, '/')) {
+        this.$router.push({
+          path: pathName,
+          query: { scopeId: this.scopeInfo.id, itemId: item.item.id }
+        })
+      } else {
+        this.$router.push({
+          name: pathName,
+          params: { scopeId: this.scopeInfo.id, itemId: item.item.id }
+        })
+      }
+    },
+    updateItemPlanDayHandler: function(item) {
+      this.updateItemPlanDay({ 'itemId': item.item.id, 'dayLong': item.planTimeDay })
+    }
+  },
+  data() {
+    return {
     }
   }
 };

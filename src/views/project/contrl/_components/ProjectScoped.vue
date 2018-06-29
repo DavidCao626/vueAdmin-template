@@ -4,29 +4,29 @@
             <svg-icon icon-class="school" width="131px" height="131px" />
         </div>
         <div>
-            <p class="scopedName">{{scopedName}}</p>
+            <p class="scopedName">{{scopeInfo.orgName}}</p>
         </div>
         <div>
-            <p>环节开始时间：{{scopedBginData}}</p>
-            <p>环节结束时间：{{scopedEndData}}</p>
+            <p>环节开始时间：{{scopeInfo.planStartTime}}</p>
+            <p>环节结束时间：{{scopeInfo.planEndTime}}</p>
         </div>
     </div>
 </template>
 <script>
+import commons from '~/utils/common.js'
+import store from '../../_store/index.js'
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
-  props: {
-    scopedName: {
-      type: String,
-      default: "内蒙古大学数学学院"
-    },
-    scopedBginData: {
-      type: String,
-      default: "2018-06-28"
-    },
-    scopedEndData: {
-      type: String,
-      default: "2018-07-30"
-    }
+  data() {
+    return {}
+  },
+  computed: {
+    ...mapGetters({
+      scopeInfo: store.namespace + '/getInteratedScopeInfo'
+    })
+  },
+  methods: {
   }
 };
 </script>

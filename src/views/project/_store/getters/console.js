@@ -49,3 +49,4 @@ export const getInteratedItems = state => {
   })
   return result
 }
+
