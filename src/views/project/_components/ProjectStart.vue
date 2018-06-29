@@ -20,7 +20,7 @@
                 <el-radio v-if="getDispenseLiablerRule" v-model="start.datalistType" label="0" checked border>{{getDispenseLiablerRule.name}}</el-radio>
                 <el-radio v-model="start.datalistType" :disabled="ruleEditable" label="1" border>选择机构</el-radio>
             </el-form-item>
-            <transfer v-show="start.datalistType==1"></transfer>
+            <transfer ref="tran" v-show="start.datalistType==1"></transfer>
             <br/><br/><br/><br/>
         </el-form>
         <br/>
@@ -82,6 +82,8 @@ export default {
       disChildScope: store.namespace + '/disChildScope'
     }),
     onSaveAndNext() {
+      console.log(["this.$refs['tran']",this.$refs['tran'].value1])
+      this.selectOrgs = this.$refs['tran'].value1;
       this.$confirm('你即将执行任务下发操作,该操作不可逆， 是否确定继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
