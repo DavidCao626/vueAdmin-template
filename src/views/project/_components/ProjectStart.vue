@@ -94,7 +94,10 @@ export default {
         var planStartTime = this.getStartTime
         var planCompleteTime = this.getEndTime
         this.disChildScope({ 'scopeId': scopeId, 'planStartTime': planStartTime, 'planCompleteTime': planCompleteTime, 'itemId': itemId, 'planTimeLong': timelong, 'orgs': this.selectOrgs }).then(result => {
-          console.log(result)
+          this.$router.push({
+            path: '/project/control',
+            query: { scopeId: scopeId }
+          })
         })
       })
     }

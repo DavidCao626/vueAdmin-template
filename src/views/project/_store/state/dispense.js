@@ -46,6 +46,7 @@ export const dispenseView = {
     timeLongRelase: '',
     linkedItems: ''
   },
+  deployLiabilityMap: {},
   relaseTimeDay: 0,
   oldRelaseTimeDay: 365 * 10,
   relaseTimeLong: 0,

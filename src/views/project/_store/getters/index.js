@@ -4,4 +4,13 @@ import * as dispense from './dispense.js'
 import _lodash from 'lodash'
 import * as projectList from './projectList.js'
 import * as todosList from './todosList.js'
-export default _lodash.assign({}, todosList,projectList, base, config,dispense)
+import * as consoled from './console.js'
+export default _lodash.assign(
+  {},
+  todosList,
+  projectList,
+  base,
+  config,
+  dispense,
+  consoled
+)

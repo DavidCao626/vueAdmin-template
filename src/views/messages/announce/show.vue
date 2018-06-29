@@ -6,8 +6,7 @@
         <h2>{{noticeInfo.baseData.title}}</h2>
         <p>发表时间：{{noticeInfo.baseData.publicTime}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布者：{{noticeInfo.baseData.createdUserId}}</p>
       </div>
-      <div class="body">
-        {{noticeInfo.baseData.content}}
+      <div class="body" v-html="noticeInfo.baseData.content">
       </div>
       <div>
           附件:</br>
