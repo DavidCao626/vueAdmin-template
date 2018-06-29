@@ -8,12 +8,14 @@
           </el-table-column>
           <el-table-column prop="projectInfo.project_service_type_name" label="业务类别" min-width="100">
           </el-table-column>
-          <el-table-column prop="scope_name" label="代办来源" min-width="80">
+          <!-- <el-table-column prop="scope_name" label="待办来源" min-width="80">
+          </el-table-column> -->
+          <el-table-column prop="org_name" label="组织" min-width="80">
           </el-table-column>
-          <el-table-column prop="item_name" label="代办名称" min-width="80">
+          <el-table-column prop="item_name" label="待办名称" min-width="80">
           </el-table-column>
-          <el-table-column prop="real_start_time" label="开始时间" min-width="120">
-          </el-table-column>
+          <!-- <el-table-column prop="real_start_time" label="开始时间" min-width="120">
+          </el-table-column> -->
           <el-table-column prop="over_time" label="结束时间" :formatter="overTimeFormatter" min-width="120">
               <template slot-scope="scope">
                <span v-html="overTimeFormatter(scope.row)"></span>
@@ -94,6 +96,7 @@ export default {
         return "";
       }
       return moment(date).format("YYYY-MM-DD HH:mm:ss");
+       //return date;
     },
     handleSizeChange(val) {
       this.pageSize = val;

@@ -3,37 +3,39 @@
         <div slot="title">项目控制台</div>
         <div slot="panel">
 
-            <ProjectType :typeName="projectInfo.tyleName"></ProjectType>
+            <ProjectType :typeName="projectInfo.projectServiceTypeName"></ProjectType>
             <div class="project" style="display:flex;align-items: center;justify-content: space-between;">
                 <div class="project-left" style="margin:30px;">
                     <div class="project-name">
-                        2019年17级贫困建档项目
+                        {{projectInfo.projectName}}
                     </div>
                     <div class="project-desc">
                         <p>
-                            项目开始时间：2018-06-25
+                            项目开始时间：{{projectInfo.planStartTime}}
                         </p>
                         <p>
-                            项目结束时间：2018-07-30
+                            项目结束时间：{{projectInfo.planCompleteTime}}
                         </p>
-                        <p>
-                            附件说明： 2019年17级贫困建档项目流程指导手册.doc
+                         <p>
+                            项目创建机构：{{projectInfo.createdUserOrgName}}
+                        </p>
+                        <p>附件列表:</p>
+                        <p v-for="(attch,index) in projectInfo.files" :key="index">
+                            <a target="_blank" :href="attch.userPath">{{attch.userFileName}}</a>
                         </p>
                     </div>
                     <div style="display: flex;justify-content: flex-end;">
                         <el-button style="color:#444;font-weight: 400;" type="text">
-                            <svg-icon icon-class="seejindu" width="20px" height="20px" /> 查看进度</el-button>
-
+                            <svg-icon icon-class="seejindu" width="20px" height="20px" />查看子任务进度</el-button>
                         <el-button style="color:#444;font-weight: 400;" type="text">
-                            <svg-icon icon-class="seedate" width="20px" height="20px" /> 查看数据</el-button>
+                            <svg-icon icon-class="seedate" width="20px" height="20px" /> 查看环节数据</el-button>
                     </div>
                 </div>
                 <div class="project-right" style="margin: 30px;display:flex;justify-content:center;flex:1">
-                    <ProjectScoped></ProjectScoped>
+                   <ProjectScoped></ProjectScoped> 
                 </div>
             </div>
-            <ContrlTimeLine></ContrlTimeLine>
-
+            <ContrlTimeLine></ContrlTimeLine> 
             <br/> <br/> <br/>
         </div>
     </page>
@@ -41,9 +43,13 @@
 </template>
 
 <script>
-import ContrlTimeLine from "./_components/ContrlTimeLine";
-import ProjectType from "./_components/ProjectType";
-import ProjectScoped from "./_components/ProjectScoped";
+import ContrlTimeLine from './_components/ContrlTimeLine'
+import ProjectType from './_components/ProjectType'
+import ProjectScoped from './_components/ProjectScoped'
+import commons from '~/utils/common.js'
+import store from '../_store/index.js'
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
   components: {
     ContrlTimeLine,
@@ -51,31 +57,29 @@ export default {
     ProjectScoped
   },
   data() {
-    return {
-      projectInfo: {
-        name: "2019年17级贫困建档项目",
-        tyleId: "001",
-        tyleName: "贫困建档",
-        bginDate: "2018-06-28",
-        endDate: "2018-09-1",
-        endDateCount: "90",
-        attachment: [
-          {
-            name: " 2019年17级贫困建档项目流程指导手册.doc",
-            src: "http://baidu.com/2019年17级贫困建档项目流程指导手册.doc"
-          }
-        ],
-        delivery: true,
-        files: [
-          { name: "2018年上学期2017级贫困学生建档项目.doc" },
-          { name: "新版学工系统建档操作手册.doc" }
-        ],
-        desc:
-          "“2018年上学期2017级贫困学生建档项目开始了，请各级学院老师提前做好准备！”"
+    return {}
+  },
+  computed: {
+    ...mapGetters({
+      projectInfo: store.namespace + '/getInteratedProjectInfo'
+    })
+  },
+  methods: {
+    ...mapActions({
+      queryScopeIntegeratedDateView: store.namespace + '/queryScopeIntegeratedDateView'
+    })
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      var scopeId = commons.getRouterParam(to, 'scopeId')
+      if (scopeId == null) {
+        console.log('没有传递scopeid,该页面不能访问')
+      } else {
+        vm.queryScopeIntegeratedDateView({ 'scopeId': scopeId })
       }
-    };
+    })
   }
-};
+}
 </script>
 <style>
 .project-name{
