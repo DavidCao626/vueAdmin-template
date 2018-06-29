@@ -31,7 +31,13 @@ export const projectRouter = {
     {
       path: "config",
       name: "projectConfig",
-      component: () => import("../config"),
+      component: () => import("../config.vue"),
+      meta: { hidden: true }
+    },
+    {
+      path: "config-home",
+      name: "projectConfig-home",
+      component: () => import("../config/index.vue"),
       meta: { hidden: true }
     },
     {
