@@ -5,6 +5,7 @@ import todosList from './todosList.js'
 import dispense from './dispense.js'
 import consoled from './console.js'
 import projectApply from './projectApply.js'
+import style from './style.js'
 import _lodash from 'lodash'
 export default _lodash.assign(
   {},
@@ -14,5 +15,6 @@ export default _lodash.assign(
   config,
   dispense,
   consoled,
-  projectApply
+  projectApply,
+  style
 )
