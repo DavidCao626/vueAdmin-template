@@ -12,7 +12,11 @@ export const projectRouter = {
       meta: { hidden: false }
     },
     { path: "todos", name: "我的待办", component: () => import("../myTodos") },
-    { path: "dones", name: "我的已完成待办", component: () => import("../myDoneTodos") },
+    {
+      path: "dones",
+      name: "我的已完成待办",
+      component: () => import("../myDoneTodos")
+    },
     {
       path: "add",
       name: "新建项目",
@@ -55,11 +59,18 @@ export const projectRouter = {
       component: () => import("../styles/studentForm.vue"),
       meta: { hidden: true }
     },
+    // {
+    //   path: "stylesApproval",
+    //   name: "styles_approval",
+    //   title: "项目审批",
+    //   component: () => import("../styles/approval/list.vue"),
+    //   meta: { hidden: true }
+    // },
     {
-      path: "stylesApproval",
-      name: "styles_approval",
+      path: "stylesAudit",
+      name: "styles_audit",
       title: "项目审批",
-      component: () => import("../styles/approval/list.vue"),
+      component: () => import("../styles/audit/index.vue"),
       meta: { hidden: true }
     }
   ]
