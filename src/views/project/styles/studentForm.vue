@@ -153,6 +153,7 @@ export default {
       if (to.query.itemId != undefined) {
         let itemId = to.query.itemId;
         if (itemId != "" && itemId != null) {
+          vm.itemId = itemId
           vm.getApplyData({ itemId: itemId }).then(response => {
             var resp = response.resBody;
             vm.projectSystemCode = resp.projectData.projectSystemCode;
@@ -194,6 +195,7 @@ export default {
       } else if (to.params.itemId != undefined) {
         let itemId = to.query.itemId;
         if (itemId != "" && itemId != null) {
+           vm.itemId = itemId
           vm.getApplyData({ itemId: itemId }).then(response => {
             var resp = response.resBody;
             vm.projectSystemCode = resp.projectData.projectSystemCode;
@@ -242,6 +244,7 @@ export default {
   },
   data() {
     return {
+      itemId:"",
       projectSystemCode: "",
       formTitle: "2017年贫困建档07级项目" + "申请表",
       formDesc: "2017年贫困建档开始了，请按照要求填表。截止日期2018年-06-01。", //项目公告
@@ -339,6 +342,7 @@ export default {
     onSubmit() {
       console.log("submit!");
       var requestData = {
+        itemId: this.itemId,
         childServiceTypeCode: this.form.typeValue,
         projectSystemCode: this.projectSystemCode,
         applyReason: this.form.desc, //申请原因
