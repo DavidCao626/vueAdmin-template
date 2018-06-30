@@ -19,24 +19,24 @@ export const projectRouter = {
       meta: { hidden: true }
     },
     {
-      path: "control",
-      name: "项目控制台",
+      path: "control-home",
+      name: "项目控制台首页",
       component: () => import("../contrl.vue")
     },
     {
-      path: "control-home",
-      name: "项目控制台首页",
+      path: "control",
+      name: "项目控制台",
       component: () => import("../contrl/index.vue")
-    },
-    {
-      path: "config",
-      name: "projectConfig",
-      component: () => import("../config.vue"),
-      meta: { hidden: true }
     },
     {
       path: "config-home",
       name: "projectConfig-home",
+      component: () => import("../config.vue"),
+      meta: { hidden: true }
+    },
+    {
+      path: "config",
+      name: "projectConfig",
       component: () => import("../config/index.vue"),
       meta: { hidden: true }
     },
