@@ -131,9 +131,9 @@
         <page style="width: 1000px;margin: 0 auto;">
             <div slot="panel">
                 <div style="text-align:center">
-                    <h4 v-if="formDays>=0" style="text-align:center">截止最后提交日期 还有
-                        <strong style="color:red;">{{formDays}}</strong> 天</h4>
-                    <h4 v-else style="text-align:center;color:red;">申请表单已到最后截止日期，不能提交。如有问题请联系相关老师。</h4>
+                    <!-- <h4 v-if="formDays>=0" style="text-align:center">截止最后提交日期 还有
+                        <strong style="color:red;">{{formDays}}</strong> 天</h4> -->
+                    <!-- <h4 v-else style="text-align:center;color:red;">申请表单已到最后截止日期，不能提交。如有问题请联系相关老师。</h4> -->
                     <br>
                     <el-button v-if="formDays>=0" type="primary" @click="onSubmit">提交申请</el-button>
                     <el-button>返回取消</el-button>
