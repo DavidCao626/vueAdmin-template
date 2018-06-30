@@ -17,7 +17,15 @@ const queryUserPending = data =>
         data: data
     })
 
+const queryUserDonePending =data=>
+    request({
+        url: "/project/queryUserDonePending.do",
+        method: "post",
+        data:data
+    })
+
 export default {
     queryUserPending,
-    getDictByDictNames
+    getDictByDictNames,
+    queryUserDonePending
 }

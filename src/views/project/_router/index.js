@@ -12,6 +12,7 @@ export const projectRouter = {
       meta: { hidden: false }
     },
     { path: "todos", name: "我的待办", component: () => import("../myTodos") },
+    { path: "dones", name: "我的已完成待办", component: () => import("../myDoneTodos") },
     {
       path: "add",
       name: "新建项目",
