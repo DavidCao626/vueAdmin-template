@@ -23,7 +23,9 @@
           </el-table-column>
           <!-- <el-table-column prop="create_time" label="创建时间" width="120">
           </el-table-column> -->
-          <el-table-column prop="state" :formatter="stateFormatter" label="状态" min-width="80">
+          <!-- <el-table-column prop="state" :formatter="stateFormatter" label="状态" min-width="80">
+          </el-table-column> -->
+          <el-table-column prop="pending_type" :formatter="typeFormatter" label="类型" min-width="80">
           </el-table-column>
         </el-table>
         <div style="margin-top: 20px">
@@ -68,12 +70,28 @@ export default {
     }),
     showDetail(row, event, column) {
       console.log(row);
+      if(row.pending_type == "Item"){
       this.$router.push({
         name: "项目控制台",
         params: {
           scopeId: row.scope_id
         }
       });
+      }else{
+        this.$router.push({
+          path:row.action,
+          quert:{
+            'itemId':row.item_id
+          }
+        })
+      }
+    },
+    typeFormatter(row, column, cellValue, index) {
+      if(row.pending_type == "Item"){
+        return "任务"
+      }else{
+        return "工序"
+      }
     },
     stateFormatter(row, column, cellValue, index) {
       var list = this.stateList;

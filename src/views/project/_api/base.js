@@ -1,7 +1,8 @@
 import request from '~/utils/request'
 import ajax from '~/utils/ajax'
 
-
+//附件上传地址
+const uploadAttrUrl = "act/project/uploadAttachment.do"
 //增加或者更新项目
 const insertOrUpdateProject = data =>
     ajax({
@@ -9,8 +10,7 @@ const insertOrUpdateProject = data =>
         method: 'post',
         data: data
     })
-//附件上传地址
-const uploadAttrUrl = "act/project/uploadAttachment.do"
+
 //获取业务类别
 const queryServiceTypeList = () =>
 

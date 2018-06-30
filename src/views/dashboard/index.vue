@@ -49,6 +49,10 @@
         </el-table-column>
         <el-table-column prop="item_name" label="待办名称" min-width="80">
         </el-table-column>
+        <!-- <el-table-column prop="state" :formatter="stateFormatter" label="状态" min-width="80">
+          </el-table-column> -->
+        <el-table-column prop="pending_type" :formatter="typeFormatter" label="类型" min-width="80">
+        </el-table-column>
         <!-- <el-table-column prop="real_start_time" label="开始时间" min-width="120">
           </el-table-column> -->
         <el-table-column prop="over_time" label="结束时间" :formatter="overTimeFormatter" min-width="120">
@@ -62,7 +66,7 @@
           </el-table-column> -->
         <el-table-column label="操作" min-width="100">
           <template slot-scope="scope">
-            <el-button size="mini" @click="goShowTodo(scope.row.scope_id)">查看</el-button>
+            <el-button size="mini" @click="goShowTodo(scope.row)">查看</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -73,7 +77,7 @@
 <script>
 import listbody from "./_components/ListBody";
 import { mapGetters, mapActions } from "vuex";
-import moment from "moment"
+import moment from "moment";
 export default {
   components: {
     listbody
@@ -150,6 +154,13 @@ export default {
       pullPublicNoticeP: "pullPublicNoticeP",
       queryUserPending: "queryUserPending"
     }),
+    typeFormatter(row, column, cellValue, index) {
+      if (row.pending_type == "Item") {
+        return "任务";
+      } else {
+        return "工序";
+      }
+    },
     overTimeFormatter(row) {
       var date = row.over_time;
       if (date == undefined) {
@@ -159,22 +170,39 @@ export default {
       //return date;
     },
     onRowClick(row, event, column) {
-      //跳转到待办处理页面
-      this.$router.push({
-        name: "项目控制台",
-        params: {
-          scopeId: row.scope_id
-        }
-      });
+      if (row.pending_type == "Item") {
+        this.$router.push({
+          name: "项目控制台",
+          params: {
+            scopeId: row.scope_id
+          }
+        });
+      } else {
+        this.$router.push({
+          path: row.action,
+          query: {
+            itemId: row.item_id
+          }
+        });
+      }
     },
-    goShowTodo(id) {
+    goShowTodo(row) {
       //跳转到待办处理页面
-      this.$router.push({
-        name: "项目控制台",
-        params: {
-          scopeId: id
-        }
-      });
+      if (row.pending_type == "Item") {
+        this.$router.push({
+          name: "项目控制台",
+          params: {
+            scopeId: row.scope_id
+          }
+        });
+      } else {
+        this.$router.push({
+          path: row.action,
+          query: {
+            itemId: row.item_id
+          }
+        });
+      }
     }
   },
   beforeRouteEnter(to, from, next) {
