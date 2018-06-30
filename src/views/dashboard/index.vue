@@ -33,12 +33,33 @@
       </div>
       <br>
       <el-table :data="tableData" style="width: 100%" @row-click="onRowClick">
-        <el-table-column prop="item_name" label="待办名称" min-width="180">
+        <!-- <el-table-column prop="item_name" label="待办名称" min-width="180">
         </el-table-column>
         <el-table-column prop="projectInfo.project_service_type_name" label="所属项目业务" min-width="120">
         </el-table-column>
         <el-table-column prop="over_time" label="结束时间" min-width="120">
+        </el-table-column> -->
+        <el-table-column prop="projectInfo.project_name" label="项目名称" min-width="120">
         </el-table-column>
+        <el-table-column prop="projectInfo.project_service_type_name" label="业务类别" min-width="100">
+        </el-table-column>
+        <!-- <el-table-column prop="scope_name" label="待办来源" min-width="80">
+          </el-table-column> -->
+        <el-table-column prop="org_name" label="组织" min-width="80">
+        </el-table-column>
+        <el-table-column prop="item_name" label="待办名称" min-width="80">
+        </el-table-column>
+        <!-- <el-table-column prop="real_start_time" label="开始时间" min-width="120">
+          </el-table-column> -->
+        <el-table-column prop="over_time" label="结束时间" :formatter="overTimeFormatter" min-width="120">
+          <template slot-scope="scope">
+            <span v-html="overTimeFormatter(scope.row)"></span>
+          </template>
+        </el-table-column>
+        <!-- <el-table-column prop="create_time" label="创建时间" width="120">
+          </el-table-column> -->
+        <!-- <el-table-column prop="state" :formatter="stateFormatter" label="状态" min-width="80">
+          </el-table-column> -->
         <el-table-column label="操作" min-width="100">
           <template slot-scope="scope">
             <el-button size="mini" @click="goShowTodo(scope.row.scope_id)">查看</el-button>
@@ -52,6 +73,7 @@
 <script>
 import listbody from "./_components/ListBody";
 import { mapGetters, mapActions } from "vuex";
+import moment from "moment"
 export default {
   components: {
     listbody
@@ -128,7 +150,14 @@ export default {
       pullPublicNoticeP: "pullPublicNoticeP",
       queryUserPending: "queryUserPending"
     }),
-
+    overTimeFormatter(row) {
+      var date = row.over_time;
+      if (date == undefined) {
+        return "";
+      }
+      return moment(date).format("YYYY-MM-DD HH:mm:ss");
+      //return date;
+    },
     onRowClick(row, event, column) {
       //跳转到待办处理页面
       this.$router.push({

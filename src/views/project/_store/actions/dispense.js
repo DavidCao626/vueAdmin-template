@@ -22,7 +22,20 @@ const disChildScope = ({ commit, state }, data) => new Promise((resolve, reject)
     })
 })
 
+
+const queryChildOrg = ({ commit, state },) => new Promise((resolve, reject) => {
+  api
+    .queryChildOrg()
+    .then(result => {
+      resolve(result)
+    })
+    .catch(ex => {
+      console.log(ex)
+    })
+})
+
 export default {
   getScopeDeispenseView,
-  disChildScope
+  disChildScope,
+  queryChildOrg
 }

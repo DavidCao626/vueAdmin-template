@@ -6,29 +6,41 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+import moment from "moment";
+import store from "../_store/index.js";
 export default {
   data() {
     return {
       data: [],
       value1: []
-    }
+    };
   },
   methods: {
+    ...mapActions({
+      queryChildOrg: store.namespace + "/queryChildOrg"
+    }),
     generateData() {
       // Todo ajax查询我的下级可用节点
-
-      const data = []
-      for (let i = 1; i <= 15; i++) {
-        data.push({
-          key: i,
-          label: `备选项 ${i}`
-        })
-      }
-      this.data = data
+      this.queryChildOrg().then(response => {
+        console.log(["穿梭框", response]);
+        var org = response.resBody;
+        let data = [];
+        for (let i = 0; i < org.length; i++) {
+          data.push({
+            key: org[i].orgCode,
+            label: org[i].orgName
+          });
+        }
+        this.data = data;
+      });
     }
   },
   mounted() {
-    this.generateData()
+    this.generateData();
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {});
   }
-}
+};
 </script>
