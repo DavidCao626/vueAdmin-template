@@ -29,9 +29,17 @@
                         <i class="el-icon-minus" v-if="listTypeStatus"></i>
                         <i class="el-icon-menu" v-else></i>
                     </el-button>
-                    <el-button plain size="mini">
-                        <i class="el-icon-setting"></i>
-                    </el-button>
+
+                    <el-tooltip class="item" effect="light" placement="bottom">
+                        <div slot="content">
+                            <el-checkbox-group v-model="checkboxVal">
+                                <el-checkbox v-for="(fruit,index) in getStylesConfig.listStyle.tableTodoHeader" :key='index' v-model="fruit.checked" :label="fruit.prop">{{fruit.label}}</el-checkbox>
+                            </el-checkbox-group>
+                        </div>
+                        <el-button plain size="mini">
+                            <i class="el-icon-setting"></i>
+                        </el-button>
+                    </el-tooltip>
                 </el-button-group>
             </div>
             <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
@@ -61,7 +69,7 @@
 
         </div>
         <keep-alive>
-            <component :is="listType"></component>
+            <component :is="listType" :checkboxVal="checkboxVal"></component>
         </keep-alive>
 
     </div>
@@ -70,15 +78,23 @@
 <script>
 import listBlock from "./_components/listBlock";
 import listLine from "./_components/listLine";
+import { mapGetters, mapMutations, mapActions } from "vuex";
+import store from "../../_store/index.js";
 export default {
   components: {
     listBlock,
     listLine
   },
+  computed: {
+    ...mapGetters({
+      getStylesConfig: store.namespace + "/getStylesConfig"
+    })
+  },
   data() {
     return {
+      checkboxVal: [],
       listTypeStatus: true,
-      listType:"listLine",
+      listType: "listLine",
       activeName: "first",
       formInline: {
         user: "",
@@ -93,10 +109,10 @@ export default {
     listTypeStatus() {
       switch (this.listTypeStatus) {
         case true:
-          this.listType="listLine";
+          this.listType = "listLine";
           break;
         case false:
-          this.listType="listBlock";
+          this.listType = "listBlock";
           break;
       }
     }
@@ -104,7 +120,7 @@ export default {
   methods: {
     onSubmit() {},
     switchListStyle() {
-      this.listTypeStatus = !this.listTypeStatus
+      this.listTypeStatus = !this.listTypeStatus;
     },
     loadAll() {
       return [
@@ -245,10 +261,19 @@ export default {
     },
     handleSelect(item) {
       console.log(item);
+    },
+    getDefaultListItems() {
+      //获取默认到选中项目
+      this.getStylesConfig.listStyle.tableTodoHeader.forEach(element => {
+        if (element.checked) {
+          this.checkboxVal.push(element.prop);
+        }
+      });
     }
   },
   mounted() {
     this.restaurants = this.loadAll();
+    this.getDefaultListItems();
   }
 };
 </script>
@@ -267,5 +292,6 @@ export default {
   -webkit-box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.05);
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.05);
 }
+
 </style>
 

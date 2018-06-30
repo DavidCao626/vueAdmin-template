@@ -13,7 +13,7 @@
 
        </slot>
       <el-table-column :key='index' v-for='(fruit,index) in formThead' :label="fruit.label" :width="fruit.width" :prop="fruit.prop">
-        <template v-if="fruit.children">
+        <template v-if="fruit.children ">
           <el-table-column v-for='(fitem,index) in fruit.children' :key='index' :label="fitem.label" :width="fitem.width" :prop="fitem.prop">
 
           </el-table-column>
@@ -39,13 +39,16 @@ export default {
     data: {
       type: Array,
       default: () => []
+    },
+    checkboxVal: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
     return {
       key: 1, // table key
       formTheadOptions: [],
-      checkboxVal: [], // checkboxVal
       formThead: this.tableHeader // 默认表头 Default header
     }
   },
@@ -69,6 +72,8 @@ export default {
       const formTheadData = this.formTheadOptions.filter(
         i => valArr.indexOf(i) >= 0
       )
+      console.log("asdas:"+formTheadData);
+      
       this.key = this.key + 1 // 为了保证table 每次都会重渲 In order to ensure the table will be re-rendered each time
       const temValue = []
       formTheadData.forEach(item => {
@@ -78,7 +83,10 @@ export default {
           }
         })
       })
+
       this.formThead = temValue
+
+      console.log("asdas2:"+ this.formThead);
     }
   }
 }

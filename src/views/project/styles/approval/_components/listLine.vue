@@ -4,7 +4,7 @@
 
             <!-- 数据表 -->
 
-            <dynamicTable :data="tableDataTodo" @selection-change="handleSelectionChange" :tableHeader="getStylesConfig.listStyle.tableTodoHeader" isdynamic style="width: 100%">
+            <dynamicTable :data="tableDataTodo" :checkboxVal="checkboxVal" @selection-change="handleSelectionChange" :tableHeader="getStylesConfig.listStyle.tableTodoHeader" style="width: 100%">
                 <template slot="left-column">
                     <el-table-column type="selection" width="55">
                     </el-table-column>
@@ -30,6 +30,12 @@ import store from "../../../_store/index.js";
 export default {
   components: {
     dynamicTable
+  },
+  props:{
+      checkboxVal:{
+          type:Array,
+          default:()=>{}
+      }
   },
   data() {
     return {
