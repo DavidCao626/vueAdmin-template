@@ -2,9 +2,11 @@ import api from '../../_api/style.js'
 
 
 
-const getAllDataAndPageDataByItemId = ({ commit, state }, params) => new Promise(resolve => {
+const getAllDataAndPageDataByItemId = ({ commit, state },params) => new Promise(resolve => {
+    params.currentPage = 1;
+    params.pageSize = 9999999;
     api.getAllDataAndPageDataByItemId(params).then(response => {
-        commit("", response.resBody);
+        commit("setTableDataToDo", response.resBody);
     })
 })
 

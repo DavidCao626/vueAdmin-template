@@ -1,146 +1,146 @@
 <template>
-    <div>
-        <page style="width: 1000px;margin: 0 auto;" :Breadcrumb="false">
-            <!-- <div slot="title">学生业务申请</div> -->
-            <div slot="panel">
-                <h2>{{formTitle}}</h2>
-                <hr/>
-                <!-- <h4 v-if="formDesc">
+  <div>
+    <page style="width: 1000px;margin: 0 auto;" :Breadcrumb="false">
+      <!-- <div slot="title">学生业务申请</div> -->
+      <div slot="panel">
+        <h2>{{formTitle}}</h2>
+        <hr/>
+        <!-- <h4 v-if="formDesc">
                     填写要求：
                     <div>{{formDesc}}</div>
                 </h4> -->
-                <h4 v-if="formFiles.length>0">
-                    下载附件：
-                    <div>
-                        <a v-for="(i,index) in formFiles" :key="index" :href="i.url">{{i.name}} &nbsp;&nbsp; </a>
-                    </div>
-                </h4>
-            </div>
-        </page>
-        <page style="width: 1000px;margin: 0 auto;">
-            <div slot="panel">
-                <h3 style="font-weight:400">一、填写申请信息</h3><hr/>
-                <el-form ref="form" :model="form" label-width="120px">
-                    <el-row>
-                        <el-col :span="10">
-                            <el-form-item label="学生姓名">
-                                <el-input v-model="form.username" disabled></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="10" :offset="1">
-                            <el-form-item label="学号">
-                                <el-input v-model="form.number" disabled></el-input>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col :span="21">
-                            <el-form-item label="所在班级">
-                                <el-input v-model="form.class" disabled></el-input>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col :span="10">
-                            <el-form-item label="业务类别">
-                                <el-input v-model="form.type" disabled></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="10" :offset="1">
-                            <el-form-item label="申请子业务类别">
-                                <el-select v-model="form.typeValue" placeholder="请选择">
-                                    <el-option v-for="item in form.options" :key="item.value" :label="item.label" :value="item.value">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col :span="21">
-                            <el-form-item label="申请理由">
-                                <el-input type="textarea" :rows="3" v-model="form.desc"></el-input>
-                            </el-form-item>
-                        </el-col>
+        <h4 v-if="formFiles.length>0">
+          下载附件：
+          <div>
+            <a v-for="(i,index) in formFiles" :key="index" :href="i.url">{{i.name}} &nbsp;&nbsp; </a>
+          </div>
+        </h4>
+      </div>
+    </page>
+    <page style="width: 1000px;margin: 0 auto;">
+      <div slot="panel">
+        <h3 style="font-weight:400">一、填写申请信息</h3><hr/>
+        <el-form ref="form" :model="form" label-width="120px">
+          <el-row>
+            <el-col :span="10">
+              <el-form-item label="学生姓名">
+                <el-input v-model="form.username" disabled></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="10" :offset="1">
+              <el-form-item label="学号">
+                <el-input v-model="form.number" disabled></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="21">
+              <el-form-item label="所在班级">
+                <el-input v-model="form.class" disabled></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="10">
+              <el-form-item label="业务类别">
+                <el-input v-model="form.type" disabled></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="10" :offset="1">
+              <el-form-item label="申请子业务类别">
+                <el-select v-model="form.typeValue" placeholder="请选择">
+                  <el-option v-for="item in form.options" :key="item.value" :label="item.label" :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="21">
+              <el-form-item label="申请理由">
+                <el-input type="textarea" :rows="3" v-model="form.desc"></el-input>
+              </el-form-item>
+            </el-col>
 
-                    </el-row>
-                    <el-row>
-                        <el-col :span="21">
-                            <el-form-item label="相关附件">
-                                <el-upload class="upload-demo" :action="uploadAttrUrl" :on-preview="handlePreview" :on-success="handleSuccess" :on-remove="handleRemove" :before-remove="beforeRemove" multiple :limit="3" :on-exceed="handleExceed" :file-list="form.fileList">
-                                    <el-button size="small" type="primary">点击上传</el-button>
-                                    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
-                                </el-upload>
-                            </el-form-item>
-                        </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="21">
+              <el-form-item label="相关附件">
+                <el-upload class="upload-demo" :action="uploadAttrUrl" :on-preview="handlePreview" :on-success="handleSuccess" :on-remove="handleRemove" :before-remove="beforeRemove" multiple :limit="3" :on-exceed="handleExceed" :file-list="form.fileList">
+                  <el-button size="small" type="primary">点击上传</el-button>
+                  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                </el-upload>
+              </el-form-item>
+            </el-col>
 
-                    </el-row>
-                </el-form>
+          </el-row>
+        </el-form>
 
-            </div>
-        </page>
-        <page style="width: 1000px;margin: 0 auto;">
-            <div slot="panel">
-                <h3 style="font-weight:400">二、填写家庭情况</h3><hr/>
-                <el-form ref="form" :model="form" label-width="120px" size="small">
-                    <el-row>
-                        <el-col :span="10">
-                            <el-form-item label="家庭人口数">
-                                <el-input v-model="form.familyNumber" type="Number"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="10" :offset="1">
-                            <el-form-item label="家庭情况">
-                                <el-radio-group v-model="form.familyStatus">
-                                    <el-radio-button label="S">双亲</el-radio-button>
-                                    <el-radio-button label="D">单亲</el-radio-button>
-                                    <el-radio-button label="G">孤儿</el-radio-button>
-                                </el-radio-group>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col :span="10">
-                            <el-form-item label="是否低保">
-                                <el-switch v-model="form.isSubsistenceAllowance" active-value="Y" inactive-value="N"></el-switch>
-                            </el-form-item>
-                        </el-col>
+      </div>
+    </page>
+    <page style="width: 1000px;margin: 0 auto;">
+      <div slot="panel">
+        <h3 style="font-weight:400">二、填写家庭情况</h3><hr/>
+        <el-form ref="form" :model="form" label-width="120px" size="small">
+          <el-row>
+            <el-col :span="10">
+              <el-form-item label="家庭人口数">
+                <el-input v-model="form.familyNumber" type="Number"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="10" :offset="1">
+              <el-form-item label="家庭情况">
+                <el-radio-group v-model="form.familyStatus">
+                  <el-radio-button label="S">双亲</el-radio-button>
+                  <el-radio-button label="D">单亲</el-radio-button>
+                  <el-radio-button label="G">孤儿</el-radio-button>
+                </el-radio-group>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="10">
+              <el-form-item label="是否低保">
+                <el-switch v-model="form.isSubsistenceAllowance" active-value="Y" inactive-value="N"></el-switch>
+              </el-form-item>
+            </el-col>
 
-                        <el-col :span="10" :offset="1">
-                            <el-form-item label="是否建档立卡">
-                                <el-switch v-model="form.isRecord" active-value="Y" inactive-value="N"></el-switch>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col :span="10">
-                            <el-form-item label="人均月收入">
-                                <el-input v-model="form.income" type="Number" placeholder="单位（元）"></el-input>
-                            </el-form-item>
-                        </el-col>
-                        <el-col :span="10" :offset="1">
-                            <el-form-item label="人均月支出">
-                                <el-input v-model="form.spending" type="Number" placeholder="单位（元）"></el-input>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
+            <el-col :span="10" :offset="1">
+              <el-form-item label="是否建档立卡">
+                <el-switch v-model="form.isRecord" active-value="Y" inactive-value="N"></el-switch>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="10">
+              <el-form-item label="人均月收入">
+                <el-input v-model="form.income" type="Number" placeholder="单位（元）"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="10" :offset="1">
+              <el-form-item label="人均月支出">
+                <el-input v-model="form.spending" type="Number" placeholder="单位（元）"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-                </el-form>
+        </el-form>
 
-            </div>
-        </page>
-        <page style="width: 1000px;margin: 0 auto;">
-            <div slot="panel">
-                <div style="text-align:center">
-                    <!-- <h4 v-if="formDays>=0" style="text-align:center">截止最后提交日期 还有
+      </div>
+    </page>
+    <page style="width: 1000px;margin: 0 auto;">
+      <div slot="panel">
+        <div style="text-align:center">
+          <!-- <h4 v-if="formDays>=0" style="text-align:center">截止最后提交日期 还有
                         <strong style="color:red;">{{formDays}}</strong> 天</h4> -->
-                    <!-- <h4 v-else style="text-align:center;color:red;">申请表单已到最后截止日期，不能提交。如有问题请联系相关老师。</h4> -->
-                    <br>
-                    <el-button v-if="formDays>=0" type="primary" @click="onSubmit">提交申请</el-button>
-                    <el-button>返回取消</el-button>
-                </div>
-            </div>
-        </page>
-    </div>
+          <!-- <h4 v-else style="text-align:center;color:red;">申请表单已到最后截止日期，不能提交。如有问题请联系相关老师。</h4> -->
+          <br>
+          <el-button v-if="formDays>=0" type="primary" @click="onSubmit">提交申请</el-button>
+          <el-button>返回取消</el-button>
+        </div>
+      </div>
+    </page>
+  </div>
 </template>
 
 <script>
@@ -153,22 +153,24 @@ export default {
       if (to.query.itemId != undefined) {
         let itemId = to.query.itemId;
         if (itemId != "" && itemId != null) {
-          vm.itemId = itemId
+          vm.itemId = itemId;
           vm.getApplyData({ itemId: itemId }).then(response => {
             var resp = response.resBody;
             vm.projectSystemCode = resp.projectData.projectSystemCode;
             vm.formTitle = resp.projectData.projectName + "申请表";
             //附件
             vm.formFiles = [];
-            resp.projectData.files.forEach(item => {
-              let temp = {
-                name: "",
-                url: ""
-              };
-              temp.name = item.userFileName;
-              temp.url = item.userPath;
-              vm.formFiles.push(temp);
-            });
+            if (resp.projectData.files) {
+              resp.projectData.files.forEach(item => {
+                let temp = {
+                  name: "",
+                  url: ""
+                };
+                temp.name = item.userFileName;
+                temp.url = item.userPath;
+                vm.formFiles.push(temp);
+              });
+            }
             if (
               resp.itemData.planCompleteTime != null &&
               resp.itemData.planCompleteTime != ""
@@ -195,22 +197,24 @@ export default {
       } else if (to.params.itemId != undefined) {
         let itemId = to.query.itemId;
         if (itemId != "" && itemId != null) {
-           vm.itemId = itemId
+          vm.itemId = itemId;
           vm.getApplyData({ itemId: itemId }).then(response => {
             var resp = response.resBody;
             vm.projectSystemCode = resp.projectData.projectSystemCode;
             vm.formTitle = resp.projectData.projectName + "申请表";
             //附件
             vm.formFiles = [];
-            resp.projectData.files.forEach(item => {
-              let temp = {
-                name: "",
-                url: ""
-              };
-              temp.name = item.userFileName;
-              temp.url = item.userPath;
-              vm.formFiles.push(temp);
-            });
+            if (resp.projectData.files) {
+              resp.projectData.files.forEach(item => {
+                let temp = {
+                  name: "",
+                  url: ""
+                };
+                temp.name = item.userFileName;
+                temp.url = item.userPath;
+                vm.formFiles.push(temp);
+              });
+            }
             if (
               resp.itemData.planCompleteTime != null &&
               resp.itemData.planCompleteTime != ""
@@ -244,7 +248,7 @@ export default {
   },
   data() {
     return {
-      itemId:"",
+      itemId: "",
       projectSystemCode: "",
       formTitle: "2017年贫困建档07级项目" + "申请表",
       formDesc: "2017年贫困建档开始了，请按照要求填表。截止日期2018年-06-01。", //项目公告

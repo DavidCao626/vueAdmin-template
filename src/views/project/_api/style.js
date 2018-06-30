@@ -9,7 +9,7 @@ const getAllDataAndPageDataByItemId = data =>
         data: data
     })
 const updateClassRecommend = data =>
-    request({
+    ajax({
         url: '/projectApply/updateClassRecommend.do',
         method: 'post',
         data: data
