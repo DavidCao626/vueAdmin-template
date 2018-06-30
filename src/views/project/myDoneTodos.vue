@@ -4,9 +4,9 @@
     <div slot="panel">
       <template>
         <el-table class="i-cursor" :data="tableData" style="width: 100%">
-          <el-table-column prop="project_name" label="项目名称" min-width="120">
+          <el-table-column prop="projectData.project_name" label="项目名称" min-width="120">
           </el-table-column>
-          <el-table-column prop="project_service_type_name" label="业务类别" min-width="100">
+          <el-table-column prop="projectData.project_service_type_name" label="业务类别" min-width="100">
           </el-table-column>
           <!-- <el-table-column prop="scope_name" label="待办来源" min-width="80">
           </el-table-column> -->
@@ -17,9 +17,6 @@
           <!-- <el-table-column prop="real_start_time" label="开始时间" min-width="120">
           </el-table-column> -->
           <el-table-column prop="pendingData.completeTime" label="完成时间" :formatter="overTimeFormatter" min-width="120">
-              <template slot-scope="scope">
-               <span v-html="overTimeFormatter(scope.row)"></span>
-              </template>
           </el-table-column>
           <!-- <el-table-column prop="create_time" label="创建时间" width="120">
           </el-table-column> -->
@@ -109,7 +106,7 @@ export default {
     //   return moment(date).format("YYYY-MM-DD HH:mm:ss");
     // },
      overTimeFormatter(row) {
-      var date = row.over_time;
+      var date = row.pendingData.completeTime;
       if (date == undefined) {
         return "";
       }
