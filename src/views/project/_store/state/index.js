@@ -5,6 +5,7 @@ import * as projectList from './projectList.js'
 import * as todosList from './todosList.js'
 import * as dispense from './dispense.js'
 import * as consoled from './console.js'
+import * as styles from "./styles.js";
 import _lodash from 'lodash'
 export default _lodash.assign(
   {},
@@ -13,5 +14,5 @@ export default _lodash.assign(
   projectList,
   base,
   config,
-  consoled
-)
+  styles
+);

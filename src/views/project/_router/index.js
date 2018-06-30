@@ -1,6 +1,6 @@
 export const projectRouter = {
   path: "/project",
-  redirect: "/project/my",
+  redirect: "/project/stylesApproval",
   name: "项目管理",
   component: () => import("../_layout/layout.vue"),
   meta: { title: "项目管理", icon: "example", hidden: false },
@@ -52,6 +52,13 @@ export const projectRouter = {
       name: "student_Form",
       title: "学生申请表",
       component: () => import("../styles/studentForm.vue"),
+      meta: { hidden: true }
+    },
+    {
+      path: "stylesApproval",
+      name: "styles_approval",
+      title: "项目审批",
+      component: () => import("../styles/approval/list.vue"),
       meta: { hidden: true }
     }
   ]
