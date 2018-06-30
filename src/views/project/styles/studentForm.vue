@@ -1,14 +1,14 @@
 <template>
     <div>
-        <page style="width: 1000px;margin: 0 auto;" :Breadcrumb="0">
+        <page style="width: 1000px;margin: 0 auto;" :Breadcrumb="false">
             <!-- <div slot="title">学生业务申请</div> -->
             <div slot="panel">
                 <h2>{{formTitle}}</h2>
                 <hr/>
-                <h4 v-if="formDesc">
+                <!-- <h4 v-if="formDesc">
                     填写要求：
                     <div>{{formDesc}}</div>
-                </h4>
+                </h4> -->
                 <h4 v-if="formFiles.length>0">
                     下载附件：
                     <div>
@@ -58,7 +58,7 @@
                     <el-row>
                         <el-col :span="21">
                             <el-form-item label="申请理由">
-                                <el-input type="textarea" rows="3" v-model="form.desc"></el-input>
+                                <el-input type="textarea" :rows="3" v-model="form.desc"></el-input>
                             </el-form-item>
                         </el-col>
 
@@ -66,7 +66,7 @@
                     <el-row>
                         <el-col :span="21">
                             <el-form-item label="相关附件">
-                                <el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/" :on-preview="handlePreview" :on-remove="handleRemove" :before-remove="beforeRemove" multiple :limit="3" :on-exceed="handleExceed" :file-list="form.fileList">
+                                <el-upload class="upload-demo" :action="uploadAttrUrl" :on-preview="handlePreview" :on-success="handleSuccess" :on-remove="handleRemove" :before-remove="beforeRemove" multiple :limit="3" :on-exceed="handleExceed" :file-list="form.fileList">
                                     <el-button size="small" type="primary">点击上传</el-button>
                                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                                 </el-upload>
@@ -91,9 +91,9 @@
                         <el-col :span="10" :offset="1">
                             <el-form-item label="家庭情况">
                                 <el-radio-group v-model="form.familyStatus">
-                                    <el-radio-button label="双亲"></el-radio-button>
-                                    <el-radio-button label="单亲"></el-radio-button>
-                                    <el-radio-button label="孤儿"></el-radio-button>
+                                    <el-radio-button label="S">双亲</el-radio-button>
+                                    <el-radio-button label="D">单亲</el-radio-button>
+                                    <el-radio-button label="G">孤儿</el-radio-button>
                                 </el-radio-group>
                             </el-form-item>
                         </el-col>
@@ -101,25 +101,25 @@
                     <el-row>
                         <el-col :span="10">
                             <el-form-item label="是否低保">
-                                <el-switch v-model="form.isSubsistenceAllowance"></el-switch>
+                                <el-switch v-model="form.isSubsistenceAllowance" active-value="Y" inactive-value="N"></el-switch>
                             </el-form-item>
                         </el-col>
 
                         <el-col :span="10" :offset="1">
                             <el-form-item label="是否建档立卡">
-                                <el-switch v-model="form.isRecord"></el-switch>
+                                <el-switch v-model="form.isRecord" active-value="Y" inactive-value="N"></el-switch>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row>
                         <el-col :span="10">
                             <el-form-item label="人均月收入">
-                                <el-input v-model="form.income"  type="Number" placeholder="单位（元）"></el-input>
+                                <el-input v-model="form.income" type="Number" placeholder="单位（元）"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="10" :offset="1">
                             <el-form-item label="人均月支出">
-                                <el-input v-model="form.spending"  type="Number" placeholder="单位（元）"></el-input>
+                                <el-input v-model="form.spending" type="Number" placeholder="单位（元）"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -131,10 +131,11 @@
         <page style="width: 1000px;margin: 0 auto;">
             <div slot="panel">
                 <div style="text-align:center">
-                    <h4 v-if="formDays>=0"  style="text-align:center">截止最后提交日期 还有 <strong style="color:red;">{{formDays}}</strong> 天</h4>
-                    <h4 v-else  style="text-align:center;color:red;">申请表单已到最后截止日期，不能提交。如有问题请联系相关老师。</h4>
+                    <h4 v-if="formDays>=0" style="text-align:center">截止最后提交日期 还有
+                        <strong style="color:red;">{{formDays}}</strong> 天</h4>
+                    <h4 v-else style="text-align:center;color:red;">申请表单已到最后截止日期，不能提交。如有问题请联系相关老师。</h4>
                     <br>
-                    <el-button  v-if="formDays>=0"  type="primary" @click="onSubmit">提交申请</el-button>
+                    <el-button v-if="formDays>=0" type="primary" @click="onSubmit">提交申请</el-button>
                     <el-button>返回取消</el-button>
                 </div>
             </div>
@@ -143,9 +144,108 @@
 </template>
 
 <script>
+import store from "../_store/index.js";
+import { mapActions, mapMutations, mapGetters, Store } from "vuex";
+import moment from "moment";
 export default {
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (to.query.itemId != undefined) {
+        let itemId = to.query.itemId;
+        if (itemId != "" && itemId != null) {
+          vm.itemId = itemId
+          vm.getApplyData({ itemId: itemId }).then(response => {
+            var resp = response.resBody;
+            vm.projectSystemCode = resp.projectData.projectSystemCode;
+            vm.formTitle = resp.projectData.projectName + "申请表";
+            //附件
+            vm.formFiles = [];
+            resp.projectData.files.forEach(item => {
+              let temp = {
+                name: "",
+                url: ""
+              };
+              temp.name = item.userFileName;
+              temp.url = item.userPath;
+              vm.formFiles.push(temp);
+            });
+            if (
+              resp.itemData.planCompleteTime != null &&
+              resp.itemData.planCompleteTime != ""
+            ) {
+              vm.formDays = vm.DateDiff(
+                resp.itemData.planCompleteTime,
+                moment(new Date()).format("YYYY-MM-DD")
+              );
+            }
+            vm.form.username = resp.studentData.userName;
+            vm.form.number = resp.studentData.userNo;
+            vm.form.class = resp.studentData.userOrgsName;
+            vm.form.type = resp.projectData.projectServiceTypeName;
+            vm.form.options = [];
+            resp.childServiceType.forEach(item => {
+              let temp = {
+                value: item.classifyCode,
+                label: item.classifyName
+              };
+              vm.form.options.push(temp);
+            });
+          });
+        }
+      } else if (to.params.itemId != undefined) {
+        let itemId = to.query.itemId;
+        if (itemId != "" && itemId != null) {
+           vm.itemId = itemId
+          vm.getApplyData({ itemId: itemId }).then(response => {
+            var resp = response.resBody;
+            vm.projectSystemCode = resp.projectData.projectSystemCode;
+            vm.formTitle = resp.projectData.projectName + "申请表";
+            //附件
+            vm.formFiles = [];
+            resp.projectData.files.forEach(item => {
+              let temp = {
+                name: "",
+                url: ""
+              };
+              temp.name = item.userFileName;
+              temp.url = item.userPath;
+              vm.formFiles.push(temp);
+            });
+            if (
+              resp.itemData.planCompleteTime != null &&
+              resp.itemData.planCompleteTime != ""
+            ) {
+              vm.formDays = vm.DateDiff(
+                resp.itemData.planCompleteTime,
+                moment(new Date()).format("YYYY-MM-DD")
+              );
+            }
+            vm.form.username = resp.studentData.userName;
+            vm.form.number = resp.studentData.userNo;
+            vm.form.class = resp.studentData.userOrgsName;
+            vm.form.type = resp.projectData.projectServiceTypeName;
+            vm.form.options = [];
+            resp.childServiceType.forEach(item => {
+              let temp = {
+                value: item.classifyCode,
+                label: item.classifyName
+              };
+              vm.form.options.push(temp);
+            });
+          });
+        }
+      }
+    });
+  },
+  computed: {
+    ...mapGetters({
+      uploadAttrUrl: store.namespace + "/getUploadAttrUrl"
+    })
+  },
   data() {
     return {
+      itemId:"",
+      projectSystemCode: "",
       formTitle: "2017年贫困建档07级项目" + "申请表",
       formDesc: "2017年贫困建档开始了，请按照要求填表。截止日期2018年-06-01。", //项目公告
       formFiles: [
@@ -159,7 +259,7 @@ export default {
           url: "2017年贫困建档07级项目流程描述2.doc"
         }
       ],
-      formDays: 30, //填表可用天数
+      formDays: 0, //填表可用天数
       form: {
         username: "王小明",
         number: "130128199007161811",
@@ -185,18 +285,31 @@ export default {
         delivery: false,
         fileList: [], //申请附件
         familyNumber: "3", //家庭人口
-        familyStatus: "双亲", //家庭情况
+        familyStatus: "S", //家庭情况
         isSubsistenceAllowance: 0, //是否低保
         isRecord: 0, //是否建档立卡
         income: 0, //收入
         spending: 0 //支出
-      }
+      },
+      attArr: []
     };
   },
   methods: {
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
+    ...mapActions({
+      getApplyData: store.namespace + "/getApplyData",
+      povertyApply: store.namespace + "/povertyApply"
+    }),
+    DateDiff(sDate1, sDate2) {
+      //sDate1和sDate2是2006-12-18格式
+      var aDate, oDate1, oDate2, iDays;
+      aDate = sDate1.split("-");
+      oDate1 = new Date(aDate[1] + "-" + aDate[2] + "-" + aDate[0]); //转换为12-18-2006格式
+      aDate = sDate2.split("-");
+      oDate2 = new Date(aDate[1] + "-" + aDate[2] + "-" + aDate[0]);
+      iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24); //把相差的毫秒数转换为天数
+      return iDays;
     },
+
     handlePreview(file) {
       console.log(file);
     },
@@ -210,8 +323,53 @@ export default {
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
     },
+    handleSuccess(response, file, fileList) {
+      console.log(["上传成功", file, fileList]);
+      var tempArr = [];
+      for (var i = 0; i < fileList.length; i++) {
+        tempArr[i] = fileList[i].response.body.resBody.fileId;
+      }
+      this.attArr = tempArr;
+    },
+    handleRemove(response, fileList) {
+      console.log(["移除成功", fileList]);
+      var tempArr = [];
+      for (var i = 0; i < fileList.length; i++) {
+        tempArr[i] = fileList[i].response.body.resBody.fileId;
+      }
+      this.attArr = tempArr;
+    },
     onSubmit() {
       console.log("submit!");
+      var requestData = {
+        itemId: this.itemId,
+        childServiceTypeCode: this.form.typeValue,
+        projectSystemCode: this.projectSystemCode,
+        applyReason: this.form.desc, //申请原因
+        attachment: this.attArr, // 附件
+        homePersonCount: this.form.familyNumber, // 家庭人口数
+        isSingleParent: "", // 是否单亲
+        isOrphan: "", // 孤儿
+        isBasicAllowance: this.form.isSubsistenceAllowance, // 低保
+        isCreateFile: this.form.isRecord, // 建档立卡
+        perCapitaIncome: this.form.income, // 人均收入
+        perCapitalExpenditure: this.form.spending // 人均支出
+      };
+      if (this.form.familyStatus == "S") {
+        requestData.isSingleParent = "N";
+        requestData.isOrphan = "N";
+      } else if (this.form.familyStatus == "D") {
+        requestData.isSingleParent = "Y";
+        requestData.isOrphan = "N";
+      } else if (this.form.familyStatus == "G") {
+        requestData.isSingleParent = "N";
+        requestData.isOrphan = "Y";
+      }
+      console.log(["requestData", requestData]);
+      this.povertyApply(requestData).then(response => {
+        this.$message.success("提交成功");
+        this.$route.go(-1);
+      });
     },
     handleChange(val) {
       console.log(val);

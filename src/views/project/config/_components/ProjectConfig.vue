@@ -1,4 +1,5 @@
 <template>
+<div>
     <table class="timeline">
         <tr>
             <td>
@@ -12,26 +13,26 @@
                 <div class="timeline-box-header__title2" >
                     <h3>
                         <!-- 已用 1.6天，环节可用 33.4天，任需时长：31天，预计超时：0天。 -->
-                        {{ProjectInfo}}
+开始日期：{{scopeInfo.planStartTime}},结束日期：{{scopeInfo.planEndTime}}，总时长：{{scopeDayCount.scopePlanTimeLong}}天,可用：{{scopeDayCount.scopeUsableTimeLong}}天，当前计划用：{{scopeDayCount.scopeAllocationedTimeLong}}天
                     </h3>
                 </div>
             </td>
         </tr>
-        <template v-for="(item,index) in ProjectItemsData">
-            <tr v-if="item.ProjectItemType==0">
+        <template v-for="(item,index) in scopeWorkItems">
+            <tr v-if="item.item.itemType=='manual'" :key="index">
                 <td class="timeline-box">
                     <span class="timeline-serial">
                         {{++index}}
                     </span>
-                   <div class="timeline-line  " v-if="index!=(ProjectItemsData.length)"></div>
+                   <div class="timeline-line" v-if="item.item.position!=='complete'"></div>
                 </td>
                 <td>
                     <div class="tag tag-flex">
                         <div class="tag-flex tag-flex-direction__column">
                             <div class=" tag-flex tag-flex-justify__content">
                                 <span>
-                                    <el-tooltip class="item" effect="dark" :content="item.ProjectItemDesc" placement="right">
-                                        <span class="tag-title">{{item.ProjectItemName}}
+                                    <el-tooltip class="item" effect="dark" :content="item.item.stepName" placement="right">
+                                        <span class="tag-title">{{item.item.stepName}}
                                             <small class="el-icon-question"></small>
                                         </span>
 
@@ -40,7 +41,7 @@
                                 <span></span>
 
                             </div>
-                            <div class="tag-description">(手动节点不需要配置)</div>
+                            <div class="tag-description"></div>
 
                         </div>
                         <div class="tag-flex status-mark" style="margin-left:20px;">
@@ -48,43 +49,37 @@
                     </div>
                 </td>
             </tr>
-
-           
-
-            <tr v-else>
+            <tr v-else :key="index">
                 <td class="timeline-box">
                     <span class="timeline-serial ">
                        {{++index}}
                     </span>
-                    <div class="timeline-line  " v-if="index!=(ProjectItemsData.length)"></div>
+                    <div class="timeline-line" v-if="item.item.position!=='complete'"></div>
                 </td>
                 <td>
                     <div class="tag tag-flex">
                         <div class="tag-flex tag-flex-direction__column">
                             <div class=" tag-flex tag-flex-justify__content">
                                 <span>
-                                    <el-tooltip class="item" effect="dark" :content="item.ProjectItemDesc" placement="right">
-                                        <span class="tag-title">{{item.ProjectItemName}}
+                                    <el-tooltip class="item" effect="dark" :content="item.item.stepName" placement="right">
+                                        <span class="tag-title">{{item.item.stepName}}
                                             <small class="el-icon-question"></small>
                                         </span>
                                     </el-tooltip>
                                 </span>
-                                <span >计划2天</span>
-                                
+                                <span >计划{{item.planTimeDay}}天</span>
                             </div>
-                            <div class="tag-description" >计划开始时间：2017-02-05 22:00 ~ 计划结束时间：2018-07-01 00:00 </div>
+                            <div class="tag-description" >计划开始时间： {{item.start==''?'未配置':formatMoment(item.start)}} ~ 计划结束时间： {{item.end==''?'未配置':formatMoment(item.end)}} </div>
                         </div>
                         <div class="tag-flex tag-flex-direction__column" style="margin-left:20px;" >
 
-                            <el-popover placement="top" width="160" :ref="'popover'+item.nodeId">
+                            <el-popover placement="top" width="160" :ref="'popover'+item.item.id">
                                 <p>请输入调整后的天数</p>
-                                <el-input-number style=" margin-top: 10px" size="small" v-model="item.plannedDays"></el-input-number>
+                                <el-input-number style=" margin-top: 10px" size="small" :min="0" v-model="item.planTimeDay" @change="handleChange(item.stepKey,$event)"></el-input-number>
                                 <div style="text-align: right; margin-top: 10px">
-                                    <el-button type="primary" size="mini" @click="saveDays(item.nodeId)">保存</el-button>
                                 </div>
                                 <el-button slot="reference">调整天数</el-button>
                             </el-popover>
-
                         </div>
                     </div>
                 </td>
@@ -92,66 +87,70 @@
 
         </template>
     </table>
+      <div class="line"></div>
+            <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
+                <el-col :span="7">
+                    <el-button ref="next" @click="onSave">保存配置</el-button>
+                    <el-button ref="back" @click="onSaveAndNext" type="primary">保存并下发任务</el-button>
+                </el-col>
+            </el-row>
+          </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+import store from '../../_store/index.js'
+import commons from '~/utils/common.js'
+import moment from 'moment'
 export default {
   data() {
-    return {
-      ProjectInfo:
-        " 开始日期： 2018-06-28   结束日期： 2018-06-21         总共 -7.6天    剩余： -8.4 天   当前计划用：2 天",
-      ProjectItemsData: [
-        {
-          nodeId: 0,
-          ProjectStatus: 2, //已结束
-          ProjectItemType: 0, //环节类型 0手动，1自动
-          plannedDays: 0, //计划天数
-          ProjectItemName: "配置计划", //环节名字
-          ProjectItemDesc: "环节说明：下发任务该环节意思是给学院分发项目任务" //环节说明
-        },
-        {
-          nodeId: 1,
-          ProjectStatus: 1, //进行中
-          plannedDays: 0, //计划天数
-          ProjectItemType: 1, //环节类型 0手动，1自动
-          ProjectItemName: "学校推荐", //环节名字
-          ProjectItemDesc: "下发任务该环节意思是给学院分发项目任务" //环节说明
-        },
-        {
-          nodeId: 2,
-          ProjectStatus: 0, //未开始
-          plannedDays: 0, //计划天数
-          ProjectItemType: 0, //环节类型 0手动，1自动
-          ProjectItemName: "预审", //环节名字
-          ProjectItemDesc: "预审数据" //环节说明
-        },
-        {
-          nodeId: 3,
-          ProjectStatus: 0, //未开始
-          plannedDays: 0, //计划天数
-          ProjectItemType: 1, //环节类型 0手动，1自动
-          ProjectItemName: "公示", //环节名字
-          ProjectItemDesc: "公示数据" //环节说明
-        },
-        {
-          nodeId: 4,
-          ProjectStatus: 0, //未开始
-          plannedDays: 0, //计划天数
-          ProjectItemType: 0, //环节类型 0手动，1自动
-          ProjectItemName: "终审", //环节名字
-          ProjectItemDesc: "终审环节说明" //环节说明
-        }
-      ]
-    };
+    return {}
+  },
+  computed: {
+    ...mapGetters({
+      scopeInfo: store.namespace + '/getScopeConfigInfoScope',
+      scopeWorkItems: store.namespace + '/getScopeConfigInfoWorkItems',
+      scopeConfig: store.namespace + '/getScopeConfigInfo',
+      scopeDayCount: store.namespace + '/getScopeConfigCountDay'
+    })
   },
   methods: {
-    saveDays(nodeId) {
-      //保存天数
-      alert(nodeId);
+   ...mapActions({
+      updateScopePlanTimeLong: store.namespace + '/updateScopePlanTimeLong',
+      updateScopePlanTimeLongAndNext: store.namespace + '/updateScopePlanTimeLongAndNext',
+      changeScopeItemHour: store.namespace + '/changeScopeItemDateHour'
+    }),
+    formatMoment: function(time) {
+      return moment(time).second(0).minute(0).format('YYYY-MM-DD HH:mm:ss')
     },
-    config(item) {
-      //操作
-      alert(item.nodeId);
+    onSaveAndNext() {
+      console.log('保存并下发任务!')
+      var planItems = {}
+      for (var i = 0; i < this.scopeWorkItems.length; i++) {
+        var workItem = this.scopeWorkItems[i]
+        planItems[workItem.item.stepKey] = workItem.item.planTimeLong
+      }
+      var itemId = commons.getRouterParam(this.$route, 'itemId')
+      this.updateScopePlanTimeLongAndNext({ 'scopeId': this.scopeInfo.id, 'itemId': itemId, 'planItems': planItems }).then(result => {
+        console.log([this.scopeInfo.id, result.resBody.id])
+       this.$router.push({
+          name: 'project_start',
+          params: { scopeId: this.scopeInfo.id, itemId: result.resBody.id }
+        })
+      })
+    },
+    onSave() {
+      console.log('保存配置!')
+      var planItems = {}
+      for (var i = 0; i < this.scopeWorkItems.length; i++) {
+        var workItem = this.scopeWorkItems[i]
+        planItems[workItem.item.stepKey] = workItem.item.planTimeLong
+      }
+      var itemId = commons.getRouterParam(this.$route, 'itemId')
+      this.updateScopePlanTimeLong({ 'scopeId': this.scopeInfo.id, 'itemId': itemId, 'planItems': planItems })
+    },
+    handleChange(param, value) {
+      this.changeScopeItemHour({ 'itemKey': param, 'timeLong': value })
     }
   }
 };

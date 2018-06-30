@@ -21,7 +21,7 @@
                     <span class="timeline-serial">
                         <i class="el-icon-check"></i>
                     </span>
-                    <div class="timeline-line" v-if="item.item.postion!=='complete'"></div>
+                    <div class="timeline-line" v-if="item.item.position!=='complete'"></div>
                 </td>
                 <td>
                     <div class="tag tag-flex">
@@ -78,7 +78,7 @@
                                 <div style="text-align: right; margin-top: 10px">
                                     <el-button type="primary" size="mini" @click="updateItemPlanDayHandler(item)">保存</el-button>
                                 </div>
-                                <el-button type="warning" :disabled="getItemEnableState(item)"  slot="reference">调整天数</el-button>
+                                <el-button type="warning" :disabled="getItemEnableState(item)" size="mini"  slot="reference">调整天数</el-button>
                             </el-popover>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                     <span class="timeline-serial timeline-blur">
                         <i class="el-icon-time"></i>
                     </span>
-                    <div class="timeline-line timeline-blur" v-if="item.item.postion!=='complete'"></div>
+                    <div class="timeline-line timeline-blur" v-if="item.item.position!=='complete'"></div>
                 </td>
                 <td>
                     <div class="tag tag-flex">
@@ -111,11 +111,11 @@
 
                             <el-popover placement="top" width="160" :ref="'popover'+item.item.id">
                                 <p>请输入调整后的天数</p>
-                                <el-input-number style=" margin-top: 10px" size="small" v-model="item.planTimeDay"></el-input-number>
+                                <el-input-number style=" margin-top: 10px" size="small" :min="0" v-model="item.planTimeDay"></el-input-number>
                                 <div style="text-align: right; margin-top: 10px">
                                     <el-button type="primary" size="mini">保存</el-button>
                                 </div>
-                                <el-button type="warning" :disabled="getItemEnableState(item)"  slot="reference">调整天数</el-button>
+                                <el-button type="warning" :disabled="getItemEnableState(item)" size="mini"  slot="reference">调整天数</el-button>
                             </el-popover>
 
                         </div>
@@ -123,6 +123,51 @@
                             <svg-icon icon-class="status-no" width="65px" height="65px" />
                             <!-- 未开始图标 -->
                         </div>
+                    </div>
+                </td>
+            </tr>
+             <tr v-else-if="item.item.state=='E'" :key="index">
+                <td class="timeline-box">
+                    <span class="timeline-serial timeline-blur" style="background-color:red">
+                        <i class="el-icon-time"></i>
+                    </span>
+                    <div class="timeline-line timeline-blur" v-if="item.item.position!=='complete'"></div>
+                </td>
+                <td>
+                    <div class="tag tag-flex">
+                        <div class="tag-flex tag-flex-direction__column">
+                            <div class=" tag-flex tag-flex-justify__content">
+                                <span>
+                                    <el-tooltip class="item" effect="dark" :content="item.item.stepName" placement="right">
+                                        <span class="tag-title">{{item.item.stepName}}
+                                            <small class="el-icon-question"></small>
+                                        </span>
+                                    </el-tooltip>
+                                </span>
+                              <span v-if="item.item.itemType=='automatic'">计划{{item.planTimeDay}}天</span>
+                            </div>
+                            <div class="tag-description" v-if="item.item.itemType=='automatic'">计划开始时间：2017-02-05 22:00 ~ 计划结束时间：2018-07-01 00:00 </div>
+                        </div>
+                        <div class="tag-flex tag-flex-direction__column" style="margin-left:20px;" v-if="item.item.itemType=='automatic'">
+
+                            <el-popover placement="top" width="160" :ref="'popover'+item.item.id">
+                                <p>请输入调整后的天数</p>
+                                <el-input-number style=" margin-top: 10px" size="small" :min="0" v-model="item.planTimeDay"></el-input-number>
+                                <div style="text-align: right; margin-top: 10px">
+                                    <el-button type="primary" size="mini">保存</el-button>
+                                </div>
+                                <el-button type="warning" :disabled="getItemEnableState(item)" size="mini"  slot="reference">调整天数</el-button>
+                            </el-popover>
+                            
+                             
+
+                        </div>
+                        
+                        <div class="tag-flex  status-mark" style="margin-left:20px;" v-else>
+                            <svg-icon icon-class="status-no" width="65px" height="65px" />
+                            <!-- 未开始图标 -->
+                        </div>
+                        <div  class="tag-flex tag-flex-direction__column" style="margin-left:20px;" > <el-button size="mini" type="warning" >手动启动</el-button></div>
                     </div>
                 </td>
             </tr>

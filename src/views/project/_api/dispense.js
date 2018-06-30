@@ -16,7 +16,16 @@ const disChildScope = data => {
   })
 }
 
+const queryChildOrg = () => { 
+  return request({
+    url: '/project/queryChildOrg.do',
+    method: 'post'
+  })
+
+}
+
 export default {
   getScopeDeispenseView,
-  disChildScope
+  disChildScope,
+  queryChildOrg
 }
