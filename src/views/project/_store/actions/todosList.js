@@ -9,6 +9,14 @@ const queryUserPending = ({ commit, state }, params) => new Promise(resolve => {
     })
 })
 
+const queryUserDonePending = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryUserDonePending(params).then(response => {
+        console.log(["queryUserPendingAction", response])
+        resolve(response)
+    })
+})
+
 export default {
-    queryUserPending
+    queryUserPending,
+    queryUserDonePending
 }

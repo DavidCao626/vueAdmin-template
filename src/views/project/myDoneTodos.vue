@@ -1,31 +1,28 @@
 <template>
   <page>
-    <div slot="title">我的待办</div>
+    <div slot="title">我的已完成待办</div>
     <div slot="panel">
       <template>
-        <el-table class="i-cursor" @row-click="showDetail" :data="tableData" style="width: 100%">
-          <el-table-column prop="projectInfo.project_name" label="项目名称" min-width="120">
+        <el-table class="i-cursor" :data="tableData" style="width: 100%">
+          <el-table-column prop="projectData.project_name" label="项目名称" min-width="120">
           </el-table-column>
-          <el-table-column prop="projectInfo.project_service_type_name" label="业务类别" min-width="100">
+          <el-table-column prop="projectData.project_service_type_name" label="业务类别" min-width="100">
           </el-table-column>
           <!-- <el-table-column prop="scope_name" label="待办来源" min-width="80">
           </el-table-column> -->
-          <el-table-column prop="org_name" label="组织" min-width="80">
+          <el-table-column prop="pendingData.orgName" label="组织" min-width="80">
           </el-table-column>
-          <el-table-column prop="item_name" label="待办名称" min-width="80">
+          <el-table-column prop="pendingData.itemName" label="待办名称" min-width="80">
           </el-table-column>
           <!-- <el-table-column prop="real_start_time" label="开始时间" min-width="120">
           </el-table-column> -->
-          <el-table-column prop="over_time" label="结束时间" :formatter="overTimeFormatter" min-width="120">
-              <template slot-scope="scope">
-               <span v-html="overTimeFormatter(scope.row)"></span>
-              </template>
+          <el-table-column prop="pendingData.completeTime" label="完成时间" :formatter="overTimeFormatter" min-width="120">
           </el-table-column>
           <!-- <el-table-column prop="create_time" label="创建时间" width="120">
           </el-table-column> -->
           <!-- <el-table-column prop="state" :formatter="stateFormatter" label="状态" min-width="80">
           </el-table-column> -->
-          <el-table-column prop="pending_type" :formatter="typeFormatter" label="类型" min-width="80">
+          <el-table-column prop="completeTime.pendingType" :formatter="typeFormatter" label="类型" min-width="80">
           </el-table-column>
         </el-table>
         <div style="margin-top: 20px">
@@ -66,7 +63,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      queryPend: store.namespace + "/queryUserPending"
+      queryPend: store.namespace + "/queryUserDonePending"
     }),
     showDetail(row, event, column) {
       console.log(row);
@@ -109,7 +106,7 @@ export default {
     //   return moment(date).format("YYYY-MM-DD HH:mm:ss");
     // },
      overTimeFormatter(row) {
-      var date = row.over_time;
+      var date = row.pendingData.completeTime;
       if (date == undefined) {
         return "";
       }
@@ -149,7 +146,7 @@ export default {
 };
 </script>
 <style scoped>
-.i-cursor:hover {
+/* .i-cursor:hover {
   cursor: pointer;
-}
+} */
 </style>
