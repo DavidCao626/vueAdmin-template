@@ -21,7 +21,19 @@ const updateItemPlanDay = ({ commit, state }, data) => {
     })
 }
 
+const handlerStartWorkItem = ({ commit, state }, data) => { 
+  api.handlerStartWorkItem(data).then(result => {
+    console.log(result);
+    queryScopeIntegeratedDateView({ "scopeId": result.resBody.id});
+   }).catch(ex => { 
+    console.log(ex);
+  });
+}
+
+
+
 export default {
   queryScopeIntegeratedDateView,
-  updateItemPlanDay
-}
+  updateItemPlanDay,
+  handlerStartWorkItem
+};

@@ -167,7 +167,7 @@
                             <svg-icon icon-class="status-no" width="65px" height="65px" />
                             <!-- 未开始图标 -->
                         </div>
-                        <div  class="tag-flex tag-flex-direction__column" style="margin-left:20px;" > <el-button size="mini" type="warning" >手动启动</el-button></div>
+                        <div  class="tag-flex tag-flex-direction__column" style="margin-left:20px;" > <el-button size="mini" @click="userOperationStartItem(item)" type="warning" >手动启动</el-button></div>
                     </div>
                 </td>
             </tr>
@@ -192,7 +192,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      updateItemPlanDay: store.namespace + '/updateItemPlanDay'
+      updateItemPlanDay: store.namespace + '/updateItemPlanDay',
+      handlerStartWorkItem:store.namespace+"/handlerStartWorkItem"
     }),
     getItemEnableState: function(item) {
       if (item.item.state === 'S') {
@@ -209,6 +210,9 @@ export default {
     },
     handleChange(value) {
       console.log(value)
+    },
+    userOperationStartItem(item){
+        this.handlerStartWorkItem({ 'itemId': item.item.id})
     },
     handle: function(item) {
       console.log(item.item.id)

@@ -16,7 +16,17 @@ const updateWorkItemDayLong = data => {
   })
 }
 
+const handlerStartWorkItem = data => { 
+    return request({
+      url: "/taskOperation/userHandlerStartItem.do",
+      method: "post",
+      data: data
+    });
+}
+
+
 export default {
   queryScopeIntegeratedDateView,
-  updateWorkItemDayLong
-}
+  updateWorkItemDayLong,
+  handlerStartWorkItem
+};
