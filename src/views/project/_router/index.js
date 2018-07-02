@@ -59,18 +59,25 @@ export const projectRouter = {
       component: () => import("../styles/studentForm.vue"),
       meta: { hidden: true }
     },
-    // {
-    //   path: "stylesApproval",
-    //   name: "styles_approval",
-    //   title: "项目审批",
-    //   component: () => import("../styles/approval/list.vue"),
-    //   meta: { hidden: true }
-    // },
+    {
+      path: "stylesApproval",
+      name: "styles_approval",
+      title: "项目审批",
+      component: () => import("../styles/approval/list.vue"),
+      meta: { hidden: true }
+    },
     {
       path: "stylesAudit",
       name: "styles_audit",
       title: "项目审批",
       component: () => import("../styles/audit/index.vue"),
+      meta: { hidden: true }
+    },
+    {
+      path: "stylesAuditTable",
+      name: "styles_audit_table",
+      title: "项目审批",
+      component: () => import("../styles/audit/table.vue"),
       meta: { hidden: true }
     }
   ]
