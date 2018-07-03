@@ -48,7 +48,7 @@
                 <th style="width:120px">申请信息</th>
                 <th>互评结果</th>
                 <th>组评结果</th>
-                <th style="width:320px">推荐操作</th>
+                <th style="width:320px">班级操作</th>
             </tr>
             <tr v-for="i in lis" key="i">
 
@@ -60,7 +60,7 @@
                 <template v-if="i.isShow">
                     <td>
 
-                        <p>{{i.name}} {{i.cid}}</p>
+                        <p  ><el-badge :is-dot="i.isDot" class="item">{{i.name}}</el-badge> {{i.cid}}</p>
                     </td>
                     <td>
                         <p>家庭人数{{i.jtNumber}}口，{{i.jtQk}}，{{i.jtisDb=='是'?'低保户':''}}，{{i.jtisDb=='是'?'已建档立卡':''}}，人均月收入{{i.jtsr}}元，月支出{{i.jtzc}}元</p>
@@ -74,10 +74,10 @@
                     </td>
                 </template>
                 <template v-else>
-                        <td >
+                        <td  >
 
                             <el-row>
-                                姓名:{{i.name}} </el-row>
+                                <el-badge :is-dot="i.isDot"   class="item">姓名:{{i.name}}</el-badge> </el-row>
                             <el-row>
                                 学号:{{i.cid}}
                             </el-row>
@@ -135,6 +135,11 @@
             <el-pagination background layout="prev, pager, next" :total="1000">
             </el-pagination>
         </div>
+
+         <div class="approval-panel" style="text-align: center;">
+      <el-button type="primary" size="mini" @click="onSubmit">全部保存</el-button>
+      <el-button size="mini">提交</el-button>
+    </div>
     </div>
 </template>
 
@@ -151,6 +156,7 @@ export default {
         {
           id: 0,
           isShow: true, //控制单条显示状态
+          isDot:true,
           name: "乌兰巴布尔",
           cid: "13123132",
           jtNumber: "3",
@@ -174,6 +180,7 @@ export default {
         {
           id: 1,
           isShow: true, //控制单条显示状态
+          isDot:true,
           name: "乌兰巴布尔",
           cid: "13123132",
           jtNumber: "3",
@@ -197,6 +204,7 @@ export default {
         {
           id: 2,
           isShow: true, //控制单条显示状态
+          isDot:true,
           name: "乌兰巴布尔",
           cid: "13123132",
           jtNumber: "3",
