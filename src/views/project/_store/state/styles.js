@@ -1,8 +1,21 @@
 export const styles = {
   config: {
+    serviceTypeList: [ {
+          value: "选项1",
+          label: "一般困难"
+        },
+        {
+          value: "选项2",
+          label: "困难"
+        },
+        {
+          value: "选项3",
+          label: "特殊困难"
+        }],
     listStyle: {
       data: [
         {
+          dataNo:"123",
           id: 0,
           name: "乌兰巴布尔",
           cid: "13123132",
