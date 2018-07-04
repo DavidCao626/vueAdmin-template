@@ -1,9 +1,9 @@
 export const projectRouter = {
   path: "/project",
-  redirect: "/project/stylesApproval",
+  redirect: "/project/control",
   name: "项目管理",
   component: () => import("../_layout/layout.vue"),
-  meta: { title: "项目管理", icon: "example", hidden: false },
+  meta: { title: "项目控制台", icon: "example", hidden: false },
   children: [
     {
       path: "my",
@@ -79,14 +79,13 @@ export const projectRouter = {
       title: "项目审批",
       component: () => import("../styles/audit/table.vue"),
       meta: { hidden: true }
-    }
-    ,
+    },
     {
       path: "stylesNewTable",
       name: "styles_new_table",
       title: "项目审批3",
       component: () => import("../styles/audit/newTable.vue"),
-      meta: { hidden: true }
+      meta: { hidden: true, title: "预审" }
     }
   ]
 };

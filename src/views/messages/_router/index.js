@@ -3,12 +3,13 @@ export const messagesRouter = {
   redirect: "/messages/announce/list",
   name: "消息管理",
   component: () => import("../_layout/layout.vue"),
-  meta: { title: "消息管理", icon: "example", hidden: false },
   children: [
     {
       path: "announce",
       name: "公告",
       component: () => import("../announce/index"),
+      redirect: "/messages/announce/showlist",
+      meta: { title: "公告" },
       children: [
         {
           path: "add",
@@ -42,6 +43,8 @@ export const messagesRouter = {
       path: "notice",
       name: "公示",
       component: () => import("../notice/index"),
+      redirect: "/messages/notice/showlist",
+      meta: { title: "公告" },
       children: [
         {
           path: "add",
