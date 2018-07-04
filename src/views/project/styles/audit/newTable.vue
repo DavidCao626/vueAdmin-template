@@ -1,5 +1,8 @@
 <template>
-    <div>
+    <page>
+        <div slot="title">
+            班级预审
+        </div>
         <slot name="header">
             <div class="approval-panel" style="">
                 <div style="float: right;    margin-top: 4px;">
@@ -134,7 +137,7 @@
             <el-button type="primary" size="mini" @click="onSubmit">全部保存</el-button>
             <el-button size="mini">提交</el-button>
         </div>
-    </div>
+    </page>
 </template>
 
 <script>
