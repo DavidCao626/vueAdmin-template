@@ -15,7 +15,7 @@
                     </el-button-group>
                 </div>
                 <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
-                    <el-form-item label="业务类别">
+                    <!-- <el-form-item label="业务类别">
                         <el-select v-model="formInline.region" placeholder="筛选类别">
                             <el-option label="全部" value="shanghai"></el-option>
                             <el-option label="贫困建档" value="beijing"></el-option>
@@ -24,13 +24,13 @@
                             <el-option label="学生资助" value="beijing4"></el-option>
                             <el-option label="其他" value="beijing5"></el-option>
                         </el-select>
-                    </el-form-item>
-                    <el-form-item label="相关项目">
+                    </el-form-item> -->
+                    <!-- <el-form-item label="相关项目">
                         <el-autocomplete v-model="state4" :fetch-suggestions="querySearchAsync" placeholder="请输入相关项目名称" @select="handleSelect"></el-autocomplete>
-                    </el-form-item>
-                    <el-form-item label="上报机构">
+                    </el-form-item> -->
+                    <!-- <el-form-item label="上报机构">
                         <el-autocomplete v-model="state4" :fetch-suggestions="querySearchAsync" placeholder="请输入相关项目名称" @select="handleSelect"></el-autocomplete>
-                    </el-form-item>
+                    </el-form-item> -->
                     <el-form-item label="申请人学号">
                         <el-input v-model="formInline.user" placeholder="申请人"></el-input>
                     </el-form-item>
@@ -60,71 +60,57 @@
                 <template v-if="i.isShow">
                     <td>
 
-                        <p  ><el-badge :is-dot="i.isDot" class="item">{{i.name}}</el-badge> {{i.cid}}</p>
+                        <p>
+                            <el-badge :is-dot="i.isDot" class="item">{{i.name}}</el-badge> {{i.cid}}</p>
                     </td>
                     <td>
                         <p>家庭人数{{i.jtNumber}}口，{{i.jtQk}}，{{i.jtisDb=='是'?'低保户':''}}，{{i.jtisDb=='是'?'已建档立卡':''}}，人均月收入{{i.jtsr}}元，月支出{{i.jtzc}}元</p>
                     </td>
                     <td>{{i.sqType}}</td>
                     <td>
-                        <p>互评{{i.huping}}，互评总参与{{i.hupingCount}}人，同意{{i.hupingOk}}人，反对{{i.hupingNo}}人。</p>
+                        {{i.huping}}
                     </td>
                     <td>
-                        组评{{i.zuping}}，组评总参与{{i.zupingCount}}人，同意{{i.zupingOk}}人，反对{{i.zupingNo}}人。
+                        {{i.zuping}}
                     </td>
                 </template>
                 <template v-else>
-                        <td  >
+                    <td>
 
-                            <el-row>
-                                <el-badge :is-dot="i.isDot"   class="item">姓名:{{i.name}}</el-badge> </el-row>
-                            <el-row>
-                                学号:{{i.cid}}
-                            </el-row>
-                        </td>
-                        <td>
-                            <el-row>
-                                <el-col :span="12">家庭人数:{{i.jtNumber}}口</el-col>
-                                <el-col :span="12"> 家庭情况：{{i.jtQk}}</el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :span="12">是否低保户：{{i.jtisDb}}</el-col>
-                                <el-col :span="12">是否建档立卡：{{i.jtisjdlk}}</el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :span="12">人均月收入：{{i.jtsr}}元</el-col>
-                                <el-col :span="12">月支出：{{i.jtzc}}元</el-col>
-                            </el-row>
-                        </td>
-                        <td>{{i.shenqin}}</td>
-                        <td>
-                            <el-row>
-                                <el-col :span="12">互评情况：{{i.huping}}</el-col>
-                                <el-col :span="12">参与总人数：{{i.hupingCount}}人</el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :span="12">同意：{{i.hupingOK}}人</el-col>
-                                <el-col :span="12">反对：{{i.hupingNo}}人</el-col>
-                            </el-row>
-                        </td>
-                        <td>
-                            <el-row>
-                                <el-col :span="12">组评情况：{{i.zuping}}</el-col>
-                                <el-col :span="12">参与总人数：{{i.zupingCount}}人</el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :span="12">同意：{{i.zupingOk}}人</el-col>
-                                <el-col :span="12">反对：{{i.zupingNo}}人</el-col>
-                            </el-row>
-                        </td>
+                        <el-row>
+                            <el-badge :is-dot="i.isDot" class="item">姓名:{{i.name}}</el-badge>
+                        </el-row>
+                        <el-row>
+                            学号:{{i.cid}}
+                        </el-row>
+                    </td>
+                    <td>
+                        <el-row>
+                            <el-col :span="12">家庭人数:{{i.jtNumber}}口</el-col>
+                            <el-col :span="12"> 家庭情况：{{i.jtQk}}</el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="12">是否低保户：{{i.jtisDb}}</el-col>
+                            <el-col :span="12">是否建档立卡：{{i.jtisjdlk}}</el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="12">人均月收入：{{i.jtsr}}元</el-col>
+                            <el-col :span="12">月支出：{{i.jtzc}}元</el-col>
+                        </el-row>
+                    </td>
+                    <td>{{i.shenqin}}</td>
+                    <td>
+                        {{i.huping}}
+                    </td>
+                    <td>
+                        {{i.zuping}}
+
+                    </td>
 
                 </template>
                 <td>
                     <el-radio-group v-model="i.banjipingshen" size="mini">
-                        <el-radio-button label="不困难"></el-radio-button>
-                        <el-radio-button label="一般困难"></el-radio-button>
-                        <el-radio-button label="困难"></el-radio-button>
-                        <el-radio-button label="特殊困难"></el-radio-button>
+                        <el-radio-button v-for="(item,index) in serviceTypeList" :key="index" :label="item.value">{{item.label}}</el-radio-button>
                     </el-radio-group>
                 </td>
 
@@ -132,18 +118,21 @@
 
         </table>
         <div class="approval-panel">
-            <el-pagination background layout="prev, pager, next" :total="1000">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[50, 100, 200, 500]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalRecord">
             </el-pagination>
         </div>
 
-         <div class="approval-panel" style="text-align: center;">
-      <el-button type="primary" size="mini" @click="onSubmit">全部保存</el-button>
-      <el-button size="mini">提交</el-button>
-    </div>
+        <div class="approval-panel" style="text-align: center;">
+            <el-button type="primary" size="mini" @click="onSubmit">全部保存</el-button>
+            <el-button size="mini">提交</el-button>
+        </div>
     </div>
 </template>
 
 <script>
+import dynamicTable from "~/components/DynamicTable";
+import { mapGetters, mapMutations, mapActions } from "vuex";
+import store from "../../_store/index.js";
 export default {
   data() {
     return {
@@ -151,12 +140,17 @@ export default {
         user: "",
         region: ""
       },
+      serviceTypeList: [{ label: "label", value: "value" }],
+      itemId: 0,
+      currentPage: 1,
+      pageSize: 50,
+      totalRecord: 0,
       radio5: "",
       lis: [
         {
           id: 0,
           isShow: true, //控制单条显示状态
-          isDot:true,
+          isDot: true,
           name: "乌兰巴布尔",
           cid: "13123132",
           jtNumber: "3",
@@ -168,65 +162,89 @@ export default {
           sqType: "贫困建档",
           shenqin: "特殊困难",
           banjipingshen: "特殊困难",
-          huping: "通过",
-          hupingCount: 123,
-          hupingOk: 88,
-          hupingNo: 8,
-          zuping: "通过",
-          zupingCount: 123,
-          zupingOk: 88,
-          zupingNo: 8
-        },
-        {
-          id: 1,
-          isShow: true, //控制单条显示状态
-          isDot:true,
-          name: "乌兰巴布尔",
-          cid: "13123132",
-          jtNumber: "3",
-          jtQk: "单亲",
-          jtisDb: "是",
-          jtisjdlk: "是",
-          jtsr: "3000",
-          jtzc: "2800",
-          sqType: "贫困建档",
-          shenqin: "特殊困难",
-          banjipingshen: "特殊困难",
-          huping: "通过",
-          hupingCount: 123,
-          hupingOk: 88,
-          hupingNo: 8,
-          zuping: "通过",
-          zupingCount: 123,
-          zupingOk: 88,
-          zupingNo: 8
-        },
-        {
-          id: 2,
-          isShow: true, //控制单条显示状态
-          isDot:true,
-          name: "乌兰巴布尔",
-          cid: "13123132",
-          jtNumber: "3",
-          jtQk: "单亲",
-          jtisDb: "是",
-          jtisjdlk: "是",
-          jtsr: "3000",
-          jtzc: "2800",
-          sqType: "贫困建档",
-          shenqin: "特殊困难",
-          banjipingshen: "特殊困难",
-          huping: "通过",
-          hupingCount: 123,
-          hupingOk: 88,
-          hupingNo: 8,
-          zuping: "通过",
-          zupingCount: 123,
-          zupingOk: 88,
-          zupingNo: 8
+          huping: "互评结果",
+          zuping: "组评结果"
         }
       ]
     };
+  },
+  methods: {
+    ...mapActions({
+      getClassDataAndPageDataByItemId:
+        store.namespace + "/getClassDataAndPageDataByItemId"
+    }),
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.getData();
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.getData();
+    },
+    onSubmit() {
+      //查询
+      this.currentPage = 1;
+      this.pageSize = 50;
+      this.getData;
+    },
+    getData() {
+      var requestData = {
+        itemId: this.itemId,
+        currentPage: this.currentPage,
+        pageSize: this.pageSize
+      };
+      this.getClassDataAndPageDataByItemId(requestData).then(response => {
+        console.log(["getData", response]);
+        //处理子业务类别。赋给this.serviceTypeList
+        var tSer = (this.serviceTypeList = []);
+        var serTyleList = response.resBody.serviceTypeList;
+        serTyleList.forEach(item => {
+          var ser = {};
+          ser.label = item.classifyName;
+          ser.value = item.classifyCode;
+          tSer.push(ser);
+        });
+
+        //处理表格数据
+        var tempLis =   {
+          id: 0,
+          isShow: true, //控制单条显示状态
+          isDot: true,
+          name: "乌兰巴布尔",
+          cid: "13123132",
+          jtNumber: "3",
+          jtQk: "单亲",
+          jtisDb: "是",
+          jtisjdlk: "是",
+          jtsr: "3000",
+          jtzc: "2800",
+          sqType: "贫困建档",
+          shenqin: "特殊困难",
+          banjipingshen: "特殊困难",
+          huping: "互评结果",
+          zuping: "组评结果"
+        }
+        var baseData = response.resBody.baseData;
+
+
+      });
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      console.log(["to", to]);
+      if (to.query.itemId != null && to.query.itemId != undefined) {
+        vm.itemId = to.query.itemId;
+      } else {
+        if (to.params.itemId != null && to.params.itemId != undefined) {
+          vm.itemId = to.params.itemId;
+        } else {
+          vm.$message.error("参数错误");
+          return;
+        }
+      }
+      vm.getData();
+    });
   }
 };
 </script>
@@ -237,6 +255,9 @@ export default {
 }
 .demo-form-inline .el-form-item {
   margin-bottom: 0px;
+}
+p {
+  font-size: 12px;
 }
 .approval-panel {
   padding: 15px;
@@ -257,7 +278,7 @@ table {
 th {
   background-color: #ebeef5;
   font-weight: 500;
-  font-size: 13px;
+  font-size: 12px;
 }
 td,
 th {
@@ -270,7 +291,7 @@ td {
   background-color: #ffffff;
   border-bottom: #ebeef5 1px solid;
 }
-.showLine{
-      background-color: #ebeef5;
+.showLine {
+  background-color: #ebeef5;
 }
 </style>

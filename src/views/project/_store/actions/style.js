@@ -2,11 +2,10 @@ import api from '../../_api/style.js'
 
 
 
-const getAllDataAndPageDataByItemId = ({ commit, state },params) => new Promise(resolve => {
-    params.currentPage = 1;
-    params.pageSize = 9999999;
+const getClassDataAndPageDataByItemId = ({ commit, state },params) => new Promise(resolve => {
     api.getAllDataAndPageDataByItemId(params).then(response => {
-        commit("setTableDataToDo", response.resBody);
+        //commit("setTableDataToDo", response.resBody);
+        resolve(response)
     })
 })
 
@@ -21,7 +20,7 @@ const completePendByItemId = ({ commit, state }, params) => new Promise(resolve 
     })
 })
 export default {
-    getAllDataAndPageDataByItemId,
+    getClassDataAndPageDataByItemId,
     updateClassRecommend,
     completePendByItemId
 }
