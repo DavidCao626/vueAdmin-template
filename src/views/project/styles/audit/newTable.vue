@@ -15,7 +15,7 @@
                     </el-button-group>
                 </div>
                 <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
-                    <el-form-item label="业务类别">
+                    <!-- <el-form-item label="业务类别">
                         <el-select v-model="formInline.region" placeholder="筛选类别">
                             <el-option label="全部" value="shanghai"></el-option>
                             <el-option label="贫困建档" value="beijing"></el-option>
@@ -30,7 +30,7 @@
                     </el-form-item>
                     <el-form-item label="上报机构">
                         <el-autocomplete v-model="state4" :fetch-suggestions="querySearchAsync" placeholder="请输入相关项目名称" @select="handleSelect"></el-autocomplete>
-                    </el-form-item>
+                    </el-form-item> -->
                     <el-form-item label="申请人学号">
                         <el-input v-model="formInline.user" placeholder="申请人"></el-input>
                     </el-form-item>
@@ -77,25 +77,14 @@
                             </el-form-item>
                             <br/>
 
-                            <el-form-item label="互评参与总数:">
-                                <span>{{ props.row.hupingCount }}</span>
+                            <el-form-item label="互评情况:">
+                                <span>{{ props.row.huping }}</span>
                             </el-form-item>
-                            <el-form-item label="互评同意人数:">
-                                <span>{{ props.row.hupingOk }}</span>
-                            </el-form-item>
-                            <el-form-item label="互评反对人数:">
-                                <span>{{ props.row.hupingNo }}</span>
-                            </el-form-item>
+
                             <br/>
 
-                            <el-form-item label="组评参与总数:">
-                                <span>{{ props.row.zupingCount }}</span>
-                            </el-form-item>
-                            <el-form-item label="组评同意人数:">
-                                <span>{{ props.row.zupingOk }}</span>
-                            </el-form-item>
-                            <el-form-item label="组评反对人数:">
-                                <span>{{ props.row.zupingNo }}</span>
+                            <el-form-item label="组评情况:">
+                                <span>{{ props.row.zuping }}</span>
                             </el-form-item>
 
                         </el-form>
@@ -114,17 +103,14 @@
                 </el-table-column>
                 <el-table-column label="申请贫困等级" prop="shenqin">
                 </el-table-column>
-                <el-table-column label="班级互评结果" prop="huping">
+                <el-table-column label="班级互评" prop="huping">
                 </el-table-column>
-                <el-table-column label="班级组评结果" prop="zuping">
+                <el-table-column label="班级组评" prop="zuping">
                 </el-table-column>
                 <el-table-column label="班主任评审" width="400" fixed="right">
                     <template slot-scope="scope">
                         <el-radio-group v-model="scope.row.banjipingshen" size="mini">
-                            <el-radio label="不困难"></el-radio>
-                            <el-radio label="一般困难"></el-radio>
-                            <el-radio label="困难"></el-radio>
-                            <el-radio label="特殊困难"></el-radio>
+                            <el-radio v-for="(item,index) in serviceTypeList" :key="index" :label="item.value">{{item.label}}</el-radio>
                         </el-radio-group>
                     </template>
                 </el-table-column>
@@ -140,7 +126,7 @@
         </div>
 
         <div class="approval-panel">
-            <el-pagination background layout="prev, pager, next" :total="1000">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[50, 100, 200, 500]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalRecord">
             </el-pagination>
         </div>
 
@@ -152,21 +138,93 @@
 </template>
 
 <script>
+import dynamicTable from "~/components/DynamicTable";
+import { mapGetters, mapMutations, mapActions } from "vuex";
+import store from "../../_store/index.js";
 export default {
-    methods: {
-      filterTag(value, row) {
-          //本页过滤状态
-        return row.isDot === value;
-      }
+  methods: {
+    filterTag(value, row) {
+      //本页过滤状态
+      return row.isDot === value;
     },
+    ...mapActions({
+      getClassDataAndPageDataByItemId:
+        store.namespace + "/getClassDataAndPageDataByItemId"
+    }),
+    handleSizeChange(val) {
+      this.pageSize = val;
+      this.getData();
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.getData();
+    },
+    onSubmit() {
+      //查询
+      this.currentPage = 1;
+      this.pageSize = 50;
+      this.getData;
+    },
+    getData() {
+      var requestData = {
+        itemId: this.itemId,
+        currentPage: this.currentPage,
+        pageSize: this.pageSize
+      };
+      this.getClassDataAndPageDataByItemId(requestData).then(response => {
+        console.log(["getData", response]);
+        //处理子业务类别。赋给this.serviceTypeList
+        var tSer = (this.serviceTypeList = []);
+        var serTyleList = response.resBody.serviceTypeList;
+        serTyleList.forEach(item => {
+          var ser = {};
+          ser.label = item.classifyName;
+          ser.value = item.classifyCode;
+          tSer.push(ser);
+        });
+        //处理分页信息
+        this.totalRecord = response.resBody.pageInfo.totalRecord;
+        //处理表格数据
+        this.data = [];
+        var baseData = response.resBody.baseData;
+        baseData.forEach(item => {
+          var tempLis = {
+              dataNo:0,
+            id: 0,
+            isDot:item.isDispose == "Y"?true:false,
+            name: item.studentName,
+            cid: item.stuNo,
+            jtNumber:item.homePersonCount,
+            jtQk: "单亲",
+            jtisDb: "是",
+            jtisjdlk: "是",
+            jtsr: item.perCapitaIncome,
+            jtzc:item.perCapitalExpenditure,
+            sqType: item.serviceTypeName,
+            shenqin: item.childServiceTypeName,
+            banjipingshen: item.classRecommend,
+            huping: "一段话",
+            zuping: "一段话"
+          };
+
+        });
+      });
+    }
+  },
   data() {
     return {
+      serviceTypeList: [{ label: "label", value: "value" }],
+      itemId: 0,
+      currentPage: 1,
+      pageSize: 50,
+      totalRecord: 0,
       formInline: {
         user: "",
         region: ""
       },
       data: [
         {
+          dataNo: 0,
           id: 0,
           isDot: false,
           name: "乌兰巴布尔",
@@ -181,62 +239,26 @@ export default {
           shenqin: "特殊困难",
           banjipingshen: "特殊困难",
           huping: "通过",
-          hupingCount: 123,
-          hupingOk: 88,
-          hupingNo: 8,
-          zuping: "通过",
-          zupingCount: 123,
-          zupingOk: 88,
-          zupingNo: 8
-        },
-        {
-          id: 1,
-          isDot: true,
-          name: "乌兰巴布尔",
-          cid: "13123132",
-          jtNumber: "3",
-          jtQk: "单亲",
-          jtisDb: "是",
-          jtisjdlk: "是",
-          jtsr: "3000",
-          jtzc: "2800",
-          sqType: "贫困建档",
-          shenqin: "特殊困难",
-          banjipingshen: "特殊困难",
-          huping: "通过",
-          hupingCount: 123,
-          hupingOk: 88,
-          hupingNo: 8,
-          zuping: "通过",
-          zupingCount: 123,
-          zupingOk: 88,
-          zupingNo: 8
-        },
-        {
-          id: 2,
-          isDot: true,
-          name: "乌兰巴布尔",
-          cid: "13123132",
-          jtNumber: "3",
-          jtQk: "单亲",
-          jtisDb: "是",
-          jtisjdlk: "是",
-          jtsr: "3000",
-          jtzc: "2800",
-          sqType: "贫困建档",
-          shenqin: "特殊困难",
-          banjipingshen: "特殊困难",
-          huping: "通过",
-          hupingCount: 123,
-          hupingOk: 88,
-          hupingNo: 8,
-          zuping: "通过",
-          zupingCount: 123,
-          zupingOk: 88,
-          zupingNo: 8
+          zuping: "通过"
         }
       ]
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      console.log(["to", to]);
+      if (to.query.itemId != null && to.query.itemId != undefined) {
+        vm.itemId = to.query.itemId;
+      } else {
+        if (to.params.itemId != null && to.params.itemId != undefined) {
+          vm.itemId = to.params.itemId;
+        } else {
+          vm.$message.error("参数错误");
+          return;
+        }
+      }
+      vm.getData();
+    });
   }
 };
 </script>
