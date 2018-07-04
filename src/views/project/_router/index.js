@@ -84,8 +84,15 @@ export const projectRouter = {
       path: "stylesNewTable",
       name: "styles_new_table",
       title: "项目审批3",
-      component: () => import("../styles/audit/newTable.vue"),
+      component: () => import("../styles/audit/classTable.vue"),
       meta: { hidden: true, title: "预审" }
+    },
+    {
+      path: "stylesCollegeTable",
+      name: "styles_college_table",
+      title: "学院审批",
+      component: () => import("../styles/audit/collegeTable.vue"),
+      meta: { hidden: true, title: "学院审批" }
     }
   ]
 };
