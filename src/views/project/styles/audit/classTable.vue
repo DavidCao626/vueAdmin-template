@@ -1,7 +1,7 @@
 <template>
     <page>
         <div slot="title">
-            班级预审
+            班级审核
         </div>
         <slot name="header">
             <div class="approval-panel" style="">
@@ -268,18 +268,18 @@ export default {
           tempLis.jtdesc += "家庭收入:" + tempLis.jtsr + "元,";
           tempLis.jtdesc += "家庭支出:" + tempLis.jtzc + "元";
           //处理班互评或者组评
-          //   item.groupComment = {
-          //     "201804": 4,
-          //     "201805": 5,
-          //     "201806": 6,
-          //     "201807": 7
-          //   };
-          //   item.eachOtherComment = {
-          //     "201804": 4,
-          //     "201805": 5,
-          //     "201806": 6,
-          //     "201807": 7
-          //   };
+            // item.groupComment = {
+            //   "201804": 4,
+            //   "201805": 5,
+            //   "201806": 6,
+            //   "201807": 7
+            // };
+            // item.eachOtherComment = {
+            //   "201804": 4,
+            //   "201805": 5,
+            //   "201806": 6,
+            //   "201807": 7
+            // };
 
           var _this = this;
 

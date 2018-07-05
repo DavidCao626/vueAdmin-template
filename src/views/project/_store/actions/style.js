@@ -14,7 +14,7 @@ const getCollegeDataAndPageDataByItemId = ({ commit, state }, params) => new Pro
     })
 })
 const getSchoolDataAndPageDataByItemId = ({ commit, state }, params) => new Promise(resolve => {
-    api.getAllDatagetSchoolDataAndPageDataByItemIdAndPageDataByItemId(params).then(response => {
+    api.getSchoolDataAndPageDataByItemId(params).then(response => {
         //commit("setTableDataToDo", response.resBody);
         resolve(response)
     })

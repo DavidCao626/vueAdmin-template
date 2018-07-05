@@ -83,9 +83,9 @@ export const projectRouter = {
     {
       path: "stylesNewTable",
       name: "styles_new_table",
-      title: "项目审批3",
+      title: "班级审批",
       component: () => import("../styles/audit/classTable.vue"),
-      meta: { hidden: true, title: "预审" }
+      meta: { hidden: true, title: "班级审批" }
     },
     {
       path: "stylesCollegeTable",
@@ -93,6 +93,13 @@ export const projectRouter = {
       title: "学院审批",
       component: () => import("../styles/audit/collegeTable.vue"),
       meta: { hidden: true, title: "学院审批" }
+    },
+    {
+      path: "stylesSchoolTable",
+      name: "styles_school_table",
+      title: "学校审批",
+      component: () => import("../styles/audit/schoolTable.vue"),
+      meta: { hidden: true, title: "学校审批" }
     }
   ]
 };
