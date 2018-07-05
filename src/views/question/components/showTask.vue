@@ -2,10 +2,7 @@
   <el-card class="box-card" style="width:800px">
     <div class="showStyleTable">
       	<h3>{{question.description}}</h3>
- 
-
 {{question}}
-
       <el-table :data="tableData6" border>
         <el-table-column prop="id" label="编号" width="180">
         </el-table-column>
@@ -20,7 +17,6 @@
             </el-radio-group>
           </template>
         </el-table-column>
-
       </el-table>
       <br/>
       <el-button type="primary" @click="subForm">提交调查</el-button>
