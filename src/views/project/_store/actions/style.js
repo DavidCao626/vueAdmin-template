@@ -39,6 +39,9 @@ const completePendByItemId = ({ commit, state }, params) => new Promise(resolve 
     api.completePendByItemId(params).then(response => {
     })
 })
+
+
+
 const submitClassData = ({ commit, state }, params) => new Promise(resolve => {
     api.submitClassData(params).then(response => {
         resolve(response)
