@@ -1,13 +1,13 @@
 <template>
-    <div>
-
+    <page :breadcrumb="false">
+        <div slot="title">{{ title }}</div>
         <el-table :data="question.questionLists" style="width: 100%;" size="mini">
 
             <el-table-column type="expand">
                 <template slot-scope="props">
 
                     <el-form label-position="" inline class="demo-table-expand" size="mini">
-                        <template v-for="(item,index) in question.dataFormat">
+                        <template v-for="(item,index) in dataHeader">
                             <template v-if="item.children&&item.children.length>0">
 
                                 <el-form-item :label="item.label+':'">
@@ -15,7 +15,7 @@
                                 <template v-for="(i,indexs) in item.children">
 
                                     <el-form-item :label="i.label">
-                                        <span>{{ i.value }}</span>
+                                        <span>{{ props.row[i.key] }}</span>
                                     </el-form-item>
                                 </template>
 
@@ -23,7 +23,7 @@
                             </template>
                             <template v-else>
                                 <el-form-item :label="item.label">
-                                    <span>{{ item.value }}</span>
+                                    <span>{{ props.row[i.key] }}</span>
                                 </el-form-item>
                             </template>
                         </template>
@@ -32,7 +32,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column v-for="(item,index) in question.dataFormat" :key="index" :label="item.label" :width="item.width" :prop="item.key">
+            <el-table-column v-for="(item,index) in dataHeader" :key="index" :label="item.label" :width="item.width" :prop="item.key">
                 <template v-if="item.children&&item.children.length>0">
                     <el-table-column v-for="(e,index) in item.children" :key="index" :label="e.label" :width="e.width" :prop="e.key">
                     </el-table-column>
@@ -57,17 +57,26 @@
                 </template>
             </el-table-column>
         </el-table>
+        <slot name="footer">
 
-        <div class="approval-panel" style="text-align: center;">
-            <el-button type="primary" size="mini" @click="subForm">提交</el-button>
-        </div>
-    </div>
+        </slot>
+    </page>
 </template>
 
 <script>
 export default {
   data() {
     return {};
+  },
+  props: {
+    title: {
+      type: String,
+      default: ""
+    },
+    dataHeader: {
+      type: Array,
+      default: () => []
+    }
   },
   computed: {
     question: {
@@ -88,23 +97,14 @@ export default {
       deep: true
     }
   },
-  mounted: function() {
-    let taskCode = this.$route.params.taskCode;
 
-    // ajax初始化灌入数据
-    this.$store.dispatch("initQuuestion", taskCode);
-  },
   methods: {
     filterTag(value, row) {
       //本页过滤状态
       return row.isDot === value;
     },
     change(row) {
-     
       row.isDot = true;
-    },
-    subForm() {
-      this.$store.dispatch("subForm");
     }
   }
 };

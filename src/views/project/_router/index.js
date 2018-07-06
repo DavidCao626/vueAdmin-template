@@ -73,7 +73,8 @@ export const projectRouter = {
       component: () => import("../styles/audit/index.vue"),
       meta: { hidden: true }
     },
-    {    path: "configParticipant",
+    {
+      path: "configParticipant",
       name: "configParticipant",
       title: "配置班级参与者",
       component: () => import("../styles/configParticipant/index.vue"),
@@ -139,14 +140,14 @@ export const projectRouter = {
       path: "xyhuping",
       name: "xyhuping",
       title: "学院组评",
-      component: () => import("../styles/xyhuping.vue"),
+      component: () => import("../styles/xyzuping.vue"),
       meta: { hidden: true, title: "学院组评" }
     },
     {
-      path: "xxhuping",
-      name: "xxhuping",
+      path: "xxzuping",
+      name: "xxzuping",
       title: "学校组评",
-      component: () => import("../styles/xxhuping.vue"),
+      component: () => import("../styles/xxzuping.vue"),
       meta: { hidden: true, title: "学校组评" }
     },
     {
