@@ -1,11 +1,6 @@
 <template>
   <div>
     <huping title="学院组评" :dataheader="xyHeradSytle">
-      <div slot="footer">
-        <div class="approval-panel" style="text-align: center;">
-          <el-button type="primary" size="mini" @click="subForm">提交</el-button>
-        </div>
-      </div>
 
     </huping>
   </div>
@@ -28,12 +23,12 @@ export default {
           children: [
             {
               label: "姓名",
-              key: "cname",
+              key: "label",
               width: ""
             },
             {
               label: "学号",
-              key: "cid",
+              key: "code",
               width: ""
             }
           ]
@@ -65,11 +60,6 @@ export default {
       // ajax初始化灌入数据
       vm.$store.dispatch("initQuuestion", taskCode);
     });
-  },
-  methods: {
-    subForm() {
-      this.$store.dispatch("subForm");
-    }
   }
 };
 </script>
