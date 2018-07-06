@@ -20,6 +20,10 @@ const completePendByItemId = ({ commit, state }, params) => new Promise(resolve 
     api.completePendByItemId(params).then(response => {
     })
 })
+
+
+
+
 export default {
     getAllDataAndPageDataByItemId,
     updateClassRecommend,

@@ -2,7 +2,7 @@ import request from '~/utils/request'
 import ajax from '~/utils/ajax'
 
 //附件上传地址
-const uploadAttrUrl = "act/project/uploadAttachment.do"
+const uploadAttrUrl = process.env.BASE_API+"/project/uploadAttachment.do"
 //增加或者更新项目
 const insertOrUpdateProject = data =>
     ajax({

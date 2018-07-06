@@ -6,6 +6,7 @@ import dispense from './dispense.js'
 import consoled from './console.js'
 import projectApply from './projectApply.js'
 import style from './style.js'
+import participant from "./styles/classParticipant.js"
 import _lodash from 'lodash'
 export default _lodash.assign(
   {},
@@ -16,5 +17,6 @@ export default _lodash.assign(
   dispense,
   consoled,
   projectApply,
-  style
-)
+  style,
+  participant
+);

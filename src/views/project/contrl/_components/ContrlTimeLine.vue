@@ -71,7 +71,7 @@
                             <div class="tag-description">已用（{{item.usedHourLong}}小时）</div>
                         </div>
                         <div class="tag-flex tag-flex-direction__column" style="margin-left:20px;">
-                            <el-button type="warning" v-if="item.item.itemType=='manual'"  @click="handle(item)">操作</el-button>
+                            <el-button type="warning" v-if="item.item.itemType=='manual'" size="mini"  @click="handle(item)">操作</el-button>
                             <el-popover placement="top" width="160" :ref="'popover'+item.item.id" v-else >
                                 <p>请输入调整后的天数</p>
                                 <el-input-number style=" margin-top: 10px" size="small" v-model="item.planTimeDay"></el-input-number>
@@ -81,6 +81,7 @@
                                 <el-button type="warning" :disabled="getItemEnableState(item)" size="mini"  slot="reference">调整天数</el-button>
                             </el-popover>
                         </div>
+                         <div  class="tag-flex tag-flex-direction__column" style="margin-left:20px;" > <el-button size="mini" @click="userOperationCompleteItem(item)" type="warning" >立即结束</el-button></div>
                     </div>
                 </td>
             </tr>
@@ -193,7 +194,8 @@ export default {
   methods: {
     ...mapActions({
       updateItemPlanDay: store.namespace + '/updateItemPlanDay',
-      handlerStartWorkItem:store.namespace+"/handlerStartWorkItem"
+      handlerStartWorkItem:store.namespace+"/handlerStartWorkItem",
+      handlerCompleteWorkItem:store.namespace+"/handlerCompleteWorkItem"
     }),
     getItemEnableState: function(item) {
       if (item.item.state === 'S') {
@@ -213,6 +215,9 @@ export default {
     },
     userOperationStartItem(item){
         this.handlerStartWorkItem({ 'itemId': item.item.id})
+    },
+    userOperationCompleteItem(item){
+        this.handlerCompleteWorkItem({'itemId':item.item.id})
     },
     handle: function(item) {
       console.log(item.item.id)

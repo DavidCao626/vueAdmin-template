@@ -72,6 +72,13 @@ export const projectRouter = {
       title: "项目审批",
       component: () => import("../styles/audit/index.vue"),
       meta: { hidden: true }
+    },
+    {
+      path: "configParticipant",
+      name: "configParticipant",
+      title: "配置参与者",
+      component: () => import("../styles/configParticipant/index.vue"),
+       meta: { hidden: false}
     }
   ]
 };
