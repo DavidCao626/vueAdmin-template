@@ -246,7 +246,6 @@ const getters = {
   getQssForStyl: state => {
     var dataFormat = state.qss.dataFormat;
     state.qss.questionLists.forEach((temItem, index) => {
- 
       if (dataFormat && dataFormat.length > 0) {
         dataFormat.forEach(e => {
           if (e.key) {
@@ -391,7 +390,6 @@ const actions = {
         description:
           "欢迎添加调查！答卷数据仅用于统计分析，请放心填写。题目选项无对错之分，按照实际情况选择即可。感谢您的帮助！",
         orgCode: ["100101", "10010101", "1001010101"],
-        
         questionLists: [
           {
             id: 1,
@@ -404,6 +402,7 @@ const actions = {
             label: "王武",
             required: true,
             isDot: false,
+            jtQk: "1231",
             options: [
               {
                 id: 0,
@@ -454,6 +453,7 @@ const actions = {
             label: "王123123123123武",
             required: true,
             isDot: false,
+            jtQk: "63",
             options: [
               {
                 id: 0,
@@ -504,6 +504,7 @@ const actions = {
             label: "李晓明",
             required: true,
             isDot: false,
+            jtQk: "13",
             options: [
               {
                 id: 0,
