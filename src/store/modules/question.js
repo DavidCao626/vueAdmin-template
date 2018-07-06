@@ -402,7 +402,6 @@ const actions = {
             label: "王武",
             required: true,
             isDot: false,
-            jtQk: "1231",
             options: [
               {
                 id: 0,

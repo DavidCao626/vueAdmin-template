@@ -1,7 +1,15 @@
 <template>
-    <div>
-        <huping title="学校组评" :dataheader="xxHeradSytle"></huping>
-    </div>
+  <div>
+    <huping title="学校组评" :dataHeader="xxHeradSytle">
+
+      <div slot="footer">
+        <div class="approval-panel" style="text-align: center;">
+          <el-button type="primary" size="mini" @click="subForm">提交</el-button>
+        </div>
+      </div>
+      
+    </huping>
+  </div>
 </template>
 
 <script>
@@ -51,6 +59,18 @@ export default {
         }
       ]
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      let taskCode = to.params.taskCode;
+      // ajax初始化灌入数据
+      vm.$store.dispatch("initQuuestion", taskCode);
+    });
+  },
+  methods: {
+    subForm() {
+      this.$store.dispatch("subForm");
+    }
   }
 };
 </script>

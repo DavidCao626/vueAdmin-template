@@ -57,10 +57,9 @@
                 </template>
             </el-table-column>
         </el-table>
+        <slot name="footer">
 
-        <div class="approval-panel" style="text-align: center;">
-            <el-button type="primary" size="mini" @click="subForm">提交</el-button>
-        </div>
+        </slot>
     </page>
 </template>
 
@@ -70,50 +69,13 @@ export default {
     return {};
   },
   props: {
-    title:{
-        type:String,
-        default:''
+    title: {
+      type: String,
+      default: ""
     },
     dataHeader: {
       type: Array,
-      default: () => [
-        {
-          label: "申请人情况",
-          key: "",
-          width: "",
-          value: "",
-          children: [
-            {
-              label: "姓名",
-              key: "label",
-              width: ""
-            },
-            {
-              label: "学号",
-              key: "code",
-              width: ""
-            }
-          ]
-        },
-        {
-          label: "家庭情况",
-          prop: "",
-          width: "",
-          data: "",
-          children: [
-            {
-              label: "状况",
-              key: "jtQk",
-              width: ""
-            },
-            {
-              label: "收入",
-              key: "jtdesc",
-              width: ""
-            }
-          ]
-        }
-      ]
+      default: () => []
     }
   },
   computed: {
@@ -135,12 +97,7 @@ export default {
       deep: true
     }
   },
-  mounted: function() {
-    let taskCode = this.$route.params.taskCode;
 
-    // ajax初始化灌入数据
-    this.$store.dispatch("initQuuestion", taskCode);
-  },
   methods: {
     filterTag(value, row) {
       //本页过滤状态
@@ -148,9 +105,6 @@ export default {
     },
     change(row) {
       row.isDot = true;
-    },
-    subForm() {
-      this.$store.dispatch("subForm");
     }
   }
 };

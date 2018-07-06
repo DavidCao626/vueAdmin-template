@@ -129,8 +129,8 @@ export const projectRouter = {
       meta: { hidden: true, title: "学院组评" }
     },
     {
-      path: "xxhuping",
-      name: "xxhuping",
+      path: "xxzuping",
+      name: "xxzuping",
       title: "学校组评",
       component: () => import("../styles/xxzuping.vue"),
       meta: { hidden: true, title: "学校组评" }
