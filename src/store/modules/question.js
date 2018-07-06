@@ -244,14 +244,19 @@ const getters = {
     return state.qss;
   },
   getQssForStyl: state => {
-    state.qss.questionLists.forEach(temItem => {
-      var dataFormat = state.qss.dataFormat;
+    var dataFormat = state.qss.dataFormat;
+    state.qss.questionLists.forEach((temItem, index) => {
+ 
       if (dataFormat && dataFormat.length > 0) {
         dataFormat.forEach(e => {
-          e.key ? (temItem[e.key] = e.value) : null;
+          if (e.key) {
+            temItem[e.key] = "";
+          }
           if (e.children && e.children.length > 0) {
             e.children.forEach(i => {
-              i.key ? (temItem[i.key] = i.value) : null;
+              if (i.key) {
+                temItem[i.key] = "";
+              }
             });
           }
         });
@@ -374,40 +379,173 @@ const actions = {
           }
         }
       }
-     var dataFormat=[  //自定义外观字段例子
-        {
-          label: "申请人情况",
-          key: "",
-          width: "",
-          value: "",
-          children: [
-            { label: "姓名", key: "cname", width: "", value: "汪祥" },
-            { label: "学号", key: "cid", width: "", value: "12311" }
-          ]
-        },
-        {
-          label: "家庭情况",
-          prop: "",
-          width: "",
-          data: "",
-          children: [
-            { label: "状况", key: "jtQk", width: "", value: "单亲" },
-            { label: "收入", key: "jtdesc", width: "", value: "3000" }
-          ]
-       },
-       {
-         label: "学校情况",
-         prop: "",
-         width: "",
-         data: "",
-         children: [
-           { label: "组评", key: "jtQk", width: "", value: "通过" },
-           { label: "预审", key: "jtdesc", width: "", value: "2人" }
-         ]
-       }
-      ]
-      data.resBody.dataFormat = dataFormat;
-      state.qss = data.resBody;
+      //state.qss = data.resBody;
+      var e = {
+        content_type: "application/json",
+        id: null,
+        taskCode: "201807061006703",
+        startTime: null,
+        endTime: null,
+        availabile: null,
+        title: "点击添加问卷名称",
+        description:
+          "欢迎添加调查！答卷数据仅用于统计分析，请放心填写。题目选项无对错之分，按照实际情况选择即可。感谢您的帮助！",
+        orgCode: ["100101", "10010101", "1001010101"],
+        
+        questionLists: [
+          {
+            id: 1,
+            desc: null,
+            code: "201807061006703-180",
+            name: [],
+            type: "radio",
+            availabile: null,
+            updateTime: "2018-07-06",
+            label: "王武",
+            required: true,
+            isDot: false,
+            options: [
+              {
+                id: 0,
+                label: "好",
+                value: "0",
+                type: "radio",
+                availabile: null,
+                updateTime: null,
+                number_Percentage: 0
+              },
+              {
+                id: 0,
+                label: "不好",
+                value: "1",
+                type: "radio",
+                availabile: null,
+                updateTime: null,
+                number_Percentage: 0
+              },
+              {
+                id: 0,
+                label: "还可以",
+                value: "2",
+                type: "radio",
+                availabile: null,
+                updateTime: null,
+                number_Percentage: 0
+              },
+              {
+                id: 0,
+                label: "行的",
+                value: "3",
+                type: "radio",
+                availabile: null,
+                updateTime: null,
+                number_Percentage: 0
+              }
+            ]
+          },
+          {
+            id: 2,
+            desc: null,
+            code: "201807061006703-181",
+            name: [],
+            type: "radio",
+            availabile: null,
+            updateTime: "2018-07-06",
+            label: "王123123123123武",
+            required: true,
+            isDot: false,
+            options: [
+              {
+                id: 0,
+                label: "好",
+                value: "0",
+                type: "radio",
+                availabile: null,
+                updateTime: null,
+                number_Percentage: 0
+              },
+              {
+                id: 0,
+                label: "不好",
+                value: "1",
+                type: "radio",
+                availabile: null,
+                updateTime: null,
+                number_Percentage: 0
+              },
+              {
+                id: 0,
+                label: "还可以",
+                value: "2",
+                type: "radio",
+                availabile: null,
+                updateTime: null,
+                number_Percentage: 0
+              },
+              {
+                id: 0,
+                label: "行的",
+                value: "3",
+                type: "radio",
+                availabile: null,
+                updateTime: null,
+                number_Percentage: 0
+              }
+            ]
+          },
+          {
+            id: 3,
+            desc: null,
+            code: "201807061006703-182",
+            name: [],
+            type: "radio",
+            availabile: null,
+            updateTime: "2018-07-06",
+            label: "李晓明",
+            required: true,
+            isDot: false,
+            options: [
+              {
+                id: 0,
+                label: "好",
+                value: "0",
+                type: "radio",
+                availabile: null,
+                updateTime: null,
+                number_Percentage: 0
+              },
+              {
+                id: 0,
+                label: "不好",
+                value: "1",
+                type: "radio",
+                availabile: null,
+                updateTime: null,
+                number_Percentage: 0
+              },
+              {
+                id: 0,
+                label: "还可以",
+                value: "2",
+                type: "radio",
+                availabile: null,
+                updateTime: null,
+                number_Percentage: 0
+              },
+              {
+                id: 0,
+                label: "行的",
+                value: "3",
+                type: "radio",
+                availabile: null,
+                updateTime: null,
+                number_Percentage: 0
+              }
+            ]
+          }
+        ]
+      };
+      state.qss = e;
     });
   },
   // 提交问卷

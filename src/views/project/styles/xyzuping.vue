@@ -1,6 +1,6 @@
 <template>
     <div>
-        <huping title="班级组评" :dataheader="zupingHeradSytle"></huping>
+        <huping title="学院组评" :dataheader="xyHeradSytle"></huping>
     </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
   },
   data() {
     return {
-      zupingHeradSytle: [
+      xyHeradSytle: [
         {
           label: "申请人情况",
           key: "",

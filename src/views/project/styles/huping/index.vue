@@ -1,13 +1,13 @@
 <template>
-    <div>
-
+    <page :breadcrumb="false">
+        <div slot="title">{{ title }}</div>
         <el-table :data="question.questionLists" style="width: 100%;" size="mini">
 
             <el-table-column type="expand">
                 <template slot-scope="props">
 
                     <el-form label-position="" inline class="demo-table-expand" size="mini">
-                        <template v-for="(item,index) in question.dataFormat">
+                        <template v-for="(item,index) in dataHeader">
                             <template v-if="item.children&&item.children.length>0">
 
                                 <el-form-item :label="item.label+':'">
@@ -32,7 +32,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column v-for="(item,index) in question.dataFormat" :key="index" :label="item.label" :width="item.width" :prop="item.key">
+            <el-table-column v-for="(item,index) in dataHeader" :key="index" :label="item.label" :width="item.width" :prop="item.key">
                 <template v-if="item.children&&item.children.length>0">
                     <el-table-column v-for="(e,index) in item.children" :key="index" :label="e.label" :width="e.width" :prop="e.key">
                     </el-table-column>
@@ -61,13 +61,60 @@
         <div class="approval-panel" style="text-align: center;">
             <el-button type="primary" size="mini" @click="subForm">提交</el-button>
         </div>
-    </div>
+    </page>
 </template>
 
 <script>
 export default {
   data() {
     return {};
+  },
+  props: {
+    title:{
+        type:String,
+        default:''
+    },
+    dataHeader: {
+      type: Array,
+      default: () => [
+        {
+          label: "申请人情况",
+          key: "",
+          width: "",
+          value: "",
+          children: [
+            {
+              label: "姓名",
+              key: "cname",
+              width: ""
+            },
+            {
+              label: "学号",
+              key: "cid",
+              width: ""
+            }
+          ]
+        },
+        {
+          label: "家庭情况",
+          prop: "",
+          width: "",
+          data: "",
+          children: [
+            {
+              label: "状况",
+              key: "jtQk",
+              width: ""
+            },
+            {
+              label: "收入",
+              key: "jtdesc",
+              width: ""
+            }
+          ]
+        }
+      ]
+    }
   },
   computed: {
     question: {
@@ -100,7 +147,6 @@ export default {
       return row.isDot === value;
     },
     change(row) {
-     
       row.isDot = true;
     },
     subForm() {
