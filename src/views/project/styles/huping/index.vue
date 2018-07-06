@@ -15,7 +15,7 @@
                                 <template v-for="(i,indexs) in item.children">
 
                                     <el-form-item :label="i.label">
-                                        <span>{{ i.value }}</span>
+                                        <span>{{ props.row[i.key] }}</span>
                                     </el-form-item>
                                 </template>
 
@@ -23,7 +23,7 @@
                             </template>
                             <template v-else>
                                 <el-form-item :label="item.label">
-                                    <span>{{ item.value }}</span>
+                                    <span>{{ props.row[i.key] }}</span>
                                 </el-form-item>
                             </template>
                         </template>
