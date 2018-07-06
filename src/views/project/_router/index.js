@@ -1,9 +1,9 @@
 export const projectRouter = {
   path: "/project",
-  redirect: "/project/stylesApproval",
+  redirect: "/project/control",
   name: "项目管理",
   component: () => import("../_layout/layout.vue"),
-  meta: { title: "项目管理", icon: "example", hidden: false },
+  meta: { title: "项目控制台", icon: "example", hidden: false },
   children: [
     {
       path: "my",
@@ -59,13 +59,13 @@ export const projectRouter = {
       component: () => import("../styles/studentForm.vue"),
       meta: { hidden: true }
     },
-    // {
-    //   path: "stylesApproval",
-    //   name: "styles_approval",
-    //   title: "项目审批",
-    //   component: () => import("../styles/approval/list.vue"),
-    //   meta: { hidden: true }
-    // },
+    {
+      path: "stylesApproval",
+      name: "styles_approval",
+      title: "项目审批",
+      component: () => import("../styles/approval/list.vue"),
+      meta: { hidden: true }
+    },
     {
       path: "stylesAudit",
       name: "styles_audit",
@@ -73,12 +73,39 @@ export const projectRouter = {
       component: () => import("../styles/audit/index.vue"),
       meta: { hidden: true }
     },
-    {
-      path: "configParticipant",
+    {    path: "configParticipant",
       name: "configParticipant",
       title: "配置参与者",
       component: () => import("../styles/configParticipant/index.vue"),
-       meta: { hidden: false}
+      meta: { hidden: false }
+    },
+    {
+      path: "stylesAuditTable",
+      name: "styles_audit_table",
+      title: "项目审批",
+      component: () => import("../styles/audit/table.vue"),
+      meta: { hidden: true }
+    },
+    {
+      path: "stylesNewTable",
+      name: "styles_new_table",
+      title: "班级审批",
+      component: () => import("../styles/audit/classTable.vue"),
+      meta: { hidden: true, title: "班级审批" }
+    },
+    {
+      path: "stylesCollegeTable",
+      name: "styles_college_table",
+      title: "学院审批",
+      component: () => import("../styles/audit/collegeTable.vue"),
+      meta: { hidden: true, title: "学院审批" }
+    },
+    {
+      path: "stylesSchoolTable",
+      name: "styles_school_table",
+      title: "学校审批",
+      component: () => import("../styles/audit/schoolTable.vue"),
+      meta: { hidden: true, title: "学校审批" }
     }
   ]
 };

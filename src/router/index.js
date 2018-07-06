@@ -27,7 +27,6 @@ export const constantRouterMap = [
     component: stuLayout,
     redirect: "/dashboard",
     name: "home_index",
-    meta: { title: "首页" },
     children: [
       componentsRouter,
       projectRouter,
