@@ -73,7 +73,8 @@ export const projectRouter = {
       component: () => import("../styles/audit/index.vue"),
       meta: { hidden: true }
     },
-    {    path: "configParticipant",
+    {
+      path: "configParticipant",
       name: "configParticipant",
       title: "配置参与者",
       component: () => import("../styles/configParticipant/index.vue"),
