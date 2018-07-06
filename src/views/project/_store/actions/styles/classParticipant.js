@@ -25,5 +25,18 @@ const saveParticipants = ({ commit, state }, data) => {
          console.log(ex);
        });
 }
+const completeUserPendingByItemId = ({ commit, state }, data) => 
+  new Promise((resolve, reject) => {
+    api
+      .completeUserPendingByItemId(data)
+      .then(result => {
+        resolve(result);
+      })
+      .catch(ex => {
+        reject(ex);
+      });
+  });
 
- export default { queryItemParticipant, saveParticipants };
+
+
+export default { queryItemParticipant, saveParticipants, completeUserPendingByItemId};

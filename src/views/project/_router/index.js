@@ -75,8 +75,22 @@ export const projectRouter = {
     },
     {    path: "configParticipant",
       name: "configParticipant",
-      title: "配置参与者",
+      title: "配置班级参与者",
       component: () => import("../styles/configParticipant/index.vue"),
+      meta: { hidden: false }
+    },
+    {
+      path: "collegeParticipant",
+      name: "collegeParticipant",
+      title: "配置学院参与者",
+      component: () => import("../styles/configParticipant/college.vue"),
+      meta: { hidden: false }
+    },
+    {
+      path: "schoolParticipant",
+      name: "schoolParticipant",
+      title: "配置学校参与者",
+      component: () => import("../styles/configParticipant/school.vue"),
       meta: { hidden: false }
     },
     {
@@ -134,6 +148,13 @@ export const projectRouter = {
       title: "学校组评",
       component: () => import("../styles/xxhuping.vue"),
       meta: { hidden: true, title: "学校组评" }
+    },
+    {
+      path: "publicityEdit",
+      name: "publicityEdit",
+      title: "编辑公示",
+      component: () => import("../publicityEdit"),
+      meta: { hidden: true }
     }
   ]
 };

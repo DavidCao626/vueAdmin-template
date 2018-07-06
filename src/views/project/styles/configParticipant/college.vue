@@ -100,7 +100,7 @@ export default {
           .queryItemParticipant({
             scopeId: scopeId,
             itemId: itemId,
-            serviceName: "ClassGroupReview"
+            serviceName: "collegeGroupReview"
           })
           .then(result => {
             vm.source = result.resBody;
