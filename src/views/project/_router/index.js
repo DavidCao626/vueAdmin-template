@@ -100,6 +100,34 @@ export const projectRouter = {
       title: "学校审批",
       component: () => import("../styles/audit/schoolTable.vue"),
       meta: { hidden: true, title: "学校审批" }
+    },
+    {
+      path: "studentHuping",
+      name: "student_Huping",
+      title: "班级互评",
+      component: () => import("../styles/stuhuping.vue"),
+      meta: { hidden: true, title: "班级互评" }
+    },
+    {
+      path: "stuzuping",
+      name: "stuzuping",
+      title: "班级组评",
+      component: () => import("../styles/stuzuping.vue"),
+      meta: { hidden: true, title: "班级组评" }
+    },
+    {
+      path: "xyhuping",
+      name: "xyhuping",
+      title: "学院组评",
+      component: () => import("../styles/xyhuping.vue"),
+      meta: { hidden: true, title: "学院组评" }
+    },
+    {
+      path: "xxhuping",
+      name: "xxhuping",
+      title: "学校组评",
+      component: () => import("../styles/xxhuping.vue"),
+      meta: { hidden: true, title: "学校组评" }
     }
   ]
 };
