@@ -71,11 +71,13 @@ export default {
     ...mapActions({
       queryScopeIntegeratedDateView: store.namespace + '/queryScopeIntegeratedDateView'
     }),
-    showScopeData(){
-      
-
-
-      
+    showScopeData(url){
+      this.$router.push({
+        path:url,
+        query:{
+          scopeId:this.scopeId
+        }
+      })
     },
     showChildScope(){
       console.log(["childScope",this.scopeId])
