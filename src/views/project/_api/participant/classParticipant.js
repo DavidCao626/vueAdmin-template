@@ -16,7 +16,16 @@ const saveParticipants = data => {
     });
 }
 
+const getItemRelaseQuestionCode = data => { 
+  return request({
+    url: "/project/getItemRelaseQuestionCode.do",
+    method: "post",
+    data: data
+  });
+}
+
 export default {
   queryParticipant,
-  saveParticipants
+  saveParticipants,
+  getItemRelaseQuestionCode
 };

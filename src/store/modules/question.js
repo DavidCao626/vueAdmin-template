@@ -244,23 +244,6 @@ const getters = {
     return state.qss;
   },
   getQssForStyl: state => {
-    var dataFormat = state.qss.dataFormat;
-    state.qss.questionLists.forEach((temItem, index) => {
-      if (dataFormat && dataFormat.length > 0) {
-        dataFormat.forEach(e => {
-          if (e.key) {
-            temItem[e.key] = "";
-          }
-          if (e.children && e.children.length > 0) {
-            e.children.forEach(i => {
-              if (i.key) {
-                temItem[i.key] = "";
-              }
-            });
-          }
-        });
-      }
-    });
     return state.qss;
   },
   // 获取stat.qss给外部数据
@@ -378,174 +361,7 @@ const actions = {
           }
         }
       }
-      //state.qss = data.resBody;
-      var e = {
-        content_type: "application/json",
-        id: null,
-        taskCode: "201807061006703",
-        startTime: null,
-        endTime: null,
-        availabile: null,
-        title: "点击添加问卷名称",
-        description:
-          "欢迎添加调查！答卷数据仅用于统计分析，请放心填写。题目选项无对错之分，按照实际情况选择即可。感谢您的帮助！",
-        orgCode: ["100101", "10010101", "1001010101"],
-        questionLists: [
-          {
-            id: 1,
-            desc: null,
-            code: "201807061006703-180",
-            name: [],
-            type: "radio",
-            availabile: null,
-            updateTime: "2018-07-06",
-            label: "王武",
-            required: true,
-            isDot: false,
-            options: [
-              {
-                id: 0,
-                label: "好",
-                value: "0",
-                type: "radio",
-                availabile: null,
-                updateTime: null,
-                number_Percentage: 0
-              },
-              {
-                id: 0,
-                label: "不好",
-                value: "1",
-                type: "radio",
-                availabile: null,
-                updateTime: null,
-                number_Percentage: 0
-              },
-              {
-                id: 0,
-                label: "还可以",
-                value: "2",
-                type: "radio",
-                availabile: null,
-                updateTime: null,
-                number_Percentage: 0
-              },
-              {
-                id: 0,
-                label: "行的",
-                value: "3",
-                type: "radio",
-                availabile: null,
-                updateTime: null,
-                number_Percentage: 0
-              }
-            ]
-          },
-          {
-            id: 2,
-            desc: null,
-            code: "201807061006703-181",
-            name: [],
-            type: "radio",
-            availabile: null,
-            updateTime: "2018-07-06",
-            label: "王123123123123武",
-            required: true,
-            isDot: false,
-            jtQk: "63",
-            options: [
-              {
-                id: 0,
-                label: "好",
-                value: "0",
-                type: "radio",
-                availabile: null,
-                updateTime: null,
-                number_Percentage: 0
-              },
-              {
-                id: 0,
-                label: "不好",
-                value: "1",
-                type: "radio",
-                availabile: null,
-                updateTime: null,
-                number_Percentage: 0
-              },
-              {
-                id: 0,
-                label: "还可以",
-                value: "2",
-                type: "radio",
-                availabile: null,
-                updateTime: null,
-                number_Percentage: 0
-              },
-              {
-                id: 0,
-                label: "行的",
-                value: "3",
-                type: "radio",
-                availabile: null,
-                updateTime: null,
-                number_Percentage: 0
-              }
-            ]
-          },
-          {
-            id: 3,
-            desc: null,
-            code: "201807061006703-182",
-            name: [],
-            type: "radio",
-            availabile: null,
-            updateTime: "2018-07-06",
-            label: "李晓明",
-            required: true,
-            isDot: false,
-            jtQk: "13",
-            options: [
-              {
-                id: 0,
-                label: "好",
-                value: "0",
-                type: "radio",
-                availabile: null,
-                updateTime: null,
-                number_Percentage: 0
-              },
-              {
-                id: 0,
-                label: "不好",
-                value: "1",
-                type: "radio",
-                availabile: null,
-                updateTime: null,
-                number_Percentage: 0
-              },
-              {
-                id: 0,
-                label: "还可以",
-                value: "2",
-                type: "radio",
-                availabile: null,
-                updateTime: null,
-                number_Percentage: 0
-              },
-              {
-                id: 0,
-                label: "行的",
-                value: "3",
-                type: "radio",
-                availabile: null,
-                updateTime: null,
-                number_Percentage: 0
-              }
-            ]
-          }
-        ]
-      };
-      state.qss = e;
+      state.qss = data.resBody;
     });
   },
   // 提交问卷
@@ -557,6 +373,21 @@ const actions = {
       state.qss = data.resBody;
     });
   },
+  subTaskItemQuestionTable(commit, data) { 
+    
+    var questionResult = this.getters["getQssToAjax1"];
+    data["result"] = questionResult;
+    //data['content_type'] = 'application/json'
+    Utils.requestBody(qusApi.submitTaskQuestionResult, data, function(
+      data
+    ) {
+      console.log(data);
+      state.qss = data.resBody;
+    });
+  },
+
+
+
   updetaForm(commit) {
     var data = state.qss;
     data["content_type"] = "application/json";
@@ -567,7 +398,6 @@ const actions = {
   },
   getResultsQuuestion(commit) {
     const ls = localStorage.getItem("taskCode");
-
     if (!ls || ls === undefined) {
       alert("你还没taskcode！");
       return;

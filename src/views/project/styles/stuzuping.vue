@@ -1,6 +1,6 @@
 <template>
   <div>
-    <huping title="班级组评" :dataHeader="zupingHeradSytle">
+    <huping title="小组评议" :dataHeader="hupingHeadSytle">
       <div slot="footer">
         <div class="approval-panel" style="text-align: center;">
           <el-button type="primary" size="mini" @click="subForm">提交</el-button>
@@ -10,61 +10,70 @@
     </huping>
   </div>
 </template>
-
 <script>
 import huping from "./huping/index";
+import commons from '~/utils/common.js'
+import { mapGetters, mapMutations, mapActions } from "vuex";
+import store from "../_store/index.js";
 export default {
   components: {
     huping
   },
   data() {
     return {
-      zupingHeradSytle: [
+      hupingHeadSytle: [
         {
           label: "申请人情况",
           key: "",
           width: "",
-          value: "",
-           children: [
+          children: [
             {
               label: "姓名",
-              key: "label",
+              key: "name",
               width: ""
             },
             {
-              label: "学号",
-              key: "code",
+              label: "机构",
+              key: "orgName",
               width: ""
             }
           ]
         },
         {
           label: "家庭情况",
-          prop: "",
-          width: "",
-          data: "",
-          children: [
-            {
-              label: "状况",
-              key: "jtQk",
-              width: ""
-            },
-            {
-              label: "收入",
-              key: "jtdesc",
-              width: ""
-            }
-          ]
+          key: "serviceTypeName",
+          width: ""
         }
-      ]
+      ],
+      scopeId:null,
+      itemId:null
     };
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      let taskCode = to.params.taskCode;
-      // ajax初始化灌入数据
-      vm.$store.dispatch("initQuuestion", taskCode);
+      const scopeId=commons.getRouterParam(to, 'scopeId');
+      const itemId=commons.getRouterParam(to, 'itemId');
+      if(scopeId==null || itemId==null){
+        console.log("参数错误，请重新输入");
+      }else{
+        vm.scopeId=scopeId;
+        vm.itemId=itemId;
+        vm.getItemRelaseQuestionCode({"scopeId":scopeId,"itemId":itemId}).then(result=>{
+            console.log(result);
+            vm.$store.dispatch("initQuuestion", result.resBody);
+        }).catch(ex=>{
+
+        });
+      }
     });
+  },
+  methods: {
+     ...mapActions({
+      getItemRelaseQuestionCode: store.namespace + "/getItemRelaseQuestionCode"
+    }),
+    subForm() {
+      this.$store.dispatch("subTaskItemQuestionTable",{"scopeId":this.scopeId,"itemId":this.itemId});
+    }
   }
 };
 </script>
