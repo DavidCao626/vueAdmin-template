@@ -25,10 +25,16 @@
                         </p>
                     </div>
                     <div style="display: flex;justify-content: flex-end;">
-                        <el-button style="color:#444;font-weight: 400;" type="text">
+                           <router-link :to="{path:'/project/nodeChild'}" target="_blank">
+              <el-button style="color:#444;font-weight: 400;" type="text">
                             <svg-icon icon-class="seejindu" width="20px" height="20px" />查看子任务进度</el-button>
+          </router-link>
+                      
+                            &nbsp; &nbsp; &nbsp; &nbsp;
+                                     <router-link :to="{path:'/project/nodeData'}" target="_blank">
                         <el-button style="color:#444;font-weight: 400;" type="text">
                             <svg-icon icon-class="seedate" width="20px" height="20px" /> 查看环节数据</el-button>
+                             </router-link>
                     </div>
                 </div>
                 <div class="project-right" style="margin: 30px;display:flex;justify-content:center;flex:1">

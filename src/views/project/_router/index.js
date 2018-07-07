@@ -27,11 +27,21 @@ export const projectRouter = {
       path: "control-home",
       name: "项目控制台首页",
       component: () => import("../contrl.vue")
-    },
+    }, 
     {
       path: "control",
       name: "项目控制台",
       component: () => import("../contrl/index.vue")
+    },
+    {
+      path: "nodeChild",
+      name: "查看项目节点",
+      component: () => import("../contrl/nodeChild.vue")
+    },
+    {
+      path: "nodeData",
+      name: "查看项目数据",
+      component: () => import("../contrl/nodeData.vue")
     },
     {
       path: "config-home",
