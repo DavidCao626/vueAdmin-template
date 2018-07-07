@@ -65,6 +65,8 @@ const getSchoolDataAndPageDataByItemId = data =>
         method: 'post',
         data: data
     })
+
+
 export default {
     getAllDataAndPageDataByItemId,
     getCollegeDataAndPageDataByItemId,

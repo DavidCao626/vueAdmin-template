@@ -35,11 +35,17 @@ const insertOrUpdateAndNext = (data) =>
         data: data
     })
 
-
+const savePublicityEdit = data =>
+    request({
+        url: '/project/savePublicityEdit.do',
+        method: 'post',
+        data: data
+    })
 export default {
     insertOrUpdateProject,
     uploadAttrUrl,
     queryServiceTypeList,
     getProjectById,
-    insertOrUpdateAndNext
+    insertOrUpdateAndNext,
+    savePublicityEdit
 };

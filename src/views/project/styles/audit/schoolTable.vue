@@ -169,7 +169,7 @@ export default {
       this.submitClassData({ itemId: this.itemId }).then(response => {
         this.$message.success("提交成功");
         var scopeId = response.resBody.scopeId;
-        this.$route.push({
+        this.$router.push({
           path: "/project/control",
           query: {
             scopeId: scopeId
