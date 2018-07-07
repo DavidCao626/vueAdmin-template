@@ -1,6 +1,6 @@
 <template>
 	<el-container>
-		<el-aside :width="store.conf.asideWidth" v-show="store.conf.isAside" style="padding:5px 15px;border-right:1px solid #f2f3f4">
+		<el-aside :width="store.conf.asideWidth" v-show="store.conf.isAside" style="width: auto;height: 80vh;border-right: 1px solid rgb(242, 243, 244);background-color:  #fff;">
 			<slot name="aside"></slot>
 		</el-aside>
 		<el-container>
