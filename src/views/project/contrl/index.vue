@@ -27,7 +27,7 @@
                     <div style="display: flex;justify-content: flex-end;">
                         <el-button  @click="showChildScope"  style="color:#444;font-weight: 400;" type="text">
                             <svg-icon icon-class="seejindu" width="20px" height="20px"/>查看子任务进度</el-button>
-                        <el-button @click="showScopeData" style="color:#444;font-weight: 400;" type="text">
+                        <el-button @click="showScopeData(interatedView.viewAction)" style="color:#444;font-weight: 400;" type="text">
                             <svg-icon icon-class="seedate" width="20px" height="20px" /> 查看环节数据</el-button>
                     </div>
                 </div>
@@ -63,7 +63,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      projectInfo: store.namespace + '/getInteratedProjectInfo'
+      projectInfo: store.namespace + '/getInteratedProjectInfo',
+      interatedView: store.namespace + '/getIntegratedView'
     })
   },
   methods: {

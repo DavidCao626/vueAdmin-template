@@ -31,6 +31,7 @@ export const scopeIntegratedView = {
   scopeAllocationedTimeLong: '',
   scopeStillNeededTimeLong: '',
   scopeDelayedTimeLong: '',
+  viewAction:'',
   project: {
     id: '',
     projectSystemCode: '',
