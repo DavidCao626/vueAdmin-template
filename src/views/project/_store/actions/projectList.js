@@ -24,8 +24,23 @@ const getDispenseTaskScopeByProjectCode = ({ commit, state }, params) => new Pro
         resolve(response)
     })
 })
+const getUserScope = ({ commit, state }, params) => new Promise(resolve => {
+    api.getUserScope(params).then(response => {
+        //console.log(["getDispenseTaskScopeByProjectCodeAction", response])
+        resolve(response)
+    })
+})
+const getChildScope = ({ commit, state }, params) => new Promise(resolve => {
+    api.getChildScope(params).then(response => {
+        //console.log(["getDispenseTaskScopeByProjectCodeAction", response])
+        resolve(response)
+    })
+})
+
 export default {
     queryUserProject,
     getDictByDictNames,
-    getDispenseTaskScopeByProjectCode
+    getDispenseTaskScopeByProjectCode,
+    getUserScope,
+    getChildScope
 }

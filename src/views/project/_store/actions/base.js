@@ -48,6 +48,13 @@ const getProjectById = ({ commit, state }, projectId) =>
       commit("setProjectFormData", response.resBody)
     })
   })
+//查询业务类别列表调用mutations赋值给state
+const savePublicityEdit = ({ commit, state },data) =>
+  new Promise(resolve => {
+    api.savePublicityEdit(data).then(response => {
+      resolve(response)
+    })
+  })
 
 
 
@@ -55,5 +62,6 @@ export default {
   insertOrUpdateProject,
   queryServiceTypeList,
   getProjectById,
-  insertOrUpdateAndNext
+  insertOrUpdateAndNext,
+  savePublicityEdit
 }

@@ -25,9 +25,9 @@
                         </p>
                     </div>
                     <div style="display: flex;justify-content: flex-end;">
-                        <el-button style="color:#444;font-weight: 400;" type="text">
-                            <svg-icon icon-class="seejindu" width="20px" height="20px" />查看子任务进度</el-button>
-                        <el-button style="color:#444;font-weight: 400;" type="text">
+                        <el-button  @click="showChildScope"  style="color:#444;font-weight: 400;" type="text">
+                            <svg-icon icon-class="seejindu" width="20px" height="20px"/>查看子任务进度</el-button>
+                        <el-button @click="showScopeData" style="color:#444;font-weight: 400;" type="text">
                             <svg-icon icon-class="seedate" width="20px" height="20px" /> 查看环节数据</el-button>
                     </div>
                 </div>
@@ -57,7 +57,9 @@ export default {
     ProjectScoped
   },
   data() {
-    return {}
+    return {
+      scopeId:0
+    }
   },
   computed: {
     ...mapGetters({
@@ -67,7 +69,19 @@ export default {
   methods: {
     ...mapActions({
       queryScopeIntegeratedDateView: store.namespace + '/queryScopeIntegeratedDateView'
-    })
+    }),
+    showScopeData(){
+      
+    },
+    showChildScope(){
+      console.log(["childScope",this.scopeId])
+      this.$router.push({
+        path:"/project/childScope",
+        query:{
+          scopeId : this.scopeId
+        }
+      })
+    }
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -75,6 +89,7 @@ export default {
       if (scopeId == null) {
         console.log('没有传递scopeid,该页面不能访问')
       } else {
+        vm.scopeId = scopeId;
         vm.queryScopeIntegeratedDateView({ 'scopeId': scopeId })
       }
     })

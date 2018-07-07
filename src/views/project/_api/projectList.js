@@ -25,8 +25,27 @@ const getDispenseTaskScopeByProjectCode = data =>
         data: data
     })
 
+    /**
+     * 
+     * @param {获取用户相关scope} data 
+     */
+const getUserScope = data =>
+    request({
+        url: '/projectApply/getUserScope.do',
+        method: 'post',
+        data: data
+    })
+const getChildScope = data =>
+    request({
+        url: '/projectApply/getChildScope.do',
+        method: 'post',
+        data: data
+    })
+getChildScope
 export default {
     queryUserProject,
     getDictByDictNames,
-    getDispenseTaskScopeByProjectCode
+    getDispenseTaskScopeByProjectCode,
+    getUserScope,
+    getChildScope
 }

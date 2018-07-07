@@ -15,6 +15,12 @@ const saveParticipants = data => {
       data: data
     });
 }
+const completeUserPendingByItemId = data =>
+  request({
+    url: "/project/completeUserPendingByItemId.do",
+    method: "post",
+    data: data
+  })
 
 const getItemRelaseQuestionCode = data => { 
   return request({
@@ -27,5 +33,6 @@ const getItemRelaseQuestionCode = data => {
 export default {
   queryParticipant,
   saveParticipants,
-  getItemRelaseQuestionCode
+  getItemRelaseQuestionCode,
+  completeUserPendingByItemId
 };

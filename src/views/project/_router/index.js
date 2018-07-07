@@ -10,6 +10,16 @@ export const projectRouter = {
       name: "我的项目",
       component: () => import("../myProject"),
       meta: { hidden: false }
+    }, {
+      path: "myScope",
+      name: "与我相关",
+      component: () => import("../myScope"),
+      meta: { hidden: false }
+    }, {
+      path: "childScope",
+      name: "子环节",
+      component: () => import("../childScope"),
+      meta: { hidden: false }
     },
     { path: "todos", name: "我的待办", component: () => import("../myTodos") },
     {
@@ -27,11 +37,21 @@ export const projectRouter = {
       path: "control-home",
       name: "项目控制台首页",
       component: () => import("../contrl.vue")
-    },
+    }, 
     {
       path: "control",
       name: "项目控制台",
       component: () => import("../contrl/index.vue")
+    },
+    {
+      path: "nodeChild",
+      name: "查看项目节点",
+      component: () => import("../contrl/nodeChild.vue")
+    },
+    {
+      path: "nodeData",
+      name: "查看项目数据",
+      component: () => import("../contrl/nodeData.vue")
     },
     {
       path: "config-home",
@@ -76,8 +96,22 @@ export const projectRouter = {
     {
       path: "configParticipant",
       name: "configParticipant",
-      title: "配置参与者",
+      title: "配置班级参与者",
       component: () => import("../styles/configParticipant/index.vue"),
+      meta: { hidden: false }
+    },
+    {
+      path: "collegeParticipant",
+      name: "collegeParticipant",
+      title: "配置学院参与者",
+      component: () => import("../styles/configParticipant/college.vue"),
+      meta: { hidden: false }
+    },
+    {
+      path: "schoolParticipant",
+      name: "schoolParticipant",
+      title: "配置学校参与者",
+      component: () => import("../styles/configParticipant/school.vue"),
       meta: { hidden: false }
     },
     {
@@ -135,6 +169,13 @@ export const projectRouter = {
       title: "学校组评",
       component: () => import("../styles/xxzuping.vue"),
       meta: { hidden: true, title: "学校组评" }
+    },
+    {
+      path: "publicityEdit",
+      name: "publicityEdit",
+      title: "编辑公示",
+      component: () => import("../publicityEdit"),
+      meta: { hidden: true }
     }
   ]
 };

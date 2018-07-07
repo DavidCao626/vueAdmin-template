@@ -24,8 +24,10 @@ const queryUserDonePending =data=>
         data:data
     })
 
+
 export default {
     queryUserPending,
     getDictByDictNames,
     queryUserDonePending
+
 }

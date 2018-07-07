@@ -71,16 +71,40 @@
         </el-table-column>
       </el-table>
     </div>
+
+    <!-- 我的发起的项目 -->
+    <div class="page-box__block">
+      <div class="weui-desktop-home-notice">
+        <div class="weui-desktop-home-notice__info">
+          <a href="#" class="weui-desktop-home-notice__title " style=" font-size: 16px;">
+            与我相关
+          </a>
+         
+        </div>
+        <div class="weui-desktop-home-notice__extra">
+            
+          <router-link :to="{path:'/project/myScope'}" target="_blank" class="weui-desktop-home-notice__readmore">
+            全部
+          </router-link>
+        </div>
+      </div>
+      <br>
+      <myProject></myProject>
+    </div>
+ <!-- 我的发起的项目  end-->
+
   </div>
 </template>
 
 <script>
 import listbody from "./_components/ListBody";
 import { mapGetters, mapActions } from "vuex";
+import myProject from './myProject'
 import moment from "moment";
 export default {
   components: {
-    listbody
+    listbody,
+    myProject
   },
   data() {
     return {
@@ -181,7 +205,8 @@ export default {
         this.$router.push({
           path: row.action,
           query: {
-            itemId: row.item_id
+            itemId: row.item_id,
+            scopeId:row.scope_id
           }
         });
       }

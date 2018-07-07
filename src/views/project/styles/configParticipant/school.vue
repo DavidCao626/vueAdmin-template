@@ -6,7 +6,6 @@
       </div>
       <div slot="panel">
         <div style="margin-bottom:10px">
-          <!--
           <el-row :gutter="10">
             <el-col :span="2" class="input_label">姓名：</el-col>
             <el-col :span="7">
@@ -26,7 +25,6 @@
               <el-button type="primary" size="mini">查询</el-button>
             </el-col>
           </el-row>
-          -->
         </div>
         <transter :source="source" :service-name="serviceName"></transter>
         <div style="margin-top:20px;text-align:right;width:85%">
@@ -102,7 +100,7 @@ export default {
           .queryItemParticipant({
             scopeId: scopeId,
             itemId: itemId,
-            serviceName: "ClassGroupReview"
+            serviceName: "schoolGroupReview"
           })
           .then(result => {
             vm.source = result.resBody;
