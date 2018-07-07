@@ -15,6 +15,11 @@ export const projectRouter = {
       name: "与我相关",
       component: () => import("../myScope"),
       meta: { hidden: false }
+    }, {
+      path: "childScope",
+      name: "子环节",
+      component: () => import("../childScope"),
+      meta: { hidden: false }
     },
     { path: "todos", name: "我的待办", component: () => import("../myTodos") },
     {

@@ -9,6 +9,15 @@ const bashboard = {
 
   },
   actions: {
+    getUserScope: ({ commit, state }) => new Promise(resolve => {
+      var params = {currentPage :1,pageSize:5}
+      api.getUserScope(params).then(response => {
+        //console.log(["getDispenseTaskScopeByProjectCodeAction", response])
+        resolve(response)
+      })
+    }),
+
+
     pullPublicNoticeA: ({ commit, state }) =>
       new Promise(resolve => {
         api.pullPublicNotice({'type':'A','currentPage':1,'pageSize':3}).then(response => {
