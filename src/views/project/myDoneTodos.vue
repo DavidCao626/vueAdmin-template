@@ -78,7 +78,8 @@ export default {
         this.$router.push({
           path:row.action,
           quert:{
-            'itemId':row.item_id
+            'itemId':row.item_id,
+            'scopeId':row.scope_id
           }
         })
       }

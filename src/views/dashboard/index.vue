@@ -77,16 +77,14 @@
       <div class="weui-desktop-home-notice">
         <div class="weui-desktop-home-notice__info">
           <a href="#" class="weui-desktop-home-notice__title " style=" font-size: 16px;">
-            我发起的项目
+            与我相关
           </a>
          
         </div>
         <div class="weui-desktop-home-notice__extra">
-            <router-link :to="{path:'/project/add'}" target="_blank" class="weui-desktop-home-notice__readmore">
-            新建项目
-          </router-link>
+            
           <router-link :to="{path:'/project/my'}" target="_blank" class="weui-desktop-home-notice__readmore">
-            全部项目
+            全部
           </router-link>
         </div>
       </div>
@@ -207,7 +205,8 @@ export default {
         this.$router.push({
           path: row.action,
           query: {
-            itemId: row.item_id
+            itemId: row.item_id,
+            scopeId:row.scope_id
           }
         });
       }

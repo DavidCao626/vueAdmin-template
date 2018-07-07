@@ -10,6 +10,11 @@ export const projectRouter = {
       name: "我的项目",
       component: () => import("../myProject"),
       meta: { hidden: false }
+    }, {
+      path: "myScope",
+      name: "与我相关",
+      component: () => import("../myScope"),
+      meta: { hidden: false }
     },
     { path: "todos", name: "我的待办", component: () => import("../myTodos") },
     {
