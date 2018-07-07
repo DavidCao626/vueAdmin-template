@@ -71,16 +71,42 @@
         </el-table-column>
       </el-table>
     </div>
+
+    <!-- 我的发起的项目 -->
+    <div class="page-box__block">
+      <div class="weui-desktop-home-notice">
+        <div class="weui-desktop-home-notice__info">
+          <a href="#" class="weui-desktop-home-notice__title " style=" font-size: 16px;">
+            我发起的项目
+          </a>
+         
+        </div>
+        <div class="weui-desktop-home-notice__extra">
+            <router-link :to="{path:'/project/add'}" target="_blank" class="weui-desktop-home-notice__readmore">
+            新建项目
+          </router-link>
+          <router-link :to="{path:'/project/my'}" target="_blank" class="weui-desktop-home-notice__readmore">
+            全部项目
+          </router-link>
+        </div>
+      </div>
+      <br>
+      <myProject></myProject>
+    </div>
+ <!-- 我的发起的项目  end-->
+
   </div>
 </template>
 
 <script>
 import listbody from "./_components/ListBody";
 import { mapGetters, mapActions } from "vuex";
+import myProject from './myProject'
 import moment from "moment";
 export default {
   components: {
-    listbody
+    listbody,
+    myProject
   },
   data() {
     return {

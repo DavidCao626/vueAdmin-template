@@ -1,6 +1,6 @@
 <template>
   <page>
-    <div slot="title">我的项目</div>
+    <div slot="title">我的全部项目</div>
     <div slot="panel">
       <div class="panel-control">
         <div class="panel-control__flex">
