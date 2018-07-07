@@ -37,7 +37,7 @@ export const projectRouter = {
       path: "control-home",
       name: "项目控制台首页",
       component: () => import("../contrl.vue")
-    }, 
+    },
     {
       path: "control",
       name: "项目控制台",
@@ -148,6 +148,27 @@ export const projectRouter = {
       title: "班级互评",
       component: () => import("../styles/stuhuping.vue"),
       meta: { hidden: true, title: "班级互评" }
+    },
+    {
+      path: "showClassData",
+      name: "showClassData",
+      title: "班级环节数据",
+      component: () => import("../styles/showScopeData/classTable.vue"),
+      meta: { hidden: true, title: "班级环节数据" }
+    },
+    {
+      path: "showCollegeData",
+      name: "showCollegeData",
+      title: "学院环节数据",
+      component: () => import("../styles/showScopeData/collegeTable.vue"),
+      meta: { hidden: true, title: "学院环节数据" }
+    },
+    {
+      path: "showSchoolData",
+      name: "showSchoolData",
+      title: "学校环节数据",
+      component: () => import("../styles/showScopeData/schoolTable.vue"),
+      meta: { hidden: true, title: "学校环节数据" }
     },
     {
       path: "stuzuping",

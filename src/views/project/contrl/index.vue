@@ -72,6 +72,9 @@ export default {
     }),
     showScopeData(){
       
+
+
+      
     },
     showChildScope(){
       console.log(["childScope",this.scopeId])
