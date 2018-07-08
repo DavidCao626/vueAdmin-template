@@ -1,7 +1,7 @@
 <template>
   <page>
     <div slot="title">
-      学院审核
+      学院环节数据
     </div>
     <slot name="header">
       <div class="approval-panel" style="">
@@ -110,7 +110,8 @@
         </el-table-column>
         <el-table-column label="班级推荐" prop="bjtj" width="80">
         </el-table-column>
-
+<el-table-column label="学院推荐" :formatter="banjiFormatter" width="80" prop="xueyuanpingshen">
+        </el-table-column>
       </el-table>
     </div>
 
@@ -128,6 +129,20 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 import store from "../../_store/index.js";
 export default {
   methods: {
+    banjiFormatter(row, column, cellValue, index) {
+      if (row.isDot == true) {
+        var result="";
+        this.serviceTypeList.forEach(item => {
+          if (item.value == row.xueyuanpingshen) {
+            result=item.label;
+            return false;
+          }
+        });
+        return result;
+      } else{
+        return " ";
+      }
+    },
     filterTag(value, row) {
       //本页过滤状态
       return row.isDot === value;
