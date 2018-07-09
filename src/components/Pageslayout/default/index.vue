@@ -12,7 +12,11 @@
                 <div v-if="this.$root.$route['meta'].hidden  && this.Breadcrumb ">
                     <Breadcrumb></Breadcrumb>
                 </div>
+                <template v-if="$slots.Breadcrumb">
+                    <slot name="Breadcrumb">
 
+                    </slot>
+                </template>
                 <!-- <el-tabs>
                    
                     <el-tab-pane label="用户管理" name="first">{{route}}</el-tab-pane>

@@ -2,9 +2,10 @@
     <div>
         <div class="weui-desktop-home-notice">
             <div class="weui-desktop-home-notice__info">
-
+               <i class="el-icon-tickets" v-if="title=='公告栏'"></i>
+              <i class="el-icon-document" v-else></i>
                 <router-link :to="{path:titleUrl}"  class="weui-desktop-home-notice__title title">
-                    {{title}}
+                    {{ title }}
                 </router-link>
             </div>
             <div class="weui-desktop-home-notice__extra">
@@ -72,7 +73,7 @@ export default {
 .olli {
   margin: 0 20px;
   line-height: 35px;
-  font-size: 15px;
+  font-size: 14px;
   color: #666;
   & small {
     color: #999;

@@ -1,7 +1,15 @@
 <template>
-    <page :Breadcrumb="true">
-        <div slot="title">项目控制台</div>
-        <div slot="panel">
+  <page :Breadcrumb="true">
+    <div slot="title">项目控制台</div>
+    <div slot="Breadcrumb">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>我的项目</el-breadcrumb-item>
+        <el-breadcrumb-item>项目控制台</el-breadcrumb-item>
+        <el-breadcrumb-item>内蒙古大学</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+    <div slot="panel">
 
             <ProjectType :typeName="projectInfo.projectServiceTypeName"></ProjectType>
             <div class="project" style="display:flex;align-items: center;justify-content: space-between;">
@@ -38,17 +46,21 @@
             <ContrlTimeLine></ContrlTimeLine> 
             <br/> <br/> <br/>
         </div>
-    </page>
+      </div>
+      <ContrlTimeLine></ContrlTimeLine>
+      <br/> <br/> <br/>
+    </div>
+  </page>
 
 </template>
 
 <script>
-import ContrlTimeLine from './_components/ContrlTimeLine'
-import ProjectType from './_components/ProjectType'
-import ProjectScoped from './_components/ProjectScoped'
-import commons from '~/utils/common.js'
-import store from '../_store/index.js'
-import { mapActions, mapGetters } from 'vuex'
+import ContrlTimeLine from "./_components/ContrlTimeLine";
+import ProjectType from "./_components/ProjectType";
+import ProjectScoped from "./_components/ProjectScoped";
+import commons from "~/utils/common.js";
+import store from "../_store/index.js";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   components: {
@@ -91,25 +103,25 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      var scopeId = commons.getRouterParam(to, 'scopeId')
+      var scopeId = commons.getRouterParam(to, "scopeId");
       if (scopeId == null) {
-        console.log('没有传递scopeid,该页面不能访问')
+        console.log("没有传递scopeid,该页面不能访问");
       } else {
         vm.scopeId = scopeId;
         vm.queryScopeIntegeratedDateView({ 'scopeId': scopeId })
       }
-    })
+    });
   }
-}
+};
 </script>
 <style>
-.project-name{
+.project-name {
   font-size: 24px;
   color: #444;
   font-weight: 400;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-.project-desc{
+.project-desc {
   font-size: 14px;
   color: #666;
   font-weight: 500;

@@ -20,6 +20,25 @@
             <div class="navbar-account">
 
               <div class="avatar-wrapper">
+                <el-dropdown trigger="hover" size="medium">
+                  <el-badge class="item" :value="messageCount">
+                    <i class="el-icon-sort message" style="transform:rotate(90deg);"></i>
+                  </el-badge>
+                  <el-dropdown-menu class="user-dropdown" slot="dropdown">
+                    <router-link class="inlineBlock" to="/">
+                      <el-dropdown-item>
+                        <i class="el-icon-caret-right"></i>&nbsp; 内蒙古大学
+                      </el-dropdown-item>
+                    </router-link>
+                    <router-link class="inlineBlock" to="/">
+                      <el-dropdown-item>
+                        <i class="el-icon-caret-right"></i>&nbsp; 内蒙古师范大学
+                      </el-dropdown-item>
+                    </router-link>
+                    </el-dropdown-menu>
+                </el-dropdown>
+                &nbsp;&nbsp; &nbsp;&nbsp; 
+
                 <router-link class="inlineBlock" to="/user/messages">
                   <el-badge class="item" :value="messageCount">
                     <i class="el-icon-message message"></i>

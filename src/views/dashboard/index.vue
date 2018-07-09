@@ -2,10 +2,12 @@
   <div class="dashboard">
 
     <div class="page-box">
-      <div class="page-box__2">
+      <div class="page-box__1">
         <div class="page-box__block flex">
           <div class="page-box__1">
-            <listbody title="公告栏" :titleUrl="announceMoreUrl" :data="announceDate"></listbody>
+            <listbody title="公告栏" :titleUrl="announceMoreUrl" :data="announceDate">
+              
+            </listbody>
           </div>
         </div>
 
@@ -21,6 +23,7 @@
     <div class="page-box__block">
       <div class="weui-desktop-home-notice">
         <div class="weui-desktop-home-notice__info">
+          <i class="el-icon-date"></i>
           <a href="#" class="weui-desktop-home-notice__title " style=" font-size: 16px;">
             我未处理的待办
           </a>
@@ -76,6 +79,7 @@
     <div class="page-box__block">
       <div class="weui-desktop-home-notice">
         <div class="weui-desktop-home-notice__info">
+          <i class="el-icon-share"></i>
           <a href="#" class="weui-desktop-home-notice__title " style=" font-size: 16px;">
             与我相关
           </a>
