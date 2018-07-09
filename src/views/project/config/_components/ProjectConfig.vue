@@ -91,7 +91,8 @@
             <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
                 <el-col :span="7">
                     <el-button ref="next" @click="onSave">保存配置</el-button>
-                    <el-button ref="back" @click="onSaveAndNext" type="primary">保存并下发任务</el-button>
+                    <el-button ref="back" v-if="getNextEnable" @click="onSaveAndNext" type="primary">提交并下发任务</el-button>
+                    <el-button ref="return" v-else @click="onSaveAndReturn" type="primary">提交并返回控制台</el-button>
                 </el-col>
             </el-row>
           </div>
@@ -106,7 +107,16 @@ export default {
   data() {
     return {}
   },
+  props:["hasNext"],
   computed: {
+    getNextEnable:function(){
+      console.log(this.hasNext);
+      if(!this.hasNext || this.hasNext==="false"){
+        return false;
+      }else{
+        return true;
+      }
+    },
     ...mapGetters({
       scopeInfo: store.namespace + '/getScopeConfigInfoScope',
       scopeWorkItems: store.namespace + '/getScopeConfigInfoWorkItems',
@@ -136,6 +146,21 @@ export default {
        this.$router.push({
           name: 'project_start',
           params: { scopeId: this.scopeInfo.id, itemId: result.resBody.id }
+        })
+      })
+    },
+    onSaveAndReturn(){
+      console.log('保存并返回控制台!')
+      var planItems = {}
+      for (var i = 0; i < this.scopeWorkItems.length; i++) {
+        var workItem = this.scopeWorkItems[i]
+        planItems[workItem.item.stepKey] = workItem.item.planTimeLong
+      }
+      var itemId = commons.getRouterParam(this.$route, 'itemId')
+      this.updateScopePlanTimeLongAndNext({ 'scopeId': this.scopeInfo.id, 'itemId': itemId, 'planItems': planItems }).then(result => {
+       this.$router.push({
+          name: 'control',
+          params: { scopeId: this.scopeInfo.id}
         })
       })
     },

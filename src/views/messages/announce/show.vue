@@ -6,7 +6,7 @@
         <h2>{{noticeInfo.baseData.title}}</h2>
         <p>发表时间：{{noticeInfo.baseData.publicTime}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布者：{{noticeInfo.baseData.createdUserId}}</p>
       </div>
-      <div class="body" v-html="noticeInfo.baseData.content">
+      <div class="content" v-html="noticeInfo.baseData.content">
       </div>
       <div>
           附件:</br>
@@ -61,9 +61,17 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .body-title {
   text-align: center;
   color: #222;
+}
+.content{
+  border:1px solid red
+}
+
+.content p{
+  line-height:32px;
+  color:red !important;
 }
 </style>

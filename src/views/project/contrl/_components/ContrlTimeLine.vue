@@ -106,7 +106,7 @@
                                 </span>
                               <span v-if="item.item.itemType=='automatic'">计划{{item.planTimeDay}}天</span>
                             </div>
-                            <div class="tag-description" v-if="item.item.itemType=='automatic'">计划开始时间：2017-02-05 22:00 ~ 计划结束时间：2018-07-01 00:00 </div>
+                            <div class="tag-description" v-if="item.item.itemType=='automatic'">计划开始时间：{{item.start==''?'-':item.start}} ~ 计划结束时间：{{item.end==''?'未配置':item.end}} </div>
                         </div>
                         <div class="tag-flex tag-flex-direction__column" style="margin-left:20px;" v-if="item.item.itemType=='automatic'">
 
@@ -147,7 +147,7 @@
                                 </span>
                               <span v-if="item.item.itemType=='automatic'">计划{{item.planTimeDay}}天</span>
                             </div>
-                            <div class="tag-description" v-if="item.item.itemType=='automatic'">计划开始时间：2017-02-05 22:00 ~ 计划结束时间：2018-07-01 00:00 </div>
+                            <div class="tag-description" v-if="item.item.itemType=='automatic'">计划开始时间：{{item.start==''?'-':item.start}} ~ 计划结束时间：{{item.end==''?'未配置':item.end}} </div>
                         </div>
                         <div class="tag-flex tag-flex-direction__column" style="margin-left:20px;" v-if="item.item.itemType=='automatic'">
 

@@ -4,7 +4,7 @@
     <div slot="panel">
       <ProjectAddSteps :active="1"></ProjectAddSteps>
       <br/>
-      <ProjectConfig></ProjectConfig>
+      <ProjectConfig :hasNext="hasNext"></ProjectConfig>
       <br/>
     </div>
   </page>
@@ -16,6 +16,11 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 import commons from '~/utils/common.js'
 import store from '../_store/index.js'
 export default {
+  data(){
+    return {
+      hasNext:true
+    }
+  },
   components: {
     ProjectConfig,
     ProjectAddSteps
@@ -44,6 +49,11 @@ export default {
       if (scopeId == null || itemId == null) {
         console.log('没有传递scopeid and itemId,该页面不能访问')
       } else {
+        //debugger
+        var nextEnable=commons.getRouterParam(to, 'nextEnable');
+        if(nextEnable!=null){
+          vm.hasNext=nextEnable;
+        }
         vm.queryScopeConfigInfo({ 'scopeId': scopeId, 'itemId': itemId })
       }
     })
