@@ -35,11 +35,17 @@ const getUserScope = data =>
         method: 'post',
         data: data
     })
-
-
+const getChildScope = data =>
+    request({
+        url: '/projectApply/getChildScope.do',
+        method: 'post',
+        data: data
+    })
+getChildScope
 export default {
     queryUserProject,
     getDictByDictNames,
     getDispenseTaskScopeByProjectCode,
-    getUserScope
+    getUserScope,
+    getChildScope
 }

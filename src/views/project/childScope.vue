@@ -1,30 +1,25 @@
 <template>
   <page>
-    <div slot="title">与我相关</div>
+    <div slot="title">子环节</div>
     <div slot="panel">
-     
+
       <template>
         <el-table class="i-cursor" @row-click="showDetail" :data="tableData" style="width: 100%">
           <template>
             <el-table-column prop="project.project_name" label="项目名称" min-width="150">
             </el-table-column>
-             <el-table-column prop="project.project_service_type_name" label="业务类别" min-width="150">
+            <el-table-column prop="project.project_service_type_name" label="业务类别" min-width="150">
             </el-table-column>
-             <el-table-column prop="scope.scopeName" label="环节名称" min-width="150">
+            <el-table-column prop="scope.scopeName" label="环节名称" min-width="150">
             </el-table-column>
-             <el-table-column prop="scope.orgName" label="相关组织" min-width="150">
+            <el-table-column prop="scope.orgName" label="相关组织" min-width="150">
             </el-table-column>
-             <el-table-column prop="scope.realStartTime" label="开始时间" min-width="150">
+            <el-table-column prop="scope.realStartTime" label="开始时间" min-width="150">
             </el-table-column>
             <el-table-column prop="scope.scopeState" :formatter="scopeStateFormatter" label="环节状态" min-width="150">
             </el-table-column>
           </template>
         </el-table>
-        <div style="margin-top: 20px">
-          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="dataTotal">
-          </el-pagination>
-          <div class="clearfix"></div>
-        </div>
       </template>
 
     </div>
@@ -33,16 +28,14 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import store from "./_store/index.js";
+import commons from "~/utils/common.js";
 export default {
   data() {
     return {
-      tableData: [
-        {
-         
-        }
-      ],
+      tableData: [],
       dataTotal: 0,
       pageSize: 10,
+      scopeId: 0,
       currentPage: 1
     };
   },
@@ -53,25 +46,25 @@ export default {
   },
   methods: {
     ...mapActions({
-     getUserScope:store.namespace + "/getUserScope"
+      getUserScope: store.namespace + "/getChildScope"
     }),
     showDetail(row, event, column) {
-    this.$router.push({
-      path:"/project/control",
-      query:{
-        scopeId:row.scope.id
-      }
-    })
+      this.$router.push({
+        path: "/project/control",
+        query: {
+          scopeId: row.scope.id
+        }
+      });
     },
     scopeStateFormatter(row, column, cellValue, index) {
-      if(cellValue == "S"){
-        return "开始"
+      if (cellValue == "S") {
+        return "开始";
       }
-      if(cellValue == "F"){
-        return "完成"
+      if (cellValue == "F") {
+        return "完成";
       }
-       if(cellValue == "C"){
-        return "创建"
+      if (cellValue == "C") {
+        return "创建";
       }
     },
     searchData() {
@@ -87,23 +80,35 @@ export default {
       this.queryData();
     },
     queryData() {
-      var requestData = {
-        currentPage:this.currentPage,
-        pageSize:this.pageSize
+      if (
+        this.scopeId == "" ||
+        this.scopeId == undefined ||
+        this.scopeId == null
+      ) {
+        this.$message.error("scopeId为空!");
+        return;
       }
-      this.getUserScope(requestData).then(response=>{
-        console.log(["response",response])
+
+      var requestData = {
+        scopeId: this.scopeId
+      };
+      this.getUserScope(requestData).then(response => {
+        console.log(["response", response]);
         this.tableData = response.resBody.baseData;
-        this.dataTotal = response.resBody.pageInfo.totalRecord
-      })
+        this.dataTotal = response.resBody.pageInfo.totalRecord;
+      });
     }
-  },beforeRouteEnter(to,from,next){
-      next(vm=>{
-          vm.queryData();
-      })
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      var scopeId = commons.getRouterParam(to, "scopeId");
+      vm.scopeId = scopeId;
+
+      vm.queryData();
+    });
   },
   mounted() {
-   // this.queryData();
+    // this.queryData();
   }
 };
 </script>

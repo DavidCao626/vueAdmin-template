@@ -2,39 +2,35 @@
     <page :breadcrumb="false">
         <div slot="title">{{ title }}</div>
         <el-table :data="question.questionLists" style="width: 100%;" size="mini">
-
             <el-table-column type="expand">
                 <template slot-scope="props">
-
                     <el-form label-position="" inline class="demo-table-expand" size="mini">
                         <template v-for="(item,index) in dataHeader">
                             <template v-if="item.children&&item.children.length>0">
 
-                                <el-form-item :label="item.label+':'">
+                                <el-form-item :label="item.label+':'" :key="index">
                                 </el-form-item>
                                 <template v-for="(i,indexs) in item.children">
 
-                                    <el-form-item :label="i.label">
-                                        <span>{{ props.row[i.key] }}</span>
+                                    <el-form-item :label="i.label" :key="indexs">
+                                        <span>{{ props.row.expand[i.key] }}</span>
                                     </el-form-item>
                                 </template>
-
-                                <br/>
+                                </br>
                             </template>
                             <template v-else>
-                                <el-form-item :label="item.label">
-                                    <span>{{ props.row[i.key] }}</span>
+                                <el-form-item :label="item.label" :key="index">
+                                    <span>{{ props.row.expand[item.key] }}</span>
                                 </el-form-item>
                             </template>
                         </template>
-
                     </el-form>
                 </template>
             </el-table-column>
 
-            <el-table-column v-for="(item,index) in dataHeader" :key="index" :label="item.label" :width="item.width" :prop="item.key">
+            <el-table-column v-for="(item,index) in dataHeader" :key="index" :label="item.label" :width="item.width" :prop="item.key" :formatter="expandFormater">
                 <template v-if="item.children&&item.children.length>0">
-                    <el-table-column v-for="(e,index) in item.children" :key="index" :label="e.label" :width="e.width" :prop="e.key">
+                    <el-table-column v-for="(e,index) in item.children" :key="index" :label="e.label" :width="e.width" :prop="e.key"  :formatter="expandFormater" >
                     </el-table-column>
                 </template>
             </el-table-column>
@@ -105,6 +101,9 @@ export default {
     },
     change(row) {
       row.isDot = true;
+    },
+    expandFormater:function(row,column){
+        return row.expand[column.property];
     }
   }
 };

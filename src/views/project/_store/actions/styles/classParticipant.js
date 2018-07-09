@@ -39,4 +39,18 @@ const completeUserPendingByItemId = ({ commit, state }, data) =>
 
 
 
-export default { queryItemParticipant, saveParticipants, completeUserPendingByItemId};
+const getItemRelaseQuestionCode = ({ commit, state }, data) =>
+  new Promise((resolve, reject) => {
+    api
+      .getItemRelaseQuestionCode(data)
+      .then(result => {
+        debugger
+        console.log(result);
+        resolve(result);
+      })
+      .catch(ex => {
+        reject(ex);
+      });
+  });
+
+ export default { queryItemParticipant, saveParticipants, getItemRelaseQuestionCode,completeUserPendingByItemId };

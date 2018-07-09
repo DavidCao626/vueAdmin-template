@@ -87,7 +87,7 @@
         </div>
         <div class="weui-desktop-home-notice__extra">
             
-          <router-link :to="{path:'/project/my'}" target="_blank" class="weui-desktop-home-notice__readmore">
+          <router-link :to="{path:'/project/myScope'}" target="_blank" class="weui-desktop-home-notice__readmore">
             全部
           </router-link>
         </div>
