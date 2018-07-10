@@ -53,6 +53,8 @@
         <div class="project-right" style="margin: 30px;display:flex;justify-content:center;flex:1">
           <ProjectScoped></ProjectScoped>
         </div>
+        </div>
+        </div>
   </page>
 
 </template>
