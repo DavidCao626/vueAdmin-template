@@ -1,5 +1,6 @@
 <template>
-  <nav class="sidebar">
+  <nav class="sidebar" >
+   
     <ul class="sidebar-nav" v-if="navMenu.length">
       <li class="sidebar-item">
         <router-link to="/dashboard" class="sidebar-item__link">
@@ -35,6 +36,11 @@ export default {
   components: { 'sidebar-children': SidebarChildren },
   computed: {
     ...mapGetters(['navMenu'])
+  },
+  data(){
+return {
+  showMenu:true
+}
   },
   mounted: function() {
   }
