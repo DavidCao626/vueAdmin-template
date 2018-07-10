@@ -29,10 +29,6 @@
           -->
         </div>
         <transter :source="source" :service-name="serviceName"></transter>
-        <div style="margin-top:20px;text-align:right;width:85%">
-          <el-button type="primary" size="small" @click="onSubmit">完成配置</el-button>
-          <el-button type="primary" size="small" @click="goBack">返回控制台</el-button>
-        </div>
       </div>
     </page>
   </div>
@@ -61,31 +57,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      queryItemParticipant: store.namespace + "/queryItemParticipant",
-      completeUserPendingByItemId:
-        store.namespace + "/completeUserPendingByItemId"
-    }),
-    onSubmit() {
-      console.log(this)
-      this.completeUserPendingByItemId({ itemId: this.itemId }).then(
-        response => {
-          this.$router.push({
-            path: "/project/control",
-            query: {
-              scopeId: this.scopeId
-            }
-          });
-        }
-      );
-    },
-    goBack() {
-      this.$router.push({
-        path: "/project/control",
-        query: {
-          scopeId: this.scopeId
-        }
-      });
-    }
+      queryItemParticipant: store.namespace + "/queryItemParticipant"
+    })
   },
   beforeRouteEnter(to, from, next) {
     console.log(["to",to])

@@ -7,30 +7,10 @@
       <div slot="panel">
         <div style="margin-bottom:10px">
           <el-row :gutter="10">
-            <el-col :span="2" class="input_label">姓名：</el-col>
-            <el-col :span="7">
-              <el-input autosize focus size="mini">
-                <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-              </el-input>
-            </el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-col :span="2" class="input_label">学号：</el-col>
-            <el-col :span="7">
-              <el-input autosize focus size="mini">
-                <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-              </el-input>
-            </el-col>
-            <el-col :span="2">
-              <el-button type="primary" size="mini">查询</el-button>
-            </el-col>
+            
           </el-row>
         </div>
         <transter :source="source" :service-name="serviceName"></transter>
-        <div style="margin-top:20px;text-align:right;width:85%">
-          <el-button type="primary" size="small" @click="onSubmit">完成配置</el-button>
-          <el-button type="primary" size="small" @click="goBack">返回控制台</el-button>
-        </div>
       </div>
     </page>
   </div>

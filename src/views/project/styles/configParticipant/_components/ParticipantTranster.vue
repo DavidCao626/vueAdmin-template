@@ -2,7 +2,8 @@
   <div>
     <el-transfer  filterable filter-placeholder="请输入搜索关键字" v-model="target" :titles="['待选', '已选']" :data="source">
          <el-button class="transfer-footer" type="danger"  slot="right-footer" size="mini">重置</el-button>
-         <el-button class="transfer-footer" type="primary" slot="right-footer" @click="saveReadyParticipants" size="mini">保存已选</el-button>
+         <el-button class="transfer-footer" type="primary" slot="right-footer" @click="saveReadyParticipants" size="mini">提交配置</el-button>
+         <el-button class="transfer-footer" type="primary" slot="right-footer" @click="returnControlRoot" size="mini">返回控制台</el-button>
     </el-transfer>
   </div>
 </template>
@@ -18,7 +19,7 @@ export default {
       sourceMap:null
     };
   },
-  props: ['source','serviceName'],
+  props: ['source','serviceName','handler'],
   computed:{
       buildSourceMap:function(){
           var that=this;
@@ -52,7 +53,23 @@ export default {
             participants.push(participant);
         });
         submitBean.participants=participants;
-        this.saveParticipants(submitBean);
+        this.saveParticipants(submitBean).then(result=>{
+           this.$router.push({
+            path: "/project/control",
+            query: {
+              "scopeId": scopeId
+            }
+           });
+        });
+    },
+    returnControlRoot:function(){
+        var scopeId= commons.getRouterParam(this.$route, 'scopeId');
+        this.$router.push({
+            path: "/project/control",
+            query: {
+              "scopeId":scopeId
+            }
+        });
     }
   }
 };
