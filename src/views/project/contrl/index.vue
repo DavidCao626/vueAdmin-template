@@ -46,7 +46,6 @@
             <ContrlTimeLine></ContrlTimeLine> 
             <br/> <br/> <br/>
         </div>
-      </div>
   </page>
 
 </template>
