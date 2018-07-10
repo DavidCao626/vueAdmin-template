@@ -6,7 +6,7 @@
         <div class="page-box__block flex">
           <div class="page-box__1">
             <listbody title="公告栏" :titleUrl="announceMoreUrl" :data="announceDate">
-              
+
             </listbody>
           </div>
         </div>
@@ -29,8 +29,9 @@
           </a>
         </div>
         <div class="weui-desktop-home-notice__extra">
-          <router-link :to="{path:'/project/todos'}" target="_blank" class="weui-desktop-home-notice__readmore">
-            全部待办
+         
+          <router-link :to="{path:'/project/todos'}"  class="weui-desktop-home-notice__readmore">
+            更多
           </router-link>
         </div>
       </div>
@@ -83,11 +84,11 @@
           <a href="#" class="weui-desktop-home-notice__title " style=" font-size: 16px;">
             与我相关
           </a>
-         
+
         </div>
         <div class="weui-desktop-home-notice__extra">
-            
-          <router-link :to="{path:'/project/myScope'}" target="_blank" class="weui-desktop-home-notice__readmore">
+
+          <router-link :to="{path:'/project/myScope'}" class="weui-desktop-home-notice__readmore">
             全部
           </router-link>
         </div>
@@ -95,7 +96,7 @@
       <br>
       <myProject></myProject>
     </div>
- <!-- 我的发起的项目  end-->
+    <!-- 我的发起的项目  end-->
 
   </div>
 </template>
@@ -103,7 +104,7 @@
 <script>
 import listbody from "./_components/ListBody";
 import { mapGetters, mapActions } from "vuex";
-import myProject from './myProject'
+import myProject from "./myProject";
 import moment from "moment";
 export default {
   components: {
@@ -210,7 +211,7 @@ export default {
           path: row.action,
           query: {
             itemId: row.item_id,
-            scopeId:row.scope_id
+            scopeId: row.scope_id
           }
         });
       }
