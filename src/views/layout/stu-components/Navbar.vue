@@ -21,35 +21,44 @@
 
               <div class="avatar-wrapper">
                 <el-dropdown trigger="hover" size="medium">
-                  <el-badge class="item" :value="messageCount">
-                    <i class="el-icon-sort message" style="transform:rotate(90deg);"></i>
-                  </el-badge>
+                  <div style="display: inline-flex;flex-direction:column;align-items:center">
+                    <el-badge class="item" >
+                      <i class="el-icon-sort message" style="transform:rotate(90deg);"></i>
+
+                    </el-badge>
+                    <span style="font-size:12px;color:#909399">身份切换</span>
+                  </div>
+
                   <el-dropdown-menu class="user-dropdown" slot="dropdown">
                     <router-link class="inlineBlock" to="/">
                       <el-dropdown-item>
-                        <i class="el-icon-caret-right"></i>&nbsp; 内蒙古大学
+                        <i class="el-icon-caret-right"></i>&nbsp; 03班
                       </el-dropdown-item>
                     </router-link>
                     <router-link class="inlineBlock" to="/">
                       <el-dropdown-item>
-                        <i class="el-icon-caret-right"></i>&nbsp; 内蒙古师范大学
+                        <i class="el-icon-caret-right"></i>&nbsp; 04班
                       </el-dropdown-item>
                     </router-link>
-                    </el-dropdown-menu>
+                  </el-dropdown-menu>
                 </el-dropdown>
-                &nbsp;&nbsp; &nbsp;&nbsp; 
+                &nbsp;&nbsp; &nbsp;&nbsp;
 
                 <router-link class="inlineBlock" to="/user/messages">
-                  <el-badge class="item" :value="messageCount">
-                    <i class="el-icon-message message"></i>
-                  </el-badge>
+                  <div style="display: inline-flex;flex-direction:column;align-items:center">
+                        <el-badge class="item" :value="messageCount">
+                            <i class="el-icon-message message"></i>
+
+                    </el-badge>
+                    <span style="font-size:12px;color:#909399">我的通知</span>
+                  </div>
                 </router-link>
                 &nbsp;&nbsp;
                 <el-dropdown trigger="hover" size="medium">
 
                   <div class="avatar-container">
 
-                    <img :src="avatar" class="user-avatar" />
+                    <img :src="avatar" class="user-avatar" /> 
                     <div class="name">
                       <span class="name__1">{{name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <!-- <span class="name__2">学号：No.01521</span> --><br/>
@@ -185,7 +194,7 @@ export default {
     }
     a:before {
       width: 376.4px;
-      background-image: url("/src/icons/svg/logo.svg");
+      background-image: url("/static/svg/logo.svg");
     }
   }
 
@@ -237,7 +246,8 @@ export default {
     }
     .message {
       padding: 6px;
-      font-size: 24px;
+      margin-bottom:2px;
+      font-size: 14px;
       color: var(--color-grey-light-1);
       border: 1px solid var(--color-grey-light-3);
       border-radius: 50%;

@@ -1,5 +1,8 @@
 <template>
-  <nav class="sidebar">
+  <nav class="sidebar" v-show="showMenu">
+    <div style="position: absolute;top: 80px;left: -10px;opacity: 0.4;" >
+     <el-button @click="showMenu=!showMenu" type="info" size="mini"><i class="el-icon-d-arrow-left"></i><span style="font-size:12px;">收起</span></el-button>
+    </div>
     <ul class="sidebar-nav" v-if="navMenu.length">
       <li class="sidebar-item">
         <router-link to="/dashboard" class="sidebar-item__link">
@@ -35,6 +38,11 @@ export default {
   components: { 'sidebar-children': SidebarChildren },
   computed: {
     ...mapGetters(['navMenu'])
+  },
+  data(){
+return {
+  showMenu:true
+}
   },
   mounted: function() {
   }
