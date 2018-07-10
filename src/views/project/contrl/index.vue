@@ -4,9 +4,7 @@
     <div slot="Breadcrumb">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>我的项目</el-breadcrumb-item>
         <el-breadcrumb-item>项目控制台</el-breadcrumb-item>
-        <el-breadcrumb-item>内蒙古大学</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div slot="panel">

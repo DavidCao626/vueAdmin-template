@@ -61,7 +61,6 @@ export default {
     tableData6(){
       console.log(this.question);
       return 0
-      debugger
     },
     question: {
       get() {
