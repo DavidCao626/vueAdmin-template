@@ -11,44 +11,57 @@
     </div>
     <div slot="panel">
 
-            <ProjectType :typeName="projectInfo.projectServiceTypeName"></ProjectType>
-            <div class="project" style="display:flex;align-items: center;justify-content: space-between;">
-                <div class="project-left" style="margin:30px;">
-                    <div class="project-name">
-                        {{projectInfo.projectName}}
-                    </div>
-                    <div class="project-desc">
-                        <p>
-                            项目开始时间：{{projectInfo.planStartTime}}
-                        </p>
-                        <p>
-                            项目结束时间：{{projectInfo.planCompleteTime}}
-                        </p>
-                         <p>
-                            项目创建机构：{{projectInfo.createdUserOrgName}}
-                        </p>
-                        <p>附件列表:</p>
-                        <p v-for="(attch,index) in projectInfo.files" :key="index">
-                            <a target="_blank" :href="attch.userPath">{{attch.userFileName}}</a>
-                        </p>
-                    </div>
-                    <div style="display: flex;justify-content: flex-end;">
-                        <el-button  @click="showChildScope"  style="color:#444;font-weight: 400;" type="text">
-                            <svg-icon icon-class="seejindu" width="20px" height="20px"/>查看子任务进度</el-button>
-                        <el-button @click="showScopeData(interatedView.viewAction)" style="color:#444;font-weight: 400;" type="text">
-                            <svg-icon icon-class="seedate" width="20px" height="20px" /> 查看环节数据</el-button>
-                    </div>
-                </div>
-                <div class="project-right" style="margin: 30px;display:flex;justify-content:center;flex:1">
-                   <ProjectScoped></ProjectScoped> 
-                </div>
+      <ProjectType :typeName="projectInfo.projectServiceTypeName"></ProjectType>
+      <div class="project" style="display:flex;align-items: center;justify-content: space-between;">
+        <div class="project-left" style="margin:30px;">
+          <div class="project-name">
+            {{projectInfo.projectName}}
+          </div>
+          <div class="project-desc">
+            <p>
+              项目开始时间：{{projectInfo.planStartTime}}
+            </p>
+            <p>
+              项目结束时间：{{projectInfo.planCompleteTime}}
+            </p>
+            <p>
+              项目创建机构：{{projectInfo.createdUserOrgName}}
+            </p>
+            <p>附件列表:</p>
+            <p v-for="(attch,index) in projectInfo.files" :key="index">
+              <a target="_blank" :href="attch.userPath">{{attch.userFileName}}</a>
+            </p>
+          </div>
+          <div style="display: flex;justify-content: flex-end;">
+
+            <div>
+              <el-popover placement="bottom" title="" width="auto" trigger="click">
+                <el-input placeholder="输入关键字进行过滤" v-model="filterText">
+                </el-input>
+
+                <el-tree class="filter-tree" :data="data2" :props="defaultProps" :expand-on-click-node="false"	:filter-node-method="filterNode" ref="tree2">
+                </el-tree>
+
+                <el-button slot="reference"  style="color:#444;font-weight: 400;" type="text">
+                  <svg-icon icon-class="seejindu" width="20px" height="20px" />查看子任务进度</el-button>
+
+              </el-popover>
             </div>
-            <ContrlTimeLine></ContrlTimeLine> 
-            <br/> <br/> <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <el-button @click="showScopeData(interatedView.viewAction)" style="color:#444;font-weight: 400;" type="text">
+              <svg-icon icon-class="seedate" width="20px" height="20px" /> 查看环节数据</el-button>
+          </div>
+        </div>
+        <div class="project-right" style="margin: 30px;display:flex;justify-content:center;flex:1">
+          <ProjectScoped></ProjectScoped>
         </div>
       </div>
       <ContrlTimeLine></ContrlTimeLine>
       <br/> <br/> <br/>
+    </div>
+    </div>
+    <ContrlTimeLine></ContrlTimeLine>
+    <br/> <br/> <br/>
     </div>
   </page>
 
@@ -70,35 +83,100 @@ export default {
   },
   data() {
     return {
-      scopeId:0
-    }
+      scopeId: 0,
+      filterText: "",
+      data2: [
+        {
+          id: 1,
+          label: "一级 1",
+          children: [
+            {
+              id: 4,
+              label: "二级 1-1",
+              children: [
+                {
+                  id: 9,
+                  label: "三级 1-1-1"
+                },
+                {
+                  id: 10,
+                  label: "三级 1-1-2"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: 2,
+          label: "一级 2",
+          children: [
+            {
+              id: 5,
+              label: "二级 2-1"
+            },
+            {
+              id: 6,
+              label: "二级 2-2"
+            }
+          ]
+        },
+        {
+          id: 3,
+          label: "一级 3",
+          children: [
+            {
+              id: 7,
+              label: "二级 3-1"
+            },
+            {
+              id: 8,
+              label: "二级 3-2"
+            }
+          ]
+        }
+      ],
+      defaultProps: {
+        children: "children",
+        label: "label"
+      }
+    };
   },
   computed: {
     ...mapGetters({
-      projectInfo: store.namespace + '/getInteratedProjectInfo',
-      interatedView: store.namespace + '/getIntegratedView'
+      projectInfo: store.namespace + "/getInteratedProjectInfo",
+      interatedView: store.namespace + "/getIntegratedView"
     })
   },
   methods: {
     ...mapActions({
-      queryScopeIntegeratedDateView: store.namespace + '/queryScopeIntegeratedDateView'
+      queryScopeIntegeratedDateView:
+        store.namespace + "/queryScopeIntegeratedDateView"
     }),
-    showScopeData(url){
-      this.$router.push({
-        path:url,
-        query:{
-          scopeId:this.scopeId
-        }
-      })
+    filterNode(value, data) {
+      if (!value) return true;
+      return data.label.indexOf(value) !== -1;
     },
-    showChildScope(){
-      console.log(["childScope",this.scopeId])
+    showScopeData(url) {
       this.$router.push({
-        path:"/project/childScope",
-        query:{
-          scopeId : this.scopeId
+        path: url,
+        query: {
+          scopeId: this.scopeId
         }
-      })
+      });
+    },
+    showChildScope() {
+      console.log(["childScope", this.scopeId]);
+      this.$router.push({
+        path: "/project/childScope",
+        query: {
+          scopeId: this.scopeId
+        }
+      });
+    },
+    watch: {
+      filterText(val) {
+        this.$refs.tree2.filter(val);
+      }
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -108,7 +186,7 @@ export default {
         console.log("没有传递scopeid,该页面不能访问");
       } else {
         vm.scopeId = scopeId;
-        vm.queryScopeIntegeratedDateView({ 'scopeId': scopeId })
+        vm.queryScopeIntegeratedDateView({ scopeId: scopeId });
       }
     });
   }

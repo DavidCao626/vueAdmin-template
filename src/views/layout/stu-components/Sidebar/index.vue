@@ -1,8 +1,6 @@
 <template>
-  <nav class="sidebar" v-show="showMenu">
-    <div style="position: absolute;top: 80px;left: -10px;opacity: 0.4;" >
-     <el-button @click="showMenu=!showMenu" type="info" size="mini"><i class="el-icon-d-arrow-left"></i><span style="font-size:12px;">收起</span></el-button>
-    </div>
+  <nav class="sidebar" >
+   
     <ul class="sidebar-nav" v-if="navMenu.length">
       <li class="sidebar-item">
         <router-link to="/dashboard" class="sidebar-item__link">
