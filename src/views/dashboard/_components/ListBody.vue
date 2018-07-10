@@ -67,8 +67,8 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .line {
-  margin-top: 10px;
-  margin-bottom: 15px;
+  margin-top:5px;
+  margin-bottom: 5px;
 }
 .olli {
   margin: 0 20px;

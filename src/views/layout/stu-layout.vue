@@ -1,29 +1,45 @@
 <template>
 
-  <div class="container" >
+  <div class="container">
     <header class="header">
       <navbar></navbar>
     </header>
     <div class="content">
-      <div class="sidebar-container" v-show="!sidebar" >
-        <sidebar style="height: 80vh;overflow:scroll;overflow-x: hidden;overflow-y: hidden;"></sidebar>
+   <div style="position: absolute;top: 90px;left:-12px;opacity: 0.4;    z-index: 999;">
+         <Sticky >  <el-button @click="sidebar=!sidebar" type="info" size="mini">
+          <i class="el-icon-d-arrow-left" v-if="sidebar"></i>
+          <i class="el-icon-d-arrow-right" v-else></i>
+          <!-- <span style="font-size:12px;" v-if="sidebar">收起</span>
+          <span style="font-size:12px;" v-else>展开</span> -->
+        </el-button></Sticky>
       </div>
-      <main class="main-view " >
-        <app-main class="app-container" ></app-main>
+      <div class="sidebar-container" v-show="sidebar">
+        <!--  style="height: 70vh;overflow:scroll;overflow-x: hidden;overflow-y: auto;" -->
+       <sidebar></sidebar>
+        
+      </div>
+      <main class="main-view ">
+        <app-main class="app-container"></app-main>
 
         <div class="app-container app-footer">
           <div class="app-footer__info">
             <ul>
-              <li><a href="">常见问题</a></li> <li>|</li>
-              <li>关于我们</li><li>|</li>
-              <li>版权说明</li><li>|</li>
-              <li>意见反馈</li><li>|</li>
+              <li>
+                <a href="">常见问题</a>
+              </li>
+              <li>|</li>
+              <li>关于我们</li>
+              <li>|</li>
+              <li>版权说明</li>
+              <li>|</li>
+              <li>意见反馈</li>
+              <li>|</li>
               <li>123-{{sidebar}}</li>
             </ul>
           </div>
-            
+
           <div class="app-footer__ext">
-              Copyright &copy; 2017-2018 Tabler. All Rights Reserved.
+            Copyright &copy; 2017-2018 Tabler. All Rights Reserved.
           </div>
 
         </div>
@@ -33,25 +49,32 @@
 </template>
 
 <script>
-import { Navbar, Sidebar, AppMain } from '~/views/layout/stu-components'
-
+import { Navbar, Sidebar, AppMain } from "~/views/layout/stu-components";
+import Sticky from "~/components/Sticky";
 export default {
-  name: 'layout',
+  name: "layout",
   components: {
     Navbar,
     Sidebar,
-    AppMain
+    AppMain,
+    Sticky
   },
   computed: {
     sidebar() {
-      return this.$root.$route['meta'].hidden
+      return this.$root.$route["meta"].hidden;
     }
+  },
+  data() {
+    return {
+      sidebar: true
+    };
   }
-}
+};
 </script>
 
 <style  lang="scss" >
 //@import "src/styles/main.scss"; // global css
+
 .container {
   min-width: 1300;
   margin: 0 auto;
@@ -66,16 +89,16 @@ export default {
   display: flex;
 }
 .page-component .page-component__nav {
-    width: 240px;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    margin-top: 80px;
-    transition: padding-top .3s;
+  width: 240px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  margin-top: 80px;
+  transition: padding-top 0.3s;
 }
 .el-scrollbar {
-    overflow: hidden;
-    position: relative;
+  overflow: hidden;
+  position: relative;
 }
 .sidebar-container {
   min-width: 250px;
@@ -83,7 +106,7 @@ export default {
 }
 .main-view {
   min-height: calc(100vh - 80px - 71px - 80px);
- // overflow:scroll;overflow-x: hidden;
+  // overflow:scroll;overflow-x: hidden;
   flex: 1;
 }
 

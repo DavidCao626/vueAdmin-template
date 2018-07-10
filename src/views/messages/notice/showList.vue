@@ -9,7 +9,7 @@
                             <strong>{{i.title}}
                                 <i class="icon_common new"></i>
                             </strong>
-                            <span class="read_more">{{i.date}}</span>
+                            <span class="read_more">{{i.publicOrg}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{i.date}}</span>
                         </router-link>
                     </li>
 
@@ -33,24 +33,7 @@ export default {
       pageSize: 10,
       currentPage: 1,
       announceDate: [
-        {
-          title: "标题1",
-          url: "/messages/announce/show",
-          urlParams: { id: 1 },
-          date: "2018-06-01"
-        },
-        {
-          title: "标题2",
-          url: "/messages/announce/show",
-          urlParams: { id: 2 },
-          date: "2018-06-01"
-        },
-        {
-          title: "标题3",
-          url: "/messages/announce/show",
-          urlParams: { id: 3 },
-          date: "2018-06-01"
-        }
+        
       ]
     };
   },
@@ -77,12 +60,14 @@ export default {
             title: "",
             url: "",
             urlParams: {},
-            date: ""
+            date: "",
+            publicOrg:""
           };
           temp.title = element.title;
           temp.url = "/messages/announce/show"; //详情地址
           temp.urlParams = { publicNoticeId: element.id };
           temp.date = element.publicTime;
+           temp.publicOrg = element.publicOrgName;
           this.announceDate.push(temp);
         });
       });

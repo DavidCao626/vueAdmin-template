@@ -112,7 +112,7 @@
                 </el-table-column>
                 <el-table-column label="班主任评审" width="150" fixed="right">
                     <template slot-scope="scope">
-                        <el-select v-model="scope.row.banjipingshen" placeholder="请选择">
+                        <el-select v-model="scope.row.banjipingshen" placeholder="请选择" @change="saveData(scope,$event)">
                             <el-option v-for="(item,index) in serviceTypeList" :key="index" :label="item.label" :value="item.value">
                             </el-option>
                         </el-select>
@@ -135,7 +135,6 @@
         </div>
 
         <div class="approval-panel" style="text-align: center;">
-            <el-button type="primary" size="mini" @click="saveData">保存本页</el-button>
             <el-button size="mini" @click="commitData">提交</el-button>
         </div>
     </page>
@@ -183,19 +182,14 @@ export default {
     
       this.getData();
     },
-    saveData() {
+    saveData(scope,val) {
       //保存数据
+      console.log([scope,val])
       var requestData = {
         itemId: this.itemId,
-        updateData: []
+        dataNo:scope.row.dataNo,
+        recommend:val
       };
-      this.data.forEach(item => {
-        var temp = {
-          dataNo: item.dataNo,
-          recommend: item.banjipingshen
-        };
-        requestData.updateData.push(temp);
-      });
       this.updateClassRecommend(requestData).then(response => {
         this.getData();
       });

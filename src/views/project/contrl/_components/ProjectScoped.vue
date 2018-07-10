@@ -1,33 +1,86 @@
 <template>
-    <div class="box">
-        <div>
-            <svg-icon icon-class="school" width="131px" height="131px" />
-        </div>
-        <div>
-            <p class="scopedName">{{scopeInfo.orgName}}</p>
-        </div>
-        <div>
-            <p>环节开始时间：{{scopeInfo.planStartTime}}</p>
-            <p>环节结束时间：{{scopeInfo.planEndTime}}</p>
-        </div>
+  <div class="box">
+    <div>
+      <svg-icon icon-class="school" width="131px" height="131px" />
     </div>
+    <div>
+      <p class="scopedName">{{ scopeInfo.orgName }}</p>
+    </div>
+    <div>
+      <p>环节开始时间：{{scopeInfo.planStartTime}}</p>
+      <p>环节结束时间：{{scopeInfo.planEndTime}}</p>
+    </div>
+  
+  </div>
 </template>
 <script>
-import commons from '~/utils/common.js'
-import store from '../../_store/index.js'
-import { mapActions, mapGetters } from 'vuex'
+import commons from "~/utils/common.js";
+import store from "../../_store/index.js";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
-  data() {
-    return {}
-  },
   computed: {
     ...mapGetters({
-      scopeInfo: store.namespace + '/getInteratedScopeInfo'
+      scopeInfo: store.namespace + "/getInteratedScopeInfo"
     })
   },
-  methods: {
-  }
+    watch: {
+      filterText(val) {
+        this.$refs.tree2.filter(val);
+      }
+    },
+
+    methods: {
+      filterNode(value, data) {
+        if (!value) return true;
+        return data.label.indexOf(value) !== -1;
+      }
+    },
+     data() {
+      return {
+        filterText: '',
+        data2: [{
+          id: 1,
+          label: '一级 1',
+          children: [{
+            id: 4,
+            label: '二级 1-1',
+            children: [{
+              id: 9,
+              label: '三级 1-1-1'
+            }, {
+              id: 10,
+              label: '三级 1-1-2'
+            }]
+          }]
+        }, {
+          id: 2,
+          label: '一级 2',
+          children: [{
+            id: 5,
+            label: '二级 2-1'
+          }, {
+            id: 6,
+            label: '二级 2-2'
+          }]
+        }, {
+          id: 3,
+          label: '一级 3',
+          children: [{
+            id: 7,
+            label: '二级 3-1'
+          }, {
+            id: 8,
+            label: '二级 3-2'
+          }]
+        }],
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        }
+      };
+    }
+
 };
 </script>
 

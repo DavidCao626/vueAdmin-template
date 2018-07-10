@@ -5,6 +5,8 @@
       <div slot="panel">
         <h2>{{formTitle}}</h2>
         <hr/>
+        <div>项目名称：{{resData.projectData.projectName}}</div>
+        <div>项目类别：{{resData.projectData.projectServiceTypeName}}</div>
         <!-- <h4 v-if="formDesc">
                     填写要求：
                     <div>{{formDesc}}</div>
@@ -156,6 +158,7 @@ export default {
           vm.itemId = itemId;
           vm.getApplyData({ itemId: itemId }).then(response => {
             var resp = response.resBody;
+            vm.resData = resp;
             vm.projectSystemCode = resp.projectData.projectSystemCode;
             vm.formTitle = resp.projectData.projectName + "申请表";
             //附件
@@ -248,6 +251,7 @@ export default {
   },
   data() {
     return {
+      resData:{},
       itemId: "",
       projectSystemCode: "",
       formTitle: "2017年贫困建档07级项目" + "申请表",

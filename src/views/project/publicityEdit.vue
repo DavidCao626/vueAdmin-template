@@ -27,7 +27,9 @@ export default {
   computed: {},
   methods: {
     ...mapActions({
-      savePublicityEdit: store.namespace + "/savePublicityEdit"
+      savePublicityEdit: store.namespace + "/savePublicityEdit",
+      completeUserPendingByItemId:
+        store.namespace + "/completeUserPendingByItemId"
     }),
 
     tempBtn() {
@@ -39,15 +41,17 @@ export default {
         itemId: this.itemId,
         content: this.content
       }).then(response => {
-        console.log(this);
-        this.$router.push(
-          {
-            path:"/project/control",
-            query:{
-              scopeId:response.resBody.scopeId
-            }
+        this.completeUserPendingByItemId({ itemId: this.itemId }).then(
+          response => {
+            console.log(["this", this]);
+            this.$router.push({
+              path: "/project/control",
+              query: {
+                scopeId: response.resBody.scopeId
+              }
+            });
           }
-        )
+        );
       });
     }
   },

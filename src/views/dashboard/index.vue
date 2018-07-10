@@ -6,7 +6,7 @@
         <div class="page-box__block flex">
           <div class="page-box__1">
             <listbody title="公告栏" :titleUrl="announceMoreUrl" :data="announceDate">
-              
+
             </listbody>
           </div>
         </div>
@@ -25,12 +25,12 @@
         <div class="weui-desktop-home-notice__info">
           <i class="el-icon-date"></i>
           <a href="#" class="weui-desktop-home-notice__title " style=" font-size: 16px;">
-            我未处理的待办
+            我的待办
           </a>
         </div>
         <div class="weui-desktop-home-notice__extra">
-          <router-link :to="{path:'/project/todos'}" target="_blank" class="weui-desktop-home-notice__readmore">
-            全部待办
+          <router-link :to="{path:'/project/todos'}"  class="weui-desktop-home-notice__readmore">
+            更多
           </router-link>
         </div>
       </div>
@@ -42,20 +42,20 @@
         </el-table-column>
         <el-table-column prop="over_time" label="结束时间" min-width="120">
         </el-table-column> -->
-        <el-table-column prop="projectInfo.project_name" label="项目名称" min-width="120">
+        <el-table-column prop="projectInfo.project_name" label="项目名称" min-width="180">
         </el-table-column>
         <el-table-column prop="projectInfo.project_service_type_name" label="业务类别" min-width="100">
         </el-table-column>
         <!-- <el-table-column prop="scope_name" label="待办来源" min-width="80">
           </el-table-column> -->
-        <el-table-column prop="org_name" label="组织" min-width="80">
-        </el-table-column>
-        <el-table-column prop="item_name" label="待办名称" min-width="80">
+        <!-- <el-table-column prop="org_name" label="组织" min-width="80">
+        </el-table-column> -->
+        <el-table-column prop="item_name" label="待办事项" min-width="80">
         </el-table-column>
         <!-- <el-table-column prop="state" :formatter="stateFormatter" label="状态" min-width="80">
           </el-table-column> -->
-        <el-table-column prop="pending_type" :formatter="typeFormatter" label="类型" min-width="80">
-        </el-table-column>
+        <!-- <el-table-column prop="pending_type" :formatter="typeFormatter" label="类型" min-width="80">
+        </el-table-column> -->
         <!-- <el-table-column prop="real_start_time" label="开始时间" min-width="120">
           </el-table-column> -->
         <el-table-column prop="over_time" label="结束时间" :formatter="overTimeFormatter" min-width="120">
@@ -67,11 +67,11 @@
           </el-table-column> -->
         <!-- <el-table-column prop="state" :formatter="stateFormatter" label="状态" min-width="80">
           </el-table-column> -->
-        <el-table-column label="操作" min-width="100">
+        <!-- <el-table-column label="操作" min-width="100">
           <template slot-scope="scope">
             <el-button size="mini" @click="goShowTodo(scope.row)">查看</el-button>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
     </div>
 
@@ -81,21 +81,21 @@
         <div class="weui-desktop-home-notice__info">
           <i class="el-icon-share"></i>
           <a href="#" class="weui-desktop-home-notice__title " style=" font-size: 16px;">
-            与我相关
+            任务列表
           </a>
-         
+
         </div>
         <div class="weui-desktop-home-notice__extra">
             
-          <router-link :to="{path:'/project/myScope'}" target="_blank" class="weui-desktop-home-notice__readmore">
-            全部
+          <router-link :to="{path:'/project/myScope'}"  class="weui-desktop-home-notice__readmore">
+            更多
           </router-link>
         </div>
       </div>
       <br>
       <myProject></myProject>
     </div>
- <!-- 我的发起的项目  end-->
+    <!-- 我的发起的项目  end-->
 
   </div>
 </template>
@@ -103,7 +103,7 @@
 <script>
 import listbody from "./_components/ListBody";
 import { mapGetters, mapActions } from "vuex";
-import myProject from './myProject'
+import myProject from "./myProject";
 import moment from "moment";
 export default {
   components: {
@@ -115,64 +115,13 @@ export default {
       announceMoreUrl: "/messages/announce/showlist",
       noticeMoreUrl: "/messages/notice/showlist",
       announceDate: [
-        {
-          title: "标题1",
-          url: "/messages/announce/show",
-          urlParams: { id: 1 },
-          date: "2018-06-01"
-        },
-        {
-          title: "标题2",
-          url: "/messages/announce/show",
-          urlParams: { id: 2 },
-          date: "2018-06-01"
-        },
-        {
-          title: "标题3",
-          url: "/messages/announce/show",
-          urlParams: { id: 3 },
-          date: "2018-06-01"
-        }
+       
       ],
       noticeDate: [
-        {
-          title: "公示1",
-          url: "/messages/notice/show",
-          urlParams: { nid: 1 },
-          date: "2018-06-01"
-        },
-        {
-          title: "公示2",
-          url: "/messages/notice/show",
-          urlParams: { nid: 2 },
-          date: "2018-06-01"
-        },
-        {
-          title: "公示3",
-          url: "/messages/notice/show",
-          urlParams: { nid: 3 },
-          date: "2018-06-01"
-        }
+        
       ],
       tableData: [
-        {
-          id: 1,
-          date: "2016-05-02",
-          type: "贫困建档",
-          name: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          id: 2,
-          date: "2016-05-04",
-          type: "贫困建档",
-          name: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          id: 3,
-          date: "2016-05-01",
-          type: "学生填表",
-          name: "上海市普陀区金沙江路 1519 弄"
-        }
+        
       ]
     };
   },
@@ -194,7 +143,7 @@ export default {
       if (date == undefined) {
         return "";
       }
-      return moment(date).format("YYYY-MM-DD HH:mm:ss");
+      return  moment(date,"yyyy-MM-DD HH:mm:ss").format("MM-DD HH:mm")
       //return date;
     },
     onRowClick(row, event, column) {
@@ -210,7 +159,7 @@ export default {
           path: row.action,
           query: {
             itemId: row.item_id,
-            scopeId:row.scope_id
+            scopeId: row.scope_id
           }
         });
       }
@@ -251,7 +200,7 @@ export default {
           temp.title = element.title;
           temp.url = "/messages/announce/show"; //详情地址
           temp.urlParams = { publicNoticeId: element.id };
-          temp.date = element.publicTime;
+          temp.date = moment(element.publicTime,"yyyy-MM-DD HH:mm:ss").format("MM-DD HH:mm")
           vm.announceDate.push(temp);
         });
       });
@@ -269,7 +218,7 @@ export default {
           temp.title = element.title;
           temp.url = "/messages/notice/show"; //详情地址
           temp.urlParams = { publicNoticeId: element.id };
-          temp.date = element.publicTime;
+          temp.date =  moment(element.publicTime,"yyyy-MM-DD HH:mm:ss").format("MM-DD HH:mm")
           vm.noticeDate.push(temp);
         });
       });
