@@ -16,15 +16,24 @@ const queryItemParticipant = ({ commit, state }, data) =>
       });
   });
 
-const saveParticipants = ({ commit, state }, data) => { 
-     api.saveParticipants(data)
-       .then(result => {
-         console.log(result);
-       })
-       .catch(ex => {
-         console.log(ex);
-       });
-}
+const saveParticipants = ({ commit, state, vm }, data) => new Promise((resolve, reject) => {
+  debugger
+  api.saveParticipants(data)
+    .then(result => {
+      debugger;
+      api
+        .completeUserPendingByItemId({ "itemId": data.itemId })
+        .then(result => {
+          resolve(result);  
+        })
+        .catch(ex => {
+          reject(ex);
+        });
+    })
+    .catch(ex => {
+      reject(ex);
+    });
+});
 const completeUserPendingByItemId = ({ commit, state }, data) => 
   new Promise((resolve, reject) => {
     api
@@ -36,8 +45,6 @@ const completeUserPendingByItemId = ({ commit, state }, data) =>
         reject(ex);
       });
   });
-
-
 
 const getItemRelaseQuestionCode = ({ commit, state }, data) =>
   new Promise((resolve, reject) => {
