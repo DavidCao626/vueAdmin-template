@@ -67,12 +67,12 @@ export default {
         state: "A",
         type: "A"
       },
-      typeList: [
+      stateList: [
         { label: "全部", value: "A" },
         { label: "已处理", value: "F" },
         { label: "未处理", value: "N" }
       ],
-      stateList: [
+      typeList  : [
         { label: "全部", value: "A" },
         { label: "工序", value: "Popular" },
         { label: "任务", value: "Item" }
