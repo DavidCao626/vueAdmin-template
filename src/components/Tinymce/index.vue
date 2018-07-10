@@ -4,6 +4,7 @@
     <div class="editor-custom-btn-container">
       <editorImage color="#1890ff" class="editor-upload-btn" @successCBK="imageSuccessCBK"></editorImage>
     </div>
+     <!-- <script src=<%= htmlWebpackPlugin.options.path %>/static/tinymce4.7.5/tinymce.min.js></script> -->
   </div>
 </template>
 
@@ -11,7 +12,7 @@
 import editorImage from './components/editorImage'
 import plugins from './plugins'
 import toolbar from './toolbar'
-
+import '~/../static/tinymce4.7.5/tinymce.min.js'
 export default {
   name: 'tinymce',
   components: { editorImage },

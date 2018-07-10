@@ -5,16 +5,18 @@
       <navbar></navbar>
     </header>
     <div class="content">
-      <div style="position: absolute;top: 90px;left:-12px;opacity: 0.4;">
-        <el-button @click="sidebar=!sidebar" type="info" size="mini">
+   <div style="position: absolute;top: 90px;left:-12px;opacity: 0.4;    z-index: 999;">
+         <Sticky >  <el-button @click="sidebar=!sidebar" type="info" size="mini">
           <i class="el-icon-d-arrow-left" v-if="sidebar"></i>
-           <i class="el-icon-d-arrow-right" v-else></i>
+          <i class="el-icon-d-arrow-right" v-else></i>
           <!-- <span style="font-size:12px;" v-if="sidebar">收起</span>
           <span style="font-size:12px;" v-else>展开</span> -->
-        </el-button>
+        </el-button></Sticky>
       </div>
       <div class="sidebar-container" v-show="sidebar">
-        <sidebar style="height: 80vh;overflow:scroll;overflow-x: hidden;overflow-y: hidden;"></sidebar>
+        <!--  style="height: 70vh;overflow:scroll;overflow-x: hidden;overflow-y: auto;" -->
+       <sidebar></sidebar>
+        
       </div>
       <main class="main-view ">
         <app-main class="app-container"></app-main>
@@ -47,32 +49,31 @@
 </template>
 
 <script>
-
 import { Navbar, Sidebar, AppMain } from "~/views/layout/stu-components";
-
+import Sticky from "~/components/Sticky";
 export default {
   name: "layout",
   components: {
     Navbar,
     Sidebar,
-    AppMain
+    AppMain,
+    Sticky
   },
   computed: {
     sidebar() {
       return this.$root.$route["meta"].hidden;
     }
   },
-  data(){
-    return{
-      sidebar:true
-    }
+  data() {
+    return {
+      sidebar: true
+    };
   }
 };
 </script>
 
 <style  lang="scss" >
 //@import "src/styles/main.scss"; // global css
-
 
 .container {
   min-width: 1300;

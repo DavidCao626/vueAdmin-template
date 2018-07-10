@@ -122,7 +122,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*']
       },
       {
-        from: path.resolve(__dirname, './icons'),
+        from: path.resolve(__dirname, '../src/icons'),
         to: config.build.assetsSubDirectory,
         ignore: ['.js']
       }
