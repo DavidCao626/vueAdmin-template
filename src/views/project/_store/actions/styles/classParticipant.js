@@ -17,10 +17,8 @@ const queryItemParticipant = ({ commit, state }, data) =>
   });
 
 const saveParticipants = ({ commit, state, vm }, data) => new Promise((resolve, reject) => {
-  debugger
   api.saveParticipants(data)
     .then(result => {
-      debugger;
       api
         .completeUserPendingByItemId({ "itemId": data.itemId })
         .then(result => {
@@ -51,7 +49,6 @@ const getItemRelaseQuestionCode = ({ commit, state }, data) =>
     api
       .getItemRelaseQuestionCode(data)
       .then(result => {
-        debugger
         console.log(result);
         resolve(result);
       })

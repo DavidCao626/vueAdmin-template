@@ -64,9 +64,7 @@ const task = {
           .then(response => {
             const s = {};
             s[taskStyleName] = { AnmeldenTypeList: response };
-            debugger;
             commit("SET_TASKSTYLEDATA_FROMDATA", s);
-            debugger;
             resolve(response);
           })
           .catch(error => {

@@ -147,7 +147,6 @@ export default {
     onSave() {
       console.log('保存配置!')
       var planItems = {}
-      debugger
       for (var i = 0; i < this.scopeWorkItems.length; i++) {
         var workItem = this.scopeWorkItems[i]
         planItems[workItem.item.stepKey] = workItem.item.planTimeLong

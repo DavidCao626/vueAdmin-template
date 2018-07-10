@@ -267,7 +267,6 @@ export default {
   },
   methods: {
     onSubmit() {
-      debugger;
       console.log(this.checkboxVal);
     }
   }
