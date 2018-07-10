@@ -6,7 +6,7 @@
         <div class="page-box__block flex">
           <div class="page-box__1">
             <listbody title="公告栏" :titleUrl="announceMoreUrl" :data="announceDate">
-              
+
             </listbody>
           </div>
         </div>
@@ -83,7 +83,7 @@
           <a href="#" class="weui-desktop-home-notice__title " style=" font-size: 16px;">
             任务列表
           </a>
-         
+
         </div>
         <div class="weui-desktop-home-notice__extra">
             
@@ -95,7 +95,7 @@
       <br>
       <myProject></myProject>
     </div>
- <!-- 我的发起的项目  end-->
+    <!-- 我的发起的项目  end-->
 
   </div>
 </template>
@@ -103,7 +103,7 @@
 <script>
 import listbody from "./_components/ListBody";
 import { mapGetters, mapActions } from "vuex";
-import myProject from './myProject'
+import myProject from "./myProject";
 import moment from "moment";
 export default {
   components: {
@@ -159,7 +159,7 @@ export default {
           path: row.action,
           query: {
             itemId: row.item_id,
-            scopeId:row.scope_id
+            scopeId: row.scope_id
           }
         });
       }
