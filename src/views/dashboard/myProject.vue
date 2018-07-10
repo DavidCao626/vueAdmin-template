@@ -1,15 +1,15 @@
 <template>
   <el-table class="i-cursor" @row-click="showDetail" :data="tableData" style="width: 100%">
     <template>
-      <el-table-column prop="project.project_name" label="项目名称" min-width="150">
+      <el-table-column prop="project.project_name" label="项目名称" min-width="180">
       </el-table-column>
       <el-table-column prop="project.project_service_type_name" label="业务类别" min-width="150">
       </el-table-column>
-      <el-table-column prop="scope.scopeName" label="环节名称" min-width="150">
+      <!-- <el-table-column prop="scope.scopeName" label="环节名称" min-width="150">
       </el-table-column>
       <el-table-column prop="scope.orgName" label="相关组织" min-width="150">
-      </el-table-column>
-      <el-table-column prop="scope.realStartTime" label="开始时间" min-width="150">
+      </el-table-column> -->
+      <el-table-column prop="scope.realStartTime" :formatter="startFormatter" label="开始时间" min-width="150">
       </el-table-column>
       <el-table-column prop="scope.scopeState" :formatter="scopeStateFormatter" label="环节状态" min-width="150">
       </el-table-column>
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
@@ -26,18 +27,21 @@ export default {
     };
   },
   methods: {
+    startFormatter(row, column, cellValue, index) {
+      return moment(cellValue, "yyyy-MM-DD HH:mm:ss").format("MM-DD HH:mm");
+    },
     ...mapActions({
       getUserScope: "getUserScope"
     }),
     scopeStateFormatter(row, column, cellValue, index) {
       if (cellValue == "S") {
-        return "开始";
+        return "已开始";
       }
       if (cellValue == "F") {
-        return "完成";
+        return "已完成";
       }
       if (cellValue == "C") {
-        return "创建";
+        return "已创建";
       }
     },
     showDetail(row, event, column) {
