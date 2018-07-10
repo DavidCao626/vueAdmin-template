@@ -5,7 +5,7 @@
         <div slot="panel">
             <div class="body-title">
                 <h2>{{noticeInfo.baseData.title}}</h2>
-                <p>发表时间：{{noticeInfo.baseData.publicTime}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布者：{{noticeInfo.baseData.createdUserId}}</p>
+                <p>发表时间：{{noticeInfo.baseData.publicTime}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布者：{{noticeInfo.baseData.publicOrgName}}</p>
             </div>
             <div class="body" v-html="noticeInfo.baseData.content">
             </div>

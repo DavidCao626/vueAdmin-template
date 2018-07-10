@@ -1,26 +1,26 @@
 <template>
-    <page>
-        <div slot="title">公告</div>
-        <div class="weui-desktop-layout__main__bd weui-desktop-panel main_bd">
-            <div class="weui-desktop-panel__bd">
-                <ul class="mp_news_list">
-                    <li class="mp_news_item" v-for="(i,index) in announceDate" :key="index">
-                        <router-link :to="{path:i.url,query:i.urlParams}">
-                            <strong>{{i.title}}
-                                <i class="icon_common new"></i>
-                            </strong>
-                            <span class="read_more">{{i.date}}</span>
-                        </router-link>
-                    </li>
+  <page>
+    <div slot="title">公告</div>
+    <div class="weui-desktop-layout__main__bd weui-desktop-panel main_bd">
+      <div class="weui-desktop-panel__bd">
+        <ul class="mp_news_list">
+          <li class="mp_news_item" v-for="(i,index) in announceDate" :key="index">
+            <router-link :to="{path:i.url,query:i.urlParams}">
+              <strong>{{i.title}}
+                <i class="icon_common new"></i>
+              </strong>
+              <span class="read_more">{{i.publicOrg}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{i.date}}</span>
+            </router-link>
+          </li>
 
-                </ul>
-                <div class="pagination_wrp pageNavigator" v-if="announceDate.length>0">
-                    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="dataTotal">
-                    </el-pagination>
-                </div>
-            </div>
+        </ul>
+        <div class="pagination_wrp pageNavigator" v-if="announceDate.length>0">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="dataTotal">
+          </el-pagination>
         </div>
-    </page>
+      </div>
+    </div>
+  </page>
 </template>
 
 <script>
@@ -32,26 +32,7 @@ export default {
       dataTotal: 0,
       pageSize: 10,
       currentPage: 1,
-      announceDate: [
-        {
-          title: "标题1",
-          url: "/messages/announce/show",
-          urlParams: { id: 1 },
-          date: "2018-06-01"
-        },
-        {
-          title: "标题2",
-          url: "/messages/announce/show",
-          urlParams: { id: 2 },
-          date: "2018-06-01"
-        },
-        {
-          title: "标题3",
-          url: "/messages/announce/show",
-          urlParams: { id: 3 },
-          date: "2018-06-01"
-        }
-      ]
+      announceDate: []
     };
   },
   methods: {
@@ -77,12 +58,14 @@ export default {
             title: "",
             url: "",
             urlParams: {},
-            date: ""
+            date: "",
+            publicOrg: ""
           };
           temp.title = element.title;
           temp.url = "/messages/announce/show"; //详情地址
           temp.urlParams = { publicNoticeId: element.id };
           temp.date = element.publicTime;
+          temp.publicOrg = element.publicOrgName;
           this.announceDate.push(temp);
         });
       });
