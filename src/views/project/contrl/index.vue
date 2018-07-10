@@ -50,12 +50,16 @@
               <svg-icon icon-class="seedate" width="20px" height="20px" /> 查看环节数据</el-button>
           </div>
         </div>
-        <div class="project-right" style="margin: 30px;display:flex;justify-content:center;flex:1">
+       <div class="project-right" style="margin: 30px;display:flex;justify-content:center;flex:1">
           <ProjectScoped></ProjectScoped>
         </div>
-        </div>
-        </div>
+      </div>
+      <ContrlTimeLine></ContrlTimeLine>
+      <br/> <br/> <br/>
+    </div>
+
   </page>
+
 
 </template>
 
@@ -105,10 +109,12 @@ export default {
     },
     getChildScope() {
       this.data2 = [];
+      
       this.getUserChildScope({ scopeId: this.scopeId }).then(response => {
         console.log(["getChildScope", response]);
-        this.data2.push(response.resBody.baseData);
+        this.data2.push(response.resBody);
       });
+      
     },
     filterNode(value, data) {
       if (!value) return true;
