@@ -16,7 +16,9 @@ module.exports = {
         secure: false
       },
       "/StuService/*": {
-        target: "http://39.105.132.61:8080",
+        //target: "http://39.105.132.61:8080",
+        target: "http://localhost:8001",
+        //target: "http://39.105.132.61:8080",
         //target: "http://192.168.1.110:7001",
         changeOrigin: true,
         secure: false

@@ -39,10 +39,10 @@
                 <el-input placeholder="输入关键字进行过滤" v-model="filterText">
                 </el-input>
 
-                <el-tree class="filter-tree" :data="data2" :props="defaultProps" :expand-on-click-node="false"	:filter-node-method="filterNode" ref="tree2">
+                <el-tree class="filter-tree" :data="data2" :props="defaultProps" :expand-on-click-node="false" :filter-node-method="filterNode" ref="tree2">
                 </el-tree>
 
-                <el-button slot="reference"  style="color:#444;font-weight: 400;" type="text">
+                <el-button slot="reference" style="color:#444;font-weight: 400;" type="text">
                   <svg-icon icon-class="seejindu" width="20px" height="20px" />查看子任务进度</el-button>
 
               </el-popover>
@@ -59,10 +59,7 @@
       <ContrlTimeLine></ContrlTimeLine>
       <br/> <br/> <br/>
     </div>
-    </div>
-    <ContrlTimeLine></ContrlTimeLine>
-    <br/> <br/> <br/>
-    </div>
+
   </page>
 
 </template>
