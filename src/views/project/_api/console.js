@@ -33,10 +33,20 @@ const handlerCompleteWorkItem = data => {
   });
 }
 
+//查新用户可查看域
+//参数scopeId
+const getUserChildScope = data => {
+  return request({
+    url: "/projectApply/getUserChildScope.do",
+    method: "post",
+    data: data
+  });
+}
 
 export default {
   queryScopeIntegeratedDateView,
   updateWorkItemDayLong,
   handlerStartWorkItem,
-  handlerCompleteWorkItem
+  handlerCompleteWorkItem,
+  getUserChildScope
 };
