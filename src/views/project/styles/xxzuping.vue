@@ -1,5 +1,6 @@
 <template>
   <div>
+    <proInfo :itemId="itemId"></proInfo>
     <huping title="学校评议" :dataHeader="hupingHeadSytle">
       <div slot="footer">
         <div class="approval-panel" style="text-align: center;">
@@ -13,11 +14,13 @@
 <script>
 import huping from "./huping/index";
 import commons from '~/utils/common.js'
+import proInfo from "../_components/projectSimpleInfo"
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import store from "../_store/index.js";
 export default {
   components: {
-    huping
+    huping,
+       proInfo
   },
   data() {
     return {
