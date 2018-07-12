@@ -34,8 +34,9 @@
       }
     },
     watch: {
-      value() {
-        this.value3 = this.value
+      value(newVal,oldVal) {
+        console.log(["selectWatch",newVal,oldVal])
+        this.value3 =newVal
       }
     }
   }

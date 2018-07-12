@@ -85,9 +85,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      stateList: store.namespace + "/getTodoState"
-    })
+    // ...mapGetters({
+    //   stateList: store.namespace + "/getTodoState"
+    // })
   },
   methods: {
     ...mapActions({
@@ -124,12 +124,18 @@ export default {
       }
     },
     stateFormatter(row, column, cellValue, index) {
-      var list = this.stateList;
-      for (var i = 0; i < list.length; i++) {
-        if (cellValue == list[i].dict_key) {
-          return list[i].dict_desc;
-        }
+      if(cellValue == "F"){
+        return "已处理"
       }
+      if(cellValue == "N"){
+        return "未处理"
+      }
+      // var list = this.stateList;
+      // for (var i = 0; i < list.length; i++) {
+      //   if (cellValue == list[i].dict_key) {
+      //     return list[i].dict_desc;
+      //   }
+      // }
     },
     // overTimeFormatter(row, column, cellValue, index) {
     //   var date = cellValue;
