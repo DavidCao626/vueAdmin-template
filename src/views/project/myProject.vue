@@ -10,9 +10,6 @@
             </el-input>
           </div>
           <div class="panel-control__flex-right">
-            <router-link to="/project/add">
-              <el-button type="primary" icon="el-icon-plus">新建项目</el-button>
-            </router-link>
           </div>
         </div>
       </div>
@@ -111,9 +108,10 @@ export default {
       } else if (row.projectState == "R") {
         //未开始跳更新页面
         this.$router.push({
-          name: "新建项目",
-          params: {
-            projectId: row.id
+          path: "/project/add",
+          query: {
+            projectId: row.id,
+            serType:row.projectServiceType
           }
         });
       }

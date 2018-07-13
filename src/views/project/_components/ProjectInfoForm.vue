@@ -52,6 +52,7 @@ import ProjectTypeSelect from "./ProjectTypeSelect";
 import ProjectAttachmentUplad from "./ProjectAttachmentUplad";
 import state from "../_store/index.js";
 import { mapActions, mapMutations, mapGetters } from "vuex";
+import commons from '~/utils/common.js'
 export default {
   name: "projectInfoForm",
   props: {
@@ -72,7 +73,7 @@ export default {
     // },
     isProjectTypeSelectDisDisabled: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
   components: {
@@ -170,7 +171,11 @@ export default {
       }
       this.form.projectAttachmentId = tempArr;
     }
+  },
+  mounted(){
+
   }
+
 };
 </script>
 <style>

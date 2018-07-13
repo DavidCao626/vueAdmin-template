@@ -1,6 +1,12 @@
 <template>
   <div>
-    <tinymce :height="300" v-model="content" id='tinymce'></tinymce>
+    <proInfo :item-id="itemId"></proInfo>
+    <el-select v-model="tempContent" placeholder="请选择" @change="selectChange">
+      <el-option v-for="(item,index) in templateList" :key="index" :label="'模板'+(index+1)" :value="item.content">
+      </el-option>
+    </el-select>
+
+    <tinymce :height="300" v-model="content" id='tinymce' ref="tinymcs"></tinymce>
     </br>
     <div id="sub">
       <el-button type="success" @click="onSubmit">提交</el-button>
@@ -10,6 +16,7 @@
 </template>
 
 <script>
+import proInfo from "./_components/projectSimpleInfo"
 import tinymce from "~/components/Tinymce";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import commons from "~/utils/common.js";
@@ -17,23 +24,39 @@ import store from "./_store/index.js";
 export default {
   data() {
     return {
+      tempContent:"",
       content: "",
-      itemId: 0
+      itemId: 0,
+      templateList: []
     };
   },
   components: {
-    tinymce
+    tinymce,
+    proInfo
   },
   computed: {},
   methods: {
     ...mapActions({
       savePublicityEdit: store.namespace + "/savePublicityEdit",
       completeUserPendingByItemId:
-        store.namespace + "/completeUserPendingByItemId"
+        store.namespace + "/completeUserPendingByItemId",
+      queryNoticeTemplateByItemId:
+        store.namespace + "/queryNoticeTemplateByItemId"
     }),
-
+    selectChange(val) {
+      this.content = val;
+      this.$refs["tinymcs"].setContent(val);
+      console.log(["val", this, val]);
+    },
     tempBtn() {
       console.log(["content", this.content]);
+    },
+    getNoticeTemplate() {
+      this.queryNoticeTemplateByItemId({ itemId: this.itemId }).then(
+        response => {
+          this.templateList = response.resBody;
+        }
+      );
     },
     onSubmit() {
       console.log(["this", this]);
@@ -59,9 +82,11 @@ export default {
     next(vm => {
       if (to.query.itemId != null && to.query.itemId != undefined) {
         vm.itemId = to.query.itemId;
+        vm.getNoticeTemplate();
       } else {
         if (to.params.itemId != null && to.params.itemId != undefined) {
           vm.itemId = to.params.itemId;
+          vm.getNoticeTemplate();
         } else {
           vm.$message.error("参数错误");
           return;

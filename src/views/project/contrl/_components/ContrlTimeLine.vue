@@ -10,7 +10,7 @@
             <td>
                 <div class="timeline-box-header__title">
                     <h3>
-                         已用{{scopeInfo.useredDay}}天，环节可用 {{scopeInfo.useabledDay}}天，任需时长：{{scopeInfo.neededDay}}天，预计超时：{{scopeInfo.delayDay}}天。
+                        已用{{scopeInfo.useredDay}}天，环节可用 {{scopeInfo.useabledDay}}天，任需时长：{{scopeInfo.neededDay}}天，预计超时：{{scopeInfo.delayDay}}天。
                     </h3>
                 </div>
             </td>
@@ -34,7 +34,7 @@
                                         </span>
                                     </el-tooltip>
                                 </span>
-                               <span v-if="item.item.itemType=='automatic'">计划{{item.planTimeDay}}天</span>
+                                <span v-if="item.item.itemType=='automatic'">计划{{item.planTimeDay}}天</span>
                             </div>
                             <div class="tag-description">实际用时（{{item.usedHourLong}}小时）</div>
                         </div>
@@ -58,7 +58,7 @@
                         <div class="tag-flex tag-flex-direction__column">
                             <div class=" tag-flex tag-flex-justify__content">
                                 <span>
-                                     <el-tooltip class="item" effect="dark" :content="item.item.stepName" placement="right">
+                                    <el-tooltip class="item" effect="dark" :content="item.item.stepName" placement="right">
                                         <span class="tag-title">{{item.item.stepName}}
                                             <small class="el-icon-question"></small>
                                         </span>
@@ -71,17 +71,36 @@
                             <div class="tag-description">已用（{{item.usedHourLong}}小时）</div>
                         </div>
                         <div class="tag-flex tag-flex-direction__column" style="margin-left:20px;">
-                            <el-button type="warning" v-if="item.item.itemType=='manual'" size="mini"  @click="handle(item)">操作</el-button>
-                            <el-popover placement="top" width="160" :ref="'popover'+item.item.id" v-else >
+                            <el-button type="warning" v-if="item.item.itemType=='manual'" size="mini" @click="handle(item)">操作</el-button>
+
+                            <el-popover placement="top" width="200" :ref="'popover'+item.item.id" v-else>
+                                <p>{{ item.planTimeDay }}天 {{ item.planTimeDay }}小时</p>
+
+                                <div>
+                                    <el-input style=" margin-top: 10px;width:60px;" size="small" type="Number" min="0" v-model="item.planTimeDay">
+
+                                    </el-input>
+                                    天
+                                    <el-input style=" margin-top: 10px;width:60px;" size="small" type="Number" min="0" max="24" v-model="item.planTimeDay"></el-input>
+                                    小时</div>
+                                <div style="text-align: right; margin-top: 10px">
+                                    <el-button type="primary" size="mini" @click="updateItemPlanDayHandler(item)">保存</el-button>
+                                </div>
+                                <el-button type="warning" :disabled="getItemEnableState(item)" size="mini" slot="reference">调整时间</el-button>
+                            </el-popover>
+
+                            <!-- <el-popover placement="top" width="160" :ref="'popover'+item.item.id" v-else>
                                 <p>请输入调整后的天数</p>
                                 <el-input-number style=" margin-top: 10px" size="small" v-model="item.planTimeDay"></el-input-number>
                                 <div style="text-align: right; margin-top: 10px">
                                     <el-button type="primary" size="mini" @click="updateItemPlanDayHandler(item)">保存</el-button>
                                 </div>
-                                <el-button type="warning" :disabled="getItemEnableState(item)" size="mini"  slot="reference">调整天数</el-button>
-                            </el-popover>
+                                <el-button type="warning" :disabled="getItemEnableState(item)" size="mini" slot="reference">调整天数</el-button>
+                            </el-popover> -->
                         </div>
-                         <div  class="tag-flex tag-flex-direction__column" style="margin-left:20px;" > <el-button size="mini" @click="userOperationCompleteItem(item)" type="warning" >立即结束</el-button></div>
+                        <div class="tag-flex tag-flex-direction__column" style="margin-left:20px;">
+                            <el-button size="mini" @click="userOperationCompleteItem(item)" type="warning">立即结束</el-button>
+                        </div>
                     </div>
                 </td>
             </tr>
@@ -104,20 +123,35 @@
                                         </span>
                                     </el-tooltip>
                                 </span>
-                              <span v-if="item.item.itemType=='automatic'">计划{{item.planTimeDay}}天</span>
+                                <span v-if="item.item.itemType=='automatic'">计划{{item.planTimeDay}}天</span>
                             </div>
                             <div class="tag-description" v-if="item.item.itemType=='automatic'">计划开始时间：{{item.start==''?'-':item.start}} ~ 计划结束时间：{{item.end==''?'未配置':item.end}} </div>
                         </div>
                         <div class="tag-flex tag-flex-direction__column" style="margin-left:20px;" v-if="item.item.itemType=='automatic'">
 
-                            <el-popover placement="top" width="160" :ref="'popover'+item.item.id">
+                            <el-popover placement="top" width="200" :ref="'popover'+item.item.id">
+                                <p>{{ item.planTimeDay }}天 {{ item.planTimeDay }}小时</p>
+
+                                <div>
+                                    <el-input style=" margin-top: 10px;width:60px;" size="small" type="Number" min="0" v-model="item.planTimeDay">
+
+                                    </el-input>
+                                    天
+                                    <el-input style=" margin-top: 10px;width:60px;" size="small" type="Number" min="0" max="24" v-model="item.planTimeDay"></el-input>
+                                    小时</div>
+                                <div style="text-align: right; margin-top: 10px">
+                                    <el-button type="primary" size="mini" @click="updateItemPlanDayHandler(item)">保存</el-button>
+                                </div>
+                                <el-button type="warning" :disabled="getItemEnableState(item)" size="mini" slot="reference">调整时间</el-button>
+                            </el-popover>
+                            <!-- <el-popover placement="top" width="160" :ref="'popover'+item.item.id">
                                 <p>请输入调整后的天数</p>
                                 <el-input-number style=" margin-top: 10px" size="small" :min="0" v-model="item.planTimeDay"></el-input-number>
                                 <div style="text-align: right; margin-top: 10px">
                                     <el-button type="primary" size="mini">保存</el-button>
                                 </div>
-                                <el-button type="warning" :disabled="getItemEnableState(item)" size="mini"  slot="reference">调整天数</el-button>
-                            </el-popover>
+                                <el-button type="warning" :disabled="getItemEnableState(item)" size="mini" slot="reference">调整天数</el-button>
+                            </el-popover> -->
 
                         </div>
                         <div class="tag-flex  status-mark" style="margin-left:20px;" v-else>
@@ -127,7 +161,7 @@
                     </div>
                 </td>
             </tr>
-             <tr v-else-if="item.item.state=='E'" :key="index">
+            <tr v-else-if="item.item.state=='E'" :key="index">
                 <td class="timeline-box">
                     <span class="timeline-serial timeline-blur" style="background-color:red">
                         <i class="el-icon-time"></i>
@@ -145,7 +179,7 @@
                                         </span>
                                     </el-tooltip>
                                 </span>
-                              <span v-if="item.item.itemType=='automatic'">计划{{item.planTimeDay}}天</span>
+                                <span v-if="item.item.itemType=='automatic'">计划{{item.planTimeDay}}天</span>
                             </div>
                             <div class="tag-description" v-if="item.item.itemType=='automatic'">计划开始时间：{{item.start==''?'-':item.start}} ~ 计划结束时间：{{item.end==''?'未配置':item.end}} </div>
                         </div>
@@ -157,18 +191,18 @@
                                 <div style="text-align: right; margin-top: 10px">
                                     <el-button type="primary" size="mini">保存</el-button>
                                 </div>
-                                <el-button type="warning" :disabled="getItemEnableState(item)" size="mini"  slot="reference">调整天数</el-button>
+                                <el-button type="warning" :disabled="getItemEnableState(item)" size="mini" slot="reference">调整天数</el-button>
                             </el-popover>
-                            
-                             
 
                         </div>
-                        
+
                         <div class="tag-flex  status-mark" style="margin-left:20px;" v-else>
                             <svg-icon icon-class="status-no" width="65px" height="65px" />
                             <!-- 未开始图标 -->
                         </div>
-                        <div  class="tag-flex tag-flex-direction__column" style="margin-left:20px;" > <el-button size="mini" @click="userOperationStartItem(item)" type="warning" >手动启动</el-button></div>
+                        <div class="tag-flex tag-flex-direction__column" style="margin-left:20px;">
+                            <el-button size="mini" @click="userOperationStartItem(item)" type="warning">手动启动</el-button>
+                        </div>
                     </div>
                 </td>
             </tr>
@@ -178,74 +212,75 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import store from '../../_store/index.js'
-import moment from 'moment'
-import _lodash from 'lodash'
+import { mapGetters, mapActions } from "vuex";
+import store from "../../_store/index.js";
+import moment from "moment";
+import _lodash from "lodash";
 export default {
-   components: {
-  },
+  components: {},
   computed: {
     ...mapGetters({
-      items: store.namespace + '/getInteratedItems',
-      scopeInfo: store.namespace + '/getInteratedScopeInfo'
+      items: store.namespace + "/getInteratedItems",
+      scopeInfo: store.namespace + "/getInteratedScopeInfo"
     })
   },
   methods: {
     ...mapActions({
-      updateItemPlanDay: store.namespace + '/updateItemPlanDay',
-      handlerStartWorkItem:store.namespace+"/handlerStartWorkItem",
-      handlerCompleteWorkItem:store.namespace+"/handlerCompleteWorkItem"
+      updateItemPlanDay: store.namespace + "/updateItemPlanDay",
+      handlerStartWorkItem: store.namespace + "/handlerStartWorkItem",
+      handlerCompleteWorkItem: store.namespace + "/handlerCompleteWorkItem"
     }),
     getItemEnableState: function(item) {
-      if (item.item.state === 'S') {
-        return false
+      if (item.item.state === "S") {
+        return false;
       } else {
-        return true
+        return true;
       }
     },
     getStateOfCircle(State) {
-      if (State === 'C') return 'state-circle'
-      else if (State === 'S') return 'state-circle ' + 'state-circle__run'
-      else if (State === 'E') return 'state-circle ' + 'state-circle__run'
-      else return 'state-circle ' + 'state-circle__ok'
+      if (State === "C") return "state-circle";
+      else if (State === "S") return "state-circle " + "state-circle__run";
+      else if (State === "E") return "state-circle " + "state-circle__run";
+      else return "state-circle " + "state-circle__ok";
     },
     handleChange(value) {
-      console.log(value)
+      console.log(value);
     },
-    userOperationStartItem(item){
-        this.handlerStartWorkItem({ 'itemId': item.item.id})
+    userOperationStartItem(item) {
+      this.handlerStartWorkItem({ itemId: item.item.id });
     },
-    userOperationCompleteItem(item){
-        this.handlerCompleteWorkItem({'itemId':item.item.id})
+    userOperationCompleteItem(item) {
+      this.handlerCompleteWorkItem({ itemId: item.item.id });
     },
     handle: function(item) {
-      console.log(item.item.id)
-      console.log(this.scopeInfo.id)
-      var pathName = item.action
+      console.log(item.item.id);
+      console.log(this.scopeInfo.id);
+      var pathName = item.action;
       if (!pathName) {
-        this.$message({ 'message': '未知的业务路径！' })
-        return false
+        this.$message({ message: "未知的业务路径！" });
+        return false;
       }
-      if (_lodash.startsWith(pathName, '/')) {
+      if (_lodash.startsWith(pathName, "/")) {
         this.$router.push({
           path: pathName,
           query: { scopeId: this.scopeInfo.id, itemId: item.item.id }
-        })
+        });
       } else {
         this.$router.push({
           name: pathName,
           params: { scopeId: this.scopeInfo.id, itemId: item.item.id }
-        })
+        });
       }
     },
     updateItemPlanDayHandler: function(item) {
-      this.updateItemPlanDay({ 'itemId': item.item.id, 'dayLong': item.planTimeDay })
+      this.updateItemPlanDay({
+        itemId: item.item.id,
+        dayLong: item.planTimeDay
+      });
     }
   },
   data() {
-    return {
-    }
+    return {};
   }
 };
 </script>

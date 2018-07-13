@@ -7,6 +7,8 @@
         <hr/>
         <div>项目名称：{{resData.projectData.projectName}}</div>
         <div>项目类别：{{resData.projectData.projectServiceTypeName}}</div>
+        <div>环节名称：{{resData.scopeData.scopeName}}</div>
+        <div>过期时间：{{endTime}}</div>
         <!-- <h4 v-if="formDesc">
                     填写要求：
                     <div>{{formDesc}}</div>
@@ -247,11 +249,30 @@ export default {
   computed: {
     ...mapGetters({
       uploadAttrUrl: store.namespace + "/getUploadAttrUrl"
-    })
+    }),
+    endTime() {
+      if (this.resData.scopeData.realStartTime) {
+        return moment(
+          this.resData.scopeData.realStartTime,
+          "YYYY-MM-DD HH:mm:ss"
+        ).add(this.resData.scopeData.planTimeLong, "hours").format("YYYY-MM-DD HH:mm");
+      } else {
+        return "";
+      }
+    }
   },
   data() {
     return {
-      resData:{},
+      resData: {
+        projectData: {
+          projectName: "",
+          projectServiceTypeName: ""
+        },
+        scopeData: {
+          realStartTime: "",
+          planTimeLong: 0
+        }
+      },
       itemId: "",
       projectSystemCode: "",
       formTitle: "2017年贫困建档07级项目" + "申请表",

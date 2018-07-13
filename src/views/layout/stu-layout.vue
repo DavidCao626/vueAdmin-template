@@ -60,9 +60,6 @@ export default {
     Sticky
   },
   computed: {
-    sidebar() {
-      return this.$root.$route["meta"].hidden;
-    }
   },
   data() {
     return {

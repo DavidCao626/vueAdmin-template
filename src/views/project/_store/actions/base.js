@@ -1,13 +1,13 @@
 import api from '../../_api/base.js'
 //增加或者修改项目
-const insertOrUpdateProject = ({ commit, state }, projectData) => 
+const insertOrUpdateProject = ({ commit, state }, projectData) =>
   new Promise(resolve => {
     // if (state.projectInfoData.id) return;
     api.insertOrUpdateProject(projectData).then(response => {
       resolve(response)
     })
   })
-  //增加或者修改并下一步
+//增加或者修改并下一步
 const insertOrUpdateAndNext = ({ commit, state }, projectData) =>
   new Promise(resolve => {
     // if (state.projectInfoData.id) return;
@@ -17,17 +17,20 @@ const insertOrUpdateAndNext = ({ commit, state }, projectData) =>
   })
 
 
-  
+
 //查询业务类别列表调用mutations赋值给state
-const queryServiceTypeList = ({ commit, state }) => 
+const queryServiceTypeList = ({ commit, state }) =>
   new Promise(resolve => {
     api.queryServiceTypeList().then(response => {
       commit("setServiceTypeList", response.resBody)
     })
   })
 
+const setProjectServiceType = ({ commit, state }, serType) => {
+  commit('setProjectServiceType', serType)
+}
 
-const getProjectById = ({ commit, state }, projectId) => 
+const getProjectById = ({ commit, state }, projectId) =>
   new Promise(resolve => {
     api.getProjectById({ 'projectId': projectId }).then(response => {
       var ps = response.resBody.planStartTime;
@@ -48,20 +51,33 @@ const getProjectById = ({ commit, state }, projectId) =>
       commit("setProjectFormData", response.resBody)
     })
   })
-//查询业务类别列表调用mutations赋值给state
-const savePublicityEdit = ({ commit, state },data) =>
+const savePublicityEdit = ({ commit, state }, data) =>
   new Promise(resolve => {
     api.savePublicityEdit(data).then(response => {
       resolve(response)
     })
   })
 
+const queryNoticeTemplateByItemId = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryNoticeTemplateByItemId(data).then(response => {
+      resolve(response)
+    })
+  })
 
-
+const getProjectAllDataByItemId = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.getProjectAllDataByItemId(data).then(response => {
+      resolve(response)
+    })
+  })
 export default {
+  setProjectServiceType,
   insertOrUpdateProject,
   queryServiceTypeList,
   getProjectById,
   insertOrUpdateAndNext,
-  savePublicityEdit
+  savePublicityEdit,
+  queryNoticeTemplateByItemId,
+  getProjectAllDataByItemId
 }

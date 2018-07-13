@@ -41,11 +41,27 @@ const savePublicityEdit = data =>
         method: 'post',
         data: data
     })
+
+const queryNoticeTemplateByItemId = data =>
+    request({
+        url: "/project/queryNoticeTemplateByItemId.do",
+        method: 'post',
+        data:data
+    })
+
+const getProjectAllDataByItemId = data =>
+    request({
+        url: "/project/getProjectAllDataByItemId.do",
+        method: 'post',
+        data: data
+    })
 export default {
     insertOrUpdateProject,
     uploadAttrUrl,
     queryServiceTypeList,
     getProjectById,
     insertOrUpdateAndNext,
-    savePublicityEdit
+    savePublicityEdit,
+    queryNoticeTemplateByItemId,
+    getProjectAllDataByItemId
 };
