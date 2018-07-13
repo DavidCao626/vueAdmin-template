@@ -5,8 +5,12 @@
       <div slot="panel">
         <h2>{{formTitle}}</h2>
         <hr/>
-        <div>项目名称：{{resData.projectData.projectName}}</div>
+        <proInfo :itemId="itemId"></proInfo>
+        <!-- <div>项目名称：{{resData.projectData.projectName}}</div>
         <div>项目类别：{{resData.projectData.projectServiceTypeName}}</div>
+        <div>环节名称：{{resData.scopeData.scopeName}}</div>
+        <div>过期时间：{{endTime}}</div> -->
+
         <!-- <h4 v-if="formDesc">
                     填写要求：
                     <div>{{formDesc}}</div>
@@ -146,6 +150,7 @@
 </template>
 
 <script>
+import proInfo from "../_components/projectSimpleInfo";
 import store from "../_store/index.js";
 import { mapActions, mapMutations, mapGetters, Store } from "vuex";
 import moment from "moment";
@@ -244,14 +249,38 @@ export default {
       }
     });
   },
+  components: {
+    proInfo
+  },
   computed: {
     ...mapGetters({
       uploadAttrUrl: store.namespace + "/getUploadAttrUrl"
-    })
+    }),
+    endTime() {
+      if (this.resData.scopeData.realStartTime) {
+        return moment(
+          this.resData.scopeData.realStartTime,
+          "YYYY-MM-DD HH:mm:ss"
+        )
+          .add(this.resData.scopeData.planTimeLong, "hours")
+          .format("YYYY-MM-DD HH:mm");
+      } else {
+        return "";
+      }
+    }
   },
   data() {
     return {
-      resData:{},
+      resData: {
+        projectData: {
+          projectName: "",
+          projectServiceTypeName: ""
+        },
+        scopeData: {
+          realStartTime: "",
+          planTimeLong: 0
+        }
+      },
       itemId: "",
       projectSystemCode: "",
       formTitle: "2017年贫困建档07级项目" + "申请表",
@@ -317,7 +346,6 @@ export default {
       iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24); //把相差的毫秒数转换为天数
       return iDays;
     },
-
     handlePreview(file) {
       console.log(file);
     },

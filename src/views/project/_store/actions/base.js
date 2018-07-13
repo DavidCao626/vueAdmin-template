@@ -51,7 +51,6 @@ const getProjectById = ({ commit, state }, projectId) =>
       commit("setProjectFormData", response.resBody)
     })
   })
-//查询业务类别列表调用mutations赋值给state
 const savePublicityEdit = ({ commit, state }, data) =>
   new Promise(resolve => {
     api.savePublicityEdit(data).then(response => {
@@ -59,13 +58,26 @@ const savePublicityEdit = ({ commit, state }, data) =>
     })
   })
 
+const queryNoticeTemplateByItemId = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryNoticeTemplateByItemId(data).then(response => {
+      resolve(response)
+    })
+  })
 
-
+const getProjectAllDataByItemId = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.getProjectAllDataByItemId(data).then(response => {
+      resolve(response)
+    })
+  })
 export default {
   setProjectServiceType,
   insertOrUpdateProject,
   queryServiceTypeList,
   getProjectById,
   insertOrUpdateAndNext,
-  savePublicityEdit
+  savePublicityEdit,
+  queryNoticeTemplateByItemId,
+  getProjectAllDataByItemId
 }

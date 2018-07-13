@@ -119,13 +119,13 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="状态" fixed="right" prop="isDot" width="100" :filters="[{ text: '已处理', value: true }, { text: '未处理', value: false }]" :filter-method="filterTag" filter-placement="bottom-end">
+        <!-- <el-table-column label="状态" fixed="right" prop="isDot" width="100" :filters="[{ text: '已处理', value: true }, { text: '未处理', value: false }]" :filter-method="filterTag" filter-placement="bottom-end">
           <template slot-scope="scope">
             <el-tag :type="scope.row.isDot === true ? 'info' : 'danger'" disable-transitions>
               {{scope.row.isDot=== true ? '已处理' : '未处理'}}
             </el-tag>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
     </div>
 
