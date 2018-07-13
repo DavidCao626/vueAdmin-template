@@ -64,7 +64,7 @@ export default {
             publicOrg:""
           };
           temp.title = element.title;
-          temp.url = "/messages/announce/show"; //详情地址
+          temp.url = "/messages/notice/show"; //详情地址
           temp.urlParams = { publicNoticeId: element.id };
           temp.date = element.publicTime;
            temp.publicOrg = element.publicOrgName;

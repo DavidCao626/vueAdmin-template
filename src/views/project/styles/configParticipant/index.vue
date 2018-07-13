@@ -1,5 +1,6 @@
 <template>
   <div>
+    <projectinfo :item-id="itemId"></projectinfo>
     <page :Breadcrumb="false">
       <div slot="title">
         选择参与者
@@ -34,13 +35,15 @@
   </div>
 </template>
 <script>
+import projectinfo from "../../_components/itemProjectSimpleInfo"
 import transter from "./_components/ParticipantTranster.vue";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import store from "../../_store/index.js";
 import commons from "~/utils/common.js";
 export default {
   components: {
-    transter
+    transter,
+    projectinfo
   },
   data() {
     return {
