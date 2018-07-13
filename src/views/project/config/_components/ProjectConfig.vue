@@ -13,7 +13,7 @@
           <div class="timeline-box-header__title2">
             <h3>
               <!-- 已用 1.6天，环节可用 33.4天，任需时长：31天，预计超时：0天。 -->
-              开始日期：{{scopeInfo.planStartTime}},结束日期：{{scopeInfo.planEndTime}}，总时长：{{scopeDayCount.scopePlanTimeLong}}天,可用：{{scopeDayCount.scopeUsableTimeLong}}天，当前计划用：{{scopeDayCount.scopeAllocationedTimeLong}}天
+              开始日期：{{scopeInfo.planStartTime}},结束日期：{{scopeInfo.planEndTime}}，总时长：{{scopeDayCount.scopePlanTimeLong}},可用：{{scopeDayCount.scopeUsableTimeLong}}，当前计划用：{{scopeDayCount.scopeAllocationedTimeLong}}
             </h3>
           </div>
         </td>
@@ -35,7 +35,6 @@
                       <span class="tag-title">{{item.item.stepName}}
                         <small class="el-icon-question"></small>
                       </span>
-
                     </el-tooltip>
                   </span>
                   <span></span>
@@ -67,21 +66,19 @@
                       </span>
                     </el-tooltip>
                   </span>
-                  <span>计划{{item.planTimeDay}}天</span>
+                  <span>计划{{item.viewPlanDay}}天-{{item.viewPlanHour}}小时</span>
                 </div>
                 <div class="tag-description">计划开始时间： {{item.start==''?'未配置':formatMoment(item.start)}} ~ 计划结束时间： {{item.end==''?'未配置':formatMoment(item.end)}} </div>
               </div>
               <div class="tag-flex tag-flex-direction__column" style="margin-left:20px;">
 
                 <el-popover placement="top" width="200" :ref="'popover'+item.item.id">
-                  <p>{{ item.planTimeDay }}天 {{ item.planTimeDay }}小时</p>
-                 
+                  <p>{{ item.viewPlanDay }}天 {{ item.viewPlanHour }}小时</p>
                  <div>
-                    <el-input style=" margin-top: 10px;width:60px;" size="small" type="Number" min="0"  v-model="item.planTimeDay" @change="handleChange(item.stepKey,$event)">
-
+                  <el-input style=" margin-top: 10px;width:60px;" size="small" type="Number" min="0"  v-model="item.viewPlanDay" @change="handleChangeDay(item,$event)">
                   </el-input>
                   天
-                  <el-input style=" margin-top: 10px;width:60px;" size="small" type="Number" min="0" max="24" v-model="item.planTimeDay" @change="handleChange(item.stepKey,$event)"></el-input>
+                  <el-input style=" margin-top: 10px;width:60px;" size="small" type="Number" min="0" max="24" v-model="item.viewPlanHour" @change="handleChangeHour(item,$event)"></el-input>
                  小时</div>
                   <div style="text-align: right; margin-top: 10px">
                   </div>
@@ -91,7 +88,6 @@
             </div>
           </td>
         </tr>
-
       </template>
     </table>
     <div class="line"></div>
@@ -132,17 +128,15 @@ export default {
     })
   },
   methods: {
-    ...mapActions({
+  ...mapActions({
       updateScopePlanTimeLong: store.namespace + "/updateScopePlanTimeLong",
-      updateScopePlanTimeLongAndNext:
-        store.namespace + "/updateScopePlanTimeLongAndNext",
+      updateScopePlanTimeLongAndNext:store.namespace + "/updateScopePlanTimeLongAndNext",
       changeScopeItemHour: store.namespace + "/changeScopeItemDateHour"
     }),
     formatMoment: function(time) {
       return moment(time)
-        .second(0)
-        .minute(0)
-        .format("YYYY-MM-DD HH:mm:ss");
+        .second(0).minute(0)
+        .format("YYYY-MM-DD HH:mm");
     },
     onSaveAndNext() {
       console.log("保存并下发任务!");
@@ -197,10 +191,15 @@ export default {
         planItems: planItems
       });
     },
-    handleChange(param, value) {
-      console.log(param+value);
-      
-      this.changeScopeItemHour({ itemKey: param, timeLong: value });
+    handleChangeDay(param, value) {
+      console.log("startChange");
+      var hour=parseInt(value*24)+parseInt(param.viewPlanHour);
+      this.changeScopeItemHour({ itemKey: param.stepKey, timeLong: hour });
+    },
+    handleChangeHour(param,value){
+      console.log("startChange");
+      var hour=parseInt(value)+parseInt(param.viewPlanDay*24);
+      this.changeScopeItemHour({ itemKey:  param.stepKey, timeLong: hour });
     }
   }
 };
