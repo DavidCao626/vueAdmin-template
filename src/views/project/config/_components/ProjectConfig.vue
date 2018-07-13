@@ -66,19 +66,19 @@
                       </span>
                     </el-tooltip>
                   </span>
-                  <span>计划{{item.viewPlanDay}}天-{{item.viewPlanHour}}小时</span>
+                  <span>计划{{item.viewPlanDay}}天{{item.viewPlanHour}}小时</span>
                 </div>
                 <div class="tag-description">计划开始时间： {{item.start==''?'未配置':formatMoment(item.start)}} ~ 计划结束时间： {{item.end==''?'未配置':formatMoment(item.end)}} </div>
               </div>
               <div class="tag-flex tag-flex-direction__column" style="margin-left:20px;">
 
-                <el-popover placement="top" width="200" :ref="'popover'+item.item.id">
+                <el-popover placement="top" width="300" :ref="'popover'+item.item.id">
                   <p>{{ item.viewPlanDay }}天 {{ item.viewPlanHour }}小时</p>
                  <div>
-                  <el-input style=" margin-top: 10px;width:60px;" size="small" type="Number" min="0"  v-model="item.viewPlanDay" @change="handleChangeDay(item,$event)">
+                  <el-input style=" margin-top: 10px;width:100px;" size="small" type="Number" min="0"  :value="item.viewPlanDay" @change="handleChangeDay(item,$event)">
                   </el-input>
                   天
-                  <el-input style=" margin-top: 10px;width:60px;" size="small" type="Number" min="0" max="24" v-model="item.viewPlanHour" @change="handleChangeHour(item,$event)"></el-input>
+                  <el-input style=" margin-top: 10px;width:100px;" size="small" type="Number" min="0" max="24" :value="item.viewPlanHour" @change="handleChangeHour(item,$event)"></el-input>
                  小时</div>
                   <div style="text-align: right; margin-top: 10px">
                   </div>
