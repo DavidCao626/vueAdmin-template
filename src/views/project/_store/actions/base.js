@@ -27,6 +27,9 @@ const queryServiceTypeList = ({ commit, state }) =>
   })
 
 const setProjectServiceType = ({ commit, state }, serType) => {
+  api.queryClassifyTypeByCode({ 'code': serType }).then(response => {
+    commit("setClassifyType", response.resBody)
+  })
   commit('setProjectServiceType', serType)
 }
 
@@ -48,6 +51,11 @@ const getProjectById = ({ commit, state }, projectId) =>
       }
       response.resBody.planStartTime = psdate
       response.resBody.planCompleteTime = pedate
+
+      api.queryClassifyTypeByCode({ 'code': response.resBody.projectServiceType}).then(response => {
+        commit("setClassifyType",response.resBody)
+      })
+
       commit("setProjectFormData", response.resBody)
     })
   })
@@ -66,8 +74,15 @@ const queryNoticeTemplateByItemId = ({ commit, state }, data) =>
   })
 
 const getProjectAllDataByItemId = ({ commit, state }, data) =>
-  new Promise(resolve => {
+  new Promise(resolve => {queryClassifyTypeByCode
     api.getProjectAllDataByItemId(data).then(response => {
+      resolve(response)
+    })
+  })
+
+const queryClassifyTypeByCode = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryClassifyTypeByCode(data).then(response => {
       resolve(response)
     })
   })
@@ -79,5 +94,6 @@ export default {
   insertOrUpdateAndNext,
   savePublicityEdit,
   queryNoticeTemplateByItemId,
-  getProjectAllDataByItemId
+  getProjectAllDataByItemId,
+  queryClassifyTypeByCode
 }

@@ -1,6 +1,7 @@
 
 export const baseproject = { 
     serviceTypeList: [],
+    classifyType:[],
     projectFormData : {
         projectId: 0,
         projectName: "",

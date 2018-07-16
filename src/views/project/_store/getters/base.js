@@ -11,3 +11,6 @@ export const getServiceTypeList = (state) => {
     console.log(["baseGetter",state.baseproject.serviceTypeList])
     return state.baseproject.serviceTypeList
 }
+export const getClassifyTypeList = (state) => {
+    return state.baseproject.classifyType
+}

@@ -55,6 +55,14 @@ const getProjectAllDataByItemId = data =>
         method: 'post',
         data: data
     })
+
+
+const queryClassifyTypeByCode = data =>
+    request({
+        url: "/project/queryClassifyTypeByCode.do",
+        method: 'post',
+        data: data
+    })
 export default {
     insertOrUpdateProject,
     uploadAttrUrl,
@@ -63,5 +71,6 @@ export default {
     insertOrUpdateAndNext,
     savePublicityEdit,
     queryNoticeTemplateByItemId,
-    getProjectAllDataByItemId
+    getProjectAllDataByItemId,
+    queryClassifyTypeByCode
 };

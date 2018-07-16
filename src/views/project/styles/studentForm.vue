@@ -61,13 +61,25 @@
               </el-form-item>
             </el-col>
           </el-row>
+
+          <el-row>
+            <el-col :span="21">
+
+              <el-form-item label="主要原因">
+                <el-select v-model="form.mainReason" placeholder="请选择">
+                  <el-option v-for="item in reasonList" :key="item.value" :label="item.label" :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+
+            </el-col>
+          </el-row>
           <el-row>
             <el-col :span="21">
               <el-form-item label="申请理由">
                 <el-input type="textarea" :rows="3" v-model="form.desc"></el-input>
               </el-form-item>
             </el-col>
-
           </el-row>
           <el-row>
             <el-col :span="21">
@@ -271,6 +283,19 @@ export default {
   },
   data() {
     return {
+      reasonList: [
+        { label: "无", value: "无" },
+        { label: "单亲", value: "单亲" },
+        { label: "孤儿", value: "孤儿" },
+        { label: "残疾", value: "残疾" },
+        { label: "低保", value: "低保" },
+        { label: "烈士子女", value: "烈士子女" },
+        { label: "农村五保", value: "农村五保" },
+        { label: "因病", value: "因病" },
+        { label: "因灾", value: "因灾" },
+        { label: "其他", value: "其他" },
+        { label: "涉农专业", value: "涉农专业" }
+      ],
       resData: {
         projectData: {
           projectName: "",
@@ -283,41 +308,28 @@ export default {
       },
       itemId: "",
       projectSystemCode: "",
-      formTitle: "2017年贫困建档07级项目" + "申请表",
-      formDesc: "2017年贫困建档开始了，请按照要求填表。截止日期2018年-06-01。", //项目公告
+      formTitle: "",
+      formDesc: "", //项目公告
       formFiles: [
         //项目附件表
         {
-          name: "2017年贫困建档07级项目流程描述",
-          url: "2017年贫困建档07级项目流程描述.doc"
+          name: "",
+          url: ""
         },
         {
-          name: "2017年贫困建档07级项目流程描述2",
-          url: "2017年贫困建档07级项目流程描述2.doc"
+          name: "",
+          url: ""
         }
       ],
       formDays: 0, //填表可用天数
       form: {
-        username: "王小明",
-        number: "130128199007161811",
-        class: "内蒙古大学数学学院03级35班", //个人信息不能更改 控件已经disabled
-        type: "贫困建档申请", //业务类别
-        options: [
-          //子业务类别选项
-          {
-            value: "01",
-            label: "一般贫困"
-          },
-          {
-            value: "02",
-            label: "贫困"
-          },
-          {
-            value: "03",
-            label: "特别贫困"
-          }
-        ],
+        username: "",
+        number: "",
+        class: "", //个人信息不能更改 控件已经disabled
+        type: "", //业务类别
+        options: [],
         typeValue: "", //子业务类别选中值
+        mainReason: "",
         desc: "", //申请理由
         delivery: false,
         fileList: [], //申请附件
@@ -335,6 +347,7 @@ export default {
     ...mapActions({
       getApplyData: store.namespace + "/getApplyData",
       povertyApply: store.namespace + "/povertyApply"
+
     }),
     DateDiff(sDate1, sDate2) {
       //sDate1和sDate2是2006-12-18格式
@@ -378,6 +391,7 @@ export default {
     onSubmit() {
       console.log("submit!");
       var requestData = {
+        mainReason:this.form.mainReason,
         itemId: this.itemId,
         childServiceTypeCode: this.form.typeValue,
         projectSystemCode: this.projectSystemCode,

@@ -15,6 +15,15 @@
         <ProjectTypeSelect @selectValue="selectValue" :value="form.projectServiceType" :options="ioptions" :disabled="isProjectTypeSelectDisDisabled"></ProjectTypeSelect>
       </el-form-item>
 
+      <el-form-item label="子类型:">
+
+         <el-select v-model="classifyType" placeholder="请选择">
+                  <el-option v-for="item in ClassifyTypeList" :key="item.value" :label="item.typeName" :value="item.templateKey">
+                  </el-option>
+                </el-select>
+
+      </el-form-item>
+
       <el-form-item label="计划开始日期">
         <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planStartTime" type="date" placeholder="选择日期">
         </el-date-picker>
@@ -92,17 +101,21 @@ export default {
     ...mapGetters({
       form: state.namespace + "/getProjectFormData",
       uploadAttrUrl: state.namespace + "/getUploadAttrUrl",
-      ioptions: state.namespace + "/getServiceTypeList"
+      ioptions: state.namespace + "/getServiceTypeList",
+      ClassifyTypeList:state.namespace + "/getClassifyTypeList"
     })
   },
   data() {
-    return { iopt: [] };
+    return { iopt: [],
+      classifyType:""
+    };
   },
   methods: {
     ...mapActions({
       queryServiceTypeList: state.namespace + "/queryServiceTypeList",
       insertOrUpdateProject: state.namespace + "/insertOrUpdateProject",
       insertOrUpdateAndNext: state.namespace + "/insertOrUpdateAndNext"
+        //    queryClassifyTypeByCode:store.namespace + "/queryClassifyTypeByCode"
     }),
     onSaveAndNext(e) {
       console.log(this.form);
@@ -117,6 +130,7 @@ export default {
         isSendPublicNotice: t.isSendPublicNotice,
         projectId: t.id,
         projectAttachmentId: t.projectAttachmentId,
+         classifyType:this.classifyType,
         attrDetailBean: null
       };
       this.insertOrUpdateAndNext(requestData).then(response => {
@@ -145,6 +159,7 @@ export default {
         isSendPublicNotice: t.isSendPublicNotice,
         projectId: t.id,
         projectAttachmentId: t.projectAttachmentId,
+        classifyType:this.classifyType,
         attrDetailBean: null
       };
       this.insertOrUpdateProject(requestData).then(response => {

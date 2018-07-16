@@ -26,3 +26,7 @@ export const setProjectServiceType = (state, serType) => {
 export const setProjectFormData = (state, projectFormData) => {
     state.baseproject.projectFormData= projectFormData
 }
+
+export const setClassifyType = (state, classifyType) => {
+    state.baseproject.classifyType = classifyType
+}
