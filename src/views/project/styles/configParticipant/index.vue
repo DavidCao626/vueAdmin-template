@@ -1,13 +1,14 @@
 <template>
-  <div>
+  <page :Breadcrumb="false">
+    <div slot="title">
+      选择参与者
+    </div>
+
+    <div slot="panel">
+
     <projectinfo :item-id="itemId"></projectinfo>
-    <page :Breadcrumb="false">
-      <div slot="title">
-        选择参与者
-      </div>
-      <div slot="panel">
-        <div style="margin-bottom:10px">
-          <!--
+      <div style="margin-bottom:10px">
+        <!--
           <el-row :gutter="10">
             <el-col :span="2" class="input_label">姓名：</el-col>
             <el-col :span="7">
@@ -28,14 +29,13 @@
             </el-col>
           </el-row>
           -->
-        </div>
-        <transter :source="source" :service-name="serviceName"></transter>
       </div>
-    </page>
-  </div>
+      <transter :source="source" :service-name="serviceName"></transter>
+    </div>
+  </page>
 </template>
 <script>
-import projectinfo from "../../_components/itemProjectSimpleInfo"
+import projectinfo from "../../_components/itemProjectSimpleInfo";
 import transter from "./_components/ParticipantTranster.vue";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import store from "../../_store/index.js";
@@ -64,7 +64,7 @@ export default {
     })
   },
   beforeRouteEnter(to, from, next) {
-    console.log(["to",to])
+    console.log(["to", to]);
     next(vm => {
       var scopeId = commons.getRouterParam(to, "scopeId");
       vm.scopeId = scopeId;

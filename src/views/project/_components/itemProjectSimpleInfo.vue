@@ -1,8 +1,10 @@
 <template>
     <div>
-        <div>项目名称:{{data.projectData.projectName}}</div>
-        <div>环节名称:{{data.scopeData.scopeName}}</div>
-        <div>节点名称:{{data.itemData.stepName}}</div>
+        <div style="display: inline-block;">项目名称:{{data.projectData.projectName}}</div>
+        <div style="display: inline-block;margin-left: 25px;">环节名称:{{data.scopeData.scopeName}}</div>
+        <div style="display: inline-block;margin-left: 25px;">节点名称:{{ data.itemData.stepName }}</div>
+        
+  
     </div>
 </template>
 <script>

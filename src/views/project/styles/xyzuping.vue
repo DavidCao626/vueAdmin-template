@@ -1,6 +1,6 @@
 <template>
   <div>
-    proInfo :itemId="itemId"></proInfo>
+    <proInfo :itemId="itemId"></proInfo>
     <huping title="学院评议" :dataHeader="hupingHeadSytle">
       <div slot="footer">
         <div class="approval-panel" style="text-align: center;">

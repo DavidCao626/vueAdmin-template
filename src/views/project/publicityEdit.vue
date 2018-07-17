@@ -1,22 +1,29 @@
 <template>
-  <div>
-    <proInfo :item-id="itemId"></proInfo>
-    <el-select v-model="tempContent" placeholder="请选择" @change="selectChange">
-      <el-option v-for="(item,index) in templateList" :key="index" :label="'模板'+(index+1)" :value="item.content">
-      </el-option>
-    </el-select>
+  <page :Breadcrumb="false">
+    <div slot="title">编辑公示</div>
+    <div slot="panel">
 
-    <tinymce :height="300" v-model="content" id='tinymce' ref="tinymcs"></tinymce>
-    </br>
-    <div id="sub">
-      <el-button type="success" @click="onSubmit">提交</el-button>
+      <proInfo :item-id="itemId"></proInfo>
+       <br/>
+      <div>
+        <el-select v-model="tempContent" placeholder="选择公示模版" @change="selectChange">
+          <el-option v-for="(item,index) in templateList" :key="index" :label="'模板'+(index+1)" :value="item.content">
+          </el-option>
+        </el-select>
+      </div>
+      <br/>
+      <tinymce :height="300" v-model="content" id='tinymce' ref="tinymcs"></tinymce>
+      </br>
+      <div id="sub">
+        <el-button type="success" @click="onSubmit">提交</el-button>
+      </div>
+
     </div>
-
-  </div>
+  </page>
 </template>
 
 <script>
-import proInfo from "./_components/projectSimpleInfo"
+import proInfo from "./_components/projectSimpleInfo";
 import tinymce from "~/components/Tinymce";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import commons from "~/utils/common.js";
@@ -24,7 +31,7 @@ import store from "./_store/index.js";
 export default {
   data() {
     return {
-      tempContent:"",
+      tempContent: "",
       content: "",
       itemId: 0,
       templateList: []
