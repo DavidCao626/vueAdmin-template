@@ -16,11 +16,11 @@
       </el-form-item>
 
       <el-form-item label="子类型:">
-
-         <el-select v-model="classifyType" placeholder="请选择">
-                  <el-option v-for="item in ClassifyTypeList" :key="item.value" :label="item.typeName" :value="item.templateKey">
-                  </el-option>
-                </el-select>
+        <el-select v-model="classifyType" placeholder="请选择" @change="classifyTypeDetail">
+          <el-option v-for="item in ClassifyTypeList" :key="item.value" :label="item.typeName" :value="item.templateKey">
+          </el-option>
+        </el-select>
+        <el-button size="small" @click="clasDetail">详细</el-button>
 
       </el-form-item>
 
@@ -61,7 +61,7 @@ import ProjectTypeSelect from "./ProjectTypeSelect";
 import ProjectAttachmentUplad from "./ProjectAttachmentUplad";
 import state from "../_store/index.js";
 import { mapActions, mapMutations, mapGetters } from "vuex";
-import commons from '~/utils/common.js'
+import commons from "~/utils/common.js";
 export default {
   name: "projectInfoForm",
   props: {
@@ -102,12 +102,14 @@ export default {
       form: state.namespace + "/getProjectFormData",
       uploadAttrUrl: state.namespace + "/getUploadAttrUrl",
       ioptions: state.namespace + "/getServiceTypeList",
-      ClassifyTypeList:state.namespace + "/getClassifyTypeList"
+      ClassifyTypeList: state.namespace + "/getClassifyTypeList"
     })
   },
   data() {
-    return { iopt: [],
-      classifyType:""
+    return {
+      classifyTypedetailPath: "",
+      iopt: [],
+      classifyType: ""
     };
   },
   methods: {
@@ -115,8 +117,25 @@ export default {
       queryServiceTypeList: state.namespace + "/queryServiceTypeList",
       insertOrUpdateProject: state.namespace + "/insertOrUpdateProject",
       insertOrUpdateAndNext: state.namespace + "/insertOrUpdateAndNext"
-        //    queryClassifyTypeByCode:store.namespace + "/queryClassifyTypeByCode"
+      //    queryClassifyTypeByCode:store.namespace + "/queryClassifyTypeByCode"
     }),
+    clasDetail() {
+      if (this.classifyTypedetailPath != "") {
+        window.open(this.classifyTypedetailPath);
+      }
+    },
+    classifyTypeDetail(val) {
+      console.log([val, this.ClassifyTypeList]);
+      for (var i = 0; i < this.ClassifyTypeList.length; i++) {
+        if (this.ClassifyTypeList[i].templateKey == val) {
+          this.classifyTypedetailPath = this.ClassifyTypeList[i].detailPath;
+        }
+      }
+      console.log([
+        " this.classifyTypedetailPath",
+        this.classifyTypedetailPath
+      ]);
+    },
     onSaveAndNext(e) {
       console.log(this.form);
       var t = this.form;
@@ -130,7 +149,7 @@ export default {
         isSendPublicNotice: t.isSendPublicNotice,
         projectId: t.id,
         projectAttachmentId: t.projectAttachmentId,
-         classifyType:this.classifyType,
+        classifyType: this.classifyType,
         attrDetailBean: null
       };
       this.insertOrUpdateAndNext(requestData).then(response => {
@@ -159,7 +178,7 @@ export default {
         isSendPublicNotice: t.isSendPublicNotice,
         projectId: t.id,
         projectAttachmentId: t.projectAttachmentId,
-        classifyType:this.classifyType,
+        classifyType: this.classifyType,
         attrDetailBean: null
       };
       this.insertOrUpdateProject(requestData).then(response => {
@@ -187,10 +206,7 @@ export default {
       this.form.projectAttachmentId = tempArr;
     }
   },
-  mounted(){
-
-  }
-
+  mounted() {}
 };
 </script>
 <style>
