@@ -7,7 +7,7 @@ import { Message, Loading } from "element-ui";
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
-  timeout: 8000, // 请求超时时间
+  timeout: 30*1000, // 请求超时时间
   headers: {
     "Specify-Request-Type": "application/x-www-form-urlencoded;charset=utf-8"
   }

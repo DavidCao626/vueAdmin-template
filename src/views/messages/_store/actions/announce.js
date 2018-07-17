@@ -31,10 +31,17 @@ const getPublicNoticeById = ({ commit, state }, params) =>
         })
     })    
 
+const insertNotice = ({ commit, state }, params) =>
+    new Promise(resolve => {
+        api.insertNotice(params).then(response => {
+            resolve(response);
+        })
+    })    
 export default {
     pullPublicNoticeA,
     queryPublicNoticeA,
     getDictByDictNames,
-    getPublicNoticeById
+    getPublicNoticeById,
+    insertNotice
 }
 

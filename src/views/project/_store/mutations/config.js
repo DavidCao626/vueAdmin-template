@@ -18,6 +18,7 @@ const _computeItemsTime = (items) => {
       var pitem = items[value.previousKey]
       value.start = pitem.end
       if (value.item.planTimeLong != null) {
+        console.log("operation the end time...");
         // console.log([value.item.stepKey, value.item.planTimeLong])
         value.end = moment(value.start).add(value.item.planTimeLong, 'H')
       }
@@ -28,7 +29,7 @@ const _computeItemsTime = (items) => {
 export const changeScopeWorkItemHour = (state, hourData) => {
   const items = state.scopeDateViewInfo.items
   const item = items[hourData.itemKey]
-  const timeLong = (hourData.timeLong * 24)
+  const timeLong = hourData.timeLong
   const oldTimeLong = item.item.planTimeLong
   var difTimeLong = timeLong - oldTimeLong
   console.log([timeLong, oldTimeLong, difTimeLong])

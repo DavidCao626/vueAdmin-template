@@ -30,9 +30,19 @@ const getPublicNoticeById = data =>
         data:data
     })    
 
+const insertNotice = data =>
+    request({
+        url: "/publicNotice/insertNotice.do",
+        method: "post",
+        data: data
+    })
+
+const uploadAttrUrl = process.env.BASE_API + "/project/uploadAttachment.do"
 export default {
     queryPublicNotice,
     getDictByDictNames,
     getPublicNoticeById,
-    pullPublicNotice
+    pullPublicNotice,
+    uploadAttrUrl,
+    insertNotice
 }

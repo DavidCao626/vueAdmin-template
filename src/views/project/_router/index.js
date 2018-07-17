@@ -66,6 +66,18 @@ export const projectRouter = {
       meta: { hidden: true }
     },
     {
+      path: "configClass",
+      name: "configClass",
+      component: () => import("../config/indexClass.vue"),
+      meta: { hidden: true }
+    },
+    {
+      path: "configCollege",
+      name: "configCollege",
+      component: () => import("../config/indexCollege.vue"),
+      meta: { hidden: true }
+    },
+    {
       path: "start",
       name: "project_start",
       title: "下发任务",

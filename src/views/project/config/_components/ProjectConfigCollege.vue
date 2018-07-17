@@ -91,7 +91,7 @@
       </template>
     </table>
     <div class="line"></div>
-    <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
+   <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
       <el-col :span="7">
         <el-button ref="next" @click="onSave">保存配置</el-button>
         <el-button ref="back" v-if="getNextEnable" @click="onSaveAndNext" type="primary">提交并下发任务</el-button>

@@ -3,6 +3,8 @@
     <template>
       <el-table-column prop="project.project_name" label="项目名称" min-width="180">
       </el-table-column>
+      <el-table-column prop="isMine" :formatter="isMineFormatter" label="来源" min-width="180">
+      </el-table-column>
       <el-table-column prop="project.project_service_type_name" label="业务类别" min-width="150">
       </el-table-column>
       <!-- <el-table-column prop="scope.scopeName" label="环节名称" min-width="150">
@@ -42,6 +44,13 @@ export default {
       }
       if (cellValue == "C") {
         return "已创建";
+      }
+    },
+    isMineFormatter(row, column, cellValue, index){
+      if(cellValue=="Y"){
+        return "我发起的"
+      }else{
+        return "发给我的"
       }
     },
     showDetail(row, event, column) {

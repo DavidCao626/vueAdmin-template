@@ -278,8 +278,8 @@ export default {
           //   "201807": 7
           // };
 
-          var _this = this;
-
+           var _this = this;
+          var sufferStr = "总人数:"+item.groupSum + ",参与人数:" +(item.groupSum-item.groupGiveUp)+",弃权数:" + item.groupGiveUp + ",";
           if (item.groupComment != null && item.groupComment != undefined) {
             var obj1 = item.groupComment;
             Object.keys(obj1).forEach(function(key) {
@@ -291,6 +291,7 @@ export default {
               });
               tempLis.zuping += tempName + ":" + obj1[key] + "人,";
             });
+            tempLis.zuping = sufferStr +  tempLis.zuping;
             tempLis.zuping = tempLis.zuping.substring(
               0,
               tempLis.zuping.length - 1
@@ -299,6 +300,7 @@ export default {
             tempLis.zuping = "暂无";
           }
 
+ var sufferStr = "总人数:"+item.eachOtherSum + ",参与人数:" +(item.eachOtherSum-item.eachOtherGiveUp)+",弃权数:" + item.eachOtherGiveUp + ",";
           if (
             item.eachOtherComment != null &&
             item.eachOtherComment != undefined
@@ -313,6 +315,7 @@ export default {
               });
               tempLis.huping += tempName + ":" + obj2[key] + "人,";
             });
+              tempLis.huping = sufferStr +  tempLis.huping;
             tempLis.huping = tempLis.huping.substring(
               0,
               tempLis.huping.length - 1

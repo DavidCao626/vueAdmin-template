@@ -1,12 +1,11 @@
 <template>
   <page>
-    <div slot="title" >消息管理</div>
+    <div slot="title">消息管理</div>
     <div slot="tabs">
       <el-tabs value="first" @tab-click="handleClick ">
         <el-tab-pane label="公告管理 " name="first">
-          我的公告
         </el-tab-pane>
-        <el-tab-pane label="公示管理 " name="second"></el-tab-pane>
+        <!-- <el-tab-pane label="公示管理 " name="second"></el-tab-pane> -->
       </el-tabs>
     </div>
     <div slot="panel">
@@ -18,7 +17,7 @@
             </el-input>
           </div>
           <div class="panel-control__flex-right">
-            <router-link to="/project/add">
+            <router-link to="/messages/announce/add">
               <el-button type="primary" icon="el-icon-plus">新建公告</el-button>
             </router-link>
           </div>
@@ -106,12 +105,23 @@ export default {
     },
     showDetail(row, event, column) {
       //alert("我要跳转到详情,这是我的Id : " + row.id)
-      this.$router.push({
-        name: "公告详情",
-        params: {
-          publicNoticeId: row.id
-        }
-      });
+      console.log(["点击事件", row]);
+      if (row.state == "S") {
+        this.$router.push({
+          name: "公告详情",
+          params: {
+            publicNoticeId: row.id
+          }
+        });
+      }else{
+        this.$router.push({
+          path:"/messages/announce/add",
+          query:{
+            id:row.id
+          }
+        });
+
+      }
     },
     filesFormatter(row, column, cellValue, index) {
       if (cellValue == null) {

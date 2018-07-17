@@ -70,7 +70,8 @@ export default {
       stateList: [
         { label: "全部", value: "A" },
         { label: "已处理", value: "F" },
-        { label: "未处理", value: "N" }
+        { label: "未处理", value: "N" },
+         { label: "已过期", value: "Y" }
       ],
       typeList  : [
         { label: "全部", value: "A" },
@@ -98,6 +99,14 @@ export default {
       this.queryData();
     },
     showDetail(row, event, column) {
+      if(row.isActive == "N"){
+        this.$message.error("该代办已经过期!不可操作!")
+        return;
+      }
+      if(row.itemState == "F"){
+        this.$message.error("该代办已经处理!不可操作!")
+        return;
+      }
       console.log(row);
       if (row.pending_type == "Item") {
         this.$router.push({
@@ -124,26 +133,21 @@ export default {
       }
     },
     stateFormatter(row, column, cellValue, index) {
-      if(cellValue == "F"){
-        return "已处理"
+      if(row.isActive == "Y"){
+        if(cellValue == "F"){
+          return "已处理"
+        }
+        if(cellValue == "N"){
+          return "未处理"
+        }
+      }else{
+       if(cellValue == "F"){
+          return "已处理"
+        }
+          return "已过期"
       }
-      if(cellValue == "N"){
-        return "未处理"
-      }
-      // var list = this.stateList;
-      // for (var i = 0; i < list.length; i++) {
-      //   if (cellValue == list[i].dict_key) {
-      //     return list[i].dict_desc;
-      //   }
-      // }
+     
     },
-    // overTimeFormatter(row, column, cellValue, index) {
-    //   var date = cellValue;
-    //   if (date == undefined) {
-    //     return "";
-    //   }
-    //   return moment(date).format("YYYY-MM-DD HH:mm:ss");
-    // },
     overTimeFormatter(row) {
       var date = row.over_time;
       if (date == undefined) {
