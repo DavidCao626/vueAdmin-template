@@ -20,7 +20,7 @@
                 <template v-for="(i,index) in data">
                     <router-link :to="{path:i.url,query:i.urlParams}">
                         <li>{{i.title}}
-                            <small>{{i.date}}
+                            <small>{{i.orgLabel}}&nbsp;&nbsp;&nbsp;{{i.date}}
                             </small>
                         </li>
                     </router-link>
@@ -55,7 +55,8 @@ export default {
             title: "默认标题",
             url: "/",
             date: "",
-            urlParams:{}
+            urlParams:{},
+            orgLabel:""
           }
         ];
       }

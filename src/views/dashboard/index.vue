@@ -195,12 +195,14 @@ export default {
             title: "",
             url: "",
             urlParams: {},
-            date: ""
+            date: "",
+            orgLabel:""
           };
           temp.title = element.title;
           temp.url = "/messages/announce/show"; //详情地址
           temp.urlParams = { publicNoticeId: element.id };
           temp.date = moment(element.publicTime,"yyyy-MM-DD HH:mm:ss").format("MM-DD HH:mm")
+          temp.orgLabel = element.orgLabel
           vm.announceDate.push(temp);
         });
       });
@@ -213,12 +215,14 @@ export default {
             title: "",
             url: "",
             urlParams: {},
-            date: ""
+            date: "",
+            orgLabel:""
           };
           temp.title = element.title;
           temp.url = "/messages/notice/show"; //详情地址
           temp.urlParams = { publicNoticeId: element.id };
           temp.date =  moment(element.publicTime,"yyyy-MM-DD HH:mm:ss").format("MM-DD HH:mm")
+           temp.orgLabel = element.orgLabel
           vm.noticeDate.push(temp);
         });
       });
