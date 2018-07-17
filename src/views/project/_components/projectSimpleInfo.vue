@@ -1,9 +1,11 @@
 <template>
-    <div>
-        <div>项目名称:{{data.projectData.projectName}}</div>
-        <div>环节名称:{{data.scopeData.scopeName}}</div>
-        <div>过期时间:{{endTime}}</div>
-    </div>
+  <div>
+    <div style="display: inline-block;">过期时间：{{endTime}}</div>
+
+    <div style="display: inline-block;margin-left: 25px;">当前环节：{{data.scopeData.scopeName}}</div>
+
+    <div style="display: inline-block;margin-left: 25px;">所在项目：{{data.projectData.projectName}}</div>
+  </div>
 </template>
 <script>
 import state from "../_store/index.js";
@@ -22,7 +24,7 @@ export default {
   computed: {
     endTime() {
       if (this.data.itemData.realStartTime) {
-          var that = this;
+        var that = this;
         return moment(that.data.itemData.realStartTime, "YYYY-MM-DD HH:mm:ss")
           .add(that.data.itemData.planTimeLong, "hours")
           .format("YYYY-MM-DD HH:mm");
@@ -34,18 +36,18 @@ export default {
   data() {
     return {
       data: {
-          scopeData:{
-              scopeName:"",
-              realStartTime:"",
-              planTimeLong:""
-          },
-          itemData:{
-              realStartTime:"",
-              planTimeLong:""
-          },
-          projectData:{
-              projectName:""
-          }
+        scopeData: {
+          scopeName: "",
+          realStartTime: "",
+          planTimeLong: ""
+        },
+        itemData: {
+          realStartTime: "",
+          planTimeLong: ""
+        },
+        projectData: {
+          projectName: ""
+        }
       }
     };
   },
@@ -61,7 +63,7 @@ export default {
     }
   },
   mounted() {
-    if (this.itemId!=undefined&& this.itemId!=null&&this.itemId != 0) {
+    if (this.itemId != undefined && this.itemId != null && this.itemId != 0) {
       this.getData(this.itemId);
     }
   }

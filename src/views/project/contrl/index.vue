@@ -11,7 +11,10 @@
 
       <ProjectType :typeName="projectInfo.projectServiceTypeName"></ProjectType>
       <div class="project" style="display:flex;align-items: center;justify-content: space-between;">
-        <div class="project-left" style="margin:30px;">
+        <div class="project-left" style="margin: 30px;display:flex;justify-content:center;">
+          <ProjectScoped></ProjectScoped>
+        </div>
+        <div class="project-right" style="margin:30px;flex:1">
           <div class="project-name">
             {{projectInfo.projectName}}
           </div>
@@ -30,7 +33,7 @@
               <a target="_blank" :href="attch.userPath">{{attch.userFileName}}</a>
             </p>
           </div>
-          <div style="display: flex;justify-content: flex-end;">
+          <div style="display: flex;">
 
             <div>
               <el-popover placement="bottom" title="" width="auto" trigger="click">
@@ -48,9 +51,7 @@
               <svg-icon icon-class="seedate" width="20px" height="20px" /> 查看环节数据</el-button>
           </div>
         </div>
-       <div class="project-right" style="margin: 30px;display:flex;justify-content:center;flex:1">
-          <ProjectScoped></ProjectScoped>
-        </div>
+       
       </div>
       <ContrlTimeLine></ContrlTimeLine>
       <br/> <br/> <br/>

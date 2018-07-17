@@ -9,8 +9,9 @@
             </td>
             <td>
                 <div class="timeline-box-header__title">
-                    <h3>
-                        已用{{scopeInfo.useredDay}}，可用 {{scopeInfo.useabledDay}}，任需：{{scopeInfo.neededDay}},{{scopeInfo.delayDay}}。
+                    <h3 style="color:#444">
+                        已用{{scopeInfo.useredDay}}天，环节可用 {{scopeInfo.useabledDay}}天，任需时长：{{scopeInfo.neededDay}}天，
+                        预计超时：<strong style="color:red">{{scopeInfo.delayDay}}</strong> 天。
                     </h3>
                 </div>
             </td>

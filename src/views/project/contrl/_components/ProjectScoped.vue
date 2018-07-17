@@ -93,7 +93,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 280px;
+  height: 300px;
   width: 250px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 12px;
