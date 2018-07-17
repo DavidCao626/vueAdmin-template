@@ -418,7 +418,7 @@ export default {
       console.log(["requestData", requestData]);
       this.povertyApply(requestData).then(response => {
         this.$message.success("提交成功");
-        this.$route.go(-1);
+        this.$router.go(-1);
       });
     },
     handleChange(val) {

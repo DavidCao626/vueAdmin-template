@@ -23,6 +23,7 @@ const queryServiceTypeList = ({ commit, state }) =>
   new Promise(resolve => {
     api.queryServiceTypeList().then(response => {
       commit("setServiceTypeList", response.resBody)
+      resolve(response)
     })
   })
 
