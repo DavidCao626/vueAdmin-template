@@ -12,7 +12,8 @@ const queryUserProject = ({ commit, state },params) => new Promise(resolve => {
 
 const getDictByDictNames = ({ commit, state }, params) => new Promise(resolve => {
     api.getDictByDictNames(params).then(response => {
-        console.log(["getDictByDictNamesAction",response])
+        console.log(["getDictByDictNamesAction", response])
+        resolve(response)
         commit('setProjectState', response.resBody.node_state)
         commit('setTodoState', response.resBody.pend_state)
     })

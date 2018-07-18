@@ -67,7 +67,7 @@
 
               <el-form-item label="主要原因">
                 <el-select v-model="form.mainReason" placeholder="请选择">
-                  <el-option v-for="item in reasonList" :key="item.value" :label="item.label" :value="item.value">
+                  <el-option v-for="item in reasonList" :key="item['dict_desc']" :label="item['dict_desc']" :value="item['dict_desc']">
                   </el-option>
                 </el-select>
               </el-form-item>
@@ -169,6 +169,7 @@ import moment from "moment";
 export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
+      vm.getReasonList();
       if (to.query.itemId != undefined) {
         let itemId = to.query.itemId;
         if (itemId != "" && itemId != null) {
@@ -284,17 +285,6 @@ export default {
   data() {
     return {
       reasonList: [
-        { label: "无", value: "无" },
-        { label: "单亲", value: "单亲" },
-        { label: "孤儿", value: "孤儿" },
-        { label: "残疾", value: "残疾" },
-        { label: "低保", value: "低保" },
-        { label: "烈士子女", value: "烈士子女" },
-        { label: "农村五保", value: "农村五保" },
-        { label: "因病", value: "因病" },
-        { label: "因灾", value: "因灾" },
-        { label: "其他", value: "其他" },
-        { label: "涉农专业", value: "涉农专业" }
       ],
       resData: {
         projectData: {
@@ -346,9 +336,18 @@ export default {
   methods: {
     ...mapActions({
       getApplyData: store.namespace + "/getApplyData",
-      povertyApply: store.namespace + "/povertyApply"
-
+      povertyApply: store.namespace + "/povertyApply",
+      getDictByDictNames: store.namespace + "/getDictByDictNames"
     }),
+    getReasonList() {
+      console.log(["getReasonList"]);
+      var requestData = { dicts: ["poverty_apply_reason"] };
+      this.getDictByDictNames(requestData).then(response => {
+        console.log(["getDictByDictNames1", response]);
+        this.reasonList = response.resBody.poverty_apply_reason;
+        console.log(["getDictByDictNames2", this.reasonList]);
+      });
+    },
     DateDiff(sDate1, sDate2) {
       //sDate1和sDate2是2006-12-18格式
       var aDate, oDate1, oDate2, iDays;
@@ -391,7 +390,7 @@ export default {
     onSubmit() {
       console.log("submit!");
       var requestData = {
-        mainReason:this.form.mainReason,
+        mainReason: this.form.mainReason,
         itemId: this.itemId,
         childServiceTypeCode: this.form.typeValue,
         projectSystemCode: this.projectSystemCode,
