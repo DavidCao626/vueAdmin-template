@@ -14,8 +14,16 @@ const povertyApply = ({ commit, state }, data) => new Promise(resolve => {
         resolve(response)
     })
 })
+const insertScholarshipApply = ({ commit, state }, data) => new Promise(resolve => {
+    api.insertScholarshipApply(data).then(response => {
+        console.log(["insertScholarshipApply", response])
+        resolve(response)
+    })
+})
+
 
 export default {
     getApplyData,
-    povertyApply
+    povertyApply,
+    insertScholarshipApply
 }

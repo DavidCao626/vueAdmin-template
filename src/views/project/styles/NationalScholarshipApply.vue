@@ -64,18 +64,6 @@
 
           <el-row>
             <el-col :span="21">
-
-              <el-form-item label="主要原因">
-                <el-select v-model="form.mainReason" placeholder="请选择">
-                  <el-option v-for="item in reasonList" :key="item['dict_desc']" :label="item['dict_desc']" :value="item['dict_desc']">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="21">
               <el-form-item label="申请理由">
                 <el-input type="textarea" :rows="3" v-model="form.desc"></el-input>
               </el-form-item>
@@ -96,56 +84,15 @@
 
       </div>
     </page>
-    <page style="width: 1000px;margin: 0 auto;">
+    <!-- <page style="width: 1000px;margin: 0 auto;">
       <div slot="panel">
         <h3 style="font-weight:400">二、填写家庭情况</h3><hr/>
         <el-form ref="form" :model="form" label-width="120px" size="small">
-          <el-row>
-            <el-col :span="10">
-              <el-form-item label="家庭人口数">
-                <el-input v-model="form.familyNumber" type="Number"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="10" :offset="1">
-              <el-form-item label="家庭情况">
-                <el-radio-group v-model="form.familyStatus">
-                  <el-radio-button label="S">双亲</el-radio-button>
-                  <el-radio-button label="D">单亲</el-radio-button>
-                  <el-radio-button label="G">孤儿</el-radio-button>
-                </el-radio-group>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="10">
-              <el-form-item label="是否低保">
-                <el-switch v-model="form.isSubsistenceAllowance" active-value="Y" inactive-value="N"></el-switch>
-              </el-form-item>
-            </el-col>
-
-            <el-col :span="10" :offset="1">
-              <el-form-item label="是否建档立卡">
-                <el-switch v-model="form.isRecord" active-value="Y" inactive-value="N"></el-switch>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="10">
-              <el-form-item label="人均月收入">
-                <el-input v-model="form.income" type="Number" placeholder="单位（元）"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="10" :offset="1">
-              <el-form-item label="人均月支出">
-                <el-input v-model="form.spending" type="Number" placeholder="单位（元）"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
 
         </el-form>
 
       </div>
-    </page>
+    </page> -->
     <page style="width: 1000px;margin: 0 auto;">
       <div slot="panel">
         <div style="text-align:center">
@@ -323,12 +270,6 @@ export default {
         desc: "", //申请理由
         delivery: false,
         fileList: [], //申请附件
-        familyNumber: "3", //家庭人口
-        familyStatus: "S", //家庭情况
-        isSubsistenceAllowance: 0, //是否低保
-        isRecord: 0, //是否建档立卡
-        income: 0, //收入
-        spending: 0 //支出
       },
       attArr: []
     };
@@ -336,7 +277,7 @@ export default {
   methods: {
     ...mapActions({
       getApplyData: store.namespace + "/getApplyData",
-      povertyApply: store.namespace + "/povertyApply",
+      insertScholarshipApply: store.namespace + "/insertScholarshipApply",
       getDictByDictNames: store.namespace + "/getDictByDictNames"
     }),
     cancle(){
@@ -393,32 +334,14 @@ export default {
     onSubmit() {
       console.log("submit!");
       var requestData = {
-        mainReason: this.form.mainReason,
         itemId: this.itemId,
         childServiceTypeCode: this.form.typeValue,
         projectSystemCode: this.projectSystemCode,
         applyReason: this.form.desc, //申请原因
         attachment: this.attArr, // 附件
-        homePersonCount: this.form.familyNumber, // 家庭人口数
-        isSingleParent: "", // 是否单亲
-        isOrphan: "", // 孤儿
-        isBasicAllowance: this.form.isSubsistenceAllowance, // 低保
-        isCreateFile: this.form.isRecord, // 建档立卡
-        perCapitaIncome: this.form.income, // 人均收入
-        perCapitalExpenditure: this.form.spending // 人均支出
       };
-      if (this.form.familyStatus == "S") {
-        requestData.isSingleParent = "N";
-        requestData.isOrphan = "N";
-      } else if (this.form.familyStatus == "D") {
-        requestData.isSingleParent = "Y";
-        requestData.isOrphan = "N";
-      } else if (this.form.familyStatus == "G") {
-        requestData.isSingleParent = "N";
-        requestData.isOrphan = "Y";
-      }
       console.log(["requestData", requestData]);
-      this.povertyApply(requestData).then(response => {
+      this.insertScholarshipApply(requestData).then(response => {
         this.$message.success("提交成功");
         this.$router.go(-1);
       });

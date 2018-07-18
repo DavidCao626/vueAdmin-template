@@ -209,6 +209,13 @@ export const projectRouter = {
       title: "编辑公示",
       component: () => import("../publicityEdit"),
       meta: { hidden: true }
+    },
+    {
+      path: "scholarshipApply",
+      name: "scholarshipApply",
+      title: "国家奖学金申请",
+      component: () => import("../styles/NationalScholarshipApply.vue"),
+      meta: { hidden: true }
     }
   ]
 };
