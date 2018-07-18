@@ -62,16 +62,5 @@ export default {
 </script>
 
 <style scoped>
-.body-title {
-  text-align: center;
-  color: #222;
-}
-.content{
-  border:1px solid red
-}
 
-.content p{
-  line-height:32px;
-  color:red !important;
-}
 </style>
