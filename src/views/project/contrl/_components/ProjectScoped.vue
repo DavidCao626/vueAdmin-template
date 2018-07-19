@@ -94,7 +94,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   height: 300px;
-  width: 250px;
+  /* width: 250px; */
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 12px;
   font-weight: 500;
