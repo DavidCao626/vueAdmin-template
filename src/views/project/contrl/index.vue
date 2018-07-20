@@ -19,7 +19,7 @@
             {{projectInfo.projectName}}
           </div>
           <div class="project-desc">
-            <p>
+            <!-- <p>
               项目开始时间：{{projectInfo.planStartTime}}
             </p>
             <p>
@@ -27,7 +27,7 @@
             </p>
             <p>
               项目创建机构：{{projectInfo.createdUserOrgName}}
-            </p>
+            </p> -->
             <p>附件列表:</p>
             <p v-for="(attch,index) in projectInfo.files" :key="index">
               <a target="_blank" :href="attch.userPath">{{attch.userFileName}}</a>
@@ -51,14 +51,13 @@
               <svg-icon icon-class="seedate" width="20px" height="20px" /> 查看环节数据</el-button>
           </div>
         </div>
-       
+
       </div>
       <ContrlTimeLine></ContrlTimeLine>
       <br/> <br/> <br/>
     </div>
 
   </page>
-
 
 </template>
 
@@ -105,15 +104,15 @@ export default {
       this.scopeId = data.id;
       this.queryScopeIntegeratedDateView({ scopeId: this.scopeId });
       this.getChildScope();
+      this.showChildScope();
     },
     getChildScope() {
       this.data2 = [];
-      
+
       this.getUserChildScope({ scopeId: this.scopeId }).then(response => {
         console.log(["getChildScope", response]);
         this.data2.push(response.resBody);
       });
-      
     },
     filterNode(value, data) {
       if (!value) return true;
@@ -130,9 +129,10 @@ export default {
     showChildScope() {
       console.log(["childScope", this.scopeId]);
       this.$router.push({
-        path: "/project/childScope",
+        path: "/project/control",
         query: {
-          scopeId: this.scopeId
+          scopeId: this.scopeId,
+          date:new Date().getTime()
         }
       });
     },
