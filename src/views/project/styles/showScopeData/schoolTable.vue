@@ -110,7 +110,7 @@
         </el-table-column>
         <el-table-column label="学院推荐" prop="xytj" width="80">
         </el-table-column>
-<el-table-column label="学院推荐" :formatter="banjiFormatter" width="80" prop="xuexiaopingshen">
+<el-table-column label="学校推荐" :formatter="banjiFormatter" width="80" prop="xuexiaopingshen">
         </el-table-column>
       </el-table>
     </div>

@@ -17,6 +17,7 @@
                         </el-button> -->
           </el-button-group>
         </div>
+        <projectinfo :item-id="itemId"></projectinfo>
         <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
           <!-- <el-form-item label="业务类别">
                         <el-select v-model="formInline.region" placeholder="筛选类别">
@@ -86,9 +87,9 @@
 
               <br/>
 
-               <el-form-item label="学院推荐:">
-                                <span>{{ props.row.xytj }}</span>
-                            </el-form-item>
+              <el-form-item label="学院推荐:">
+                <span>{{ props.row.xytj }}</span>
+              </el-form-item>
 
             </el-form>
           </template>
@@ -142,9 +143,13 @@
 
 <script>
 import dynamicTable from "~/components/DynamicTable";
+import projectinfo from "../../_components/itemProjectSimpleInfo";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import store from "../../_store/index.js";
 export default {
+  components: {
+    projectinfo
+  },
   methods: {
     filterTag(value, row) {
       //本页过滤状态
@@ -155,7 +160,7 @@ export default {
         store.namespace + "/getSchoolDataAndPageDataByItemId",
       updateClassRecommend: store.namespace + "/updateSchoolRecommend",
       submitClassData: store.namespace + "/submitSchoolData",
-       completeUserPendingByItemId:
+      completeUserPendingByItemId:
         store.namespace + "/completeUserPendingByItemId"
     }),
     handleSizeChange(val) {
@@ -166,7 +171,7 @@ export default {
       this.currentPage = val;
       this.getData();
     },
-   commitData() {
+    commitData() {
       this.submitClassData({ itemId: this.itemId }).then(response => {
         this.completeUserPendingByItemId({ itemId: this.itemId }).then(res => {
           this.$message.success("提交成功");
@@ -238,16 +243,19 @@ export default {
             shenqin: item.childServiceTypeName,
             banjipingshen: item.classRecommend,
             xueyuanpingshen: item.collegeRecommend,
-            xuexiaopingshen:item.schoolRecommend,
+            xuexiaopingshen: item.schoolRecommend,
             bjtj: "",
             xypy: "",
-            xxpy:""
+            xxpy: ""
           };
           var _this = this;
-          if (item.collegeRecommend != null && item.collegeRecommend != undefined) {
+          if (
+            item.collegeRecommend != null &&
+            item.collegeRecommend != undefined
+          ) {
             _this.serviceTypeList.forEach(el => {
-              if(el.value == item.collegeRecommend){
-                tempLis.xytj = el.label
+              if (el.value == item.collegeRecommend) {
+                tempLis.xytj = el.label;
               }
             });
           } else {

@@ -17,6 +17,7 @@
                         </el-button> -->
           </el-button-group>
         </div>
+         <projectinfo :item-id="itemId"></projectinfo>
         <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
           <!-- <el-form-item label="业务类别">
                         <el-select v-model="formInline.region" placeholder="筛选类别">
@@ -141,10 +142,14 @@
 </template>
 
 <script>
+import projectinfo from "../../_components/itemProjectSimpleInfo"
 import dynamicTable from "~/components/DynamicTable";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import store from "../../_store/index.js";
 export default {
+    components: {
+    projectinfo
+  },
   methods: {
     filterTag(value, row) {
       //本页过滤状态

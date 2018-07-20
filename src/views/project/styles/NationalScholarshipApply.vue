@@ -84,15 +84,49 @@
 
       </div>
     </page>
-    <!-- <page style="width: 1000px;margin: 0 auto;">
+    <page style="width: 1000px;margin: 0 auto;">
       <div slot="panel">
-        <h3 style="font-weight:400">二、填写家庭情况</h3><hr/>
+        <h3 style="font-weight:400">二、相关信息</h3><hr/>
         <el-form ref="form" :model="form" label-width="120px" size="small">
+          <el-row>
+            <el-col :span="10">
+              <el-form-item label="成绩排名">
+                <el-input v-model="form.username" disabled></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="10" :offset="1">
+              <el-form-item label="成绩排名人数">
+                <el-input v-model=" form.username " disabled></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="10 ">
+              <el-form-item label="必修课数量 ">
+                <el-input v-model="form.username " disabled></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="10 " :offset="1 ">
+              <el-form-item label="必修课及格数 ">
+                <el-input v-model="form.username " disabled></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row> <el-row>
+            <el-col :span="10 ">
+              <el-form-item label="综合考评名次 ">
+                <el-input v-model="form.username " disabled></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="10 " :offset="1 ">
+              <el-form-item label="综合考评总人数">
+                <el-input v-model="form.username" disabled></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
         </el-form>
-
       </div>
-    </page> -->
+    </page>
     <page style="width: 1000px;margin: 0 auto;">
       <div slot="panel">
         <div style="text-align:center">
@@ -231,8 +265,7 @@ export default {
   },
   data() {
     return {
-      reasonList: [
-      ],
+      reasonList: [],
       resData: {
         projectData: {
           projectName: "",
@@ -269,7 +302,7 @@ export default {
         mainReason: "",
         desc: "", //申请理由
         delivery: false,
-        fileList: [], //申请附件
+        fileList: [] //申请附件
       },
       attArr: []
     };
@@ -280,8 +313,8 @@ export default {
       insertScholarshipApply: store.namespace + "/insertScholarshipApply",
       getDictByDictNames: store.namespace + "/getDictByDictNames"
     }),
-    cancle(){
-      this.$router.go(-1)
+    cancle() {
+      this.$router.go(-1);
     },
     getReasonList() {
       console.log(["getReasonList"]);
@@ -338,7 +371,7 @@ export default {
         childServiceTypeCode: this.form.typeValue,
         projectSystemCode: this.projectSystemCode,
         applyReason: this.form.desc, //申请原因
-        attachment: this.attArr, // 附件
+        attachment: this.attArr // 附件
       };
       console.log(["requestData", requestData]);
       this.insertScholarshipApply(requestData).then(response => {
