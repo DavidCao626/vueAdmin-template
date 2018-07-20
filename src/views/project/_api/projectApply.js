@@ -27,9 +27,16 @@ const insertMotivationScholarshipApply = data =>
         method: 'post',
         data: data
     })
+const insertNationalGrantsApply = data =>
+    ajax({
+        url: "/projectApply/insertNationalGrantsApply.do",
+        method: 'post',
+        data: data
+    })
+
 export default {
     getApplyData,
     povertyApply,
     insertScholarshipApply,
-    insertMotivationScholarshipApply
+    insertNationalGrantsApply
 }

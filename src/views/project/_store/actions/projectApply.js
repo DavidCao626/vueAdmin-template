@@ -27,9 +27,17 @@ const insertMotivationScholarshipApply = ({ commit, state }, data) => new Promis
         resolve(response)
     })
 })
+const insertNationalGrantsApply = ({ commit, state }, data) => new Promise(resolve => {
+    api.insertNationalGrantsApply(data).then(response => {
+        console.log(["insertNationalGrantsApply", response])
+        resolve(response)
+    })
+})
+
 export default {
     getApplyData,
     povertyApply,
     insertScholarshipApply,
-    insertMotivationScholarshipApply
+    insertMotivationScholarshipApply,
+    insertNationalGrantsApply
 }

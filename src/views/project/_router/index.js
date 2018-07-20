@@ -276,11 +276,73 @@ export const projectRouter = {
       meta: { hidden: true, title: "学院环节数据" }
     },
     {//奖学金
-      path: "gSshowSchoolData",
-      name: "gSshowSchoolData",
+      path: "gsShowSchoolData",
+      name: "gsShowSchoolData",
       title: "学校环节数据",
       component: () => import("../styles/showNationSchoData/schoolTable.vue"),
       meta: { hidden: true, title: "学校环节数据" }
+    }, {//国家助学金
+      path: "NationGrantsApply",
+      name: "NationGrantsApply",
+      title: "学生申请表",
+      component: () => import("../styles/NationGrantsApply.vue"),
+      meta: { hidden: true } 
     },
+    {//国家助学金
+      path: "NationGrantsClassCheck",
+      name: "NationGrantsClassCheck",
+      title: "班级审批",
+      component: () => import("../styles/NationGrantsCheck/classTable.vue"),
+      meta: { hidden: true, title: "班级审批" }
+    },
+    {//国家助学金
+      path: "NationGrantsCollegeCheck",
+      name: "NationGrantsCollegeCheck",
+      title: "学院审批",
+      component: () => import("../styles/NationGrantsCheck/collegeTable.vue"),
+      meta: { hidden: true, title: "班级审批" }
+    },
+    {//国家助学金
+      path: "NationGrantsSchoolCheck",
+      name: "NationGrantsSchoolCheck",
+      title: "学校审批",
+      component: () => import("../styles/NationGrantsCheck/SchoolTable.vue"),
+      meta: { hidden: true, title: "班级审批" }
+    },
+    {//国家助学金
+      path: "ngShowClassData",
+      name: "ngShowClassData",
+      title: "班级环节数据",
+      component: () => import("../styles/showNationGrantsData/classTable.vue"),
+      meta: { hidden: true, title: "班级环节数据" }
+    },
+    {//国家助学金
+      path: "ngShowCollegeData",
+      name: "ngShowCollegeData",
+      title: "学院环节数据",
+      component: () => import("../styles/showNationGrantsData/collegeTable.vue"),
+      meta: { hidden: true, title: "学院环节数据" }
+    },
+    {//国家助学金
+      path: "ngShowSchoolData",
+      name: "ngShowSchoolData",
+      title: "学校环节数据",
+      component: () => import("../styles/showNationGrantsData/schoolTable.vue"),
+      meta: { hidden: true, title: "学校环节数据" }
+    },
+    {//国家助学金
+      path: "ngxypingyi",
+      name: "ngxypingyi",
+      title: "学院组评",
+      component: () => import("../styles/ngxypingyi.vue"),
+      meta: { hidden: true, title: "学院组评" }
+    },
+    {//国家助学金
+      path: "ngxxpingyi",
+      name: "ngxxpingyi",
+      title: "学校组评",
+      component: () => import("../styles/ngxxpingyi.vue"),
+      meta: { hidden: true, title: "学校组评" }
+    }
   ]
 };

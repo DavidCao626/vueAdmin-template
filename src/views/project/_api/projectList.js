@@ -41,7 +41,6 @@ const getChildScope = data =>
         method: 'post',
         data: data
     })
-getChildScope
 export default {
     queryUserProject,
     getDictByDictNames,

@@ -111,9 +111,6 @@
       </el-pagination>
     </div>
 
-    <div class="approval-panel" style="text-align: center;">
-      <el-button size="mini" @click="commitData">提交</el-button>
-    </div>
   </page>
 </template>
 
