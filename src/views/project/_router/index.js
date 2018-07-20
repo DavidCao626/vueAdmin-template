@@ -217,6 +217,15 @@ export const projectRouter = {
       component: () => import("../styles/NationalScholarshipApply.vue"),
       meta: { hidden: true }
     },
+    {//励志奖学金
+      path: "MotivationScholarshipApply",
+      name: "MotivationScholarshipApply",
+      title: "励志奖学金申请",
+      component: () => import("../styles/MotivationScholarshipApply.vue"),
+      meta: { hidden: true }
+    },
+
+    
     {//奖学金
       path: "NationSchClassCheck",
       name: "NationSchClassCheck",
