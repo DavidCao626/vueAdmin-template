@@ -16,6 +16,7 @@ import Router from "vue-router";
 Vue.use(Router);
 
 import _lodash from "lodash";
+import { userRouter } from "~/views/user/_router/index";
 import { projectRouter } from "~/views/project/_router/index";
 import { messagesRouter } from "~/views/messages/_router/index";
 import { componentsRouter } from "~/components/_router";
@@ -28,6 +29,7 @@ export const constantRouterMap = [
     redirect: "/dashboard",
     name: "home_index",
     children: [
+      userRouter,
       componentsRouter,
       projectRouter,
       messagesRouter,
