@@ -64,6 +64,16 @@
 
           <el-row>
             <el-col :span="21">
+              <el-form-item label="申请原因">
+                <el-checkbox-group v-model="form.mainReason">
+                  <el-checkbox v-for="item in reasonList" :key="item.dict_key" :label="item.dict_key">{{item.dict_desc}}</el-checkbox>
+                </el-checkbox-group>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="21">
               <el-form-item label="申请理由">
                 <el-input type="textarea" :rows="3" v-model="form.desc"></el-input>
               </el-form-item>
@@ -84,49 +94,14 @@
 
       </div>
     </page>
-    <page style="width: 1000px;margin: 0 auto;">
+    <!-- <page style="width: 1000px;margin: 0 auto;">
       <div slot="panel">
         <h3 style="font-weight:400">二、相关信息</h3><hr/>
         <el-form ref="form" :model="form" label-width="120px" size="small">
-          <el-row>
-            <el-col :span="10">
-              <el-form-item label="成绩排名">
-                <el-input v-model="form.username" disabled></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="10" :offset="1">
-              <el-form-item label="成绩排名人数">
-                <el-input v-model=" form.username " disabled></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="10 ">
-              <el-form-item label="必修课数量 ">
-                <el-input v-model="form.username " disabled></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="10 " :offset="1 ">
-              <el-form-item label="必修课及格数 ">
-                <el-input v-model="form.username " disabled></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row> <el-row>
-            <el-col :span="10 ">
-              <el-form-item label="综合考评名次 ">
-                <el-input v-model="form.username " disabled></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="10 " :offset="1 ">
-              <el-form-item label="综合考评总人数">
-                <el-input v-model="form.username" disabled></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
 
         </el-form>
       </div>
-    </page>
+    </page> -->
     <page style="width: 1000px;margin: 0 auto;">
       <div slot="panel">
         <div style="text-align:center">
@@ -299,7 +274,7 @@ export default {
         type: "", //业务类别
         options: [],
         typeValue: "", //子业务类别选中值
-        mainReason: "",
+        mainReason: [], //主要原因
         desc: "", //申请理由
         delivery: false,
         fileList: [] //申请附件
@@ -310,7 +285,8 @@ export default {
   methods: {
     ...mapActions({
       getApplyData: store.namespace + "/getApplyData",
-      insertScholarshipApply: store.namespace + "/insertScholarshipApply",
+      insertNationalGrantsApply:
+        store.namespace + "/insertNationalGrantsApply",
       getDictByDictNames: store.namespace + "/getDictByDictNames"
     }),
     cancle() {
@@ -318,10 +294,10 @@ export default {
     },
     getReasonList() {
       console.log(["getReasonList"]);
-      var requestData = { dicts: ["poverty_apply_reason"] };
+      var requestData = { dicts: ["nation_grants_reason"] };
       this.getDictByDictNames(requestData).then(response => {
         console.log(["getDictByDictNames1", response]);
-        this.reasonList = response.resBody.poverty_apply_reason;
+        this.reasonList = response.resBody.nation_grants_reason;
         console.log(["getDictByDictNames2", this.reasonList]);
       });
     },
@@ -371,10 +347,11 @@ export default {
         childServiceTypeCode: this.form.typeValue,
         projectSystemCode: this.projectSystemCode,
         applyReason: this.form.desc, //申请原因
+        mainReason:this.form.mainReason,
         attachment: this.attArr // 附件
       };
       console.log(["requestData", requestData]);
-      this.insertScholarshipApply(requestData).then(response => {
+      this.insertNationalGrantsApply(requestData).then(response => {
         this.$message.success("提交成功");
         this.$router.go(-1);
       });

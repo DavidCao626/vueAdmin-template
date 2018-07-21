@@ -310,7 +310,7 @@ export default {
   methods: {
     ...mapActions({
       getApplyData: store.namespace + "/getApplyData",
-      insertScholarshipApply: store.namespace + "/insertScholarshipApply",
+      insertScholarshipApply: store.namespace + "/insertMotivationScholarshipApply",
       getDictByDictNames: store.namespace + "/getDictByDictNames"
     }),
     cancle() {

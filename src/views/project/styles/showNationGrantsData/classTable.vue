@@ -1,40 +1,16 @@
 <template>
   <page>
     <div slot="title">
-      学校审核
+      班级审核
     </div>
     <slot name="header">
       <div class="approval-panel" style="">
         <div style="float: right;    margin-top: 4px;">
           <el-button-group>
-            <!-- <el-button plain size="mini">
-                            <i class="el-icon-sort-down"></i>
-                        </el-button>
-                        //排序
-                        <el-button plain size="mini">
-
-                            <i class="el-icon-sort-up"></i>
-                        </el-button> -->
           </el-button-group>
         </div>
         <projectinfo :item-id="itemId"></projectinfo>
         <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
-          <!-- <el-form-item label="业务类别">
-                        <el-select v-model="formInline.region" placeholder="筛选类别">
-                            <el-option label="全部" value="shanghai"></el-option>
-                            <el-option label="贫困建档" value="beijing"></el-option>
-                            <el-option label="助学金" value="beijing2"></el-option>
-                            <el-option label="奖学金" value="beijing3"></el-option>
-                            <el-option label="学生资助" value="beijing4"></el-option>
-                            <el-option label="其他" value="beijing5"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="相关项目">
-                        <el-autocomplete v-model="state4" :fetch-suggestions="querySearchAsync" placeholder="请输入相关项目名称" @select="handleSelect"></el-autocomplete>
-                    </el-form-item>
-                    <el-form-item label="上报机构">
-                        <el-autocomplete v-model="state4" :fetch-suggestions="querySearchAsync" placeholder="请输入相关项目名称" @select="handleSelect"></el-autocomplete>
-                    </el-form-item> -->
           <el-form-item label="申请人学号">
             <el-input v-model="formInline.user" placeholder="申请人"></el-input>
           </el-form-item>
@@ -48,47 +24,23 @@
       <el-table :data="data" style="width: 100%;" size="mini">
         <el-table-column type="expand">
           <template slot-scope="props">
-
             <el-form label-position="" inline class="demo-table-expand" size="mini">
-
               <el-form-item label="姓名:">
                 <span>{{ props.row.name }}</span>
               </el-form-item>
-
               <el-form-item label="学号:">
                 <span>{{ props.row.cid }}</span>
               </el-form-item>
               <br/>
-              <el-form-item label="家庭情况:">
-                <span>{{ props.row.jtQk }}</span>
+              <el-form-item label="证件类型:">
+                <span>{{ props.row.zjlx }}</span>
               </el-form-item>
-              <el-form-item label="家庭人口">
-                <span>{{ props.row.jtNumber }}</span>
-              </el-form-item>
-
-              <el-form-item label="是否低保户:">
-                <span>{{ props.row.jtisDb }}</span>
-              </el-form-item>
-              <el-form-item label="是否建档立卡:">
-                <span>{{ props.row.jtisjdlk }}</span>
-              </el-form-item>
-
-              <el-form-item label="家庭收入:">
-                <span>{{ props.row.jtsr }}</span>
-              </el-form-item>
-              <el-form-item label="家庭支出:">
-                <span>{{ props.row.jtzc }}</span>
+              <el-form-item label="证件号码">
+                <span>{{ props.row.zjhm }}</span>
               </el-form-item>
               <br/>
-
-              <el-form-item label="学校评议:">
-                <span>{{ props.row.xxpy }}</span>
-              </el-form-item>
-
-              <br/>
-
-              <el-form-item label="学院推荐:">
-                <span>{{ props.row.xytj }}</span>
+              <el-form-item label="申请原因">
+                <span>{{ props.row.sqyy }}</span>
               </el-form-item>
 
             </el-form>
@@ -101,23 +53,16 @@
           </el-table-column>
 
         </el-table-column>
+        <el-table-column label="申请等级" width="80" prop="sqdj">
+        </el-table-column>
+        <el-table-column label="证件类型" prop="zjlx">
+        </el-table-column>
+        </el-table-column>
+        <el-table-column label="证件号码" width="80" prop="zjhm">
+        </el-table-column>
+        <el-table-column label="申请原因" prop="sqyy"></el-table-column>
 
-        <el-table-column label="家庭情况" prop="jtdesc">
-        </el-table-column>
-        </el-table-column>
-        <el-table-column label="申请等级" width="80" prop="shenqin">
-        </el-table-column>
-        <el-table-column label="学校评议" prop="xxpy">
-        </el-table-column>
-        <el-table-column label="学院推荐" prop="xytj" width="80">
-        </el-table-column>
-        <el-table-column label="学校推荐" width="150" fixed="right">
-          <template slot-scope="scope">
-            <el-select v-model="scope.row.xuexiaopingshen" placeholder="请选择" @change="saveData(scope,$event)">
-              <el-option v-for="(item,index) in serviceTypeList" :key="index" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </template>
+          <el-table-column label="班级推荐" :formatter="banjiFormatter" width="80" prop="banjipingshen">
         </el-table-column>
 
         <!-- <el-table-column label="状态" fixed="right" prop="isDot" width="100" :filters="[{ text: '已处理', value: true }, { text: '未处理', value: false }]" :filter-method="filterTag" filter-placement="bottom-end">
@@ -135,34 +80,56 @@
       </el-pagination>
     </div>
 
-    <div class="approval-panel" style="text-align: center;">
-      <el-button size="mini" @click="commitData">提交</el-button>
-    </div>
   </page>
 </template>
 
 <script>
 import dynamicTable from "~/components/DynamicTable";
-import projectinfo from "../../_components/itemProjectSimpleInfo";
 import { mapGetters, mapMutations, mapActions } from "vuex";
+import projectinfo from "../../_components/itemProjectSimpleInfo";
 import store from "../../_store/index.js";
 export default {
   components: {
     projectinfo
   },
   methods: {
+     banjiFormatter(row, column, cellValue, index) {
+      if (row.isDot == true) {
+        var result="";
+        this.serviceTypeList.forEach(item => {
+          if (item.value == row.banjipingshen) {
+            result=item.label;
+            return false;
+          }
+        });
+        return result;
+      } else{
+        return " ";
+      }
+    },
     filterTag(value, row) {
       //本页过滤状态
       return row.isDot === value;
     },
     ...mapActions({
+      getDictByDictNames: store.namespace + "/getDictByDictNames",
       getClassDataAndPageDataByItemId:
-        store.namespace + "/getSchoolDataAndPageDataByItemId",
-      updateClassRecommend: store.namespace + "/updateSchoolRecommend",
-      submitClassData: store.namespace + "/submitSchoolData",
+        store.namespace + "/getClassDataAndPageDataByItemId",
+      updateClassRecommend: store.namespace + "/updateClassRecommend",
+      submitClassData: store.namespace + "/submitClassData",
       completeUserPendingByItemId:
         store.namespace + "/completeUserPendingByItemId"
     }),
+    getReasonList() {
+      console.log(["getReasonList"]);
+      var requestData = { dicts: ["nation_grants_reason"] };
+      this.getDictByDictNames(requestData).then(response => {
+        console.log(["getDictByDictNames1", response]);
+        this.reasonList = response.resBody.nation_grants_reason;
+        console.log(["getDictByDictNames2", this.reasonList]);
+        this.getData();
+      });
+    },
     handleSizeChange(val) {
       this.pageSize = val;
       this.getData();
@@ -191,8 +158,9 @@ export default {
 
       this.getData();
     },
-    saveData() {
+    saveData(scope, val) {
       //保存数据
+      console.log([scope, val]);
       var requestData = {
         itemId: this.itemId,
         dataNo: scope.row.dataNo,
@@ -204,7 +172,7 @@ export default {
     },
     getData() {
       var requestData = {
-        itemId: this.itemId,
+        scopeId: this.scopeId,
         currentPage: this.currentPage,
         pageSize: this.pageSize,
         stuNo: this.formInline.user
@@ -232,88 +200,25 @@ export default {
             isDot: item.isDispose == "Y" ? true : false,
             name: item.studentName,
             cid: item.stuNo,
-            jtNumber: item.homePersonCount,
-            jtQk: "单亲",
-            jtdesc: "描述",
-            jtisDb: "是",
-            jtisjdlk: "是",
-            jtsr: item.perCapitaIncome,
-            jtzc: item.perCapitalExpenditure,
             sqType: item.serviceTypeName,
-            shenqin: item.childServiceTypeName,
+            sqdj: item.childServiceTypeName,
             banjipingshen: item.classRecommend,
-            xueyuanpingshen: item.collegeRecommend,
-            xuexiaopingshen: item.schoolRecommend,
-            bjtj: "",
-            xypy: "",
-            xxpy: ""
+            zjlx: item.idType,
+            zjhm: item.idNum,
+            sqyy: ""
           };
+
+          var tempStr = "";
           var _this = this;
-          if (
-            item.collegeRecommend != null &&
-            item.collegeRecommend != undefined
-          ) {
-            _this.serviceTypeList.forEach(el => {
-              if (el.value == item.collegeRecommend) {
-                tempLis.xytj = el.label;
+          for (var i = 0; i < item.mainReason.length; i++) {
+            for (var j = 0; j < _this.reasonList.length; j++) {
+              if (_this.reasonList[j].dict_key == item.mainReason[i]) {
+                tempStr += _this.reasonList[j].dict_desc +",";
               }
-            });
-          } else {
-            tempLis.xytj = "无";
+            }
           }
-          if (item.isSingleParent == "Y") {
-            tempLis.jtQk = "单亲";
-          } else if (item.isOrghan == "Y") {
-            tempLis.jtQk = "孤儿";
-          } else {
-            tempLis.jtQK = "双亲";
-          }
+          tempLis.sqyy = tempStr;
 
-          tempLis.jtdesc = tempLis.jtQk + ",";
-
-          if (item.isBasicAllowance == "Y") {
-            tempLis.jtisDb = "是";
-            tempLis.jtdesc += "低保,";
-          } else {
-            tempLis.jtisDb = "否";
-          }
-          if (item.isCreateFile == "Y") {
-            tempLis.jtisjdlk = "是";
-            tempLis.jtdesc += "已建档,";
-          } else {
-            tempLis.jtisjdlk = "否";
-          }
-          tempLis.jtdesc += "家庭收入:" + tempLis.jtsr + "元,";
-          tempLis.jtdesc += "家庭支出:" + tempLis.jtzc + "元";
-          //处理班互评或者组评
-          //   item.groupComment = {
-          //     "201804": 4,
-          //     "201805": 5,
-          //     "201806": 6,
-          //     "201807": 7
-          //   };
-          //   item.eachOtherComment = {
-          //     "201804": 4,
-          //     "201805": 5,
-          //     "201806": 6,
-          //     "201807": 7
-          //   };
-
-          if (item.schoolCommend != null && item.schoolCommend != undefined) {
-            var obj1 = item.schoolCommend;
-            Object.keys(obj1).forEach(function(key) {
-              var tempName = "";
-              _this.serviceTypeList.forEach(ele => {
-                if (ele.value == key) {
-                  tempName = ele.label;
-                }
-              });
-              tempLis.xxpy += tempName + ":" + obj1[key] + "人,";
-            });
-            tempLis.xxpy = tempLis.xxpy.substring(0, tempLis.xxpy.length - 1);
-          } else {
-            tempLis.xxpy = "暂无";
-          }
           this.data.push(tempLis);
         });
       });
@@ -321,8 +226,10 @@ export default {
   },
   data() {
     return {
+      reasonList: [],
       serviceTypeList: [{ label: "label", value: "value" }],
       itemId: 0,
+      scopeId:0,
       currentPage: 1,
       pageSize: 10,
       totalRecord: 0,
@@ -336,23 +243,23 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       console.log(["to", to]);
-      if (to.query.itemId != null && to.query.itemId != undefined) {
-        vm.itemId = to.query.itemId;
+      if (to.query.scopeId != null && to.query.scopeId != undefined) {
+        vm.scopeId = to.query.scopeId;
       } else {
-        if (to.params.itemId != null && to.params.itemId != undefined) {
-          vm.itemId = to.params.itemId;
+        if (to.params.scopeId != null && to.params.scopeId != undefined) {
+          vm.scopeId = to.params.itemId;
         } else {
           vm.$message.error("参数错误");
           return;
         }
       }
-      vm.getData();
+      vm.getReasonList();
     });
   }
 };
 </script>
 
-<style scoped> 
+<style>
 .el-form-item {
   margin-bottom: 10px;
 }

@@ -7,34 +7,10 @@
       <div class="approval-panel" style="">
         <div style="float: right;    margin-top: 4px;">
           <el-button-group>
-            <!-- <el-button plain size="mini">
-                            <i class="el-icon-sort-down"></i>
-                        </el-button>
-                        //排序
-                        <el-button plain size="mini">
-
-                            <i class="el-icon-sort-up"></i>
-                        </el-button> -->
           </el-button-group>
         </div>
-         <projectinfo :item-id="itemId"></projectinfo>
+        <projectinfo :item-id="itemId"></projectinfo>
         <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
-          <!-- <el-form-item label="业务类别">
-                        <el-select v-model="formInline.region" placeholder="筛选类别">
-                            <el-option label="全部" value="shanghai"></el-option>
-                            <el-option label="贫困建档" value="beijing"></el-option>
-                            <el-option label="助学金" value="beijing2"></el-option>
-                            <el-option label="奖学金" value="beijing3"></el-option>
-                            <el-option label="学生资助" value="beijing4"></el-option>
-                            <el-option label="其他" value="beijing5"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="相关项目">
-                        <el-autocomplete v-model="state4" :fetch-suggestions="querySearchAsync" placeholder="请输入相关项目名称" @select="handleSelect"></el-autocomplete>
-                    </el-form-item>
-                    <el-form-item label="上报机构">
-                        <el-autocomplete v-model="state4" :fetch-suggestions="querySearchAsync" placeholder="请输入相关项目名称" @select="handleSelect"></el-autocomplete>
-                    </el-form-item> -->
           <el-form-item label="申请人学号">
             <el-input v-model="formInline.user" placeholder="申请人"></el-input>
           </el-form-item>
@@ -48,49 +24,30 @@
       <el-table :data="data" style="width: 100%;" size="mini">
         <el-table-column type="expand">
           <template slot-scope="props">
-
             <el-form label-position="" inline class="demo-table-expand" size="mini">
-
               <el-form-item label="姓名:">
                 <span>{{ props.row.name }}</span>
               </el-form-item>
-
               <el-form-item label="学号:">
                 <span>{{ props.row.cid }}</span>
               </el-form-item>
               <br/>
-              <el-form-item label="家庭情况:">
-                <span>{{ props.row.jtQk }}</span>
+              <el-form-item label="证件类型:">
+                <span>{{ props.row.zjlx }}</span>
               </el-form-item>
-              <el-form-item label="家庭人口">
-                <span>{{ props.row.jtNumber }}</span>
-              </el-form-item>
-
-              <el-form-item label="是否低保户:">
-                <span>{{ props.row.jtisDb }}</span>
-              </el-form-item>
-              <el-form-item label="是否建档立卡:">
-                <span>{{ props.row.jtisjdlk }}</span>
-              </el-form-item>
-
-              <el-form-item label="家庭收入:">
-                <span>{{ props.row.jtsr }}</span>
-              </el-form-item>
-              <el-form-item label="家庭支出:">
-                <span>{{ props.row.jtzc }}</span>
+              <el-form-item label="证件号码">
+                <span>{{ props.row.zjhm }}</span>
               </el-form-item>
               <br/>
-
-              <el-form-item label="互评情况:">
-                <span>{{ props.row.huping }}</span>
+              <el-form-item label="申请原因">
+                <span>{{ props.row.sqyy }}</span>
               </el-form-item>
-
-              <br/>
-
-              <el-form-item label="组评情况:">
-                <span>{{ props.row.zuping }}</span>
+              <el-form-item label="学院评议">
+                <span>{{ props.row.xypy }}</span>
               </el-form-item>
-
+              <el-form-item label="班级推荐">
+                <span>{{ props.row.bjtj }}</span>
+              </el-form-item>
             </el-form>
           </template>
         </el-table-column>
@@ -101,19 +58,19 @@
           </el-table-column>
 
         </el-table-column>
-
-        <el-table-column label="家庭情况" prop="jtdesc">
+        <el-table-column label="申请等级" width="80" prop="sqdj">
+        </el-table-column>
+        <el-table-column label="证件类型" prop="zjlx">
         </el-table-column>
         </el-table-column>
-        <el-table-column label="申请等级" width="80" prop="shenqin">
+        <el-table-column label="证件号码" width="80" prop="zjhm">
         </el-table-column>
-        <el-table-column label="班级互评" prop="huping">
-        </el-table-column>
-        <el-table-column label="班级组评" prop="zuping">
-        </el-table-column>
-        <el-table-column label="班主任评审" width="150" fixed="right">
+        <el-table-column label="申请原因" prop="sqyy"></el-table-column>
+        <el-table-column label="学院评议" prop="xypy"></el-table-column>
+        <el-table-column label="班级推荐" prop="bjtj"></el-table-column>
+        <el-table-column label="学院评审" width="150" fixed="right">
           <template slot-scope="scope">
-            <el-select v-model="scope.row.banjipingshen" placeholder="请选择" @change="saveData(scope,$event)">
+            <el-select v-model="scope.row.xueyuanpingshen" placeholder="请选择" @change="saveData(scope,$event)">
               <el-option v-for="(item,index) in serviceTypeList" :key="index" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
@@ -142,12 +99,12 @@
 </template>
 
 <script>
-import projectinfo from "../../_components/itemProjectSimpleInfo"
 import dynamicTable from "~/components/DynamicTable";
 import { mapGetters, mapMutations, mapActions } from "vuex";
+import projectinfo from "../../_components/itemProjectSimpleInfo";
 import store from "../../_store/index.js";
 export default {
-    components: {
+  components: {
     projectinfo
   },
   methods: {
@@ -156,13 +113,24 @@ export default {
       return row.isDot === value;
     },
     ...mapActions({
+      getDictByDictNames: store.namespace + "/getDictByDictNames",
       getClassDataAndPageDataByItemId:
-        store.namespace + "/getClassDataAndPageDataByItemId",
-      updateClassRecommend: store.namespace + "/updateClassRecommend",
-      submitClassData: store.namespace + "/submitClassData",
+        store.namespace + "/getCollegeDataAndPageDataByItemId",
+      updateClassRecommend: store.namespace + "/updateCollegeRecommend",
+      submitClassData: store.namespace + "/submitCollegeData",
       completeUserPendingByItemId:
         store.namespace + "/completeUserPendingByItemId"
     }),
+    getReasonList() {
+      console.log(["getReasonList"]);
+      var requestData = { dicts: ["nation_grants_reason"] };
+      this.getDictByDictNames(requestData).then(response => {
+        console.log(["getDictByDictNames1", response]);
+        this.reasonList = response.resBody.nation_grants_reason;
+        console.log(["getDictByDictNames2", this.reasonList]);
+        this.getData();
+      });
+    },
     handleSizeChange(val) {
       this.pageSize = val;
       this.getData();
@@ -233,61 +201,39 @@ export default {
             isDot: item.isDispose == "Y" ? true : false,
             name: item.studentName,
             cid: item.stuNo,
-            jtNumber: item.homePersonCount,
-            jtQk: "单亲",
-            jtdesc: "描述",
-            jtisDb: "是",
-            jtisjdlk: "是",
-            jtsr: item.perCapitaIncome,
-            jtzc: item.perCapitalExpenditure,
             sqType: item.serviceTypeName,
-            shenqin: item.childServiceTypeName,
+            sqdj: item.childServiceTypeName,
             banjipingshen: item.classRecommend,
-            huping: "",
-            zuping: ""
+             xueyuanpingshen: item.collegeRecommend,
+            zjlx: item.idType,
+            zjhm: item.idNum,
+            sqyy: "",
+            bjtj: "",
+            xypy: ""
           };
-          if (item.isSingleParent == "Y") {
-            tempLis.jtQk = "单亲";
-          } else if (item.isOrghan == "Y") {
-            tempLis.jtQk = "孤儿";
-          } else {
-            tempLis.jtQK = "双亲";
-          }
 
-          tempLis.jtdesc = tempLis.jtQk + ",";
-
-          if (item.isBasicAllowance == "Y") {
-            tempLis.jtisDb = "是";
-            tempLis.jtdesc += "低保,";
-          } else {
-            tempLis.jtisDb = "否";
-          }
-          if (item.isCreateFile == "Y") {
-            tempLis.jtisjdlk = "是";
-            tempLis.jtdesc += "已建档,";
-          } else {
-            tempLis.jtisjdlk = "否";
-          }
-          tempLis.jtdesc += "家庭收入:" + tempLis.jtsr + "元,";
-          tempLis.jtdesc += "家庭支出:" + tempLis.jtzc + "元";
-          //处理班互评或者组评
-          // item.groupComment = {
-          //   "201804": 4,
-          //   "201805": 5,
-          //   "201806": 6,
-          //   "201807": 7
-          // };
-          // item.eachOtherComment = {
-          //   "201804": 4,
-          //   "201805": 5,
-          //   "201806": 6,
-          //   "201807": 7
-          // };
-
+          var tempStr = "";
           var _this = this;
-          var sufferStr = "总人数:"+item.groupSum + ",参与人数:" +(item.groupSum-item.groupGiveUp)+ ",弃权数:" + item.groupGiveUp + ",";
-          if (item.groupComment != null && item.groupComment != undefined) {
-            var obj1 = item.groupComment;
+          for (var i = 0; i < item.mainReason.length; i++) {
+            for (var j = 0; j < _this.reasonList.length; j++) {
+              if (_this.reasonList[j].dict_key == item.mainReason[i]) {
+                tempStr += _this.reasonList[j].dict_desc + ",";
+              }
+            }
+          }
+          tempLis.sqyy = tempStr;
+          var _this = this;
+          if (item.classRecommend != null && item.classRecommend != undefined) {
+            _this.serviceTypeList.forEach(el => {
+              if (el.value == item.classRecommend) {
+                tempLis.bjtj = el.label;
+              }
+            });
+          } else {
+            tempLis.bjtj = "无";
+          }
+          if (item.collegeCommend != null && item.collegeCommend != undefined) {
+            var obj1 = item.collegeCommend;
             Object.keys(obj1).forEach(function(key) {
               var tempName = "";
               _this.serviceTypeList.forEach(ele => {
@@ -295,43 +241,12 @@ export default {
                   tempName = ele.label;
                 }
               });
-              tempLis.zuping += tempName + ":" + obj1[key] + "人,";
+              tempLis.xypy += tempName + ":" + obj1[key] + "人,";
             });
-            console.log(["zuping1",tempLis.zuping,sufferStr])
-            tempLis.zuping = sufferStr +  tempLis.zuping;
-             console.log(["zuping2",tempLis.zuping,sufferStr])
-            tempLis.zuping = tempLis.zuping.substring(
-              0,
-              tempLis.zuping.length - 1
-            );
+            tempLis.xypy = tempLis.xypy.substring(0, tempLis.xypy.length - 1);
           } else {
-            tempLis.zuping = "暂无";
+            tempLis.xypy = "暂无";
           }
-
- var sufferStr2 = "总人数:"+item.eachOtherSum + ",参与人数:" +(item.eachOtherSum-item.eachOtherGiveUp)+",弃权数:" + item.eachOtherGiveUp + ",";
-          if (
-            item.eachOtherComment != null &&
-            item.eachOtherComment != undefined
-          ) {
-            var obj2 = item.eachOtherComment;
-            Object.keys(obj2).forEach(function(key) {
-              var tempName = "";
-              _this.serviceTypeList.forEach(ele => {
-                if (ele.value == key) {
-                  tempName = ele.label;
-                }
-              });
-              tempLis.huping += tempName + ":" + obj2[key] + "人,";
-            });
-              tempLis.huping = sufferStr2 +  tempLis.huping;
-            tempLis.huping = tempLis.huping.substring(
-              0,
-              tempLis.huping.length - 1
-            );
-          } else {
-            tempLis.huping = "暂无";
-          }
-
           this.data.push(tempLis);
         });
       });
@@ -339,6 +254,7 @@ export default {
   },
   data() {
     return {
+      reasonList: [],
       serviceTypeList: [{ label: "label", value: "value" }],
       itemId: 0,
       currentPage: 1,
@@ -364,13 +280,13 @@ export default {
           return;
         }
       }
-      vm.getData();
+      vm.getReasonList();
     });
   }
 };
 </script>
 
-<style scoped>
+<style>
 .el-form-item {
   margin-bottom: 10px;
 }
