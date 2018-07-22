@@ -130,7 +130,7 @@
             <el-row>
                <el-col :span="8">
                     <el-form-item label="是否农村学生:">
-                        <el-switch v-model="baseform.isNongCun" active-color="#13ce66" inactive-color="#ff4949">
+                        <el-switch v-model="baseform.isNongCun" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
 
                     </el-form-item>
@@ -139,7 +139,7 @@
              <el-row>
                 <el-col :span="8">
                     <el-form-item label="是否已毕业:">
-                        <el-switch v-model="baseform.isBiYe" active-color="#13ce66" inactive-color="#ff4949">
+                        <el-switch v-model="baseform.isBiYe" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
 
                     </el-form-item>
