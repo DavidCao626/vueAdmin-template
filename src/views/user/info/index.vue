@@ -65,7 +65,7 @@
                     <baseform></baseform>
                 </el-tab-pane>
                 <el-tab-pane label="家庭信息"><jiating></jiating></el-tab-pane>
-                <el-tab-pane label="毕业信息"><biye></biye></el-tab-pane>
+               
 
                 <el-tab-pane label="奖学金信息"><jiangxuejin></jiangxuejin></el-tab-pane>
                 <el-tab-pane label="助学金信息"><zhuxuejin></zhuxuejin></el-tab-pane>
