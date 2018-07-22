@@ -71,13 +71,14 @@
 
                     </el-form-item>
                 </el-col>
-                <el-col :span="8">
+               
+            </el-row>
+            <el-row>
+                 <el-col :span="8">
                     <el-form-item label="院系名称:">
                         <el-input v-model="baseform.yuanxi"></el-input>
                     </el-form-item>
                 </el-col>
-            </el-row>
-            <el-row>
                 <el-col :span="8">
                     <el-form-item label="所在年级:">
                         <elx-select @change="changeCheckNJ" :value="baseform.checkNJ" :options="checkNJs"></elx-select>
@@ -90,14 +91,15 @@
                         <el-input v-model="baseform.banji"></el-input>
                     </el-form-item>
                 </el-col>
-                <el-col :span="8">
+               
+            </el-row>
+            <el-row>
+                 <el-col :span="8">
                     <el-form-item label="专业大类:">
                         <elx-select @change="changeCheckZYDL" :value="baseform.checkZYDL" :options="checkZYDLs"></elx-select>
 
                     </el-form-item>
                 </el-col>
-            </el-row>
-            <el-row>
                 <el-col :span="8">
                     <el-form-item label="专业:">
                         <el-input v-model="baseform.zhuanye"></el-input>
