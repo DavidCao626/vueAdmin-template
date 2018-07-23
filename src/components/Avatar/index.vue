@@ -42,6 +42,7 @@ export default {
     cropSuccess(imgDataUrl, field) {
       console.log("-------- crop success --------");
       this.imgDataUrl = imgDataUrl;
+      this.$emit('cropSuccess', this.imgDataUrl)
     },
     /**
      * upload success

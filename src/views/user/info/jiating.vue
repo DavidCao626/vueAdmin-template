@@ -1,6 +1,13 @@
 <template>
     <div style="margin: 10px;">
         <el-form ref="baseform" label-position="left" size="mini" :inline="true" :model="baseform">
+            <!-- <el-row>
+                <el-col :span="8">
+                    <el-form-item label="学号:">
+                        <el-input v-model="baseform.nid"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row> -->
             <el-row :gutter="0">
                 <el-col :span="8">
                     <el-form-item label="是否农村五保户:">
@@ -173,7 +180,7 @@
                 </el-col>
                 <el-col :span="16">
                     <el-form-item label="其他家庭经济信息:">
-                        <el-input v-model="baseform.QTJTJJXX" ></el-input>
+                        <el-input v-model="baseform.QTJTJJXX"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -211,11 +218,11 @@
                     </el-form-item>
                 </el-col>
             </el-row>
-               <el-col :span="24">
-                     <el-form-item label="认定原因:">
-                        <el-input v-model="baseform.RDYY" :maxlength="30" style="width:300%"></el-input>
-                    </el-form-item>
-                </el-col>
+            <el-col :span="24">
+                <el-form-item label="认定原因:">
+                    <el-input v-model="baseform.RDYY" :maxlength="30" style="width:300%"></el-input>
+                </el-form-item>
+            </el-col>
             <el-row>
 
                 <el-col :span="24">
@@ -247,39 +254,40 @@ export default {
   data() {
     return {
       baseform: {
-        isNCWBH: false,//是否农村五保户
-        isDBH: false,//是否低保户
-        isGE: false,//是否孤儿
-        isDQJTZN: false,//是否单亲家庭子女
-        isFMSSLDNL: false,//是否残疾人子女
-        isJZYDBHZ: false,//是否父母丧失劳动能力
-        isBRSFCJ: false,//是否家中有大病患者
-        isCJRZN: false,//本人是否残疾
-        cjlb: "1",//残疾类别
-        isJDLKPKJT: false,//是否建档立卡贫困家庭
-        isDSRJT: false,//是否低收入家庭
-        isJLSHYFZN: false,//是否军烈属或优抚子女
-        JTRJSR:'',//家庭人均收入
-        JTZYSRLY: "1",//家庭主要收入来源类别
-        JTSFZSZRZH: false,//家庭是否遭受自然灾害
+        nid: "", //学号
+        isNCWBH: false, //是否农村五保户
+        isDBH: false, //是否低保户
+        isGE: false, //是否孤儿
+        isDQJTZN: false, //是否单亲家庭子女
+        isFMSSLDNL: false, //是否残疾人子女
+        isJZYDBHZ: false, //是否父母丧失劳动能力
+        isBRSFCJ: false, //是否家中有大病患者
+        isCJRZN: false, //本人是否残疾
+        cjlb: "1", //残疾类别
+        isJDLKPKJT: false, //是否建档立卡贫困家庭
+        isDSRJT: false, //是否低收入家庭
+        isJLSHYFZN: false, //是否军烈属或优抚子女
+        JTRJSR: "", //家庭人均收入
+        JTZYSRLY: "1", //家庭主要收入来源类别
+        JTSFZSZRZH: false, //家庭是否遭受自然灾害
         JTSFZSZRZH_text: "", //家庭自然灾害具体情况描述
-        JTSFZSYTFYWSJ: false,//家庭是否遭受突发意外事件
-        JTSFZSYTFYWSJ_text: "",//突发意外事件具体描述
-        JTQZJE: "",//家庭欠债金额
-        JTQZYY: "",//家庭欠债原因
-        JTRKS: "",//家庭人口数
-        LDRKS: "",//劳动力人口数
-        JTCYSYS: "",//家庭成员失业人数
-        SYRKS:'',//赡养人口数
-        QTJTJJXX: "",//其他家庭经济信息
-        isNCDBH: false,//是否农村低保户
-        isNCTKGY: false,//是否农村特困供养
+        JTSFZSYTFYWSJ: false, //家庭是否遭受突发意外事件
+        JTSFZSYTFYWSJ_text: "", //突发意外事件具体描述
+        JTQZJE: "", //家庭欠债金额
+        JTQZYY: "", //家庭欠债原因
+        JTRKS: "", //家庭人口数
+        LDRKS: "", //劳动力人口数
+        JTCYSYS: "", //家庭成员失业人数
+        SYRKS: "", //赡养人口数
+        QTJTJJXX: "", //其他家庭经济信息
+        isNCDBH: false, //是否农村低保户
+        isNCTKGY: false, //是否农村特困供养
         QT: "", //填写农村特困供养、农村低户、建档立卡相关信息
-        checkDiffName: "3",//认定困难级别
-        RDSJ: "",//认定时间
-        RDYY: "",//认定原因
-        BJTDYJ: "",//班级认定意见
-        NJRDYJ: ""//年级认定意见
+        checkDiffName: "3", //认定困难级别
+        RDSJ: "", //认定时间
+        RDYY: "", //认定原因
+        BJTDYJ: "", //班级认定意见
+        NJRDYJ: "" //年级认定意见
       },
       checkDiffNames: [
         {
