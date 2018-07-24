@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="value" placeholder="请选择" @change="change">
+  <el-select v-model="val" placeholder="请选择" @change="change">
     <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
     </el-option>
   </el-select>
@@ -17,6 +17,16 @@ export default {
       default() {
         return [];
       }
+    }
+  },
+  watch:{
+    value(newv,oldv){
+      this.val = newv;
+    }
+  },
+  data(){
+    return {
+      val:this.value
     }
   },
   methods: {

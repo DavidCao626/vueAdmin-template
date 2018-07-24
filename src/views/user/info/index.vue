@@ -1,34 +1,47 @@
 <template>
-    <page>
-        <div slot="title">
-            修改学生信息
-        </div>
-        <div slot="panel">
-            <!-- <el-row style="margin-bottom: 10px;">账号信息：</el-row> -->
-            <!-- <el-row style="margin-bottom: 10px;">在校信息：</el-row> -->
-            <el-tabs type="card" size="mini">
-                <el-tab-pane label="基本信息">
-                   
-                    <baseform></baseform>
-                </el-tab-pane>
-                <el-tab-pane label="个人信息">
-                    <geren></geren>
-                </el-tab-pane>
-                <el-tab-pane label="在校信息"><zaixiao></zaixiao></el-tab-pane>
-                <el-tab-pane label="家庭信息"><jiating></jiating></el-tab-pane>
-               
+  <page>
+    <div slot="title">
+      修改学生信息
+    </div>
+    <div slot="panel">
+      <!-- <el-row style="margin-bottom: 10px;">账号信息：</el-row> -->
+      <!-- <el-row style="margin-bottom: 10px;">在校信息：</el-row> -->
+      <el-tabs type="card" size="mini">
+        <el-tab-pane label="基本信息">
 
-                <el-tab-pane label="奖学金信息 "><jiangxuejin></jiangxuejin></el-tab-pane>
-                <el-tab-pane label="助学金信息 "><zhuxuejin></zhuxuejin></el-tab-pane>
+          <baseform :stuNo="stuNo"></baseform>
+        </el-tab-pane>
+        <el-tab-pane label="个人信息">
+          <geren></geren>
+        </el-tab-pane>
+        <el-tab-pane label="在校信息">
+          <zaixiao></zaixiao>
+        </el-tab-pane>
+        <el-tab-pane label="家庭信息">
+          <jiating></jiating>
+        </el-tab-pane>
 
-                <el-tab-pane label="学校资助信息 "><zizhu></zizhu></el-tab-pane>
-                <el-tab-pane label="社会资助信息 "><shehuizizhu></shehuizizhu></el-tab-pane>
+        <el-tab-pane label="奖学金信息 ">
+          <jiangxuejin></jiangxuejin>
+        </el-tab-pane>
+        <el-tab-pane label="助学金信息 ">
+          <zhuxuejin></zhuxuejin>
+        </el-tab-pane>
 
-                <el-tab-pane label="困难学生认定信息 "><kunnan></kunnan></el-tab-pane>
-            </el-tabs>
-        </div>
+        <el-tab-pane label="学校资助信息 ">
+          <zizhu></zizhu>
+        </el-tab-pane>
+        <el-tab-pane label="社会资助信息 ">
+          <shehuizizhu></shehuizizhu>
+        </el-tab-pane>
 
-    </page>
+        <el-tab-pane label="困难学生认定信息 ">
+          <kunnan></kunnan>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+
+  </page>
 </template>
 <script>
 import avatar from "~/components/Avatar";
@@ -45,6 +58,7 @@ import geren from "./geren.vue";
 export default {
   data() {
     return {
+      stuNo: "0",
       activeName: "second",
       form: {
         name: ""
@@ -63,6 +77,14 @@ export default {
     jiating,
     zaixiao,
     geren
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      console.log(["vm.stuNo",to.query.stuNo])
+      if (to.query.stuNo) {
+        vm.stuNo = to.query.stuNo;
+      }
+    });
   },
   methods: {
     handleClick(tab, event) {

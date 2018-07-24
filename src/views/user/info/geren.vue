@@ -46,7 +46,13 @@
                     </el-form-item>
                 </el-col>
             </el-row>
-
+            <el-row>
+                <el-col :span="3">
+                    <el-form-item label="上传证件照:">
+                        <avatar @cropSuccess="onSuccess() " :imgDataUrl="baseform.imgUrl" url="/upImg.do"></avatar>
+                    </el-form-item>
+                </el-col>
+            </el-row>
             <el-row style="margin: 0 auto;width: 150px;">
                 <el-form-item>
                     <el-button type="primary" ref="btn" size="mini" round @click="onSubmit($event)">保存基本信息</el-button>
@@ -58,7 +64,15 @@
 
 <script>
 import select from "./_components/select";
+import avatar from "~/components/Avatar";
+import { mapGetters, mapActions } from "vuex";
+import store from "../_store/index.js";
+import moment from "moment";
 export default {
+  mounted() {
+    this.getData();
+    this.getDict();
+  },
   data() {
     return {
       baseform: {
@@ -68,7 +82,8 @@ export default {
         lxdh: "15034933020", //联系电话
         zzlx: "", //住宅类型
         xsbh: "6302", //校舍编号
-        zzdz: "内蒙古呼和浩特" //住宅地址
+        zzdz: "内蒙古呼和浩特", //住宅地址
+        imgUrl: ""
       },
       zzlxType: [
         {
@@ -83,16 +98,54 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      getStuPerInfo: store.namespace + "/getStuPerInfo",
+      getDictByDictNames: store.namespace + "/getDictByDictNames"
+    }),
+    getData() {
+      this.getStuPerInfo({}).then(response => {
+        console.log("getStuBaseInfo", response);
+        var res = response.resBody;
+        this.baseform.nid = res.stuNo; //学号
+        this.baseform.jtzz = res.postalAddress; //家庭住址
+        this.baseform.uzbm = res.postalCode; //邮政编码
+        this.baseform.lxdh = res.contactNo; //联系电话
+        this.baseform.zzlx = res.accommodationType; //住宅类型
+        this.baseform.xsbh = res.dormitoryNo; //校舍编号
+        this.baseform.zzdz = res.outsideDormitoryAddress; //住宅地址
+        this.baseform.imgUrl = res.personalPhoto;
+      });
+    },
+    getDict() {
+      var requestData = {
+        dicts: ["accommodation_type"]
+      };
+      this.getDictByDictNames(requestData).then(response => {
+        var res = response.resBody;
+        this.zzlxType = [];
+        console.log(["dict", response]);
+        res.accommodation_type.forEach(element => {
+          var t1 = {};
+          t1.label = element.dict_desc;
+          t1.value = element.dict_key;
+          this.zzlxType.push(t1);
+        });
+      });
+    },
     changeZzlx(value) {
       this.baseform.zzlx = value;
-      
     },
     onSubmit(event) {
       this.$refs["btn"].loading = true;
+    },
+    onSuccess(imgUrl) {
+      //上传成功后图片地址 imgUrl
+      this.baseform.imgUrl = imgUrl;
     }
   },
   components: {
-    "elx-select": select
+    "elx-select": select,
+    avatar
   }
 };
 </script>
