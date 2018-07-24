@@ -3,10 +3,38 @@
         <el-form ref="baseform" label-position="left" size="mini" :inline="true" :model="baseform" label-width="100px">
             <el-row :gutter="0">
                 <el-col :span="8">
-                    <el-form-item label="真实姓名:">
+                    <el-form-item label="学生姓名:">
                         <el-input v-model="baseform.name"></el-input>
                     </el-form-item>
                 </el-col>
+                <el-col :span="8">
+                    <el-form-item label="学号:">
+                        <el-input v-model="baseform.nid"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="考生号:">
+                        <el-input v-model="baseform.kid"></el-input>
+                    </el-form-item>
+                </el-col>
+
+            </el-row>
+
+            <el-row :gutter="0">
+
+                <el-col :span="8">
+                    <el-form-item label="身份证件类型:">
+                        <elx-select @change="changeCidTypes" v-model="baseform.cidType" :options="cidTypes"></elx-select>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="8">
+                    <el-form-item label="身份证件号码:">
+                        <el-input v-model="baseform.cid"></el-input>
+                    </el-form-item>
+                </el-col>
+
+            </el-row>
+            <el-row :gutter="0">
                 <el-col :span="8">
                     <el-form-item label="性别:">
                         <el-select v-model="baseform.sex" placeholder="请选择">
@@ -20,115 +48,24 @@
                         <el-input v-model="baseform.birth"></el-input>
                     </el-form-item>
                 </el-col>
+
             </el-row>
-            <el-row :gutter="0">
+            <el-row>
                 <el-col :span="8">
-                    <el-form-item label="学号:">
-                        <el-input v-model="baseform.nid"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="考生号:">
-                        <el-input v-model="baseform.kid"></el-input>
+                    <el-form-item label="政治面貌:">
+                        <elx-select @change="changeCheckZZMM" v-model="baseform.checkZZMM" :options="checkZZMMs"></elx-select>
+
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
                     <el-form-item label="民族:">
-                        <elx-select @change="change" :value="baseform.minzu"></elx-select>
+                        <elx-select @change="change" v-model="baseform.minzu" :options="minzulist" ></elx-select>
                     </el-form-item>
                 </el-col>
             </el-row>
-            <el-row :gutter="0">
 
-                <el-col :span="8">
-                    <el-form-item label="身份证件类型:">
-                        <elx-select @change="changeCidTypes" :value="baseform.cidType" :options="cidTypes"></elx-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="身份证件号码:">
-                        <el-input v-model="baseform.cid"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="政治面貌:">
-                        <elx-select @change="changeCheckZZMM" :value="baseform.checkZZMM" :options="checkZZMMs"></elx-select>
-
-                    </el-form-item>
-                </el-col>
-
-            </el-row>
             <el-row>
                 <el-col :span="8">
-                    <el-form-item label="学生类型:">
-                        <elx-select @change="changeCheckXSLX" :value="baseform.checkXSLX" :options="checkXSLXs"></elx-select>
-                    </el-form-item>
-                </el-col>
-
-                <el-col :span="8">
-                    <el-form-item label="学习形式:">
-                        <elx-select @change="changeCheckXXXS" :value="baseform.checkXXXS" :options="checkXXXSs"></elx-select>
-
-                    </el-form-item>
-                </el-col>
-               
-            </el-row>
-            <el-row>
-                 <el-col :span="8">
-                    <el-form-item label="院系名称:">
-                        <el-input v-model="baseform.yuanxi"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="所在年级:">
-                        <elx-select @change="changeCheckNJ" :value="baseform.checkNJ" :options="checkNJs"></elx-select>
-
-                    </el-form-item>
-                </el-col>
-
-                <el-col :span="8">
-                    <el-form-item label="班级:">
-                        <el-input v-model="baseform.banji"></el-input>
-                    </el-form-item>
-                </el-col>
-               
-            </el-row>
-            <el-row>
-                 <el-col :span="8">
-                    <el-form-item label="专业大类:">
-                        <elx-select @change="changeCheckZYDL" :value="baseform.checkZYDL" :options="checkZYDLs"></elx-select>
-
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="专业:">
-                        <el-input v-model="baseform.zhuanye"></el-input>
-                    </el-form-item>
-                </el-col>
-
-                <el-col :span="8">
-                    <el-form-item label="攻读学历:">
-                        <elx-select @change="changeXueli" :value="baseform.xueli" :options="xuelis"></elx-select>
-
-                    </el-form-item>
-                </el-col>
-                
-            </el-row>
-            <el-row>
-                <el-col :span="8">
-                    <el-form-item label="学制:">
-                        <elx-select @change="changeCheckXZ" :value="baseform.checkXZ" :options="checkXZs"></elx-select>
-
-                    </el-form-item>
-                </el-col>
-               <el-col :span="8">
-                    <el-form-item label="入学日期:">
-                        <el-input v-model="baseform.ruxueDate"></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row>
-               <el-col :span="8">
                     <el-form-item label="是否农村学生:">
                         <el-switch v-model="baseform.isNongCun" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
@@ -136,17 +73,10 @@
                     </el-form-item>
                 </el-col>
             </el-row>
-             <el-row>
-                <el-col :span="8">
-                    <el-form-item label="是否已毕业:">
-                        <el-switch v-model="baseform.isBiYe" active-color="#13ce66" inactive-color="#ccc">
-                        </el-switch>
-
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8" v-if="baseform.isBiYe">
-                    <el-form-item label="毕业日期:">
-                        <el-input v-model="baseform.BiYeDate"></el-input>
+            <el-row>
+                <el-col :span="3">
+                    <el-form-item label="上传证件照:">
+                        <avatar @cropSuccess="onSuccess() " url="/upImg.do"></avatar>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -161,33 +91,46 @@
 
 <script>
 import select from "./_components/select";
+import avatar from "~/components/Avatar";
 export default {
   data() {
     return {
       baseform: {
         name: "李奥名",
-        sex: "1",//性别
-        birth: "19900716",//出生日期
-        nid: "123",//学号
-        kid: "123",//考试号
-        minzu: "01",//民族
-        cidType: "1",//身份证件类型
-        cid: "15034933020",//身份证号码
-        checkZZMM: "1",//政治面貌
-        checkXSLX: "41",//学生类型
-        checkXXXS: "01",//学习形式
-        checkXZ: "2.5",//学制
-        checkNJ: "7",//年级
-        checkZYDL: "01",//专业大类
-        ruxueDate:'201606',//入学日期
-        xueli: "1", //攻读学历,
-        yuanxi: "数学学院",
-        banji: "201706",//班级
-        zhuanye: "思想政治",//专业
-        isNongCun:true,//是否农村学生
-        isBiYe:false,//是否毕业
-        BiYeDate:'201806'//毕业日期
+        sex: "1", //性别
+        birth: "19900716", //出生日期
+        nid: "123", //学号
+        kid: "123", //考试号
+        minzu: "01", //民族
+        cidType: "1", //身份证件类型
+        cid: "15034933020", //身份证号码
+        checkZZMM: "1", //政治面貌
+        isNongCun: true, //是否农村学生
+        BiYeDate: "201806", //毕业日期
+        Zjz: "" //证件照
       },
+      minzulist: [
+        {
+          value: "01",
+          label: "汉族"
+        },
+        {
+          value: "02",
+          label: "蒙古族"
+        },
+        {
+          value: "03",
+          label: "回族"
+        },
+        {
+          value: "04",
+          label: "藏族"
+        },
+        {
+          value: "05",
+          label: "维吾尔族"
+        }
+      ],
       sexType: [
         {
           value: "1",
@@ -208,16 +151,7 @@ export default {
           label: "军官证"
         }
       ],
-      checkXSLXs: [
-        {
-          value: "41",
-          label: "专科"
-        },
-        {
-          value: "42",
-          label: "专科（高职）"
-        }
-      ],
+
       checkZZMMs: [
         {
           value: "1",
@@ -227,104 +161,31 @@ export default {
           value: "2",
           label: "中共预备党员"
         }
-      ],
-      checkXXXSs: [
-        {
-          value: "01",
-          label: "全日制"
-        },
-        {
-          value: "02",
-          label: "非全日制"
-        }
-      ],
-      checkXZs: [
-        //学制
-        {
-          value: "2",
-          label: "2"
-        },
-        {
-          value: "2.5",
-          label: "2.5"
-        }
-      ],
-      checkNJs: [
-        //年级
-        {
-          value: "1",
-          label: "1"
-        },
-        {
-          value: "2",
-          label: "2"
-        },
-        {
-          value: "7",
-          label: "延期毕业"
-        }
-      ],
-      checkZYDLs: [
-        //专业大类
-        {
-          value: "01",
-          label: "哲学"
-        },
-        {
-          value: "02",
-          label: "经济学"
-        }
-      ],
-      xuelis: [
-        //攻读学历
-        {
-          value: "1",
-          label: "本科"
-        },
-        {
-          value: "2",
-          label: "专科"
-        }
       ]
     };
   },
   methods: {
+    onSuccess(imgUrl) {
+      //上传成功后图片地址 imgUrl
+      this.baseform.imgUrl = imgUrl;
+    },
     onSubmit(event) {
-       this.$refs['btn'].loading=true
-
-       
-        
+      this.$refs["btn"].loading = true;
+      //保存表单
     },
     change(item) {
       this.baseform.minzu = item;
     },
     changeCidTypes(item) {
-      this.baseform.minzu = item;
+      this.baseform.cidTypes = item;
     },
     changeCheckZZMM(eitem) {
-      this.baseform.checkZZMM = item;
-    },
-    changeCheckXSLX(eitem) {
-      this.baseform.checkXSLX = item;
-    },
-    changeCheckXXXS(eitem) {
-      this.baseform.checkXXXS = item;
-    },
-    changeCheckXZ(eitem) {
-      this.baseform.checkXZ = item;
-    },
-    changeCheckNJ(eitem) {
-      this.baseform.checkNJ = item;
-    },
-    changeCheckZYDL(eitem) {
-      this.baseform.checkZYDL = item;
-    },
-    changeXueli(eitem) {
-      this.baseform.xueli = item;
+      this.baseform.checkZZMM = item; //政治面貌
     }
   },
   components: {
-    "elx-select": select
+    "elx-select": select,
+    avatar
   }
 };
 </script>
