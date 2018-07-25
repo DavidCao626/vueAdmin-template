@@ -110,19 +110,6 @@ export default {
   data() {
     return {
       baseform: {
-<<<<<<< HEAD
-        name: "李奥名",
-        sex: "1", //性别
-        birth: "19900716", //出生日期
-        nid: "123", //学号
-        kid: "123", //考试号
-        minzu: "02", //民族
-        cidType: "1", //身份证件类型
-        cid: "15034933020", //身份证号码
-        checkZZMM: "1", //政治面貌
-        isNongCun: true, //是否农村学生
-        BiYeDate: "201806", //毕业日期
-=======
         name: "",
         sex: "", //性别
         birth: "", //出生日期
@@ -134,7 +121,6 @@ export default {
         checkZZMM: "", //政治面貌
         isNongCun: "Y", //是否农村学生
         BiYeDate: "", //毕业日期
->>>>>>> 5b1b87f9de6987e542082621bc9710a4847ffeb3
         Zjz: "" //证件照
       },
       minzulist: [],

@@ -1,9 +1,5 @@
 <template>
-<<<<<<< HEAD
-  <el-select :value="value" placeholder="请选择" @change="change">
-=======
   <el-select v-model="val" placeholder="请选择" @change="change">
->>>>>>> 5b1b87f9de6987e542082621bc9710a4847ffeb3
     <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
     </el-option>
   </el-select>
