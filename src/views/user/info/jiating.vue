@@ -305,7 +305,8 @@ export default {
   methods: {
     ...mapActions({
       getStuEconmyInfo: store.namespace + "/getStuEconmyInfo",
-      getDictByDictNames: store.namespace + "/getDictByDictNames"
+      getDictByDictNames: store.namespace + "/getDictByDictNames",
+      updateStuEcoInfo: store.namespace + "/updateStuEcoInfo"
     }),
     getData() {
       this.getStuEconmyInfo({}).then(response => {
@@ -366,7 +367,42 @@ export default {
       });
     },
 
-    onSubmit() {},
+    onSubmit() {
+      var requestData = {
+        stuNo: this.baseform.nid,
+        isFiveGuarantees: this.baseform.isNCWBH,
+        isSubsistenceAllowances: this.baseform.isDBH,
+        isOrphan: this.baseform.isGE,
+        isSingleParent: this.baseform.isDQJTZN,
+        isDisabilityChildren: this.baseform.isFMSSLDNL,
+        isParentLoseLabour: this.baseform.isJZYDBHZ,
+        isHasSeriousIllness: this.baseform.isBRSFCJ,
+        isDisability: this.baseform.isCJRZN,
+        disabilityType: this.baseform.cjlb,
+        isCreatedFile: this.baseform.isJDLKPKJT,
+        isLowIncome: this.baseform.isDSRJT,
+        isSoldierChildren: this.baseform.isJLSHYFZN,
+        capitaIncomeYear: this.baseform.JTRJSR,
+        incomeType: this.baseform.JTZYSRLY,
+        isNaturalHazard: this.baseform.JTSFZSZRZH,
+        naturalHazardDesc: this.baseform.JTSFZSZRZH_text,
+        isEmergency: this.baseform.JTSFZSYTFYWSJ,
+        emergencyDesc: this.baseform.JTSFZSYTFYWSJ_text,
+        liabilitiesMoney: this.baseform.JTQZJE,
+        liabilitiesReason: this.baseform.JTQZYY,
+        familyPerson: this.baseform.JTRKS,
+        labourPersonNum: this.baseform.LDRKS,
+        unemploymentPersonNum: this.baseform.JTCYSYS,
+        supportPersonNum: this.baseform.SYRKS,
+        otherInfo: this.baseform.QTJTJJXX,
+        isVillageSubsistenceAllowances: this.baseform.isNCDBH,
+        isPovertySupport: this.baseform.isNCTKGY,
+        other: this.baseform.QT
+      };
+      this.updateStuEcoInfo(requestData).then(response => {
+        this.$message.success("修改成功");
+      });
+    },
     changeCjlb(value) {
       this.baseform.cjlb = value;
     },

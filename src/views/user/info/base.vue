@@ -1,6 +1,6 @@
 <template>
   <div style="margin: 10px;">
-    <el-form ref="baseform" label-position="left" size="mini" :inline="true" :model="baseform" label-width="100px">
+    <el-form ref="baseform"  label-position="left" size="mini" :inline="true" :model="baseform" label-width="100px">
       <el-row :gutter="0">
         <el-col :span="8">
           <el-form-item label="学生姓名:">
@@ -76,11 +76,11 @@
         </el-col>
       </el-row>
 
-      <el-row style="margin: 0 auto;width: 150px;">
+      <!-- <el-row style="margin: 0 auto;width: 150px;">
         <el-form-item>
           <el-button type="primary" ref="btn" size="mini" round @click="onSubmit($event)">保存个人资料</el-button>
         </el-form-item>
-      </el-row>
+      </el-row> -->
     </el-form>
   </div>
 </template>

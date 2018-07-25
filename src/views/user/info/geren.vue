@@ -100,7 +100,8 @@ export default {
   methods: {
     ...mapActions({
       getStuPerInfo: store.namespace + "/getStuPerInfo",
-      getDictByDictNames: store.namespace + "/getDictByDictNames"
+      getDictByDictNames: store.namespace + "/getDictByDictNames",
+      updateStuPerInfo: store.namespace + "/updateStuPerInfo"
     }),
     getData() {
       this.getStuPerInfo({}).then(response => {
@@ -113,8 +114,8 @@ export default {
         this.baseform.zzlx = res.accommodationType; //住宅类型
         this.baseform.xsbh = res.dormitoryNo; //校舍编号
         this.baseform.zzdz = res.outsideDormitoryAddress; //住宅地址
-        if(res.personalPhoto != ""){
-            this.baseform.imgUrl = res.personalPhoto;
+        if (res.personalPhoto != "") {
+          this.baseform.imgUrl = res.personalPhoto;
         }
       });
     },
@@ -138,7 +139,20 @@ export default {
       this.baseform.zzlx = value;
     },
     onSubmit(event) {
-      this.$refs["btn"].loading = true;
+      var requestData = {
+        postalAddress: this.baseform.jtzz,
+        stuNo: this.baseform.nid,
+        postalCode: this.baseform.uzbm,
+        contactNo: this.baseform.lxdh,
+        accommodationType: this.baseform.zzlx,
+        dormitoryNo: this.baseform.xsbh,
+        outsideDormitoryAddress: this.baseform.zzdz,
+        personalPhoto: this.baseform.imgUrl
+      };
+      this.updateStuPerInfo(requestData).then(response => {
+        this.$message.success("修改成功");
+        this.$refs["btn"].loading = false;
+      });
     },
     onSuccess(imgUrl) {
       //上传成功后图片地址 imgUrl

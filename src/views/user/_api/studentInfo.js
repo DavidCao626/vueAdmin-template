@@ -51,6 +51,18 @@ const queryCollegeOrg = data =>
     })
 
 
+const updateStuPerInfo = data =>
+    ajax({
+        url: "/stuInfo/updateStuPerInfo.do",
+        method: 'post',
+        data: data
+    })
+const updateStuEcoInfo = data =>
+    ajax({
+        url: "/stuInfo/updateStuEcoInfo.do",
+        method: 'post',
+        data: data
+    })
 
 export default {
     getStuEconmyInfo,
@@ -60,5 +72,7 @@ export default {
     getDictByDictNames,
     getStuBaseInfo,
     queryAllMajor,
-    queryCollegeOrg
+    queryCollegeOrg,
+    updateStuPerInfo,
+    updateStuEcoInfo
 };
