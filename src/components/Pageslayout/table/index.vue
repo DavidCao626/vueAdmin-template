@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-dialog title="导入数据" :visible.sync="dialogVisible" width="400px" :before-close="handleClose">
-            <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" :limit='1' @onSuccess="onUploadSuccess">
+            <el-upload class="upload-demo" drag :action="action" :limit='1' @onSuccess="onUploadSuccess">
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">将文件拖到此处，或
                     <em>点击上传</em>
@@ -13,7 +13,7 @@
         <div class="approval-panel ">
             <div style="float: right;margin-top: 4px;">
                 <el-button-group>
-                    <slot name="haeder-right"></slot>
+                    <slot name="haederRight"></slot>
 
                     <el-tooltip class="item" effect="dark" content="新增项" placement="bottom" v-if="newOpen">
 
@@ -90,6 +90,10 @@ export default {
       default: () => {
         [];
       }
+    },
+    action:{
+        type:String,
+        default:'https://jsonplaceholder.typicode.com/posts/'
     }
   },
   data() {

@@ -1,101 +1,116 @@
 <template>
-    <div style="margin: 10px;">
-        <el-form ref="baseform" label-position="left" size="mini" :inline="true" :model="baseform" label-width="100px">
-            <el-row :gutter="0">
-                <el-col :span="8">
-                    <el-form-item label="学生姓名:">
-                        <el-input v-model="baseform.name"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="学号:">
-                        <el-input v-model="baseform.nid"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="考生号:">
-                        <el-input v-model="baseform.kid"></el-input>
-                    </el-form-item>
-                </el-col>
+  <div style="margin: 10px;">
+    <el-form ref="baseform" label-position="left" size="mini" :inline="true" :model="baseform" label-width="100px">
+      <el-row :gutter="0">
+        <el-col :span="8">
+          <el-form-item label="学生姓名:">
+            <el-input v-model="baseform.name"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="学号:">
+            <el-input v-model="baseform.nid"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="考生号:">
+            <el-input v-model="baseform.kid"></el-input>
+          </el-form-item>
+        </el-col>
 
-            </el-row>
+      </el-row>
 
-            <el-row :gutter="0">
+      <el-row :gutter="0">
 
-                <el-col :span="8">
-                    <el-form-item label="身份证件类型:">
-                        <elx-select @change="changeCidTypes" v-model="baseform.cidType" :options="cidTypes"></elx-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="身份证件号码:">
-                        <el-input v-model="baseform.cid"></el-input>
-                    </el-form-item>
-                </el-col>
+        <el-col :span="8">
+          <el-form-item label="身份证件类型:">
+            <elx-select @change="changeCidTypes" v-model="baseform.cidType" :options="cidTypes"></elx-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="身份证件号码:">
+            <el-input v-model="baseform.cid"></el-input>
+          </el-form-item>
+        </el-col>
 
-            </el-row>
-            <el-row :gutter="0">
-                <el-col :span="8">
-                    <el-form-item label="性别:">
-                        <el-select v-model="baseform.sex" placeholder="请选择">
-                            <el-option v-for="item in sexType" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="出生日期:">
-                        <el-input v-model="baseform.birth"></el-input>
-                    </el-form-item>
-                </el-col>
+      </el-row>
+      <el-row :gutter="0">
+        <el-col :span="8">
+          <el-form-item label="性别:">
 
-            </el-row>
-            <el-row>
-                <el-col :span="8">
-                    <el-form-item label="政治面貌:">
-                        <elx-select @change="changeCheckZZMM" v-model="baseform.checkZZMM" :options="checkZZMMs"></elx-select>
+            <el-select v-model="baseform.sex" placeholder="请选择">
+              <el-option v-for="item in sexType" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
 
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="民族:">
-                        <elx-select @change="change" v-model="baseform.minzu" :options="minzulist" ></elx-select>
-                    </el-form-item>
-                </el-col>
-            </el-row>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="出生日期:">
+            <el-input v-model="baseform.birth"></el-input>
+          </el-form-item>
+        </el-col>
 
-            <el-row>
-                <el-col :span="8">
-                    <el-form-item label="是否农村学生:">
-                        <el-switch v-model="baseform.isNongCun" active-color="#13ce66" inactive-color="#ccc">
-                        </el-switch>
+      </el-row>
+      <el-row>
+        <el-col :span="8">
+          <el-form-item label="政治面貌:">
+            <elx-select @change="changeCheckZZMM" v-model="baseform.checkZZMM" :options="checkZZMMs"></elx-select>
 
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="3">
-                    <el-form-item label="上传证件照:">
-                        <avatar @cropSuccess="onSuccess() " url="/upImg.do"></avatar>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row style="margin: 0 auto;width: 150px;">
-                <el-form-item>
-                    <el-button type="primary" ref="btn" size="mini" round @click="onSubmit($event)">保存个人资料</el-button>
-                </el-form-item>
-            </el-row>
-        </el-form>
-    </div>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="民族:">
+            <elx-select @change="change" v-model="baseform.minzu" :options="minzulist"></elx-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="8">
+          <el-form-item label="是否农村学生:">
+            <el-switch active-value="Y" inactive-value="N" v-model="baseform.isNongCun" active-color="#13ce66" inactive-color="#ccc">
+            </el-switch>
+
+          </el-form-item>
+        </el-col>
+      </el-row>
+
+      <el-row style="margin: 0 auto;width: 150px;">
+        <el-form-item>
+          <el-button type="primary" ref="btn" size="mini" round @click="onSubmit($event)">保存个人资料</el-button>
+        </el-form-item>
+      </el-row>
+    </el-form>
+  </div>
 </template>
 
 <script>
 import select from "./_components/select";
 import avatar from "~/components/Avatar";
+import { mapGetters, mapActions } from "vuex";
+import store from "../_store/index.js";
+import moment from "moment";
 export default {
+  watch: {
+    stuNo(newVal, oldVal) {
+      this.getData();
+    }
+  },
+  props: {
+    stuNo: {
+      type: String,
+      default: "0"
+    }
+  },
+  mounted() {
+    this.getData();
+    this.getDict();
+  },
   data() {
     return {
       baseform: {
+<<<<<<< HEAD
         name: "李奥名",
         sex: "1", //性别
         birth: "19900716", //出生日期
@@ -107,79 +122,107 @@ export default {
         checkZZMM: "1", //政治面貌
         isNongCun: true, //是否农村学生
         BiYeDate: "201806", //毕业日期
+=======
+        name: "",
+        sex: "", //性别
+        birth: "", //出生日期
+        nid: "", //学号
+        kid: "", //考试号
+        minzu: "", //民族
+        cidType: "", //身份证件类型
+        cid: "", //身份证号码
+        checkZZMM: "", //政治面貌
+        isNongCun: "Y", //是否农村学生
+        BiYeDate: "", //毕业日期
+>>>>>>> 5b1b87f9de6987e542082621bc9710a4847ffeb3
         Zjz: "" //证件照
       },
-      minzulist: [
-        {
-          value: "01",
-          label: "汉族"
-        },
-        {
-          value: "02",
-          label: "蒙古族"
-        },
-        {
-          value: "03",
-          label: "回族"
-        },
-        {
-          value: "04",
-          label: "藏族"
-        },
-        {
-          value: "05",
-          label: "维吾尔族"
-        }
-      ],
-      sexType: [
-        {
-          value: "1",
-          label: "男"
-        },
-        {
-          value: "2",
-          label: "女"
-        }
-      ],
-      cidTypes: [
-        {
-          value: "1",
-          label: "居民身份证"
-        },
-        {
-          value: "2",
-          label: "军官证"
-        }
-      ],
+      minzulist: [],
+      sexType: [],
+      cidTypes: [],
 
-      checkZZMMs: [
-        {
-          value: "1",
-          label: "中共党员"
-        },
-        {
-          value: "2",
-          label: "中共预备党员"
-        }
-      ]
+      checkZZMMs: []
     };
   },
   methods: {
+    ...mapActions({
+      getStuBaseInfo: store.namespace + "/getStuBaseInfo",
+      getDictByDictNames: store.namespace + "/getDictByDictNames"
+    }),
+    getData() {
+      this.getStuBaseInfo({}).then(response => {
+        console.log("getStuBaseInfo", response);
+        var res = response.resBody;
+        this.baseform.name = res.name;
+        this.baseform.sex = res.sexType;
+        this.baseform.birth = moment(
+          res.birthday,
+          "YYYY-MM-DD HH:mm:ss"
+        ).format("YYYY-MM-DD");
+        this.baseform.nid = res.stuNo;
+        this.baseform.kid = res.collegeEntranceNo;
+        this.baseform.minzu = res.nation;
+        this.baseform.cidType = res.identityType;
+        this.baseform.cid = res.identityNo;
+        this.baseform.checkZZMM = res.politicalStatus;
+        this.baseform.isNongCun = res.isCountryStu;
+        this.baseform.Zjz = res.personalPhoto;
+      });
+    },
+    getDict() {
+      var requestData = {
+        dicts: ["nation", "sex_type", "identity_type", "political_status"]
+      };
+      this.getDictByDictNames(requestData).then(response => {
+        var res = response.resBody;
+        this.minzulist = [];
+        this.sexType = [];
+        this.cidTypes = [];
+        this.checkZZMMs = [];
+        console.log(["dict", response]);
+        res.nation.forEach(element => {
+          var t1 = {};
+          t1.label = element.dict_desc;
+          t1.value = element.dict_key;
+          this.minzulist.push(t1);
+        });
+        res.sex_type.forEach(element => {
+          var t1 = {};
+          t1.label = element.dict_desc;
+          t1.value = element.dict_key;
+          this.sexType.push(t1);
+        });
+        res.identity_type.forEach(element => {
+          var t1 = {};
+          t1.label = element.dict_desc;
+          t1.value = element.dict_key;
+          this.cidTypes.push(t1);
+        });
+        res.political_status.forEach(element => {
+          var t1 = {};
+          t1.label = element.dict_desc;
+          t1.value = element.dict_key;
+          this.checkZZMMs.push(t1);
+        });
+      });
+    },
     onSuccess(imgUrl) {
       //上传成功后图片地址 imgUrl
       this.baseform.imgUrl = imgUrl;
     },
     onSubmit(event) {
-      this.$refs["btn"].loading = true;
+      // this.$refs["btn"].loading = true;
+      console.log(this);
       //保存表单
     },
     change(item) {
       this.baseform.minzu = item;
     },
     changeCidTypes(item) {
+      console.log(item);
       this.baseform.cidTypes = item;
     },
-    changeCheckZZMM(eitem) {
+    changeCheckZZMM(item) {
       this.baseform.checkZZMM = item; //政治面貌
     }
   },

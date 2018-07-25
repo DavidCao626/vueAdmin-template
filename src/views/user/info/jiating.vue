@@ -11,13 +11,13 @@
             <el-row :gutter="0">
                 <el-col :span="8">
                     <el-form-item label="是否农村五保户:">
-                        <el-switch v-model="baseform.isNCWBH" active-color="#13ce66" inactive-color="#ccc">
+                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isNCWBH" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
                     <el-form-item label="是否低保户:">
-                        <el-switch v-model="baseform.isDBH" active-color="#13ce66" inactive-color="#ccc">
+                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isDBH" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
                     </el-form-item>
                 </el-col>
@@ -27,13 +27,13 @@
 
                 <el-col :span="8">
                     <el-form-item label="是否孤儿:">
-                        <el-switch v-model="baseform.isGE" @change="onGEChange" active-color="#13ce66" inactive-color="#ccc">
+                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isGE" @change="onGEChange" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
                     <el-form-item label="是否单亲家庭子女:">
-                        <el-switch v-model="baseform.isDQJTZN" ref="isDQJTZN" active-color="#13ce66" inactive-color="#ccc">
+                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isDQJTZN" ref="isDQJTZN" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
                     </el-form-item>
                 </el-col>
@@ -42,20 +42,20 @@
 
                 <el-col :span="8">
                     <el-form-item label="是否残疾人子女:">
-                        <el-switch v-model="baseform.isCJRZN" active-color="#13ce66" inactive-color="#ccc">
+                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isCJRZN" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
                     <el-form-item label="是否父母丧失劳动能力:">
-                        <el-switch v-model="baseform.isFMSSLDNL" active-color="#13ce66" inactive-color="#ccc">
+                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isFMSSLDNL" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
                     </el-form-item>
                 </el-col>
 
                 <el-col :span="8">
                     <el-form-item label="是否家中有大病患者:">
-                        <el-switch v-model="baseform.isJZYDBHZ" active-color="#13ce66" inactive-color="#ccc">
+                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isJZYDBHZ" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
                     </el-form-item>
                 </el-col>
@@ -64,7 +64,7 @@
 
                 <el-col :span="8">
                     <el-form-item label="本人是否残疾:">
-                        <el-switch v-model="baseform.isBRSFCJ" active-color="#13ce66" inactive-color="#ccc">
+                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isBRSFCJ" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
                     </el-form-item>
                 </el-col>
@@ -79,20 +79,20 @@
             <el-row>
                 <el-col :span="8">
                     <el-form-item label="是否建档立卡贫困家庭:">
-                        <el-switch v-model="baseform.isJDLKPKJT" active-color="#13ce66" inactive-color="#ccc">
+                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isJDLKPKJT" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
                     </el-form-item>
                 </el-col>
 
                 <el-col :span="8">
                     <el-form-item label="是否低收入家庭:">
-                        <el-switch v-model="baseform.isDSRJT" active-color="#13ce66" inactive-color="#ccc">
+                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isDSRJT" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
                     <el-form-item label="是否军烈属或优抚子女:">
-                        <el-switch v-model="baseform.isJLSHYFZN" active-color="#13ce66" inactive-color="#ccc">
+                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isJLSHYFZN" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
                     </el-form-item>
                 </el-col>
@@ -104,7 +104,7 @@
                     </el-form-item>
                 </el-col>
 
-                <el-col :span="8">
+                <el-col :span="9">
                     <el-form-item label="家庭主要收入来源:">
                         <elx-select @change="changeJTZYSRLY" :value="baseform.JTZYSRLY" :options="checkFamilyIncomeType"></elx-select>
 
@@ -114,12 +114,12 @@
             <el-row>
                 <el-col :span="8">
                     <el-form-item label="家庭是否遭受自然灾害:">
-                        <el-switch v-model="baseform.JTSFZSZRZH" active-color="#13ce66" inactive-color="#ccc">
+                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.JTSFZSZRZH" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
                     </el-form-item>
                 </el-col>
 
-                <el-col :span="16" v-if="baseform.JTSFZSZRZH">
+                <el-col :span="16" v-if="baseform.JTSFZSZRZH =='Y'">
                     <el-form-item label="自然灾害具体情况描述:">
                         <el-input v-model="baseform.JTSFZSZRZH_text"></el-input>
                     </el-form-item>
@@ -129,12 +129,12 @@
                 <el-col :span="8">
                     <el-form-item label="家庭是否遭受突发意外事件:">
 
-                        <el-switch v-model="baseform.JTSFZSYTFYWSJ" active-color="#13ce66" inactive-color="#ccc">
+                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.JTSFZSYTFYWSJ" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
                     </el-form-item>
                 </el-col>
 
-                <el-col :span="16">
+                <el-col :span="16" v-if="baseform.JTSFZSYTFYWSJ =='Y'">
                     <el-form-item label="突发意外事件具体描述:">
                         <el-input v-model="baseform.JTSFZSYTFYWSJ_text"></el-input>
                     </el-form-item>
@@ -188,13 +188,13 @@
 
                 <el-col :span="8">
                     <el-form-item label="是否农村低保户:">
-                        <el-switch v-model="baseform.isNCDBH" active-color="#13ce66" inactive-color="#ccc">
+                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isNCDBH" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
                     <el-form-item label="是否农村特困供养:">
-                        <el-switch v-model="baseform.isNCTKGY" active-color="#13ce66" inactive-color="#ccc">
+                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isNCTKGY" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
                     </el-form-item>
                 </el-col>
@@ -204,7 +204,7 @@
                     </el-form-item>
                 </el-col>
             </el-row>
-            <el-row>
+            <!-- <el-row>
 
                 <el-col :span="8">
                     <el-form-item label="认定困难级别名称:">
@@ -238,7 +238,7 @@
                         <el-input v-model="baseform.NJRDYJ" :maxlength="33" style="width:300%"></el-input>
                     </el-form-item>
                 </el-col>
-            </el-row>
+            </el-row> -->
             <el-row style="margin: 0 auto;width: 150px;">
                 <el-form-item>
                     <el-button type="primary" size="mini" round @click="onSubmit">保存家庭信息</el-button>
@@ -250,28 +250,36 @@
 
 <script>
 import select from "./_components/select";
+import avatar from "~/components/Avatar";
+import { mapGetters, mapActions } from "vuex";
+import store from "../_store/index.js";
+import moment from "moment";
 export default {
+  mounted() {
+    this.getData();
+    this.getDict();
+  },
   data() {
     return {
       baseform: {
         nid: "", //学号
-        isNCWBH: false, //是否农村五保户
-        isDBH: false, //是否低保户
-        isGE: false, //是否孤儿
-        isDQJTZN: false, //是否单亲家庭子女
-        isFMSSLDNL: false, //是否残疾人子女
-        isJZYDBHZ: false, //是否父母丧失劳动能力
-        isBRSFCJ: false, //是否家中有大病患者
-        isCJRZN: false, //本人是否残疾
+        isNCWBH: "N", //是否农村五保户
+        isDBH: "N", //是否低保户
+        isGE: "N", //是否孤儿
+        isDQJTZN: "N", //是否单亲家庭子女
+        isFMSSLDNL: "N", //是否残疾人子女
+        isJZYDBHZ: "N", //是否父母丧失劳动能力
+        isBRSFCJ: "N", //是否家中有大病患者
+        isCJRZN: "N", //本人是否残疾
         cjlb: "1", //残疾类别
-        isJDLKPKJT: false, //是否建档立卡贫困家庭
-        isDSRJT: false, //是否低收入家庭
-        isJLSHYFZN: false, //是否军烈属或优抚子女
+        isJDLKPKJT: "N", //是否建档立卡贫困家庭
+        isDSRJT: "N", //是否低收入家庭
+        isJLSHYFZN: "N", //是否军烈属或优抚子女
         JTRJSR: "", //家庭人均收入
         JTZYSRLY: "1", //家庭主要收入来源类别
-        JTSFZSZRZH: false, //家庭是否遭受自然灾害
+        JTSFZSZRZH: "N", //家庭是否遭受自然灾害
         JTSFZSZRZH_text: "", //家庭自然灾害具体情况描述
-        JTSFZSYTFYWSJ: false, //家庭是否遭受突发意外事件
+        JTSFZSYTFYWSJ: "N", //家庭是否遭受突发意外事件
         JTSFZSYTFYWSJ_text: "", //突发意外事件具体描述
         JTQZJE: "", //家庭欠债金额
         JTQZYY: "", //家庭欠债原因
@@ -280,88 +288,84 @@ export default {
         JTCYSYS: "", //家庭成员失业人数
         SYRKS: "", //赡养人口数
         QTJTJJXX: "", //其他家庭经济信息
-        isNCDBH: false, //是否农村低保户
-        isNCTKGY: false, //是否农村特困供养
-        QT: "", //填写农村特困供养、农村低户、建档立卡相关信息
-        checkDiffName: "3", //认定困难级别
-        RDSJ: "", //认定时间
-        RDYY: "", //认定原因
-        BJTDYJ: "", //班级认定意见
-        NJRDYJ: "" //年级认定意见
+        isNCDBH: "N", //是否农村低保户
+        isNCTKGY: "N", //是否农村特困供养
+        QT: "" //填写农村特困供养、农村低户、建档立卡相关信息
+        // checkDiffName: "3", //认定困难级别
+        // RDSJ: "", //认定时间
+        // RDYY: "", //认定原因
+        // BJTDYJ: "", //班级认定意见
+        // NJRDYJ: "" //年级认定意见
       },
-      checkDiffNames: [
-        {
-          value: "1",
-          label: "特别困难"
-        },
-        {
-          value: "21",
-          label: "困难"
-        },
-        {
-          value: "22",
-          label: "一般困难"
-        },
-        {
-          value: "3",
-          label: "不困难"
-        }
-      ],
-      checkDisableType: [
-        {
-          value: "1",
-          label: "视力残疾"
-        },
-        {
-          value: "2",
-          label: "听力残疾"
-        },
-        {
-          value: "3",
-          label: "智力残疾"
-        },
-        {
-          value: "9",
-          label: "其他残疾"
-        }
-      ],
-      checkFamilyIncomeType: [
-        {
-          value: "1",
-          label: "工资、奖金、津贴、补贴和其他劳动收入"
-        },
-        {
-          value: "2",
-          label: "离退休金、基本养老金、基本生活费、失业保险金"
-        },
-        {
-          value: "3",
-          label: "继承、接受赠予、出租或出售家庭财产获得的收入"
-        },
-        {
-          value: "4",
-          label: "存款及利息，有价证券及红利、股票、博彩收入"
-        },
-        {
-          value: "5",
-          label: "经商、办厂以及从事种植业、 养植业、加工业扣除必要成本后的收入"
-        },
-        {
-          value: "6",
-          label: "赡养费、抚(扶)养费"
-        },
-        {
-          value: "7",
-          label: "自谋职业收入"
-        },
-        {
-          value: "8",
-          label: "其他应当计入家庭的收入"
-        }
-      ]
+      checkDiffNames: [],
+      checkDisableType: [],
+      checkFamilyIncomeType: []
     };
   },
   methods: {
+    ...mapActions({
+      getStuEconmyInfo: store.namespace + "/getStuEconmyInfo",
+      getDictByDictNames: store.namespace + "/getDictByDictNames"
+    }),
+    getData() {
+      this.getStuEconmyInfo({}).then(response => {
+        console.log("getStuEconmyInfo", response);
+        var res = response.resBody;
+        this.baseform.nid = res.stuNo; //学号
+        this.baseform.isNCWBH = res.isFiveGuarantees; //是否农村五保户
+        this.baseform.isDBH = res.isSubsistenceAllowances; //是否低保户
+        this.baseform.isGE = res.isOrphan; //是否孤儿
+        this.baseform.isDQJTZN = res.isSingleParent; //是否单亲家庭子女
+        this.baseform.isFMSSLDNL = res.isDisabilityChildren; //是否残疾人子女
+        this.baseform.isJZYDBHZ = res.isParentLoseLabour; //是否父母丧失劳动能力
+        this.baseform.isBRSFCJ = res.isHasSeriousIllness; //是否家中有大病患者
+        this.baseform.isCJRZN = res.isDisability; //本人是否残疾
+        this.baseform.cjlb = res.disabilityType; //残疾类别
+        this.baseform.isJDLKPKJT = res.isCreatedFile; //是否建档立卡贫困家庭
+        this.baseform.isDSRJT = res.isLowIncome; //是否低收入家庭
+        this.baseform.isJLSHYFZN = res.isSoldierChildren; //是否军烈属或优抚子女
+        this.baseform.JTRJSR = res.capitaIncomeYear; //家庭人均收入
+        this.baseform.JTZYSRLY = res.incomeType; //家庭主要收入来源类别
+        this.baseform.JTSFZSZRZH = res.isNaturalHazard; //家庭是否遭受自然灾害
+        this.baseform.JTSFZSZRZH_text = res.naturalHazardDesc; //家庭自然灾害具体情况描述
+        this.baseform.JTSFZSYTFYWSJ = res.isEmergency; //家庭是否遭受突发意外事件
+        this.baseform.JTSFZSYTFYWSJ_text = res.emergencyDesc; //突发意外事件具体描述
+        this.baseform.JTQZJE = res.liabilitiesMoney; //家庭欠债金额
+        this.baseform.JTQZYY = res.liabilitiesReason; //家庭欠债原因
+        this.baseform.JTRKS = res.familyPerson; //家庭人口数
+        this.baseform.LDRKS = res.labourPersonNum; //劳动力人口数
+        this.baseform.JTCYSYS = res.unemploymentPersonNum; //家庭成员失业人数
+        this.baseform.SYRKS = res.supportPersonNum; //赡养人口数
+        this.baseform.QTJTJJXX = res.otherInfo; //其他家庭经济信息
+        this.baseform.isNCDBH = res.isVillageSubsistenceAllowances; //是否农村低保户
+        this.baseform.isNCTKGY = res.isPovertySupport; //是否农村特困供养
+        this.baseform.QT = res.other; //填写农村特困供养、农村低户、建档立卡相关信息
+      });
+    },
+    getDict() {
+      var requestData = {
+        dicts: ["income_type", "disability_type"]
+      };
+      this.getDictByDictNames(requestData).then(response => {
+        var res = response.resBody;
+        this.zzlxType = [];
+        console.log(["dict", response]);
+
+        res.income_type.forEach(element => {
+          var t1 = {};
+          t1.label = element.dict_desc;
+          t1.value = element.dict_key;
+          this.checkFamilyIncomeType.push(t1);
+        });
+        res.disability_type.forEach(element => {
+          var t1 = {};
+          t1.label = element.dict_desc;
+          t1.value = element.dict_key;
+          this.checkDisableType.push(t1);
+        });
+      });
+    },
+
     onSubmit() {},
     changeCjlb(value) {
       this.baseform.cjlb = value;

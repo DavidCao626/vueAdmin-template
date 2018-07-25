@@ -1,13 +1,13 @@
-// import actions from './actions'
-// import getters from './getters'
-// import mutations from './mutations'
-// import state from './state'
+import actions from './actions'
+import getters from './getters'
+import mutations from './mutations'
+import state from './state'
 
 export default {
   namespaced: true,
-  // state,
-  // actions,
-  // getters,
-  // mutations,
-  namespace: 'user'
+  state,
+  actions,
+  getters,
+  mutations,
+  namespace: 'student'
 }
