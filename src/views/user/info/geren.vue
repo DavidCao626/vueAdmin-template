@@ -83,7 +83,7 @@ export default {
         zzlx: "", //住宅类型
         xsbh: "6302", //校舍编号
         zzdz: "内蒙古呼和浩特", //住宅地址
-        imgUrl: ""
+        imgUrl: null
       },
       zzlxType: [
         {
@@ -113,7 +113,9 @@ export default {
         this.baseform.zzlx = res.accommodationType; //住宅类型
         this.baseform.xsbh = res.dormitoryNo; //校舍编号
         this.baseform.zzdz = res.outsideDormitoryAddress; //住宅地址
-        this.baseform.imgUrl = res.personalPhoto;
+        if(res.personalPhoto != ""){
+            this.baseform.imgUrl = res.personalPhoto;
+        }
       });
     },
     getDict() {

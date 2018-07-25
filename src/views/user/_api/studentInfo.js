@@ -37,6 +37,20 @@ const getStuUniverInfo = data =>
         data: data
     })
 
+const queryAllMajor = data =>
+    request({
+        url: "/stuInfo/queryAllMajor.do",
+        method: 'post',
+        data: data
+    })
+const queryCollegeOrg = data =>
+    request({
+        url: "/stuInfo/queryCollegeOrg.do",
+        method: 'post',
+        data: data
+    })
+
+
 
 export default {
     getStuEconmyInfo,
@@ -44,5 +58,7 @@ export default {
     getStuPerInfo,
     uploadAttrUrl,
     getDictByDictNames,
-    getStuBaseInfo
+    getStuBaseInfo,
+    queryAllMajor,
+    queryCollegeOrg
 };

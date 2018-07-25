@@ -38,12 +38,26 @@ const getStuUniverInfo = ({ commit, state }, params) => new Promise(resolve => {
     })
 })
 
+const queryAllMajor = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryAllMajor(params).then(response => {
+        console.log(["queryAllMajor", response])
+        resolve(response)
+    })
+})
 
+const queryCollegeOrg = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryCollegeOrg(params).then(response => {
+        console.log(["queryCollegeOrg", response])
+        resolve(response)
+    })
+})
 export default {
     getStuEconmyInfo,
     getStuPerInfo,
     getStuUniverInfo,
     getStuBaseInfo,
-    getDictByDictNames
+    getDictByDictNames,
+    queryAllMajor,
+    queryCollegeOrg
 
 }

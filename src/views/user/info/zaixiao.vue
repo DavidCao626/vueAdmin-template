@@ -25,9 +25,10 @@
             <el-row>
                 <el-col :span="8">
                     <el-form-item label="院系名称:">
-                        <el-input v-model="baseform.yuanxi"></el-input>
+                        <elx-select @change="changeYuanxi" :value="baseform.yuanxi" :options="collegeOrg"></elx-select>
                     </el-form-item>
                 </el-col>
+
                 <el-col :span="8">
                     <el-form-item label="所在年级:">
                         <elx-select @change="changeCheckNJ" :value="baseform.checkNJ" :options="checkNJs"></elx-select>
@@ -43,15 +44,15 @@
 
             </el-row>
             <el-row>
-                <el-col :span="8">
+                <!-- <el-col :span="8">
                     <el-form-item label="专业大类:">
                         <elx-select @change="changeCheckZYDL" :value="baseform.checkZYDL" :options="checkZYDLs"></elx-select>
 
                     </el-form-item>
-                </el-col>
+                </el-col> -->
                 <el-col :span="8">
                     <el-form-item label="专业:">
-                        <el-input v-model="baseform.zhuanye"></el-input>
+                        <elx-select @change="changezhuangye" :value="baseform.zhuanye" :options="majorList"></elx-select>
                     </el-form-item>
                 </el-col>
 
@@ -79,12 +80,12 @@
             <el-row>
                 <el-col :span="8">
                     <el-form-item label="是否已毕业:">
-                        <el-switch v-model="baseform.isBiYe" active-color="#13ce66" inactive-color="#ccc">
+                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isBiYe" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
 
                     </el-form-item>
                 </el-col>
-                <el-col :span="8" v-if="baseform.isBiYe">
+                <el-col :span="8" v-if="baseform.isBiYe == 'Y'">
                     <el-form-item label="毕业日期:">
                         <el-input v-model="baseform.BiYeDate"></el-input>
                     </el-form-item>
@@ -101,126 +102,187 @@
 
 <script>
 import select from "./_components/select";
+import avatar from "~/components/Avatar";
+import { mapGetters, mapActions } from "vuex";
+import store from "../_store/index.js";
+import moment from "moment";
 export default {
+  mounted() {
+    this.getData();
+    this.getDict();
+    this.getAllMajor();
+    this.getCollegeOrg();
+  },
   data() {
     return {
       baseform: {
-        nid: "123", //学号
-        checkXSLX: "41", //学生类型
-        checkXXXS: "01", //学习形式
-        checkXZ: "2.5", //学制
-        checkNJ: "7", //年级
-        checkZYDL: "01", //专业大类
-        ruxueDate: "201606", //入学日期
-        xueli: "1", //攻读学历,
-        yuanxi: "数学学院",
-        banji: "201706", //班级
-        zhuanye: "思想政治", //专业
-        isNongCun: true, //是否农村学生
-        isBiYe: false, //是否毕业
-        BiYeDate: "201806" //毕业日期
+        nid: "", //学号
+        checkXSLX: "", //学生类型
+        checkXXXS: "", //学习形式
+        checkXZ: "", //学制
+        checkNJ: "", //年级
+        checkZYDL: "", //专业大类
+        ruxueDate: "", //入学日期
+        xueli: "", //攻读学历,
+        yuanxi: "",
+        banji: "", //班级
+        zhuanye: "", //专业
+        isNongCun: "", //是否农村学生
+        isBiYe: "", //是否毕业
+        BiYeDate: "" //毕业日期
       },
-    
-      checkXSLXs: [
-        {
-          value: "41",
-          label: "专科"
-        },
-        {
-          value: "42",
-          label: "专科（高职）"
-        }
-      ],
-      checkZZMMs: [
-        {
-          value: "1",
-          label: "中共党员"
-        },
-        {
-          value: "2",
-          label: "中共预备党员"
-        }
-      ],
-      checkXXXSs: [
-        {
-          value: "01",
-          label: "全日制"
-        },
-        {
-          value: "02",
-          label: "非全日制"
-        }
-      ],
-      checkXZs: [
-        //学制
-        {
-          value: "2",
-          label: "2"
-        },
-        {
-          value: "2.5",
-          label: "2.5"
-        }
-      ],
-      checkNJs: [
-        //年级
-        {
-          value: "1",
-          label: "1"
-        },
-        {
-          value: "2",
-          label: "2"
-        },
-        {
-          value: "7",
-          label: "延期毕业"
-        }
-      ],
-      checkZYDLs: [
-        //专业大类
-        {
-          value: "01",
-          label: "哲学"
-        },
-        {
-          value: "02",
-          label: "经济学"
-        }
-      ],
-      xuelis: [
-        //攻读学历
-        {
-          value: "1",
-          label: "本科"
-        },
-        {
-          value: "2",
-          label: "专科"
-        }
-      ]
+
+      checkXSLXs: [],
+      checkZZMMs: [],
+      checkXXXSs: [],
+      checkXZs: [],
+      checkNJs: [],
+      checkZYDLs: [],
+      xuelis: [],
+      majorList: [],
+      collegeOrg: []
     };
   },
   methods: {
+    ...mapActions({
+      getStuUniverInfo: store.namespace + "/getStuUniverInfo",
+      getDictByDictNames: store.namespace + "/getDictByDictNames",
+      queryAllMajor: store.namespace + "/queryAllMajor",
+      queryCollegeOrg: store.namespace + "/queryCollegeOrg"
+    }),
+    getCollegeOrg() {
+      this.queryCollegeOrg().then(response => {
+        console.log(["queryCollegeOrg", response]);
+        this.collegeOrg = [];
+        response.resBody.forEach(ite => {
+          var t = {};
+          t.label = ite.orgName;
+          t.value = ite.orgCode;
+          this.collegeOrg.push(t);
+        });
+      });
+    },
+    getAllMajor() {
+      this.queryAllMajor().then(response => {
+        console.log(["major", response]);
+        this.majorList = [];
+        response.resBody.forEach(ite => {
+          var t = {};
+          t.label = ite.majorName;
+          t.value = ite.majorCode;
+          this.majorList.push(t);
+        });
+      });
+    },
+    getData() {
+      this.getStuUniverInfo({}).then(response => {
+        console.log("getStuUniverInfo", response);
+        var res = response.resBody;
+
+        this.baseform.nid = res.stuNo; //学号
+        this.baseform.checkXSLX = res.stuTypeCode; //学生类
+        this.baseform.checkXXXS = res.learnTypeCode; //学习形式
+        this.baseform.checkXZ = res.educationalType; //学制
+        this.baseform.checkNJ = res.stuGradeCode; //年级
+        this.baseform.checkZYDL = res.majorTypeCode; //专业大类
+        if (res.startSchoolDate) {
+          this.baseform.ruxueDate = moment(
+            res.startSchoolDate,
+            "YYYY-MM-DD HH:mm:ss"
+          ).format("YYYY-MM-DD");
+        }
+        this.baseform.xueli = res.studyDegreeCode; //攻读学历,
+        this.baseform.yuanxi = res.collegeCode;
+        this.baseform.banji = res.stuClassName; //班级
+        this.baseform.zhuanye = res.majorCode; //专业
+        this.baseform.isBiYe = res.isEndSchool; //是否毕业
+
+        if (res.endSchoolDate) {
+          this.baseform.BiYeDate = moment(
+            res.endSchoolDate,
+            "YYYY-MM-DD HH:mm:ss"
+          ).format("YYYY-MM-DD");
+        }
+      });
+    },
+    getDict() {
+      var requestData = {
+        dicts: [
+          "stu_type",
+          "learnTypeCode",
+          "grade",
+          "major_type",
+          "study_degree_code",
+          "educationalType"
+        ]
+      };
+      this.getDictByDictNames(requestData).then(response => {
+        var res = response.resBody;
+        this.zzlxType = [];
+        console.log(["dict", response]);
+        res.stu_type.forEach(element => {
+          var t1 = {};
+          t1.label = element.dict_desc;
+          t1.value = element.dict_key;
+          this.checkXSLXs.push(t1);
+        });
+        res.learnTypeCode.forEach(element => {
+          var t1 = {};
+          t1.label = element.dict_desc;
+          t1.value = element.dict_key;
+          this.checkXXXSs.push(t1);
+        });
+        res.educationalType.forEach(element => {
+          var t1 = {};
+          t1.label = element.dict_desc;
+          t1.value = element.dict_key;
+          this.checkXZs.push(t1);
+        });
+        res.grade.forEach(element => {
+          var t1 = {};
+          t1.label = element.dict_desc;
+          t1.value = element.dict_key;
+          this.checkNJs.push(t1);
+        });
+        res.major_type.forEach(element => {
+          var t1 = {};
+          t1.label = element.dict_desc;
+          t1.value = element.dict_key;
+          this.checkZYDLs.push(t1);
+        });
+        res.study_degree_code.forEach(element => {
+          var t1 = {};
+          t1.label = element.dict_desc;
+          t1.value = element.dict_key;
+          this.xuelis.push(t1);
+        });
+      });
+    },
     onSubmit(event) {
       this.$refs["btn"].loading = true;
     },
-    changeCheckXSLX(eitem) {
+    changezhuangye(item) {
+      this.baseform.zhuanye = item;
+    },
+    changeCheckXSLX(item) {
       this.baseform.checkXSLX = item;
     },
-    changeCheckXXXS(eitem) {
+    changeCheckXXXS(item) {
       this.baseform.checkXXXS = item;
     },
-    changeCheckXZ(eitem) {
+    changeCheckXZ(item) {
       this.baseform.checkXZ = item;
     },
-    changeCheckNJ(eitem) {
+    changeCheckNJ(item) {
       this.baseform.checkNJ = item;
     },
-    changeCheckZYDL(eitem) {
+    changeCheckZYDL(item) {
       this.baseform.checkZYDL = item;
     },
-    changeXueli(eitem) {
+    changeYuanxi(item) {
+      this.baseform.yuanxi = item;
+    },
+    changeXueli(item) {
       this.baseform.xueli = item;
     }
   },
