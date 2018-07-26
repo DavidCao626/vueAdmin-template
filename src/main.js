@@ -19,8 +19,9 @@ import '~/icons' // icon
 
 import * as filters from './filters' // global filters
 
-import { Pagedefault } from '~/components/Pageslayout'
+import { Pagedefault, tableLayout } from '~/components/Pageslayout'
 Vue.component('page', Pagedefault)
+Vue.component("elx-table", tableLayout);
 
 Vue.use(ElementUI, {
   i18n: (key, value) => i18n.t(key, value),
