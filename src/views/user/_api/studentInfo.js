@@ -63,6 +63,19 @@ const updateStuEcoInfo = data =>
         method: 'post',
         data: data
     })
+const queryCurrentOrgStuList = data =>
+    request({
+        url: "/stuInfo/queryCurrentOrgStuList.do",
+        method: 'post',
+        data: data
+    })
+
+const queryResignationByStuNo = data =>
+    request({
+        url: "/stuInfo/queryResignationByStuNo.do",
+        method: 'post',
+        data: data
+    })
 
 export default {
     getStuEconmyInfo,
@@ -74,5 +87,7 @@ export default {
     queryAllMajor,
     queryCollegeOrg,
     updateStuPerInfo,
-    updateStuEcoInfo
+    updateStuEcoInfo,
+    queryCurrentOrgStuList,
+    queryResignationByStuNo
 };

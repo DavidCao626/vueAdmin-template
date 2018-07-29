@@ -6,6 +6,7 @@ export const userRouter = {
   meta: { title: "用户中心", icon: "example", hidden: false },
   children: [
     { path: "info", name: "info", component: () => import("../info") },
-    { path: "studentBaseInfo", name: "studentBaseInfo", component: () => import("../studentBaseInfo") }
+    { path: "studentBaseInfo", name: "studentBaseInfo", component: () => import("../studentBaseInfo") },
+    { path: "resignation", name: "resignation", component: () => import("../resignation") }
   ]
 };

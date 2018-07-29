@@ -64,6 +64,20 @@ const updateStuEcoInfo = ({ commit, state }, params) => new Promise(resolve => {
         resolve(response)
     })
 })
+
+const queryCurrentOrgStuList = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryCurrentOrgStuList(params).then(response => {
+        console.log(["queryCurrentOrgStuList", response])
+        resolve(response)
+    })
+})
+
+const queryResignationByStuNo = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryResignationByStuNo(params).then(response => {
+        console.log(["queryResignationByStuNo", response])
+        resolve(response)
+    })
+})
 export default {
     getStuEconmyInfo,
     getStuPerInfo,
@@ -74,4 +88,6 @@ export default {
     queryCollegeOrg,
     updateStuPerInfo,
     updateStuEcoInfo,
+    queryCurrentOrgStuList,
+    queryResignationByStuNo
 }
