@@ -104,7 +104,6 @@ export default {
     }
   },
   mounted() {
-    this.getData();
     this.getDict();
   },
   data() {
@@ -191,6 +190,7 @@ export default {
           this.checkZZMMs.push(t1);
         });
       });
+      this.getData();
     },
     onSuccess(imgUrl) {
       //上传成功后图片地址 imgUrl

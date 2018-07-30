@@ -7,6 +7,7 @@ export const userRouter = {
   children: [
     { path: "info", name: "info", component: () => import("../info") },
     { path: "studentBaseInfo", name: "studentBaseInfo", component: () => import("../studentBaseInfo") },
+    { path: "staffBaseInfo", name: "staffBaseInfo", component: () => import("../staffBaseInfo") },
     { path: "resignation", name: "resignation", component: () => import("../resignation") }
   ]
 };

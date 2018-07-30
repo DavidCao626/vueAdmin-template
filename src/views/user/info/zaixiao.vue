@@ -1,103 +1,103 @@
 <template>
-    <div style="margin: 10px;">
-        <el-form ref="baseform" label-position="left" size="mini" :inline="true" :model="baseform" label-width="100px">
+  <div style="margin: 10px;">
+    <el-form ref="baseform" label-position="left" size="mini" :inline="true" :model="baseform" label-width="100px">
 
-            <el-row>
-                <el-col :span="8">
-                    <el-form-item label="学号:">
-                        <el-input v-model="baseform.nid"></el-input>
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="学生类型:">
-                        <elx-select @change="changeCheckXSLX" :value="baseform.checkXSLX" :options="checkXSLXs"></elx-select>
-                    </el-form-item>
-                </el-col>
+      <el-row>
+        <el-col :span="8">
+          <el-form-item label="学号:">
+            <el-input v-model="baseform.nid"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="学生类型:">
+            <elx-select @change="changeCheckXSLX" :value="baseform.checkXSLX" :options="checkXSLXs"></elx-select>
+          </el-form-item>
+        </el-col>
 
-                <el-col :span="8">
-                    <el-form-item label="学习形式:">
-                        <elx-select @change="changeCheckXXXS" :value="baseform.checkXXXS" :options="checkXXXSs"></elx-select>
+        <el-col :span="8">
+          <el-form-item label="学习形式:">
+            <elx-select @change="changeCheckXXXS" :value="baseform.checkXXXS" :options="checkXXXSs"></elx-select>
 
-                    </el-form-item>
-                </el-col>
+          </el-form-item>
+        </el-col>
 
-            </el-row>
-            <el-row>
-                <el-col :span="8">
-                    <el-form-item label="院系名称:">
-                        <elx-select @change="changeYuanxi" :value="baseform.yuanxi" :options="collegeOrg"></elx-select>
-                    </el-form-item>
-                </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="8">
+          <el-form-item label="院系名称:">
+            <elx-select @change="changeYuanxi" :value="baseform.yuanxi" :options="collegeOrg"></elx-select>
+          </el-form-item>
+        </el-col>
 
-                <el-col :span="8">
-                    <el-form-item label="所在年级:">
-                        <elx-select @change="changeCheckNJ" :value="baseform.checkNJ" :options="checkNJs"></elx-select>
+        <el-col :span="8">
+          <el-form-item label="所在年级:">
+            <elx-select @change="changeCheckNJ" :value="baseform.checkNJ" :options="checkNJs"></elx-select>
 
-                    </el-form-item>
-                </el-col>
+          </el-form-item>
+        </el-col>
 
-                <el-col :span="8">
-                    <el-form-item label="班级:">
-                        <el-input v-model="baseform.banji"></el-input>
-                    </el-form-item>
-                </el-col>
+        <el-col :span="8">
+          <el-form-item label="班级:">
+            <el-input v-model="baseform.banji"></el-input>
+          </el-form-item>
+        </el-col>
 
-            </el-row>
-            <el-row>
-                <!-- <el-col :span="8">
+      </el-row>
+      <el-row>
+        <!-- <el-col :span="8">
                     <el-form-item label="专业大类:">
                         <elx-select @change="changeCheckZYDL" :value="baseform.checkZYDL" :options="checkZYDLs"></elx-select>
 
                     </el-form-item>
                 </el-col> -->
-                <el-col :span="8">
-                    <el-form-item label="专业:">
-                        <elx-select @change="changezhuangye" :value="baseform.zhuanye" :options="majorList"></elx-select>
-                    </el-form-item>
-                </el-col>
+        <el-col :span="8">
+          <el-form-item label="专业:">
+            <elx-select @change="changezhuangye" :value="baseform.zhuanye" :options="majorList"></elx-select>
+          </el-form-item>
+        </el-col>
 
-                <el-col :span="8">
-                    <el-form-item label="攻读学历:">
-                        <elx-select @change="changeXueli" :value="baseform.xueli" :options="xuelis"></elx-select>
+        <el-col :span="8">
+          <el-form-item label="攻读学历:">
+            <elx-select @change="changeXueli" :value="baseform.xueli" :options="xuelis"></elx-select>
 
-                    </el-form-item>
-                </el-col>
+          </el-form-item>
+        </el-col>
 
-            </el-row>
-            <el-row>
-                <el-col :span="8">
-                    <el-form-item label="学制:">
-                        <elx-select @change="changeCheckXZ" :value="baseform.checkXZ" :options="checkXZs"></elx-select>
+      </el-row>
+      <el-row>
+        <el-col :span="8">
+          <el-form-item label="学制:">
+            <elx-select @change="changeCheckXZ" :value="baseform.checkXZ" :options="checkXZs"></elx-select>
 
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="入学日期:">
-                        <el-input v-model="baseform.ruxueDate"></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="8">
-                    <el-form-item label="是否已毕业:">
-                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isBiYe" active-color="#13ce66" inactive-color="#ccc">
-                        </el-switch>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="入学日期:">
+            <el-input v-model="baseform.ruxueDate"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="8">
+          <el-form-item label="是否已毕业:">
+            <el-switch active-value="Y" inactive-value="N" v-model="baseform.isBiYe" active-color="#13ce66" inactive-color="#ccc">
+            </el-switch>
 
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8" v-if="baseform.isBiYe == 'Y'">
-                    <el-form-item label="毕业日期:">
-                        <el-input v-model="baseform.BiYeDate"></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row style="margin: 0 auto;width: 150px;">
-                <el-form-item>
-                    <el-button type="primary" ref="btn" size="mini" round @click="onSubmit($event)">保存个人资料</el-button>
-                </el-form-item>
-            </el-row>
-        </el-form>
-    </div>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8" v-if="baseform.isBiYe == 'Y'">
+          <el-form-item label="毕业日期:">
+            <el-input v-model="baseform.BiYeDate"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row style="margin: 0 auto;width: 150px;">
+        <el-form-item>
+          <el-button type="primary" ref="btn" size="mini" round @click="onSubmit($event)">保存个人资料</el-button>
+        </el-form-item>
+      </el-row>
+    </el-form>
+  </div>
 </template>
 
 <script>
@@ -108,7 +108,6 @@ import store from "../_store/index.js";
 import moment from "moment";
 export default {
   mounted() {
-    this.getData();
     this.getDict();
     this.getAllMajor();
     this.getCollegeOrg();
@@ -257,6 +256,7 @@ export default {
           this.xuelis.push(t1);
         });
       });
+      this.getData();
     },
     onSubmit(event) {
       this.$refs["btn"].loading = true;

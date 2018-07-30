@@ -256,7 +256,7 @@ import store from "../_store/index.js";
 import moment from "moment";
 export default {
   mounted() {
-    this.getData();
+   
     this.getDict();
   },
   data() {
@@ -365,6 +365,7 @@ export default {
           this.checkDisableType.push(t1);
         });
       });
+       this.getData();
     },
 
     onSubmit() {

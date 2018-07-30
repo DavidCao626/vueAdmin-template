@@ -19,12 +19,12 @@
                         </el-button>
                     </el-tooltip>
                     <el-tooltip class="item" effect="dark" content="导入学生" placement="bottom">
-                        <el-button plain size="mini" >
+                        <el-button plain size="mini">
                             导入
                         </el-button>
                     </el-tooltip>
                     <el-tooltip class="item" effect="dark" content="导出学生" placement="bottom">
-                        <el-button plain size="mini" >
+                        <el-button plain size="mini">
                             导出
                         </el-button>
                     </el-tooltip>
@@ -38,8 +38,8 @@
                     </el-button>
                 </span> -->
                 <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-                    <el-form-item label="学号:">
-                        <el-input v-model="formInline.stuNo" placeholder="学号"></el-input>
+                    <el-form-item label="职工号:">
+                        <el-input v-model="formInline.staffCode" placeholder="职工号"></el-input>
                     </el-form-item>
                     <el-form-item label="姓名:">
                         <el-input v-model="formInline.name" placeholder="姓名"></el-input>
@@ -54,19 +54,13 @@
                 <el-table-column type="selection" width="38">
                 </el-table-column>
 
-                <el-table-column prop="stu_no" label="学号">
+                <el-table-column prop="staff_code" label="职工号">
                 </el-table-column>
                 <el-table-column prop="name" label="姓名">
                 </el-table-column>
-                <el-table-column prop="nation" label="民族" :formatter="nationFormatter">
+                <el-table-column prop="phone" label="手机号">
                 </el-table-column>
-                <el-table-column prop="sex_type" label="性别" :formatter="sexTypeFormatter">
-                </el-table-column>
-                <el-table-column prop="phone" label="手机号码">
-                </el-table-column>
-                <el-table-column prop="college_name" label="学院">
-                </el-table-column>
-                <el-table-column prop="stu_class_name" label="班级">
+                <el-table-column prop="org_code" label="所属组织">
                 </el-table-column>
 
                 <el-table-column label="操作" width="88" header-align="left" align="center">
@@ -85,16 +79,16 @@
                 <el-table-column type="expand" label="#" width="42">
                     <template slot-scope="props" style="background-color:#f7f8f9">
                         <el-form label-position="left" inline class="demo-table-expand">
-                            <el-form-item label="证件类型:">
-                                <span v-html="idTypeFormatter(props.row.identity_type)"></span>
+                            <el-form-item label="职工号:">
+                                <span v-html="idTypeFormatter(props.row.staff_code)"></span>
                             </el-form-item>
                             <br/>
-                            <el-form-item label="证件号码:">
-                                <span>{{ props.row.identity_no }}</span>
+                            <el-form-item label="姓名:">
+                                <span>{{ props.row.name }}</span>
                             </el-form-item>
                             <br/>
-                            <el-form-item label="家庭住址:">
-                                <span>{{ props.row.postal_address }}</span>
+                            <el-form-item label="手机号:">
+                                <span>{{ props.row.phone }}</span>
                             </el-form-item>
                         </el-form>
                     </template>
@@ -133,7 +127,7 @@ export default {
       exportOpen: false,
       data: [],
       formInline: {
-        stuNo: "",
+        staffCode: "",
         name: ""
       },
       sexObj: {},
@@ -164,30 +158,30 @@ export default {
       console.log(["创建学生"]);
     },
     ...mapActions({
-      queryCurrentOrgStuList: store.namespace + "/queryCurrentOrgStuList",
+      queryCurrentOrgStaffList: store.namespace + "/queryCurrentOrgStaffList",
       getDictByDictNames: store.namespace + "/getDictByDictNames"
     }),
-    resignation(row){
-        console.log(["row",row])
-        this.$router.push({
-            path:"/user/resignation",
-            query:{
-                sysNo:row.stu_no,
-                type:"student"
-            }
-        })
+    resignation(row) {
+      console.log(["row", row]);
+      this.$router.push({
+        path: "/user/resignation",
+        query: {
+          sysNo: row.staff_code,
+          type: "staff"
+        }
+      });
     },
-    edit(row){
-console.log(["row",row])
+    edit(row) {
+      console.log(["row", row]);
     },
-    nationFormatter(row, column, cellValue, index){
-        return this.nationObj[cellValue];
+    nationFormatter(row, column, cellValue, index) {
+      return this.nationObj[cellValue];
     },
-    sexTypeFormatter(row, column, cellValue, index){
-        return this.sexObj[cellValue];
+    sexTypeFormatter(row, column, cellValue, index) {
+      return this.sexObj[cellValue];
     },
-    idTypeFormatter(val){
-        return this.idTypeObj[val]
+    idTypeFormatter(val) {
+      return this.idTypeObj[val];
     },
     getDict() {
       var requestData = {
@@ -205,17 +199,17 @@ console.log(["row",row])
         res.identity_type.forEach(el => {
           this.idTypeObj[el.dict_key] = el.dict_desc;
         });
-      this.getData();
+        this.getData();
       });
     },
     getData() {
       var requestData = {
-        stuNo: this.formInline.stuNo,
+        staffCode: this.formInline.staffCode,
         name: this.formInline.name,
         currentPage: this.pageInfo.currentPage,
         pageSize: this.pageInfo.pageSize
       };
-      this.queryCurrentOrgStuList(requestData).then(response => {
+      this.queryCurrentOrgStaffList(requestData).then(response => {
         console.log(["查询数据", response]);
         this.data = response.resBody.baseData;
         this.pageInfo = response.resBody.pageInfo;
@@ -261,7 +255,6 @@ console.log(["row",row])
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-     
       vm.getDict();
     });
   }

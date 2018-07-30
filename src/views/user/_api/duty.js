@@ -19,8 +19,61 @@ const deleteUserResigDutyById = data =>
     })
 
 
+const queryResignationByTypeAndSysCode = data =>
+    request({
+        url: "/duty/queryResignationByTypeAndSysCode.do",
+        method: 'post',
+        data: data
+    })
 
+
+const updateUserResignation = data =>
+    request({
+        url: "/duty/updateUserResignation.do",
+        method: 'post',
+        data: data
+    })
+    /**
+     * 获取下级当前组织包括当前组织
+     * @param {*} data 
+     */
+const getCurrentOrgListAndOwner = data =>
+    request({
+        url: "/systemManagerApi/getCurrentOrgListAndOwner.do",
+        method: 'post',
+        data: data
+    })
+
+    /**
+     * 获取管理节点下的组织包括管理节点
+     * @param {*} data 
+     */
+const getCurrentMNCodeOrgListAndOwner = data =>
+    request({
+        url: "/systemManagerApi/getCurrentMNCodeOrgListAndOwner.do",
+        method: 'post',
+        data: data
+    })
+const queryResigDutyBySessionAndType = data =>
+    request({
+        url: "/duty/queryResigDutyBySessionAndType.do",
+        method: 'post',
+        data: data
+    })
+
+const insertUserResignation = data =>
+    request({
+        url: "/duty/insertUserResignation.do",
+        method: 'post',
+        data: data
+    })
 export default {
+    getCurrentOrgListAndOwner,
     deleteUserResigDutyById,
-    getDictByDictNames
+    getDictByDictNames,
+    queryResignationByTypeAndSysCode,
+    updateUserResignation,
+    queryResigDutyBySessionAndType,
+    insertUserResignation,
+    getCurrentMNCodeOrgListAndOwner
 };
