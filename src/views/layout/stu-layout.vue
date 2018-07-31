@@ -1,51 +1,113 @@
 <template>
-
-  <div class="container">
-    <header class="header">
-      <navbar></navbar>
-    </header>
-    <div class="content">
-   <div style="position: absolute;top: 90px;left:-12px;opacity: 0.4;    z-index: 999;">
-         <Sticky >  <el-button @click="sidebar=!sidebar" type="info" size="mini">
-          <i class="el-icon-d-arrow-left" v-if="sidebar"></i>
-          <i class="el-icon-d-arrow-right" v-else></i>
-          <!-- <span style="font-size:12px;" v-if="sidebar">收起</span>
-          <span style="font-size:12px;" v-else>展开</span> -->
-        </el-button></Sticky>
-      </div>
-      <div class="sidebar-container" v-show="sidebar">
-        <!--  style="height: 70vh;overflow:scroll;overflow-x: hidden;overflow-y: auto;" -->
-       <sidebar></sidebar>
-        
-      </div>
-      <main class="main-view ">
-        <app-main class="app-container"></app-main>
-
-        <div class="app-container app-footer">
-          <div class="app-footer__info">
-            <ul>
-              <li>
-                <a href="">常见问题</a>
-              </li>
-              <li>|</li>
-              <li>关于我们</li>
-              <li>|</li>
-              <li>版权说明</li>
-              <li>|</li>
-              <li>意见反馈</li>
-              <li>|</li>
-              <li>123-{{sidebar}}</li>
-            </ul>
+<div>
+<div class="headerWrapper">
+      <header class="header">
+        <navbar></navbar>
+         <div style="position: absolute;top: 95px;left:-12px;opacity: 0.4;    z-index: 99999;">
+            <Sticky>
+              <el-button @click="sidebar=!sidebar" type="info" size="mini">
+                <i class="el-icon-d-arrow-left" v-if="sidebar"></i>
+                <i class="el-icon-d-arrow-right" v-else></i>
+              </el-button>
+            </Sticky>
           </div>
+      </header>
+    </div>
+   
+  <el-scrollbar class="page-component__scroll" ref="componentScrollBar">
+    <div class="page-container page-component " >
+       
+      <el-scrollbar class="page-component__nav" style="padding-top: 20px;"  v-show="sidebar">
+        <sidebar></sidebar>
+      </el-scrollbar>
 
-          <div class="app-footer__ext">
-            Copyright &copy; 2017-2018 Tabler. All Rights Reserved.
+      <div :class="['page-component__content', sidebar?'sidebar-hide':'']" style="margin-top: 45px;">
+        <!-- <router-view class="content"></router-view> -->
+        <app-main class=" app-container "></app-main>
+         <div class="app-container app-footer">
+              <div class="app-footer__info">
+                <ul>
+                  <li>
+                    <a href="">常见问题</a>
+                  </li>
+                  <li>|</li>
+                  <li>关于我们</li>
+                  <li>|</li>
+                  <li>版权说明</li>
+                  <li>|</li>
+                  <li>意见反馈</li>
+                  <li>|</li>
+                  <li>123-{{sidebar}}</li>
+                </ul>
+              </div>
+
+              <div class="app-footer__ext">
+                Copyright &copy; 2017-2018 Tabler. All Rights Reserved.
+              </div>
+
+            </div> 
+      </div>
+      
+    </div>
+    </el-scrollbar>
+</div>
+  <!-- <div class="container">
+    <div class="headerWrapper">
+      <header class="header">
+        <navbar></navbar>
+      </header>
+    </div>
+
+    <div class="main-cnt">
+      <el-scrollbar class="page-component__scrollcomponent__scroll" ref="componentScrollBar">
+        <div class="content">
+          <div style="position: absolute;top: 90px;left:-12px;opacity: 0.4;    z-index: 999;">
+            <Sticky>
+              <el-button @click="sidebar=!sidebar" type="info" size="mini">
+                <i class="el-icon-d-arrow-left" v-if="sidebar"></i>
+                <i class="el-icon-d-arrow-right" v-else></i>
+              </el-button>
+            </Sticky>
           </div>
+          <el-scrollbar class="page-component__nav">
+            <div class="sidebar-container" v-show="sidebar">
+              <sidebar></sidebar>
+            </div>
+          </el-scrollbar>
+          <main class="main-view ">
+            <el-scrollbar>
+              <app-main class="app-container"></app-main>
+            </el-scrollbar>
+            <div class="app-container app-footer">
+              <div class="app-footer__info">
+                <ul>
+                  <li>
+                    <a href="">常见问题</a>
+                  </li>
+                  <li>|</li>
+                  <li>关于我们</li>
+                  <li>|</li>
+                  <li>版权说明</li>
+                  <li>|</li>
+                  <li>意见反馈</li>
+                  <li>|</li>
+                  <li>123-{{sidebar}}</li>
+                </ul>
+              </div>
+
+              <div class="app-footer__ext">
+                Copyright &copy; 2017-2018 Tabler. All Rights Reserved.
+              </div>
+
+            </div>
+
+          </main>
 
         </div>
-      </main>
+      </el-scrollbar>
     </div>
-  </div>
+
+  </div> -->
 </template>
 
 <script>
@@ -59,8 +121,7 @@ export default {
     AppMain,
     Sticky
   },
-  computed: {
-  },
+  computed: {},
   data() {
     return {
       sidebar: true
@@ -69,48 +130,199 @@ export default {
 };
 </script>
 
-<style  lang="scss" >
+<style  lang="scss" scoped>
 //@import "src/styles/main.scss"; // global css
-
+.headerWrapper {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 1500;
+}
 .container {
   min-width: 1300;
   margin: 0 auto;
 }
 .header {
+  box-shadow: var(--shadow-dark);
+
   height: 80px;
   background-color: #fff;
-  box-shadow: var(--shadow-dark);
+  color: #fff;
+  top: 0;
+  left: 0;
+  width: 100%;
+  // line-height: 80px;
+  z-index: 100;
+  position: relative;
 }
 .content {
   padding: 40px 0 80px;
   display: flex;
 }
-.page-component .page-component__nav {
-  width: 240px;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  margin-top: 80px;
-  transition: padding-top 0.3s;
-}
-.el-scrollbar {
-  overflow: hidden;
-  position: relative;
-}
-.sidebar-container {
-  min-width: 250px;
-  margin-top: -10px;
-}
-.main-view {
-  min-height: calc(100vh - 80px - 71px - 80px);
-  // overflow:scroll;overflow-x: hidden;
-  flex: 1;
-}
+.page-component__scroll {
+    height: calc(100% - 80px);
+    margin-top: 80px;
 
-.legal {
-  text-align: center;
-  padding: 2.5rem;
-  color: var(--color-grey-light-2);
-  font-size: 12px;
-}
+    .el-scrollbar__wrap {
+      overflow-x: auto;
+    }
+  }
+
+  .page-component {
+    box-sizing: border-box;
+    height: 100%;
+  
+    &.page-container {
+      padding: 0;
+    }
+
+    .page-component__nav {
+      width: 250px;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      margin-top: 80px;
+      transition: padding-top .3s;
+
+      .el-scrollbar__wrap {
+        height: 100%;
+      }
+
+      &.is-extended {
+        padding-top: 0;
+      }
+    }
+
+    .side-nav {
+      height: 100%;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      padding-right: 0;
+
+      & > ul {
+        padding-bottom: 50px;
+      }
+    }
+
+    .page-component__content {
+      
+      padding-bottom: 100px;
+      box-sizing: border-box;
+    }
+
+    .content {
+      padding-top: 50px;
+
+      > {
+        h3 {
+          margin: 55px 0 20px;
+        }
+
+        table {
+          border-collapse: collapse;
+          width: 100%;
+          background-color: #fff;
+          font-size: 14px;
+          margin-bottom: 45px;
+          line-height: 1.5em;
+
+          strong {
+            font-weight: normal;
+          }
+
+          td, th {
+            border-bottom: 1px solid #d8d8d8;
+            padding: 15px;
+            max-width: 250px;
+          }
+
+          th {
+            text-align: left;
+            white-space: nowrap;
+            color: #666;
+            font-weight: normal;
+          }
+
+          td {
+            color: #333;
+          }
+
+          th:first-child, td:first-child {
+            padding-left: 10px;
+          }
+        }
+
+        ul:not(.timeline) {
+          margin: 10px 0;
+          padding: 0 0 0 20px;
+          font-size: 14px;
+          color: #5e6d82;
+          line-height: 2em;
+        }
+      }
+    }
+
+    .page-component-up {
+      background-color: #fff;
+      position: fixed;
+      right: 100px;
+      bottom: 150px;
+      size: 40px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: .3s;
+      box-shadow: 0 0 6px rgba(0,0,0, .12);
+      z-index: 5;
+
+      i {
+        color: #409EFF;
+        display: block;
+        line-height: 40px;
+        text-align: center;
+        font-size: 18px;
+      }
+
+      &.hover {
+        opacity: 1;
+      }
+    }
+    .back-top-fade-enter,
+    .back-top-fade-leave-active {
+      transform: translateY(-30px);
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .page-component {
+      .page-component__nav {
+        width: 100%;
+        position: static;
+        margin-top: 0;
+      }
+      .side-nav {
+        padding-top: 0;
+        padding-left: 50px;
+      }
+      .page-component__content {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      .content {
+        padding-top: 0;
+      }
+      .content > table {
+        overflow: auto;
+        display: block;
+      }
+      .page-component-up {
+        display: none;
+      }
+    }
+  }
+
+  .sidebar-hide{
+    padding-left: 250px;
+  }
 </style>

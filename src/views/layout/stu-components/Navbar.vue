@@ -29,18 +29,32 @@
                     <span style="font-size:12px;color:#909399">身份切换</span>
                   </div>
 
-                  <el-dropdown-menu class="user-dropdown" slot="dropdown">
-                    <router-link class="inlineBlock" to="/">
-                      <el-dropdown-item>
-                        <i class="el-icon-caret-right"></i>&nbsp; 03班
-                      </el-dropdown-item>
-                    </router-link>
-                    <router-link class="inlineBlock" to="/">
-                      <el-dropdown-item>
-                        <i class="el-icon-caret-right"></i>&nbsp; 04班
-                      </el-dropdown-item>
-                    </router-link>
-                  </el-dropdown-menu>
+                   <el-dropdown-menu slot="dropdown">
+                                <ul class="dropdown-menu-devin">
+                                    <li class="header">你目前有2处任职:</li>
+                                    <li>
+                                        <!-- inner menu: contains the actual data -->
+                                        <ul class="menu">
+                                            <li> 
+                                                <a href="#">
+                                                    <h3>内蒙古大学数学学院 <span class="text-green fontello-record">切换</span>
+                                                        </h3>
+                                                    <p>[教职工]系主任</p>
+                                                </a>
+                                            </li>
+                                            <li> 
+                                                <a href="#">
+                                                    <h3>内蒙古大学数学学院2017级3班<span class="text-yellow fontello-record">切换</span>
+                                                        </h3>
+                                                    <p>[教职工]班主任</p>
+                                                </a>
+                                            </li>
+                                           
+                                        </ul>
+                                    </li>
+                             
+                                </ul>
+                            </el-dropdown-menu>
                 </el-dropdown>
                 &nbsp;&nbsp; &nbsp;&nbsp;
 
@@ -256,6 +270,33 @@ export default {
 }
 .user-dropdown {
   margin-top: -3px;
+}
+
+.dropdown-menu-devin{max-width:280px;overflow-x:auto;list-style:none;margin:0;padding:0
+}
+.dropdown-menu-devin .header{border-top-left-radius:4px;border-top-right-radius:4px;border-bottom-right-radius:0;border-bottom-left-radius:0;padding:10px 15px;color:#444444;font-size:14px
+}
+.dropdown-menu-devin li{list-style:none;margin:0;padding:0
+}
+.dropdown-menu-devin .footer{padding:15px;text-align:right
+}
+.dropdown-menu-devin .footer a{background:#ccc;color:#fff;padding:5px 15px;border-radius:30px;margin:0;position:relative;top:3px
+}
+.menu{margin:0;padding:0
+}
+.menu li{padding:0 15px;position:relative;float:left;display:inline-block;width:100%
+}
+.menu li svg{stroke:red;height:40px;width:30px;display:inline-block;position:relative;left:0;top:0;line-height:30px;text-align:left;margin:10px 10px 0 0;padding-bottom:0;padding:0;font-size:16px;float:left
+}
+.menu li i{height:40px;width:30px;display:inline-block;position:relative;left:0;top:0;line-height:30px;text-align:left;margin:10px 10px 0 0;padding-bottom:0;padding:0;font-size:16px;float:left
+}
+.menu li a{color:#8c92a3 !important
+}
+.menu li a h3{font-size:14px;margin:0;padding:10px 0 0;font-weight:bold;color:#8c92a3
+}
+.menu li a h3 span{font-size:11px;float:right;font-weight:100;font-style:italic
+}
+.menu li a p{margin:0;padding:5px 0 15px;color:#8c92a3;border-bottom:1px solid rgba(0,0,0,0.1)
 }
 </style>
 
