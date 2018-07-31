@@ -48,6 +48,24 @@ const getCurrentMNCodeOrgListAndOwner = ({ commit, state }, params) => new Promi
         resolve(response)
     })
 })
+
+const queryDutyListByMNCode = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryDutyListByMNCode(params).then(response => {
+        console.log(["queryDutyListByMNCode", response])
+        resolve(response)
+    })
+})
+
+const querySocializeClassify = ({ commit, state }, params) => new Promise(resolve => {
+    api.querySocializeClassify(params).then(response => {
+        console.log(["querySocializeClassify", response])
+        resolve(response)
+    })
+})
+
+
+
+
 export default {
     deleteUserResigDutyById,
     queryResignationByTypeAndSysCode,
@@ -55,5 +73,7 @@ export default {
     getCurrentOrgListAndOwner,
     queryResigDutyBySessionAndType,
     insertUserResignation,
-    getCurrentMNCodeOrgListAndOwner
+    getCurrentMNCodeOrgListAndOwner,
+    queryDutyListByMNCode,
+    querySocializeClassify
 }

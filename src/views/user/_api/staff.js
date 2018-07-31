@@ -9,7 +9,14 @@ const queryCurrentOrgStaffList = data =>
     })
 
 
+const queryOrgByOrgCode = data =>
+    request({
+        url: "/staInfo/queryOrgByOrgCode.do",
+        method: 'post',
+        data: data
+    })
 
 export default {
-    queryCurrentOrgStaffList
+    queryCurrentOrgStaffList,
+    queryOrgByOrgCode
 };

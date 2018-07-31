@@ -67,6 +67,23 @@ const insertUserResignation = data =>
         method: 'post',
         data: data
     })
+
+
+//-------------------------职务管理-------------------------
+const queryDutyListByMNCode = data =>
+    request({
+        url: "/duty/queryDutyListByMNCode.do",
+        method: 'post',
+        data: data
+    })
+const querySocializeClassify = data =>
+    request({
+        url: "/duty/querySocializeClassify.do",
+        method: 'post',
+        data: data
+    })
+
+
 export default {
     getCurrentOrgListAndOwner,
     deleteUserResigDutyById,
@@ -75,5 +92,7 @@ export default {
     updateUserResignation,
     queryResigDutyBySessionAndType,
     insertUserResignation,
-    getCurrentMNCodeOrgListAndOwner
+    getCurrentMNCodeOrgListAndOwner,
+    queryDutyListByMNCode,
+    querySocializeClassify
 };
