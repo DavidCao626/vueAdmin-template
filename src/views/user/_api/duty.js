@@ -70,6 +70,13 @@ const insertUserResignation = data =>
 
 
 //-------------------------职务管理-------------------------
+const getGrantRole = data =>
+    request({
+        url: "/systemManagerApi/getGrantRole.do",
+        method: 'post',
+        data: data
+    })
+
 const queryDutyListByMNCode = data =>
     request({
         url: "/duty/queryDutyListByMNCode.do",
@@ -83,7 +90,27 @@ const querySocializeClassify = data =>
         data: data
     })
 
+const getDutyByDutyId = data =>
+    request({
+        url: "/duty/getDutyByDutyId.do",
+        method: 'post',
+        data: data
+    })
 
+
+const updateDuty = data =>
+    request({
+        url: "/duty/updateDuty.do",
+        method: 'post',
+        data: data
+    })
+
+const insertDuty = data =>
+    request({
+        url: "/duty/insertDuty.do",
+        method: 'post',
+        data: data
+    })
 export default {
     getCurrentOrgListAndOwner,
     deleteUserResigDutyById,
@@ -94,5 +121,9 @@ export default {
     insertUserResignation,
     getCurrentMNCodeOrgListAndOwner,
     queryDutyListByMNCode,
-    querySocializeClassify
+    querySocializeClassify,
+    getDutyByDutyId,
+    getGrantRole,
+    insertDuty,
+    updateDuty
 };

@@ -62,10 +62,32 @@ const querySocializeClassify = ({ commit, state }, params) => new Promise(resolv
         resolve(response)
     })
 })
+const getDutyByDutyId = ({ commit, state }, params) => new Promise(resolve => {
+    api.getDutyByDutyId(params).then(response => {
+        console.log(["getDutyByDutyId", response])
+        resolve(response)
+    })
+})
+const getGrantRole = ({ commit, state }, params) => new Promise(resolve => {
+    api.getGrantRole(params).then(response => {
+        console.log(["getGrantRole", response])
+        resolve(response)
+    })
+})
 
+const updateDuty = ({ commit, state }, params) => new Promise(resolve => {
+    api.updateDuty(params).then(response => {
+        console.log(["updateDuty", response])
+        resolve(response)
+    })
+})
 
-
-
+const insertDuty = ({ commit, state }, params) => new Promise(resolve => {
+    api.insertDuty(params).then(response => {
+        console.log(["insertDuty", response])
+        resolve(response)
+    })
+})
 export default {
     deleteUserResigDutyById,
     queryResignationByTypeAndSysCode,
@@ -75,5 +97,9 @@ export default {
     insertUserResignation,
     getCurrentMNCodeOrgListAndOwner,
     queryDutyListByMNCode,
-    querySocializeClassify
+    querySocializeClassify,
+    getDutyByDutyId,
+    getGrantRole,
+    updateDuty,
+    insertDuty
 }

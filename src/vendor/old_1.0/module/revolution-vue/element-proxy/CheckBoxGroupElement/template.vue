@@ -16,6 +16,7 @@
 <script>
 	export default {
 	  data() {
+			console.log(['roleField',this.fields]);
 	    return {
 	      innerProp: this.fields.inner_prop,
 	      innerEvent: this.fields.inner_event
