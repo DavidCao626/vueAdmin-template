@@ -67,6 +67,50 @@ const insertUserResignation = data =>
         method: 'post',
         data: data
     })
+
+
+//-------------------------职务管理-------------------------
+const getGrantRole = data =>
+    request({
+        url: "/systemManagerApi/getGrantRole.do",
+        method: 'post',
+        data: data
+    })
+
+const queryDutyListByMNCode = data =>
+    request({
+        url: "/duty/queryDutyListByMNCode.do",
+        method: 'post',
+        data: data
+    })
+const querySocializeClassify = data =>
+    request({
+        url: "/duty/querySocializeClassify.do",
+        method: 'post',
+        data: data
+    })
+
+const getDutyByDutyId = data =>
+    request({
+        url: "/duty/getDutyByDutyId.do",
+        method: 'post',
+        data: data
+    })
+
+
+const updateDuty = data =>
+    request({
+        url: "/duty/updateDuty.do",
+        method: 'post',
+        data: data
+    })
+
+const insertDuty = data =>
+    request({
+        url: "/duty/insertDuty.do",
+        method: 'post',
+        data: data
+    })
 export default {
     getCurrentOrgListAndOwner,
     deleteUserResigDutyById,
@@ -75,5 +119,11 @@ export default {
     updateUserResignation,
     queryResigDutyBySessionAndType,
     insertUserResignation,
-    getCurrentMNCodeOrgListAndOwner
+    getCurrentMNCodeOrgListAndOwner,
+    queryDutyListByMNCode,
+    querySocializeClassify,
+    getDutyByDutyId,
+    getGrantRole,
+    insertDuty,
+    updateDuty
 };

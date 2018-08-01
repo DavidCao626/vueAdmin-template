@@ -8,6 +8,8 @@ export const userRouter = {
     { path: "info", name: "info", component: () => import("../info") },
     { path: "studentBaseInfo", name: "studentBaseInfo", component: () => import("../studentBaseInfo") },
     { path: "staffBaseInfo", name: "staffBaseInfo", component: () => import("../staffBaseInfo") },
-    { path: "resignation", name: "resignation", component: () => import("../resignation") }
+    { path: "resignation", name: "resignation", component: () => import("../resignation") },
+    { path: "dutyManager", name: "dutyManager", component: () => import("../dutyManager") },
+    { path: "baseInfo", name: "baseInfo", component: () => import("../baseInfo") }
   ]
 };
