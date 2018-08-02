@@ -1,8 +1,6 @@
 export const zongceRouter = {
-  path: "/zongce",
-  //redirect: "/zongce/index",
+  path: "/zongce", //redirect: "/zongce/index",
   name: "综测",
   component: () => import("../index.vue"),
-  meta: { title: "zongce", icon: "example", hidden: true },
-  
+  meta: { title: "新建综测计划模版", icon: "example", hidden: true }
 };

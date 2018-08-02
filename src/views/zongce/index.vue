@@ -1,122 +1,182 @@
 <template>
+  <div>
     <page>
-        <div slot="panel">
-            <div id="wrapper">
-                <span class="label">RootRootRootRoot</span>
+      <div slot="title">
+        计划模版
+      </div>
 
-                <div class="branch " v-if="rootChildNodes.length>0">
-                    <zc-tree-node v-for="(child,index) in rootChildNodes" :node="child" :key="index" :class="rootChildNodes.length==1?'sole':''">
-                    </zc-tree-node>
+      <div slot="panel">
+        <div>
+          <el-form :model="formInline" class="demo-form-inline">
+            <el-form-item label="名称：">
+              <el-input v-model="formInline.name" placeholder="模版名称" style="width:300px"></el-input>
+            </el-form-item>
+            <el-form-item label="是否启用:">
+              <el-radio-group v-model="formInline.isok" size="mini">
+                <el-radio-button label="是"></el-radio-button>
+                <el-radio-button label="否"></el-radio-button>
+              </el-radio-group>
+            </el-form-item>
 
-                </div>
-            </div>
+            <!-- <el-form-item label="配置内容:">
+             
+            </el-form-item> -->
+          </el-form>
+
         </div>
-    </page>
 
+        <div id="wrapper">
+          <el-scrollbar>
+            <span class="label">{{ node.lable }}</span>
+            <div class="branch " v-if="node.children.length>0 ">
+              <zc-tree-node v-for="(child,index) in node.children" :node="child" :key="index" :class="node.children.length==1?'sole':''">
+              </zc-tree-node>
+
+            </div>
+          </el-scrollbar>
+        </div>
+      </div>
+
+    </page>
+    <page style="margin: 0 auto;">
+      <div slot="panel">
+        <div style="text-align:center">
+          <!-- <h4 v-if="formDays>=0" style="text-align:center">截止最后提交日期 还有
+                        <strong style="color:red;">{{formDays}}</strong> 天</h4> -->
+          <!-- <h4 v-else style="text-align:center;color:red;">申请表单已到最后截止日期，不能提交。如有问题请联系相关老师。</h4> -->
+          <el-button type="primary" @click="onSubmit">保存提交</el-button>
+        </div>
+      </div>
+    </page>
+  </div>
 </template>
 <script>
 import ZcTreeNode from "./tree";
 export default {
+  props:{
+    props: {
+        default() {
+          return {
+            children: 'children',
+            label: 'label',
+            icon: 'icon',
+            disabled: 'disabled'
+          };
+        }
+      },
+  },
   data() {
     return {
+      formInline: {
+        name: "",
+        isok: "是"
+      },
       visible2: false,
-      rootChildNodes: [
-        {
-          leble: "e-1",
-          children: [
-            {
-              leble: "e-1-1",
-              children: [
-                {
-                  leble: "e-1-1-1",
-                  children: [
-                    {
-                      leble: "e-1-1-1-1",
-                      children: [
-                        {
-                          leble: "e-1-1-1-1",
-                          children: []
-                        },
-                        {
-                          leble: "e-1-1-1-1",
-                          children: []
-                        },
-                        {
-                          leble: "e-1-1-1-1",
-                          children: []
-                        },
-                        {
-                          leble: "e-1-1-1-1",
-                          children: []
-                        },
-                        {
-                          leble: "e-1-1-1-1",
-                          children: []
-                        },
-                        {
-                          leble: "e-1-1-1-1",
-                          children: []
-                        }
-                      ]
-                    },
-                    {
-                      leble: "e-1-1-1-2",
-                      children: []
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              leble: "e-1-2",
-              children: []
-            }
-          ]
-        },
-        {
-          leble: "e-1",
-          children: [
-            {
-              leble: "e-1-1",
-              children: [
-                {
-                  leble: "e-1-1-1",
-                  children: [
-                    {
-                      leble: "e-1-1-1-1",
-                      children: []
-                    },
-                    {
-                      leble: "e-1-1-1-2",
-                      children: []
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              leble: "e-1-2",
-              children: []
-            }
-          ]
-        },
-        {
-          leble: "e-1-2",
-          children: []
-        },
-        {
-          leble: "e-1-2",
-          children: []
-        },
-        {
-          leble: "e-1-2",
-          children: []
-        }
-      ]
+      node: {
+        lable: "root",
+        children: [
+          {
+            lable: "e-1",
+            children: [
+              {
+                lable: "e-1-1",
+                children: [
+                  {
+                    lable: "e-1-1-1",
+                    children: [
+                      {
+                        lable: "e-1-1-1-1",
+                        children: [
+                          {
+                            lable: "e-1-1-1-1",
+                            children: []
+                          },
+                          {
+                            lable: "e-1-1-1-1",
+                            children: []
+                          },
+                          {
+                            lable: "e-1-1-1-1",
+                            children: []
+                          },
+                          {
+                            lable: "e-1-1-1-1",
+                            children: []
+                          },
+                          {
+                            lable: "e-1-1-1-1",
+                            children: []
+                          },
+                          {
+                            lable: "e-1-1-1-1",
+                            children: []
+                          }
+                        ]
+                      },
+                      {
+                        lable: "e-1-1-1-2",
+                        children: []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                lable: "e-1-2",
+                children: []
+              }
+            ]
+          },
+          {
+            lable: "e-2",
+            children: [
+              {
+                lable: "e-1-1",
+                children: [
+                  {
+                    lable: "e-1-1-1",
+                    children: [
+                      {
+                        lable: "e-1-1-1-1",
+                        children: []
+                      },
+                      {
+                        lable: "e-1-1-1-2",
+                        children: []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                lable: "e-1-2",
+                children: []
+              }
+            ]
+          },
+          {
+            lable: "e-3-2",
+            children: []
+          },
+          {
+            lable: "e-4-2",
+            children: []
+          },
+          {
+            lable: "e-5-2",
+            children: []
+          }
+        ]
+      }
     };
   },
   components: {
     ZcTreeNode
+  },
+  methods: {
+    onSubmit() {
+      debugger;
+    }
   }
 };
 </script>
