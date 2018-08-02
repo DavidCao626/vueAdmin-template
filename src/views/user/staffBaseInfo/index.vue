@@ -13,7 +13,7 @@
     <elx-table-layout>
       <template slot="headerRight">
         <el-button-group>
-          <el-tooltip class="item" effect="dark" content="创建学生" placement="bottom">
+          <el-tooltip class="item" effect="dark" content="创建职工" placement="bottom">
             <el-button plain size="mini" @click="addStu">
               新建
             </el-button>
@@ -164,7 +164,9 @@ export default {
       }
     },
     addStu() {
-      console.log(["创建学生"]);
+      this.$router.push({
+        path:"/user/createStaffForm"
+      })
     },
     ...mapActions({
       queryCurrentOrgStaffList: store.namespace + "/queryCurrentOrgStaffList",

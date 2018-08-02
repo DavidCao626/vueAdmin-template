@@ -21,7 +21,7 @@
           <jiating></jiating>
         </el-tab-pane>
 
-        <el-tab-pane label="奖学金信息 ">
+        <!-- <el-tab-pane label="奖学金信息 ">
           <jiangxuejin></jiangxuejin>
         </el-tab-pane>
         <el-tab-pane label="助学金信息 ">
@@ -37,7 +37,7 @@
 
         <el-tab-pane label="困难学生认定信息 ">
           <kunnan></kunnan>
-        </el-tab-pane>
+        </el-tab-pane> -->
       </el-tabs>
     </div>
 

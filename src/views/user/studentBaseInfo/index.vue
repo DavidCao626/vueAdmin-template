@@ -161,7 +161,9 @@ export default {
       this.getData();
     },
     addStu() {
-      console.log(["创建学生"]);
+     this.$router.push({
+         path:"/user/createStudentForm"
+     })
     },
     ...mapActions({
       queryCurrentOrgStuList: store.namespace + "/queryCurrentOrgStuList",
