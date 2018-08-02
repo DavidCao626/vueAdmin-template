@@ -63,6 +63,15 @@ const updateStuEcoInfo = data =>
         method: 'post',
         data: data
     })
+
+
+const updateStuBaseInfo = data =>
+    ajax({
+        url: "/stuInfo/updateStuBaseInfo.do",
+        method: 'post',
+        data: data
+    })
+
 const createStudent = data =>
     ajax({
         url: "/stuInfo/createStudent.do",
@@ -79,7 +88,12 @@ const queryCurrentOrgStuList = data =>
         data: data
     })
 
-
+const updateStuUniverInfo = data =>
+    ajax({
+        url: "/stuInfo/updateStuUniverInfo.do",
+        method: 'post',
+        data: data
+    })
 export default {
     getStuEconmyInfo,
     getStuUniverInfo,
@@ -92,5 +106,7 @@ export default {
     updateStuPerInfo,
     updateStuEcoInfo,
     queryCurrentOrgStuList,
-    createStudent
+    createStudent,
+    updateStuBaseInfo,
+    updateStuUniverInfo
 };

@@ -56,7 +56,7 @@
 
             <el-form-item label="所属班级">
 
-                <el-cascader v-model="formData.orgArr" placeholder="输入进行搜索" :options="orgList" filterable change-on-select :props="orgProps"></el-cascader>
+                <el-cascader :show-all-levels="false" v-model="formData.orgArr" placeholder="输入进行搜索" :options="orgList" filterable change-on-select :props="orgProps"></el-cascader>
 
             </el-form-item>
 

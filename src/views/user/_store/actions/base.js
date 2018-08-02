@@ -15,6 +15,9 @@ const createBaseClassify = ({ commit, state }, params) => new Promise(resolve =>
         resolve(response)
     })
 })
+
+
+
 export default {
     queryCurrentOrgBaseList,
     createBaseClassify

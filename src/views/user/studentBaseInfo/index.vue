@@ -19,12 +19,12 @@
                         </el-button>
                     </el-tooltip>
                     <el-tooltip class="item" effect="dark" content="导入学生" placement="bottom">
-                        <el-button plain size="mini" >
+                        <el-button plain size="mini">
                             导入
                         </el-button>
                     </el-tooltip>
                     <el-tooltip class="item" effect="dark" content="导出学生" placement="bottom">
-                        <el-button plain size="mini" >
+                        <el-button plain size="mini">
                             导出
                         </el-button>
                     </el-tooltip>
@@ -161,35 +161,41 @@ export default {
       this.getData();
     },
     addStu() {
-     this.$router.push({
-         path:"/user/createStudentForm"
-     })
+      this.$router.push({
+        path: "/user/createStudentForm"
+      });
     },
     ...mapActions({
       queryCurrentOrgStuList: store.namespace + "/queryCurrentOrgStuList",
       getDictByDictNames: store.namespace + "/getDictByDictNames"
     }),
-    resignation(row){
-        console.log(["row",row])
-        this.$router.push({
-            path:"/user/resignation",
-            query:{
-                sysNo:row.stu_no,
-                type:"student"
-            }
-        })
+    resignation(row) {
+      console.log(["row", row]);
+      this.$router.push({
+        path: "/user/resignation",
+        query: {
+          sysNo: row.stu_no,
+          type: "student"
+        }
+      });
     },
-    edit(row){
-console.log(["row",row])
+    edit(row) {
+    this.$message.success("正在跳转")
+      this.$router.push({
+        path: "/user/info",
+        query: {
+          stuNo: row.stu_no
+        }
+      });
     },
-    nationFormatter(row, column, cellValue, index){
-        return this.nationObj[cellValue];
+    nationFormatter(row, column, cellValue, index) {
+      return this.nationObj[cellValue];
     },
-    sexTypeFormatter(row, column, cellValue, index){
-        return this.sexObj[cellValue];
+    sexTypeFormatter(row, column, cellValue, index) {
+      return this.sexObj[cellValue];
     },
-    idTypeFormatter(val){
-        return this.idTypeObj[val]
+    idTypeFormatter(val) {
+      return this.idTypeObj[val];
     },
     getDict() {
       var requestData = {
@@ -207,7 +213,7 @@ console.log(["row",row])
         res.identity_type.forEach(el => {
           this.idTypeObj[el.dict_key] = el.dict_desc;
         });
-      this.getData();
+        this.getData();
       });
     },
     getData() {
@@ -263,7 +269,6 @@ console.log(["row",row])
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-     
       vm.getDict();
     });
   }

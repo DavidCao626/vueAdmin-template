@@ -8,17 +8,16 @@
       <!-- <el-row style="margin-bottom: 10px;">在校信息：</el-row> -->
       <el-tabs type="card" size="mini">
         <el-tab-pane label="基本信息">
-
           <baseform :stuNo="stuNo"></baseform>
         </el-tab-pane>
         <el-tab-pane label="个人信息">
-          <geren></geren>
+          <geren :stuNo="stuNo"></geren>
         </el-tab-pane>
         <el-tab-pane label="在校信息">
-          <zaixiao></zaixiao>
+          <zaixiao :stuNo="stuNo"></zaixiao>
         </el-tab-pane>
         <el-tab-pane label="家庭信息">
-          <jiating></jiating>
+          <jiating :stuNo="stuNo"></jiating>
         </el-tab-pane>
 
         <!-- <el-tab-pane label="奖学金信息 ">
@@ -58,7 +57,7 @@ import geren from "./geren.vue";
 export default {
   data() {
     return {
-      stuNo: "0",
+      stuNo:this.$route.query.stuNo,
       activeName: "second",
       form: {
         name: ""
@@ -81,9 +80,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       console.log(["vm.stuNo",to.query.stuNo])
-      if (to.query.stuNo) {
-        vm.stuNo = to.query.stuNo;
-      }
+    
     });
   },
   methods: {

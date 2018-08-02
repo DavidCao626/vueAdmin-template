@@ -255,6 +255,17 @@ import { mapGetters, mapActions } from "vuex";
 import store from "../_store/index.js";
 import moment from "moment";
 export default {
+     watch: {
+    stuNo(newVal, oldVal) {
+     this.getDict();
+    }
+  },
+  props: {
+    stuNo: {
+      type: String,
+      default: "0"
+    }
+  },
   mounted() {
    
     this.getDict();
@@ -309,7 +320,11 @@ export default {
       updateStuEcoInfo: store.namespace + "/updateStuEcoInfo"
     }),
     getData() {
-      this.getStuEconmyInfo({}).then(response => {
+                var requestData={};
+      if(this.stuNo!=0){
+        requestData.stuNo = this.stuNo;
+      }
+      this.getStuEconmyInfo(requestData).then(response => {
         console.log("getStuEconmyInfo", response);
         var res = response.resBody;
         this.baseform.nid = res.stuNo; //学号
@@ -333,7 +348,7 @@ export default {
         this.baseform.JTSFZSYTFYWSJ_text = res.emergencyDesc; //突发意外事件具体描述
         this.baseform.JTQZJE = res.liabilitiesMoney; //家庭欠债金额
         this.baseform.JTQZYY = res.liabilitiesReason; //家庭欠债原因
-        this.baseform.JTRKS = res.familyPerson; //家庭人口数
+        this.baseform.JTRKS = res.familyPersonNum; //家庭人口数
         this.baseform.LDRKS = res.labourPersonNum; //劳动力人口数
         this.baseform.JTCYSYS = res.unemploymentPersonNum; //家庭成员失业人数
         this.baseform.SYRKS = res.supportPersonNum; //赡养人口数
