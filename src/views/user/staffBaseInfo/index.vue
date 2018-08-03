@@ -19,7 +19,7 @@
             </el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" content="导入职工" placement="bottom">
-            <el-button plain size="mini">
+            <el-button @click="dialogVisible = true" plain size="mini">
               导入
             </el-button>
           </el-tooltip>
@@ -105,6 +105,7 @@
 </template>
 
   <script>
+  import api from '../_api/staff.js'
 import Vue from "vue";
 import Element from "element-ui-x";
 import { mapGetters, mapActions } from "vuex";
@@ -134,7 +135,7 @@ export default {
       sexObj: {},
       nationObj: {},
       idTypeObj: {},
-      action: "https://jsonplaceholder.typicode.com/posts/"
+      action: api.importStaff
     };
   },
   watch: {

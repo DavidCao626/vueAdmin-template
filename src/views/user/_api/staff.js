@@ -23,9 +23,10 @@ const createStaff = data =>
     })
 
 
-
+const importStaff = process.env.BASE_API + "/staInfo/importStaff.do"
 export default {
     queryCurrentOrgStaffList,
     queryOrgByOrgCode,
-    createStaff
+    createStaff,
+    importStaff
 };

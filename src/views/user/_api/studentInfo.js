@@ -3,6 +3,9 @@ import ajax from '~/utils/ajax'
 
 //附件上传地址
 const uploadAttrUrl = process.env.BASE_API+"/project/uploadAttachment.do"
+
+const importStudent = process.env.BASE_API + "/stuInfo/importStudent.do"
+
 //增加或者更新项目
 const getDictByDictNames = data =>
     request({
@@ -94,6 +97,8 @@ const updateStuUniverInfo = data =>
         method: 'post',
         data: data
     })
+
+
 export default {
     getStuEconmyInfo,
     getStuUniverInfo,
@@ -108,5 +113,6 @@ export default {
     queryCurrentOrgStuList,
     createStudent,
     updateStuBaseInfo,
-    updateStuUniverInfo
+    updateStuUniverInfo,
+    importStudent
 };
