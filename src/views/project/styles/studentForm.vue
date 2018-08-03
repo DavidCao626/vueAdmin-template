@@ -98,8 +98,8 @@
     </page>
     <page style="width: 1000px;margin: 0 auto;">
       <div slot="panel">
-        <h3 style="font-weight:400">二、填写家庭情况</h3><hr/>
-        <el-form ref="form" :model="form" label-width="120px" size="small">
+        <h3 style="font-weight:400">二、填写家庭情况 <el-button type="text" @click="editEn">修改</el-button></h3><hr/>
+        <el-form disabled="" ref="form" :model="form" label-width="120px" size="small">
           <el-row>
             <el-col :span="10">
               <el-form-item label="家庭人口数">
@@ -135,11 +135,11 @@
                 <el-input v-model="form.income" type="Number" placeholder="单位（元）"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="10" :offset="1">
+            <!-- <el-col :span="10" :offset="1">
               <el-form-item label="人均月支出">
                 <el-input v-model="form.spending" type="Number" placeholder="单位（元）"></el-input>
               </el-form-item>
-            </el-col>
+            </el-col> -->
           </el-row>
 
         </el-form>
@@ -169,6 +169,7 @@ import moment from "moment";
 export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
+      vm.getEconmyData();
       vm.getReasonList();
       if (to.query.itemId != undefined) {
         let itemId = to.query.itemId;
@@ -284,8 +285,7 @@ export default {
   },
   data() {
     return {
-      reasonList: [
-      ],
+      reasonList: [],
       resData: {
         projectData: {
           projectName: "",
@@ -323,6 +323,7 @@ export default {
         desc: "", //申请理由
         delivery: false,
         fileList: [], //申请附件
+
         familyNumber: "3", //家庭人口
         familyStatus: "S", //家庭情况
         isSubsistenceAllowance: 0, //是否低保
@@ -334,13 +335,36 @@ export default {
     };
   },
   methods: {
+    editEn(){
+      this.$router.push({
+        path:"/user/info"
+      })
+    },
     ...mapActions({
       getApplyData: store.namespace + "/getApplyData",
       povertyApply: store.namespace + "/povertyApply",
-      getDictByDictNames: store.namespace + "/getDictByDictNames"
+      getDictByDictNames: store.namespace + "/getDictByDictNames",
+      getStuEconmyInfo: store.namespace + "/getStuEconmyInfo"
     }),
-    cancle(){
-      this.$router.go(-1)
+    cancle() {
+      this.$router.go(-1);
+    },
+    getEconmyData() {
+      this.getStuEconmyInfo().then(response => {
+        console.log(["getStuEconmyInfo", response]);
+        var res = response.resBody;
+        this.form.familyNumber = res.familyPersonNum;
+        if (res.isOrphan == "Y") {
+          this.form.familyStatus = "G";
+        } else if (res.isSingleParent == "Y") {
+          this.form.familyStatus = "D";
+        } else {
+          this.form.familyStatus = "S";
+        }
+        this.form.isSubsistenceAllowance = res.isSubsistenceAllowances;
+        this.form.isRecord = res.isCreatedFile;
+        this.form.income = res.capitaIncomeYear;
+      });
     },
     getReasonList() {
       console.log(["getReasonList"]);
@@ -399,6 +423,7 @@ export default {
         projectSystemCode: this.projectSystemCode,
         applyReason: this.form.desc, //申请原因
         attachment: this.attArr, // 附件
+
         homePersonCount: this.form.familyNumber, // 家庭人口数
         isSingleParent: "", // 是否单亲
         isOrphan: "", // 孤儿
@@ -417,6 +442,7 @@ export default {
         requestData.isSingleParent = "N";
         requestData.isOrphan = "Y";
       }
+
       console.log(["requestData", requestData]);
       this.povertyApply(requestData).then(response => {
         this.$message.success("提交成功");

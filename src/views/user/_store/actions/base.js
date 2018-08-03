@@ -8,6 +8,17 @@ const queryCurrentOrgBaseList = ({ commit, state }, params) => new Promise(resol
     })
 })
 
+
+const createBaseClassify = ({ commit, state }, params) => new Promise(resolve => {
+    api.createBaseClassify(params).then(response => {
+        console.log(["createBaseClassify", response])
+        resolve(response)
+    })
+})
+
+
+
 export default {
-    queryCurrentOrgBaseList
+    queryCurrentOrgBaseList,
+    createBaseClassify
 }

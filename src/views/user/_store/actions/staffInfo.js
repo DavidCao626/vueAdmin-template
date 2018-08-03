@@ -16,7 +16,15 @@ const queryOrgByOrgCode = ({ commit, state }, params) => new Promise(resolve => 
     })
 })
 
+
+const createStaff = ({ commit, state }, params) => new Promise(resolve => {
+    api.createStaff(params).then(response => {
+        console.log(["createStaff", response])
+        resolve(response)
+    })
+})
 export default {
     queryCurrentOrgStaffList,
-    queryOrgByOrgCode
+    queryOrgByOrgCode,
+    createStaff
 }

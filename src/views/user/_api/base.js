@@ -9,7 +9,13 @@ const queryCurrentOrgBaseList = data =>
     })
 
 
-
+const createBaseClassify = data =>
+    ajax({
+        url: "/classifyBase/createBaseClassify.do",
+        method: 'post',
+        data: data
+    })
 export default {
-    queryCurrentOrgBaseList
+    queryCurrentOrgBaseList,
+    createBaseClassify
 };

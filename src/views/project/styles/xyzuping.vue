@@ -1,7 +1,7 @@
 <template>
   <div>
     <proInfo :itemId="itemId"></proInfo>
-    <huping title="学院评议" :dataHeader="hupingHeadSytle">
+    <huping title="学院评议" :dataHeader="hupingHeadSytle" :dataExpand="expand">
       <div slot="footer">
         <div class="approval-panel" style="text-align: center;">
           <el-button type="primary" size="mini" @click="subForm">提交</el-button>
@@ -23,11 +23,10 @@ export default {
     proInfo
   },
   data() {
-    return {
-      hupingHeadSytle: [
+    return { hupingHeadSytle: [
         {
           label: "申请人情况",
-          key: "",
+          key: "qk",
           width: "",
           children: [
             {
@@ -39,17 +38,78 @@ export default {
               label: "机构",
               key: "orgName",
               width: ""
+            },
+            {
+              label: "班级推荐",
+              key: "classR",
+              width: ""
             }
           ]
         },
         {
           label: "家庭情况",
-          key: "serviceTypeName",
+          key: "homeDesc",
           width: ""
         }
       ],
       scopeId: null,
-      itemId: null
+      itemId: null,
+      expand: [
+        {
+          label: "申请人情况",
+          key: "qk",
+          width: "",
+          children: [
+            {
+              label: "姓名",
+              key: "name",
+              width: ""
+            },
+            {
+              label: "学号",
+              key: "stuNo",
+              width: ""
+            },
+            {
+              label: "机构",
+              key: "orgName",
+              width: ""
+            }
+          ]
+        },
+        {
+          label: "家庭情况",
+          key: "jtqk",
+          width: "",
+          children: [
+            {
+              label: "单亲",
+              key: "isSingleParent",
+              width: ""
+            },
+            {
+              label: "孤儿",
+              key: "isOrphan",
+              width: ""
+            },
+            {
+              label: "低保",
+              key: "isBasicAllowance",
+              width: ""
+            },
+            {
+              label: "建立档案",
+              key: "isCreateFile",
+              width: ""
+            },
+            {
+              label: "人均收入",
+              key: "perCapitaIncome",
+              width: ""
+            }
+          ]
+        }
+      ]
     };
   },
   beforeRouteEnter(to, from, next) {

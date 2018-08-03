@@ -5,7 +5,7 @@
 
                 <el-col :span="8">
                     <el-form-item label="学号:">
-                        <el-input v-model="baseform.nid"></el-input>
+                        <el-input disabled v-model="baseform.nid"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
@@ -69,6 +69,17 @@ import { mapGetters, mapActions } from "vuex";
 import store from "../_store/index.js";
 import moment from "moment";
 export default {
+      watch: {
+    stuNo(newVal, oldVal) {
+     this.getDict();
+    }
+  },
+  props: {
+    stuNo: {
+      type: String,
+      default: "0"
+    }
+  },
   mounted() {
   
     this.getDict();
@@ -104,7 +115,11 @@ export default {
       updateStuPerInfo: store.namespace + "/updateStuPerInfo"
     }),
     getData() {
-      this.getStuPerInfo({}).then(response => {
+         var requestData={};
+      if(this.stuNo!=0){
+        requestData.stuNo = this.stuNo;
+      }
+      this.getStuPerInfo(requestData).then(response => {
         console.log("getStuBaseInfo", response);
         var res = response.resBody;
         this.baseform.nid = res.stuNo; //学号

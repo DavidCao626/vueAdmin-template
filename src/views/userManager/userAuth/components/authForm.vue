@@ -52,7 +52,7 @@ import GUtils from '@/components/Utils.js'
 	import GraceComponent from '@/ComponentPackage/GraceComponents.js'
 	import dataPath from '@/API/UserAuth/User_Auth_Info.js'
 	import inputCom from '@/module/revolution-vue/element-proxy/ItemListElement/resolver.js'
-	Vue.use(GraceComponent)
+	Vue.use(GraceComponent) 
 var requestData = {
 	  'dicts': ['check_flag', 'authState']
 	}

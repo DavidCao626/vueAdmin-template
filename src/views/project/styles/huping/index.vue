@@ -5,13 +5,12 @@
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <el-form label-position="" inline class="demo-table-expand" size="mini">
-                        <template v-for="(item,index) in dataHeader">
+                        
+                        <template v-for="(item,index) in dataExpand">
                             <template v-if="item.children&&item.children.length>0">
-
                                 <el-form-item :label="item.label+':'" :key="index">
                                 </el-form-item>
                                 <template v-for="(i,indexs) in item.children">
-
                                     <el-form-item :label="i.label" :key="indexs">
                                         <span>{{ props.row.expand[i.key] }}</span>
                                     </el-form-item>
@@ -70,6 +69,10 @@ export default {
       default: ""
     },
     dataHeader: {
+      type: Array,
+      default: () => []
+    },
+    dataExpand: {
       type: Array,
       default: () => []
     }

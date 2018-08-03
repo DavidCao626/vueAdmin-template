@@ -15,8 +15,18 @@ const queryOrgByOrgCode = data =>
         method: 'post',
         data: data
     })
+const createStaff = data =>
+    ajax({
+        url: "/staInfo/createStaff.do",
+        method: 'post',
+        data: data
+    })
 
+
+const importStaff = process.env.BASE_API + "/staInfo/importStaff.do"
 export default {
     queryCurrentOrgStaffList,
-    queryOrgByOrgCode
+    queryOrgByOrgCode,
+    createStaff,
+    importStaff
 };

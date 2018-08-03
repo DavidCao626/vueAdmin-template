@@ -71,6 +71,27 @@ const queryCurrentOrgStuList = ({ commit, state }, params) => new Promise(resolv
         resolve(response)
     })
 })
+
+
+const createStudent = ({ commit, state }, params) => new Promise(resolve => {
+    api.createStudent(params).then(response => {
+        console.log(["createStudent", response])
+        resolve(response)
+    })
+})
+const updateStuBaseInfo = ({ commit, state }, params) => new Promise(resolve => {
+    api.updateStuBaseInfo(params).then(response => {
+        console.log(["updateStuBaseInfo", response])
+        resolve(response)
+    })
+})
+
+const updateStuUniverInfo = ({ commit, state }, params) => new Promise(resolve => {
+    api.updateStuUniverInfo(params).then(response => {
+        console.log(["updateStuUniverInfo", response])
+        resolve(response)
+    })
+})
 export default {
     getStuEconmyInfo,
     getStuPerInfo,
@@ -81,5 +102,8 @@ export default {
     queryCollegeOrg,
     updateStuPerInfo,
     updateStuEcoInfo,
-    queryCurrentOrgStuList
+    queryCurrentOrgStuList,
+    createStudent,
+    updateStuBaseInfo,
+    updateStuUniverInfo
 }

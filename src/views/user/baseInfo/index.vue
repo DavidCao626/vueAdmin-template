@@ -143,7 +143,10 @@ export default {
       this.getData();
     },
     addStu() {
-      console.log(["创建学生"]);
+      this.$message.success("正在跳转 ")
+     this.$router.push({
+       path:"/user/createBaseForm"
+     })
     },
     ...mapActions({
       queryCurrentOrgBaseList: store.namespace + "/queryCurrentOrgBaseList",
