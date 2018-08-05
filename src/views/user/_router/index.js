@@ -13,6 +13,7 @@ export const userRouter = {
     { path: "dutyManager", name: "dutyManager", component: () => import("../dutyManager") },
     { path: "userManager", name: "userManager", component: () => import("../userManager") },
     { path: "baseInfo", name: "baseInfo", component: () => import("../baseInfo") },
+    { path: "importRecord", name: "importRecord", component: () => import("../importRecord") },
     { path: "authInfo", name: "authInfo", component: () => import("../authInfo") },
     { path: "createStudentForm", name: "createStudentForm", component: () => import("../studentBaseInfo/createStudentForm.vue") },
     { path: "createStaffForm", name: "createStaffForm", component: () => import("../staffBaseInfo/createStaffForm.vue") },
