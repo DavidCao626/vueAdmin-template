@@ -1,73 +1,73 @@
 <template>
-	<page>
-		<span slot="title">通知中心</span>
+  <page>
+    <span slot="title">通知中心</span>
 
-		<div slot="panel" class="messages">
-			<div class="panel-control">
-				<div class="panel-control__flex">
-					<div class="panel-control__flex-left">
-						<el-button size="small" type="text" style="color:#8d8d8d" @click="queryDataByStatus('')"> 全部({{allNumber}})</el-button>
-						&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
-						<!-- <el-badge :value="noReadNumber" :max="99" class="item">
+    <div slot="panel" class="messages">
+      <div class="panel-control">
+        <div class="panel-control__flex">
+          <div class="panel-control__flex-left">
+            <el-button size="small" type="text" style="color:#8d8d8d" @click="queryDataByStatus('')"> 全部({{allNumber}})</el-button>
+            &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+            <!-- <el-badge :value="noReadNumber" :max="99" class="item">
 							<el-button size="small" plain @click="queryDataByStatus('N')">未读</el-button>
 						</el-badge> -->
-						&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+            &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
 
-						<!-- <el-button size="small" type="text" style="color:#8d8d8d"> 已收藏({{messagesMarkCount}})</el-button>
+            <!-- <el-button size="small" type="text" style="color:#8d8d8d"> 已收藏({{messagesMarkCount}})</el-button>
                         &nbsp; &nbsp;&nbsp; -->
-						<!-- <el-button size="small" type="text" style="color:#8d8d8d" @click="queryDataByStatus('Y')"> 已读({{ReadNumber}})</el-button> -->
+            <!-- <el-button size="small" type="text" style="color:#8d8d8d" @click="queryDataByStatus('Y')"> 已读({{ReadNumber}})</el-button> -->
 
-					</div>
-					<div class="panel-control__flex-right" style="margin-right:20px;">
+          </div>
+          <div class="panel-control__flex-right" style="margin-right:20px;">
 
-						<el-input placeholder="消息标题或内容" v-model="currentShowContent" style="width:255px;">
-							<i slot="suffix" class="el-input__icon el-icon-search" @click="queryDataByStatus('')"></i>
-						</el-input>
-					</div>
-				</div>
-			</div>
+            <el-input placeholder="消息标题或内容" v-model="currentShowContent" style="width:255px;">
+              <i slot="suffix" class="el-input__icon el-icon-search" @click="queryDataByStatus('')"></i>
+            </el-input>
+          </div>
+        </div>
+      </div>
 
-			<div class="panel-body">
-				<div style="margin:30px 0 10px;font-size:12px;">
-					总共 ( {{allNumber}} 封)
-				</div>
-				<el-collapse accordion>
+      <div class="panel-body">
+        <div style="margin:30px 0 10px;font-size:12px;">
+          总共 ( {{allNumber}} 封)
+        </div>
+        <el-collapse accordion>
 
-					<el-collapse-item :name="index" v-for="(notice,index) in noticeData" :key="index">
-						<template slot="title" @click="messageShow(notice)">
-							<template v-if="isScreening==true">
-								<el-checkbox :true-label="12"></el-checkbox>
-							</template>
-							&nbsp;
-							<el-tooltip content="标记已读/未读" placement="top">
-								<div class="circle messages-readState" :class="{'messages-readState__true':(notice.status=='Y')}" @click="readSwitch(notice.id,notice)"></div>
-							</el-tooltip>
-							&nbsp;
-							<span class="messages-title">{{notice.title}}</span>
+          <el-collapse-item :name="index" v-for="(notice,index) in noticeData" :key="index">
+            <template slot="title" @click="messageShow(notice)">
+              <template v-if="isScreening==true">
+                <el-checkbox :true-label="12"></el-checkbox>
+              </template>
+              &nbsp;
+              <el-tooltip content="标记已读/未读" placement="top">
+                <div class="circle messages-readState" :class="{'messages-readState__true':(notice.status=='Y')}" @click="readSwitch(notice.id,notice)"></div>
+              </el-tooltip>
+              &nbsp;
+              <span class="messages-title">{{notice.title}}</span>
 
-							<!-- <span class="messages-mark" @click.stop="markSwitch">
+              <!-- <span class="messages-mark" @click.stop="markSwitch">
                                 <i class="el-icon-star-off" :class="{'messages-mark__true':isMarkForMessage}"></i>
                             </span> -->
-							<span class="messages-time">&nbsp;{{notice.sendTime}}</span>
-							<span class="messages-author">来源&nbsp;:&nbsp;{{notice.source}}</span>
-						</template>
-						<div class="messages-body">
-							<div v-html="notice.content">{{notice.content}}</div>
-							<!--<div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>-->
-						</div>
-					</el-collapse-item>
+              <span class="messages-time">&nbsp;{{notice.sendTime}}</span>
+              <span class="messages-author">来源&nbsp;:&nbsp;{{notice.source}}</span>
+            </template>
+            <div class="messages-body">
+              <div v-html="notice.content" @click="gotopage(notice.id)">{{notice.content}}</div>
+              <!--<div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>-->
+            </div>
+          </el-collapse-item>
 
-				</el-collapse>
+        </el-collapse>
 
-				<div class="messages-pagination">
-					<el-pagination @size-change="handleSizeChange" :current-page="currentPage" @current-change="handleCurrentChange" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="dataCount">
-					</el-pagination>
-				</div>
-				<div class="clearfix"><br/></div>
-			</div>
-		</div>
+        <div class="messages-pagination">
+          <el-pagination @size-change="handleSizeChange" :current-page="currentPage" @current-change="handleCurrentChange" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="dataCount">
+          </el-pagination>
+        </div>
+        <div class="clearfix"><br/></div>
+      </div>
+    </div>
 
-	</page>
+  </page>
 </template>
 <script>
 import {
@@ -111,6 +111,9 @@ export default {
   },
 
   methods: {
+    gotopage(id) {
+      this.changeNoticeStatus(id, "Y");
+    },
     search() {
       // this.currentShowState
       // this.currentShowContent
