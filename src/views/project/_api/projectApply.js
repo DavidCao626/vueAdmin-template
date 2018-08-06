@@ -33,10 +33,16 @@ const insertNationalGrantsApply = data =>
         method: 'post',
         data: data
     })
-
+const getStuEconmyInfo = data =>
+    request({
+        url: "/stuInfo/getStuEconmyInfo.do",
+        method: 'post',
+        data: data
+    })
 export default {
     getApplyData,
     povertyApply,
     insertScholarshipApply,
-    insertNationalGrantsApply
+    insertNationalGrantsApply,
+    getStuEconmyInfo
 }

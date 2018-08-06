@@ -5,7 +5,7 @@
 
                 <el-col :span="8">
                     <el-form-item label="学号:">
-                        <el-input v-model="baseform.nid"></el-input>
+                        <el-input disabled v-model="baseform.nid"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
@@ -69,8 +69,19 @@ import { mapGetters, mapActions } from "vuex";
 import store from "../_store/index.js";
 import moment from "moment";
 export default {
+      watch: {
+    stuNo(newVal, oldVal) {
+     this.getDict();
+    }
+  },
+  props: {
+    stuNo: {
+      type: String,
+      default: "0"
+    }
+  },
   mounted() {
-    this.getData();
+  
     this.getDict();
   },
   data() {
@@ -100,10 +111,15 @@ export default {
   methods: {
     ...mapActions({
       getStuPerInfo: store.namespace + "/getStuPerInfo",
-      getDictByDictNames: store.namespace + "/getDictByDictNames"
+      getDictByDictNames: store.namespace + "/getDictByDictNames",
+      updateStuPerInfo: store.namespace + "/updateStuPerInfo"
     }),
     getData() {
-      this.getStuPerInfo({}).then(response => {
+         var requestData={};
+      if(this.stuNo!=0){
+        requestData.stuNo = this.stuNo;
+      }
+      this.getStuPerInfo(requestData).then(response => {
         console.log("getStuBaseInfo", response);
         var res = response.resBody;
         this.baseform.nid = res.stuNo; //学号
@@ -113,8 +129,8 @@ export default {
         this.baseform.zzlx = res.accommodationType; //住宅类型
         this.baseform.xsbh = res.dormitoryNo; //校舍编号
         this.baseform.zzdz = res.outsideDormitoryAddress; //住宅地址
-        if(res.personalPhoto != ""){
-            this.baseform.imgUrl = res.personalPhoto;
+        if (res.personalPhoto != "") {
+          this.baseform.imgUrl = res.personalPhoto;
         }
       });
     },
@@ -133,12 +149,26 @@ export default {
           this.zzlxType.push(t1);
         });
       });
+        this.getData();
     },
     changeZzlx(value) {
       this.baseform.zzlx = value;
     },
     onSubmit(event) {
-      this.$refs["btn"].loading = true;
+      var requestData = {
+        postalAddress: this.baseform.jtzz,
+        stuNo: this.baseform.nid,
+        postalCode: this.baseform.uzbm,
+        contactNo: this.baseform.lxdh,
+        accommodationType: this.baseform.zzlx,
+        dormitoryNo: this.baseform.xsbh,
+        outsideDormitoryAddress: this.baseform.zzdz,
+        personalPhoto: this.baseform.imgUrl
+      };
+      this.updateStuPerInfo(requestData).then(response => {
+        this.$message.success("修改成功");
+        this.$refs["btn"].loading = false;
+      });
     },
     onSuccess(imgUrl) {
       //上传成功后图片地址 imgUrl

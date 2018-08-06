@@ -51,6 +51,47 @@ const queryCollegeOrg = ({ commit, state }, params) => new Promise(resolve => {
         resolve(response)
     })
 })
+
+const updateStuPerInfo = ({ commit, state }, params) => new Promise(resolve => {
+    api.updateStuPerInfo(params).then(response => {
+        console.log(["updateStuPerInfo", response])
+        resolve(response)
+    })
+})
+const updateStuEcoInfo = ({ commit, state }, params) => new Promise(resolve => {
+    api.updateStuEcoInfo(params).then(response => {
+        console.log(["updateStuEcoInfo", response])
+        resolve(response)
+    })
+})
+
+const queryCurrentOrgStuList = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryCurrentOrgStuList(params).then(response => {
+        console.log(["queryCurrentOrgStuList", response])
+        resolve(response)
+    })
+})
+
+
+const createStudent = ({ commit, state }, params) => new Promise(resolve => {
+    api.createStudent(params).then(response => {
+        console.log(["createStudent", response])
+        resolve(response)
+    })
+})
+const updateStuBaseInfo = ({ commit, state }, params) => new Promise(resolve => {
+    api.updateStuBaseInfo(params).then(response => {
+        console.log(["updateStuBaseInfo", response])
+        resolve(response)
+    })
+})
+
+const updateStuUniverInfo = ({ commit, state }, params) => new Promise(resolve => {
+    api.updateStuUniverInfo(params).then(response => {
+        console.log(["updateStuUniverInfo", response])
+        resolve(response)
+    })
+})
 export default {
     getStuEconmyInfo,
     getStuPerInfo,
@@ -58,6 +99,11 @@ export default {
     getStuBaseInfo,
     getDictByDictNames,
     queryAllMajor,
-    queryCollegeOrg
-
+    queryCollegeOrg,
+    updateStuPerInfo,
+    updateStuEcoInfo,
+    queryCurrentOrgStuList,
+    createStudent,
+    updateStuBaseInfo,
+    updateStuUniverInfo
 }

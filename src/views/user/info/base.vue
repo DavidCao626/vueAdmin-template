@@ -42,12 +42,12 @@
               <el-option v-for="item in sexType" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
-
           </el-form-item>
         </el-col>
-        <el-col :span="8">
-          <el-form-item label="出生日期:">
-            <el-input v-model="baseform.birth"></el-input>
+        <el-col :span="10">
+          <el-form-item label="出生日期">
+            <el-date-picker v-model="baseform.birth" value-format="yyyy-MM-dd" type="date" placeholder="选择日期">
+            </el-date-picker>
           </el-form-item>
         </el-col>
 
@@ -94,7 +94,7 @@ import moment from "moment";
 export default {
   watch: {
     stuNo(newVal, oldVal) {
-      this.getData();
+      this.getDict();
     }
   },
   props: {
@@ -104,7 +104,6 @@ export default {
     }
   },
   mounted() {
-    this.getData();
     this.getDict();
   },
   data() {
@@ -133,10 +132,15 @@ export default {
   methods: {
     ...mapActions({
       getStuBaseInfo: store.namespace + "/getStuBaseInfo",
-      getDictByDictNames: store.namespace + "/getDictByDictNames"
+      getDictByDictNames: store.namespace + "/getDictByDictNames",
+      updateStuBaseInfo: store.namespace + "/updateStuBaseInfo"
     }),
     getData() {
-      this.getStuBaseInfo({}).then(response => {
+      var requestData = {};
+      if (this.stuNo != 0) {
+        requestData.stuNo = this.stuNo;
+      }
+      this.getStuBaseInfo(requestData).then(response => {
         console.log("getStuBaseInfo", response);
         var res = response.resBody;
         this.baseform.name = res.name;
@@ -191,15 +195,29 @@ export default {
           this.checkZZMMs.push(t1);
         });
       });
+      this.getData();
     },
     onSuccess(imgUrl) {
       //上传成功后图片地址 imgUrl
       this.baseform.imgUrl = imgUrl;
     },
     onSubmit(event) {
-      // this.$refs["btn"].loading = true;
-      console.log(this);
-      //保存表单
+      var requestData = {
+        stuNo: this.baseform.nid,
+        name: this.baseform.name,
+        collegeEntranceNo: this.baseform.kid,
+        identityType: this.baseform.cidType,
+        identityNo: this.baseform.cid,
+        sexType: this.baseform.sex,
+        birthday: this.baseform.birth,
+        politicalStatus: this.baseform.checkZZMM,
+        nation: this.baseform.minzu,
+        isCountryStu: this.baseform.isNongCun
+      };
+      this.updateStuBaseInfo(requestData).then(response => {
+        this.$message.success("保存成功");
+        this.getDict();
+      });
     },
     change(item) {
       this.baseform.minzu = item;
