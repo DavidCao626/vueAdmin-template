@@ -29,7 +29,7 @@
           <el-scrollbar>
             <span class="label">{{ node.lable }}</span>
             <div class="branch " v-if="node.children.length>0 ">
-              <zc-tree-node v-for="(child,index) in node.children" :node="child" :key="index" :class="node.children.length==1?'sole':''">
+              <zc-tree-node v-for="(child,index) in node.children" :props="props" :node="child" :key="index" :class="node.children.length==1?'sole':''">
               </zc-tree-node>
 
             </div>
@@ -46,24 +46,22 @@
       </div>
     </div> -->
 
-      <div class="approval-panel  footer-toolbar clearfix">
-        <div class="footer-toolbar__tools">
-          <el-button plain>取消</el-button>
-          <el-button type="primary">确定</el-button>
-        </div>
-
-        <div class="footer-toolbar__messages">
-          <el-popover placement="top"  width="200" trigger="hover"    title="表单验证结果" >
-              <hr/>
-            1
-            <hr/>
-            2
-            <hr/>
-            <i class="el-icon-warning" slot="reference"> 3</i> 
-          </el-popover>
-
-        </div>
+    <div class="approval-panel  footer-toolbar clearfix">
+      <div class="footer-toolbar__tools">
+        <el-button plain>取消</el-button>
+        <el-button type="primary">确定</el-button>
       </div>
+
+      <div class="footer-toolbar__messages">
+        <el-popover placement="top" width="200" trigger="hover" title="表单验证结果">
+        
+          <div style="color:red;"> e-1-1项目下的所有子节点占比不能超过1
+            </div>
+          <i class="el-icon-warning" slot="reference"> 3</i>
+        </el-popover>
+
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -73,10 +71,10 @@ export default {
     props: {
       default() {
         return {
-          children: "children",
-          label: "label",
-          icon: "icon",
-          disabled: "disabled"
+          children: "children", //定义要绑定node对象的哪个字段名：：子节点项
+          lable: "lable", //定义要绑定node对象的哪个字段名：：名称
+          proportion: "proportion", //定义要绑定node对象的哪个字段名：：占比
+          direction: "direction" //定义要绑定node对象的哪个字段名：：方向
         };
       }
     }
@@ -90,47 +88,47 @@ export default {
       visible2: false,
       node: {
         lable: "root",
+        proportion: "",
+        direction: "正",
         children: [
           {
             lable: "e-1",
+            proportion: "12",
+            direction: "负",
             children: [
               {
                 lable: "e-1-1",
+                proportion: "",
+                direction: "正",
                 children: [
                   {
                     lable: "e-1-1-1",
+                    proportion: "",
+                    direction: "正",
                     children: [
                       {
                         lable: "e-1-1-1-1",
+                        proportion: "",
+                        direction: "正",
                         children: [
                           {
                             lable: "e-1-1-1-1",
+                            proportion: "",
+                            direction: "正",
                             children: []
                           },
                           {
                             lable: "e-1-1-1-1",
-                            children: []
-                          },
-                          {
-                            lable: "e-1-1-1-1",
-                            children: []
-                          },
-                          {
-                            lable: "e-1-1-1-1",
-                            children: []
-                          },
-                          {
-                            lable: "e-1-1-1-1",
-                            children: []
-                          },
-                          {
-                            lable: "e-1-1-1-1",
+                            proportion: "",
+                            direction: "正",
                             children: []
                           }
                         ]
                       },
                       {
                         lable: "e-1-1-1-2",
+                        proportion: "",
+                        direction: "正",
                         children: []
                       }
                     ]
@@ -139,47 +137,16 @@ export default {
               },
               {
                 lable: "e-1-2",
-                children: []
-              }
-            ]
-          },
-          {
-            lable: "e-2",
-            children: [
-              {
-                lable: "e-1-1",
-                children: [
-                  {
-                    lable: "e-1-1-1",
-                    children: [
-                      {
-                        lable: "e-1-1-1-1",
-                        children: []
-                      },
-                      {
-                        lable: "e-1-1-1-2",
-                        children: []
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                lable: "e-1-2",
+                proportion: "",
+                direction: "正",
                 children: []
               }
             ]
           },
           {
             lable: "e-3-2",
-            children: []
-          },
-          {
-            lable: "e-4-2",
-            children: []
-          },
-          {
-            lable: "e-5-2",
+            proportion: "",
+            direction: "正",
             children: []
           }
         ]
