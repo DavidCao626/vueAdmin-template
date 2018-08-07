@@ -1,25 +1,7 @@
 <template>
     <div>
-        <el-dialog title="导入数据" :visible.sync="dialogVisible" width="400px" :before-close="handleClose">
-            <el-upload class="upload-demo" drag :action="action" :limit='1' @onSuccess="onUploadSuccess">
-                <i class="el-icon-upload"></i>
-                <div class="el-upload__text">将文件拖到此处，或
-                    <em>点击上传</em>
-                </div>
-                <div class="el-upload__tip" slot="tip">只能上传xlx/xlsx</div>
-            </el-upload>
-        </el-dialog>
 
         <elx-table-layout>
-            <template slot="headerRight">
-                <el-button-group>
-                    <el-tooltip class="item" effect="dark" content="创建新的基础用户" placement="bottom">
-                        <el-button plain size="mini" @click="addStu">
-                            新建
-                        </el-button>
-                    </el-tooltip>
-                </el-button-group>
-            </template>
 
             <template slot="headerLeft">
                 <!-- <span v-if="deleteOpen && isMultipleSelection">
@@ -28,12 +10,12 @@
                     </el-button>
                 </span> -->
                 <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-                    <el-form-item label="编号:">
+                    <!-- <el-form-item label="编号:">
                         <el-input v-model="formInline.sysNo" placeholder="编号"></el-input>
                     </el-form-item>
                     <el-form-item label="姓名:">
                         <el-input v-model="formInline.name" placeholder="姓名"></el-input>
-                    </el-form-item>
+                    </el-form-item> -->
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit">查询</el-button>
                     </el-form-item>
@@ -44,11 +26,15 @@
                 <el-table-column type="selection" width="38">
                 </el-table-column>
 
-                <el-table-column prop="memberCode" label="编号">
+                <el-table-column prop="batch" label="批次">
                 </el-table-column>
-                <el-table-column prop="name" label="姓名">
+                <el-table-column prop="serviceType" :formatter="typeFormatter" label="导入类型">
                 </el-table-column>
-                <el-table-column prop="officeOrgName" label="所属组织">
+                <el-table-column prop="state" :formatter="stateFormatter" label="状态">
+                </el-table-column>
+                <el-table-column prop="createTime" label="操作时间">
+                </el-table-column>
+                <el-table-column prop="lastUpdateTime" label="最后变更时间">
                 </el-table-column>
 
                 <el-table-column label="操作" width="88" header-align="left" align="center">
@@ -59,9 +45,19 @@
                             </el-button>
                             <el-dropdown-menu slot="dropdown">
                                 <!-- <el-dropdown-item @click.native="edit(scope.row)">编辑</el-dropdown-item> -->
-                                <el-dropdown-item @click.native="resignation(scope.row)">任职</el-dropdown-item>
+                                <el-dropdown-item @click.native="rollBack(scope.row)">回滚</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
+                    </template>
+                </el-table-column>
+                <el-table-column type="expand" label="#" width="42">
+                    <template slot-scope="props" style="background-color:#f7f8f9">
+                        <el-form label-position="left" inline class="demo-table-expand">
+                            <el-form-item label="失败原因:">
+                                <span>{{ props.row.errorCause }}</span>
+                            </el-form-item>
+                            <br/>
+                        </el-form>
                     </template>
                 </el-table-column>
             </el-table>
@@ -90,6 +86,7 @@ export default {
         pageSize: 10,
         totalRecord: 0
       },
+      formInline: {},
       multipleSelection: [], //选中的值
       isMultipleSelection: false, //是否选中
       dialogVisible: false,
@@ -97,13 +94,8 @@ export default {
       importOpen: false,
       exportOpen: false,
       data: [],
-      formInline: {
-        sysNo: "",
-        name: ""
-      },
-      sexObj: {},
-      nationObj: {},
-      idTypeObj: {},
+      typeObj: {},
+      stateObj: {},
       action: "https://jsonplaceholder.typicode.com/posts/"
     };
   },
@@ -115,6 +107,15 @@ export default {
     }
   },
   methods: {
+    dateFormatter(row, column, cellValue, index) {
+      return moment(cellValue, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD");
+    },
+    stateFormatter(r, c, v, i) {
+      return this.stateObj[v];
+    },
+    typeFormatter(r, c, v, i) {
+      return this.typeObj[v];
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageInfo.pageSize = val;
@@ -126,64 +127,40 @@ export default {
       this.getData();
     },
     addStu() {
-      this.$message.success("正在跳转 ")
-     this.$router.push({
-       path:"/user/createBaseForm"
-     })
-    },
-    ...mapActions({
-      queryCurrentOrgBaseList: store.namespace + "/queryCurrentOrgBaseList",
-      getDictByDictNames: store.namespace + "/getDictByDictNames"
-    }),
-    resignation(row) {
-      console.log(["row", row]);
+      this.$message.success("正在跳转 ");
       this.$router.push({
-        path: "/user/resignation",
-        query: {
-          sysNo: row.memberCode,
-          type: "base"
-        }
+        path: "/user/createBaseForm"
       });
     },
-    edit(row) {
-      console.log(["row", row]);
-    },
-    nationFormatter(row, column, cellValue, index) {
-      return this.nationObj[cellValue];
-    },
-    sexTypeFormatter(row, column, cellValue, index) {
-      return this.sexObj[cellValue];
-    },
-    idTypeFormatter(val) {
-      return this.idTypeObj[val];
-    },
+    ...mapActions({
+      getDictByDictNames: store.namespace + "/getDictByDictNames",
+      queryImportRecordList: store.namespace + "/queryImportRecordList",
+      rollBackStaffInfoByBatch: store.namespace + "/rollBackStaffInfoByBatch",
+      rollBackStudentInfoByBatch:
+        store.namespace + "/rollBackStudentInfoByBatch"
+    }),
     getDict() {
       var requestData = {
-        dicts: ["nation", "sex_type", "identity_type"]
+        dicts: ["import_service_type", "import_state"]
       };
       this.getDictByDictNames(requestData).then(response => {
         console.log(["dict", response]);
         var res = response.resBody;
-        res.nation.forEach(el => {
-          this.nationObj[el.dict_key] = el.dict_desc;
+        res.import_service_type.forEach(el => {
+          this.typeObj[el.dict_key] = el.dict_desc;
         });
-        res.sex_type.forEach(el => {
-          this.sexObj[el.dict_key] = el.dict_desc;
-        });
-        res.identity_type.forEach(el => {
-          this.idTypeObj[el.dict_key] = el.dict_desc;
+        res.import_state.forEach(el => {
+          this.stateObj[el.dict_key] = el.dict_desc;
         });
         this.getData();
       });
     },
     getData() {
       var requestData = {
-        sysNo: this.formInline.sysNo,
-        name:this.formInline.name,
         currentPage: this.pageInfo.currentPage,
         pageSize: this.pageInfo.pageSize
       };
-      this.queryCurrentOrgBaseList(requestData).then(response => {
+      this.queryImportRecordList(requestData).then(response => {
         console.log(["查询数据", response]);
         this.data = response.resBody.baseData;
         this.pageInfo = response.resBody.pageInfo;
@@ -195,6 +172,21 @@ export default {
           done();
         })
         .catch(_ => {});
+    },
+    rollBack(row) {
+      if (row.serviceType == "S") {
+        this.rollBackStudentInfoByBatch({ batch: row.batch }).then(response => {
+          this.$message.success("成功");
+          this.getData();
+        });
+      } else if (row.serviceType == "T") {
+        this.rollBackStaffInfoByBatch({ batch: row.batch }).then(response => {
+          this.$message.success("成功");
+          this.getData();
+        });
+      } else {
+        this.$message.error("未知的类型");
+      }
     },
     onSubmit() {
       console.log("submit!");
