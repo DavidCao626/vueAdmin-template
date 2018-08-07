@@ -343,6 +343,14 @@ export const projectRouter = {
       title: "学校组评",
       component: () => import("../styles/ngxxpingyi.vue"),
       meta: { hidden: true, title: "学校组评" }
+    },
+    //-------------综合测评----------
+    {//国家助学金
+      path: "createAppraiseProject",
+      name: "createAppraiseProject",
+      title: "创建综测项目",
+      component: () => import("../appraise/createProject.vue"),
+      meta: { hidden: true, title: "学校组评" }
     }
   ]
 };
