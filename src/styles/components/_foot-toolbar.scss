@@ -1,0 +1,12 @@
+.footer-toolbar{
+
+    &__tools{
+        float: right;
+    }
+    &__messages{
+        color:red;
+        float: right;
+        margin-right: 45px;
+        margin-top: 5px;
+    }
+}

@@ -4,7 +4,7 @@
       <div class="page-box__1">
         <div class="page-box__block flex">
           <div class="page-box__1">
-            <listbody title="公告栏" :titleUrl="announceMoreUrl" :data="announceDate">
+            <listbody title="公告栏" :titleUrl="announceMoreUrl" :data="announceDate" >
 
             </listbody>
           </div>
@@ -13,7 +13,7 @@
       </div>
       <div class="page-box__1">
         <div class="page-box__block">
-          <listbody title="公示栏" :titleUrl="noticeMoreUrl" :data="noticeDate"></listbody>
+          <listbody title="公示栏" v-state="15" :titleUrl="noticeMoreUrl" :data="noticeDate"></listbody>
 
         </div>
 

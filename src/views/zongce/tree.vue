@@ -1,42 +1,42 @@
 <template>
 
-    <div class="entry">
+  <div class="entry">
 
-        <div class="label">
-            {{ node.leble }}{{ formLabelAlign.region }} &nbsp;&nbsp;
-              <i class="el-icon-remove" @click="add(node)" style="color:#bbb"></i>
-            <el-popover placement="top" width="260" v-model="visible2">
-                <div style="margin-top:10px">
-                    <el-form label-position="left" label-width="50px" :model="formLabelAlign" size="mini">
-                        <el-form-item label="名称:">
-                            <el-input v-model="node.leble"></el-input>
-                        </el-form-item>
-                        <el-form-item label="占比:">
-                            <el-input v-model="formLabelAlign.region"></el-input>
-                        </el-form-item>
-                        <el-form-item label="方向:">
-                            <el-radio-group v-model="formLabelAlign.type" size="mini">
-                                <el-radio-button label="正"></el-radio-button>
-                                <el-radio-button label="负"></el-radio-button>
-                            </el-radio-group>
-                        </el-form-item>
-                    </el-form>
-                </div>
-                <el-button slot="reference" type="text"  size="mini" class="el-icon-info" style="color:#bbb"  ></el-button>
-            </el-popover>
-
-            <i class="el-icon-circle-plus" style="color:#bbb;" @click="add(node)"></i>
+    <div class="label">
+      {{ node.lable }}{{ formLabelAlign.region }} &nbsp;&nbsp;
+      <i class="el-icon-remove" @click="del(node)" style="color:#bbb"></i>
+      <el-popover placement="top" width="260" v-model="visible2">
+        <div style="margin-top:10px">
+          <el-form label-position="left" label-width="50px" :model="formLabelAlign" size="mini">
+            <el-form-item label="名称:">
+              <el-input v-model="node.lable"></el-input>
+            </el-form-item>
+            <el-form-item label="占比:">
+              <el-input v-model="formLabelAlign.region"></el-input>
+            </el-form-item>
+            <el-form-item label="方向:">
+              <el-radio-group v-model="formLabelAlign.type" size="mini">
+                <el-radio-button label="正"></el-radio-button>
+                <el-radio-button label="负"></el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+          </el-form>
         </div>
-        <template v-if="node.children.length>0">
-            <div :class="['branch']">
+        <el-button slot="reference" type="text" size="mini" class="el-icon-info" style="color:#bbb"></el-button>
+      </el-popover>
 
-                <zc-tree-node v-for="(child,index)  in node.children" :node="child" :key="index" :class="node.children.length==1?'sole':''">
-                </zc-tree-node>
-
-            </div>
-        </template>
-
+      <i class="el-icon-circle-plus" style="color:#bbb;" @click="add(node)"></i>
     </div>
+    <template v-if="node.children.length>0 ">
+      <div :class="['branch']">
+
+        <zc-tree-node v-for="(child,index)  in node.children" :node="child" :key="index" :class="node.children.length==1?'sole':''">
+        </zc-tree-node>
+
+      </div>
+    </template>
+
+  </div>
 </template>
 
 <script>
@@ -64,9 +64,27 @@ export default {
   methods: {
     add(node) {
       node.children.push({
-        leble: "+++",
+        lable: "+++",
         children: []
       });
+    },
+    del(node) {
+      if (node.children && node.children.length > 0) {
+        this.$message.error("包含子节点的节点不能删除");
+      } else {
+        
+        this.node["isDel"] = true;
+        let parentChildrens = this.$parent.node.children;
+        parentChildrens.forEach(e => {
+          if (e.isDel) {
+            parentChildrens.splice(parentChildrens.indexOf(e), 1);
+          }
+        });
+
+      }
+      //console.log(this.$root);
+     
+      
     }
   },
   mounted() {}
