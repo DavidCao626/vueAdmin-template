@@ -38,32 +38,48 @@
       </div>
 
     </page>
-    <page style="margin: 0 auto;">
+    <!-- <div style="margin: 0 auto;">
       <div slot="panel">
         <div style="text-align:center">
-          <!-- <h4 v-if="formDays>=0" style="text-align:center">截止最后提交日期 还有
-                        <strong style="color:red;">{{formDays}}</strong> 天</h4> -->
-          <!-- <h4 v-else style="text-align:center;color:red;">申请表单已到最后截止日期，不能提交。如有问题请联系相关老师。</h4> -->
           <el-button type="primary" @click="onSubmit">保存提交</el-button>
         </div>
       </div>
-    </page>
+    </div> -->
+
+      <div class="approval-panel  footer-toolbar clearfix">
+        <div class="footer-toolbar__tools">
+          <el-button plain>取消</el-button>
+          <el-button type="primary">确定</el-button>
+        </div>
+
+        <div class="footer-toolbar__messages">
+          <el-popover placement="top"  width="200" trigger="hover"    title="表单验证结果" >
+              <hr/>
+            1
+            <hr/>
+            2
+            <hr/>
+            <i class="el-icon-warning" slot="reference"> 3</i> 
+          </el-popover>
+
+        </div>
+      </div>
   </div>
 </template>
 <script>
 import ZcTreeNode from "./tree";
 export default {
-  props:{
+  props: {
     props: {
-        default() {
-          return {
-            children: 'children',
-            label: 'label',
-            icon: 'icon',
-            disabled: 'disabled'
-          };
-        }
-      },
+      default() {
+        return {
+          children: "children",
+          label: "label",
+          icon: "icon",
+          disabled: "disabled"
+        };
+      }
+    }
   },
   data() {
     return {
