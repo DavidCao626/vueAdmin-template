@@ -9,13 +9,13 @@
         <div style="margin-top:10px">
           <el-form label-position="left" label-width="50px" :model="formLabelAlign" size="mini">
             <el-form-item label="名称:">
-              <el-input v-model="node.lable"></el-input>
+              <el-input v-model="node[props.lable]"></el-input>
             </el-form-item>
             <el-form-item label="占比:">
-              <el-input v-model="formLabelAlign.region"></el-input>
+              <el-input v-model="node[props.proportion]"></el-input>
             </el-form-item>
             <el-form-item label="方向:">
-              <el-radio-group v-model="formLabelAlign.type" size="mini">
+              <el-radio-group v-model="node[props.direction]" size="mini">
                 <el-radio-button label="正"></el-radio-button>
                 <el-radio-button label="负"></el-radio-button>
               </el-radio-group>
@@ -45,6 +45,12 @@ export default {
 
   componentName: "ZcTreeNode",
   props: {
+    props: {
+      type: Object,
+      default() {
+        return {};
+      }
+    },
     node: {
       default() {
         return {};
@@ -72,7 +78,6 @@ export default {
       if (node.children && node.children.length > 0) {
         this.$message.error("包含子节点的节点不能删除");
       } else {
-        
         this.node["isDel"] = true;
         let parentChildrens = this.$parent.node.children;
         parentChildrens.forEach(e => {
@@ -80,11 +85,8 @@ export default {
             parentChildrens.splice(parentChildrens.indexOf(e), 1);
           }
         });
-
       }
       //console.log(this.$root);
-     
-      
     }
   },
   mounted() {}
