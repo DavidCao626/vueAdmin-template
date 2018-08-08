@@ -9,7 +9,7 @@
         <div style="margin-top:10px">
           <el-form label-position="left" label-width="50px" :model="formLabelAlign" size="mini">
             <el-form-item label="名称:">
-              <el-input v-model="node[props.lable]" ></el-input>
+              <el-input v-model="node[props.lable]"></el-input>
             </el-form-item>
             <el-form-item label="占比:">
               <el-input v-model="node[props.proportion]"></el-input>
@@ -27,10 +27,10 @@
 
       <i class="el-icon-circle-plus" style="color:#bbb;" @click="add(node)"></i>
     </div>
-    <template v-if="node.children.length>0 ">
+    <template v-if="node[props.children].length>0 ">
       <div class="branch">
 
-        <zc-tree-node v-for="(child,index)  in node.children" :node="child" :key="index" :props="props" :class="node.children.length==1?'sole':''">
+        <zc-tree-node v-for="(child,index)  in node[props.children]" :node="child" :key="index" :props="props" :class="node[props.children].length==1?'sole':''">
         </zc-tree-node>
 
       </div>
@@ -63,42 +63,41 @@ export default {
       formLabelAlign: {
         name: "",
         region: "",
-        type: "正"
+        type: 1
       }
     };
   },
-  computed:{
-    
-
-  },
+  computed: {},
   methods: {
-    nodeLable(lable){
+    nodeLable(lable) {
       console.log(lable.length);
-      
-      if(lable.length>4){
-        return lable.substring(0,4)+'...'
-      }else{
-        return lable
+
+      if (lable.length > 4) {
+        return lable.substring(0, 4) + "...";
+      } else {
+        return lable;
       }
     },
     add(node) {
-      node.children.push({
-        lable: "新节点",
-        children: []
+      node[this.props.children].push({
+        [this.props.lable]: "新节点",
+        [this.props.direction]: 1,
+        [this.props.children]: [],
+        [this.props.proportion]: 0,
+         [this.props.code]:null
       });
     },
     del(node) {
-      if (node.children && node.children.length > 0) {
+      if (node[this.props.children] && node[this.props.children].length > 0) {
         this.$message.error("包含子节点的节点不能删除");
       } else {
         this.node["isDel"] = true;
-        
 
-        let parentChildrens 
-        if(this.$parent.node){
-          parentChildrens=this.$parent.node.children
-        }else{
-          parentChildrens=this.$parent.$parent.node.children
+        let parentChildrens;
+        if (this.$parent.node) {
+          parentChildrens = this.$parent.node[this.props.children];
+        } else {
+          parentChildrens = this.$parent.$parent.node[this.props.children];
         }
         parentChildrens.forEach(e => {
           if (e.isDel) {

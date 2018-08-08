@@ -29,7 +29,7 @@
         <div style="overflow:scroll">
           <div class="wrapper">
 
-            <zc-tree-node v-for="(child,index) in node.children" :props="props" :node="child" :key="index" :class="node.children.length==1?'sole':''">
+            <zc-tree-node v-for="(child,index) in node[props.children]" :props="props" :node="child" :key="index" :class="node[props.children].length==1?'sole':''">
             </zc-tree-node>
           </div>
         </div>
@@ -71,7 +71,8 @@ export default {
           children: "childItems", //定义要绑定node对象的哪个字段名：：子节点项
           lable: "name", //定义要绑定node对象的哪个字段名：：名称
           proportion: "ratio", //定义要绑定node对象的哪个字段名：：占比
-          direction: "orientation" //定义要绑定node对象的哪个字段名：：方向
+          direction: "orientation", //定义要绑定node对象的哪个字段名：：方向
+          code: "code"
         };
       }
     }
@@ -85,11 +86,9 @@ export default {
       visible2: false,
       node: {
         name: "root123",
-        ratio: "",
-        orientation: "1",
-        childItems: [
-     
-        ]
+        ratio: 0,
+        orientation: 1,
+        childItems: []
       }
     };
   },
@@ -112,11 +111,13 @@ export default {
       });
     },
     addRootNode() {
-      this.node.children.push({
-        lable: "新节点",
-        proportion: "",
-        direction: "1",
-        children: []
+      console.log([this.props,""])
+      this.node[this.props.children].push({
+        [this.props.lable]: "新节点",
+        [this.props.proportion]: 0,
+        [this.props.direction]: 1,
+        [this.props.children]: [],
+        [this.props.code]: null
       });
     }
   }

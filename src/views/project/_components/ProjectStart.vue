@@ -1,12 +1,18 @@
 <template>
     <div>
         <el-form ref="form" label-position="right" label-width="220px" style="margin: 20px;">
-           <el-form-item label="父节点">
+           <el-form-item label="父节点" v-if="dispenseView.relaseWorkItemName">
                 {{dispenseView.relaseWorkItemName}}&nbsp;&nbsp;&nbsp;&nbsp;配置的天数为:{{dispenseView.oldRelaseTimeDay}}
             </el-form-item>
             <el-form-item label="可用时长:">
-                <el-input-number style=" margin-top: 3px" size="small" v-model="dispenseView.relaseTimeDay" :min="0" :max="dispenseView.oldRelaseTimeDay" label="描述文字">
-                </el-input-number>
+                <template v-if="dispenseView.relaseWorkItemName">
+                       <el-input-number style=" margin-top: 3px" size="small" v-model="dispenseView.relaseTimeDay" :min="0" :max="dispenseView.oldRelaseTimeDay" label="描述文字">
+                       </el-input-number>
+                </template >
+                <template v-else>
+                       <el-input-number style=" margin-top: 3px" size="small" v-model="dispenseView.relaseTimeDay" :min="0"  label="描述文字">
+                       </el-input-number>
+                </template>
             </el-form-item>
             <el-form-item label="开始时间:">
                 <el-date-picker disabled v-model="getStartTime" type="datetime" placeholder="选择日期">
@@ -72,7 +78,7 @@ export default {
     },
     getEndTime: function() {
       var now = moment().second(0).minute(0)
-      var timelong = this.dispenseView.relaseTimeDay
+      var timelong = this.getTimeLong;
       var end = now.add(timelong, 'days')
       return end.format('YYYY-MM-DD HH:mm:ss')
     }
