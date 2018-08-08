@@ -19,7 +19,7 @@
             </el-form-item>
 
             <el-form-item label="添加配置节点:">
-              <el-button  icon="el-icon-plus" size="mini" plain @click="addRootNode()">添加</el-button>
+              <el-button icon="el-icon-plus" size="mini" plain @click="addRootNode()">添加</el-button>
             </el-form-item>
           </el-form>
 
@@ -50,7 +50,7 @@
     <div class="approval-panel  footer-toolbar clearfix">
       <div class="footer-toolbar__tools">
         <el-button plain>取消</el-button>
-        <el-button type="primary">确定</el-button>
+        <el-button type="primary" @click="onSubmit">确定</el-button>
       </div>
 
       <div class="footer-toolbar__messages">
@@ -159,14 +159,16 @@ export default {
   },
   methods: {
     onSubmit() {
+      console.log(this.node);
+      
       debugger;
     },
     addRootNode() {
-      this.node.children.push({
-        lable: "新节点",
-        proportion: "",
-        direction: "正",
-        children: []
+      this.node[this.props.children].push({
+        [this.props.lable]: "新节点",
+        [this.props.proportion]: "",
+        [this.props.direction]: "正",
+        [this.props.children]: []
       });
     }
   }
