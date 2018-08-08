@@ -25,16 +25,21 @@
 
         </div>
 
-        <div id="wrapper">
-          <el-scrollbar>
-            <span class="label">{{ node.lable }}</span>
-            <div class="branch " v-if="node.children.length>0 ">
-              <zc-tree-node v-for="(child,index) in node.children" :props="props" :node="child" :key="index" :class="node.children.length==1?'sole':''">
+        <!-- <el-scollbar> -->
+        <div style="overflow:scroll">
+          <div class="wrapper" v-for="(item,index) in Items" :key="index">
+            
+            <span class="label">{{ item.node.lable }}</span>
+            <div class="branch " v-if="item.node.children.length>0 ">
+              <zc-tree-node v-for="(child,index) in item.node.children" :props="props" :node="child" :key="index" :class="item.node.children.length==1?'sole':''">
               </zc-tree-node>
 
             </div>
-          </el-scrollbar>
+          </div>
         </div>
+
+        <!-- </el-scollbar> -->
+
       </div>
 
     </page>
@@ -54,9 +59,9 @@
 
       <div class="footer-toolbar__messages">
         <el-popover placement="top" width="200" trigger="hover" title="表单验证结果">
-        
+
           <div style="color:red;"> e-1-1项目下的所有子节点占比不能超过1
-            </div>
+          </div>
           <i class="el-icon-warning" slot="reference"> 3</i>
         </el-popover>
 
@@ -86,28 +91,25 @@ export default {
         isok: "是"
       },
       visible2: false,
-      node: {
-        lable: "root",
-        proportion: "",
-        direction: "正",
-        children: [
-          {
-            lable: "e-1",
-            proportion: "12",
-            direction: "负",
+      Items: [
+        {
+          node: {
+            lable: "root123",
+            proportion: "",
+            direction: "正",
             children: [
               {
-                lable: "e-1-1",
-                proportion: "",
-                direction: "正",
+                lable: "e-1",
+                proportion: "12",
+                direction: "负",
                 children: [
                   {
-                    lable: "e-1-1-1",
+                    lable: "e-1-1",
                     proportion: "",
                     direction: "正",
                     children: [
                       {
-                        lable: "e-1-1-1-1",
+                        lable: "e-1-1-1",
                         proportion: "",
                         direction: "正",
                         children: [
@@ -115,42 +117,116 @@ export default {
                             lable: "e-1-1-1-1",
                             proportion: "",
                             direction: "正",
-                            children: []
+                            children: [
+                              {
+                                lable: "e-1-1-1-1",
+                                proportion: "",
+                                direction: "正",
+                                children: []
+                              },
+                              {
+                                lable: "e-1-1-1-1",
+                                proportion: "",
+                                direction: "正",
+                                children: []
+                              }
+                            ]
                           },
                           {
-                            lable: "e-1-1-1-1",
+                            lable: "e-1-1-1-2",
                             proportion: "",
                             direction: "正",
                             children: []
                           }
                         ]
-                      },
-                      {
-                        lable: "e-1-1-1-2",
-                        proportion: "",
-                        direction: "正",
-                        children: []
                       }
                     ]
+                  },
+                  {
+                    lable: "e-1-2",
+                    proportion: "",
+                    direction: "正",
+                    children: []
                   }
                 ]
               },
               {
-                lable: "e-1-2",
+                lable: "e-3-2",
                 proportion: "",
                 direction: "正",
                 children: []
               }
             ]
-          },
-          {
-            lable: "e-3-2",
+          }
+        },
+         {
+          node: {
+            lable: "root123",
             proportion: "",
             direction: "正",
-            children: []
+            children: [
+              {
+                lable: "e-1",
+                proportion: "12",
+                direction: "负",
+                children: [
+                  {
+                    lable: "e-1-1",
+                    proportion: "",
+                    direction: "正",
+                    children: [
+                      {
+                        lable: "e-1-1-1",
+                        proportion: "",
+                        direction: "正",
+                        children: [
+                          {
+                            lable: "e-1-1-1-1",
+                            proportion: "",
+                            direction: "正",
+                            children: [
+                              {
+                                lable: "e-1-1-1-1",
+                                proportion: "",
+                                direction: "正",
+                                children: []
+                              },
+                              {
+                                lable: "e-1-1-1-1",
+                                proportion: "",
+                                direction: "正",
+                                children: []
+                              }
+                            ]
+                          },
+                          {
+                            lable: "e-1-1-1-2",
+                            proportion: "",
+                            direction: "正",
+                            children: []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    lable: "e-1-2",
+                    proportion: "",
+                    direction: "正",
+                    children: []
+                  }
+                ]
+              },
+              {
+                lable: "e-3-2",
+                proportion: "",
+                direction: "正",
+                children: []
+              }
+            ]
           }
-        ]
-      }
+        }
+      ]
     };
   },
   components: {
@@ -202,7 +278,7 @@ body {
   user-select: none;
 }
 
-#wrapper {
+.wrapper {
   position: relative;
 }
 

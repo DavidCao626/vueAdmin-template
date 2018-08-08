@@ -1,7 +1,6 @@
 <template>
-
+  
   <div class="entry">
-
     <div class="label">
       {{ node.lable }}{{ formLabelAlign.region }} &nbsp;&nbsp;
       <i class="el-icon-remove" @click="del(node)" style="color:#bbb"></i>
