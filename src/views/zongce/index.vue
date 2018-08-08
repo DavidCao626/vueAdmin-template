@@ -18,23 +18,24 @@
               </el-radio-group>
             </el-form-item>
 
-            <!-- <el-form-item label="配置内容:">
-             
-            </el-form-item> -->
+            <el-form-item label="添加配置节点:">
+              <el-button  icon="el-icon-plus" size="mini" plain @click="addRootNode()">添加</el-button>
+            </el-form-item>
           </el-form>
 
         </div>
 
-        <div id="wrapper">
-          <el-scrollbar>
-            <span class="label">{{ node.lable }}</span>
-            <div class="branch " v-if="node.children.length>0 ">
-              <zc-tree-node v-for="(child,index) in node.children" :props="props" :node="child" :key="index" :class="node.children.length==1?'sole':''">
-              </zc-tree-node>
+        <!-- <el-scollbar> -->
+        <div style="overflow:scroll">
+          <div class="wrapper">
 
-            </div>
-          </el-scrollbar>
+            <zc-tree-node v-for="(child,index) in node.children" :props="props" :node="child" :key="index" :class="node.children.length==1?'sole':''">
+            </zc-tree-node>
+          </div>
         </div>
+
+        <!-- </el-scollbar> -->
+
       </div>
 
     </page>
@@ -54,9 +55,9 @@
 
       <div class="footer-toolbar__messages">
         <el-popover placement="top" width="200" trigger="hover" title="表单验证结果">
-        
+
           <div style="color:red;"> e-1-1项目下的所有子节点占比不能超过1
-            </div>
+          </div>
           <i class="el-icon-warning" slot="reference"> 3</i>
         </el-popover>
 
@@ -87,7 +88,7 @@ export default {
       },
       visible2: false,
       node: {
-        lable: "root",
+        lable: "root123",
         proportion: "",
         direction: "正",
         children: [
@@ -159,6 +160,14 @@ export default {
   methods: {
     onSubmit() {
       debugger;
+    },
+    addRootNode() {
+      this.node.children.push({
+        lable: "新节点",
+        proportion: "",
+        direction: "正",
+        children: []
+      });
     }
   }
 };
@@ -202,7 +211,7 @@ body {
   user-select: none;
 }
 
-#wrapper {
+.wrapper {
   position: relative;
 }
 

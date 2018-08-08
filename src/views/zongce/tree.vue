@@ -3,13 +3,13 @@
   <div class="entry">
 
     <div class="label">
-      {{ node.lable }}{{ formLabelAlign.region }} &nbsp;&nbsp;
+      {{ nodeLable(node[props.lable]) }}{{ node[props.proportion] }} &nbsp;&nbsp;
       <i class="el-icon-remove" @click="del(node)" style="color:#bbb"></i>
       <el-popover placement="top" width="260" v-model="visible2">
         <div style="margin-top:10px">
           <el-form label-position="left" label-width="50px" :model="formLabelAlign" size="mini">
             <el-form-item label="名称:">
-              <el-input v-model="node[props.lable]"></el-input>
+              <el-input v-model="node[props.lable]" ></el-input>
             </el-form-item>
             <el-form-item label="占比:">
               <el-input v-model="node[props.proportion]"></el-input>
@@ -28,9 +28,9 @@
       <i class="el-icon-circle-plus" style="color:#bbb;" @click="add(node)"></i>
     </div>
     <template v-if="node.children.length>0 ">
-      <div :class="['branch']">
+      <div class="branch">
 
-        <zc-tree-node v-for="(child,index)  in node.children" :node="child" :key="index" :class="node.children.length==1?'sole':''">
+        <zc-tree-node v-for="(child,index)  in node.children" :node="child" :key="index" :props="props" :class="node.children.length==1?'sole':''">
         </zc-tree-node>
 
       </div>
@@ -67,10 +67,23 @@ export default {
       }
     };
   },
+  computed:{
+    
+
+  },
   methods: {
+    nodeLable(lable){
+      console.log(lable.length);
+      
+      if(lable.length>4){
+        return lable.substring(0,4)+'...'
+      }else{
+        return lable
+      }
+    },
     add(node) {
       node.children.push({
-        lable: "+++",
+        lable: "新节点",
         children: []
       });
     },
@@ -79,7 +92,14 @@ export default {
         this.$message.error("包含子节点的节点不能删除");
       } else {
         this.node["isDel"] = true;
-        let parentChildrens = this.$parent.node.children;
+        
+
+        let parentChildrens 
+        if(this.$parent.node){
+          parentChildrens=this.$parent.node.children
+        }else{
+          parentChildrens=this.$parent.$parent.node.children
+        }
         parentChildrens.forEach(e => {
           if (e.isDel) {
             parentChildrens.splice(parentChildrens.indexOf(e), 1);
@@ -105,7 +125,7 @@ $border-radius: 10px;
 
 $entry-min-height: 60px;
 
-$label-width: 180px;
+$label-width: 200px; //label字段长度
 $label-height: 30px;
 $label-border-radius: 5px;
 
