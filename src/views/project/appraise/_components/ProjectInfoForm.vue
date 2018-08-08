@@ -75,6 +75,7 @@
           <el-option v-for="item in appraiseTypeList" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
+        <el-button type="">修改</el-button> <el-button type="">新增</el-button>
 </el-form-item>
 </el-form>
            
@@ -141,7 +142,7 @@ export default {
     return {
       appraiseTypeList:[{
         label:"假的测评类别",
-        value:"0"
+        value:"1"
       }],
       classifyTypedetailPath: "",
       iopt: [],
