@@ -16,8 +16,8 @@
             </el-form-item>
             <el-form-item label="方向:">
               <el-radio-group v-model="node[props.direction]" size="mini">
-                <el-radio-button label="正"></el-radio-button>
-                <el-radio-button label="负"></el-radio-button>
+                <el-radio-button label="1">正</el-radio-button>
+                <el-radio-button label="0">负</el-radio-button>
               </el-radio-group>
             </el-form-item>
           </el-form>

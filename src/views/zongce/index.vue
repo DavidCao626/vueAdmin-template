@@ -13,8 +13,8 @@
             </el-form-item>
             <el-form-item label="是否启用:">
               <el-radio-group v-model="formInline.isok" size="mini">
-                <el-radio-button label="是"></el-radio-button>
-                <el-radio-button label="否"></el-radio-button>
+                <el-radio-button label="Y">是</el-radio-button>
+                <el-radio-button label="N">否</el-radio-button>
               </el-radio-group>
             </el-form-item>
 
@@ -39,13 +39,6 @@
       </div>
 
     </page>
-    <!-- <div style="margin: 0 auto;">
-      <div slot="panel">
-        <div style="text-align:center">
-          <el-button type="primary" @click="onSubmit">保存提交</el-button>
-        </div>
-      </div>
-    </div> -->
 
     <div class="approval-panel  footer-toolbar clearfix">
       <div class="footer-toolbar__tools">
@@ -67,15 +60,18 @@
 </template>
 <script>
 import ZcTreeNode from "./tree";
+import { mapGetters, mapActions } from "vuex";
+import store from "./_store/index.js";
+import moment from "moment";
 export default {
   props: {
     props: {
       default() {
         return {
-          children: "children", //定义要绑定node对象的哪个字段名：：子节点项
-          lable: "lable", //定义要绑定node对象的哪个字段名：：名称
-          proportion: "proportion", //定义要绑定node对象的哪个字段名：：占比
-          direction: "direction" //定义要绑定node对象的哪个字段名：：方向
+          children: "childItems", //定义要绑定node对象的哪个字段名：：子节点项
+          lable: "name", //定义要绑定node对象的哪个字段名：：名称
+          proportion: "ratio", //定义要绑定node对象的哪个字段名：：占比
+          direction: "orientation" //定义要绑定node对象的哪个字段名：：方向
         };
       }
     }
@@ -84,72 +80,15 @@ export default {
     return {
       formInline: {
         name: "",
-        isok: "是"
+        isok: "Y"
       },
       visible2: false,
       node: {
-        lable: "root123",
-        proportion: "",
-        direction: "正",
-        children: [
-          {
-            lable: "e-1",
-            proportion: "12",
-            direction: "负",
-            children: [
-              {
-                lable: "e-1-1",
-                proportion: "",
-                direction: "正",
-                children: [
-                  {
-                    lable: "e-1-1-1",
-                    proportion: "",
-                    direction: "正",
-                    children: [
-                      {
-                        lable: "e-1-1-1-1",
-                        proportion: "",
-                        direction: "正",
-                        children: [
-                          {
-                            lable: "e-1-1-1-1",
-                            proportion: "",
-                            direction: "正",
-                            children: []
-                          },
-                          {
-                            lable: "e-1-1-1-1",
-                            proportion: "",
-                            direction: "正",
-                            children: []
-                          }
-                        ]
-                      },
-                      {
-                        lable: "e-1-1-1-2",
-                        proportion: "",
-                        direction: "正",
-                        children: []
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                lable: "e-1-2",
-                proportion: "",
-                direction: "正",
-                children: []
-              }
-            ]
-          },
-          {
-            lable: "e-3-2",
-            proportion: "",
-            direction: "正",
-            children: []
-          }
+        name: "root123",
+        ratio: "",
+        orientation: "1",
+        childItems: [
+     
         ]
       }
     };
@@ -158,17 +97,26 @@ export default {
     ZcTreeNode
   },
   methods: {
+    ...mapActions({
+      addAppraiseCategory: store.namespace + "/addAppraiseCategory"
+    }),
     onSubmit() {
-      console.log(this.node);
-      
-      debugger;
+      console.log(["onSubmt", this.node]);
+      var requestData = {
+        name: this.formInline.name,
+        available: this.formInline.isok,
+        template: this.node
+      };
+      this.addAppraiseCategory(requestData).then(response => {
+        console.log(response);
+      });
     },
     addRootNode() {
-      this.node[this.props.children].push({
-        [this.props.lable]: "新节点",
-        [this.props.proportion]: "",
-        [this.props.direction]: "正",
-        [this.props.children]: []
+      this.node.children.push({
+        lable: "新节点",
+        proportion: "",
+        direction: "1",
+        children: []
       });
     }
   }
