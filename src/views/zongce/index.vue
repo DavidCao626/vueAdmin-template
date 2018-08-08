@@ -27,14 +27,10 @@
 
         <!-- <el-scollbar> -->
         <div style="overflow:scroll">
-          <div class="wrapper" v-for="(item,index) in Items" :key="index">
-            
-            <span class="label">{{ item.node.lable }}</span>
-            <div class="branch " v-if="item.node.children.length>0 ">
-              <zc-tree-node v-for="(child,index) in item.node.children" :props="props" :node="child" :key="index" :class="item.node.children.length==1?'sole':''">
-              </zc-tree-node>
+          <div class="wrapper">
 
-            </div>
+            <zc-tree-node v-for="(child,index) in node.children" :props="props" :node="child" :key="index" :class="node.children.length==1?'sole':''">
+            </zc-tree-node>
           </div>
         </div>
 
@@ -91,25 +87,28 @@ export default {
         isok: "是"
       },
       visible2: false,
-      Items: [
-        {
-          node: {
-            lable: "root123",
-            proportion: "",
-            direction: "正",
+      node: {
+        lable: "root123",
+        proportion: "",
+        direction: "正",
+        children: [
+          {
+            lable: "e-1",
+            proportion: "12",
+            direction: "负",
             children: [
               {
-                lable: "e-1",
-                proportion: "12",
-                direction: "负",
+                lable: "e-1-1",
+                proportion: "",
+                direction: "正",
                 children: [
                   {
-                    lable: "e-1-1",
+                    lable: "e-1-1-1",
                     proportion: "",
                     direction: "正",
                     children: [
                       {
-                        lable: "e-1-1-1",
+                        lable: "e-1-1-1-1",
                         proportion: "",
                         direction: "正",
                         children: [
@@ -117,116 +116,42 @@ export default {
                             lable: "e-1-1-1-1",
                             proportion: "",
                             direction: "正",
-                            children: [
-                              {
-                                lable: "e-1-1-1-1",
-                                proportion: "",
-                                direction: "正",
-                                children: []
-                              },
-                              {
-                                lable: "e-1-1-1-1",
-                                proportion: "",
-                                direction: "正",
-                                children: []
-                              }
-                            ]
-                          },
-                          {
-                            lable: "e-1-1-1-2",
-                            proportion: "",
-                            direction: "正",
                             children: []
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    lable: "e-1-2",
-                    proportion: "",
-                    direction: "正",
-                    children: []
-                  }
-                ]
-              },
-              {
-                lable: "e-3-2",
-                proportion: "",
-                direction: "正",
-                children: []
-              }
-            ]
-          }
-        },
-         {
-          node: {
-            lable: "root123",
-            proportion: "",
-            direction: "正",
-            children: [
-              {
-                lable: "e-1",
-                proportion: "12",
-                direction: "负",
-                children: [
-                  {
-                    lable: "e-1-1",
-                    proportion: "",
-                    direction: "正",
-                    children: [
-                      {
-                        lable: "e-1-1-1",
-                        proportion: "",
-                        direction: "正",
-                        children: [
+                          },
                           {
                             lable: "e-1-1-1-1",
                             proportion: "",
                             direction: "正",
-                            children: [
-                              {
-                                lable: "e-1-1-1-1",
-                                proportion: "",
-                                direction: "正",
-                                children: []
-                              },
-                              {
-                                lable: "e-1-1-1-1",
-                                proportion: "",
-                                direction: "正",
-                                children: []
-                              }
-                            ]
-                          },
-                          {
-                            lable: "e-1-1-1-2",
-                            proportion: "",
-                            direction: "正",
                             children: []
                           }
                         ]
+                      },
+                      {
+                        lable: "e-1-1-1-2",
+                        proportion: "",
+                        direction: "正",
+                        children: []
                       }
                     ]
-                  },
-                  {
-                    lable: "e-1-2",
-                    proportion: "",
-                    direction: "正",
-                    children: []
                   }
                 ]
               },
               {
-                lable: "e-3-2",
+                lable: "e-1-2",
                 proportion: "",
                 direction: "正",
                 children: []
               }
             ]
+          },
+          {
+            lable: "e-3-2",
+            proportion: "",
+            direction: "正",
+            children: []
           }
-        }
-      ]
+        ]
+      }
     };
   },
   components: {
