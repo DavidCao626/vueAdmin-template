@@ -18,9 +18,9 @@
               </el-radio-group>
             </el-form-item>
 
-            <!-- <el-form-item label="配置内容:">
-             
-            </el-form-item> -->
+            <el-form-item label="添加配置节点:">
+              <el-button  icon="el-icon-plus" size="mini" plain @click="addRootNode()">添加</el-button>
+            </el-form-item>
           </el-form>
 
         </div>
@@ -160,6 +160,14 @@ export default {
   methods: {
     onSubmit() {
       debugger;
+    },
+    addRootNode() {
+      this.node.children.push({
+        lable: "新节点",
+        proportion: "",
+        direction: "正",
+        children: []
+      });
     }
   }
 };
