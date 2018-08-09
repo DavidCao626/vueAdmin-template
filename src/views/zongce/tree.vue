@@ -37,8 +37,8 @@
 
       </el-popover>
 
-      <i class="el-icon-remove" @click="del(node)" style="color:#bbb" v-state-show="2"></i>
-      <i class="el-icon-circle-plus" style="color:#bbb;" @click="add(node)"></i>
+      <i class="el-icon-delete" @click="del(node)" style="color:#7b7b7b" v-state-show="2"></i>
+      <i class="el-icon-circle-plus-outline" style="color:#7b7b7b;" @click="add(node)"></i>
     </div>
     <template v-if="node[props.children].length>0 ">
       <div class="branch">
