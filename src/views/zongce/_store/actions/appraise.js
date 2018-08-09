@@ -14,7 +14,25 @@ const addAppraiseCategory = ({ commit, state }, params) => new Promise(resolve =
         resolve(response)
     })
 })
+
+
+const getAppraiseCategory = ({ commit, state }, params) => new Promise(resolve => {
+    api.getAppraiseCategory(params).then(response => {
+        console.log(["getAppraiseCategory", response])
+        resolve(response)
+    })
+})
+
+const updateAppraiseCategory = ({ commit, state }, params) => new Promise(resolve => {
+    api.updateAppraiseCategory(params).then(response => {
+        console.log(["updateAppraiseCategory", response])
+        resolve(response)
+    })
+})
+
 export default {
     getDictByDictNames,
-    addAppraiseCategory
+    addAppraiseCategory,
+    getAppraiseCategory,
+    updateAppraiseCategory
 }

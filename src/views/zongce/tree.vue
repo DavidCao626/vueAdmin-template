@@ -5,9 +5,9 @@
     <div class="label">
       {{ nodeLable(node[props.lable]) }}{{ node[props.proportion] }} &nbsp;&nbsp;
       <i class="el-icon-remove" @click="del(node)" style="color:#bbb"></i>
-      <el-popover placement="top" width="260" v-model="visible2">
+      <el-popover placement="top" width="310" v-model="visible2">
         <div style="margin-top:10px">
-          <el-form label-position="left" label-width="50px" :model="formLabelAlign" size="mini">
+          <el-form label-position="left" label-width="100px" :model="formLabelAlign" size="mini">
             <el-form-item label="名称:">
               <el-input v-model="node[props.lable]"></el-input>
             </el-form-item>
@@ -18,6 +18,13 @@
               <el-radio-group v-model="node[props.direction]" size="mini">
                 <el-radio-button label="1">正</el-radio-button>
                 <el-radio-button label="0">负</el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+            
+<el-form-item label="包含科目项:">
+              <el-radio-group v-model="node[props.include]" size="mini">
+                <el-radio-button :label="true">是</el-radio-button>
+                <el-radio-button :label="false">否</el-radio-button>
               </el-radio-group>
             </el-form-item>
           </el-form>
@@ -83,8 +90,9 @@ export default {
         [this.props.lable]: "新节点",
         [this.props.direction]: 1,
         [this.props.children]: [],
-        [this.props.proportion]: 0,
-         [this.props.code]:null
+        [this.props.proportion]: 1,
+         [this.props.code]:null,
+         [this.props.include]:true
       });
     },
     del(node) {

@@ -21,10 +21,26 @@ const addAppraiseCategory = data =>
         data: data
     })
 
+const updateAppraiseCategory = data =>
+    ajax({
+        url: "/appraise/updateAppraiseCategory.do",
+        method: 'post',
+        data: data
+    })
+
+const getAppraiseCategory = data =>
+    request({
+        url: "/appraise/getAppraiseCategory.do",
+        method: 'post',
+        data: data
+    })
+
 export default {
 
     uploadAttrUrl,
     getDictByDictNames,
-    addAppraiseCategory
+    addAppraiseCategory,
+    getAppraiseCategory,
+    updateAppraiseCategory
 
 };
