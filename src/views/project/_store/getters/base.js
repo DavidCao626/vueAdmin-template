@@ -14,3 +14,6 @@ export const getServiceTypeList = (state) => {
 export const getClassifyTypeList = (state) => {
     return state.baseproject.classifyType
 }
+export const getappraiseCategoryList = (state) => {
+    return state.baseproject.appraiseCategoryList
+}

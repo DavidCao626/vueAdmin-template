@@ -63,6 +63,15 @@ const queryClassifyTypeByCode = data =>
         method: 'post',
         data: data
     })
+
+
+const queryCategoryList = data =>
+    request({
+        url: "/appraise/queryCategoryList.do",
+        method: 'post',
+        data: data
+    })
+
 export default {
     insertOrUpdateProject,
     uploadAttrUrl,
@@ -72,5 +81,6 @@ export default {
     savePublicityEdit,
     queryNoticeTemplateByItemId,
     getProjectAllDataByItemId,
-    queryClassifyTypeByCode
+    queryClassifyTypeByCode,
+    queryCategoryList
 };

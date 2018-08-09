@@ -19,6 +19,13 @@
                 <el-radio-button label="0">负</el-radio-button>
               </el-radio-group>
             </el-form-item>
+
+            <el-form-item label="包含科目项:">
+              <el-radio-group v-model="node[props.include]" size="mini">
+                <el-radio-button :label="true">是</el-radio-button>
+                <el-radio-button :label="false">否</el-radio-button>
+              </el-radio-group>
+            </el-form-item>
           </el-form>
         </div>
         <span slot="reference">
@@ -67,7 +74,6 @@ export default {
       default: 1
     },
 
-  
     ShowStateBit: {
       type: Number,
       default: 1
@@ -114,18 +120,20 @@ export default {
           [this.props.lable]: "新节点",
           [this.props.direction]: 1,
           [this.props.children]: [],
-          [this.props.proportion]: 0,
-          [this.props.code]: null
+          [this.props.proportion]: 1,
+          [this.props.code]: null,
+          [this.props.include]: true
         };
       }
 
       //如果操作者是学院，那么push学院新增节点的（类型1 模版tree_type_1.vue）数据
       if (this.getNodeType == 1) {
         addNewNode = {
-          [this.props.lable]: "新节点", //节点名称
-          [this.props.score]: 80, //分值
+          [this.props.lable]: "学院新节点", //节点名称
+          [this.props.score]: 80, //分值 《========================================================注意这里测试新增的分值字段，可能会造成后台异常！！！！！
           [this.props.children]: [],
-          [this.props.code]: null
+          [this.props.code]: null,
+          [this.props.include]: true
         };
       }
 

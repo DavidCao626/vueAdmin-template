@@ -49,42 +49,42 @@
     <br/>
     </hr>
     <br/>
- <h3>二、测评信息</h3>
- <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
-<el-form-item label="名称">
-  <el-input v-model="form.expand.appraiseName" autosize focus style="width:50%;">
+    <h3>二、测评信息</h3>
+    <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
+      <el-form-item label="名称">
+        <el-input v-model="form.expand.appraiseName" autosize focus style="width:50%;">
           <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-  </el-input>
-</el-form-item>
-<el-form-item label="年度">
-  <el-input v-model="form.expand.appraiseYearType" autosize focus style="width:50%;">
+        </el-input>
+      </el-form-item>
+      <el-form-item label="年度">
+        <el-input v-model="form.expand.appraiseYearType" autosize focus style="width:50%;">
           <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-  </el-input>
-</el-form-item>
-<el-form-item label="开始时间">
-   <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.expand.appraiseStartTime" type="date" placeholder="选择日期">
+        </el-input>
+      </el-form-item>
+      <el-form-item label="开始时间">
+        <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.expand.appraiseStartTime" type="date" placeholder="选择日期">
         </el-date-picker>
-</el-form-item>
-<el-form-item label="结束时间">
-   <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.expand.appraiseEndTime" type="date" placeholder="选择日期">
+      </el-form-item>
+      <el-form-item label="结束时间">
+        <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.expand.appraiseEndTime" type="date" placeholder="选择日期">
         </el-date-picker>
-</el-form-item>
-<el-form-item label="测评类别">
+      </el-form-item>
+      <el-form-item label="测评类别">
 
         <el-select v-model="form.expand.appraiseServiceType" placeholder="请选择" @change="appraiseServiceTypeChange">
-          <el-option v-for="item in appraiseTypeList" :key="item.value" :label="item.label" :value="item.value">
+          <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id">
           </el-option>
         </el-select>
-        <el-button type="">修改</el-button> <el-button type="">新增</el-button>
-</el-form-item>
-</el-form>
-           
+        <el-button type="" @click="updateCategory">修改</el-button>
+        <el-button type="" @click="insertCategory">新增</el-button>
 
+      </el-form-item>
+    </el-form>
 
     <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
       <el-col :span="7">
         <el-button ref="next" @click="onSave">保存</el-button>
-        <el-button ref="back" @click="onSaveAndNext">保存并配置计划</el-button>
+        <el-button ref="back" @click="onSaveAndNext">保存并下发</el-button>
       </el-col>
     </el-row>
   </div>
@@ -135,29 +135,50 @@ export default {
       form: state.namespace + "/getProjectFormData",
       uploadAttrUrl: state.namespace + "/getUploadAttrUrl",
       ioptions: state.namespace + "/getServiceTypeList",
-      ClassifyTypeList: state.namespace + "/getClassifyTypeList"
+      ClassifyTypeList: state.namespace + "/getClassifyTypeList",
+      categoryList: state.namespace + "/getappraiseCategoryList"
     })
   },
   data() {
     return {
-      appraiseTypeList:[{
-        label:"假的测评类别",
-        value:"1"
-      }],
+      currentCategoryId: 0, //当前选中的测评类别id
+      appraiseTypeList: [
+        {
+          label: "假的测评类别",
+          value: "1"
+        }
+      ],
       classifyTypedetailPath: "",
       iopt: [],
       classifyType: ""
     };
   },
   methods: {
+    updateCategory() {
+      if(this.currentCategoryId == 0){
+        this.$message.error("请选择一个类别再进行操作")
+        return;
+      }
+      this.$router.push({
+        path: "/zongce/addCategory",
+        query: {
+          id: this.currentCategoryId
+        }
+      });
+    },
+    insertCategory() {
+      this.$router.push({
+        path: "/zongce/addCategory"
+      });
+    },
     ...mapActions({
       queryServiceTypeList: state.namespace + "/queryServiceTypeList",
       insertOrUpdateProject: state.namespace + "/insertOrUpdateProject",
       insertOrUpdateAndNext: state.namespace + "/insertOrUpdateAndNext"
       //    queryClassifyTypeByCode:store.namespace + "/queryClassifyTypeByCode"
     }),
-    appraiseServiceTypeChange(){
-
+    appraiseServiceTypeChange(val) {
+      this.currentCategoryId = val;
     },
     clasDetail() {
       if (this.classifyTypedetailPath != "") {
@@ -191,13 +212,13 @@ export default {
         projectAttachmentId: t.projectAttachmentId,
         classifyType: this.classifyType,
         attrDetailBean: null,
-        expand:{
-          appraiseId:t.expand.appraiseId,
-            appraiseName: t.expand.appraiseName,//名称
-            appraiseStartTime: t.expand.appraiseStartTime,//开始时间
-            appraiseEndTime: t.expand.appraiseEndTime,//结束时间
-            appraiseYearType: t.expand.appraiseYearType,//年度
-            appraiseServiceType:t.expand.appraiseServiceType//测评类别
+        expand: {
+          appraiseId: t.expand.appraiseId,
+          appraiseName: t.expand.appraiseName, //名称
+          appraiseStartTime: t.expand.appraiseStartTime, //开始时间
+          appraiseEndTime: t.expand.appraiseEndTime, //结束时间
+          appraiseYearType: t.expand.appraiseYearType, //年度
+          appraiseServiceType: t.expand.appraiseServiceType //测评类别
         }
       };
       this.insertOrUpdateAndNext(requestData).then(response => {
@@ -205,7 +226,7 @@ export default {
         this.form.id = response.resBody.projectId;
         console.log(["insertOrUpdateAndNext", response]);
         this.$router.push({
-          name: "projectConfig",
+          name: "issuedAppraiseProject",
           params: {
             itemId: response.resBody.itemId,
             scopeId: response.resBody.scopeId

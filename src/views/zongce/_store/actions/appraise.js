@@ -14,7 +14,56 @@ const addAppraiseCategory = ({ commit, state }, params) => new Promise(resolve =
         resolve(response)
     })
 })
+
+
+const getAppraiseCategory = ({ commit, state }, params) => new Promise(resolve => {
+    api.getAppraiseCategory(params).then(response => {
+        console.log(["getAppraiseCategory", response])
+        resolve(response)
+    })
+})
+
+const updateAppraiseCategory = ({ commit, state }, params) => new Promise(resolve => {
+    api.updateAppraiseCategory(params).then(response => {
+        console.log(["updateAppraiseCategory", response])
+        resolve(response)
+    })
+})
+
+const getAppraiseInfoByScopeIdAndItemId = ({ commit, state }, params) => new Promise(resolve => {
+    api.getAppraiseInfoByScopeIdAndItemId(params).then(response => {
+        console.log(["getAppraiseInfoByScopeIdAndItemId", response])
+        resolve(response)
+    })
+})
+
+const addProspectus = ({ commit, state }, params) => new Promise(resolve => {
+    api.addProspectus(params).then(response => {
+        console.log(["addProspectus", response])
+        resolve(response)
+    })
+})
+
+const querySchemesByOrgCodeAndCategoryId = ({ commit, state }, params) => new Promise(resolve => {
+    api.querySchemesByOrgCodeAndCategoryId(params).then(response => {
+        console.log(["querySchemesByOrgCodeAndCategoryId", response])
+        resolve(response)
+    })
+})
+
+const completeUserPendingByItemId = ({ commit, state }, params) => new Promise(resolve => {
+    api.completeUserPendingByItemId(params).then(response => {
+        console.log(["completeUserPendingByItemId", response])
+        resolve(response)
+    })
+})
 export default {
     getDictByDictNames,
-    addAppraiseCategory
+    addAppraiseCategory,
+    getAppraiseCategory,
+    updateAppraiseCategory,
+    getAppraiseInfoByScopeIdAndItemId,
+    addProspectus,
+    querySchemesByOrgCodeAndCategoryId,
+    completeUserPendingByItemId
 }

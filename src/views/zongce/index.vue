@@ -72,8 +72,8 @@ export default {
           lable: "name", //定义要绑定node对象的哪个字段名：：名称
           proportion: "ratio", //定义要绑定node对象的哪个字段名：：占比
           direction: "orientation", //定义要绑定node对象的哪个字段名：：方向
-          score:"score",//分值
-          code: "code"
+          code: "code",
+          include: "include" //是否包含科目项
         };
       }
     }
@@ -86,7 +86,9 @@ export default {
       *  rootShowStateBit路由加载回来进行赋值 ；
       *  算法详解：https://www.cnblogs.com/shipengfei/p/5996270.html
      */
-      ShowStateBit:1,
+      ShowStateBit:3,
+      opType: "A", //增加
+      id: null,
       formInline: {
         name: "",
         isok: "Y"
@@ -105,30 +107,94 @@ export default {
   },
   methods: {
     ...mapActions({
-      addAppraiseCategory: store.namespace + "/addAppraiseCategory"
+      addAppraiseCategory: store.namespace + "/addAppraiseCategory",
+      getAppraiseCategory: store.namespace + "/getAppraiseCategory",
+      updateAppraiseCategory: store.namespace + "/updateAppraiseCategory"
     }),
+
     onSubmit() {
-      console.log(["onSubmt", this.node]);
-      debugger;
-      var requestData = {
-        name: this.formInline.name,
-        available: this.formInline.isok,
-        template: this.node
-      };
-      this.addAppraiseCategory(requestData).then(response => {
-        console.log(response);
-      });
+      if (this.opType == "A") {
+        //增加
+        console.log(["onSubmt", this.node]);
+        var name = JSON.parse(JSON.stringify(this.formInline.name));
+        var available = JSON.parse(JSON.stringify(this.formInline.isok));
+        var template = JSON.parse(JSON.stringify(this.node));
+        var requestData = {
+          name: name,
+          available: available,
+          template: template
+        };
+        requestData.template.items = this.node.childItems.slice();
+        delete requestData.template.name;
+        delete requestData.template.ratio;
+        delete requestData.template.orientation;
+        delete requestData.template.childItems;
+        this.addAppraiseCategory(requestData).then(response => {
+          console.log(response);
+           this.$message.success("增加成功");
+           this.$router.go(-1)
+        });
+      } else {
+        //更新
+        console.log(["onSubmt", this.node]);
+        var name = JSON.parse(JSON.stringify(this.formInline.name));
+        var available = JSON.parse(JSON.stringify(this.formInline.isok));
+        var template = JSON.parse(JSON.stringify(this.node));
+        var id = JSON.parse(JSON.stringify(this.id));
+
+        var requestData = {
+          id: id,
+          name: name,
+          available: available,
+          template: template
+        };
+        requestData.template.items = this.node.childItems.slice();
+        delete requestData.template.name;
+        delete requestData.template.ratio;
+        delete requestData.template.orientation;
+        delete requestData.template.childItems;
+
+        this.updateAppraiseCategory(requestData).then(response => {
+          this.$message.success("更新成功");
+          this.$router.go(-1)
+        });
+      }
     },
     addRootNode() {
       console.log([this.props, ""]);
       this.node[this.props.children].push({
         [this.props.lable]: "新节点",
-        [this.props.proportion]: 0,
+        [this.props.proportion]: 1,
         [this.props.direction]: 1,
         [this.props.children]: [],
-        [this.props.code]: null
+        [this.props.code]: null,
+        [this.props.include]: true
       });
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.opType = "A";
+      if (to.query.id) {
+        vm.getAppraiseCategory({ id: to.query.id }).then(response => {
+          console.log(["getAppraiseCategory", response]);
+          vm.opType = "U"; //更新
+          vm.id = to.query.id;
+          var res = response.resBody;
+
+          vm.node = res.template;
+          vm.node.name = "这是不显示的节点";
+          vm.node.ratio = 0;
+          vm.node.orientation = 1;
+          vm.node.childItems = res.template.items;
+
+          vm.formInline = {
+            name: res.name,
+            isok: res.available
+          };
+        });
+      }
+    });
   }
 };
 </script>
