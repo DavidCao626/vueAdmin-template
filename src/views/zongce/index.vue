@@ -83,7 +83,7 @@ export default {
       /* 
       *  ShowStateBit权限控制位， v-state-show中的值（所属权限1不可用 2可用）会与该值 进行按位与运算 如果结果等于0则隐藏；
       *  例：1(0x1)为学院权限 3(0x10)为学校权限；
-      *  rootShowStateBit路由加载回来进行赋值 ；
+      *  ShowStateBit路由加载回来进行赋值 ；
       *  算法详解：https://www.cnblogs.com/shipengfei/p/5996270.html
      */
       ShowStateBit:3,
