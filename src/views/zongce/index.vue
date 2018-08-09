@@ -124,6 +124,8 @@ export default {
         delete requestData.template.childItems;
         this.addAppraiseCategory(requestData).then(response => {
           console.log(response);
+           this.$message.success("增加成功");
+           this.$router.go(-1)
         });
       } else {
         //更新
@@ -147,6 +149,7 @@ export default {
 
         this.updateAppraiseCategory(requestData).then(response => {
           this.$message.success("更新成功");
+          this.$router.go(-1)
         });
       }
     },

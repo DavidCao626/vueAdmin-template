@@ -30,9 +30,32 @@ const updateAppraiseCategory = ({ commit, state }, params) => new Promise(resolv
     })
 })
 
+const getAppraiseInfoByScopeIdAndItemId = ({ commit, state }, params) => new Promise(resolve => {
+    api.getAppraiseInfoByScopeIdAndItemId(params).then(response => {
+        console.log(["getAppraiseInfoByScopeIdAndItemId", response])
+        resolve(response)
+    })
+})
+
+const addProspectus = ({ commit, state }, params) => new Promise(resolve => {
+    api.addProspectus(params).then(response => {
+        console.log(["addProspectus", response])
+        resolve(response)
+    })
+})
+
+const querySchemesByOrgCodeAndCategoryId = ({ commit, state }, params) => new Promise(resolve => {
+    api.querySchemesByOrgCodeAndCategoryId(params).then(response => {
+        console.log(["querySchemesByOrgCodeAndCategoryId", response])
+        resolve(response)
+    })
+})
 export default {
     getDictByDictNames,
     addAppraiseCategory,
     getAppraiseCategory,
-    updateAppraiseCategory
+    updateAppraiseCategory,
+    getAppraiseInfoByScopeIdAndItemId,
+    addProspectus,
+    querySchemesByOrgCodeAndCategoryId
 }

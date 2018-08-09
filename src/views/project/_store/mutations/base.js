@@ -30,3 +30,6 @@ export const setProjectFormData = (state, projectFormData) => {
 export const setClassifyType = (state, classifyType) => {
     state.baseproject.classifyType = classifyType
 }
+export const setAppraiseCategory = (state, appraiseCategoryList) => {
+    state.baseproject.appraiseCategoryList = appraiseCategoryList
+}

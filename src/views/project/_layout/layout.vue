@@ -16,7 +16,8 @@ export default {
     ...mapActions({
       initConfig: store.namespace + '/configInit',
       queryServiceTypeList: store.namespace + '/queryServiceTypeList',
-      getDictByDictNames:store.namespace + '/getDictByDictNames'
+      getDictByDictNames:store.namespace + '/getDictByDictNames',
+      queryCategoryList:store.namespace + "/queryCategoryList"
     }),
     ...mapMutations({
       setUploadAttrUrl:store.namespace+'/setUploadAttrUrl'
@@ -28,7 +29,7 @@ export default {
       dicts :['node_state','pend_state']
     }
     this.getDictByDictNames(getDictParams);
-
+    this.queryCategoryList({available:"Y"})
     //查询业务类别列表
     this.queryServiceTypeList();
     //设置上传地址

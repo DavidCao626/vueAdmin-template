@@ -35,12 +35,39 @@ const getAppraiseCategory = data =>
         data: data
     })
 
+
+
+const getAppraiseInfoByScopeIdAndItemId = data =>
+    request({
+        url: "/appraise/getAppraiseInfoByScopeIdAndItemId.do",
+        method: 'post',
+        data: data
+    })
+
+const addProspectus = data =>
+    request({
+        url: "/appraise/addProspectus.do",
+        method: 'post',
+        data: data
+    })
+
+
+
+const querySchemesByOrgCodeAndCategoryId = data =>
+    request({
+        url: "/appraise/querySchemesByOrgCodeAndCategoryId.do",
+        method: 'post',
+        data: data
+    }) 
 export default {
 
     uploadAttrUrl,
     getDictByDictNames,
     addAppraiseCategory,
     getAppraiseCategory,
-    updateAppraiseCategory
+    updateAppraiseCategory,
+    getAppraiseInfoByScopeIdAndItemId,
+    addProspectus,
+    querySchemesByOrgCodeAndCategoryId
 
 };

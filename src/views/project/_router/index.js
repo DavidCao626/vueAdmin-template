@@ -345,12 +345,19 @@ export const projectRouter = {
       meta: { hidden: true, title: "学校组评" }
     },
     //-------------综合测评----------
-    {//国家助学金
+    {
       path: "createAppraiseProject",
       name: "createAppraiseProject",
       title: "创建综测项目",
       component: () => import("../appraise/createProject.vue"),
       meta: { hidden: true, title: "学校组评" }
+    },
+    {//国家助学金
+      path: "issuedAppraiseProject",
+      name: "issuedAppraiseProject",
+      title: "下发任务",
+      component: () => import("../appraise/start.vue"),
+      meta: { hidden: true, title: "下发任务" }
     }
   ]
 };

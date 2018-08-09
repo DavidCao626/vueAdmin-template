@@ -87,6 +87,14 @@ const queryClassifyTypeByCode = ({ commit, state }, data) =>
       resolve(response)
     })
   })
+
+const queryCategoryList = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryCategoryList(data).then(response => {
+      commit("setAppraiseCategory",response.resBody)
+
+    })
+  })
 export default {
   setProjectServiceType,
   insertOrUpdateProject,
@@ -96,5 +104,6 @@ export default {
   savePublicityEdit,
   queryNoticeTemplateByItemId,
   getProjectAllDataByItemId,
-  queryClassifyTypeByCode
+  queryClassifyTypeByCode,
+  queryCategoryList
 }

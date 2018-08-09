@@ -24,6 +24,16 @@ export const zongceRouter = {
       }
     },
     {
+      path: "appraiseScheme",
+      name: "appraiseScheme",
+      component: () => import("../appraiseScheme.vue"),
+      meta: {
+        title: "配置计划书",
+        icon: "example",
+        hidden: true
+      }
+    },
+    {
       path: "zongce2",
       name: "标准分",
       component: () => import("../zongce2.vue"),

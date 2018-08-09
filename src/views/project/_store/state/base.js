@@ -23,6 +23,6 @@ export const baseproject = {
         }
     },
     tempProjectId:"",//临时储存当前项目id
-    uploadAttrUrl: ""
-   
+    uploadAttrUrl: "",
+    appraiseCategoryList:[]
  }
