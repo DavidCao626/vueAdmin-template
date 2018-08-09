@@ -66,7 +66,6 @@ export default {
   },
   data() {
     return {
-      ShowStateBit: 1, //权限控制位， v-state-show中的值会与该值 进行按位与运算
       visible2: false,
       formLabelAlign: {
         name: "",
