@@ -59,6 +59,12 @@ const querySchemesByOrgCodeAndCategoryId = data =>
         method: 'post',
         data: data
     }) 
+const completeUserPendingByItemId = data =>
+    request({
+        url: "/project/completeUserPendingByItemId.do",
+        method: "post",
+        data: data
+    })
 export default {
 
     uploadAttrUrl,
@@ -68,6 +74,7 @@ export default {
     updateAppraiseCategory,
     getAppraiseInfoByScopeIdAndItemId,
     addProspectus,
-    querySchemesByOrgCodeAndCategoryId
+    querySchemesByOrgCodeAndCategoryId,
+    completeUserPendingByItemId
 
 };

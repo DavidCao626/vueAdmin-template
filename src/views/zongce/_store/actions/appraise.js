@@ -50,6 +50,13 @@ const querySchemesByOrgCodeAndCategoryId = ({ commit, state }, params) => new Pr
         resolve(response)
     })
 })
+
+const completeUserPendingByItemId = ({ commit, state }, params) => new Promise(resolve => {
+    api.completeUserPendingByItemId(params).then(response => {
+        console.log(["completeUserPendingByItemId", response])
+        resolve(response)
+    })
+})
 export default {
     getDictByDictNames,
     addAppraiseCategory,
@@ -57,5 +64,6 @@ export default {
     updateAppraiseCategory,
     getAppraiseInfoByScopeIdAndItemId,
     addProspectus,
-    querySchemesByOrgCodeAndCategoryId
+    querySchemesByOrgCodeAndCategoryId,
+    completeUserPendingByItemId
 }

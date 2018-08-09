@@ -48,8 +48,9 @@ import moment from "moment";
 export default {
   data() {
     return {
+      itemId: null,
       appraiseProject: {
-        categoryId:null,
+        categoryId: null,
         id: null,
         name: "",
         yearType: "",
@@ -58,15 +59,15 @@ export default {
         schemeId: null,
         schemeName: ""
       },
-      schemeList: [{ label: "假的方案", value: 1 }]
+      schemeList: []
     };
   },
   components: {},
   methods: {
     schemeIdChange(val) {
       for (var i = 0; i < this.schemeList.length; i++) {
-        if (this.schemeList[i].value == val) {
-          this.appraiseProject.schemeName = this.schemeList[i].label;
+        if (this.schemeList[i].id == val) {
+          this.appraiseProject.schemeName = this.schemeList[i].name;
         }
       }
     },
@@ -74,7 +75,10 @@ export default {
       getAppraiseInfoByScopeIdAndItemId:
         store.namespace + "/getAppraiseInfoByScopeIdAndItemId",
       addProspectus: store.namespace + "/addProspectus",
-      querySchemesByOrgCodeAndCategoryId:store.namespace + "/querySchemesByOrgCodeAndCategoryId"
+      querySchemesByOrgCodeAndCategoryId:
+        store.namespace + "/querySchemesByOrgCodeAndCategoryId",
+      completeUserPendingByItemId:
+        store.namespace + "/completeUserPendingByItemId"
     }),
     dateFormatter(dateSource) {
       return moment(dateSource, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD");
@@ -86,8 +90,19 @@ export default {
         schemeName: this.appraiseProject.schemeName
       };
       this.addProspectus(requestData).then(response => {
-        this.$message.success("保存成功");
-        this.$router.go(-1)
+        this.completeUserPendingByItemId({ itemId: this.itemId }).then(
+          response => {
+            this.$message.success("保存成功");
+            this.$router.go(-1);
+            console.log(["this", this]);
+            this.$router.push({
+              path: "/project/control",
+              query: {
+                scopeId: response.resBody.scopeId
+              }
+            });
+          }
+        );
       });
     }
   },
@@ -101,10 +116,15 @@ export default {
           })
           .then(response => {
             var res = response.resBody;
+            vm.itemId = to.query.itemId;
             vm.appraiseProject = res.appraiseProject;
-            vm.querySchemesByOrgCodeAndCategoryId({categoryId:vm.appraiseProject.categoryId}).then(response=>{
-              vm.schemeList = response.resBody;
-            })
+            vm
+              .querySchemesByOrgCodeAndCategoryId({
+                categoryId: vm.appraiseProject.categoryId
+              })
+              .then(response => {
+                vm.schemeList = response.resBody;
+              });
           });
       } else {
         vm.$message.error("参数错误");
