@@ -7,35 +7,26 @@
       <el-popover placement="top" width="260" v-model="visible2">
         <div style="margin-top:10px">
           <el-form label-position="left" label-width="50px" :model="formLabelAlign" size="mini">
-            <el-form-item label="名称:" v-state-show="2">
+            <el-form-item label="名称:" v-state-show="1">
               <el-input v-model="node[props.lable]"></el-input>
             </el-form-item>
-            <el-form-item label="占比:" v-state-show="1">
-              <el-input maxlength="5" v-model="node[props.proportion]"></el-input>
-            </el-form-item>
-            <el-form-item label="方向:" v-state-show="2">
-              <el-radio-group v-model="node[props.direction]" size="mini">
-                <el-radio-button label="1">正</el-radio-button>
-                <el-radio-button label="0">负</el-radio-button>
-              </el-radio-group>
+            <el-form-item label="分值:" v-state-show="1">
+              <el-input v-model="node[props.score]" maxlength="3"></el-input>
             </el-form-item>
           </el-form>
         </div>
         <span slot="reference">
-          {{ nodeLable(node[props.lable]) }}({{ node[props.proportion] }})
-          <span style="font-size:10px" v-if="node[props.direction]=='1'">正</span>
-          <span style="color:red;font-size:10px" v-else>负</span>
-          &nbsp;
+          {{ nodeLable(node[props.lable]) }}&nbsp;({{ node[props.score] }}) &nbsp;&nbsp;
         </span>
 
       </el-popover>
-
-      <i class="el-icon-remove" @click="del(node)" style="color:#bbb" v-state-show="2"></i>
+      <i class="el-icon-remove" v-state-show="1" @click="del(node)" style="color:#bbb"></i>
       <i class="el-icon-circle-plus" style="color:#bbb;" @click="add(node)"></i>
     </div>
     <template v-if="node[props.children].length>0 ">
       <div class="branch">
-        <component v-bind:is="which_to_show" v-for="(child,index)  in node[props.children]" :ShowStateBit="ShowStateBit" :node="child" :getNodeType="1" :key="index" :props="props" :class="node[props.children].length==1?'sole':''"></component>
+        <component v-bind:is="which_to_show" v-for="(child,index)  in node[props.children]" :ShowStateBit="ShowStateBit" :node="child" :getNodeType="getNodeType" :key="index" :props="props" :class="node[props.children].length==1?'sole':''"></component>
+
       </div>
     </template>
 
@@ -43,12 +34,15 @@
 </template>
 
 <script>
-import treeType1 from "./tree_type_1";
+import ZcTreeNode from "./tree";
 
 export default {
-  name: "ZcTreeNode",
+  name: "tree-type-1",
 
-  componentName: "ZcTreeNode",
+  componentName: "tree-type-1",
+  components: {
+    ZcTreeNode
+  },
   props: {
     props: {
       type: Object,
@@ -62,24 +56,18 @@ export default {
       }
     },
     getNodeType: {
-      //获取要新建下级节点的类型 0: tree.vue;   1: tree_type_1.vue; 。
       type: Number,
       default: 1
-    },
-
-  
+    }, //获取要新建下级节点的类型 0: tree.vue;   1: tree_type_1.vue;
     ShowStateBit: {
       type: Number,
       default: 1
     }
   },
-  components: {
-    "tree-type-1": treeType1
-  },
   data() {
     return {
+      ShowStateBit: 1, //权限控制位， v-state-show中的值会与该值 进行按位与运算
       visible2: false,
-
       formLabelAlign: {
         name: "",
         region: "",
@@ -87,6 +75,7 @@ export default {
       }
     };
   },
+
   computed: {
     which_to_show() {
       if (this.getNodeType == 0) {
@@ -100,6 +89,7 @@ export default {
   methods: {
     nodeLable(lable) {
       console.log(lable.length);
+
       if (lable.length > 4) {
         return lable.substring(0, 4) + "...";
       } else {
@@ -159,7 +149,7 @@ export default {
 <style lang="scss" scoped>
 //------- {{ Variables }} -------//
 
-$white: #7b7b7b;
+$white: rgb(83, 187, 87);
 $bg: #fff;
 
 $horizontal-gutter: 40px;
@@ -170,7 +160,6 @@ $entry-min-height: 60px;
 $label-width: 200px; //label字段长度
 $label-height: 30px;
 $label-border-radius: 5px;
-
 //------- {{ Styles }} -------//
 
 *,

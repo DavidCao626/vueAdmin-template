@@ -16,7 +16,7 @@ import '~/icons' // icon
  import '~/permission' // permission control
 
 // import './mock' // simulation data
-import state from "~/directive/state"; // 指令
+import state from "~/directive/state-show"; // 指令
 Vue.use(state);
 
 import * as filters from './filters' // global filters

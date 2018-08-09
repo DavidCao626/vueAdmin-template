@@ -1,7 +1,7 @@
 import state from "./state";
 
 const install = function (Vue) {
-    Vue.directive("state", state);
+    Vue.directive("state-show", state);
 }
 
 if (window.Vue) {

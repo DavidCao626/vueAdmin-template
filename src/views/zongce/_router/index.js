@@ -7,21 +7,16 @@
 
 export const zongceRouter = {
   path: "/zongce",
-
   name: "综测中心",
   redirect: "/zongce/addCategory",
   component: () => import("../_layout/layout.vue"),
-  meta: { title: "综测", icon: "example", hidden: false },
+  meta: { title: "综测", icon: "example", hidden: true },
   children: [
     {
       path: "addCategory",
       name: "addCategory",
       component: () => import("../index.vue"),
-      meta: {
-        title: "新建综测计划模版",
-        icon: "example",
-        hidden: true
-      }
+      meta: { title: "新建综测计划模版", icon: "example", hidden: true }
     },
     {
       path: "zongce2",

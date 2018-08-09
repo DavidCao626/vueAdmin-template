@@ -8,33 +8,33 @@
       <div slot="panel">
         <div>
           <el-form :model="formInline" class="demo-form-inline">
-            <el-form-item label="名称：">
+            <el-form-item label="名称："v-state-show="2">
               <el-input v-model="formInline.name" placeholder="模版名称" style="width:300px"></el-input>
             </el-form-item>
-            <el-form-item label="是否启用:">
-              <el-radio-group v-model="formInline.isok" size="mini">
+            <el-form-item label="是否启用:" v-state-show="1">
+              <el-radio-group v-model="formInline.isok" size="mini" >
                 <el-radio-button label="Y">是</el-radio-button>
                 <el-radio-button label="N">否</el-radio-button>
               </el-radio-group>
             </el-form-item>
 
-            <el-form-item label="添加配置节点:">
+            <el-form-item label="添加配置节点:" v-state-show="2">
               <el-button icon="el-icon-plus" size="mini" plain @click="addRootNode()">添加</el-button>
             </el-form-item>
           </el-form>
 
         </div>
 
-        <!-- <el-scollbar> -->
+        <!-- <el-scollbar>  -->
         <div style="overflow:scroll">
           <div class="wrapper">
 
-            <zc-tree-node v-for="(child,index) in node[props.children]" :props="props" :node="child" :key="index" :class="node[props.children].length==1?'sole':''">
+            <zc-tree-node v-for="(child,index) in node[props.children]" :props="props" :ShowStateBit="ShowStateBit" :getNodeType="0" :node="child" :key="index" :class="node[props.children].length==1?'sole':''">
             </zc-tree-node>
           </div>
         </div>
 
-        <!-- </el-scollbar> -->
+        <!-- </el-scollbar>  -->
 
       </div>
 
@@ -72,6 +72,7 @@ export default {
           lable: "name", //定义要绑定node对象的哪个字段名：：名称
           proportion: "ratio", //定义要绑定node对象的哪个字段名：：占比
           direction: "orientation", //定义要绑定node对象的哪个字段名：：方向
+          score:"score",//分值
           code: "code"
         };
       }
@@ -79,6 +80,13 @@ export default {
   },
   data() {
     return {
+      /* 
+      *  ShowStateBit权限控制位， v-state-show中的值（所属权限）会与该值 进行按位与运算 如果结果等于0则隐藏；
+      *  例：1(0x1)为学院权限 3(0x10)为学校权限；
+      *  rootShowStateBit路由加载回来进行赋值 ；
+      *  算法详解：https://www.cnblogs.com/shipengfei/p/5996270.html
+     */
+      ShowStateBit:1,
       formInline: {
         name: "",
         isok: "Y"
@@ -101,6 +109,7 @@ export default {
     }),
     onSubmit() {
       console.log(["onSubmt", this.node]);
+      debugger;
       var requestData = {
         name: this.formInline.name,
         available: this.formInline.isok,
@@ -111,7 +120,7 @@ export default {
       });
     },
     addRootNode() {
-      console.log([this.props,""])
+      console.log([this.props, ""]);
       this.node[this.props.children].push({
         [this.props.lable]: "新节点",
         [this.props.proportion]: 0,
