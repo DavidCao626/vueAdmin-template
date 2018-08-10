@@ -79,25 +79,93 @@
             </div>
           </el-col>
           <el-col :span="18">
-            <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
+            <template v-if="nodeObj.type==1">
+              <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
 
-              <div class="block-header">
-                <h3>{{ nodeObj.label }}</h3>
+                <div class="block-header">
+                  <h3>{{ nodeObj.label }}</h3>
+                </div>
+
+                <div style="margin-top:20px">
+                  <el-form ref="form" :model="form" label-width="80px">
+                    <el-form-item label="活动名称">
+                      <el-input v-model="form.name"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="活动时间">
+                      <el-col :span="11">
+                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                      </el-col>
+                      <el-col class="line" :span="2">-</el-col>
+                      <el-col :span="11">
+                        <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
+                      </el-col>
+                    </el-form-item>
+                    <h2>{{ nodeObj.type }}</h2>
+                  </el-form>
+                </div>
               </div>
+            </template>
 
-              <div style="margin-top:20px">
-                <zongceCollapse :data="this.kemuList" @onNodeDel=onNodeDel></zongceCollapse>
+            <template v-if="nodeObj.type==2">
+              <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
+
+                <div class="block-header">
+                  <h3>{{ nodeObj.label }}</h3>
+                </div>
+
+                <div style="margin-top:20px">
+                  <el-form ref="form" :model="form" label-width="80px">
+                    <el-form-item label="活动名称">
+                      <el-input v-model="form.name"></el-input>
+                    </el-form-item>
+                    <el-form-item label="活动区域">
+                      <el-select v-model="form.region" placeholder="请选择活动区域">
+                        <el-option label="区域一" value="shanghai"></el-option>
+                        <el-option label="区域二" value="beijing"></el-option>
+                      </el-select>
+                    </el-form-item>
+                    <el-form-item label="活动时间">
+                      <el-col :span="11">
+                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                      </el-col>
+                      <el-col class="line" :span="2">-</el-col>
+                      <el-col :span="11">
+                        <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
+                      </el-col>
+                    </el-form-item>
+                    <h2>{{ nodeObj.type }}</h2>
+                  </el-form>
+
+                </div>
 
               </div>
-              <div>
-                <el-button type="text" size="mini" @click="dialogVisible = true">+ 新增科目项</el-button>&nbsp;&nbsp;
+            </template>
+
+            <template v-if="nodeObj.type==3">
+              <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
+
+                <div class="block-header">
+                  <h3>{{ nodeObj.label }}</h3>
+                </div>
+
+                <div style="margin-top:20px">
+                  <zongceCollapse :data="this.kemuList" :ShowStateBit="ShowStateBit" @onNodeDel=onNodeDel></zongceCollapse>
+
+                </div>
+                <div>
+                  <el-button v-state-show="1"  type="text" size="mini" @click="dialogVisible = true"  >+ 新增科目项</el-button>&nbsp;&nbsp;
+
+                  
+                </div>
+
               </div>
+              <div class="block-right" v-else>
+                <div class="block-right__noBody">请选择左侧叶节点-分值科目项</div>
 
-            </div>
-            <div class="block-right" v-else>
-              <div class="block-right__noBody">请选择左侧叶节点-分值科目项</div>
-
-            </div>
+              </div>
+            
+            </template>
           </el-col>
         </el-row>
       </div>
@@ -114,22 +182,38 @@ export default {
   },
   data() {
     return {
+      ShowStateBit:1,//权限位
+      form: {
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
+        delivery: false,
+        type: [],
+        resource: "",
+        desc: ""
+      },
       addlabel: "",
       dialogVisible: false,
-      nodeObj: {},
+      nodeObj: { label: "我的学校", id: 1, type: 1 }, //当前点击节点
+
       data: [
         {
           id: 1,
           label: "我的学校",
+          type: 1,
           children: [
             {
               id: 2,
               label: "校党委",
+              type: 1,
               children: [
                 {
                   label: "二级 1-1",
+                  type: 2,
                   children: [
                     {
+                      type: 3,
                       label: "三级 1-1-1"
                     }
                   ]
@@ -141,6 +225,7 @@ export default {
               label: "校团委",
               children: [
                 {
+                  type: 2,
                   label: "二级 2-1",
                   children: [
                     {
@@ -149,6 +234,7 @@ export default {
                   ]
                 },
                 {
+                  type: 2,
                   label: "二级 2-2",
                   children: [
                     {
@@ -160,6 +246,7 @@ export default {
             },
             {
               id: 4,
+              type: 2,
               label: "学工处",
               children: [
                 {
@@ -174,20 +261,25 @@ export default {
             },
             {
               id: 5,
+              type: 2,
               label: "旗下学院",
               children: [
                 {
+                  type: 2,
                   label: "数学学院",
                   children: [
                     {
+                      type: 3,
                       label: "三级 3-1-1"
                     }
                   ]
                 },
                 {
+                  type: 2,
                   label: "蒙古学院",
                   children: [
                     {
+                      type: 3,
                       label: "三级 3-2-1"
                     }
                   ]
@@ -202,11 +294,12 @@ export default {
   },
   methods: {
     handleNodeClick(nodeDataObj, nodeObj) {
-      if (!nodeDataObj.children || nodeDataObj.children.length == 0) {
-        this.nodeObj = nodeDataObj; //只有点击叶节点才能触发右面数据加载
-      } else {
-        this.nodeObj = {};
-      }
+      // if (!nodeDataObj.children || nodeDataObj.children.length == 0) {
+      //   this.nodeObj = nodeDataObj; //只有点击叶节点才能触发右面数据加载
+      // } else {
+      //   this.nodeObj = {};
+      // }
+      this.nodeObj = nodeDataObj;
     },
     onNodeDel(nodeData) {
       if (nodeData.fenzhiList && nodeData.fenzhiList.length > 0) {

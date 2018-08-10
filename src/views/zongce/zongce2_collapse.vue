@@ -33,14 +33,14 @@
                                 <el-button type="primary" size="mini" @click="km.visible2 = false">保存</el-button>
                             </div>
                         </div>
-                        <span slot="reference" >
-                            <i class="el-icon-edit-outline" style="color:#409EFF">
+                        <span slot="reference">
+                            <i class="el-icon-edit-outline" style="color:#409EFF" v-state-show="1">
                             </i> &nbsp;&nbsp;
                         </span>
 
                     </el-popover>
 
-                    <el-button size="mini" type="text" class="el-icon-circle-close" @click.stop="onNodeDel(km)"></el-button>
+                    <el-button size="mini" type="text" class="el-icon-circle-close" @click.stop="onNodeDel(km)" v-state-show="1"></el-button>
                 </template>
                 <div style="margin-left: 40px;">
 
@@ -48,15 +48,15 @@
                         <li v-for="(fz,index) in km.fenzhiList" :key="index">
 
                             <span @click="editShow(fz)">分值项：{{ fz.label }} &nbsp;分数：{{ fz.score }}&nbsp;&nbsp;
-                                <i class="el-icon-edit-outline" style="color:#409EFF">
+                                <i class="el-icon-edit-outline" style="color:#409EFF" v-state-show="1">
                                 </i>
                             </span>
 
                             &nbsp;&nbsp;
-                            <i class="el-icon-circle-close" style="color:#409EFF" @click="del(km,fz)">&nbsp;</i>
+                            <i class="el-icon-circle-close" style="color:#409EFF" @click="del(km,fz)" v-state-show="1">&nbsp;</i>
                         </li>
                     </ul>
-                    <el-button size="mini" type="text" class="el-icon-plus" @click="addShow(km)">新增分值项</el-button>
+                    <el-button size="mini" type="text" class="el-icon-plus" @click="addShow(km)" v-state-show="1">新增分值项</el-button>
                 </div>
 
             </el-collapse-item>
@@ -67,7 +67,17 @@
 
 <script>
 export default {
-  props: ["data"],
+  props: {
+    data: {
+      default() {
+        return [];
+      }
+    },
+    ShowStateBit: {
+      type: Number,
+      default: 1
+    }
+  },
   data() {
     return {
       label: "",

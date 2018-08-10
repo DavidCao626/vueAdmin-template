@@ -24,7 +24,7 @@
         </el-form-item>
         <br />
         <el-form-item>
-          <el-button type="success" size="medium" @click="submitForm('ruleLoginForm')" v-waves>{{$t('login.logIn')}}</el-button>
+          <el-button   type="success" size="medium" @click="submitForm('ruleLoginForm')" v-waves>{{$t('login.logIn')}}</el-button>
           <!-- <el-button type="text">忘记密码?</el-button> -->
           &nbsp;&nbsp;
         	<router-link to="/register">
@@ -49,6 +49,7 @@ export default {
   },
   data() {
     return {
+      ShowStateBit:1,
       serverMessage: {
         exType: 'error',
         message: '登录失败',
