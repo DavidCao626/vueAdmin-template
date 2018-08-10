@@ -22,14 +22,12 @@
               <el-button icon="el-icon-plus" size="mini" plain @click="addRootNode()">添加</el-button>
             </el-form-item>
           </el-form>
-
         </div>
 
         <!-- <el-scollbar>  -->
         <div style="overflow:scroll">
           <div class="wrapper">
-
-            <zc-tree-node v-for="(child,index) in node[props.children]" :props="props" :ShowStateBit="ShowStateBit" :getNodeType="0" :node="child" :key="index" :class="node[props.children].length==1?'sole':''">
+            <zc-tree-node v-for="(child,index) in node[props.children]" :props="props" :ShowStateBit="ShowStateBit"  :node="child" :key="index" :class="node[props.children].length==1?'sole':''">
             </zc-tree-node>
           </div>
         </div>
@@ -73,7 +71,13 @@ export default {
           proportion: "ratio", //定义要绑定node对象的哪个字段名：：占比
           direction: "orientation", //定义要绑定node对象的哪个字段名：：方向
           code: "code",
-          include: "include" //是否包含科目项
+          include: "include", //是否包含科目项,
+          leaf:"leaf",
+          hcChildren:"hcItems",//存学院的树
+          hcName:"name",
+          hcCode:"code",
+          hcLeaf:"leaf",
+          hcScoreValue:"scoreValue"
         };
       }
     }
@@ -86,7 +90,7 @@ export default {
       *  ShowStateBit路由加载回来进行赋值 ；
       *  算法详解：https://www.cnblogs.com/shipengfei/p/5996270.html
      */
-      ShowStateBit:3,
+      ShowStateBit:1,
       opType: "A", //增加
       id: null,
       formInline: {
@@ -161,7 +165,7 @@ export default {
       }
     },
     addRootNode() {
-      console.log([this.props, ""]);
+      console.log([this.props, this.node]);
       this.node[this.props.children].push({
         [this.props.lable]: "新节点",
         [this.props.proportion]: 1,
@@ -169,7 +173,9 @@ export default {
         [this.props.children]: [],
         [this.props.code]: null,
         [this.props.include]: true
+        
       });
+     
     }
   },
   beforeRouteEnter(to, from, next) {
