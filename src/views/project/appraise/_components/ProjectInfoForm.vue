@@ -155,14 +155,16 @@ export default {
   },
   methods: {
     updateCategory() {
-      if(this.currentCategoryId == 0){
-        this.$message.error("请选择一个类别再进行操作")
+      this.currentCategoryId = this.form.expand.appraiseServiceType
+      if (!this.currentCategoryId) {
+        this.$message.error("请选择一个类别再进行操作");
         return;
       }
       this.$router.push({
         path: "/zongce/addCategory",
         query: {
-          id: this.currentCategoryId
+          id: this.currentCategoryId,
+          serviceType: 0
         }
       });
     },

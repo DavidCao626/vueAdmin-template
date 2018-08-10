@@ -57,6 +57,28 @@ const completeUserPendingByItemId = ({ commit, state }, params) => new Promise(r
         resolve(response)
     })
 })
+
+
+const addScheme = ({ commit, state }, params) => new Promise(resolve => {
+    api.addScheme(params).then(response => {
+        console.log(["addScheme", response])
+        resolve(response)
+    })
+})
+
+const getStandardScheme = ({ commit, state }, params) => new Promise(resolve => {
+    api.getStandardScheme(params).then(response => {
+        console.log(["getStandardScheme", response])
+        resolve(response)
+    })
+})
+
+const updateScheme = ({ commit, state }, params) => new Promise(resolve => {
+    api.updateScheme(params).then(response => {
+        console.log(["updateScheme", response])
+        resolve(response)
+    })
+})
 export default {
     getDictByDictNames,
     addAppraiseCategory,
@@ -65,5 +87,8 @@ export default {
     getAppraiseInfoByScopeIdAndItemId,
     addProspectus,
     querySchemesByOrgCodeAndCategoryId,
-    completeUserPendingByItemId
+    completeUserPendingByItemId,
+    addScheme,
+    getStandardScheme,
+    updateScheme
 }

@@ -40,12 +40,25 @@
       <i class="el-icon-delete" @click="del(node)" style="color:#7b7b7b" v-state-show="2"></i>
       <i class="el-icon-circle-plus-outline" style="color:#7b7b7b;" @click="add(node)"></i>
     </div>
-    <template v-if="node[props.children].length>0 ">
-      <div class="branch">
-        <component v-bind:is="which_to_show" v-for="(child,index)  in node[props.children]" :ShowStateBit="ShowStateBit" :node="child" :getNodeType="1" :key="index" :props="props" :class="node[props.children].length==1?'sole':''"></component>
-      </div>
-    </template>
+    <template v-if="node[props.children].length>0 || (node[props.hcChildren]&&node[props.hcChildren].length>0)">
 
+      <template v-if="serviceType == 0">
+        <div class="branch">
+          <component v-bind:is="which_to_show" :serviceType="serviceType" v-for="(child,index)  in node[props.children]" :ShowStateBit="ShowStateBit" :node="child" :getNodeType="0" :key="index" :props="props" :class="node[props.children].length==1?'sole':''"></component>
+        </div>
+      </template>
+
+      <template v-else>
+        <div class="branch" v-if="node[props.leaf]">
+          <component v-bind:is="which_to_show" v-for="(child,index)  in node[props.hcChildren]" :ShowStateBit="ShowStateBit" :node="child" :getNodeType="1" :key="index" :props="props" :class="node[props.hcChildren].length==1?'sole':''"></component>
+        </div>
+        <div class="branch" v-else>
+
+          <component v-bind:is="which_to_show" :serviceType="serviceType" v-for="(child,index)  in node[props.children]" :ShowStateBit="ShowStateBit" :node="child" :getNodeType="0" :key="index" :props="props" :class="node[props.children].length==1?'sole':''"></component>
+        </div>
+      </template>
+
+    </template>
   </div>
 </template>
 
@@ -68,6 +81,10 @@ export default {
         return {};
       }
     },
+    serviceType: {
+      type: Number
+      //default: 1
+    },
     getNodeType: {
       //获取要新建下级节点的类型 0: tree.vue;   1: tree_type_1.vue; 。
       type: Number,
@@ -76,7 +93,7 @@ export default {
 
     ShowStateBit: {
       type: Number,
-      default: 1
+      default: 3
     }
   },
   components: {
@@ -95,17 +112,21 @@ export default {
   },
   computed: {
     which_to_show() {
-      if (this.getNodeType == 0) {
+      //  this.getNodeType = this.serviceType;
+      if (!this.node[this.props.leaf] || this.node[this.props.leaf] == false) {
         return "ZcTreeNode";
-      }
-      if (this.getNodeType == 1) {
-        return "tree-type-1";
+      } else {
+        if (this.serviceType == 0) {
+          return "ZcTreeNode";
+        }
+        if (this.serviceType == 1) {
+          return "tree-type-1";
+        }
       }
     }
   },
   methods: {
     nodeLable(lable) {
-      console.log(lable.length);
       if (lable.length > 4) {
         return lable.substring(0, 4) + "...";
       } else {
@@ -115,7 +136,7 @@ export default {
     add(node) {
       let addNewNode;
       //如果操作者是学校，，那么push新增节点学校（类型0 模版tree.vue）节点所需数据
-      if (this.getNodeType == 0) {
+      if (this.serviceType == 0) {
         addNewNode = {
           [this.props.lable]: "新节点",
           [this.props.direction]: 1,
@@ -124,20 +145,19 @@ export default {
           [this.props.code]: null,
           [this.props.include]: true
         };
+        node[this.props.children].push(addNewNode);
       }
 
       //如果操作者是学院，那么push学院新增节点的（类型1 模版tree_type_1.vue）数据
-      if (this.getNodeType == 1) {
+      if (this.serviceType == 1) {
         addNewNode = {
-          [this.props.lable]: "学院新节点", //节点名称
-          [this.props.score]: 80, //分值 《========================================================注意这里测试新增的分值字段，可能会造成后台异常！！！！！
-          [this.props.children]: [],
-          [this.props.code]: null,
-          [this.props.include]: true
+          [this.props.hcName]: "学院新节点", //节点名称
+          [this.props.hcScoreValue]: 80, //分值 《========================================================注意这里测试新增的分值字段，可能会造成后台异常！！！！！
+          [this.props.hcCode]: null,
+          [this.props.hcLeaf]: true
         };
+        node[this.props.hcChildren].push(addNewNode);
       }
-
-      node[this.props.children].push(addNewNode);
     },
     del(node) {
       if (node[this.props.children] && node[this.props.children].length > 0) {

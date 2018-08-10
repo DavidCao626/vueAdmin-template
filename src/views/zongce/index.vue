@@ -8,11 +8,11 @@
       <div slot="panel">
         <div>
           <el-form :model="formInline" class="demo-form-inline">
-            <el-form-item label="名称："v-state-show="2">
+            <el-form-item label="名称：" v-state-show="1">
               <el-input v-model="formInline.name" placeholder="模版名称" style="width:300px"></el-input>
             </el-form-item>
             <el-form-item label="是否启用:" v-state-show="1">
-              <el-radio-group v-model="formInline.isok" size="mini" >
+              <el-radio-group v-model="formInline.isok" size="mini">
                 <el-radio-button label="Y">是</el-radio-button>
                 <el-radio-button label="N">否</el-radio-button>
               </el-radio-group>
@@ -22,14 +22,12 @@
               <el-button icon="el-icon-plus" size="mini" plain @click="addRootNode()">添加</el-button>
             </el-form-item>
           </el-form>
-
         </div>
 
         <!-- <el-scollbar>  -->
         <div style="overflow:scroll">
           <div class="wrapper">
-
-            <zc-tree-node v-for="(child,index) in node[props.children]" :props="props" :ShowStateBit="ShowStateBit" :getNodeType="0" :node="child" :key="index" :class="node[props.children].length==1?'sole':''">
+            <zc-tree-node v-for="(child,index) in node[props.children]" :props="props" :serviceType="serviceType" :ShowStateBit="ShowStateBit" :node="child" :key="index" :class="node[props.children].length==1?'sole':''">
             </zc-tree-node>
           </div>
         </div>
@@ -40,13 +38,13 @@
 
     </page>
 
-    <div class="approval-panel  footer-toolbar clearfix">
+    <div class="approval-panel  footer-toolbar clearfix" v-if="serviceType==0">
       <div class="footer-toolbar__tools">
-        <el-button plain>取消</el-button>
+        <!-- <el-button plain>取消</el-button> -->
         <el-button type="primary" @click="onSubmit">确定</el-button>
       </div>
 
-      <div class="footer-toolbar__messages">
+      <!-- <div class="footer-toolbar__messages">
         <el-popover placement="top" width="200" trigger="hover" title="表单验证结果">
 
           <div style="color:red;"> e-1-1项目下的所有子节点占比不能超过1
@@ -54,8 +52,26 @@
           <i class="el-icon-warning" slot="reference"> 3</i>
         </el-popover>
 
-      </div>
+      </div> -->
     </div>
+
+    <div class="approval-panel  footer-toolbar clearfix" v-if="serviceType==1">
+      <div class="footer-toolbar__tools">
+        <!-- <el-button plain>取消</el-button> -->
+        <el-button type="primary" @click="collegeBT">保存</el-button>
+      </div>
+
+      <!-- <div class="footer-toolbar__messages">
+        <el-popover placement="top" width="200" trigger="hover" title="表单验证结果">
+
+          <div style="color:red;"> e-1-1项目下的所有子节点占比不能超过1
+          </div>
+          <i class="el-icon-warning" slot="reference"> 3</i>
+        </el-popover>
+
+      </div> -->
+    </div>
+
   </div>
 </template>
 <script>
@@ -73,7 +89,13 @@ export default {
           proportion: "ratio", //定义要绑定node对象的哪个字段名：：占比
           direction: "orientation", //定义要绑定node对象的哪个字段名：：方向
           code: "code",
-          include: "include" //是否包含科目项
+          include: "include", //是否包含科目项,
+          leaf: "leaf",
+          hcChildren: "hcItems", //存学院的树
+          hcName: "name",
+          hcCode: "code",
+          hcLeaf: "leaf",
+          hcScoreValue: "scoreValue"
         };
       }
     }
@@ -86,9 +108,11 @@ export default {
       *  ShowStateBit路由加载回来进行赋值 ；
       *  算法详解：https://www.cnblogs.com/shipengfei/p/5996270.html
      */
-      ShowStateBit:3,
+      ShowStateBit: 1,
       opType: "A", //增加
-      id: null,
+      serviceType: 0,
+      schemeId: null, //方案 id
+      id: null, //类别id
       formInline: {
         name: "",
         isok: "Y"
@@ -109,8 +133,60 @@ export default {
     ...mapActions({
       addAppraiseCategory: store.namespace + "/addAppraiseCategory",
       getAppraiseCategory: store.namespace + "/getAppraiseCategory",
-      updateAppraiseCategory: store.namespace + "/updateAppraiseCategory"
+      updateAppraiseCategory: store.namespace + "/updateAppraiseCategory",
+      addScheme: store.namespace + "/addScheme",
+      getStandardScheme: store.namespace + "/getStandardScheme",
+      updateScheme: store.namespace + "/updateScheme"
     }),
+    collegeBT() {
+      if (this.opType == "A") {
+        //增加
+        console.log(["onSubmt", this.node]);
+        var name = JSON.parse(JSON.stringify(this.formInline.name));
+        var available = JSON.parse(JSON.stringify(this.formInline.isok));
+        var template = JSON.parse(JSON.stringify(this.node));
+        var id = JSON.parse(JSON.stringify(this.id));
+        var requestData = {
+          categoryId: id,
+          name: name,
+          available: available,
+          template: template
+        };
+        requestData.template.items = this.node.childItems.slice();
+        delete requestData.template.name;
+        delete requestData.template.ratio;
+        delete requestData.template.orientation;
+        delete requestData.template.childItems;
+        this.addScheme(requestData).then(response => {
+          console.log(response);
+          this.$message.success("保存成功");
+          this.$router.go(-1);
+        });
+      } else {
+        //更新
+        console.log(["onSubmt", this.node]);
+        var name = JSON.parse(JSON.stringify(this.formInline.name));
+        var available = JSON.parse(JSON.stringify(this.formInline.isok));
+        var template = JSON.parse(JSON.stringify(this.node));
+        var schemeId = JSON.parse(JSON.stringify(this.schemeId));
+        var requestData = {
+          schemeId: schemeId,
+          name: name,
+          available: available,
+          template: template
+        };
+        requestData.template.items = this.node.childItems.slice();
+        delete requestData.template.name;
+        delete requestData.template.ratio;
+        delete requestData.template.orientation;
+        delete requestData.template.childItems;
+
+        this.updateScheme(requestData).then(response => {
+          this.$message.success("更新成功");
+          this.$router.go(-1);
+        });
+      }
+    },
 
     onSubmit() {
       if (this.opType == "A") {
@@ -131,8 +207,8 @@ export default {
         delete requestData.template.childItems;
         this.addAppraiseCategory(requestData).then(response => {
           console.log(response);
-           this.$message.success("增加成功");
-           this.$router.go(-1)
+          this.$message.success("增加成功");
+          this.$router.go(-1);
         });
       } else {
         //更新
@@ -156,12 +232,12 @@ export default {
 
         this.updateAppraiseCategory(requestData).then(response => {
           this.$message.success("更新成功");
-          this.$router.go(-1)
+          this.$router.go(-1);
         });
       }
     },
     addRootNode() {
-      console.log([this.props, ""]);
+      console.log([this.props, this.node]);
       this.node[this.props.children].push({
         [this.props.lable]: "新节点",
         [this.props.proportion]: 1,
@@ -174,25 +250,84 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      vm.opType = "A";
-      if (to.query.id) {
-        vm.getAppraiseCategory({ id: to.query.id }).then(response => {
-          console.log(["getAppraiseCategory", response]);
-          vm.opType = "U"; //更新
-          vm.id = to.query.id;
-          var res = response.resBody;
+      if (to.query.serviceType == null && to.query.serviceType == undefined) {
+        vm.$message.error("参数不正确");
+        vm.$router.go(-1);
+      }
+      vm.serviceType = parseInt(to.query.serviceType);
+      if (to.query.serviceType == 0) {
+        //学校
+        vm.ShowStateBit = 3;
+        console.log(["serviceType", vm.serviceType]);
+        vm.opType = "A";
+        if (to.query.id) {
+          vm.getAppraiseCategory({ id: to.query.id }).then(response => {
+            console.log(["getAppraiseCategory", response]);
+            vm.opType = "U"; //更新
+            vm.id = to.query.id;
+            var res = response.resBody;
 
-          vm.node = res.template;
-          vm.node.name = "这是不显示的节点";
-          vm.node.ratio = 0;
-          vm.node.orientation = 1;
-          vm.node.childItems = res.template.items;
+            vm.node = res.template;
+            vm.node.name = "这是不显示的节点";
+            vm.node.ratio = 0;
+            vm.node.orientation = 1;
+            vm.node.childItems = res.template.items;
 
-          vm.formInline = {
-            name: res.name,
-            isok: res.available
-          };
-        });
+            vm.formInline = {
+              name: res.name,
+              isok: res.available
+            };
+          });
+        }
+      } else {
+        if (to.query.id == null) {
+          vm.$message.error("参数不正确");
+          vm.$router.go(-1);
+        }
+        vm.id = to.query.id;
+
+        vm.ShowStateBit = 1;
+        //学院
+        vm.opType = "A";
+        if (to.query.schemeId) {
+          vm.opType = "U"; //更新，根据schemeId查
+          vm.schemeId = to.query.schemeId;
+
+          //----执行查找
+          vm
+            .getStandardScheme({ categoryId: vm.id, schemeId: vm.schemeId })
+            .then(response => {
+              console.log(["getStandardScheme", response]);
+              vm.opType = "U"; //更新
+              vm.id = to.query.id;
+              var res = response.resBody;
+              vm.node = res.template;
+              vm.node.name = "这是不显示的节点";
+              vm.node.ratio = 0;
+              vm.node.orientation = 1;
+              vm.node.childItems = res.template.items;
+              vm.formInline = {
+                name: res.name,
+                isok: res.available
+              };
+            });
+        } else {
+          //增加
+          vm.getAppraiseCategory({ id: to.query.id }).then(response => {
+            console.log(["getAppraiseCategory", response]);
+            vm.id = to.query.id;
+            var res = response.resBody;
+            vm.node = res.template;
+            vm.node.name = "这是不显示的节点";
+            vm.node.ratio = 0;
+            vm.node.orientation = 1;
+            vm.node.childItems = res.template.items;
+            vm.formInline = {
+              name: "请输入方案名称",
+              isok: res.available
+            };
+          });
+        }
       }
     });
   }

@@ -1,6 +1,6 @@
 <template>
 
-  <div class="entry">
+  <div class="entry ">
 
     <div class="label">
 
@@ -8,26 +8,31 @@
         <div style="margin-top:10px">
           <el-form label-position="left" label-width="50px" :model="formLabelAlign" size="mini">
             <el-form-item label="名称:" v-state-show="1">
-              <el-input v-model="node[props.lable]"></el-input>
+              <el-input v-model="node[props.hcName]"></el-input>
             </el-form-item>
             <el-form-item label="分值:" v-state-show="1">
-              <el-input v-model="node[props.score]" maxlength="3"></el-input>
+              <el-input v-model="node[props.hcScoreValue]" maxlength="3"></el-input>
             </el-form-item>
           </el-form>
         </div>
         <span slot="reference">
-          {{ nodeLable(node[props.lable]) }}&nbsp;({{ node[props.score] }}) &nbsp;&nbsp;
+          {{ nodeLable(node[props.hcName]) }}&nbsp;({{ node[props.hcScoreValue] }}) &nbsp;&nbsp;
         </span>
 
       </el-popover>
       <i class="el-icon-delete" v-state-show="1" @click="del(node)" style="color:#7b7b7b"></i>
-      <i class="el-icon-circle-plus-outline" style="color:#7b7b7b;" @click="add(node)"></i>
+      <i class="el-icon-circle-plus-outline" style="color:#7b7b7b;" @click="add(node)" v-state-show="4"></i>
     </div>
-    <template v-if="node[props.children].length>0 ">
-      <div class="branch">
-        <component v-bind:is="which_to_show" v-for="(child,index)  in node[props.children]" :ShowStateBit="ShowStateBit" :node="child" :getNodeType="getNodeType" :key="index" :props="props" :class="node[props.children].length==1?'sole':''"></component>
+    <template v-if="0">
 
-      </div>
+      <template v-if="node[props.hcChildren].length>0 ">
+        <div class="branch">
+          <component v-bind:is="which_to_show" v-for="(child,index)  in node[props.hcChildren]" :ShowStateBit="ShowStateBit" :node="child" :getNodeType="1" :key="index" :props="props" :class="node[props.hcChildren].length==1?'sole':''"></component>
+        </div>
+        <!-- <div class="branch" v-else>
+          <component v-bind:is="which_to_show" v-for="(child,index)  in node[props.children]" :ShowStateBit="ShowStateBit" :node="child" :getNodeType="1" :key="index" :props="props" :class="node[props.children].length==1?'sole':''"></component>
+        </div> -->
+      </template>
     </template>
 
   </div>
@@ -107,39 +112,34 @@ export default {
           [this.props.code]: null,
           [this.props.include]: true
         };
+        node[this.props.children].push(addNewNode);
       }
 
       //如果操作者是学院，那么push学院新增节点的（类型1 模版tree_type_1.vue）数据
       if (this.getNodeType == 1) {
         addNewNode = {
-          [this.props.lable]: "学院新节点", //节点名称
-          [this.props.score]: 80, //分值 《========================================================注意这里测试新增的分值字段，可能会造成后台异常！！！！！
-          [this.props.children]: [],
-          [this.props.code]: null,
-          [this.props.include]: true
+          [this.props.hcName]: "学院新节点", //节点名称
+          [this.props.hcScoreValue]: 80, //分值 《========================================================注意这里测试新增的分值字段，可能会造成后台异常！！！！！
+          [this.props.hcCode]: null,
+          [this.props.hcLeaf]: true
         };
+        node[this.props.hcChildren].push(addNewNode);
       }
-
-      node[this.props.children].push(addNewNode);
     },
     del(node) {
-      if (node[this.props.children] && node[this.props.children].length > 0) {
-        this.$message.error("包含子节点的节点不能删除");
-      } else {
-        this.node["isDel"] = true;
+      this.node["isDel"] = true;
 
-        let parentChildrens;
-        if (this.$parent.node) {
-          parentChildrens = this.$parent.node[this.props.children];
-        } else {
-          parentChildrens = this.$parent.$parent.node[this.props.children];
-        }
-        parentChildrens.forEach(e => {
-          if (e.isDel) {
-            parentChildrens.splice(parentChildrens.indexOf(e), 1);
-          }
-        });
+      let parentChildrens;
+      if (this.$parent.node) {
+        parentChildrens = this.$parent.node[this.props.hcChildren];
+      } else {
+        parentChildrens = this.$parent.$parent.node[this.props.hcChildren];
       }
+      parentChildrens.forEach(e => {
+        if (e.isDel) {
+          parentChildrens.splice(parentChildrens.indexOf(e), 1);
+        }
+      });
     }
   },
   mounted() {}
