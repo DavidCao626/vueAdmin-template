@@ -19,8 +19,8 @@
         <el-collapse v-model="activeNames" @change="handleChange">
             <el-collapse-item v-for="(km,index) in data" :name="index" :key="index">
                 <template slot="title">
-                    {{ index+=1 }} 、{{ km.label }} &nbsp;&nbsp;
-                    <el-popover placement="top" width="260" v-model="km.visible2" trigger="hover">
+                    {{ index+=1 }} 、{{ km[props.label] }} &nbsp;&nbsp;
+                    <el-popover placement="top" width="260" v-model="km[props.visible]" trigger="hover">
                         <div style="margin-top:10px">
                             <el-form label-position="left" label-width="50px" size="mini">
                                 <el-form-item label="名称:">
@@ -29,12 +29,12 @@
 
                             </el-form>
                             <div style="text-align: right; margin: 0">
-                                <el-button size="mini" type="text" @click="km.visible2 = false">取消</el-button>
-                                <el-button type="primary" size="mini" @click="km.visible2 = false">保存</el-button>
+                                <el-button size="mini" type="text" @click="km[props.visible] = false">取消</el-button>
+                                <el-button type="primary" size="mini" @click="km[props.visible] = false">保存</el-button>
                             </div>
                         </div>
-                        <span slot="reference">
-                            <i class="el-icon-edit-outline" style="color:#409EFF" v-state-show="1">
+                        <span slot="reference" v-state-show="1">
+                            <i class="el-icon-edit-outline" style="color:#409EFF">
                             </i> &nbsp;&nbsp;
                         </span>
 
@@ -47,7 +47,7 @@
                     <ul class="fenzhi">
                         <li v-for="(fz,index) in km.fenzhiList" :key="index">
 
-                            <span @click="editShow(fz)">分值项：{{ fz.label }} &nbsp;分数：{{ fz.score }}&nbsp;&nbsp;
+                            <span @click="editShow(fz)">分值项：{{ fz[props.label] }} &nbsp;分数：{{ fz[props.score] }}&nbsp;&nbsp;
                                 <i class="el-icon-edit-outline" style="color:#409EFF" v-state-show="1">
                                 </i>
                             </span>
@@ -73,6 +73,16 @@ export default {
         return [];
       }
     },
+    props: {
+      type: Object,
+      default() {
+        return {
+          label: "label",
+          score: "score",
+          visible: "visible2"
+        };
+      }
+    },
     ShowStateBit: {
       type: Number,
       default: 1
@@ -87,8 +97,7 @@ export default {
       ckm: {}, //当前操作的的科目项目
       dialogtype: "add",
       activeNames: ["0"],
-      fenzhiList: [],
-      visible2: false
+      fenzhiList: []
     };
   },
   methods: {
@@ -96,18 +105,23 @@ export default {
       console.log(val);
     },
     add(label, score) {
+        debugger
       if (!this.ckm.hasOwnProperty("fenzhiList")) {
         this.$set(this.ckm, "fenzhiList", []);
       }
-      this.ckm.fenzhiList.push({ label, score });
-     this.emptyTemVariable()
+      
+      this.ckm.fenzhiList.push({
+        [this.props.label]: label,
+        [this.props.score]: score
+      });
+      this.emptyTemVariableAndCloseWindow();
       this.$message({
         message: "恭喜你，添加成功",
         type: "success"
       });
     },
     addShow(km) {
-     this.emptyTemVariableAndCloseWindow()
+      this.emptyTemVariableAndCloseWindow();
       this.dialogtype = "add";
       this.dialogVisible = true;
       this.ckm = km;
@@ -120,21 +134,21 @@ export default {
       });
     },
     edit(label, score) {
-      this.cfz.label = label;
-      this.cfz.score = score;
+      this.cfz[this.props.label] = label;
+      this.cfz[this.props.score] = score;
       //Ajax提交到后台
       this.$message({
         message: "恭喜你，修改成功",
         type: "success"
       });
-      this.emptyTemVariableAndCloseWindow()
+      this.emptyTemVariableAndCloseWindow();
     },
     editShow(fz) {
       this.dialogtype = "edit";
       this.dialogVisible = true;
       this.cfz = fz;
-      this.label = fz.label;
-      this.score = fz.score;
+      this.label = fz[this.props.label];
+      this.score = fz[this.props.score];
     },
     onNodeDel(km) {
       this.$emit("onNodeDel", km);

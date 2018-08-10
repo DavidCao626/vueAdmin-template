@@ -4,8 +4,7 @@ export default {
       return s.rawName == "v-show";
     });
   },
-  inserted(el, binding, vnode) {
-   
+  update(el, binding, vnode) {
     let values = vnode.data.directives.filter(function(s) {
       return s.rawName == "v-show";
     });

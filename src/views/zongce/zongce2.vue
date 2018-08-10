@@ -74,16 +74,19 @@
                 <i class="el-icon-menu"></i> 分值科目列表</div>
               <div class="block-line"></div>
               <div class="block-nav">
-                <el-tree :data="data" node-key="id" :default-expanded-keys="[1]" :expand-on-click-node="false" default-expand-all @node-click="handleNodeClick"></el-tree>
+                <el-input placeholder="输入关键字进行过滤" v-model="filterText">
+                </el-input>
+
+                <el-tree ref="tree2" :data="data" :filter-node-method="filterNode" node-key="id" :default-expanded-keys="[1]" :expand-on-click-node="false" default-expand-all @node-click="handleNodeClick"></el-tree>
               </div>
             </div>
           </el-col>
           <el-col :span="18">
-            <template v-if="nodeObj.type==1">
+            <template v-if="nodeObj[props['type']]==1">
               <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
 
                 <div class="block-header">
-                  <h3>{{ nodeObj.label }}</h3>
+                  <h3>{{ nodeObj[props['label']] }}</h3>
                 </div>
 
                 <div style="margin-top:20px">
@@ -101,17 +104,17 @@
                         <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
                       </el-col>
                     </el-form-item>
-                    <h2>{{ nodeObj.type }}</h2>
+                    <h2>{{ nodeObj[props['type']] }}</h2>
                   </el-form>
                 </div>
               </div>
             </template>
 
-            <template v-if="nodeObj.type==2">
+            <template v-if="nodeObj[props['type']]==2">
               <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
 
                 <div class="block-header">
-                  <h3>{{ nodeObj.label }}</h3>
+                  <h3>{{ nodeObj[props['label']] }}</h3>
                 </div>
 
                 <div style="margin-top:20px">
@@ -134,7 +137,7 @@
                         <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
                       </el-col>
                     </el-form-item>
-                    <h2>{{ nodeObj.type }}</h2>
+                    <h2>{{ nodeObj[props['type']] }}</h2>
                   </el-form>
 
                 </div>
@@ -142,21 +145,20 @@
               </div>
             </template>
 
-            <template v-if="nodeObj.type==3">
+            <template v-if="nodeObj[props['type']]==3">
               <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
 
                 <div class="block-header">
-                  <h3>{{ nodeObj.label }}</h3>
+                  <h3>{{ nodeObj[props['label']] }}</h3>
                 </div>
 
                 <div style="margin-top:20px">
-                  <zongceCollapse :data="this.kemuList" :ShowStateBit="ShowStateBit" @onNodeDel=onNodeDel></zongceCollapse>
+                  <zongceCollapse :data="this.kemuList" :ShowStateBit="ShowStateBit" @onNodeDel="onNodeDel" :props:='{ label: " label ",score: "score ", visible: "visible2 "}'></zongceCollapse>
 
                 </div>
                 <div>
-                  <el-button v-state-show="1"  type="text" size="mini" @click="dialogVisible = true"  >+ 新增科目项</el-button>&nbsp;&nbsp;
-
-                  
+                  <el-button v-state-show="1" type="text" size="mini" @click="dialogVisible = true">+ 新增科目项</el-button>&nbsp;&nbsp;
+                  <!-- <el-button type="primary" @click="ShowStateBit=0">{{ ShowStateBit }}</el-button> -->
                 </div>
 
               </div>
@@ -164,7 +166,7 @@
                 <div class="block-right__noBody">请选择左侧叶节点-分值科目项</div>
 
               </div>
-            
+
             </template>
           </el-col>
         </el-row>
@@ -177,12 +179,25 @@
 <script>
 import zongceCollapse from "./zongce2_collapse.vue";
 export default {
+  props: {
+    props: {
+      type: Object,
+      default() {
+        return {
+          id: "id",
+          label: "label",
+          type: "type",
+          children: "children"
+        };
+      }
+    }
+  },
   components: {
     zongceCollapse
   },
   data() {
     return {
-      ShowStateBit:1,//权限位
+      ShowStateBit: 1, //权限位
       form: {
         name: "",
         region: "",
@@ -196,7 +211,7 @@ export default {
       addlabel: "",
       dialogVisible: false,
       nodeObj: { label: "我的学校", id: 1, type: 1 }, //当前点击节点
-
+      filterText: "",
       data: [
         {
           id: 1,
@@ -292,13 +307,17 @@ export default {
       kemuList: []
     };
   },
+  watch: {
+    filterText(val) {
+      this.$refs.tree2.filter(val);
+    }
+  },
   methods: {
+    filterNode(value, data) {
+      if (!value) return true;
+      return data[this.props["label"]].indexOf(value) !== -1;
+    },
     handleNodeClick(nodeDataObj, nodeObj) {
-      // if (!nodeDataObj.children || nodeDataObj.children.length == 0) {
-      //   this.nodeObj = nodeDataObj; //只有点击叶节点才能触发右面数据加载
-      // } else {
-      //   this.nodeObj = {};
-      // }
       this.nodeObj = nodeDataObj;
     },
     onNodeDel(nodeData) {
@@ -326,7 +345,7 @@ export default {
       }
     },
     addNode(nodeObj, label) {
-      this.kemuList.push({ label: this.addlabel });
+      this.kemuList.push({ [this.props["label"]]: this.addlabel });
 
       this.dialogVisible = false;
       this.addlabel = "";
