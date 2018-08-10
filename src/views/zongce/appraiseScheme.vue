@@ -24,8 +24,8 @@
             <el-select v-model="appraiseProject.schemeId" placeholder="方案" @change="schemeIdChange">
               <el-option v-for="item in schemeList" :key="item.id" :label="item.name" :value="item.id"></el-option>
             </el-select>
-            <el-button type="">修改</el-button>
-            <el-button type="">新增</el-button>
+            <el-button type="" @click="updateBT">修改</el-button>
+            <el-button type="" @click="insertBT">新增</el-button>
           </el-form-item>
 
         </el-form>
@@ -49,6 +49,7 @@ export default {
   data() {
     return {
       itemId: null,
+      schemeId: null,
       appraiseProject: {
         categoryId: null,
         id: null,
@@ -64,7 +65,32 @@ export default {
   },
   components: {},
   methods: {
+    insertBT() {
+      this.$router.push({
+        path: "/zongce/addCategory",
+        query: {
+          id: this.appraiseProject.categoryId,
+          serviceType: 1
+        }
+      });
+    },
+    updateBT() {
+      this.schemeId = this.appraiseProject.schemeId;
+      if (!this.schemeId) {
+        this.$message.error("请选择一个类别再进行操作");
+        return;
+      }
+      this.$router.push({
+        path: "/zongce/addCategory",
+        query: {
+          id: this.appraiseProject.categoryId,
+          serviceType: 1,
+          schemeId: this.schemeId
+        }
+      });
+    },
     schemeIdChange(val) {
+      this.schemeId = val;
       for (var i = 0; i < this.schemeList.length; i++) {
         if (this.schemeList[i].id == val) {
           this.appraiseProject.schemeName = this.schemeList[i].name;

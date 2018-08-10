@@ -42,9 +42,9 @@
     </div>
     <template v-if="node[props.children].length>0 || (node[props.hcChildren]&&node[props.hcChildren].length>0)">
 
-        <template v-if="serviceType == 0">
+      <template v-if="serviceType == 0">
         <div class="branch">
-          <component v-bind:is="which_to_show" v-for="(child,index)  in node[props.children]" :ShowStateBit="ShowStateBit" :node="child" :getNodeType="0" :key="index" :props="props" :class="node[props.children].length==1?'sole':''"></component>
+          <component v-bind:is="which_to_show" :serviceType="serviceType" v-for="(child,index)  in node[props.children]" :ShowStateBit="ShowStateBit" :node="child" :getNodeType="0" :key="index" :props="props" :class="node[props.children].length==1?'sole':''"></component>
         </div>
       </template>
 
@@ -54,9 +54,9 @@
         </div>
         <div class="branch" v-else>
 
-          <component v-bind:is="which_to_show" v-for="(child,index)  in node[props.children]" :ShowStateBit="ShowStateBit" :node="child" :getNodeType="0" :key="index" :props="props" :class="node[props.children].length==1?'sole':''"></component>
+          <component v-bind:is="which_to_show" :serviceType="serviceType" v-for="(child,index)  in node[props.children]" :ShowStateBit="ShowStateBit" :node="child" :getNodeType="0" :key="index" :props="props" :class="node[props.children].length==1?'sole':''"></component>
         </div>
-      </template>   
+      </template>
 
     </template>
   </div>
@@ -81,6 +81,10 @@ export default {
         return {};
       }
     },
+    serviceType: {
+      type: Number
+      //default: 1
+    },
     getNodeType: {
       //获取要新建下级节点的类型 0: tree.vue;   1: tree_type_1.vue; 。
       type: Number,
@@ -89,7 +93,7 @@ export default {
 
     ShowStateBit: {
       type: Number,
-      default: 1
+      default: 3
     }
   },
   components: {
@@ -98,7 +102,7 @@ export default {
   data() {
     return {
       visible2: false,
-      serviceType: 1,
+
       formLabelAlign: {
         name: "",
         region: "",
@@ -108,8 +112,8 @@ export default {
   },
   computed: {
     which_to_show() {
-    //  this.getNodeType = this.serviceType;
-      if (!this.node[this.props.leaf]||this.node[this.props.leaf] == false) {
+      //  this.getNodeType = this.serviceType;
+      if (!this.node[this.props.leaf] || this.node[this.props.leaf] == false) {
         return "ZcTreeNode";
       } else {
         if (this.serviceType == 0) {

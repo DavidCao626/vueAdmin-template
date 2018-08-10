@@ -65,6 +65,26 @@ const completeUserPendingByItemId = data =>
         method: "post",
         data: data
     })
+
+const getStandardScheme = data =>
+    request({
+        url: "/appraise/getStandardScheme.do",
+        method: "post",
+        data: data
+    })
+const addScheme = data =>
+    ajax({
+        url: "/appraise/addScheme.do",
+        method: "post",
+        data: data
+    })
+
+const updateScheme = data =>
+    ajax({
+        url: "/appraise/updateScheme.do",
+        method: "post",
+        data: data
+    })
 export default {
 
     uploadAttrUrl,
@@ -75,6 +95,9 @@ export default {
     getAppraiseInfoByScopeIdAndItemId,
     addProspectus,
     querySchemesByOrgCodeAndCategoryId,
-    completeUserPendingByItemId
+    completeUserPendingByItemId,
+    addScheme,
+    getStandardScheme,
+    updateScheme
 
 };

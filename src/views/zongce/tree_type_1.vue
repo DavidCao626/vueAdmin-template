@@ -21,7 +21,7 @@
 
       </el-popover>
       <i class="el-icon-delete" v-state-show="1" @click="del(node)" style="color:#7b7b7b"></i>
-      <i class="el-icon-circle-plus-outline" style="color:#7b7b7b;" @click="add(node)"   v-state-show="4"></i>
+      <i class="el-icon-circle-plus-outline" style="color:#7b7b7b;" @click="add(node)" v-state-show="4"></i>
     </div>
     <template v-if="0">
 
@@ -127,27 +127,22 @@ export default {
       }
     },
     del(node) {
-      if (node[this.props.children] && node[this.props.children].length > 0) {
-        this.$message.error("包含子节点的节点不能删除");
-      } else {
-        this.node["isDel"] = true;
+      this.node["isDel"] = true;
 
-        let parentChildrens;
-        if (this.$parent.node) {
-          parentChildrens = this.$parent.node[this.props.children];
-        } else {
-          parentChildrens = this.$parent.$parent.node[this.props.children];
-        }
-        parentChildrens.forEach(e => {
-          if (e.isDel) {
-            parentChildrens.splice(parentChildrens.indexOf(e), 1);
-          }
-        });
+      let parentChildrens;
+      if (this.$parent.node) {
+        parentChildrens = this.$parent.node[this.props.hcChildren];
+      } else {
+        parentChildrens = this.$parent.$parent.node[this.props.hcChildren];
       }
+      parentChildrens.forEach(e => {
+        if (e.isDel) {
+          parentChildrens.splice(parentChildrens.indexOf(e), 1);
+        }
+      });
     }
   },
-  mounted() {
-  }
+  mounted() {}
 };
 </script>
 
