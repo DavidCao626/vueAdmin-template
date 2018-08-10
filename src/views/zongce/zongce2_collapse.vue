@@ -100,7 +100,7 @@ export default {
         this.$set(this.ckm, "fenzhiList", []);
       }
       this.ckm.fenzhiList.push({ label, score });
-     this.emptyTemVariable()
+     this.emptyTemVariableAndCloseWindow()
       this.$message({
         message: "恭喜你，添加成功",
         type: "success"

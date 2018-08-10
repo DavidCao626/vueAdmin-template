@@ -18,7 +18,7 @@
               </el-radio-group>
             </el-form-item>
 
-            <el-form-item label="添加配置节点:" v-state-show="2">
+            <el-form-item label="添加配置节点:"  v-state-show="2">
               <el-button icon="el-icon-plus" size="mini" plain @click="addRootNode()">添加</el-button>
             </el-form-item>
           </el-form>
@@ -59,7 +59,7 @@
       <div class="footer-toolbar__tools">
         <!-- <el-button plain>取消</el-button> -->
         <el-button type="primary" @click="collegeBT">保存</el-button>
-        <el-button type="primary" v-if="opType =='U'" @click="saveAsScheme">另存为</el-button>
+        <el-button type="primary" v-if="opType =='U'" @click="saveAsSchemeA">另存为</el-button>
       </div>
 
       <!-- <div class="footer-toolbar__messages">
@@ -109,7 +109,7 @@ export default {
       *  ShowStateBit路由加载回来进行赋值 ；
       *  算法详解：https://www.cnblogs.com/shipengfei/p/5996270.html
      */
-      ShowStateBit: 1,
+      ShowStateBit: 3,
       opType: "A", //增加
       serviceType: 0,
       schemeId: null, //方案 id
@@ -140,7 +140,7 @@ export default {
       updateScheme: store.namespace + "/updateScheme",
       saveAsScheme:store.namespace +"/saveAsScheme"
     }),
-    saveAsScheme(){
+    saveAsSchemeA(){
           var name = JSON.parse(JSON.stringify(this.formInline.name));
         var available = JSON.parse(JSON.stringify(this.formInline.isok));
         var template = JSON.parse(JSON.stringify(this.node));
@@ -274,7 +274,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (to.query.serviceType == null && to.query.serviceType == undefined) {
+      if (to.query.serviceType == null || to.query.serviceType == undefined) {
         vm.$message.error("参数不正确");
         vm.$router.go(-1);
       }
