@@ -59,6 +59,7 @@
       <div class="footer-toolbar__tools">
         <!-- <el-button plain>取消</el-button> -->
         <el-button type="primary" @click="collegeBT">保存</el-button>
+        <el-button type="primary" v-if="opType =='U'" @click="saveAsScheme">另存为</el-button>
       </div>
 
       <!-- <div class="footer-toolbar__messages">
@@ -139,6 +140,28 @@ export default {
       updateScheme: store.namespace + "/updateScheme",
       saveAsScheme:store.namespace +"/saveAsScheme"
     }),
+    saveAsScheme(){
+          var name = JSON.parse(JSON.stringify(this.formInline.name));
+        var available = JSON.parse(JSON.stringify(this.formInline.isok));
+        var template = JSON.parse(JSON.stringify(this.node));
+        var schemeId = JSON.parse(JSON.stringify(this.schemeId));
+        var requestData = {
+          schemeId: schemeId,
+          name: name,
+          available: available,
+          template: template
+        };
+        requestData.template.items = this.node.childItems.slice();
+        delete requestData.template.name;
+        delete requestData.template.ratio;
+        delete requestData.template.orientation;
+        delete requestData.template.childItems;
+
+        this.saveAsScheme(requestData).then(response => {
+          this.$message.success("更新成功");
+          this.$router.go(-1);
+        });
+    },
     collegeBT() {
       if (this.opType == "A") {
         //增加
