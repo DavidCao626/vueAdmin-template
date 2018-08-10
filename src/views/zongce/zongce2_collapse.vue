@@ -100,17 +100,14 @@ export default {
         this.$set(this.ckm, "fenzhiList", []);
       }
       this.ckm.fenzhiList.push({ label, score });
-      this.label = "";
-      this.score = 0;
-      this.dialogVisible = false;
+     this.emptyTemVariable()
       this.$message({
         message: "恭喜你，添加成功",
         type: "success"
       });
     },
     addShow(km) {
-      this.label = "";
-      this.score = 0;
+     this.emptyTemVariableAndCloseWindow()
       this.dialogtype = "add";
       this.dialogVisible = true;
       this.ckm = km;
@@ -130,9 +127,7 @@ export default {
         message: "恭喜你，修改成功",
         type: "success"
       });
-      this.dialogVisible = false;
-      this.label = "";
-      this.score = 0;
+      this.emptyTemVariableAndCloseWindow()
     },
     editShow(fz) {
       this.dialogtype = "edit";
@@ -143,6 +138,12 @@ export default {
     },
     onNodeDel(km) {
       this.$emit("onNodeDel", km);
+    },
+    //清空当前环境临时交换变量 并关闭窗口
+    emptyTemVariableAndCloseWindow() {
+      this.label = "";
+      this.score = 0;
+      this.dialogVisible = false;
     }
   }
 };
