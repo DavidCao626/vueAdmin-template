@@ -197,7 +197,7 @@ export default {
   },
   data() {
     return {
-      ShowStateBit: 1, //权限位
+      ShowStateBit:1,//权限位
       form: {
         name: "",
         region: "",

@@ -85,6 +85,13 @@ const updateScheme = data =>
         method: "post",
         data: data
     })
+
+const saveAsScheme = data =>
+    ajax({
+        url: "/appraise/saveAsScheme.do",
+        method: "post",
+        data: data
+    })
 export default {
 
     uploadAttrUrl,
@@ -98,6 +105,7 @@ export default {
     completeUserPendingByItemId,
     addScheme,
     getStandardScheme,
-    updateScheme
+    updateScheme,
+    saveAsScheme
 
 };
