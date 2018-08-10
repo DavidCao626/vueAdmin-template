@@ -79,6 +79,13 @@ const updateScheme = ({ commit, state }, params) => new Promise(resolve => {
         resolve(response)
     })
 })
+
+const saveAsScheme = ({ commit, state }, params) => new Promise(resolve => {
+    api.saveAsScheme(params).then(response => {
+        console.log(["saveAsScheme", response])
+        resolve(response)
+    })
+})
 export default {
     getDictByDictNames,
     addAppraiseCategory,
@@ -90,5 +97,6 @@ export default {
     completeUserPendingByItemId,
     addScheme,
     getStandardScheme,
-    updateScheme
+    updateScheme,
+    saveAsScheme
 }

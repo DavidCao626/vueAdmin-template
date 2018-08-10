@@ -136,7 +136,8 @@ export default {
       updateAppraiseCategory: store.namespace + "/updateAppraiseCategory",
       addScheme: store.namespace + "/addScheme",
       getStandardScheme: store.namespace + "/getStandardScheme",
-      updateScheme: store.namespace + "/updateScheme"
+      updateScheme: store.namespace + "/updateScheme",
+      saveAsScheme:store.namespace +"/saveAsScheme"
     }),
     collegeBT() {
       if (this.opType == "A") {
