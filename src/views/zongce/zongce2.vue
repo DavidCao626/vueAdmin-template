@@ -82,70 +82,44 @@
             </div>
           </el-col>
           <el-col :span="18">
-            <template v-if="nodeObj[props['type']]==1">
+            <template v-if="nodeObj[props['type']]=='rootType'">
+              <span>这是根节点</span>
               <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
 
                 <div class="block-header">
                   <h3>{{ nodeObj[props['label']] }}</h3>
                 </div>
 
-                <div style="margin-top:20px">
-                  <el-form ref="form" :model="form" label-width="80px">
-                    <el-form-item label="活动名称">
-                      <el-input v-model="form.name"></el-input>
-                    </el-form-item>
-
-                    <el-form-item label="活动时间">
-                      <el-col :span="11">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-                      </el-col>
-                      <el-col class="line" :span="2">-</el-col>
-                      <el-col :span="11">
-                        <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-                      </el-col>
-                    </el-form-item>
-                    <h2>{{ nodeObj[props['type']] }}</h2>
-                  </el-form>
-                </div>
               </div>
             </template>
 
-            <template v-if="nodeObj[props['type']]==2">
+            <template v-if="nodeObj[props['type']]=='standardType'">
+              <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
+                <div class="block-header">
+                  <h3>{{ nodeObj[props['label']] }}</h3>
+                </div>
+                <el-form :model="nodeObj" label-width="80px">
+                  <el-form-item label="所占比例">
+                    <span>{{nodeObj[props['ratio']]*100+'%'}}</span>
+                  </el-form-item>
+                </el-form>
+
+              </div>
+            </template>
+
+            <template v-if="nodeObj[props['type']]=='hcType' &&nodeObj[props['enable']]=='N'">
+              <span>这是分值科目(不包含科目项)</span>
               <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
 
                 <div class="block-header">
                   <h3>{{ nodeObj[props['label']] }}</h3>
                 </div>
-
-                <div style="margin-top:20px">
-                  <el-form ref="form" :model="form" label-width="80px">
-                    <el-form-item label="活动名称">
-                      <el-input v-model="form.name"></el-input>
-                    </el-form-item>
-                    <el-form-item label="活动区域">
-                      <el-select v-model="form.region" placeholder="请选择活动区域">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                      </el-select>
-                    </el-form-item>
-                    <el-form-item label="活动时间">
-                      <el-col :span="11">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-                      </el-col>
-                      <el-col class="line" :span="2">-</el-col>
-                      <el-col :span="11">
-                        <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-                      </el-col>
-                    </el-form-item>
-                    <h2>{{ nodeObj[props['type']] }}</h2>
-                  </el-form>
-
-                </div>
-
+                  <h4>此分值科目不包含科目项,无法创建科目项及分值科目!</h4>
               </div>
             </template>
 
-            <template v-if="nodeObj[props['type']]==3">
+            <template v-if="nodeObj[props['type']]=='hcType' &&nodeObj[props['enable']]=='Y' ">
+              <span>这是分值科目(包含科目项)</span>
               <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
 
                 <div class="block-header">
@@ -190,7 +164,9 @@ export default {
           id: "id",
           label: "label",
           type: "type",
-          children: "children"
+          children: "children",
+          enable: "enable",
+          ratio: "ratio"
         };
       }
     }
@@ -216,8 +192,7 @@ export default {
       dialogVisible: false,
       nodeObj: { label: "我的学校", id: 1, type: 1 }, //当前点击节点
       filterText: "",
-      data: [
-      ],
+      data: [],
       kemuList: []
     };
   },
@@ -228,19 +203,19 @@ export default {
   },
   methods: {
     ...mapActions({
-      getSchemeTree: store.namespace + "/getSchemeTree"
+      getSchemeTree: store.namespace + "/getSchemeTree",
+      getItemListAndScore:store.namespace + "/getItemListAndScore"
     }),
     getData() {
       var requestData = {
         schemeId: this.schemeId
       };
       this.getSchemeTree(requestData).then(response => {
-        this.data=[]
+        this.data = [];
         console.log(["tree", response]);
         var res = response.resBody;
-        this.data.push(res.template) ;
-
-      }); 
+        this.data.push(res.template);
+      });
     },
     filterNode(value, data) {
       if (!value) return true;
@@ -248,6 +223,20 @@ export default {
     },
     handleNodeClick(nodeDataObj, nodeObj) {
       this.nodeObj = nodeDataObj;
+      
+      if(this.nodeObj[props['type']]=='hcType' &&this.nodeObj[props['enable']]=='Y'){
+        //点击的是分值科目，要查询数据
+        var subjectCode = this.nodeObj.id;
+        this.getItemListAndScore({subjectCode:subjectCode,schemeId:this.schemeId}){
+          console.log(["itemAndScore",response])
+          var res = response.resBody;
+          //this.kemuList=====
+        }
+      }
+
+
+
+
     },
     onNodeDel(nodeData) {
       if (nodeData.fenzhiList && nodeData.fenzhiList.length > 0) {

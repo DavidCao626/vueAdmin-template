@@ -66,6 +66,9 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+import store from "./_store/index.js";
+import moment from "moment";
 export default {
   props: {
     data: {
