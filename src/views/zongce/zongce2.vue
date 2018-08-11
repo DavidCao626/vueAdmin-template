@@ -108,18 +108,16 @@
             </template>
 
             <template v-if="nodeObj[props['type']]=='hcType' &&nodeObj[props['enable']]=='N'">
-              <span>这是分值科目(不包含科目项)</span>
               <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
 
                 <div class="block-header">
                   <h3>{{ nodeObj[props['label']] }}</h3>
                 </div>
-                  <h4>此分值科目不包含科目项,无法创建科目项及分值科目!</h4>
+                <h4>此分值科目不包含科目项,无法创建科目项及分值科目!</h4>
               </div>
             </template>
 
             <template v-if="nodeObj[props['type']]=='hcType' &&nodeObj[props['enable']]=='Y' ">
-              <span>这是分值科目(包含科目项)</span>
               <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
 
                 <div class="block-header">
@@ -127,7 +125,7 @@
                 </div>
 
                 <div style="margin-top:20px">
-                  <zongceCollapse :data="this.kemuList" :ShowStateBit="ShowStateBit" @onNodeDel="onNodeDel" :props:='{ label: " label ",score: "score ", visible: "visible2 "}'></zongceCollapse>
+                  <zongceCollapse :data="this.kemuList" :ShowStateBit="ShowStateBit" @onNodeDel="onNodeDel" :schemeId="schemeId"></zongceCollapse>
 
                 </div>
                 <div>
@@ -204,7 +202,9 @@ export default {
   methods: {
     ...mapActions({
       getSchemeTree: store.namespace + "/getSchemeTree",
-      getItemListAndScore:store.namespace + "/getItemListAndScore"
+      getItemListAndScore: store.namespace + "/getItemListAndScore",
+      addItem: store.namespace + "/addItem",
+      deleteItem: store.namespace + "/deleteItem"
     }),
     getData() {
       var requestData = {
@@ -223,23 +223,30 @@ export default {
     },
     handleNodeClick(nodeDataObj, nodeObj) {
       this.nodeObj = nodeDataObj;
-      
-      if(this.nodeObj[props['type']]=='hcType' &&this.nodeObj[props['enable']]=='Y'){
+      this.kemuList = [];
+      if (
+        this.nodeObj[this.props["type"]] == "hcType" &&
+        this.nodeObj[this.props["enable"]] == "Y"
+      ) {
         //点击的是分值科目，要查询数据
-        var subjectCode = this.nodeObj.id;
-        this.getItemListAndScore({subjectCode:subjectCode,schemeId:this.schemeId}){
-          console.log(["itemAndScore",response])
+        var requestData = {
+          subjectCode: this.nodeObj.id,
+          schemeId: this.schemeId
+        };
+        // var requestData = {
+        //   subjectCode: 1,
+        //   schemeId: 1
+        // };
+
+        this.getItemListAndScore(requestData).then(response => {
+          console.log(["itemAndScore", response]);
           var res = response.resBody;
-          //this.kemuList=====
-        }
+          this.kemuList = res;
+        });
       }
-
-
-
-
     },
     onNodeDel(nodeData) {
-      if (nodeData.fenzhiList && nodeData.fenzhiList.length > 0) {
+      if (nodeData.scoreList && nodeData.scoreList.length > 0) {
         this.$message.error("包含子节点的节点不能删除");
       } else {
         this.$confirm("此操作将永久删除该节点, 是否继续?", "删除节点", {
@@ -248,10 +255,13 @@ export default {
           type: "warning"
         })
           .then(() => {
-            this.kemuList.splice(this.kemuList.indexOf(nodeData), 1);
-            this.$message({
-              type: "success",
-              message: "删除成功!"
+            //删除
+            this.deleteItem({ itemId: nodeData.item.id }).then(response => {
+              this.kemuList.splice(this.kemuList.indexOf(nodeData), 1);
+              this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
             });
           })
           .catch(() => {
@@ -263,14 +273,29 @@ export default {
       }
     },
     addNode(nodeObj, label) {
-      this.kemuList.push({ [this.props["label"]]: this.addlabel });
-
-      this.dialogVisible = false;
-      this.addlabel = "";
-      this.$message({
-        message: "恭喜你，添加成功",
-        type: "success"
+      console.log(["增加之前的kemulist", this.kemuList]);
+      var requestData = {
+        name: label,
+        subjectCode: nodeObj.id,
+        schemeId: this.schemeId
+      };
+      this.addItem(requestData).then(response => {
+        var temp = {
+          item: response.resBody,
+          scoreList: []
+        };
+        this.kemuList.push(temp);
+        this.dialogVisible = false;
+        this.addlabel = "";
+        this.$message({
+          message: "恭喜你，添加成功",
+          type: "success"
+        });
+        console.log(["增加之后的kemulist", this.kemuList]);
       });
+
+      //   this.kemuList.push({ [this.props["label"]]: this.addlabel });
+
       // 真实情况触发ajax插入
       //nodeObj.children.push({ label: label, children: [] });
     }

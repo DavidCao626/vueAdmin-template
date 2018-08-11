@@ -83,7 +83,7 @@
 
     <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
       <el-col :span="7">
-        <el-button ref="next" @click="onSave">保存</el-button>
+        <!-- <el-button ref="next" @click="onSave">保存</el-button> -->
         <el-button ref="back" @click="onSaveAndNext">保存并下发</el-button>
       </el-col>
     </el-row>
@@ -150,7 +150,7 @@ export default {
       ],
       classifyTypedetailPath: "",
       iopt: [],
-      classifyType: ""
+      classifyType:""
     };
   },
   methods: {
@@ -170,7 +170,10 @@ export default {
     },
     insertCategory() {
       this.$router.push({
-        path: "/zongce/addCategory"
+        path: "/zongce/addCategory",
+        query: {
+          serviceType: 0
+        }
       });
     },
     ...mapActions({
@@ -200,6 +203,10 @@ export default {
       ]);
     },
     onSaveAndNext(e) {
+      if(!this.classifyType){
+        this.$message.error("子类型不能为空!")
+        return;
+      }
       console.log(this.form);
       var t = this.form;
       var requestData = {
