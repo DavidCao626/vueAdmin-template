@@ -2,7 +2,7 @@
 
   <div class="entry ">
 
-    <div class="label">
+    <div class="label" style="color: white;background-color: #53bb57;">
 
       <el-popover placement="top" width="260" v-model="visible2">
         <div style="margin-top:10px">
@@ -17,12 +17,12 @@
         </div>
         <span slot="reference">
           {{ nodeLable(node[props.hcName]) }}&nbsp;({{ node[props.hcScoreValue] }}) &nbsp;&nbsp;
-          <i class="el-icon-edit-outline"  style="color:#7b7b7b"></i>
+          <i class="el-icon-edit-outline"  style="color:#fff"></i>
         </span>
 
       </el-popover>
-      <i class="el-icon-delete" v-state-show="1" @click="del(node)" style="color:#7b7b7b"></i>
-      <i class="el-icon-circle-plus-outline" style="color:#7b7b7b;" @click="add(node)" v-state-show="4"></i>
+      <i class="el-icon-delete" v-state-show="1" @click="del(node)" style="color:#fff"></i>
+      <i class="el-icon-circle-plus-outline" style="color:#fff;" @click="add(node)" v-state-show="4"></i>
     </div>
     <template v-if="0">
 
