@@ -124,7 +124,7 @@ export default {
   computed: {},
   data() {
     return {
-      sidebar: true
+      sidebar: !this.$store.state.app.sidebar['opened']
     };
   }
 };
