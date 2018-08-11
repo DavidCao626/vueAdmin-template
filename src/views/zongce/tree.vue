@@ -12,7 +12,7 @@
             </el-form-item>
             <el-form-item label="占比(%):" v-state-show="1">
               <!-- <el-input maxlength="5" v-model="node[props.proportion]"></el-input> -->
-                <el-slider v-model="node[props.proportion]"></el-slider>
+              <el-slider v-model="node[props.proportion]" :step="0.01" :max="1"></el-slider>
             </el-form-item>
             <el-form-item label="方向:" v-state-show="2">
               <el-radio-group v-model="node[props.direction]" size="mini">
@@ -30,11 +30,11 @@
           </el-form>
         </div>
         <span slot="reference">
-          {{ nodeLable(node[props.lable]) }}({{ node[props.proportion] }})
+          {{ nodeLable(node[props.lable]) }}({{ node[props.proportion]*100+"%" }})
           <span style="font-size:10px" v-if="node[props.direction]=='1'">正</span>
           <span style="color:red;font-size:10px" v-else>负</span>
           &nbsp;
-          <i class="el-icon-edit-outline"  style="color:#7b7b7b"></i>
+          <i class="el-icon-edit-outline" style="color:#7b7b7b"></i>
         </span>
 
       </el-popover>
@@ -128,6 +128,9 @@ export default {
     }
   },
   methods: {
+    formatTooltip(val) {
+      return val * 100;
+    },
     nodeLable(lable) {
       if (lable.length > 6) {
         return lable.substring(0, 6) + "...";
@@ -143,7 +146,7 @@ export default {
           [this.props.lable]: "新节点",
           [this.props.direction]: 1,
           [this.props.children]: [],
-          [this.props.proportion]: 1,
+          [this.props.proportion]: 100,
           [this.props.code]: null,
           [this.props.include]: true
         };
