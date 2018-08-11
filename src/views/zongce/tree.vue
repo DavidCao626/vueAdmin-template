@@ -37,7 +37,7 @@
 
       </el-popover>
 
-      <i class="el-icon-delete" @click="del(node)" style="color:#7b7b7b" v-state-show="2"></i>
+      <i class="el-icon-delete" @click="del(node)" style="color:#7b7b7b" v-if="serviceType == 0"></i>
       <i class="el-icon-circle-plus-outline" style="color:#7b7b7b;" @click="add(node)" v-if="serviceType == 0 ||node[props.leaf]"></i>
     </div>
     <template v-if="node[props.children].length>0 || (node[props.hcChildren]&&node[props.hcChildren].length>0)">

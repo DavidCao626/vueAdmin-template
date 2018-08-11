@@ -86,6 +86,20 @@ const saveAsScheme = ({ commit, state }, params) => new Promise(resolve => {
         resolve(response)
     })
 })
+
+const queryAppraiseProspectus = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryAppraiseProspectus(params).then(response => {
+        console.log(["queryAppraiseProspectus", response])
+        resolve(response)
+    })
+})
+
+const startAppraiseProject = ({ commit, state }, params) => new Promise(resolve => {
+    api.startAppraiseProject(params).then(response => {
+        console.log(["startAppraiseProject", response])
+        resolve(response)
+    })
+})
 export default {
     getDictByDictNames,
     addAppraiseCategory,
@@ -98,5 +112,7 @@ export default {
     addScheme,
     getStandardScheme,
     updateScheme,
-    saveAsScheme
+    saveAsScheme,
+    queryAppraiseProspectus,
+    startAppraiseProject
 }
