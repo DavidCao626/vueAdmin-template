@@ -181,9 +181,6 @@ export default {
         delete requestData.template.ratio;
         delete requestData.template.orientation;
         delete requestData.template.childItems;
-        delete requestData.template.id;
-        delete requestData.template.type;
-        delete requestData.template.label;
 
         this.addScheme(requestData).then(response => {
           console.log(response);
