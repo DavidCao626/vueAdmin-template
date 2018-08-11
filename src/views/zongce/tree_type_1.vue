@@ -17,6 +17,7 @@
         </div>
         <span slot="reference">
           {{ nodeLable(node[props.hcName]) }}&nbsp;({{ node[props.hcScoreValue] }}) &nbsp;&nbsp;
+          <i class="el-icon-edit-outline"  style="color:#7b7b7b"></i>
         </span>
 
       </el-popover>

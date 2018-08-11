@@ -18,7 +18,7 @@
               </el-radio-group>
             </el-form-item>
 
-            <el-form-item label="添加配置节点:"  v-state-show="2">
+            <el-form-item label="添加配置节点:" v-state-show="2">
               <el-button icon="el-icon-plus" size="mini" plain @click="addRootNode()">添加</el-button>
             </el-form-item>
           </el-form>
@@ -60,6 +60,7 @@
         <!-- <el-button plain>取消</el-button> -->
         <el-button type="primary" @click="collegeBT">保存</el-button>
         <el-button type="primary" v-if="opType =='U'" @click="saveAsSchemeA">另存为</el-button>
+        <el-button type="primary" @click="goDetail">维护分值项</el-button>
       </div>
 
       <!-- <div class="footer-toolbar__messages">
@@ -138,10 +139,65 @@ export default {
       addScheme: store.namespace + "/addScheme",
       getStandardScheme: store.namespace + "/getStandardScheme",
       updateScheme: store.namespace + "/updateScheme",
-      saveAsScheme:store.namespace +"/saveAsScheme"
+      saveAsScheme: store.namespace + "/saveAsScheme"
     }),
-    saveAsSchemeA(){
-          var name = JSON.parse(JSON.stringify(this.formInline.name));
+    saveAsSchemeA() {
+      var name = JSON.parse(JSON.stringify(this.formInline.name));
+      var available = JSON.parse(JSON.stringify(this.formInline.isok));
+      var template = JSON.parse(JSON.stringify(this.node));
+      var schemeId = JSON.parse(JSON.stringify(this.schemeId));
+      var requestData = {
+        schemeId: schemeId,
+        name: name,
+        available: available,
+        template: template
+      };
+      requestData.template.items = this.node.childItems.slice();
+      delete requestData.template.name;
+      delete requestData.template.ratio;
+      delete requestData.template.orientation;
+      delete requestData.template.childItems;
+
+      this.saveAsScheme(requestData).then(response => {
+        this.$message.success("更新成功");
+        this.$router.go(-1);
+      });
+    },
+    goDetail(){
+        if (this.opType == "A") {
+        //增加
+        console.log(["onSubmt", this.node]);
+        var name = JSON.parse(JSON.stringify(this.formInline.name));
+        var available = JSON.parse(JSON.stringify(this.formInline.isok));
+        var template = JSON.parse(JSON.stringify(this.node));
+        var id = JSON.parse(JSON.stringify(this.id));
+        var requestData = {
+          categoryId: id,
+          name: name,
+          available: available,
+          template: template
+        };
+        requestData.template.items = this.node.childItems.slice();
+        delete requestData.template.name;
+        delete requestData.template.ratio;
+        delete requestData.template.orientation;
+        delete requestData.template.childItems;
+
+        this.addScheme(requestData).then(response => {
+          console.log(response);
+           this.schemeId = response.resBody.id;
+          this.$message.success("保存成功");
+          this.$router.push({
+            path:"/zongce/zongce2",
+            query:{
+              schemeId:this.schemeId
+            }
+          })
+        });
+      } else {
+        //更新
+        console.log(["onSubmt", this.node]);
+        var name = JSON.parse(JSON.stringify(this.formInline.name));
         var available = JSON.parse(JSON.stringify(this.formInline.isok));
         var template = JSON.parse(JSON.stringify(this.node));
         var schemeId = JSON.parse(JSON.stringify(this.schemeId));
@@ -157,10 +213,17 @@ export default {
         delete requestData.template.orientation;
         delete requestData.template.childItems;
 
-        this.saveAsScheme(requestData).then(response => {
+        this.updateScheme(requestData).then(response => {
+          this.schemeId = response.resBody.id;
           this.$message.success("更新成功");
-          this.$router.go(-1);
+           this.$router.push({
+            path:"/zongce/zongce2",
+            query:{
+              schemeId:this.schemeId
+            }
+          })
         });
+      }
     },
     collegeBT() {
       if (this.opType == "A") {
@@ -181,8 +244,10 @@ export default {
         delete requestData.template.ratio;
         delete requestData.template.orientation;
         delete requestData.template.childItems;
+
         this.addScheme(requestData).then(response => {
           console.log(response);
+           this.schemeId = response.resBody.id;
           this.$message.success("保存成功");
           this.$router.go(-1);
         });
@@ -206,6 +271,7 @@ export default {
         delete requestData.template.childItems;
 
         this.updateScheme(requestData).then(response => {
+          this.schemeId = response.resBody.id;
           this.$message.success("更新成功");
           this.$router.go(-1);
         });

@@ -35,6 +35,12 @@ export const zongceRouter = {
       name: "评测模版",
       component: () => import("../pingce.vue"),
       meta: { title: "标准分", icon: "example", hidden: true }
+    },
+    {
+      path: "showProspectus",
+      name: "showProspectus",
+      component: () => import("../showProspectus.vue"),
+      meta: { title: "查看计划书", icon: "example", hidden: true }
     }
   ]
 };
