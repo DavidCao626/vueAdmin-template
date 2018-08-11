@@ -106,6 +106,26 @@ const startAppraiseProject = data =>
         method: "post",
         data: data
     })
+
+const addItem = data =>
+    request({
+        url: "/appraise/addItem.do",
+        method: "post",
+        data: data
+    })
+const addScore = data =>
+    request({
+        url: "/appraise/addScore.do",
+        method: "post",
+        data: data
+    })
+
+const getSchemeTree = data =>
+    request({
+        url: "/appraise/getSchemeTree.do",
+        method: "post",
+        data: data
+    })
 export default {
 
     uploadAttrUrl,
@@ -122,6 +142,9 @@ export default {
     updateScheme,
     saveAsScheme,
     queryAppraiseProspectus,
-    startAppraiseProject
+    startAppraiseProject,
+    addItem,
+    addScore,
+    getSchemeTree
 
 };

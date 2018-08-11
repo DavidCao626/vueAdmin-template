@@ -178,6 +178,9 @@
 
 <script>
 import zongceCollapse from "./zongce2_collapse.vue";
+import { mapGetters, mapActions } from "vuex";
+import store from "./_store/index.js";
+import moment from "moment";
 export default {
   props: {
     props: {
@@ -197,7 +200,7 @@ export default {
   },
   data() {
     return {
-      ShowStateBit:1,//权限位
+      ShowStateBit: 1, //权限位
       form: {
         name: "",
         region: "",
@@ -208,101 +211,12 @@ export default {
         resource: "",
         desc: ""
       },
+      schemeId: 0,
       addlabel: "",
       dialogVisible: false,
       nodeObj: { label: "我的学校", id: 1, type: 1 }, //当前点击节点
       filterText: "",
       data: [
-        {
-          id: 1,
-          label: "我的学校",
-          type: 1,
-          children: [
-            {
-              id: 2,
-              label: "校党委",
-              type: 1,
-              children: [
-                {
-                  label: "二级 1-1",
-                  type: 2,
-                  children: [
-                    {
-                      type: 3,
-                      label: "三级 1-1-1"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: 3,
-              label: "校团委",
-              children: [
-                {
-                  type: 2,
-                  label: "二级 2-1",
-                  children: [
-                    {
-                      label: "三级 2-1-1"
-                    }
-                  ]
-                },
-                {
-                  type: 2,
-                  label: "二级 2-2",
-                  children: [
-                    {
-                      label: "三级 2-2-1"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: 4,
-              type: 2,
-              label: "学工处",
-              children: [
-                {
-                  label: "二级 1-1",
-                  children: [
-                    {
-                      label: "三级 1-1-1"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: 5,
-              type: 2,
-              label: "旗下学院",
-              children: [
-                {
-                  type: 2,
-                  label: "数学学院",
-                  children: [
-                    {
-                      type: 3,
-                      label: "三级 3-1-1"
-                    }
-                  ]
-                },
-                {
-                  type: 2,
-                  label: "蒙古学院",
-                  children: [
-                    {
-                      type: 3,
-                      label: "三级 3-2-1"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
       ],
       kemuList: []
     };
@@ -313,6 +227,21 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      getSchemeTree: store.namespace + "/getSchemeTree"
+    }),
+    getData() {
+      var requestData = {
+        schemeId: this.schemeId
+      };
+      this.getSchemeTree(requestData).then(response => {
+        this.data=[]
+        console.log(["tree", response]);
+        var res = response.resBody;
+        this.data.push(res.template) ;
+
+      }); 
+    },
     filterNode(value, data) {
       if (!value) return true;
       return data[this.props["label"]].indexOf(value) !== -1;
@@ -356,6 +285,17 @@ export default {
       // 真实情况触发ajax插入
       //nodeObj.children.push({ label: label, children: [] });
     }
+  },
+  beforeRouteEnter(to, form, next) {
+    next(vm => {
+      if (!to.query.schemeId) {
+        vm.$message.error("参数不正确");
+        vm.$router.go(-1);
+        returnl;
+      }
+      vm.schemeId = to.query.schemeId;
+      vm.getData();
+    });
   }
 };
 </script>

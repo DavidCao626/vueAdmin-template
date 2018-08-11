@@ -24,7 +24,7 @@
                         <div style="margin-top:10px">
                             <el-form label-position="left" label-width="50px" size="mini">
                                 <el-form-item label="名称:">
-                                    <el-input v-model="km.label"></el-input>
+                                    <el-input v-model="km[props.label]"></el-input>
                                 </el-form-item>
 
                             </el-form>

@@ -100,7 +100,30 @@ const startAppraiseProject = ({ commit, state }, params) => new Promise(resolve 
         resolve(response)
     })
 })
+
+const addItem = ({ commit, state }, params) => new Promise(resolve => {
+    api.addItem(params).then(response => {
+        console.log(["addItem", response])
+        resolve(response)
+    })
+})
+const addScore = ({ commit, state }, params) => new Promise(resolve => {
+    api.addScore(params).then(response => {
+        console.log(["addScore", response])
+        resolve(response)
+    })
+})
+
+const getSchemeTree = ({ commit, state }, params) => new Promise(resolve => {
+    api.getSchemeTree(params).then(response => {
+        console.log(["getSchemeTree", response])
+        resolve(response)
+    })
+})
+
 export default {
+    addScore,
+    addItem,
     getDictByDictNames,
     addAppraiseCategory,
     getAppraiseCategory,
@@ -114,5 +137,6 @@ export default {
     updateScheme,
     saveAsScheme,
     queryAppraiseProspectus,
-    startAppraiseProject
+    startAppraiseProject,
+    getSchemeTree
 }
