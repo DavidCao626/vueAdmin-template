@@ -105,7 +105,6 @@ export default {
       console.log(val);
     },
     add(label, score) {
-        debugger
       if (!this.ckm.hasOwnProperty("fenzhiList")) {
         this.$set(this.ckm, "fenzhiList", []);
       }

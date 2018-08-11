@@ -18,7 +18,7 @@
               </el-radio-group>
             </el-form-item>
 
-            <el-form-item label="添加配置节点:"  v-state-show="2">
+            <el-form-item label="添加配置节点:" v-state-show="2">
               <el-button icon="el-icon-plus" size="mini" plain @click="addRootNode()">添加</el-button>
             </el-form-item>
           </el-form>
@@ -138,29 +138,29 @@ export default {
       addScheme: store.namespace + "/addScheme",
       getStandardScheme: store.namespace + "/getStandardScheme",
       updateScheme: store.namespace + "/updateScheme",
-      saveAsScheme:store.namespace +"/saveAsScheme"
+      saveAsScheme: store.namespace + "/saveAsScheme"
     }),
-    saveAsSchemeA(){
-          var name = JSON.parse(JSON.stringify(this.formInline.name));
-        var available = JSON.parse(JSON.stringify(this.formInline.isok));
-        var template = JSON.parse(JSON.stringify(this.node));
-        var schemeId = JSON.parse(JSON.stringify(this.schemeId));
-        var requestData = {
-          schemeId: schemeId,
-          name: name,
-          available: available,
-          template: template
-        };
-        requestData.template.items = this.node.childItems.slice();
-        delete requestData.template.name;
-        delete requestData.template.ratio;
-        delete requestData.template.orientation;
-        delete requestData.template.childItems;
+    saveAsSchemeA() {
+      var name = JSON.parse(JSON.stringify(this.formInline.name));
+      var available = JSON.parse(JSON.stringify(this.formInline.isok));
+      var template = JSON.parse(JSON.stringify(this.node));
+      var schemeId = JSON.parse(JSON.stringify(this.schemeId));
+      var requestData = {
+        schemeId: schemeId,
+        name: name,
+        available: available,
+        template: template
+      };
+      requestData.template.items = this.node.childItems.slice();
+      delete requestData.template.name;
+      delete requestData.template.ratio;
+      delete requestData.template.orientation;
+      delete requestData.template.childItems;
 
-        this.saveAsScheme(requestData).then(response => {
-          this.$message.success("更新成功");
-          this.$router.go(-1);
-        });
+      this.saveAsScheme(requestData).then(response => {
+        this.$message.success("更新成功");
+        this.$router.go(-1);
+      });
     },
     collegeBT() {
       if (this.opType == "A") {
@@ -181,6 +181,10 @@ export default {
         delete requestData.template.ratio;
         delete requestData.template.orientation;
         delete requestData.template.childItems;
+        delete requestData.template.id;
+        delete requestData.template.type;
+        delete requestData.template.label;
+
         this.addScheme(requestData).then(response => {
           console.log(response);
           this.$message.success("保存成功");
