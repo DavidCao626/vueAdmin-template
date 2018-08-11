@@ -164,7 +164,6 @@ export default {
         this.$message.error("包含子节点的节点不能删除");
       } else {
         this.node["isDel"] = true;
-
         let parentChildrens;
         if (this.$parent.node) {
           parentChildrens = this.$parent.node[this.props.children];

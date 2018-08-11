@@ -327,16 +327,17 @@ export default {
       }
     },
     addRootNode() {
-      console.log([this.props, this.node]);
-      this.node[this.props.children].push({
-        [this.props.lable]: "新节点",
-        [this.props.proportion]: 1,
-        [this.props.direction]: 1,
-        [this.props.children]: [],
-        [this.props.code]: null,
-        [this.props.include]: true
-      });
-    }
+        console.log([this.props, this.node]);
+        this.node[this.props.children].push({
+          [this.props.lable]: "新节点",
+          [this.props.proportion]: 1,
+          [this.props.direction]: 1,
+          [this.props.children]: [],
+          [this.props.code]: null,
+          [this.props.include]: true
+        })
+     
+    } 
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -357,11 +358,18 @@ export default {
             vm.id = to.query.id;
             var res = response.resBody;
 
-            vm.node = res.template;
+            
+
+            //var tem = JSON.parse(JSON.stringify(res.template));
+
+           // vm.node = tem;
             vm.node.name = "这是不显示的节点";
             vm.node.ratio = 0;
             vm.node.orientation = 1;
-            vm.node.childItems = res.template.items;
+            vm.node.childItems = []
+            res.template.items.forEach(e=>{
+              vm.node.childItems.push(e)
+            })
 
             vm.formInline = {
               name: res.name,
