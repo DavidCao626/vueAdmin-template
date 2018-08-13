@@ -120,7 +120,7 @@ export default {
       if (this.getNodeType == 1) {
         addNewNode = {
           [this.props.hcName]: "学院新节点", //节点名称
-          [this.props.hcScoreValue]: 80, //分值 《========================================================注意这里测试新增的分值字段，可能会造成后台异常！！！！！
+          [this.props.hcScoreValue]: 100, //分值 《========================================================注意这里测试新增的分值字段，可能会造成后台异常！！！！！
           [this.props.hcCode]: null,
           [this.props.hcLeaf]: true
         };

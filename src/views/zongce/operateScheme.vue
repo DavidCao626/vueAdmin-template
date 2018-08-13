@@ -2,7 +2,7 @@
   <div>
     <page>
       <div slot="title">
-        计划模版
+        编辑方案
       </div>
       <div slot="panel">
         <div>
@@ -34,12 +34,11 @@
 
     </page>
 
-
-    <div class="approval-panel  footer-toolbar clearfix" >
+    <div class="approval-panel  footer-toolbar clearfix">
       <div class="footer-toolbar__tools">
         <!-- <el-button plain>取消</el-button> -->
+        <el-button type="primary" @click="goBack()">返回</el-button>
         <el-button type="primary" @click="collegeBT">保存</el-button>
-        <el-button type="primary" v-if="opType =='U'" @click="saveAsSchemeA">另存为</el-button>
         <el-button type="primary" @click="goDetail">维护分值项</el-button>
       </div>
 
@@ -119,10 +118,11 @@ export default {
       addScheme: store.namespace + "/addScheme",
       getStandardScheme: store.namespace + "/getStandardScheme",
       updateScheme: store.namespace + "/updateScheme",
-      saveAsScheme: store.namespace + "/saveAsScheme"
+      saveAsScheme: store.namespace + "/saveAsScheme",
+      getSchemeEnableUpdateState:
+        store.namespace + "/getSchemeEnableUpdateState"
     }),
-    saveAsSchemeA() {
-      var name = JSON.parse(JSON.stringify(this.formInline.name));
+    saveAsSchemeA(name) {
       var available = JSON.parse(JSON.stringify(this.formInline.isok));
       var template = JSON.parse(JSON.stringify(this.node));
       var schemeId = JSON.parse(JSON.stringify(this.schemeId));
@@ -139,71 +139,50 @@ export default {
       delete requestData.template.childItems;
 
       this.saveAsScheme(requestData).then(response => {
-        this.$message.success("更新成功");
-        this.$router.go(-1);
+        this.$message.success("另存成功");
+        this.$router.push({
+          name: "tempRouterGo",
+          params: {
+            toPath: "/zongce/operateScheme",
+            id: this.id,
+            schemeId: response.resBody.id
+          }
+        });
       });
     },
-    goDetail(){
-        if (this.opType == "A") {
-        //增加
-        console.log(["onSubmt", this.node]);
-        var name = JSON.parse(JSON.stringify(this.formInline.name));
-        var available = JSON.parse(JSON.stringify(this.formInline.isok));
-        var template = JSON.parse(JSON.stringify(this.node));
-        var id = JSON.parse(JSON.stringify(this.id));
-        var requestData = {
-          categoryId: id,
-          name: name,
-          available: available,
-          template: template
-        };
-        requestData.template.items = this.node.childItems.slice();
-        delete requestData.template.name;
-        delete requestData.template.ratio;
-        delete requestData.template.orientation;
-        delete requestData.template.childItems;
 
-        this.addScheme(requestData).then(response => {
-          console.log(response);
-           this.schemeId = response.resBody.id;
-          this.$message.success("保存成功");
-          this.$router.push({
-            path:"/zongce/zongce2",
-            query:{
-              schemeId:this.schemeId
-            }
-          })
-        });
-      } else {
-        //更新
-        console.log(["onSubmt", this.node]);
-        var name = JSON.parse(JSON.stringify(this.formInline.name));
-        var available = JSON.parse(JSON.stringify(this.formInline.isok));
-        var template = JSON.parse(JSON.stringify(this.node));
-        var schemeId = JSON.parse(JSON.stringify(this.schemeId));
-        var requestData = {
-          schemeId: schemeId,
-          name: name,
-          available: available,
-          template: template
-        };
-        requestData.template.items = this.node.childItems.slice();
-        delete requestData.template.name;
-        delete requestData.template.ratio;
-        delete requestData.template.orientation;
-        delete requestData.template.childItems;
-        this.updateScheme(requestData).then(response => {
-          this.schemeId = response.resBody.id;
-          this.$message.success("更新成功");
-           this.$router.push({
-            path:"/zongce/zongce2",
-            query:{
-              schemeId:this.schemeId
-            }
-          })
-        });
-      }
+    goBack() {
+      this.$confirm("此操作不会保存数据,请确认内容已经保存", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$router.go(-1);
+        })
+        .catch(() => {});
     },
+    goDetail() {
+      if(!this.schemeId){
+        this.$message.error("请保存数据后进行操作")
+        return ;
+      }
+      this.$confirm("此操作不会保存数据,请确认内容已经保存", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.$router.push({
+            path: "/zongce/zongce2",
+            query: {
+              schemeId: this.schemeId
+            }
+          });
+        })
+        .catch(() => {});
+    },
+
     collegeBT() {
       if (this.opType == "A") {
         //增加
@@ -226,75 +205,76 @@ export default {
 
         this.addScheme(requestData).then(response => {
           console.log(response);
-           this.schemeId = response.resBody.id;
+          this.schemeId = response.resBody.id;
           this.$message.success("保存成功");
-          this.$router.go(-1);
         });
       } else {
-        //更新
-        console.log(["onSubmt", this.node]);
-        var name = JSON.parse(JSON.stringify(this.formInline.name));
-        var available = JSON.parse(JSON.stringify(this.formInline.isok));
-        var template = JSON.parse(JSON.stringify(this.node));
-        var schemeId = JSON.parse(JSON.stringify(this.schemeId));
-        var requestData = {
-          schemeId: schemeId,
-          name: name,
-          available: available,
-          template: template
-        };
-        requestData.template.items = this.node.childItems.slice();
-        delete requestData.template.name;
-        delete requestData.template.ratio;
-        delete requestData.template.orientation;
-        delete requestData.template.childItems;
+        this.getSchemeEnableUpdateState({ schemeId: this.schemeId }).then(
+          response => {
+            var res = response.resBody;
+            if (res.state == false) {
+              //当前状态不可更新
+              //需要另存为
+              this.$prompt("请输入名称:", "方案被使用，只允许另存为", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消"
+              })
+                .then(({ value }) => {
+                  this.saveAsSchemeA(value);
+                })
+                .catch(() => {});
+            } else {
+              //正常更新
+              //更新
+              console.log(["onSubmt", this.node]);
+              var name = JSON.parse(JSON.stringify(this.formInline.name));
+              var available = JSON.parse(JSON.stringify(this.formInline.isok));
+              var template = JSON.parse(JSON.stringify(this.node));
+              var schemeId = JSON.parse(JSON.stringify(this.schemeId));
+              var requestData = {
+                schemeId: schemeId,
+                name: name,
+                available: available,
+                template: template
+              };
+              requestData.template.items = this.node.childItems.slice();
+              delete requestData.template.name;
+              delete requestData.template.ratio;
+              delete requestData.template.orientation;
+              delete requestData.template.childItems;
 
-        this.updateScheme(requestData).then(response => {
-          this.schemeId = response.resBody.id;
-          this.$message.success("更新成功");
-          this.$router.go(-1);
-        });
+              this.updateScheme(requestData).then(response => {
+                this.schemeId = response.resBody.id;
+                this.$message.success("更新成功");
+              });
+            }
+          }
+        );
       }
-    } 
+    }
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      vm.serviceType =1;
-        if (to.query.id == null) {
-          vm.$message.error("参数不正确");
-          vm.$router.go(-1);
-        }
-        vm.id = to.query.id;
+      vm.serviceType = 1;
+      if (to.query.id == null) {
+        vm.$message.error("参数不正确");
+        vm.$router.go(-1);
+      }
+      vm.id = to.query.id;
 
-        vm.ShowStateBit = 1;
-        //学院
-        vm.opType = "A";
-        if (to.query.schemeId) {
-          vm.opType = "U"; //更新，根据schemeId查
-          vm.schemeId = to.query.schemeId;
+      vm.ShowStateBit = 1;
+      //学院
+      vm.opType = "A";
+      if (to.query.schemeId) {
+        vm.opType = "U"; //更新，根据schemeId查
+        vm.schemeId = to.query.schemeId;
 
-          //----执行查找
-          vm
-            .getStandardScheme({ categoryId: vm.id, schemeId: vm.schemeId })
-            .then(response => {
-              console.log(["getStandardScheme", response]);
-              vm.opType = "U"; //更新
-              vm.id = to.query.id;
-              var res = response.resBody;
-              vm.node = res.template;
-              vm.node.name = "这是不显示的节点";
-              vm.node.ratio = 0;
-              vm.node.orientation = 1;
-              vm.node.childItems = res.template.items;
-              vm.formInline = {
-                name: res.name,
-                isok: res.available
-              };
-            });
-        } else {
-          //增加
-          vm.getAppraiseCategory({ id: to.query.id }).then(response => {
-            console.log(["getAppraiseCategory", response]);
+        //----执行查找
+        vm
+          .getStandardScheme({ categoryId: vm.id, schemeId: vm.schemeId })
+          .then(response => {
+            console.log(["getStandardScheme", response]);
+            vm.opType = "U"; //更新
             vm.id = to.query.id;
             var res = response.resBody;
             vm.node = res.template;
@@ -303,11 +283,27 @@ export default {
             vm.node.orientation = 1;
             vm.node.childItems = res.template.items;
             vm.formInline = {
-              name: "请输入方案名称",
+              name: res.name,
               isok: res.available
             };
           });
-        }
+      } else {
+        //增加
+        vm.getAppraiseCategory({ id: to.query.id }).then(response => {
+          console.log(["getAppraiseCategory", response]);
+          vm.id = to.query.id;
+          var res = response.resBody;
+          vm.node = res.template;
+          vm.node.name = "这是不显示的节点";
+          vm.node.ratio = 0;
+          vm.node.orientation = 1;
+          vm.node.childItems = res.template.items;
+          vm.formInline = {
+            name: "请输入方案名称",
+            isok: res.available
+          };
+        });
+      }
     });
   }
 };

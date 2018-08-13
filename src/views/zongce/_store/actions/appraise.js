@@ -151,6 +151,13 @@ const deleteItem = ({ commit, state }, params) => new Promise(resolve => {
         resolve(response)
     })
 })
+
+const getSchemeEnableUpdateState = ({ commit, state }, params) => new Promise(resolve => {
+    api.getSchemeEnableUpdateState(params).then(response => {
+        console.log(["getSchemeEnableUpdateState", response])
+        resolve(response)
+    })
+})
 export default {
     deleteItem,
     updateItem,
@@ -173,5 +180,6 @@ export default {
     saveAsScheme,
     queryAppraiseProspectus,
     startAppraiseProject,
-    getSchemeTree
+    getSchemeTree,
+    getSchemeEnableUpdateState
 }

@@ -48,6 +48,13 @@ export const zongceRouter = {
       name: "showProspectus",
       component: () => import("../showProspectus.vue"),
       meta: { title: "查看计划书", icon: "example", hidden: true }
-    }
+    },
+    
+       {
+         path: "tempRouterGo",
+         name: "tempRouterGo",
+         component: () => import("../tempRouterGo.vue"),
+      meta: { title: "router跳自己用", icon: "example", hidden: true }
+    },
   ]
 };
