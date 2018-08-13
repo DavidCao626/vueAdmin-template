@@ -67,10 +67,9 @@ export default {
   methods: {
     insertBT() {
       this.$router.push({
-        path: "/zongce/addCategory",
+        path: "/zongce/operateScheme",
         query: {
-          id: this.appraiseProject.categoryId,
-          serviceType: 1
+          id: this.appraiseProject.categoryId
         }
       });
     },
@@ -81,10 +80,9 @@ export default {
         return;
       }
       this.$router.push({
-        path: "/zongce/addCategory",
+        path: "/zongce/operateScheme",
         query: {
           id: this.appraiseProject.categoryId,
-          serviceType: 1,
           schemeId: this.schemeId
         }
       });

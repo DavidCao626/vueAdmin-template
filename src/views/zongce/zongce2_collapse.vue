@@ -22,7 +22,7 @@
         <template slot="title">
 
           {{ index+=1 }} 、{{ km["item"].name }} &nbsp;&nbsp;
-          <el-popover placement="top" width="260" v-model="km[props.visible]" trigger="hover">
+          <el-popover placement="top" width="260" v-model="km[props.visible]" trigger="hover" @show="editKmShow(km)">
             <div style="margin-top:10px">
               <el-form label-position="left" label-width="50px" size="mini">
                 <el-form-item label="名称:">
@@ -119,6 +119,9 @@ export default {
     };
   },
   methods: {
+    editKmShow(km){
+      console.log(["显示编辑",km])
+    },
     updateItemBT(km) {
       console.log(["km", km]);
       var requestData = {
