@@ -49,7 +49,7 @@
           <ul class="fenzhi">
             <li v-for="(fz,index) in km[fenzhiProps.children]" :key="index">
 
-              <span @click="editShow(fz)">分值项：{{ fz[fenzhiProps.label] }} &nbsp;分数：{{ fz[fenzhiProps.score] }}&nbsp;&nbsp;
+              <span @click="editShow(fz)">{{ fz[fenzhiProps.label] }} &nbsp;&nbsp;&nbsp; {{ fz[fenzhiProps.score] + '分'}}&nbsp;&nbsp;
                 <i class="el-icon-edit-outline" style="color:#409EFF" v-state-show="1">
                 </i>
               </span>
@@ -119,100 +119,155 @@ export default {
     };
   },
   methods: {
-    editKmShow(km){
-      console.log(["显示编辑",km])
+    editKmShow(km) {
+      console.log(["显示编辑", km]);
     },
     updateItemBT(km) {
-      console.log(["km", km]);
-      var requestData = {
-        itemId: km.item.id,
-        name: km.item.name
-      };
-      this.updateItem(requestData).then(response => {
-        km[this.props.visible] = false;
-        this.$message.success("修改成功");
+      this.checkState().then(res => {
+        if (!res) {
+          return;
+        }
+        console.log(["km", km]);
+        var requestData = {
+          itemId: km.item.id,
+          name: km.item.name
+        };
+        this.updateItem(requestData).then(response => {
+          km[this.props.visible] = false;
+          this.$message.success("修改成功");
+        });
       });
     },
     ...mapActions({
       updateItem: store.namespace + "/updateItem",
       addScore: store.namespace + "/addScore",
       deleteScore: store.namespace + "/deleteScore",
-      updateScore: store.namespace + "/updateScore"
+      updateScore: store.namespace + "/updateScore",
+      getSchemeEnableUpdateState:
+        store.namespace + "/getSchemeEnableUpdateState"
     }),
+    checkState() {
+      return new Promise(resolve => {
+        this.getSchemeEnableUpdateState({ schemeId: this.schemeId }).then(
+          response => {
+            var res = response.resBody;
+            if (res.state == false) {
+              //当前状态不可更新
+              //需要另存为
+              this.$message.error("此方案已经被使用，请另存为后修改");
+              //  return false;
+              resolve(false);
+            } else {
+              resolve(true);
+            }
+          }
+        );
+      });
+    },
     handleChange(val) {
       console.log(val);
     },
     add(label, score) {
-      if (!this.ckm.hasOwnProperty(this.fenzhiProps["children"])) {
-        this.$set(this.ckm, this.fenzhiProps["children"], []);
-      }
-      console.log(["ckm", this.ckm]);
-      //String name, float value, int schemeId, String itemCode,
-      var requestData = {
-        name: label,
-        value: score,
-        schemeId: this.schemeId,
-        itemCode: this.ckm.item.code
-      };
-      this.addScore(requestData).then(response => {
-        this.ckm[this.fenzhiProps["children"]].push(
-          // [this.fenzhiProps.label]: label,
-          // [this.fenzhiProps.score]: score
-          response.resBody
-        );
-        this.emptyTemVariableAndCloseWindow();
-        this.$message({
-          message: "恭喜你，添加成功",
-          type: "success"
+      this.checkState().then(res => {
+        if (!res) {
+          return;
+        }
+        if (!this.ckm.hasOwnProperty(this.fenzhiProps["children"])) {
+          this.$set(this.ckm, this.fenzhiProps["children"], []);
+        }
+        console.log(["ckm", this.ckm]);
+        //String name, float value, int schemeId, String itemCode,
+        var requestData = {
+          name: label,
+          value: score,
+          schemeId: this.schemeId,
+          itemCode: this.ckm.item.code
+        };
+        this.addScore(requestData).then(response => {
+          this.ckm[this.fenzhiProps["children"]].push(
+            // [this.fenzhiProps.label]: label,
+            // [this.fenzhiProps.score]: score
+            response.resBody
+          );
+          this.emptyTemVariableAndCloseWindow();
+          this.$message({
+            message: "恭喜你，添加成功",
+            type: "success"
+          });
         });
       });
     },
     addShow(km) {
-      this.emptyTemVariableAndCloseWindow();
-      this.dialogtype = "add";
-      this.dialogVisible = true;
-      this.ckm = km;
+      this.checkState().then(res => {
+        if (!res) {
+          return;
+        }
+        this.emptyTemVariableAndCloseWindow();
+        this.dialogtype = "add";
+        this.dialogVisible = true;
+        this.ckm = km;
+      });
     },
     del(km, node) {
-      this.deleteScore({ id: node.id }).then(response => {
-        km[this.fenzhiProps["children"]].splice(
-          km[this.fenzhiProps["children"]].indexOf(node),
-          1
-        );
-        this.$message({
-          message: "恭喜你，删除成功",
-          type: "success"
+      this.checkState().then(res => {
+        if (!res) {
+          return;
+        }
+        this.deleteScore({ id: node.id }).then(response => {
+          km[this.fenzhiProps["children"]].splice(
+            km[this.fenzhiProps["children"]].indexOf(node),
+            1
+          );
+          this.$message({
+            message: "恭喜你，删除成功",
+            type: "success"
+          });
         });
       });
     },
     edit(label, score) {
-      //int id, String name, float value,
-      var requestData = {
-        id: this.cfz.id,
-        name: label,
-        value: score
-      };
+      this.checkState().then(res => {
+        if (!res) {
+          return;
+        }
+        //int id, String name, float value,
+        var requestData = {
+          id: this.cfz.id,
+          name: label,
+          value: score
+        };
 
-      this.updateScore(requestData).then(response => {
-        this.cfz[this.fenzhiProps.label] = label;
-        this.cfz[this.fenzhiProps.score] = score;
-        //Ajax提交到后台
-        this.$message({
-          message: "恭喜你，修改成功",
-          type: "success"
+        this.updateScore(requestData).then(response => {
+          this.cfz[this.fenzhiProps.label] = label;
+          this.cfz[this.fenzhiProps.score] = score;
+          //Ajax提交到后台
+          this.$message({
+            message: "恭喜你，修改成功",
+            type: "success"
+          });
+          this.emptyTemVariableAndCloseWindow();
         });
-        this.emptyTemVariableAndCloseWindow();
       });
     },
     editShow(fz) {
-      this.dialogtype = "edit";
-      this.dialogVisible = true;
-      this.cfz = fz;
-      this.label = fz[this.fenzhiProps.label];
-      this.score = fz[this.fenzhiProps.score];
+      this.checkState().then(res => {
+        if (!res) {
+          return;
+        }
+        this.dialogtype = "edit";
+        this.dialogVisible = true;
+        this.cfz = fz;
+        this.label = fz[this.fenzhiProps.label];
+        this.score = fz[this.fenzhiProps.score];
+      });
     },
     onNodeDel(km) {
-      this.$emit("onNodeDel", km);
+      this.checkState().then(res => {
+        if (!res) {
+          return;
+        }
+        this.$emit("onNodeDel", km);
+      });
     },
     //清空当前环境临时交换变量 并关闭窗口
     emptyTemVariableAndCloseWindow() {

@@ -161,6 +161,12 @@ const deleteItem = data =>
         data: data
     })
 
+const getSchemeEnableUpdateState = data =>
+    request({
+        url: "/appraise/getSchemeEnableUpdateState.do",
+        method: "post",
+        data: data
+    })
 export default {
 
     uploadAttrUrl,
@@ -185,6 +191,7 @@ export default {
     updateScore,
     deleteScore,
     updateItem,
-    deleteItem
+    deleteItem,
+    getSchemeEnableUpdateState
 
 };
