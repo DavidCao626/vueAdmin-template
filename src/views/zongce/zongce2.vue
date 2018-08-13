@@ -164,7 +164,7 @@
                   </el-form-item>
                 </el-form>
               </div>
-              <div class="approval-panel">
+              <div class="approval-panel" style="margin-bottom: 0px;">
                 <h4>此分值科目不包含科目项,无法创建科目项及分值科目!</h4>
               </div>
             </template>
