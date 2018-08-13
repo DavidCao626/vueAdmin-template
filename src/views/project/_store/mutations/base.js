@@ -33,3 +33,7 @@ export const setClassifyType = (state, classifyType) => {
 export const setAppraiseCategory = (state, appraiseCategoryList) => {
     state.baseproject.appraiseCategoryList = appraiseCategoryList
 }
+
+export const setYearTypeList = (state, yearTypeList) => {
+    state.baseproject.yearTypeList = yearTypeList
+}

@@ -4,7 +4,6 @@
       <div slot="title">
         计划模版
       </div>
-
       <div slot="panel">
         <div>
           <el-form :model="formInline" class="demo-form-inline">
@@ -18,9 +17,6 @@
               </el-radio-group>
             </el-form-item>
 
-            <el-form-item label="添加配置节点:" v-state-show="2">
-              <el-button icon="el-icon-plus" size="mini" plain @click="addRootNode()">添加</el-button>
-            </el-form-item>
           </el-form>
         </div>
 
@@ -38,10 +34,13 @@
 
     </page>
 
-    <div class="approval-panel  footer-toolbar clearfix" v-if="serviceType==0">
+
+    <div class="approval-panel  footer-toolbar clearfix" >
       <div class="footer-toolbar__tools">
         <!-- <el-button plain>取消</el-button> -->
-        <el-button type="primary" @click="onSubmit">确定</el-button>
+        <el-button type="primary" @click="collegeBT">保存</el-button>
+        <el-button type="primary" v-if="opType =='U'" @click="saveAsSchemeA">另存为</el-button>
+        <el-button type="primary" @click="goDetail">维护分值项</el-button>
       </div>
 
       <!-- <div class="footer-toolbar__messages">
@@ -51,9 +50,9 @@
           </div>
           <i class="el-icon-warning" slot="reference"> 3</i>
         </el-popover>
+
       </div> -->
     </div>
-
 
   </div>
 </template>
@@ -144,14 +143,16 @@ export default {
         this.$router.go(-1);
       });
     },
-    onSubmit() {
-      if (this.opType == "A") {
+    goDetail(){
+        if (this.opType == "A") {
         //增加
         console.log(["onSubmt", this.node]);
         var name = JSON.parse(JSON.stringify(this.formInline.name));
         var available = JSON.parse(JSON.stringify(this.formInline.isok));
         var template = JSON.parse(JSON.stringify(this.node));
+        var id = JSON.parse(JSON.stringify(this.id));
         var requestData = {
+          categoryId: id,
           name: name,
           available: available,
           template: template
@@ -161,9 +162,72 @@ export default {
         delete requestData.template.ratio;
         delete requestData.template.orientation;
         delete requestData.template.childItems;
-        this.addAppraiseCategory(requestData).then(response => {
+
+        this.addScheme(requestData).then(response => {
           console.log(response);
-          this.$message.success("增加成功");
+           this.schemeId = response.resBody.id;
+          this.$message.success("保存成功");
+          this.$router.push({
+            path:"/zongce/zongce2",
+            query:{
+              schemeId:this.schemeId
+            }
+          })
+        });
+      } else {
+        //更新
+        console.log(["onSubmt", this.node]);
+        var name = JSON.parse(JSON.stringify(this.formInline.name));
+        var available = JSON.parse(JSON.stringify(this.formInline.isok));
+        var template = JSON.parse(JSON.stringify(this.node));
+        var schemeId = JSON.parse(JSON.stringify(this.schemeId));
+        var requestData = {
+          schemeId: schemeId,
+          name: name,
+          available: available,
+          template: template
+        };
+        requestData.template.items = this.node.childItems.slice();
+        delete requestData.template.name;
+        delete requestData.template.ratio;
+        delete requestData.template.orientation;
+        delete requestData.template.childItems;
+        this.updateScheme(requestData).then(response => {
+          this.schemeId = response.resBody.id;
+          this.$message.success("更新成功");
+           this.$router.push({
+            path:"/zongce/zongce2",
+            query:{
+              schemeId:this.schemeId
+            }
+          })
+        });
+      }
+    },
+    collegeBT() {
+      if (this.opType == "A") {
+        //增加
+        console.log(["onSubmt", this.node]);
+        var name = JSON.parse(JSON.stringify(this.formInline.name));
+        var available = JSON.parse(JSON.stringify(this.formInline.isok));
+        var template = JSON.parse(JSON.stringify(this.node));
+        var id = JSON.parse(JSON.stringify(this.id));
+        var requestData = {
+          categoryId: id,
+          name: name,
+          available: available,
+          template: template
+        };
+        requestData.template.items = this.node.childItems.slice();
+        delete requestData.template.name;
+        delete requestData.template.ratio;
+        delete requestData.template.orientation;
+        delete requestData.template.childItems;
+
+        this.addScheme(requestData).then(response => {
+          console.log(response);
+           this.schemeId = response.resBody.id;
+          this.$message.success("保存成功");
           this.$router.go(-1);
         });
       } else {
@@ -172,10 +236,9 @@ export default {
         var name = JSON.parse(JSON.stringify(this.formInline.name));
         var available = JSON.parse(JSON.stringify(this.formInline.isok));
         var template = JSON.parse(JSON.stringify(this.node));
-        var id = JSON.parse(JSON.stringify(this.id));
-
+        var schemeId = JSON.parse(JSON.stringify(this.schemeId));
         var requestData = {
-          id: id,
+          schemeId: schemeId,
           name: name,
           available: available,
           template: template
@@ -186,56 +249,65 @@ export default {
         delete requestData.template.orientation;
         delete requestData.template.childItems;
 
-        this.updateAppraiseCategory(requestData).then(response => {
+        this.updateScheme(requestData).then(response => {
+          this.schemeId = response.resBody.id;
           this.$message.success("更新成功");
           this.$router.go(-1);
         });
       }
-    },
-    addRootNode() {
-        console.log([this.props, this.node]);
-        this.node[this.props.children].push({
-          [this.props.lable]: "新节点",
-          [this.props.proportion]: 1,
-          [this.props.direction]: 1,
-          [this.props.children]: [],
-          [this.props.code]: null,
-          [this.props.include]: true
-        })
-     
     } 
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      vm.serviceType =0
-        //学校
-        vm.ShowStateBit = 3;
-        console.log(["serviceType", vm.serviceType]);
+      vm.serviceType =1;
+        if (to.query.id == null) {
+          vm.$message.error("参数不正确");
+          vm.$router.go(-1);
+        }
+        vm.id = to.query.id;
+
+        vm.ShowStateBit = 1;
+        //学院
         vm.opType = "A";
-        if (to.query.id) {
+        if (to.query.schemeId) {
+          vm.opType = "U"; //更新，根据schemeId查
+          vm.schemeId = to.query.schemeId;
+
+          //----执行查找
+          vm
+            .getStandardScheme({ categoryId: vm.id, schemeId: vm.schemeId })
+            .then(response => {
+              console.log(["getStandardScheme", response]);
+              vm.opType = "U"; //更新
+              vm.id = to.query.id;
+              var res = response.resBody;
+              vm.node = res.template;
+              vm.node.name = "这是不显示的节点";
+              vm.node.ratio = 0;
+              vm.node.orientation = 1;
+              vm.node.childItems = res.template.items;
+              vm.formInline = {
+                name: res.name,
+                isok: res.available
+              };
+            });
+        } else {
+          //增加
           vm.getAppraiseCategory({ id: to.query.id }).then(response => {
             console.log(["getAppraiseCategory", response]);
-            vm.opType = "U"; //更新
             vm.id = to.query.id;
             var res = response.resBody;
-
-            //var tem = JSON.parse(JSON.stringify(res.template));
-
-           // vm.node = tem;
+            vm.node = res.template;
             vm.node.name = "这是不显示的节点";
             vm.node.ratio = 0;
             vm.node.orientation = 1;
-            vm.node.childItems = []
-            res.template.items.forEach(e=>{
-              vm.node.childItems.push(e)
-            })
+            vm.node.childItems = res.template.items;
             vm.formInline = {
-              name: res.name,
+              name: "请输入方案名称",
               isok: res.available
             };
           });
         }
-      
     });
   }
 };

@@ -121,7 +121,42 @@ const getSchemeTree = ({ commit, state }, params) => new Promise(resolve => {
     })
 })
 
+const getItemListAndScore = ({ commit, state }, params) => new Promise(resolve => {
+    api.getItemListAndScore(params).then(response => {
+        console.log(["getItemListAndScore", response])
+        resolve(response)
+    })
+})
+const updateScore = ({ commit, state }, params) => new Promise(resolve => {
+    api.updateScore(params).then(response => {
+        console.log(["updateScore", response])
+        resolve(response)
+    })
+})
+const deleteScore = ({ commit, state }, params) => new Promise(resolve => {
+    api.deleteScore(params).then(response => {
+        console.log(["deleteScore", response])
+        resolve(response)
+    })
+})
+const updateItem = ({ commit, state }, params) => new Promise(resolve => {
+    api.updateItem(params).then(response => {
+        console.log(["updateItem", response])
+        resolve(response)
+    })
+})
+const deleteItem = ({ commit, state }, params) => new Promise(resolve => {
+    api.deleteItem(params).then(response => {
+        console.log(["deleteItem", response])
+        resolve(response)
+    })
+})
 export default {
+    deleteItem,
+    updateItem,
+    deleteScore,
+    getItemListAndScore,
+    updateScore,
     addScore,
     addItem,
     getDictByDictNames,

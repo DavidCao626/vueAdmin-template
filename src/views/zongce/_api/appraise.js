@@ -126,6 +126,41 @@ const getSchemeTree = data =>
         method: "post",
         data: data
     })
+
+const getItemListAndScore = data =>
+    request({
+        url: "/appraise/getItemListAndScore.do",
+        method: "post",
+        data: data
+    })
+
+const updateScore = data =>
+    request({
+        url: "/appraise/updateScore.do",
+        method: "post",
+        data: data
+    })
+
+const deleteScore = data =>
+    request({
+        url: "/appraise/deleteScore.do",
+        method: "post",
+        data: data
+    })
+
+const updateItem = data =>
+    request({
+        url: "/appraise/updateItem.do",
+        method: "post",
+        data: data
+    })
+const deleteItem = data =>
+    request({
+        url: "/appraise/deleteItem.do",
+        method: "post",
+        data: data
+    })
+
 export default {
 
     uploadAttrUrl,
@@ -145,6 +180,11 @@ export default {
     startAppraiseProject,
     addItem,
     addScore,
-    getSchemeTree
+    getSchemeTree,
+    getItemListAndScore,
+    updateScore,
+    deleteScore,
+    updateItem,
+    deleteItem
 
 };

@@ -24,6 +24,13 @@ export const zongceRouter = {
       component: () => import("../appraiseScheme.vue"),
       meta: { title: "配置计划书", icon: "example", hidden: true }
     },
+    
+  {
+    path: "operateScheme",
+    name: "operateScheme",
+    component: () => import("../operateScheme.vue"),
+      meta: { title: "编辑方案", icon: "example", hidden: true }
+    },
     {
       path: "zongce2",
       name: "标准分",

@@ -18,19 +18,21 @@
 
     <el-collapse v-model="activeNames" @change="handleChange">
       <el-collapse-item v-for="(km,index) in data" :name="index" :key="index">
+
         <template slot="title">
-          {{ index+=1 }} 、{{ km[props.label] }} &nbsp;&nbsp;
-          <el-popover placement="top" width="260" v-model="km[props.visible]" trigger="hover">
+
+          {{ index+=1 }} 、{{ km["item"].name }} &nbsp;&nbsp;
+          <el-popover placement="top" width="260" v-model="km[props.visible]" trigger="hover" @show="editKmShow(km)">
             <div style="margin-top:10px">
               <el-form label-position="left" label-width="50px" size="mini">
                 <el-form-item label="名称:">
-                  <el-input v-model="km[props.label]"></el-input>
+                  <el-input v-model=" km['item'].name"></el-input>
                 </el-form-item>
 
               </el-form>
               <div style="text-align: right; margin: 0">
                 <el-button size="mini" type="text" @click="km[props.visible] = false">取消</el-button>
-                <el-button type="primary" size="mini" @click="km[props.visible] = false">保存</el-button>
+                <el-button type="primary" size="mini" @click="updateItemBT(km)">修改</el-button>
               </div>
             </div>
             <span slot="reference" v-state-show="1">
@@ -66,8 +68,15 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+import store from "./_store/index.js";
+import moment from "moment";
 export default {
   props: {
+    schemeId: {
+      type: String,
+      default: null
+    },
     data: {
       default() {
         return [];
@@ -77,7 +86,7 @@ export default {
       type: Object,
       default() {
         return {
-          label: "label",
+          label: "item.name",
           visible: "visible2"
         };
       }
@@ -86,9 +95,9 @@ export default {
       type: Object,
       default() {
         return {
-          label: "label",
-          score: "score",
-          children: "fenzhiList"
+          label: "name",
+          score: "value",
+          children: "scoreList"
         };
       }
     },
@@ -110,22 +119,52 @@ export default {
     };
   },
   methods: {
+    editKmShow(km){
+      console.log(["显示编辑",km])
+    },
+    updateItemBT(km) {
+      console.log(["km", km]);
+      var requestData = {
+        itemId: km.item.id,
+        name: km.item.name
+      };
+      this.updateItem(requestData).then(response => {
+        km[this.props.visible] = false;
+        this.$message.success("修改成功");
+      });
+    },
+    ...mapActions({
+      updateItem: store.namespace + "/updateItem",
+      addScore: store.namespace + "/addScore",
+      deleteScore: store.namespace + "/deleteScore",
+      updateScore: store.namespace + "/updateScore"
+    }),
     handleChange(val) {
       console.log(val);
     },
     add(label, score) {
-      if (!this.ckm.hasOwnProperty(this.fenzhiProps[children])) {
-        this.$set(this.ckm, this.fenzhiProps[children], []);
+      if (!this.ckm.hasOwnProperty(this.fenzhiProps["children"])) {
+        this.$set(this.ckm, this.fenzhiProps["children"], []);
       }
-
-      this.ckm[this.fenzhiProps[children]].push({
-        [this.fenzhiProps.label]: label,
-        [this.fenzhiProps.score]: score
-      });
-      this.emptyTemVariableAndCloseWindow();
-      this.$message({
-        message: "恭喜你，添加成功",
-        type: "success"
+      console.log(["ckm", this.ckm]);
+      //String name, float value, int schemeId, String itemCode,
+      var requestData = {
+        name: label,
+        value: score,
+        schemeId: this.schemeId,
+        itemCode: this.ckm.item.code
+      };
+      this.addScore(requestData).then(response => {
+        this.ckm[this.fenzhiProps["children"]].push(
+          // [this.fenzhiProps.label]: label,
+          // [this.fenzhiProps.score]: score
+          response.resBody
+        );
+        this.emptyTemVariableAndCloseWindow();
+        this.$message({
+          message: "恭喜你，添加成功",
+          type: "success"
+        });
       });
     },
     addShow(km) {
@@ -135,21 +174,35 @@ export default {
       this.ckm = km;
     },
     del(km, node) {
-      km[this.fenzhiProps[children]].splice(km[this.fenzhiProps[children]].indexOf(node), 1);
-      this.$message({
-        message: "恭喜你，删除成功",
-        type: "success"
+      this.deleteScore({ id: node.id }).then(response => {
+        km[this.fenzhiProps["children"]].splice(
+          km[this.fenzhiProps["children"]].indexOf(node),
+          1
+        );
+        this.$message({
+          message: "恭喜你，删除成功",
+          type: "success"
+        });
       });
     },
     edit(label, score) {
-      this.cfz[this.fenzhiProps.label] = label;
-      this.cfz[this.fenzhiProps.score] = score;
-      //Ajax提交到后台
-      this.$message({
-        message: "恭喜你，修改成功",
-        type: "success"
+      //int id, String name, float value,
+      var requestData = {
+        id: this.cfz.id,
+        name: label,
+        value: score
+      };
+
+      this.updateScore(requestData).then(response => {
+        this.cfz[this.fenzhiProps.label] = label;
+        this.cfz[this.fenzhiProps.score] = score;
+        //Ajax提交到后台
+        this.$message({
+          message: "恭喜你，修改成功",
+          type: "success"
+        });
+        this.emptyTemVariableAndCloseWindow();
       });
-      this.emptyTemVariableAndCloseWindow();
     },
     editShow(fz) {
       this.dialogtype = "edit";

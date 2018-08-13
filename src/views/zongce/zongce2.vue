@@ -82,70 +82,42 @@
             </div>
           </el-col>
           <el-col :span="18">
-            <template v-if="nodeObj[props['type']]==1">
+            <template v-if="nodeObj[props['type']]=='rootType'">
+              <span>这是根节点</span>
               <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
 
                 <div class="block-header">
                   <h3>{{ nodeObj[props['label']] }}</h3>
-                </div>
-
-                <div style="margin-top:20px">
-                  <el-form ref="form" :model="form" label-width="80px">
-                    <el-form-item label="活动名称">
-                      <el-input v-model="form.name"></el-input>
-                    </el-form-item>
-
-                    <el-form-item label="活动时间">
-                      <el-col :span="11">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-                      </el-col>
-                      <el-col class="line" :span="2">-</el-col>
-                      <el-col :span="11">
-                        <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-                      </el-col>
-                    </el-form-item>
-                    <h2>{{ nodeObj[props['type']] }}</h2>
-                  </el-form>
-                </div>
-              </div>
-            </template>
-
-            <template v-if="nodeObj[props['type']]==2">
-              <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
-
-                <div class="block-header">
-                  <h3>{{ nodeObj[props['label']] }}</h3>
-                </div>
-
-                <div style="margin-top:20px">
-                  <el-form ref="form" :model="form" label-width="80px">
-                    <el-form-item label="活动名称">
-                      <el-input v-model="form.name"></el-input>
-                    </el-form-item>
-                    <el-form-item label="活动区域">
-                      <el-select v-model="form.region" placeholder="请选择活动区域">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                      </el-select>
-                    </el-form-item>
-                    <el-form-item label="活动时间">
-                      <el-col :span="11">
-                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-                      </el-col>
-                      <el-col class="line" :span="2">-</el-col>
-                      <el-col :span="11">
-                        <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-                      </el-col>
-                    </el-form-item>
-                    <h2>{{ nodeObj[props['type']] }}</h2>
-                  </el-form>
-
                 </div>
 
               </div>
             </template>
 
-            <template v-if="nodeObj[props['type']]==3">
+            <template v-if="nodeObj[props['type']]=='standardType'">
+              <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
+                <div class="block-header">
+                  <h3>{{ nodeObj[props['label']] }}</h3>
+                </div>
+                <el-form :model="nodeObj" label-width="80px">
+                  <el-form-item label="所占比例">
+                    <span>{{nodeObj[props['ratio']]*100+'%'}}</span>
+                  </el-form-item>
+                </el-form>
+
+              </div>
+            </template>
+
+            <template v-if="nodeObj[props['type']]=='hcType' &&nodeObj[props['enable']]=='N'">
+              <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
+
+                <div class="block-header">
+                  <h3>{{ nodeObj[props['label']] }}</h3>
+                </div>
+                <h4>此分值科目不包含科目项,无法创建科目项及分值科目!</h4>
+              </div>
+            </template>
+
+            <template v-if="nodeObj[props['type']]=='hcType' &&nodeObj[props['enable']]=='Y' ">
               <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
 
                 <div class="block-header">
@@ -153,7 +125,7 @@
                 </div>
 
                 <div style="margin-top:20px">
-                  <zongceCollapse :data="this.kemuList" :ShowStateBit="ShowStateBit" @onNodeDel="onNodeDel" :props:='{ label: " label ",score: "score ", visible: "visible2 "}'></zongceCollapse>
+                  <zongceCollapse :data="this.kemuList" :ShowStateBit="ShowStateBit" @onNodeDel="onNodeDel" :schemeId="schemeId"></zongceCollapse>
 
                 </div>
                 <div>
@@ -190,7 +162,9 @@ export default {
           id: "id",
           label: "label",
           type: "type",
-          children: "children"
+          children: "children",
+          enable: "enable",
+          ratio: "ratio"
         };
       }
     }
@@ -216,8 +190,7 @@ export default {
       dialogVisible: false,
       nodeObj: { label: "我的学校", id: 1, type: 1 }, //当前点击节点
       filterText: "",
-      data: [
-      ],
+      data: [],
       kemuList: []
     };
   },
@@ -228,19 +201,21 @@ export default {
   },
   methods: {
     ...mapActions({
-      getSchemeTree: store.namespace + "/getSchemeTree"
+      getSchemeTree: store.namespace + "/getSchemeTree",
+      getItemListAndScore: store.namespace + "/getItemListAndScore",
+      addItem: store.namespace + "/addItem",
+      deleteItem: store.namespace + "/deleteItem"
     }),
     getData() {
       var requestData = {
         schemeId: this.schemeId
       };
       this.getSchemeTree(requestData).then(response => {
-        this.data=[]
+        this.data = [];
         console.log(["tree", response]);
         var res = response.resBody;
-        this.data.push(res.template) ;
-
-      }); 
+        this.data.push(res.template);
+      });
     },
     filterNode(value, data) {
       if (!value) return true;
@@ -248,9 +223,30 @@ export default {
     },
     handleNodeClick(nodeDataObj, nodeObj) {
       this.nodeObj = nodeDataObj;
+      this.kemuList = [];
+      if (
+        this.nodeObj[this.props["type"]] == "hcType" &&
+        this.nodeObj[this.props["enable"]] == "Y"
+      ) {
+        //点击的是分值科目，要查询数据
+        var requestData = {
+          subjectCode: this.nodeObj.id,
+          schemeId: this.schemeId
+        };
+        // var requestData = {
+        //   subjectCode: 1,
+        //   schemeId: 1
+        // };
+
+        this.getItemListAndScore(requestData).then(response => {
+          console.log(["itemAndScore", response]);
+          var res = response.resBody;
+          this.kemuList = res;
+        });
+      }
     },
     onNodeDel(nodeData) {
-      if (nodeData.fenzhiList && nodeData.fenzhiList.length > 0) {
+      if (nodeData.scoreList && nodeData.scoreList.length > 0) {
         this.$message.error("包含子节点的节点不能删除");
       } else {
         this.$confirm("此操作将永久删除该节点, 是否继续?", "删除节点", {
@@ -259,10 +255,13 @@ export default {
           type: "warning"
         })
           .then(() => {
-            this.kemuList.splice(this.kemuList.indexOf(nodeData), 1);
-            this.$message({
-              type: "success",
-              message: "删除成功!"
+            //删除
+            this.deleteItem({ itemId: nodeData.item.id }).then(response => {
+              this.kemuList.splice(this.kemuList.indexOf(nodeData), 1);
+              this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
             });
           })
           .catch(() => {
@@ -274,14 +273,29 @@ export default {
       }
     },
     addNode(nodeObj, label) {
-      this.kemuList.push({ [this.props["label"]]: this.addlabel });
-
-      this.dialogVisible = false;
-      this.addlabel = "";
-      this.$message({
-        message: "恭喜你，添加成功",
-        type: "success"
+      console.log(["增加之前的kemulist", this.kemuList]);
+      var requestData = {
+        name: label,
+        subjectCode: nodeObj.id,
+        schemeId: this.schemeId
+      };
+      this.addItem(requestData).then(response => {
+        var temp = {
+          item: response.resBody,
+          scoreList: []
+        };
+        this.kemuList.push(temp);
+        this.dialogVisible = false;
+        this.addlabel = "";
+        this.$message({
+          message: "恭喜你，添加成功",
+          type: "success"
+        });
+        console.log(["增加之后的kemulist", this.kemuList]);
       });
+
+      //   this.kemuList.push({ [this.props["label"]]: this.addlabel });
+
       // 真实情况触发ajax插入
       //nodeObj.children.push({ label: label, children: [] });
     }
