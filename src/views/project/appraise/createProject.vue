@@ -4,8 +4,8 @@
     <div slot="panel">
       <ProjectAddSteps :active="0"></ProjectAddSteps>
       <br/>
-      <ProjectInfoForm></ProjectInfoForm>
     </div>
+      <ProjectInfoForm></ProjectInfoForm>
   </page>
 </template>
 

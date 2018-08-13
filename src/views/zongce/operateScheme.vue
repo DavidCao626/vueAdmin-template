@@ -4,7 +4,6 @@
       <div slot="title">
         计划模版
       </div>
-
       <div slot="panel">
         <div>
           <el-form :model="formInline" class="demo-form-inline">
@@ -36,18 +35,7 @@
     </page>
 
 
-      <!-- <div class="footer-toolbar__messages">
-        <el-popover placement="top" width="200" trigger="hover" title="表单验证结果">
-
-          <div style="color:red;"> e-1-1项目下的所有子节点占比不能超过1
-          </div>
-          <i class="el-icon-warning" slot="reference"> 3</i>
-        </el-popover>
-
-      </div> -->
-    </div>
-
-    <div class="approval-panel  footer-toolbar clearfix" v-if="serviceType==1">
+    <div class="approval-panel  footer-toolbar clearfix" >
       <div class="footer-toolbar__tools">
         <!-- <el-button plain>取消</el-button> -->
         <el-button type="primary" @click="collegeBT">保存</el-button>

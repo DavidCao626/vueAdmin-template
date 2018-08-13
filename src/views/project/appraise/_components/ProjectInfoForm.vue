@@ -1,92 +1,108 @@
 <template>
   <div>
-    <h3>一、项目信息</h3>
-    <el-form ref="form" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
-      <el-form-item label="项目名称:">
-        <el-input v-model="form.projectName" autosize focus style="width:50%;">
-          <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-        </el-input>
-      </el-form-item>
-      <el-form-item label="项目编号:">
-        <el-input v-model="form.projectUserCode" autosize focus style="width:50%;">
-          <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-        </el-input>
-      </el-form-item>
-      <el-form-item label="业务类型:">
-        <ProjectTypeSelect @selectValue="selectValue" :value="form.projectServiceType" :options="ioptions" :disabled="isProjectTypeSelectDisDisabled"></ProjectTypeSelect>
-      </el-form-item>
+    <page class="page" :breadcrumb="false">
+      <div slot="panel">
+        <h3>一、项目信息</h3>
+        <el-form ref="form" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
+          <el-form-item label="项目名称:">
+            <el-input v-model="form.projectName" autosize focus style="width:50%;">
+              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="项目编号:">
+            <el-input v-model="form.projectUserCode" autosize focus style="width:50%;">
+              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="业务类型:">
+            <ProjectTypeSelect @selectValue="selectValue" :value="form.projectServiceType" :options="ioptions" :disabled="isProjectTypeSelectDisDisabled"></ProjectTypeSelect>
+          </el-form-item>
 
-      <el-form-item label="子类型:">
-        <el-select v-model="classifyType" placeholder="请选择" @change="classifyTypeDetail">
-          <el-option v-for="item in ClassifyTypeList" :key="item.value" :label="item.typeName" :value="item.templateKey">
-          </el-option>
-        </el-select>
-        <el-button size="small" @click="clasDetail">详细</el-button>
+          <el-form-item label="子类型:">
+            <el-select v-model="classifyType" placeholder="请选择" @change="classifyTypeDetail">
+              <el-option v-for="item in ClassifyTypeList" :key="item.value" :label="item.typeName" :value="item.templateKey">
+              </el-option>
+            </el-select>
+            <el-button size="small" @click="clasDetail">详细</el-button>
 
-      </el-form-item>
+          </el-form-item>
 
-      <el-form-item label="计划开始日期">
-        <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planStartTime" type="date" placeholder="选择日期">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="计划结束日期">
-        <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planCompleteTime" type="date" placeholder="选择日期">
-        </el-date-picker>
-      </el-form-item>
+          <el-form-item label="计划开始日期">
+            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planStartTime" type="date" placeholder="选择日期">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="计划结束日期">
+            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planCompleteTime" type="date" placeholder="选择日期">
+            </el-date-picker>
+          </el-form-item>
 
-      <el-form-item label="项目附件:">
-        <ProjectAttachmentUplad :fileList2="form.attrDetailBean" :url="uploadAttrUrl" style="width: 30%;" @onSuccess="formUploadOnSuccess"></ProjectAttachmentUplad>
-      </el-form-item>
+          <el-form-item label="项目附件:">
+            <ProjectAttachmentUplad :fileList2="form.attrDetailBean" :url="uploadAttrUrl" style="width: 30%;" @onSuccess="formUploadOnSuccess"></ProjectAttachmentUplad>
+          </el-form-item>
 
-      <el-form-item label="是否生成公告:">
-        <el-switch v-model="form.isSendPublicNotice" active-value="Y" inactive-value="N"></el-switch>
-      </el-form-item>
-      <el-form-item label="公告内容:" v-show="form.isSendPublicNotice=='Y'?true:false">
-        <!-- <el-input type="textarea" :autosize="{ minRows: 3}" v-model="form.projectDesc"></el-input> -->
-        <tinymce :height="300" v-model="form.projectDesc" id='tinymce'></tinymce>
-      </el-form-item>
-    </el-form>
-    <br/>
-    </hr>
-    <br/>
-    <h3>二、测评信息</h3>
-    <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
-      <el-form-item label="名称">
-        <el-input v-model="form.expand.appraiseName" autosize focus style="width:50%;">
-          <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-        </el-input>
-      </el-form-item>
-      <el-form-item label="年度">
-        <el-input v-model="form.expand.appraiseYearType" autosize focus style="width:50%;">
-          <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-        </el-input>
-      </el-form-item>
-      <el-form-item label="开始时间">
-        <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.expand.appraiseStartTime" type="date" placeholder="选择日期">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="结束时间">
-        <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.expand.appraiseEndTime" type="date" placeholder="选择日期">
-        </el-date-picker>
-      </el-form-item>
-      <el-form-item label="测评类别">
+          <el-form-item label="是否生成公告:">
+            <el-switch v-model="form.isSendPublicNotice" active-value="Y" inactive-value="N"></el-switch>
+          </el-form-item>
+          <el-form-item label="公告内容:" v-show="form.isSendPublicNotice=='Y'?true:false">
+            <!-- <el-input type="textarea" :autosize="{ minRows: 3}" v-model="form.projectDesc"></el-input> -->
+            <tinymce :height="300" v-model="form.projectDesc" id='tinymce'></tinymce>
+          </el-form-item>
+        </el-form>
+      </div>
+    </page>
 
-        <el-select v-model="form.expand.appraiseServiceType" placeholder="请选择" @change="appraiseServiceTypeChange">
-          <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id">
-          </el-option>
-        </el-select>
-        <el-button type="" @click="updateCategory">修改</el-button>
-        <el-button type="" @click="insertCategory">新增</el-button>
+    <page class="page" :breadcrumb="false">
+      <div slot="panel">
 
-      </el-form-item>
-    </el-form>
+        <h3>二、测评信息</h3>
+        <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
+          <el-form-item label="名称">
+            <el-input v-model="form.expand.appraiseName" autosize focus style="width:50%;">
+              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
+            </el-input>
+          </el-form-item>
 
-    <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
-      <el-col :span="7">
-        <!-- <el-button ref="next" @click="onSave">保存</el-button> -->
-        <el-button ref="back" @click="onSaveAndNext">保存并下发</el-button>
-      </el-col>
-    </el-row>
+
+          <el-form-item label="年度">
+            <el-select v-model="form.expand.appraiseYearType" placeholder="请选择" no-data-text="无数据,请尝试刷新页面">
+              <el-option v-for="item in yearTypeList" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+
+          <el-form-item label="开始时间">
+            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.expand.appraiseStartTime" type="date" placeholder="选择日期">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="结束时间">
+            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.expand.appraiseEndTime" type="date" placeholder="选择日期">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="测评类别">
+
+            <el-select v-model="form.expand.appraiseServiceType" placeholder="请选择" @change="appraiseServiceTypeChange">
+              <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id">
+              </el-option>
+            </el-select>
+            <el-button type="" @click="updateCategory">修改</el-button>
+            <el-button type="" @click="insertCategory">新增</el-button>
+
+          </el-form-item>
+        </el-form>
+      </div>
+    </page>
+
+    <page class="page" :breadcrumb="false">
+      <div slot="panel">
+        <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
+          <el-col :span="7">
+            <el-button type="primary" @click="onSaveAndNext">保存并下发</el-button>
+          </el-col>
+        </el-row>
+      </div>
+    </page>
+
   </div>
 </template>
 <script>
@@ -99,21 +115,6 @@ import commons from "~/utils/common.js";
 export default {
   name: "projectInfoForm",
   props: {
-    // form: {
-    //   type: Object,
-    //   default: function(){
-    //   return {
-    //     name: '',
-    //     id: '', // 项目编号
-    //     tyleId: '001', // 业务类别id
-    //     date1: '',
-    //     enddate: '',
-    //     delivery: true,
-    //     files: [],
-    //     desc: ''
-    //     }
-    //   }
-    // },
     isProjectTypeSelectDisDisabled: {
       type: Boolean,
       default: true
@@ -150,12 +151,13 @@ export default {
       ],
       classifyTypedetailPath: "",
       iopt: [],
-      classifyType:""
+      classifyType: "",
+      yearTypeList:[]
     };
   },
   methods: {
     updateCategory() {
-      this.currentCategoryId = this.form.expand.appraiseServiceType
+      this.currentCategoryId = this.form.expand.appraiseServiceType;
       if (!this.currentCategoryId) {
         this.$message.error("请选择一个类别再进行操作");
         return;
@@ -203,8 +205,8 @@ export default {
       ]);
     },
     onSaveAndNext(e) {
-      if(!this.classifyType){
-        this.$message.error("子类型不能为空!")
+      if (!this.classifyType) {
+        this.$message.error("子类型不能为空!");
         return;
       }
       console.log(this.form);
@@ -282,9 +284,23 @@ export default {
         tempArr[i] = files[i].response.body.resBody.fileId;
       }
       this.form.projectAttachmentId = tempArr;
-    }
+    },
+    createYearTypeList(){
+      this.yearTypeList = [];
+      for(var i = 2000;i<2050;i++){
+        var temp = {
+          label:i + "年",
+          value:i.toString()
+        }
+        this.yearTypeList.push(temp)
+      }
+
+    },
   },
-  mounted() {}
+  mounted() {
+    this.createYearTypeList();
+
+  }
 };
 </script>
 <style>

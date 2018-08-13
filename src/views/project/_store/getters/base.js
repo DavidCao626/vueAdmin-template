@@ -17,3 +17,6 @@ export const getClassifyTypeList = (state) => {
 export const getappraiseCategoryList = (state) => {
     return state.baseproject.appraiseCategoryList
 }
+export const getYearTypeList = (state) => {
+    return state.baseproject.yearTypeList
+}

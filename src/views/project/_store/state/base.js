@@ -18,11 +18,12 @@ export const baseproject = {
             appraiseName: "",//名称
             appraiseStartTime: "",//开始时间
             appraiseEndTime: "",//结束时间
-            appraiseYearType: "",//年度
+            appraiseYearType: "2018",//年度
             appraiseServiceType:""//测评类别
         }
     },
     tempProjectId:"",//临时储存当前项目id
     uploadAttrUrl: "",
-    appraiseCategoryList:[]
+    appraiseCategoryList: [],
+    yearTypeList:[]
  }
