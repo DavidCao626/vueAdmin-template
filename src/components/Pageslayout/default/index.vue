@@ -30,9 +30,11 @@
 
                     </slot>
                 </template>
-                <!-- <div class="extra_info" v-if="!$slots.tabs">
-                    <el-button icon="el-icon-arrow-left" circle @click="go(-1)"></el-button>
-                </div> -->
+                <div class="extra_info" v-if="$slots.extra">
+                    <slot name="extra">
+                        <el-button icon="el-icon-arrow-left" circle @click="go(-1)"></el-button>
+                    </slot>
+                </div>
             </div>
 
         </template>
@@ -63,10 +65,10 @@ export default {
       return "123123123";
     }
   },
-  methods:{
-      go(i){
-         this.router.go(i)
-      }
+  methods: {
+    go(i) {
+      this.router.go(i);
+    }
   },
   components: {
     Breadcrumb

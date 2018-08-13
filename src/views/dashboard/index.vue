@@ -13,7 +13,7 @@
       </div>
       <div class="page-box__1">
         <div class="page-box__block">
-          <listbody title="公示栏" v-state="15" :titleUrl="noticeMoreUrl" :data="noticeDate"></listbody>
+          <listbody title="公示栏" :titleUrl="noticeMoreUrl" :data="noticeDate"></listbody>
 
         </div>
 

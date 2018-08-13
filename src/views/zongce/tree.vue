@@ -30,7 +30,7 @@
           </el-form>
         </div>
         <span slot="reference">
-          {{ nodeLable(node[props.lable]) }}({{ node[props.proportion]*100+"%" }})
+          {{ nodeLable(node[props.lable]) }}({{ parseInt(node[props.proportion]*100)+"%" }})
           <span style="font-size:10px" v-if="node[props.direction]=='1'">正</span>
           <span style="color:red;font-size:10px" v-else>负</span>
           &nbsp;
