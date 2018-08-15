@@ -11,18 +11,23 @@
               <el-input v-model="node[props.hcName]"></el-input>
             </el-form-item>
             <el-form-item label="分值:" v-state-show="1">
-              <el-input v-model="node[props.hcScoreValue]" maxlength="3"></el-input>
+              <!-- <el-input v-model="" maxlength="3"></el-input> -->
+              <div class="block">
+                <!-- <el-slider v-model="node[props.hcScoreValue]" show-input>
+                </el-slider> -->
+                 <el-input-number size="mini"   :max="100"  :min="0"  v-model="node[props.hcScoreValue]"></el-input-number>
+              </div>
             </el-form-item>
           </el-form>
         </div>
         <span slot="reference">
           {{ nodeLable(node[props.hcName]) }}&nbsp;({{ node[props.hcScoreValue] }}) &nbsp;&nbsp;
-          <i class="el-icon-edit-outline"  style="color:#fff"></i>
+          <i class="el-icon-edit-outline" style="color:#fff"></i>
         </span>
 
       </el-popover>
       <i class="el-icon-delete" v-state-show="1" @click="del(node)" style="color:#fff"></i>
-      <i class="el-icon-circle-plus-outline" style="color:#fff;" @click="add(node)" v-state-show="4"></i>
+      <!-- <i class="el-icon-circle-plus-outline" style="color:#fff;" @click="add(node)" v-state-show="4"></i> -->
     </div>
     <template v-if="0">
 
