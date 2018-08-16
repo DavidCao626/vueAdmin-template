@@ -22,8 +22,10 @@ Vue.use(state);
 import * as filters from './filters' // global filters
 
 import { Pagedefault, tableLayout } from '~/components/Pageslayout'
+import { ElXSelect } from "~/components/Select";
 Vue.component('page', Pagedefault)
 Vue.component("elx-table", tableLayout);
+Vue.component("elx-select", ElXSelect);
 
 Vue.use(ElementUI, {
   i18n: (key, value) => i18n.t(key, value),

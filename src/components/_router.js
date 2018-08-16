@@ -1,6 +1,6 @@
 export const componentsRouter = {
   path: "/components",
-  redirect: "/components/tabs",
+  redirect: "/components/elxSelcet",
   component: () => import("./_layout"),
   name: "组件demo",
   children: [
@@ -26,6 +26,11 @@ export const componentsRouter = {
       path: "Avatar",
       name: "avatar",
       component: () => import("./Avatar/index.vue")
+    },
+    {
+      path: "elxSelcet",
+      name: "elxSelcet",
+      component: () => import("./Select/test.vue")
     }
   ]
 };
