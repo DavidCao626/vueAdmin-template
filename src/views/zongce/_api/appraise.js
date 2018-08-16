@@ -167,6 +167,29 @@ const getSchemeEnableUpdateState = data =>
         method: "post",
         data: data
     })
+
+const queryTargetOrgBehaviors = data =>
+    request({
+        url: "/appraise/queryTargetOrgBehaviors.do",
+        method: "post",
+        data: data
+    })
+
+
+const getAllCorrelationDataByScopeIdAndItemId = data =>
+    request({
+        url: "/appraise/getAllCorrelationDataByScopeIdAndItemId.do",
+        method: "post",
+        data: data
+    })
+
+
+const queryTargetArtfBehviors = data =>
+    request({
+        url: "/appraise/queryTargetArtfBehviors.do",
+        method: "post",
+        data: data
+    })
 export default {
 
     uploadAttrUrl,
@@ -192,6 +215,9 @@ export default {
     deleteScore,
     updateItem,
     deleteItem,
-    getSchemeEnableUpdateState
+    getSchemeEnableUpdateState,
+    queryTargetOrgBehaviors,
+    getAllCorrelationDataByScopeIdAndItemId,
+    queryTargetArtfBehviors
 
 };

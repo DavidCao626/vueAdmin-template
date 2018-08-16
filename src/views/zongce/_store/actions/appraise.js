@@ -158,6 +158,28 @@ const getSchemeEnableUpdateState = ({ commit, state }, params) => new Promise(re
         resolve(response)
     })
 })
+const queryTargetOrgBehaviors = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryTargetOrgBehaviors(params).then(response => {
+        console.log(["queryTargetOrgBehaviors", response])
+        resolve(response)
+    })
+})
+
+
+const getAllCorrelationDataByScopeIdAndItemId = ({ commit, state }, params) => new Promise(resolve => {
+    api.getAllCorrelationDataByScopeIdAndItemId(params).then(response => {
+        console.log(["getAllCorrelationDataByScopeIdAndItemId", response])
+        resolve(response)
+    })
+})
+
+
+const queryTargetArtfBehviors = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryTargetArtfBehviors(params).then(response => {
+        console.log(["queryTargetArtfBehviors", response])
+        resolve(response)
+    })
+})
 export default {
     deleteItem,
     updateItem,
@@ -181,5 +203,8 @@ export default {
     queryAppraiseProspectus,
     startAppraiseProject,
     getSchemeTree,
-    getSchemeEnableUpdateState
+    getSchemeEnableUpdateState,
+    queryTargetOrgBehaviors,
+    getAllCorrelationDataByScopeIdAndItemId,
+    queryTargetArtfBehviors
 }
