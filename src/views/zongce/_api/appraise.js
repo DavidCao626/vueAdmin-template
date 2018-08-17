@@ -190,6 +190,12 @@ const queryTargetArtfBehviors = data =>
         method: "post",
         data: data
     })
+const getCurrentOrgListAndOwner = data =>
+    request({
+        url: "/systemManagerApi/getCurrentOrgListAndOwner.do",
+        method: 'post',
+        data: data
+    })
 export default {
 
     uploadAttrUrl,
@@ -218,6 +224,7 @@ export default {
     getSchemeEnableUpdateState,
     queryTargetOrgBehaviors,
     getAllCorrelationDataByScopeIdAndItemId,
-    queryTargetArtfBehviors
+    queryTargetArtfBehviors,
+    getCurrentOrgListAndOwner
 
 };

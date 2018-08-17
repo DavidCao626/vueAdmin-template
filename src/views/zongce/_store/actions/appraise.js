@@ -180,6 +180,14 @@ const queryTargetArtfBehviors = ({ commit, state }, params) => new Promise(resol
         resolve(response)
     })
 })
+
+
+const getCurrentOrgListAndOwner = ({ commit, state }, params) => new Promise(resolve => {
+    api.getCurrentOrgListAndOwner(params).then(response => {
+        console.log(["getCurrentOrgListAndOwner", response])
+        resolve(response)
+    })
+})
 export default {
     deleteItem,
     updateItem,
@@ -206,5 +214,6 @@ export default {
     getSchemeEnableUpdateState,
     queryTargetOrgBehaviors,
     getAllCorrelationDataByScopeIdAndItemId,
-    queryTargetArtfBehviors
+    queryTargetArtfBehviors,
+    getCurrentOrgListAndOwner
 }

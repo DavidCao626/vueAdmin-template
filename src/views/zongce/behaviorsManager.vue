@@ -28,7 +28,7 @@
 
                 <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
                     <el-form-item label="组织机构">
-                        <el-input v-model="formInline.orgCode" placeholder="组织机构"></el-input>
+                         <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select :props="orgProps"></el-cascader>
                     </el-form-item>
                     <el-form-item label="分值科目">
                         <el-input v-model="formInline.subjectCode" placeholder="分值科目"></el-input>
@@ -142,6 +142,12 @@ export default {
         targetId: "", //测评对象id（学号）
         titleLike: "" //事件名称
       },
+      orgProps: {
+        label: "org_name",
+        value: "org_code",
+        children: "children"
+      },
+      orgList: [],
       scopeId: null,
       itemId: null,
       multipleSelection: [], //选中的值
@@ -163,6 +169,12 @@ export default {
     }
   },
   methods: {
+       getOrgList() {
+      this.getCurrentOrgListAndOwner({}).then(response => {
+        console.log(["orgList", response]);
+        this.orgList = response.resBody;
+      });
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageInfo.pageSize = val;
@@ -174,6 +186,7 @@ export default {
       this.getData();
     },
     ...mapActions({
+         getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
       getDictByDictNames: store.namespace + "/getDictByDictNames",
       getAllCorrelationDataByScopeIdAndItemId:
         store.namespace + "/getAllCorrelationDataByScopeIdAndItemId",
@@ -264,6 +277,7 @@ export default {
       if (!to.query.itemId || !to.query.scopeId) {
         vm.$message.error("参数不正确");
       } else {
+           vm.getOrgList();
         vm.itemId = to.query.itemId;
         vm.scopeId = to.query.scopeId;
         vm.getDict();

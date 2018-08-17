@@ -1,7 +1,7 @@
 <template>
   <div>
     <page>
-      <div slot="title">生成考评行为记录</div>
+      <div slot="title">生成分值科目记录</div>
     </page>
     <el-dialog title="导入数据" :visible.sync="dialogVisible" width="400px" :before-close="handleClose">
       <el-upload class="upload-demo" drag :action="action" :limit='1' @onSuccess="onUploadSuccess">
@@ -19,7 +19,7 @@
 
         <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
           <el-form-item label="组织机构">
-             <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select :props="orgProps"></el-cascader>
+            <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select :props="orgProps"></el-cascader>
           </el-form-item>
           <el-form-item label="分值科目">
             <el-input v-model="formInline.subjectCode" placeholder="分值科目"></el-input>
@@ -39,25 +39,18 @@
       <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop: 'name',prop: 'address'}" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="38">
         </el-table-column>
-        <el-table-column prop="title" label="行为标题">
+        <el-table-column prop="targetName" label="学生名称">
         </el-table-column>
-        <el-table-column prop="targetName" label="测评对象">
+        <el-table-column prop="targetOrgName" label="学生机构">
         </el-table-column>
-        <el-table-column prop="targetOrgName" label="测评对象组织">
+        <el-table-column prop="subjectName" label="分录科目">
         </el-table-column>
-        <el-table-column prop="hcSubjectName" label="分值科目名称">
+        <el-table-column prop="scoreValue" label="得分值">
         </el-table-column>
-        <el-table-column prop="subTitle" label="分项业务">
+        <el-table-column prop="behaviorType" label="行为类型">
         </el-table-column>
-        <el-table-column prop="original_score" label="原始分值">
+        <el-table-column prop="recordTime" label="记录日期">
         </el-table-column>
-        <el-table-column prop="conversion_ratio" label="转换比率">
-        </el-table-column>
-        <el-table-column prop="reality_score" label="实际得分值">
-        </el-table-column>
-        <el-table-column prop="record_time" label="记录时间">
-        </el-table-column>
-
       </el-table>
 
       <template slot="footer">
@@ -124,12 +117,6 @@ export default {
     }
   },
   methods: {
-     getOrgList() {
-      this.getCurrentOrgListAndOwner({}).then(response => {
-        console.log(["orgList", response]);
-        this.orgList = response.resBody;
-      });
-    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageInfo.pageSize = val;
@@ -141,12 +128,18 @@ export default {
       this.getData();
     },
     ...mapActions({
-       getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
       getDictByDictNames: store.namespace + "/getDictByDictNames",
       getAllCorrelationDataByScopeIdAndItemId:
         store.namespace + "/getAllCorrelationDataByScopeIdAndItemId",
+         getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
       queryTargetArtfBehviors: store.namespace + "/queryTargetArtfBehviors"
     }),
+     getOrgList() {
+      this.getCurrentOrgListAndOwner({}).then(response => {
+        console.log(["orgList", response]);
+        this.orgList = response.resBody;
+      });
+    },
     getDict() {
       var requestData = {
         dicts: ["nation"]
@@ -228,7 +221,6 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      
       if (!to.query.itemId || !to.query.scopeId) {
         vm.$message.error("参数不正确");
       } else {

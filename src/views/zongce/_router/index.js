@@ -70,8 +70,18 @@ export const zongceRouter = {
       path: "artfBehviorsManager",
       name: "artfBehviorsManager",
       component: () => import("../artfBehviorsManager.vue"),
-      meta: { title: "考评行为记录管理", icon: "example", hidden: true }
+      meta: { title: "生成考评行为记录", icon: "example", hidden: true }
+    }, {
+      path: "hierarchicalRecord",
+      name: "hierarchicalRecord",
+      component: () => import("../hierarchicalRecord.vue"),
+      meta: { title: "生成分值科目记录", icon: "example", hidden: true }
+    }, {
+      path: "standardRecord",
+      name: "standardRecord",
+      component: () => import("../standardRecord.vue"),
+      meta: { title: "生成标准科目记录", icon: "example", hidden: true }
     }
-    
+
   ]
 };
