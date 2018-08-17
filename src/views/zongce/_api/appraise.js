@@ -190,10 +190,45 @@ const queryTargetArtfBehviors = data =>
         method: "post",
         data: data
     })
+
+
+
+const getSubjectBySSCodeAndProjectId = data =>
+    request({
+        url: "/appraise/getSubjectBySSCodeAndProjectId.do",
+        method: "post",
+        data: data
+    })
 const getCurrentOrgListAndOwner = data =>
     request({
         url: "/systemManagerApi/getCurrentOrgListAndOwner.do",
         method: 'post',
+        data: data
+    })
+const getItemListAndScoreBySubjectCodeAndProjectId = data =>
+    request({
+        url: "/appraise/getItemListAndScoreBySubjectCodeAndProjectId.do",
+        method: "post",
+        data: data
+    })
+const getStateList = data =>
+    request({
+        url: "/appraise/getStateList.do",
+        method: "post",
+        data: data
+    })
+
+const getSubjectByProjectIdAndSession = data =>
+    request({
+        url: "/appraise/getSubjectByProjectIdAndSession.do",
+        method: "post",
+        data: data
+    })
+
+const getStudentApplyProject = data =>
+    request({
+        url: "/appraise/getStudentApplyProject.do",
+        method: "post",
         data: data
     })
 export default {
@@ -225,6 +260,11 @@ export default {
     queryTargetOrgBehaviors,
     getAllCorrelationDataByScopeIdAndItemId,
     queryTargetArtfBehviors,
-    getCurrentOrgListAndOwner
+    getCurrentOrgListAndOwner,
+    getSubjectBySSCodeAndProjectId,
+    getItemListAndScoreBySubjectCodeAndProjectId,
+    getStateList,
+    getSubjectByProjectIdAndSession,
+    getStudentApplyProject
 
 };

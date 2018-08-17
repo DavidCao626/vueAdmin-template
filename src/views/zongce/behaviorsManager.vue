@@ -1,123 +1,132 @@
 <template>
-    <div>
-        <page>
-            <div slot="title">科目行为管理</div>
-        </page>
-        <el-dialog title="导入数据" :visible.sync="dialogVisible" width="400px" :before-close="handleClose">
-            <el-upload class="upload-demo" drag :action="action" :limit='1' @onSuccess="onUploadSuccess">
-                <i class="el-icon-upload"></i>
-                <div class="el-upload__text">将文件拖到此处，或
-                    <em>点击上传</em>
-                </div>
-                <div class="el-upload__tip" slot="tip">只能上传xlx/xlsx</div>
-            </el-upload>
-        </el-dialog>
+  <div>
+    <page>
+      <div slot="title">科目行为管理</div>
+    </page>
+    <el-dialog title="导入数据" :visible.sync="dialogVisible" width="400px" :before-close="handleClose">
+      <el-upload class="upload-demo" drag :action="action" :limit='1' @onSuccess="onUploadSuccess">
+        <i class="el-icon-upload"></i>
+        <div class="el-upload__text">将文件拖到此处，或
+          <em>点击上传</em>
+        </div>
+        <div class="el-upload__tip" slot="tip">只能上传xlx/xlsx</div>
+      </el-upload>
+    </el-dialog>
 
-        <elx-table-layout>
-            <template slot="headerRight">
-                <el-button-group>
-                    <el-tooltip class="item" effect="dark" content="录入数据" placement="bottom">
-                        <el-button plain size="mini">
-                            录入
-                        </el-button>
-                    </el-tooltip>
-                </el-button-group>
-            </template>
+    <elx-table-layout>
+      <template slot="headerRight">
+        <el-button-group>
+          <el-tooltip class="item" effect="dark" content="录入数据" placement="bottom">
+            <el-button plain size="mini">
+              录入
+            </el-button>
+          </el-tooltip>
+        </el-button-group>
+      </template>
 
-            <template slot="headerLeft">
+      <template slot="headerLeft">
 
-                <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-                    <el-form-item label="组织机构">
-                         <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select :props="orgProps"></el-cascader>
-                    </el-form-item>
-                    <el-form-item label="分值科目">
-                        <el-input v-model="formInline.subjectCode" placeholder="分值科目"></el-input>
-                    </el-form-item>
-                    <el-form-item label="科目项">
-                        <el-input v-model="formInline.itemId" placeholder="科目项"></el-input>
-                    </el-form-item>
-                    <el-form-item label="学号">
-                        <el-input v-model="formInline.targetId" placeholder="学号"></el-input>
-                    </el-form-item>
-                    <el-form-item label="事件名称">
-                        <el-input v-model="formInline.titleLike" placeholder="事件名称"></el-input>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="onSubmit">查询</el-button>
-                    </el-form-item>
-                </el-form>
-            </template>
+        <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
+          <el-form-item label="组织机构">
+            <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select :props="orgProps"></el-cascader>
+          </el-form-item>
+          <el-form-item label="分值科目">
+            <elx-select v-model="formInline.subjectCode" placeholder="" @change="fzkmChange">
+              <el-option v-for="item in standardSubjectList" :key="item.code" :value="item.code" :label="item.name"></el-option>
+            </elx-select>
+          </el-form-item>
+          <el-form-item label="科目项">
+            <elx-select v-model="formInline.itemId" placeholder="">
+              <el-option v-for="item in subjectList" :key="item.id" :value="item.id" :label="item.name"></el-option>
+            </elx-select>
+          </el-form-item>
+          <el-form-item label="学号">
+            <el-input v-model="formInline.targetId" placeholder="学号"></el-input>
+          </el-form-item>
+          <el-form-item label="事件名称">
+            <el-input v-model="formInline.titleLike" placeholder="事件名称"></el-input>
+          </el-form-item>
+          <el-form-item label="状态">
+            <elx-select v-model="formInline.state" placeholder="">
+              <el-option v-for="item in stateList" :key="item.value" :value="item.value" :label="item.label"></el-option>
+            </elx-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
+          </el-form-item>
+        </el-form>
+      </template>
 
-            <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop: 'name',prop: 'address'}" @selection-change="handleSelectionChange">
-                <el-table-column type="selection" width="38">
-                </el-table-column>
-                <el-table-column prop="title" label="行为名称">
-                </el-table-column>
-                <el-table-column prop="targetName" label="测评对象">
-                </el-table-column>
-                <el-table-column prop="targetOrgName" label="测评对象组织">
-                </el-table-column>
-                <el-table-column prop="hcSubjectName" label="分值科目名称">
-                </el-table-column>
-                <el-table-column prop="state" label="记录状态">
-                </el-table-column>
-                <el-table-column prop="cognizanceItemName" label="认定科目项">
-                </el-table-column>
-                <el-table-column prop="cognizanceScoreName" label="认定分值项">
-                </el-table-column>
-                <el-table-column prop="cognizanceScoreValue" label="实际得分值">
-                </el-table-column>
-                <el-table-column prop="cognizanceOperationTime" label="认定时间">
-                </el-table-column>
-                <el-table-column prop="cognizanceOperatorId" label="认定人">
-                </el-table-column>
+      <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop: 'name',prop: 'address'}" @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="38">
+        </el-table-column>
+        <el-table-column prop="title" label="行为名称">
+        </el-table-column>
+        <el-table-column prop="targetName" label="测评对象">
+        </el-table-column>
+        <el-table-column prop="targetOrgName" label="测评对象组织">
+        </el-table-column>
+        <el-table-column prop="hcSubjectName" label="分值科目名称">
+        </el-table-column>
+        <el-table-column prop="state" label="记录状态">
+        </el-table-column>
+        <el-table-column prop="cognizanceItemName" label="认定科目项">
+        </el-table-column>
+        <el-table-column prop="cognizanceScoreName" label="认定分值项">
+        </el-table-column>
+        <el-table-column prop="cognizanceScoreValue" label="实际得分值">
+        </el-table-column>
+        <el-table-column prop="cognizanceOperationTime" label="认定时间">
+        </el-table-column>
+        <el-table-column prop="cognizanceOperatorId" label="认定人">
+        </el-table-column>
 
-                <el-table-column type="expand" label="#" width="42">
-                    <template slot-scope="props" style="background-color:#f7f8f9">
-                        <el-form label-position="left" inline class="demo-table-expand">
-                            <el-form-item label="申请科目项:">
-                                <span>{{ props.row.applyItemName }}</span>
-                            </el-form-item>
-                            <br/>
-                            <el-form-item label="申请分值项:">
-                                <span>{{ props.row.applyScoreName }}</span>
-                            </el-form-item>
-                            <br/>
-                            <el-form-item label="数量:">
-                                <span>{{ props.row.quantity }}</span>
-                            </el-form-item>
-                            <el-form-item label="申请得分值:">
-                                <span>{{ props.row.applyScoreValue }}</span>
-                            </el-form-item>
-                            <el-form-item label="申请原因:">
-                                <span>{{ props.row.applyReason }}</span>
-                            </el-form-item>
-                        </el-form>
-                    </template>
-                </el-table-column>
+        <el-table-column type="expand" label="#" width="42">
+          <template slot-scope="props" style="background-color:#f7f8f9">
+            <el-form label-position="left" inline class="demo-table-expand">
+              <el-form-item label="申请科目项:">
+                <span>{{ props.row.applyItemName }}</span>
+              </el-form-item>
+              <br/>
+              <el-form-item label="申请分值项:">
+                <span>{{ props.row.applyScoreName }}</span>
+              </el-form-item>
+              <br/>
+              <el-form-item label="数量:">
+                <span>{{ props.row.quantity }}</span>
+              </el-form-item>
+              <el-form-item label="申请得分值:">
+                <span>{{ props.row.applyScoreValue }}</span>
+              </el-form-item>
+              <el-form-item label="申请原因:">
+                <span>{{ props.row.applyReason }}</span>
+              </el-form-item>
+            </el-form>
+          </template>
+        </el-table-column>
 
-                <el-table-column label="操作" width="88" header-align="left" align="center">
-                    <template slot-scope="scope">
-                        <el-dropdown>
-                            <el-button size="mini" @click="">
-                                <i class="el-icon-arrow-down"></i>
-                            </el-button>
-                            <el-dropdown-menu slot="dropdown">
-                                <!-- <el-dropdown-item @click.native="edit(scope.row)">编辑</el-dropdown-item> -->
-                                <el-dropdown-item>认定</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
-                    </template>
-                </el-table-column>
-            </el-table>
+        <el-table-column label="操作" width="88" header-align="left" align="center">
+          <template slot-scope="scope">
+            <el-dropdown>
+              <el-button size="mini" @click="">
+                <i class="el-icon-arrow-down"></i>
+              </el-button>
+              <el-dropdown-menu slot="dropdown">
+                <!-- <el-dropdown-item @click.native="edit(scope.row)">编辑</el-dropdown-item> -->
+                <el-dropdown-item>认定</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </template>
+        </el-table-column>
+      </el-table>
 
-            <template slot="footer">
-                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-                </el-pagination>
-            </template>
+      <template slot="footer">
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+        </el-pagination>
+      </template>
 
-        </elx-table-layout>
-    </div>
+    </elx-table-layout>
+  </div>
 </template>
 
   <script>
@@ -136,19 +145,22 @@ export default {
         totalRecord: 0
       },
       formInline: {
-          orgCode:[],//组织机构
-        subjectCode: "", //分值科目
-        itemId: "", //科目项
+        orgCode: [], //组织机构
+        subjectCode: "0", //分值科目
+        itemId: 0, //科目项
         targetId: "", //测评对象id（学号）
-        titleLike: "" //事件名称
+        titleLike: "", //事件名称
+        state: "0"
       },
       orgProps: {
         label: "org_name",
         value: "org_code",
         children: "children"
       },
+      standardSubjectCode: "",
       orgList: [],
       scopeId: null,
+      projectId: null,
       itemId: null,
       multipleSelection: [], //选中的值
       isMultipleSelection: false, //是否选中
@@ -158,6 +170,9 @@ export default {
       exportOpen: false,
       data: [],
       nationObj: {},
+      stateList: [{ label: "全部", value: "0" }],
+      standardSubjectList: [{ code: "0", name: "全部" }],
+      subjectList: [{ id: 0, name: "全部" }],
       action: "https://jsonplaceholder.typicode.com/posts/"
     };
   },
@@ -169,7 +184,25 @@ export default {
     }
   },
   methods: {
-       getOrgList() {
+    fzkmChange(val) {
+      this.formInline.itemId = 0;
+      if (val == "0") {
+        this.subjectList = [{ id: 0, name: "全部" }];
+      } else {
+        this.getItemListAndScoreBySubjectCodeAndProjectId({
+          projectId: this.projectId,
+          subjectCode: val
+        }).then(response => {
+          var res = response.resBody;
+          this.subjectList = [];
+          res.forEach(it => {
+            this.subjectList.push(it.item);
+          });
+          this.subjectList.unshift({ id: 0, name: "全部" });
+        });
+      }
+    },
+    getOrgList() {
       this.getCurrentOrgListAndOwner({}).then(response => {
         console.log(["orgList", response]);
         this.orgList = response.resBody;
@@ -186,13 +219,31 @@ export default {
       this.getData();
     },
     ...mapActions({
-         getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
+      getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
       getDictByDictNames: store.namespace + "/getDictByDictNames",
       getAllCorrelationDataByScopeIdAndItemId:
         store.namespace + "/getAllCorrelationDataByScopeIdAndItemId",
-      queryTargetOrgBehaviors: store.namespace + "/queryTargetOrgBehaviors"
+      queryTargetOrgBehaviors: store.namespace + "/queryTargetOrgBehaviors",
+      getSubjectBySSCodeAndProjectId:
+        store.namespace + "/getSubjectBySSCodeAndProjectId",
+      getItemListAndScoreBySubjectCodeAndProjectId:
+        store.namespace + "/getItemListAndScoreBySubjectCodeAndProjectId",
+      getStateList: store.namespace + "/getStateList"
     }),
+    getSubjectList() {
+      this.getSubjectBySSCodeAndProjectId({
+        projectId: this.projectId,
+        standardSubjectCode: this.standardSubjectCode
+      }).then(response => {
+        this.standardSubjectList = response.resBody;
+        this.standardSubjectList.unshift({ code: "0", name: "全部" });
+      });
+    },
     getDict() {
+      this.getStateList({}).then(response => {
+        this.stateList = response.resBody;
+        this.stateList.unshift({ label: "全部", value: "0" });
+      });
       var requestData = {
         dicts: ["nation"]
       };
@@ -213,13 +264,16 @@ export default {
       this.getAllCorrelationDataByScopeIdAndItemId(requestData).then(
         response => {
           var res = response.resBody;
+          this.projectId = res.appraiseProject.id;
           this.getData(res.appraiseProject.id);
+          this.getSubjectList();
         }
       );
     },
     getData(projectId) {
       var requestData = {
-          orgCode:this.formInline.orgCode,
+        state: this.formInline.state,
+        orgCode: this.formInline.orgCode,
         subjectCode: this.formInline.subjectCode,
         itemId: this.formInline.itemId,
         targetId: this.formInline.targetId,
@@ -274,10 +328,11 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (!to.query.itemId || !to.query.scopeId) {
+      if (!to.query.scopeId || !to.query.standardSubjectCode) {
         vm.$message.error("参数不正确");
       } else {
-           vm.getOrgList();
+        vm.standardSubjectCode = to.query.standardSubjectCode;
+        vm.getOrgList();
         vm.itemId = to.query.itemId;
         vm.scopeId = to.query.scopeId;
         vm.getDict();
