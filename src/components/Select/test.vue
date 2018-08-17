@@ -1,6 +1,6 @@
 <template>
     <elx-select v-model="value" placeholder="请选择" @change="changeValue">
-        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+        <el-option v-for="item in options" :key="item.value" :label="item.label" :config="item" :config1="12312" :value="item.value">
         </el-option>
     </elx-select>
 </template>
