@@ -283,9 +283,8 @@ export default {
     };
   },
   methods: {
-    handleChange(value,label,object) {
+    handleChange(values,labels,objects) {
       debugger
-      console.log(value);
     }
   }
 };
