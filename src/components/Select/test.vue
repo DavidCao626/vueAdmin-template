@@ -35,7 +35,7 @@ export default {
     };
   },
   methods: {
-    changeValue(value,o) {
+    changeValue(value,l,o) {
       console.log(o);
       
       debugger
