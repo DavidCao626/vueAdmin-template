@@ -158,6 +158,70 @@ const getSchemeEnableUpdateState = ({ commit, state }, params) => new Promise(re
         resolve(response)
     })
 })
+const queryTargetOrgBehaviors = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryTargetOrgBehaviors(params).then(response => {
+        console.log(["queryTargetOrgBehaviors", response])
+        resolve(response)
+    })
+})
+
+
+const getAllCorrelationDataByScopeIdAndItemId = ({ commit, state }, params) => new Promise(resolve => {
+    api.getAllCorrelationDataByScopeIdAndItemId(params).then(response => {
+        console.log(["getAllCorrelationDataByScopeIdAndItemId", response])
+        resolve(response)
+    })
+})
+
+
+const queryTargetArtfBehviors = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryTargetArtfBehviors(params).then(response => {
+        console.log(["queryTargetArtfBehviors", response])
+        resolve(response)
+    })
+})
+
+
+const getCurrentOrgListAndOwner = ({ commit, state }, params) => new Promise(resolve => {
+    api.getCurrentOrgListAndOwner(params).then(response => {
+        console.log(["getCurrentOrgListAndOwner", response])
+        resolve(response)
+    })
+})
+
+const getSubjectBySSCodeAndProjectId = ({ commit, state }, params) => new Promise(resolve => {
+    api.getSubjectBySSCodeAndProjectId(params).then(response => {
+        console.log(["getSubjectBySSCodeAndProjectId", response])
+        resolve(response)
+    })
+})
+
+const getItemListAndScoreBySubjectCodeAndProjectId = ({ commit, state }, params) => new Promise(resolve => {
+    api.getItemListAndScoreBySubjectCodeAndProjectId(params).then(response => {
+        console.log(["getItemListAndScoreBySubjectCodeAndProjectId", response])
+        resolve(response)
+    })
+})
+
+const getStateList = ({ commit, state }, params) => new Promise(resolve => {
+    api.getStateList(params).then(response => {
+        console.log(["getStateList", response])
+        resolve(response)
+    })
+})
+const getSubjectByProjectIdAndSession = ({ commit, state }, params) => new Promise(resolve => {
+    api.getSubjectByProjectIdAndSession(params).then(response => {
+        console.log(["getSubjectByProjectIdAndSession", response])
+        resolve(response)
+    })
+})
+
+const getStudentApplyProject = ({ commit, state }, params) => new Promise(resolve => {
+    api.getStudentApplyProject(params).then(response => {
+        console.log(["getStudentApplyProject", response])
+        resolve(response)
+    })
+})
 export default {
     deleteItem,
     updateItem,
@@ -181,5 +245,14 @@ export default {
     queryAppraiseProspectus,
     startAppraiseProject,
     getSchemeTree,
-    getSchemeEnableUpdateState
+    getSchemeEnableUpdateState,
+    queryTargetOrgBehaviors,
+    getAllCorrelationDataByScopeIdAndItemId,
+    queryTargetArtfBehviors,
+    getCurrentOrgListAndOwner,
+    getSubjectBySSCodeAndProjectId,
+    getItemListAndScoreBySubjectCodeAndProjectId,
+    getStateList,
+    getSubjectByProjectIdAndSession,
+    getStudentApplyProject
 }

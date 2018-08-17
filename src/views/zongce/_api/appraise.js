@@ -167,6 +167,70 @@ const getSchemeEnableUpdateState = data =>
         method: "post",
         data: data
     })
+
+const queryTargetOrgBehaviors = data =>
+    request({
+        url: "/appraise/queryTargetOrgBehaviors.do",
+        method: "post",
+        data: data
+    })
+
+
+const getAllCorrelationDataByScopeIdAndItemId = data =>
+    request({
+        url: "/appraise/getAllCorrelationDataByScopeIdAndItemId.do",
+        method: "post",
+        data: data
+    })
+
+
+const queryTargetArtfBehviors = data =>
+    request({
+        url: "/appraise/queryTargetArtfBehviors.do",
+        method: "post",
+        data: data
+    })
+
+
+
+const getSubjectBySSCodeAndProjectId = data =>
+    request({
+        url: "/appraise/getSubjectBySSCodeAndProjectId.do",
+        method: "post",
+        data: data
+    })
+const getCurrentOrgListAndOwner = data =>
+    request({
+        url: "/systemManagerApi/getCurrentOrgListAndOwner.do",
+        method: 'post',
+        data: data
+    })
+const getItemListAndScoreBySubjectCodeAndProjectId = data =>
+    request({
+        url: "/appraise/getItemListAndScoreBySubjectCodeAndProjectId.do",
+        method: "post",
+        data: data
+    })
+const getStateList = data =>
+    request({
+        url: "/appraise/getStateList.do",
+        method: "post",
+        data: data
+    })
+
+const getSubjectByProjectIdAndSession = data =>
+    request({
+        url: "/appraise/getSubjectByProjectIdAndSession.do",
+        method: "post",
+        data: data
+    })
+
+const getStudentApplyProject = data =>
+    request({
+        url: "/appraise/getStudentApplyProject.do",
+        method: "post",
+        data: data
+    })
 export default {
 
     uploadAttrUrl,
@@ -192,6 +256,15 @@ export default {
     deleteScore,
     updateItem,
     deleteItem,
-    getSchemeEnableUpdateState
+    getSchemeEnableUpdateState,
+    queryTargetOrgBehaviors,
+    getAllCorrelationDataByScopeIdAndItemId,
+    queryTargetArtfBehviors,
+    getCurrentOrgListAndOwner,
+    getSubjectBySSCodeAndProjectId,
+    getItemListAndScoreBySubjectCodeAndProjectId,
+    getStateList,
+    getSubjectByProjectIdAndSession,
+    getStudentApplyProject
 
 };

@@ -24,11 +24,11 @@ export const zongceRouter = {
       component: () => import("../appraiseScheme.vue"),
       meta: { title: "配置计划书", icon: "example", hidden: true }
     },
-    
-  {
-    path: "operateScheme",
-    name: "operateScheme",
-    component: () => import("../operateScheme.vue"),
+
+    {
+      path: "operateScheme",
+      name: "operateScheme",
+      component: () => import("../operateScheme.vue"),
       meta: { title: "编辑方案", icon: "example", hidden: true }
     },
     {
@@ -49,12 +49,39 @@ export const zongceRouter = {
       component: () => import("../showProspectus.vue"),
       meta: { title: "查看计划书", icon: "example", hidden: true }
     },
-    
-       {
-         path: "tempRouterGo",
-         name: "tempRouterGo",
-         component: () => import("../tempRouterGo.vue"),
+
+    {
+      path: "tempRouterGo",
+      name: "tempRouterGo",
+      component: () => import("../tempRouterGo.vue"),
       meta: { title: "router跳自己用", icon: "example", hidden: true }
     },
+    {
+      path: "behaviorsManager",
+      name: "behaviorsManager",
+      component: () => import("../behaviorsManager.vue"),
+      meta: { title: "科目行为记录管理", icon: "example", hidden: true }
+    }, {
+      path: "studentApply",
+      name: "studentApply",
+      component: () => import("../studentApply.vue"),
+      meta: { title: "学生申请", icon: "example", hidden: true }
+    }, {
+      path: "artfBehviorsManager",
+      name: "artfBehviorsManager",
+      component: () => import("../artfBehviorsManager.vue"),
+      meta: { title: "生成考评行为记录", icon: "example", hidden: true }
+    }, {
+      path: "hierarchicalRecord",
+      name: "hierarchicalRecord",
+      component: () => import("../hierarchicalRecord.vue"),
+      meta: { title: "生成分值科目记录", icon: "example", hidden: true }
+    }, {
+      path: "standardRecord",
+      name: "standardRecord",
+      component: () => import("../standardRecord.vue"),
+      meta: { title: "生成标准科目记录", icon: "example", hidden: true }
+    }
+
   ]
 };
