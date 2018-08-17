@@ -23,9 +23,11 @@ import * as filters from './filters' // global filters
 
 import { Pagedefault, tableLayout } from '~/components/Pageslayout'
 import { ElXSelect } from "~/components/Select";
+import ElxCascader from "~/components/ElxCascader/main.vue";
 Vue.component('page', Pagedefault)
 Vue.component("elx-table", tableLayout);
 Vue.component("elx-select", ElXSelect);
+Vue.component("elx-cascader", ElxCascader);
 
 Vue.use(ElementUI, {
   i18n: (key, value) => i18n.t(key, value),

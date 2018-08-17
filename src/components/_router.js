@@ -31,6 +31,10 @@ export const componentsRouter = {
       path: "elxSelcet",
       name: "elxSelcet",
       component: () => import("./Select/test.vue")
+    }, {
+      path: "ElxCascader",
+      name: "ElxCascader",
+      component: () => import("./ElxCascader/test.vue")
     }
   ]
 };
