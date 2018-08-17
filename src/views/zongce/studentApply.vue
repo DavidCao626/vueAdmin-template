@@ -96,8 +96,8 @@ export default {
       getItemList:
         store.namespace + "/getItemListAndScoreBySubjectCodeAndProjectId"
     }),
-    fenzhiChange(val, item) {
-      console.log([val, item]);
+    fenzhiChange(val, item,obj) {
+      console.log([val, item,obj]);
       this.formData.applyScoreName = item.currentLabel;
       // this.formData.applyScoreValue = item.
     },
