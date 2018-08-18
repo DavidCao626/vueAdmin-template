@@ -231,6 +231,37 @@ const getStudentApplyProject = data =>
         method: "post",
         data: data
     })
+const studentApply = data =>
+    request({
+        url: "/appraise/studentApply.do",
+        method: "post",
+        data: data
+    })
+
+
+const applyRegBehavior = data =>
+    request({
+        url: "/appraise/applyRegBehavior.do",
+        method: "post",
+        data: data
+    })
+
+
+const importRegBehavior = data =>
+    ajax({
+        url: "/appraise/importRegBehavior.do",
+        method: "post",
+        data: data
+    })
+
+
+const queryStudentBaseInfo = data =>
+    request({
+        url: "/appraise/queryStudentBaseInfo.do",
+        method: "post",
+        data: data
+    })
+
 export default {
 
     uploadAttrUrl,
@@ -265,6 +296,10 @@ export default {
     getItemListAndScoreBySubjectCodeAndProjectId,
     getStateList,
     getSubjectByProjectIdAndSession,
-    getStudentApplyProject
+    getStudentApplyProject,
+    studentApply,
+    applyRegBehavior,
+    importRegBehavior,
+    queryStudentBaseInfo
 
 };

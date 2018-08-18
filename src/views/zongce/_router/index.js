@@ -81,7 +81,13 @@ export const zongceRouter = {
       name: "standardRecord",
       component: () => import("../standardRecord.vue"),
       meta: { title: "生成标准科目记录", icon: "example", hidden: true }
+    }, {
+      path: "importBehaviors",
+      name: "importBehaviors",
+      component: () => import("../importBehaviors.vue"),
+      meta: { title: "导入科目行为", icon: "example", hidden: true }
     }
+    
 
   ]
 };

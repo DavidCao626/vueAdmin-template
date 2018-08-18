@@ -4,38 +4,38 @@
             <div slot="title">学生申请</div>
             <div slot="panel">
                 <el-form :model="formData" label-width="100px">
+                    <el-form-item label="行为标题">
+                        <el-row>
+                            <el-col :span="8">
+                                <el-input v-model="formData.applyReason"  placeholder="请输入"></el-input>
+                            </el-col>
+                        </el-row>
+                    </el-form-item>
                     <el-form-item label="测评项目">
-                        <elx-select v-model="formData.projectId" placeholder="" @change="projectChange">
+                        <elx-select v-model="formData.projectId" placeholder="请选择" @change="projectChange">
                             <el-option v-for="item in projectList" :key="item.id" :value="item.id" :label="item.name"></el-option>
                         </elx-select>
                     </el-form-item>
                     <el-form-item label="分值科目">
-                        <el-cascader @change="kemuchange" expand-trigger="hover" v-model="formData.fzkemuCode" placeholder="输入进行搜索" :options="fzkmList" filterable :props="orgProps"></el-cascader>
+                        <elx-cascader @change="kemuchange" expand-trigger="hover" v-model="formData.fzkemuCode" placeholder="输入进行搜索" :options="fzkmList" filterable :props="orgProps"></elx-cascader>
                     </el-form-item>
 
                     <el-form-item label="科目项">
-                        <elx-select v-model="formData.applyItemId" placeholder="" @change="itemChange">
+                        <elx-select v-model="formData.applyItemId" placeholder="请选择" @change="itemChange">
                             <el-option v-for="(item,index) in subjectList" :key="index" :value="item.item.id" :label="item.item.name"></el-option>
                         </elx-select>
                     </el-form-item>
                     <el-form-item label="分值项">
-                        <elx-select v-model="formData.applyScoreId" placeholder="" @change="fenzhiChange">
+                        <elx-select v-model="formData.applyScoreId" placeholder="请选择" @change="fenzhiChange">
                             <el-option v-for="item in scoreItemList" :key="item.id" :value="item.id" :label="item.name" :config="item"></el-option>
                         </elx-select>
                     </el-form-item>
                     <el-form-item label="时间日期">
-                        <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="formData.eventDate" type="date" placeholder="选择日期">
+                        <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="formData.eventDate"  placeholder="选择日期">
                         </el-date-picker>
                     </el-form-item>
                     <el-form-item label="数量/次">
                         <el-input-number v-model="formData.quantity" :min="1" label="数量"></el-input-number>
-                    </el-form-item>
-                    <el-form-item label="申请理由">
-                        <el-row>
-                            <el-col :span="8">
-                                <el-input v-model="formData.applyReason" rows="3" type="textarea" placeholder="请输入申请原因"></el-input>
-                            </el-col>
-                        </el-row>
                     </el-form-item>
                 </el-form>
             </div>
@@ -78,7 +78,7 @@ export default {
         applyScoreName: "",
         applyScoreValue: null,
         quantity: 1,
-        eventDate: new Date(),
+        eventDate: "",
         applyReason: ""
       },
       fzkmList: [],
@@ -94,12 +94,13 @@ export default {
       getSubjectByProjectIdAndSession:
         store.namespace + "/getSubjectByProjectIdAndSession",
       getItemList:
-        store.namespace + "/getItemListAndScoreBySubjectCodeAndProjectId"
+        store.namespace + "/getItemListAndScoreBySubjectCodeAndProjectId",
+      studentApply: store.namespace + "/studentApply"
     }),
-    fenzhiChange(val, item,obj) {
-      console.log([val, item,obj]);
+    fenzhiChange(val, item, obj) {
+      console.log([val, item, obj]);
       this.formData.applyScoreName = item.currentLabel;
-      // this.formData.applyScoreValue = item.
+      this.formData.applyScoreValue = obj.config.value;
     },
     itemChange(val, item) {
       this.formData.applyItemName = item.currentLabel;
@@ -109,16 +110,17 @@ export default {
       this.formData.applyScoreValue = null;
       console.log([val, item]);
       item = this.subjectList.find(item => {
-        return (item.item.id == val);
+        return item.item.id == val;
       });
       this.scoreItemList = item.scoreList;
     },
-    kemuchange(val) {
+    kemuchange(val, label, obj) {
+      console.log(["级联改变", val, label, obj]);
+      this.formData.fzkemuName = obj[obj.length - 1].label;
       this.scoreItemList = [];
       this.formData.applyScoreId = null;
       this.formData.applyScoreName = "";
       this.formData.applyScoreValue = null;
-      console.log(["级联改变", val]);
       this.getItemList({
         projectId: this.formData.projectId,
         subjectCode: val[val.length - 1]
@@ -169,7 +171,23 @@ export default {
       });
     },
     onSubmit() {
-      var requestData = {};
+      var data = this.formData;
+      var requestData = {
+        projectId: data.projectId,
+        title: data.applyReason,
+        subjectCode: data.fzkemuCode[data.fzkemuCode.length - 1],
+        subjectName: data.fzkemuName,
+        itemId: data.applyItemId,
+        itemName: data.applyItemName,
+        scoreId: data.applyScoreId,
+        scoreName: data.applyScoreName,
+        quailly: data.quantity,
+        scoreVaue: data.applyScoreValue,
+        ocDate: data.eventDate
+      };
+      this.studentApply(requestData).then(response => {
+        this.$message.success("提交成功!");
+      });
     }
   },
   beforeRouteEnter(to, from, next) {

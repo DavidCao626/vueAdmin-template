@@ -222,6 +222,33 @@ const getStudentApplyProject = ({ commit, state }, params) => new Promise(resolv
         resolve(response)
     })
 })
+const studentApply = ({ commit, state }, params) => new Promise(resolve => {
+    api.studentApply(params).then(response => {
+        console.log(["studentApply", response])
+        resolve(response)
+    })
+})
+
+const applyRegBehavior = ({ commit, state }, params) => new Promise(resolve => {
+    api.applyRegBehavior(params).then(response => {
+        console.log(["applyRegBehavior", response])
+        resolve(response)
+    })
+})
+const importRegBehavior = ({ commit, state }, params) => new Promise(resolve => {
+    api.importRegBehavior(params).then(response => {
+        console.log(["importRegBehavior", response])
+        resolve(response)
+    })
+})
+
+const queryStudentBaseInfo = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryStudentBaseInfo(params).then(response => {
+        console.log(["queryStudentBaseInfo", response])
+        resolve(response)
+    })
+})
+
 export default {
     deleteItem,
     updateItem,
@@ -254,5 +281,9 @@ export default {
     getItemListAndScoreBySubjectCodeAndProjectId,
     getStateList,
     getSubjectByProjectIdAndSession,
-    getStudentApplyProject
+    getStudentApplyProject,
+    studentApply,
+    applyRegBehavior,
+    importRegBehavior,
+    queryStudentBaseInfo
 }

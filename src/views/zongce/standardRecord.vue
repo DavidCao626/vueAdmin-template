@@ -93,6 +93,7 @@ export default {
       orgList: [],
       scopeId: null,
       itemId: null,
+      projectId:null,
       multipleSelection: [], //选中的值
       isMultipleSelection: false, //是否选中
       dialogVisible: false,
@@ -156,11 +157,13 @@ export default {
       this.getAllCorrelationDataByScopeIdAndItemId(requestData).then(
         response => {
           var res = response.resBody;
+          this.projectId = res.appraiseProject.id
           this.getData(res.appraiseProject.id);
         }
       );
     },
     getData(projectId) {
+      console.log(["projectId",projectId])
       var requestData = {
         targetOrgCode: this.formInline.orgCode,
         subjectCode: this.formInline.subjectCode,
@@ -184,9 +187,9 @@ export default {
         .catch(_ => {});
     },
     onSubmit() {
-      console.log("submit!");
+      console.log(["submit!!!!",this.projectId,"submit"]);
       this.pageInfo.currentPage = 1;
-      this.getData();
+      this.getData(this.projectId);
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
