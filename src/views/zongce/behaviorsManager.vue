@@ -17,7 +17,7 @@
       <template slot="headerRight">
         <el-button-group>
           <el-tooltip class="item" effect="dark" content="录入数据" placement="bottom">
-            <el-button plain size="mini">
+            <el-button @click="importData" plain size="mini">
               录入
             </el-button>
           </el-tooltip>
@@ -317,6 +317,15 @@ export default {
       console.log(`当前页: ${val}`);
       this.pageInfo.currentPage = val;
       this.getData();
+    },
+    importData(){
+      this.$router.push({
+        path:"/zongce/importBehaviors",
+        query:{
+          projectId:this.projectId,
+          standardSubjectCode:this.standardSubjectCode
+        }
+      })
     },
     ...mapActions({
       getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
