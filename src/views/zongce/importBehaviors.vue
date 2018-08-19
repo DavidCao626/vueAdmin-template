@@ -28,7 +28,10 @@
             <el-form-item label="学生信息">
               <el-row>
                 <el-col :span="9">
-                  <el-button>请选择</el-button>
+                  <span v-if="item.formData.targetEvaluator.targetName != ''">
+                    {{item.formData.targetEvaluator.targetOrgName}}------{{item.formData.targetEvaluator.targetName}}
+                  </span>
+                  <el-button @click="switchStudnet(item)">选择</el-button>
                 </el-col>
               </el-row>
             </el-form-item>
@@ -76,48 +79,44 @@
       </page>
     </div>
     <el-button type="primary" @click="addItem">添加学生</el-button>
-
+    <el-button type="primary" @click="submitAll">确定</el-button>
+    <el-button type="danger" @click="goBack">返回</el-button>
     <!-- 选择学生的dialog -->
-    <el-dialog title="点击选则学生" :visible.sync="switchStudentDV">
+    <el-dialog title="点击选择学生" :visible.sync="switchStudentDV" top="0vh" width="70%">
+      <elx-table-layout>
+        <template slot="headerLeft">
+          <el-form :inline="true" :model="studentSearchForm" size="mini" class="demo-form-inline">
+            <el-form-item label="组织机构">
+              <el-cascader v-model="studentSearchForm.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select :props="orgProps"></el-cascader>
+            </el-form-item>
+            <el-form-item label="学号">
+              <el-input v-model="studentSearchForm.sysNo" placeholder="学号"></el-input>
+            </el-form-item>
+            <el-form-item label="姓名">
+              <el-input v-model="studentSearchForm.name" placeholder="姓名"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="searchButton">查询</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+        <div style="overflow-y:scroll;height:60vh;padding:0 15px">
 
- <template slot="headerLeft">
-        <el-form :inline="true" :model="studentSearchForm" size="mini" class="demo-form-inline">
-          <el-form-item label="组织机构">
-            <el-cascader v-model="studentSearchForm.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select :props="orgProps"></el-cascader>
-          </el-form-item>
-          <el-form-item label="学号">
-               <el-input v-model="studentSearchForm.sysNo" placeholder="学号"></el-input>
-          </el-form-item>
-          <el-form-item label="姓名">
-             <el-input v-model="studentSearchForm.name" placeholder="姓名"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
-          </el-form-item>
-        </el-form>
-      </template>
+          <el-table :data="studentData" @row-click="studentClick" style="width: 100%" border size="mini">
+            <el-table-column prop="userObjectNo" label="学号">
+            </el-table-column>
+            <el-table-column prop="userObjectName" label="姓名">
+            </el-table-column>
+            <el-table-column prop="orgName" label="组织">
+            </el-table-column>
+          </el-table>
 
-      <el-table :data="data" style="width: 100%" border size="mini">
-        <el-table-column type="selection" width="38">
-        </el-table-column>
-        <el-table-column prop="title" label="行为名称">
-        </el-table-column>
-        <el-table-column prop="targetName" label="测评对象">
-        </el-table-column>
-        <el-table-column prop="targetOrgName" label="测评对象组织">
-        </el-table-column>
-        <el-table-column prop="hcSubjectName" label="分值科目名称">
-        </el-table-column>
-      </el-table>
-
-      <template slot="footer">
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-        </el-pagination>
-      </template>
-
-
-
-
+        </div>
+        <template slot="footer">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+          </el-pagination>
+        </template>
+      </elx-table-layout>
       <div slot="footer" class="dialog-footer">
         <el-button @click="switchStudentDV = false">取 消</el-button>
       </div>
@@ -136,7 +135,14 @@ Vue.use(Element);
 export default {
   data() {
     return {
-      switchStudentDV:false,
+      orgProps: {
+        label: "org_name",
+        value: "org_code",
+        children: "children"
+      },
+      orgList: [],
+      tempItem: null,
+      switchStudentDV: false,
       pageInfo: {
         currentPage: 1,
         pageSize: 10,
@@ -163,9 +169,9 @@ export default {
           formData: {
             targetEvaluator: {
               targetId: null,
-              targetName: "未选择",
+              targetName: "",
               targetOrgCode: "",
-              targetOrgName: "未选择"
+              targetOrgName: ""
             },
             title: "",
             itemId: null,
@@ -186,26 +192,85 @@ export default {
         store.namespace + "/getItemListAndScoreBySubjectCodeAndProjectId",
       getSubjectBySSCodeAndProjectId:
         store.namespace + "/getSubjectBySSCodeAndProjectId",
-      queryStudentBaseInfo: store.namespace + "/queryStudentBaseInfo"
+      getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
+      queryStudentBaseInfo: store.namespace + "/queryStudentBaseInfo",
+      importRegBehavior: store.namespace + "/importRegBehavior"
     }),
+    submitAll() {
+      var behaviors = [];
+      this.forData.forEach(it => {
+        behaviors.push(it.formData);
+      });
+
+      var requestData = {
+        projectId: this.projectId,
+        subjectCode: this.topForm.standardSubjectCode,
+        subjectName: this.topForm.standardSubjectName,
+        behaviors: behaviors
+      };
+
+      this.importRegBehavior(requestData).then(response => {
+        this.$message.success("保存成功");
+        this.$router.go(-1);
+      });
+    },
+    goBack() {
+      this.$router.go(-1);
+    },
+    studentClick(row, event, column) {
+      var index = this.forData.indexOf(this.tempItem);
+      this.forData[index].formData.targetEvaluator = {
+        targetId: row.userObjectNo,
+        targetName: row.userObjectName,
+        targetOrgCode: row.orgCode,
+        targetOrgName: row.orgName
+      };
+      this.switchStudentDV = false;
+    },
+    switchStudnet(item) {
+      this.tempItem == null;
+      this.switchStudentDV = true;
+      this.tempItem = item;
+    },
+    searchButton() {
+      this.pageInfo.currentPage = 1;
+      this.getStudentData();
+    },
+    handleSizeChange(val) {
+      this.pageInfo.pageSize = val;
+      this.getStudentData();
+    },
+    handleCurrentChange(val) {
+      this.pageInfo.currentPage = val;
+      this.getStudentData();
+    },
+    getOrgList() {
+      this.getCurrentOrgListAndOwner({}).then(response => {
+        console.log(["orgList", response]);
+        this.orgList = response.resBody;
+      });
+    },
     getStudentData() {
       var requestData = {
         currentPage: this.pageInfo.currentPage,
         pageSize: this.pageInfo.pageSize,
-        orgCode: this.studentSearchForm.orgCode[
-          this.studentSearchForm.orgCode.length - 1
-        ],
         sysNo: this.studentSearchForm.sysNo,
         name: this.studentSearchForm.name
       };
-      queryStudentBaseInfo(requestData).then(response => {
+      if (this.studentSearchForm.orgCode.length > 0) {
+        requestData.orgCode = this.studentSearchForm.orgCode[
+          this.studentSearchForm.orgCode.length - 1
+        ];
+      }
+
+      this.queryStudentBaseInfo(requestData).then(response => {
         this.studentData = response.resBody.baseData;
         this.pageInfo = response.resBody.pageInfo;
       });
     },
     subChange(val, vueCom, obj) {
       //分值科目改变
-      this.topForm.standardSubjectName = obj.name;
+      this.topForm.standardSubjectName = obj.obj.name;
       this.subjectCode = val;
       this.getItemList();
       //清空所有科目项分值项的值
@@ -287,6 +352,7 @@ export default {
       //vm.getItemList();
       vm.getstandardSubjectList();
       vm.getStudentData();
+      vm.getOrgList();
     });
   }
 };
