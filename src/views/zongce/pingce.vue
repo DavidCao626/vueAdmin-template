@@ -37,7 +37,7 @@
 
       <div class="approval-panel  footer-toolbar clearfix">
         <div class="footer-toolbar__pagination">
-          <el-button type="primary">提交</el-button>
+          <el-button type="primary" @click="submit">提交</el-button>
         </div>
       </div>
     </page>
@@ -181,8 +181,14 @@ export default {
     };
   },
   methods: {
-    filterTag(value, row) {
-      return row.tag === value;
+    submit() {
+      //ajax提交成功
+      this.$message({
+        message: "恭喜你，这是一条提交成功消息",
+        type: "success"
+      });
+      //ajax提交失败
+      //this.$message.error("错了哦，这是一条提交错误消息");
     }
   },
   watch: {
@@ -204,8 +210,8 @@ export default {
         });
       }
       if (temValues.length == 0) {
-         this.data.children = temValues;
-         return;
+        this.data.children = temValues;
+        return;
       }
       if (this.selectInput != "") {
         this.data.children = temValues;
