@@ -35,35 +35,37 @@
 
 
 <template>
-    <page>
-        <span slot="title">选择跳转</span>
-        <div slot="panel">
-            <div class="state_empty_hd">
-                <p class="desc">选择您的业务内容:</p>
-            </div>
-            <div class="content__flex">
-                <template v-for="member in list">
+  <page :Breadcrumb="false">
+    <span slot="title">选择跳转</span>
+    <div slot="panel">
 
-                    <div class="content__box" @click="onClick(member.url)">
+      <div class="content">
+        <br/>
+        <el-form label-width="80px" :model="formLabelAlign" >
 
-                        <!-- <img src="/src/assets/img/student-man.svg" /> -->
-                        <div class="img__box">
-                            <svg-icon class="sidebar-item__icon" :icon-class="member.icon" />
-                        </div>
-                        <h3>{{member.name}}</h3>
+          <el-form-item label="活动区域">
+            <el-select v-model="form" placeholder="请选择活动区域">
+              <el-option label="区域一" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="活动形式">
+            <el-select v-model="form" placeholder="请选择活动区域">
+              <el-option label="区域一" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">下一步</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
 
-                        <!-- <p>任期时间: 2017-6 ~ 2018-10</p> -->
-
-                    </div>
-                </template>
-            </div>
-        </div>
-
-    </page>
+  </page>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 export default {
   components: {},
   computed: {},
@@ -71,17 +73,18 @@ export default {
 
   data() {
     return {
-      list: [
-        { name: "选项一标题", url: "http://baidu.com", icon: "info-line" },
-        { name: "选项二标题", url: "http://163.com", icon: "icon" }
-      ]
+      form: "",
+      formLabelAlign: {
+        name: "",
+        region: "",
+        type: ""
+      }
     };
   },
-  methods:{
-      onClick(url){
-          alert(url)
-          //路由逻辑
-      }
+  methods: {
+    onSubmit() {
+      //路由逻辑
+    }
   }
 };
 </script>
