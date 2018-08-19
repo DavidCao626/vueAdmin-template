@@ -143,22 +143,24 @@ export default {
       console.log(value)
     },
     handle: function(item) {
-      console.log(item.item.id)
-      console.log(this.scopeInfo.id)
+     
       var pathName = item.action
       if (!pathName) {
         this.$message({ 'message': '未知的业务路径！' })
         return false
       }
+      var routerParams=item.actionParameter?item.actionParameter:{};
+      routerParams.scopeId=this.scopeInfo.id;
+      routerParams.itemId=item.item.id;
       if (_lodash.startsWith(pathName, '/')) {
         this.$router.push({
           path: pathName,
-          query: { scopeId: this.scopeInfo.id, itemId: item.item.id }
+          query:routerParams
         })
       } else {
         this.$router.push({
           name: pathName,
-          params: { scopeId: this.scopeInfo.id, itemId: item.item.id }
+          params: routerParams
         })
       }
     },
