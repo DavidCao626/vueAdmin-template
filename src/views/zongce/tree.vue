@@ -8,11 +8,10 @@
         <div style="margin-top:10px">
           <el-form label-position="left" label-width="100px" :model="formLabelAlign" size="mini">
             <el-form-item label="名称:" >
-              <el-input v-model="node[props.lable]" disabled="serviceType!=0"></el-input>
+              <el-input v-model="node[props.lable]" :disabled="serviceType!=0"></el-input>
             </el-form-item>
             <el-form-item label="占比(%):" v-state-show="1">
               <!-- <el-input maxlength="5" v-model="node[props.proportion]"></el-input> -->
-             
                  <el-input-number size="mini"  :step="0.01" :max="1"  :min="0"  v-model="node[props.proportion]"></el-input-number>
             </el-form-item>
             <el-form-item label="方向:" v-state-show="2">
@@ -23,7 +22,7 @@
             </el-form-item>
 
             <el-form-item label="包含科目项:">
-              <el-radio-group v-model="node[props.include]" size="mini" disabled="serviceType!=0">
+              <el-radio-group v-model="node[props.include]" size="mini" :disabled="serviceType!=0">
                 <el-radio-button :label="true">是</el-radio-button>
                 <el-radio-button :label="false">否</el-radio-button>
               </el-radio-group>

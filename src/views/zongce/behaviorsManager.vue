@@ -17,7 +17,7 @@
       <template slot="headerRight">
         <el-button-group>
           <el-tooltip class="item" effect="dark" content="录入数据" placement="bottom">
-            <el-button plain size="mini">
+            <el-button @click="importData" plain size="mini">
               录入
             </el-button>
           </el-tooltip>
@@ -37,7 +37,7 @@
           </el-form-item>
           <el-form-item label="科目项">
             <elx-select v-model="formInline.itemId" placeholder="">
-              <el-option v-for="item in subjectList" :key="item.id" :value="item.id" :label="item.name"></el-option>
+              <el-option v-for="(item,index) in subjectList" :key="index" :value="item.id" :label="item.name"></el-option>
             </elx-select>
           </el-form-item>
           <el-form-item label="学号">
@@ -98,9 +98,9 @@
               <el-form-item label="申请得分值:">
                 <span>{{ props.row.applyScoreValue }}</span>
               </el-form-item>
-              <el-form-item label="申请原因:">
+              <!-- <el-form-item label="申请原因:">
                 <span>{{ props.row.applyReason }}</span>
-              </el-form-item>
+              </el-form-item> -->
             </el-form>
           </template>
         </el-table-column>
@@ -113,7 +113,7 @@
               </el-button>
               <el-dropdown-menu slot="dropdown">
                 <!-- <el-dropdown-item @click.native="edit(scope.row)">编辑</el-dropdown-item> -->
-                <el-dropdown-item>认定</el-dropdown-item>
+                <el-dropdown-item @click.native="rending(scope.row)">认定</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </template>
@@ -126,6 +126,43 @@
       </template>
 
     </elx-table-layout>
+
+    <el-dialog title="认定" :visible.sync="rendingDV" width="30%" :before-close="handleClose">
+      <el-form :model="rendingForm" label-width="80px" size="mini">
+        <el-form-item label="分值科目">
+          <el-input v-model="rendingForm.hcSubjectName" disabled="" placeholder=""></el-input>
+        </el-form-item>
+        <el-form-item label="事件时间">
+          <el-date-picker disabled="" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="rendingForm.occurrenceDate" placeholder="选择日期">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="科目项">
+          <elx-select v-model=" rendingForm.itemId" placeholder="" @change="rendingkmChange">
+            <el-option v-for="(item,index) in rkemuList" :key="index" :value="item.item.id" :obj="item" :label="item.item.name"></el-option>
+          </elx-select>
+        </el-form-item>
+        <el-form-item label="分值项">
+          <elx-select v-model=" rendingForm.scoreId" placeholder="" @change="rendingfzChange">
+            <el-option v-for="(item,index) in rfenzhiList" :key="index" :value="item.id" :obj="item" :label="item.name"></el-option>
+          </elx-select>
+        </el-form-item>
+        <el-form-item label="认定状态">
+          <el-radio-group v-model="rendingForm.cState">
+            <el-radio-button label="Y">通过</el-radio-button>
+            <el-radio-button label="N">不通过</el-radio-button>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="原因" v-if="rendingForm.cState == 'N'">
+          <el-input v-model="rendingForm.reason" type="textarea" rows="3" placeholder="不通过原因"></el-input>
+        </el-form-item>
+      </el-form>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="rendingDV = false">取 消</el-button>
+        <el-button type="primary" @click="rendingSubmit">确 定</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -139,6 +176,9 @@ Vue.use(Element);
 export default {
   data() {
     return {
+      rkemuList: [],
+      rfenzhiList: [],
+      rendingDV: false,
       pageInfo: {
         currentPage: 1,
         pageSize: 10,
@@ -173,7 +213,19 @@ export default {
       stateList: [{ label: "全部", value: "0" }],
       standardSubjectList: [{ code: "0", name: "全部" }],
       subjectList: [{ id: 0, name: "全部" }],
-      action: "https://jsonplaceholder.typicode.com/posts/"
+      action: "https://jsonplaceholder.typicode.com/posts/",
+      rendingForm: {
+        hcSubjectName: "",
+        behaviorId: null,
+        itemId: null,
+        itemName: "",
+        scoreId: null,
+        scoreName: "",
+        scoreValue: null,
+        cState: "Y",
+        reason: "",
+        occurrenceDate: ""
+      }
     };
   },
   watch: {
@@ -184,6 +236,54 @@ export default {
     }
   },
   methods: {
+    rendingSubmit() {
+      this.applyRegBehavior(this.rendingForm).then(response => {
+        this.$message.success("认定成功");
+        this.rendingDV = false;
+        this.getData(this.projectId);
+      });
+    },
+    rendingkmChange(val, vueCom, obj) {
+      console.log([val, vueCom, obj]);
+      this.rendingForm.scoreId = null;
+      this.rendingForm.scoreName = null;
+      this.rendingForm.scoreValue = null;
+      this.rendingForm.itemName = obj.obj.item.name;
+      this.rfenzhiList = obj.obj.scoreList;
+    },
+    rendingfzChange(val, vueCom, obj) {
+      console.log([val, vueCom, obj]);
+      this.rendingForm.scoreName = obj.obj.name;
+      this.rendingForm.scoreValue = obj.obj.value;
+    },
+    rending(row) {
+      this.rendingDV = true;
+      this.rendingForm.hcSubjectName = row.hcSubjectName;
+      this.rendingForm.behaviorId = row.id;
+      this.rendingForm.itemId = row.applyItemId;
+      this.rendingForm.itemName = row.applyItemName;
+      this.rendingForm.scoreId = row.applyScoreId;
+      this.rendingForm.scoreName = row.applyScoreName;
+      this.rendingForm.scoreValue = row.applyScoreValue;
+      this.rendingForm.occurrenceDate = row.occurrenceDate;
+      console.log(["row", row]);
+      this.rkemuList = [];
+      this.rfenzhiList = [];
+      this.getItemListAndScoreBySubjectCodeAndProjectId({
+        projectId: this.projectId,
+        subjectCode: row.hcSubjectCode
+      }).then(response => {
+        var res = response.resBody;
+        res.forEach(it => {
+          this.rkemuList.push(it);
+        });
+        var itemm = this.rkemuList.find(item => {
+          console.log(["item", item]);
+          return item.item.id == row.applyItemId;
+        });
+        this.rfenzhiList = itemm.scoreList;
+      });
+    },
     fzkmChange(val) {
       this.formInline.itemId = 0;
       if (val == "0") {
@@ -218,6 +318,15 @@ export default {
       this.pageInfo.currentPage = val;
       this.getData();
     },
+    importData(){
+      this.$router.push({
+        path:"/zongce/importBehaviors",
+        query:{
+          projectId:this.projectId,
+          standardSubjectCode:this.standardSubjectCode
+        }
+      })
+    },
     ...mapActions({
       getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
       getDictByDictNames: store.namespace + "/getDictByDictNames",
@@ -228,7 +337,8 @@ export default {
         store.namespace + "/getSubjectBySSCodeAndProjectId",
       getItemListAndScoreBySubjectCodeAndProjectId:
         store.namespace + "/getItemListAndScoreBySubjectCodeAndProjectId",
-      getStateList: store.namespace + "/getStateList"
+      getStateList: store.namespace + "/getStateList",
+      applyRegBehavior: store.namespace + "/applyRegBehavior"
     }),
     getSubjectList() {
       this.getSubjectBySSCodeAndProjectId({
@@ -258,7 +368,6 @@ export default {
     },
     getProjectData() {
       var requestData = {
-        itemId: this.itemId,
         scopeId: this.scopeId
       };
       this.getAllCorrelationDataByScopeIdAndItemId(requestData).then(
@@ -280,7 +389,8 @@ export default {
         titleLike: this.formInline.titleLike,
         projectId: projectId,
         currentPage: this.pageInfo.currentPage,
-        pageSize: this.pageInfo.pageSize
+        pageSize: this.pageInfo.pageSize,
+        standardSubjectCode: this.standardSubjectCode
       };
       this.queryTargetOrgBehaviors(requestData).then(response => {
         console.log(["查询数据", response]);
@@ -298,7 +408,7 @@ export default {
     onSubmit() {
       console.log("submit!");
       this.pageInfo.currentPage = 1;
-      this.getData();
+      this.getData(this.projectId);
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
@@ -333,7 +443,6 @@ export default {
       } else {
         vm.standardSubjectCode = to.query.standardSubjectCode;
         vm.getOrgList();
-        vm.itemId = to.query.itemId;
         vm.scopeId = to.query.scopeId;
         vm.getDict();
       }

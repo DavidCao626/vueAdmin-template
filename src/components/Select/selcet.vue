@@ -586,6 +586,9 @@ export default {
     getItemForOptions(value) {
       const ops = this.options;
       let s = ops.filter(itme => itme.currentValue === value);
+     if(s.length==0){
+       return null
+     }
       return s[0].$vnode.data.attrs;
     },
     handleOptionSelect(option) {

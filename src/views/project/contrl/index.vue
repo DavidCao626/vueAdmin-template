@@ -49,6 +49,12 @@
             &nbsp;&nbsp;&nbsp;&nbsp;
             <el-button @click="showScopeData(interatedView.viewAction)" style="color:#444;font-weight: 400;" type="text">
               <svg-icon icon-class="seedate" width="20px" height="20px" /> 查看环节数据</el-button>
+
+              <template v-for="(fun,index) in interatedView.expandFunction">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <el-button @click="routerTo(fun.path,fun.params)" style="color:#444;font-weight: 400;" type="text" :key="index">
+                 <svg-icon icon-class="seedate" width="20px" height="20px" /> {{fun.name}}</el-button>
+              </template>
           </div>
         </div>
 
@@ -136,12 +142,20 @@ export default {
         }
       });
     },
+    routerTo:function(path,params){
+      this.$router.push({
+        path: path,
+        query:params
+      });
+    },
     watch: {
       filterText(val) {
         this.$refs.tree2.filter(val);
       }
     }
   },
+
+
   beforeRouteEnter(to, from, next) {
     next(vm => {
       var scopeId = commons.getRouterParam(to, "scopeId");

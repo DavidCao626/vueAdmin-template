@@ -178,7 +178,6 @@ export default {
     currentObject() {
       let options = this.options;
       let currentObject = [];
-      debugger;
       this.currentValue.forEach(value => {
         const targetOption =
           options &&
