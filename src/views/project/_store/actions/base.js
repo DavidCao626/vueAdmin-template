@@ -53,8 +53,8 @@ const getProjectById = ({ commit, state }, projectId) =>
       response.resBody.planStartTime = psdate
       response.resBody.planCompleteTime = pedate
 
-      api.queryClassifyTypeByCode({ 'code': response.resBody.projectServiceType}).then(response => {
-        commit("setClassifyType",response.resBody)
+      api.queryClassifyTypeByCode({ 'code': response.resBody.projectServiceType }).then(response => {
+        commit("setClassifyType", response.resBody)
       })
 
       commit("setProjectFormData", response.resBody)
@@ -75,7 +75,8 @@ const queryNoticeTemplateByItemId = ({ commit, state }, data) =>
   })
 
 const getProjectAllDataByItemId = ({ commit, state }, data) =>
-  new Promise(resolve => {queryClassifyTypeByCode
+  new Promise(resolve => {
+    queryClassifyTypeByCode
     api.getProjectAllDataByItemId(data).then(response => {
       resolve(response)
     })
@@ -91,10 +92,33 @@ const queryClassifyTypeByCode = ({ commit, state }, data) =>
 const queryCategoryList = ({ commit, state }, data) =>
   new Promise(resolve => {
     api.queryCategoryList(data).then(response => {
-      commit("setAppraiseCategory",response.resBody)
+      commit("setAppraiseCategory", response.resBody)
 
     })
   })
+const getStudentApplyProject = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.getStudentApplyProject(data).then(response => {
+      resolve(response)
+
+    })
+  })
+
+const queryIncludUnEnableStandardSubject = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryIncludUnEnableStandardSubject(data).then(response => {
+      resolve(response)
+
+    })
+  })
+const queryIncludEnableStandardSubject = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryIncludEnableStandardSubject(data).then(response => {
+      resolve(response)
+
+    })
+  })
+
 export default {
   setProjectServiceType,
   insertOrUpdateProject,
@@ -105,5 +129,8 @@ export default {
   queryNoticeTemplateByItemId,
   getProjectAllDataByItemId,
   queryClassifyTypeByCode,
-  queryCategoryList
+  queryCategoryList,
+  getStudentApplyProject,
+  queryIncludUnEnableStandardSubject,
+  queryIncludEnableStandardSubject
 }

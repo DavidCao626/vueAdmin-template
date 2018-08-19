@@ -249,6 +249,27 @@ const queryStudentBaseInfo = ({ commit, state }, params) => new Promise(resolve 
     })
 })
 
+const queryStdSubjectRecord = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryStdSubjectRecord(params).then(response => {
+        console.log(["queryStdSubjectRecord", response])
+        resolve(response)
+    })
+})
+
+const queryStdSubjectTree = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryStdSubjectTree(params).then(response => {
+        console.log(["queryStdSubjectTree", response])
+        resolve(response)
+    })
+})
+const produceStdSubjectRecord = ({ commit, state }, params) => new Promise(resolve => {
+    api.produceStdSubjectRecord(params).then(response => {
+        console.log(["produceStdSubjectRecord", response])
+        resolve(response)
+    })
+})
+
+
 export default {
     deleteItem,
     updateItem,
@@ -285,5 +306,8 @@ export default {
     studentApply,
     applyRegBehavior,
     importRegBehavior,
-    queryStudentBaseInfo
+    queryStudentBaseInfo,
+    queryStdSubjectRecord,
+    queryStdSubjectTree,
+    produceStdSubjectRecord
 }

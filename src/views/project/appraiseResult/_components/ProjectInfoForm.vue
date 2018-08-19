@@ -55,23 +55,27 @@
       <div slot="panel">
 
         <h3>二、测评信息</h3>
-        <el-form ref="form.expand"  label-position="left" :model="form" label-width="110px" style="margin: 20px;">
+        <el-form label-position="left" :model="form.expand" label-width="110px" style="margin: 20px;">
           <el-form-item label="测评项目">
-            
+            <elx-select v-model="form.expand.appraiseProjectCode" placeholder="请选择" @change="projectChange">
+              <el-option v-for="item in projectList" :key="item.id" :value="item.code" :obj="item" :label="item.name"></el-option>
+            </elx-select>
           </el-form-item>
-
           <el-form-item label="考评科目">
-
+            <elx-select v-model="form.expand.assessSubjects" placeholder="请选择">
+              <el-option v-for="item in unEnableStandardSubject" :key="item.code" :value="item.code" :label="item.name"></el-option>
+            </elx-select>
           </el-form-item>
-
           <el-form-item label="学院管理科目">
-
+            <el-checkbox-group v-model="form.expand.collegeSubjects" @change="coChange">
+              <el-checkbox v-for="item in collegeEnableStandardSubject" :disabled="item.checkNum!=1 && item.checkNum>0" :key="item.code" :label="item.code">{{item.name}}</el-checkbox>
+            </el-checkbox-group>
           </el-form-item>
-
           <el-form-item label="班级管理科目">
-
+            <el-checkbox-group v-model="form.expand.classSubjects" @change="clChange">
+              <el-checkbox v-for="item in collegeEnableStandardSubject" :disabled="item.checkNum!=2 && item.checkNum>0" :key="item.code" :label="item.code">{{item.name}}</el-checkbox>
+            </el-checkbox-group>
           </el-form-item>
-
         </el-form>
       </div>
     </page>
@@ -90,6 +94,7 @@
 </template>
 <script>
 import tinymce from "~/components/Tinymce";
+import Vue from "vue";
 import ProjectTypeSelect from "./ProjectTypeSelect";
 import ProjectAttachmentUplad from "./ProjectAttachmentUplad";
 import state from "../../_store/index.js";
@@ -116,7 +121,7 @@ export default {
       return t;
     },
     ...mapGetters({
-      form: state.namespace + "/getProjectFormData",
+      form: state.namespace + "/getAppraiseResultProjectFormData",
       uploadAttrUrl: state.namespace + "/getUploadAttrUrl",
       ioptions: state.namespace + "/getServiceTypeList",
       ClassifyTypeList: state.namespace + "/getClassifyTypeList",
@@ -125,6 +130,10 @@ export default {
   },
   data() {
     return {
+      projectList: [],
+      unEnableStandardSubject: [],
+      collegeEnableStandardSubject: [],
+      classEnableStandardSubject: [],
       currentCategoryId: 0, //当前选中的测评类别id
       appraiseTypeList: [
         {
@@ -135,10 +144,62 @@ export default {
       classifyTypedetailPath: "",
       iopt: [],
       classifyType: "",
-      yearTypeList:[]
+      yearTypeList: []
     };
   },
   methods: {
+    projectChange(val, vueCom, obj) {
+      this.form.expand.assessSubject = "";
+      this.form.expand.collegeSubjects = [];
+      this.form.expand.classSubjects = [];
+      this.queryIncludUnEnableStandardSubject({ projectId: obj.obj.id }).then(
+        response => {
+          this.unEnableStandardSubject = response.resBody;
+        }
+      );
+
+      this.queryIncludEnableStandardSubject({ projectId: obj.obj.id }).then(
+        response => {
+          this.collegeEnableStandardSubject = response.resBody;
+          var coe = this.collegeEnableStandardSubject;
+          var that = this;
+          coe.forEach(it => {
+            Vue.set(it, "checkNum", 0);
+          });
+        }
+      );
+    },
+    getItemDisable: function(item) {
+      console.log(item);
+      return false;
+    },
+    coChange(val) {
+      var c = this.collegeEnableStandardSubject;
+      c.forEach(it => {
+        console.log(val.indexOf(it.code));
+        if (val.indexOf(it.code) != -1) {
+          it.checkNum = 1;
+        } else {
+          if (it.checkNum == 1) {
+            it.checkNum = 0;
+          }
+        }
+      });
+    },
+    clChange(val) {
+      console.log(val);
+      var c = this.collegeEnableStandardSubject;
+      c.forEach(it => {
+        console.log(val.indexOf(it.code));
+        if (val.indexOf(it.code) != -1) {
+          it.checkNum = 2;
+        } else {
+          if (it.checkNum == 2) {
+            it.checkNum = 0;
+          }
+        }
+      });
+    },
     updateCategory() {
       this.currentCategoryId = this.form.expand.appraiseServiceType;
       if (!this.currentCategoryId) {
@@ -164,9 +225,19 @@ export default {
     ...mapActions({
       queryServiceTypeList: state.namespace + "/queryServiceTypeList",
       insertOrUpdateProject: state.namespace + "/insertOrUpdateProject",
-      insertOrUpdateAndNext: state.namespace + "/insertOrUpdateAndNext"
+      insertOrUpdateAndNext: state.namespace + "/insertOrUpdateAndNext",
+      getStudentApplyProject: state.namespace + "/getStudentApplyProject",
+      queryIncludUnEnableStandardSubject:
+        state.namespace + "/queryIncludUnEnableStandardSubject",
+      queryIncludEnableStandardSubject:
+        state.namespace + "/queryIncludEnableStandardSubject"
       //    queryClassifyTypeByCode:store.namespace + "/queryClassifyTypeByCode"
     }),
+    getProjectList() {
+      this.getStudentApplyProject({}).then(response => {
+        this.projectList = response.resBody;
+      });
+    },
     appraiseServiceTypeChange(val) {
       this.currentCategoryId = val;
     },
@@ -207,12 +278,11 @@ export default {
         classifyType: this.classifyType,
         attrDetailBean: null,
         expand: {
-          appraiseId: t.expand.appraiseId,
-          appraiseName: t.expand.appraiseName, //名称
-          appraiseStartTime: t.expand.appraiseStartTime, //开始时间
-          appraiseEndTime: t.expand.appraiseEndTime, //结束时间
-          appraiseYearType: t.expand.appraiseYearType, //年度
-          appraiseServiceType: t.expand.appraiseServiceType //测评类别
+          id: t.expand.id,
+          appraiseProjectCode: t.expand.appraiseProjectCode, //测评项目代码
+          assessSubjects: t.expand.assessSubjects, //考评科目(无科目项)
+          collegeSubjects: t.expand.collegeSubjects, //学院可管理科目
+          classSubjects: t.expand.classSubjects //班级可管理科目
         }
       };
       this.insertOrUpdateAndNext(requestData).then(response => {
@@ -268,21 +338,20 @@ export default {
       }
       this.form.projectAttachmentId = tempArr;
     },
-    createYearTypeList(){
+    createYearTypeList() {
       this.yearTypeList = [];
-      for(var i = 2000;i<2050;i++){
+      for (var i = 2000; i < 2050; i++) {
         var temp = {
-          label:i + "年",
-          value:i.toString()
-        }
-        this.yearTypeList.push(temp)
+          label: i + "年",
+          value: i.toString()
+        };
+        this.yearTypeList.push(temp);
       }
-
-    },
+    }
   },
   mounted() {
     this.createYearTypeList();
-
+    this.getProjectList();
   }
 };
 </script>
