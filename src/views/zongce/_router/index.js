@@ -24,7 +24,6 @@ export const zongceRouter = {
       component: () => import("../appraiseScheme.vue"),
       meta: { title: "配置计划书", icon: "example", hidden: true }
     },
-
     {
       path: "operateScheme",
       name: "operateScheme",
@@ -42,12 +41,12 @@ export const zongceRouter = {
       name: "评测模版",
       component: () => import("../pingce.vue"),
       meta: { title: "标准分", icon: "example", hidden: true }
-    }, 
+    },
     {
       path: "pc2",
       name: "选择模版",
       component: () => import("../pingce2.vue"),
-      meta: { title: "标准分", icon: "example", hidden: false }
+      meta: { title: "标准分", icon: "example", hidden: true }
     },
     {
       path: "showProspectus",
@@ -55,7 +54,6 @@ export const zongceRouter = {
       component: () => import("../showProspectus.vue"),
       meta: { title: "查看计划书", icon: "example", hidden: true }
     },
-
     {
       path: "tempRouterGo",
       name: "tempRouterGo",
@@ -67,33 +65,36 @@ export const zongceRouter = {
       name: "behaviorsManager",
       component: () => import("../behaviorsManager.vue"),
       meta: { title: "科目行为记录管理", icon: "example", hidden: true }
-    }, {
+    },
+    {
       path: "studentApply",
       name: "studentApply",
       component: () => import("../studentApply.vue"),
       meta: { title: "学生申请", icon: "example", hidden: true }
-    }, {
+    },
+    {
       path: "artfBehviorsManager",
       name: "artfBehviorsManager",
       component: () => import("../artfBehviorsManager.vue"),
       meta: { title: "生成考评行为记录", icon: "example", hidden: true }
-    }, {
+    },
+    {
       path: "hierarchicalRecord",
       name: "hierarchicalRecord",
       component: () => import("../hierarchicalRecord.vue"),
       meta: { title: "生成分值科目记录", icon: "example", hidden: true }
-    }, {
+    },
+    {
       path: "standardRecord",
       name: "standardRecord",
       component: () => import("../standardRecord.vue"),
       meta: { title: "生成标准科目记录", icon: "example", hidden: true }
-    }, {
+    },
+    {
       path: "importBehaviors",
       name: "importBehaviors",
       component: () => import("../importBehaviors.vue"),
       meta: { title: "导入科目行为", icon: "example", hidden: true }
     }
-    
-
   ]
 };
