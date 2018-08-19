@@ -72,6 +72,27 @@ const queryCategoryList = data =>
         data: data
     })
 
+const getStudentApplyProject = data =>
+    request({
+        url: "/appraise/getStudentApplyProject.do",
+        method: 'post',
+        data: data
+    })
+
+
+const queryIncludUnEnableStandardSubject = data =>
+    request({
+        url: "/appraise/queryIncludUnEnableStandardSubject.do",
+        method: 'post',
+        data: data
+    })
+
+const queryIncludEnableStandardSubject = data =>
+    request({
+        url: "/appraise/queryIncludEnableStandardSubject.do",
+        method: 'post',
+        data: data
+    })
 export default {
     insertOrUpdateProject,
     uploadAttrUrl,
@@ -82,5 +103,8 @@ export default {
     queryNoticeTemplateByItemId,
     getProjectAllDataByItemId,
     queryClassifyTypeByCode,
-    queryCategoryList
+    queryCategoryList,
+    getStudentApplyProject,
+    queryIncludUnEnableStandardSubject,
+    queryIncludEnableStandardSubject
 };

@@ -199,7 +199,6 @@ export default {
       },
       standardSubjectCode: "",
       orgList: [],
-      scopeId: null,
       projectId: null,
       itemId: null,
       multipleSelection: [], //选中的值
@@ -363,21 +362,8 @@ export default {
         res.nation.forEach(el => {
           this.nationObj[el.dict_key] = el.dict_desc;
         });
-        this.getProjectData();
+         this.getData(this.projectId);
       });
-    },
-    getProjectData() {
-      var requestData = {
-        scopeId: this.scopeId
-      };
-      this.getAllCorrelationDataByScopeIdAndItemId(requestData).then(
-        response => {
-          var res = response.resBody;
-          this.projectId = res.appraiseProject.id;
-          this.getData(res.appraiseProject.id);
-          this.getSubjectList();
-        }
-      );
     },
     getData(projectId) {
       var requestData = {
@@ -438,12 +424,12 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (!to.query.scopeId || !to.query.standardSubjectCode) {
+      if (!to.query.projectId || !to.query.standardSubjectCode) {
         vm.$message.error("参数不正确");
       } else {
         vm.standardSubjectCode = to.query.standardSubjectCode;
         vm.getOrgList();
-        vm.scopeId = to.query.scopeId;
+        vm.projectId = to.query.projectId;
         vm.getDict();
       }
     });

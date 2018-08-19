@@ -262,6 +262,26 @@ const queryStudentBaseInfo = data =>
         data: data
     })
 
+const queryStdSubjectRecord = data =>
+    request({
+        url: "/appraise/queryStdSubjectRecord.do",
+        method: "post",
+        data: data
+    })
+
+const queryStdSubjectTree = data =>
+    request({
+        url: "/appraise/queryStdSubjectTree.do",
+        method: "post",
+        data: data
+    })
+const produceStdSubjectRecord = data =>
+    request({
+        url: "/appraise/produceStdSubjectRecord.do",
+        method: "post",
+        data: data
+    })
+
 export default {
 
     uploadAttrUrl,
@@ -300,6 +320,8 @@ export default {
     studentApply,
     applyRegBehavior,
     importRegBehavior,
-    queryStudentBaseInfo
-
+    queryStudentBaseInfo,
+    queryStdSubjectRecord,
+    queryStdSubjectTree,
+    produceStdSubjectRecord
 };

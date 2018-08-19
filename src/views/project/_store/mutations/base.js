@@ -20,6 +20,7 @@ export const setTempProjectId = (state, id) => {
 
 export const setProjectServiceType = (state, serType) => { 
     state.baseproject.projectFormData.projectServiceType = serType
+    state.baseproject.appraiseResultProjectFormData.projectServiceType = serType
 }
 
 //设置项目表单内容表单

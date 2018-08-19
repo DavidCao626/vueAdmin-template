@@ -3,6 +3,11 @@ export const getProjectFormData = state => {
     return state.baseproject.projectFormData
 };
 
+export const getAppraiseResultProjectFormData = state => {
+    return state.baseproject.appraiseResultProjectFormData
+};
+
+
 export const getUploadAttrUrl = state => { 
     return state.baseproject.uploadAttrUrl;
 }

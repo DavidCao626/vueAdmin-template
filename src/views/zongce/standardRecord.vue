@@ -1,31 +1,18 @@
 <template>
   <div>
     <page>
-      <div slot="title">生成标准科目记录</div>
+      <div slot="title">标准科目记录管理</div>
     </page>
-    <el-dialog title="导入数据" :visible.sync="dialogVisible" width="400px" :before-close="handleClose">
-      <el-upload class="upload-demo" drag :action="action" :limit='1' @onSuccess="onUploadSuccess">
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处，或
-          <em>点击上传</em>
-        </div>
-        <div class="el-upload__tip" slot="tip">只能上传xlx/xlsx</div>
-      </el-upload>
-    </el-dialog>
-
     <elx-table-layout>
 
       <template slot="headerLeft">
 
         <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
+          <el-form-item label="标准科目">
+            <el-cascader v-model="formInline.subjectCode" placeholder="输入进行搜索" :options="stdSubjectList" expand-trigger="hover" filterable change-on-select :props="stdProps"></el-cascader>
+          </el-form-item>
           <el-form-item label="组织机构">
-            <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select :props="orgProps"></el-cascader>
-          </el-form-item>
-          <el-form-item label="分值科目">
-            <el-input v-model="formInline.subjectCode" placeholder="分值科目"></el-input>
-          </el-form-item>
-          <el-form-item label="记录分项">
-            <el-input v-model="formInline.subTitle" placeholder="科目项"></el-input>
+            <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
           </el-form-item>
           <el-form-item label="学号">
             <el-input v-model="formInline.targetId" placeholder="学号"></el-input>
@@ -56,9 +43,9 @@
     </elx-table-layout>
     <page>
       <div slot="panel" style="text-align: right">
-        <el-button size="mini" type="primary">生成</el-button>
-        <el-button size="mini" type="primary">完成</el-button>
+        <el-button size="mini" @click="createRecord" type="primary">生成</el-button>
         <el-button size="mini" type="danger">回退</el-button>
+        <el-button size="mini" type="primary">完成</el-button>
       </div>
     </page>
   </div>
@@ -81,8 +68,7 @@ export default {
       },
       formInline: {
         orgCode: [], //组织机构
-        subjectCode: "", //分值科目
-        subTitle: "", //记录分项
+        subjectCode: [], //标准科目
         targetId: "" //测评对象id（学号）
       },
       orgProps: {
@@ -90,19 +76,21 @@ export default {
         value: "org_code",
         children: "children"
       },
+      stdProps: {
+        label: "label",
+        value: "code",
+        children: "subs"
+      },
+
+      stdSubjectList: [],
       orgList: [],
       scopeId: null,
       itemId: null,
-      projectId:null,
+      projectId: null,
       multipleSelection: [], //选中的值
       isMultipleSelection: false, //是否选中
-      dialogVisible: false,
-      deleteOpen: false,
-      importOpen: false,
-      exportOpen: false,
       data: [],
-      nationObj: {},
-      action: "https://jsonplaceholder.typicode.com/posts/"
+      nationObj: {}
     };
   },
   watch: {
@@ -128,12 +116,27 @@ export default {
       getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
       getAllCorrelationDataByScopeIdAndItemId:
         store.namespace + "/getAllCorrelationDataByScopeIdAndItemId",
-      queryTargetArtfBehviors: store.namespace + "/queryTargetArtfBehviors"
+      queryTargetArtfBehviors: store.namespace + "/queryTargetArtfBehviors",
+      queryStdSubjectRecord: store.namespace + "/queryStdSubjectRecord",
+      queryStdSubjectTree: store.namespace + "/queryStdSubjectTree",
+      produceStdSubjectRecord:store.namespace + "/produceStdSubjectRecord"
     }),
     getOrgList() {
       this.getCurrentOrgListAndOwner({}).then(response => {
         console.log(["orgList", response]);
         this.orgList = response.resBody;
+      });
+    },
+    createRecord(){
+      this.produceStdSubjectRecord({projectId:this.projectId}).then(response=>{
+        this.$message.success("生成成功");
+        this.getData();
+      })
+    },
+    getSubjectTree() {
+      this.queryStdSubjectTree({ projectId: this.projectId }).then(response => {
+        console.log(["getSubjectTree", response]);
+        this.stdSubjectList = response.resBody.subs;
       });
     },
     getDict() {
@@ -146,34 +149,26 @@ export default {
         res.nation.forEach(el => {
           this.nationObj[el.dict_key] = el.dict_desc;
         });
-        this.getProjectData();
+        this.getData();
       });
     },
-    getProjectData() {
+    getData() {
       var requestData = {
-        itemId: this.itemId,
-        scopeId: this.scopeId
-      };
-      this.getAllCorrelationDataByScopeIdAndItemId(requestData).then(
-        response => {
-          var res = response.resBody;
-          this.projectId = res.appraiseProject.id
-          this.getData(res.appraiseProject.id);
-        }
-      );
-    },
-    getData(projectId) {
-      console.log(["projectId",projectId])
-      var requestData = {
-        targetOrgCode: this.formInline.orgCode,
-        subjectCode: this.formInline.subjectCode,
-        subTitle: this.formInline.subTitle,
-        targetEvaluatorId: this.formInline.targetId,
-        projectId: projectId,
+        targetId: this.formInline.targetId,
+        projectId: this.projectId,
         currentPage: this.pageInfo.currentPage,
         pageSize: this.pageInfo.pageSize
       };
-      this.queryTargetArtfBehviors(requestData).then(response => {
+      var targetOrgCode = this.formInline.orgCode;
+      var stdSubjectCode = this.formInline.subjectCode;
+      if (targetOrgCode.length > 0) {
+        requestData.targetOrgCode = targetOrgCode[targetOrgCode.length - 1];
+      }
+      if (stdSubjectCode.length > 0) {
+        requestData.stdSubjectCode = stdSubjectCode[stdSubjectCode.length - 1];
+      }
+
+      this.queryStdSubjectRecord(requestData).then(response => {
         console.log(["查询数据", response]);
         this.data = response.resBody.baseData;
         this.pageInfo = response.resBody.pageInfo;
@@ -187,45 +182,25 @@ export default {
         .catch(_ => {});
     },
     onSubmit() {
-      console.log(["submit!!!!",this.projectId,"submit"]);
+      console.log(["submit!!!!", this.projectId, "submit"]);
       this.pageInfo.currentPage = 1;
       this.getData(this.projectId);
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
-    },
-    onMultipleSelectionDel() {
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(() => {
-        this.$message({
-          type: "success",
-          message: "删除成功!"
-        });
-        this.$emit("onSelectionDel", this.multipleSelection);
-      });
-    },
-    onExportExcel() {
-      this.$emit("onExportExcel");
-    },
-    onUploadSuccess() {
-      this.$emit("onUploadSuccess");
-    },
-    onNew() {
-      this.$emit("onNew");
     }
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (!to.query.itemId || !to.query.scopeId) {
+      if (!to.query.itemId || !to.query.scopeId || !to.query.projectId) {
         vm.$message.error("参数不正确");
       } else {
         vm.getOrgList();
+        vm.projectId = to.query.projectId;
         vm.itemId = to.query.itemId;
         vm.scopeId = to.query.scopeId;
         vm.getDict();
+        vm.getSubjectTree();
       }
     });
   }
