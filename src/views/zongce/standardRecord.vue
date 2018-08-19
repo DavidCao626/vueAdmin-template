@@ -44,8 +44,8 @@
     <page>
       <div slot="panel" style="text-align: right">
         <el-button size="mini" @click="createRecord" type="primary">生成</el-button>
-        <el-button size="mini" type="danger">回退</el-button>
-        <el-button size="mini" type="primary">完成</el-button>
+        <el-button size="mini" @click="backRecord" type="danger">回退</el-button>
+        <el-button size="mini" @click="complateItem" type="primary">完成</el-button>
       </div>
     </page>
   </div>
@@ -119,8 +119,16 @@ export default {
       queryTargetArtfBehviors: store.namespace + "/queryTargetArtfBehviors",
       queryStdSubjectRecord: store.namespace + "/queryStdSubjectRecord",
       queryStdSubjectTree: store.namespace + "/queryStdSubjectTree",
-      produceStdSubjectRecord:store.namespace + "/produceStdSubjectRecord"
+      produceStdSubjectRecord:store.namespace + "/produceStdSubjectRecord",
+      truncateStdSubjectRecord:store.namespace + "/truncateStdSubjectRecord",
+      completeUserPendingByItemId:store.namespace +"/completeUserPendingByItemId"
     }),
+    complateItem(){
+      this.completeUserPendingByItemId({itemId:this.itemId}).then(response=>{
+        this.$message.success("操作成功")
+        this.$router.go(-1)
+      })
+    },
     getOrgList() {
       this.getCurrentOrgListAndOwner({}).then(response => {
         console.log(["orgList", response]);
@@ -133,10 +141,17 @@ export default {
         this.getData();
       })
     },
+    backRecord(){
+      this.truncateStdSubjectRecord({projectId:this.projectId}).then(response=>{
+        this.$message.success("回退成功");
+        this.getData();
+      })
+    },
     getSubjectTree() {
       this.queryStdSubjectTree({ projectId: this.projectId }).then(response => {
         console.log(["getSubjectTree", response]);
         this.stdSubjectList = response.resBody.subs;
+        this.stdSubjectList.unshift({label:"全部",code:"0",subs:[]})
       });
     },
     getDict() {

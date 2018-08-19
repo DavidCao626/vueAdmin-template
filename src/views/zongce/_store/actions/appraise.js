@@ -269,7 +269,12 @@ const produceStdSubjectRecord = ({ commit, state }, params) => new Promise(resol
     })
 })
 
-
+const truncateStdSubjectRecord = ({ commit, state }, params) => new Promise(resolve => {
+    api.truncateStdSubjectRecord(params).then(response => {
+        console.log(["truncateStdSubjectRecord", response])
+        resolve(response)
+    })
+})
 export default {
     deleteItem,
     updateItem,
@@ -309,5 +314,6 @@ export default {
     queryStudentBaseInfo,
     queryStdSubjectRecord,
     queryStdSubjectTree,
-    produceStdSubjectRecord
+    produceStdSubjectRecord,
+    truncateStdSubjectRecord
 }

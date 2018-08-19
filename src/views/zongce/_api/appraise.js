@@ -282,6 +282,12 @@ const produceStdSubjectRecord = data =>
         data: data
     })
 
+const truncateStdSubjectRecord = data =>
+    request({
+        url: "/appraise/truncateStdSubjectRecord.do",
+        method: "post",
+        data: data
+    })
 export default {
 
     uploadAttrUrl,
@@ -323,5 +329,6 @@ export default {
     queryStudentBaseInfo,
     queryStdSubjectRecord,
     queryStdSubjectTree,
-    produceStdSubjectRecord
+    produceStdSubjectRecord,
+    truncateStdSubjectRecord
 };
