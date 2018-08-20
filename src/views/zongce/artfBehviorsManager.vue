@@ -1,28 +1,57 @@
 <template>
   <div>
     <page>
-      <div slot="title">生成考评行为记录</div>
+      <div slot="title">考评行为记录管理</div>
     </page>
-    <el-dialog title="导入数据" :visible.sync="dialogVisible" width="400px" :before-close="handleClose">
-      <el-upload class="upload-demo" drag :action="action" :limit='1' @onSuccess="onUploadSuccess">
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处，或
-          <em>点击上传</em>
-        </div>
-        <div class="el-upload__tip" slot="tip">只能上传xlx/xlsx</div>
-      </el-upload>
+    <el-dialog title="导入数据" :visible.sync="dialogVisible" width="50vw">
+      <el-form :model="importFormData" label-width="80px" size="small">
+        <el-form-item label="机构">
+          <elx-cascader @change="importOrgChange" v-model="importFormData.orgCode" :options="orgList" expand-trigger="hover" :props="orgProps"></elx-cascader>
+        </el-form-item>
+        <el-form-item label="分值科目">
+          <elx-select v-model="importFormData.subjectCode" @change="importSubjectChange" placeholder="">
+            <el-option v-for="item in importStandardSubjectList" :key="item.code" :obj="item" :value="item.code" :label="item.name"></el-option>
+          </elx-select>
+        </el-form-item>
+        <el-form-item label="事件标题">
+          <el-input v-model="importFormData.stitle" placeholder="事件标题"></el-input>
+        </el-form-item>
+        <el-form-item label="文件上传">
+          <el-upload drag :action="importAction" :on-success="importSuccess">
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或
+              <em>点击上传</em>
+            </div>
+          </el-upload>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="importSubmit">确 定</el-button>
+      </span>
+
     </el-dialog>
 
     <elx-table-layout>
-
+      <template slot="headerRight">
+        <el-button-group>
+          <el-tooltip class="item" effect="dark" content="录入数据" placement="bottom">
+            <el-button @click="dialogVisible = true" plain size="mini">
+              导入
+            </el-button>
+          </el-tooltip>
+        </el-button-group>
+      </template>
       <template slot="headerLeft">
 
         <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
           <el-form-item label="组织机构">
-             <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select :props="orgProps"></el-cascader>
+            <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select :props="orgProps"></el-cascader>
           </el-form-item>
           <el-form-item label="分值科目">
-            <el-input v-model="formInline.subjectCode" placeholder="分值科目"></el-input>
+            <elx-select v-model="formInline.subjectCode" placeholder="">
+              <el-option v-for="item in standardSubjectList" :key="item.code" :value="item.code" :label="item.name"></el-option>
+            </elx-select>
           </el-form-item>
           <el-form-item label="记录分项">
             <el-input v-model="formInline.subTitle" placeholder="科目项"></el-input>
@@ -37,8 +66,6 @@
       </template>
 
       <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop: 'name',prop: 'address'}" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="38">
-        </el-table-column>
         <el-table-column prop="title" label="行为标题">
         </el-table-column>
         <el-table-column prop="targetName" label="测评对象">
@@ -66,17 +93,11 @@
 
       </template>
     </elx-table-layout>
-    <page>
-      <div slot="panel" style="text-align: right">
-        <el-button size="mini" type="primary">生成</el-button>
-        <el-button size="mini" type="primary">完成</el-button>
-        <el-button size="mini" type="danger">回退</el-button>
-      </div>
-    </page>
   </div>
 </template>
 
   <script>
+import api from "./_api/appraise.js";
 import Vue from "vue";
 import Element from "element-ui-x";
 import { mapGetters, mapActions } from "vuex";
@@ -86,6 +107,17 @@ Vue.use(Element);
 export default {
   data() {
     return {
+      importAction: api.importArtRecord,
+      importStandardSubjectList: [],
+      importFormData: {
+        orgCode: [],
+        orgName: "",
+        subjectCode: "",
+        subjectName: "",
+        stitle: "",
+        fileId: null
+      },
+      dialogVisible: false,
       pageInfo: {
         currentPage: 1,
         pageSize: 10,
@@ -102,18 +134,13 @@ export default {
         value: "org_code",
         children: "children"
       },
+      standardSubjectList: [],
       orgList: [],
-      scopeId: null,
-      itemId: null,
+      projectId: null,
+      standardSubjectCode: "",
       multipleSelection: [], //选中的值
-      isMultipleSelection: false, //是否选中
-      dialogVisible: false,
-      deleteOpen: false,
-      importOpen: false,
-      exportOpen: false,
       data: [],
-      nationObj: {},
-      action: "https://jsonplaceholder.typicode.com/posts/"
+      nationObj: {}
     };
   },
   watch: {
@@ -124,28 +151,85 @@ export default {
     }
   },
   methods: {
-     getOrgList() {
+    importSuccess(response, file, fileList) {
+      console.log([response, file, fileList]);
+      this.importFormData.fileId = response.body.resBody.fileId;
+    },
+    importSubjectChange(val, xx, obj) {
+      this.importFormData.subjectName = obj.obj.name;
+    },
+    importOrgChange(val, xx, obj) {
+      this.importFormData.orgName = obj[obj.length - 1].org_name;
+    },
+    importSubmit() {
+      var requestData = {
+        projectId: this.projectId,
+        orgName: this.importFormData.orgName,
+        subjectCode: this.importFormData.subjectCode,
+        subjectName: this.importFormData.subjectName,
+        stitle: this.importFormData.stitle,
+        fileId: this.importFormData.fileId
+      };
+      var org = this.importFormData.orgCode;
+      requestData.orgCode = org[org.length - 1];
+      this.startImportRecord(requestData).then(response => {
+        this.$message.success("操作成功");
+        this.dialogVisible = false;
+        var batch = response.resBody.batch;
+        this.$alert("您的导入批次号是:" + batch, "提示", {
+          confirmButtonText: "确定",
+          callback: action => {
+            this.getData();
+          }
+        });
+      });
+    },
+    getOrgList() {
       this.getCurrentOrgListAndOwner({}).then(response => {
         console.log(["orgList", response]);
         this.orgList = response.resBody;
+        this.delFreeChildren(this.orgList);
+      });
+    },
+    delFreeChildren(children) {
+      console.log(["del", children]);
+      children.forEach(it => {
+        if (it.children.length == 0) {
+          delete it.children;
+        } else {
+          this.delFreeChildren(it.children);
+        }
+      });
+    },
+    getSubjectList() {
+      this.getSubjectBySSCodeAndProjectId({
+        projectId: this.projectId,
+        standardSubjectCode: this.standardSubjectCode
+      }).then(response => {
+        this.importStandardSubjectList = JSON.parse(
+          JSON.stringify(response.resBody)
+        );
+        this.standardSubjectList = response.resBody;
+        this.standardSubjectList.unshift({ code: "0", name: "全部" });
       });
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
       this.pageInfo.pageSize = val;
       this.getData();
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
       this.pageInfo.currentPage = val;
       this.getData();
     },
     ...mapActions({
-       getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
+      getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
       getDictByDictNames: store.namespace + "/getDictByDictNames",
       getAllCorrelationDataByScopeIdAndItemId:
         store.namespace + "/getAllCorrelationDataByScopeIdAndItemId",
-      queryTargetArtfBehviors: store.namespace + "/queryTargetArtfBehviors"
+      queryTargetArtfBehviors: store.namespace + "/queryTargetArtfBehviors",
+      getSubjectBySSCodeAndProjectId:
+        store.namespace + "/getSubjectBySSCodeAndProjectId",
+      startImportRecord: store.namespace + "/startImportRecord"
     }),
     getDict() {
       var requestData = {
@@ -157,28 +241,18 @@ export default {
         res.nation.forEach(el => {
           this.nationObj[el.dict_key] = el.dict_desc;
         });
-        this.getProjectData();
+        this.getData();
       });
     },
-    getProjectData() {
-      var requestData = {
-        itemId: this.itemId,
-        scopeId: this.scopeId
-      };
-      this.getAllCorrelationDataByScopeIdAndItemId(requestData).then(
-        response => {
-          var res = response.resBody;
-          this.getData(res.appraiseProject.id);
-        }
-      );
-    },
-    getData(projectId) {
+
+    getData() {
       var requestData = {
         targetOrgCode: this.formInline.orgCode,
         subjectCode: this.formInline.subjectCode,
         subTitle: this.formInline.subTitle,
         targetEvaluatorId: this.formInline.targetId,
-        projectId: projectId,
+        projectId: this.projectId,
+        standardSubjectCode: this.standardSubjectCode,
         currentPage: this.pageInfo.currentPage,
         pageSize: this.pageInfo.pageSize
       };
@@ -188,13 +262,7 @@ export default {
         this.pageInfo = response.resBody.pageInfo;
       });
     },
-    handleClose(done) {
-      this.$confirm("确认关闭？")
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
-    },
+    handleClose(done) {},
     onSubmit() {
       console.log("submit!");
       this.pageInfo.currentPage = 1;
@@ -202,40 +270,18 @@ export default {
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
-    },
-    onMultipleSelectionDel() {
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(() => {
-        this.$message({
-          type: "success",
-          message: "删除成功!"
-        });
-        this.$emit("onSelectionDel", this.multipleSelection);
-      });
-    },
-    onExportExcel() {
-      this.$emit("onExportExcel");
-    },
-    onUploadSuccess() {
-      this.$emit("onUploadSuccess");
-    },
-    onNew() {
-      this.$emit("onNew");
     }
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      
-      if (!to.query.itemId || !to.query.scopeId) {
+      if (!to.query.projectId || !to.query.standardSubjectCode) {
         vm.$message.error("参数不正确");
       } else {
-         vm.getOrgList();
-        vm.itemId = to.query.itemId;
-        vm.scopeId = to.query.scopeId;
+        vm.getOrgList();
+        vm.projectId = to.query.projectId;
+        vm.standardSubjectCode = to.query.standardSubjectCode;
         vm.getDict();
+        vm.getSubjectList();
       }
     });
   }

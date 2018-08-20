@@ -18,7 +18,8 @@ export const baseproject = {
             appraiseProjectCode: "",//测评项目代码
             assessSubjects: "",//考评科目(无科目项)
             collegeSubjects: [],//学院可管理科目
-            classSubjects: []//班级可管理科目
+            classSubjects: [],//班级可管理科目
+            academicSubjects:""//学业科目
         }
     },
     projectFormData : {

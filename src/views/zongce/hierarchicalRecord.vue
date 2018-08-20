@@ -1,31 +1,25 @@
 <template>
   <div>
     <page>
-      <div slot="title">生成分值科目记录</div>
+      <div slot="title">分值科目记录管理</div>
     </page>
-    <el-dialog title="导入数据" :visible.sync="dialogVisible" width="400px" :before-close="handleClose">
-      <el-upload class="upload-demo" drag :action="action" :limit='1' @onSuccess="onUploadSuccess">
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处，或
-          <em>点击上传</em>
-        </div>
-        <div class="el-upload__tip" slot="tip">只能上传xlx/xlsx</div>
-      </el-upload>
-    </el-dialog>
-
     <elx-table-layout>
 
       <template slot="headerLeft">
 
         <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-          <el-form-item label="组织机构">
-            <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select :props="orgProps"></el-cascader>
+          <el-form-item label="标准科目">
+            <elx-select v-model="formInline.subjectCode" placeholder="请选择" @change="stdSubjectChange">
+              <el-option v-for="item in stdSubjectList" :key="item.code" :value="item.code" :obj="item" :label="item.name"></el-option>
+            </elx-select>
           </el-form-item>
           <el-form-item label="分值科目">
-            <el-input v-model="formInline.subjectCode" placeholder="分值科目"></el-input>
+            <elx-select v-model="formInline.hcsubjectCode" placeholder="请选择">
+              <el-option v-for="item in hcSubjectList" :key="item.code" :value="item.code" :label="item.label"></el-option>
+            </elx-select>
           </el-form-item>
-          <el-form-item label="记录分项">
-            <el-input v-model="formInline.subTitle" placeholder="科目项"></el-input>
+          <el-form-item label="组织机构">
+            <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
           </el-form-item>
           <el-form-item label="学号">
             <el-input v-model="formInline.targetId" placeholder="学号"></el-input>
@@ -35,7 +29,6 @@
           </el-form-item>
         </el-form>
       </template>
-
       <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop: 'name',prop: 'address'}" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="38">
         </el-table-column>
@@ -52,18 +45,16 @@
         <el-table-column prop="recordTime" label="记录日期">
         </el-table-column>
       </el-table>
-
       <template slot="footer">
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
         </el-pagination>
-
       </template>
     </elx-table-layout>
     <page>
       <div slot="panel" style="text-align: right">
-        <el-button size="mini" type="primary">生成</el-button>
-        <el-button size="mini" type="primary">完成</el-button>
-        <el-button size="mini" type="danger">回退</el-button>
+        <el-button size="mini" @click="createRecord" type="primary">生成</el-button>
+        <el-button size="mini" @click="backRecord" type="danger">回退</el-button>
+        <el-button size="mini" @click="complateItem" type="primary">完成</el-button>
       </div>
     </page>
   </div>
@@ -85,9 +76,9 @@ export default {
         totalRecord: 0
       },
       formInline: {
+        subjectCode: "", //标准科目
+        hcsubjectCode: "", //分值科目
         orgCode: [], //组织机构
-        subjectCode: "", //分值科目
-        subTitle: "", //记录分项
         targetId: "" //测评对象id（学号）
       },
       orgProps: {
@@ -95,18 +86,22 @@ export default {
         value: "org_code",
         children: "children"
       },
+      stdProps: {
+        label: "label",
+        value: "code",
+        children: "subs"
+      },
+      hcSubjectList: [], //分值科目list
+      stdSubjectCode: [], //路由传进来的 标准可目
+      stdSubjectList: [],
       orgList: [],
       scopeId: null,
       itemId: null,
+      projectId: null,
       multipleSelection: [], //选中的值
       isMultipleSelection: false, //是否选中
-      dialogVisible: false,
-      deleteOpen: false,
-      importOpen: false,
-      exportOpen: false,
       data: [],
-      nationObj: {},
-      action: "https://jsonplaceholder.typicode.com/posts/"
+      nationObj: {}
     };
   },
   watch: {
@@ -129,15 +124,63 @@ export default {
     },
     ...mapActions({
       getDictByDictNames: store.namespace + "/getDictByDictNames",
+      getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
       getAllCorrelationDataByScopeIdAndItemId:
         store.namespace + "/getAllCorrelationDataByScopeIdAndItemId",
-         getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
-      queryTargetArtfBehviors: store.namespace + "/queryTargetArtfBehviors"
+      queryTargetArtfBehviors: store.namespace + "/queryTargetArtfBehviors",
+      queryStdSubjectTree: store.namespace + "/queryStdSubjectTree",
+      completeUserPendingByItemId:
+        store.namespace + "/completeUserPendingByItemId",
+      queryHierarchicalRecord: store.namespace + "/queryHierarchicalRecord",
+      truncateHcSubjectRecord: store.namespace + "/truncateHcSubjectRecord",
+      produceHcSubjectRecord: store.namespace + "/produceHcSubjectRecord",
+      queryStdSubjectListByCode: store.namespace + "/queryStdSubjectListByCode"
     }),
-     getOrgList() {
+    stdSubjectChange(val, vueCom, obj) {
+      this.hcSubjectList = [];
+      this.formInline.hcsubjectCode = "";
+      this.hcSubjectList = JSON.parse(JSON.stringify(obj.obj.children));
+      this.hcSubjectList.unshift({ label: "全部", code: "0" });
+    },
+    querystdSubjectList() {
+      var requestData = {
+        stdSubjectCode: this.stdSubjectCode,
+        projectId: this.projectId
+      };
+      this.queryStdSubjectListByCode(requestData).then(response => {
+        this.stdSubjectList = response.resBody;
+      });
+    },
+    complateItem() {
+      this.completeUserPendingByItemId({ itemId: this.itemId }).then(
+        response => {
+          this.$message.success("操作成功");
+          this.$router.go(-1);
+        }
+      );
+    },
+    getOrgList() {
       this.getCurrentOrgListAndOwner({}).then(response => {
         console.log(["orgList", response]);
         this.orgList = response.resBody;
+      });
+    },
+    createRecord() {
+      this.produceHcSubjectRecord({
+        projectId: this.projectId,
+        standardSubjectCodes: this.stdSubjectCode
+      }).then(response => {
+        this.$message.success("生成成功,点击查询进行查看");
+        // this.getData();
+      });
+    },
+    backRecord() {
+      this.truncateHcSubjectRecord({
+        projectId: this.projectId,
+        standardSubjectCodes: this.stdSubjectCode
+      }).then(response => {
+        this.$message.success("回退成功");
+        this.getData();
       });
     },
     getDict() {
@@ -150,32 +193,31 @@ export default {
         res.nation.forEach(el => {
           this.nationObj[el.dict_key] = el.dict_desc;
         });
-        this.getProjectData();
+        // this.getData();
       });
     },
-    getProjectData() {
+    getData() {
+      if (
+        this.formInline.subjectCode == "" ||
+        this.formInline.subjectCode == null ||
+        this.formInline.subjectCode == "0"
+      ) {
+        this.$message.error("标准科目不能为空!");
+        return;
+      }
       var requestData = {
-        itemId: this.itemId,
-        scopeId: this.scopeId
-      };
-      this.getAllCorrelationDataByScopeIdAndItemId(requestData).then(
-        response => {
-          var res = response.resBody;
-          this.getData(res.appraiseProject.id);
-        }
-      );
-    },
-    getData(projectId) {
-      var requestData = {
-        targetOrgCode: this.formInline.orgCode,
-        subjectCode: this.formInline.subjectCode,
-        subTitle: this.formInline.subTitle,
-        targetEvaluatorId: this.formInline.targetId,
-        projectId: projectId,
+        sdtSubjectCode: this.formInline.subjectCode, //标准科目
+        subject_code: this.formInline.hcsubjectCode, //分值科目
+        targetId: this.formInline.targetId,
+        projectId: this.projectId,
         currentPage: this.pageInfo.currentPage,
         pageSize: this.pageInfo.pageSize
       };
-      this.queryTargetArtfBehviors(requestData).then(response => {
+      var targetOrgCode = this.formInline.orgCode;
+      if (targetOrgCode.length > 0) {
+        requestData.target_org_code = targetOrgCode[targetOrgCode.length - 1];
+      }
+      this.queryHierarchicalRecord(requestData).then(response => {
         console.log(["查询数据", response]);
         this.data = response.resBody.baseData;
         this.pageInfo = response.resBody.pageInfo;
@@ -189,45 +231,31 @@ export default {
         .catch(_ => {});
     },
     onSubmit() {
-      console.log("submit!");
+      console.log(["submit!!!!", this.projectId, "submit"]);
       this.pageInfo.currentPage = 1;
-      this.getData();
+      this.getData(this.projectId);
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
-    },
-    onMultipleSelectionDel() {
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(() => {
-        this.$message({
-          type: "success",
-          message: "删除成功!"
-        });
-        this.$emit("onSelectionDel", this.multipleSelection);
-      });
-    },
-    onExportExcel() {
-      this.$emit("onExportExcel");
-    },
-    onUploadSuccess() {
-      this.$emit("onUploadSuccess");
-    },
-    onNew() {
-      this.$emit("onNew");
     }
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (!to.query.itemId || !to.query.scopeId) {
+      if (
+        !to.query.itemId ||
+        !to.query.scopeId ||
+        !to.query.projectId ||
+        !to.query.stdSubjectCode
+      ) {
         vm.$message.error("参数不正确");
       } else {
-         vm.getOrgList();
+        vm.getOrgList();
+        vm.projectId = to.query.projectId;
         vm.itemId = to.query.itemId;
         vm.scopeId = to.query.scopeId;
+        vm.stdSubjectCode = to.query.stdSubjectCode;
         vm.getDict();
+        vm.querystdSubjectList();
       }
     });
   }
