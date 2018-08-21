@@ -37,10 +37,16 @@ export const zongceRouter = {
       meta: { title: "标准分", icon: "example", hidden: true }
     },
     {
-      path: "pc",
-      name: "评测模版",
-      component: () => import("../pingce.vue"),
-      meta: { title: "标准分", icon: "example", hidden: true }
+      path: "singleUserQuestion",
+      name: "个人自评",
+      component: () => import("../singleUserQuestion.vue"),
+      meta: { title: "个人自评", icon: "example", hidden: true }
+    },
+    {
+      path: "groupQuestion",
+      name: "小组评议",
+      component: () => import("../groupQuestion.vue"),
+      meta: { title: "多人评议", icon: "example", hidden: true }
     },
     {
       path: "pc2",
