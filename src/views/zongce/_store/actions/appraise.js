@@ -307,7 +307,24 @@ const startImportRecord = ({ commit, state }, params) => new Promise(resolve => 
     })
 })
 
+const truncateAppraiseBehaviorRegRecord = ({ commit, state }, params) => new Promise(resolve => {
+    api.truncateAppraiseBehaviorRegRecord(params).then(response => {
+        console.log(["truncateAppraiseBehaviorRegRecord", response])
+        resolve(response)
+    })
+})
+const queryAllEnableStandardSubject = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryAllEnableStandardSubject(params).then(response => {
+        console.log(["queryAllEnableStandardSubject", response])
+        resolve(response)
+    })
+})
+
+
+
 export default {
+    queryAllEnableStandardSubject,
+    truncateAppraiseBehaviorRegRecord,
     startImportRecord,
     queryStdSubjectListByCode,
     queryHierarchicalRecord,

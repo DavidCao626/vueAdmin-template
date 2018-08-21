@@ -36,24 +36,21 @@
 
 <template>
   <page :Breadcrumb="false">
-    <span slot="title">选择跳转</span>
+    <span slot="title">行为管理跳转</span>
     <div slot="panel">
 
       <div class="content">
         <br/>
-        <el-form label-width="80px" :model="formLabelAlign" >
-
-          <el-form-item label="活动区域">
-            <el-select v-model="form" placeholder="请选择活动区域">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
+        <el-form label-width="80px" :model="formData">
+          <el-form-item label="测评项目">
+            <elx-select v-model="formData.projectId" placeholder="请选择" @change="projectChange">
+              <el-option v-for="item in projectList" :key="item.id" :value="item.id" :label="item.name"></el-option>
+            </elx-select>
           </el-form-item>
-          <el-form-item label="活动形式">
-            <el-select v-model="form" placeholder="请选择活动区域">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
+          <el-form-item label="标准科目">
+            <elx-select v-model="formData.subjectCode" placeholder="请选择" @change="subjectChange">
+              <el-option v-for="item in subjectList" :key="item.code" :value="item.code" :obj="item" :label="item.name"></el-option>
+            </elx-select>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">下一步</el-button>
@@ -66,6 +63,12 @@
 </template>
 
 <script>
+import api from "./_api/appraise.js";
+import Vue from "vue";
+import Element from "element-ui-x";
+import { mapGetters, mapActions } from "vuex";
+import store from "./_store/index.js";
+import moment from "moment";
 export default {
   components: {},
   computed: {},
@@ -73,18 +76,71 @@ export default {
 
   data() {
     return {
-      form: "",
-      formLabelAlign: {
-        name: "",
-        region: "",
-        type: ""
-      }
+      formData: {
+        projectId: null,
+        subjectCode: "",
+        isInclude: null
+      },
+      projectList: [],
+      subjectList: []
     };
   },
   methods: {
+    subjectChange(val, vueCom, obj) {
+      this.isInclude = obj.obj.include;
+    },
+    projectChange(val) {
+      this.formData.subjectCode = "";
+      this.getSubjectList();
+    },
+    getProjectList() {
+      this.getStudentApplyProject().then(response => {
+        this.projectList = response.resBody;
+      });
+    },
+    getSubjectList() {
+      this.queryAllEnableStandardSubject({
+        projectId: this.formData.projectId
+      }).then(response => {
+        this.subjectList = response.resBody;
+      });
+    },
+    ...mapActions({
+      queryAllEnableStandardSubject:
+        store.namespace + "/queryAllEnableStandardSubject",
+      getStudentApplyProject: store.namespace + "/getStudentApplyProject"
+    }),
     onSubmit() {
+      if(this.formData.projectId == null ||this.formData.subjectCode == ""){
+        this.$message.error("请完成所有选项!")
+        return;
+      }
       //路由逻辑
+      if (this.isInclude == true) {
+        this.$router.push({
+          path: "/zongce/behaviorsManager",
+          query: {
+            projectId: this.formData.projectId,
+            standardSubjectCode: this.formData.subjectCode
+          }
+        });
+      } else if (this.isInclude == false) {
+        this.$router.push({
+          path: "/zongce/artfBehviorsManager",
+          query: {
+            projectId: this.formData.projectId,
+            standardSubjectCode: this.formData.subjectCode
+          }
+        });
+      } else {
+        this.$message.error("跳转发生异常")
+      }
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.getProjectList();
+    });
   }
 };
 </script>

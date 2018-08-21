@@ -40,6 +40,9 @@
               导入
             </el-button>
           </el-tooltip>
+             <el-button @click="goBackData" plain size="mini">
+              回退
+            </el-button>
         </el-button-group>
       </template>
       <template slot="headerLeft">
@@ -66,6 +69,8 @@
       </template>
 
       <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop: 'name',prop: 'address'}" @selection-change="handleSelectionChange">
+        <el-table-column prop="targetId" label="学号">
+        </el-table-column>
         <el-table-column prop="title" label="行为标题">
         </el-table-column>
         <el-table-column prop="targetName" label="测评对象">
@@ -76,13 +81,13 @@
         </el-table-column>
         <el-table-column prop="subTitle" label="分项业务">
         </el-table-column>
-        <el-table-column prop="original_score" label="原始分值">
+        <el-table-column prop="originalScore" label="原始分值">
         </el-table-column>
-        <el-table-column prop="conversion_ratio" label="转换比率">
+        <el-table-column prop="conversionRatio" label="转换比率">
         </el-table-column>
-        <el-table-column prop="reality_score" label="实际得分值">
+        <el-table-column prop="realityScore" label="实际得分值">
         </el-table-column>
-        <el-table-column prop="record_time" label="记录时间">
+        <el-table-column prop="recordTime" label="记录时间">
         </el-table-column>
 
       </el-table>
@@ -151,6 +156,19 @@ export default {
     }
   },
   methods: {
+    goBackData(){
+       this.$prompt('请输入批次号', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(({ value }) => {
+          this.truncateAppraiseBehaviorRegRecord({projectId:this.projectId,batchNo:value}).then(res=>{
+            this.$message.success("操作成功")
+            this.getData();
+          })
+        }).catch(() => {
+          
+        });
+    },
     importSuccess(response, file, fileList) {
       console.log([response, file, fileList]);
       this.importFormData.fileId = response.body.resBody.fileId;
@@ -229,7 +247,8 @@ export default {
       queryTargetArtfBehviors: store.namespace + "/queryTargetArtfBehviors",
       getSubjectBySSCodeAndProjectId:
         store.namespace + "/getSubjectBySSCodeAndProjectId",
-      startImportRecord: store.namespace + "/startImportRecord"
+      startImportRecord: store.namespace + "/startImportRecord",
+      truncateAppraiseBehaviorRegRecord:store.namespace + "/truncateAppraiseBehaviorRegRecord"
     }),
     getDict() {
       var requestData = {
@@ -247,7 +266,6 @@ export default {
 
     getData() {
       var requestData = {
-        targetOrgCode: this.formInline.orgCode,
         subjectCode: this.formInline.subjectCode,
         subTitle: this.formInline.subTitle,
         targetEvaluatorId: this.formInline.targetId,
@@ -256,6 +274,10 @@ export default {
         currentPage: this.pageInfo.currentPage,
         pageSize: this.pageInfo.pageSize
       };
+      var org =   this.formInline.orgCode
+      if(org.length !=0){
+        requestData.targetOrgCode = org[org.length-1]
+      }
       this.queryTargetArtfBehviors(requestData).then(response => {
         console.log(["查询数据", response]);
         this.data = response.resBody.baseData;

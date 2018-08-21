@@ -321,7 +321,25 @@ const startImportRecord = data =>
         method: "post",
         data: data
     })
+
+
+const truncateAppraiseBehaviorRegRecord = data =>
+    request({
+        url: "/appraise/truncateAppraiseBehaviorRegRecord.do",
+        method: "post",
+        data: data
+    })
+
+const queryAllEnableStandardSubject = data =>
+    request({
+        url: "/appraise/queryAllEnableStandardSubject.do",
+        method: "post",
+        data: data
+    })
+
 export default {
+    queryAllEnableStandardSubject,
+    truncateAppraiseBehaviorRegRecord,
     startImportRecord,
     queryStdSubjectListByCode,
     produceHcSubjectRecord,

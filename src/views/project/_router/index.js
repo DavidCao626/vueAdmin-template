@@ -21,6 +21,14 @@ export const projectRouter = {
       component: () => import("../childScope"),
       meta: { hidden: false }
     },
+    {
+      path: "appraiseChildScope",
+      name: "查看下级数据",
+      component: () => import("../appraiseChildScope"),
+      meta: { hidden: false }
+    },
+    
+  
     { path: "todos", name: "我的待办", component: () => import("../myTodos") },
     {
       path: "dones",
@@ -366,5 +374,6 @@ export const projectRouter = {
       component: () => import("../appraiseResult/createProject.vue"),
       meta: { hidden: true, title: "综测结果项目" }
     }
+    
   ]
 };

@@ -87,6 +87,11 @@
                         <i class="el-icon-date"></i>&nbsp; 账号详情
                       </el-dropdown-item>
                     </router-link>
+                    <router-link class="inlineBlock" to="/user/userDuty">
+                      <el-dropdown-item>
+                        <i class="el-icon-setting"></i>&nbsp; 任职详情
+                      </el-dropdown-item>
+                    </router-link>
                     <router-link class="inlineBlock" to="/">
                       <el-dropdown-item>
                         <i class="el-icon-setting"></i>&nbsp; 功能设置
