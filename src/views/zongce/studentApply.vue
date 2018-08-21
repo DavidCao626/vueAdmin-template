@@ -187,6 +187,7 @@ export default {
       };
       this.studentApply(requestData).then(response => {
         this.$message.success("提交成功!");
+        this.$router.go(-1)
       });
     }
   },

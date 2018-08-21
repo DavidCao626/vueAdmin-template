@@ -2,7 +2,7 @@ import request from '~/utils/request'
 import ajax from '~/utils/ajax'
 
 //附件上传地址
-const uploadAttrUrl = process.env.BASE_API+"/project/uploadAttachment.do"
+const importArtRecord = process.env.BASE_API +"/appraise/importArtRecord.do"
 
 
 const getDictByDictNames = data =>
@@ -288,9 +288,64 @@ const truncateStdSubjectRecord = data =>
         method: "post",
         data: data
     })
-export default {
 
-    uploadAttrUrl,
+const queryHierarchicalRecord = data =>
+    request({
+        url: "/appraise/queryHierarchicalRecord.do",
+        method: "post",
+        data: data
+    })
+const truncateHcSubjectRecord = data =>
+    request({
+        url: "/appraise/truncateHcSubjectRecord.do",
+        method: "post",
+        data: data
+    })
+const produceHcSubjectRecord = data =>
+        request({
+        url: "/appraise/produceHcSubjectRecord.do",
+            method: "post",
+            data: data
+        })
+
+const queryStdSubjectListByCode = data =>
+    request({
+        url: "/appraise/queryStdSubjectListByCode.do",
+        method: "post",
+        data: data
+    })
+
+const startImportRecord = data =>
+    request({
+        url: "/appraise/startImportRecord.do",
+        method: "post",
+        data: data
+    })
+
+
+const truncateAppraiseBehaviorRegRecord = data =>
+    request({
+        url: "/appraise/truncateAppraiseBehaviorRegRecord.do",
+        method: "post",
+        data: data
+    })
+
+const queryAllEnableStandardSubject = data =>
+    request({
+        url: "/appraise/queryAllEnableStandardSubject.do",
+        method: "post",
+        data: data
+    })
+
+export default {
+    queryAllEnableStandardSubject,
+    truncateAppraiseBehaviorRegRecord,
+    startImportRecord,
+    queryStdSubjectListByCode,
+    produceHcSubjectRecord,
+    truncateHcSubjectRecord,
+    queryHierarchicalRecord,
+    importArtRecord,
     getDictByDictNames,
     addAppraiseCategory,
     getAppraiseCategory,

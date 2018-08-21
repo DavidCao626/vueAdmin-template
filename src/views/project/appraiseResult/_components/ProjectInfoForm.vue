@@ -61,8 +61,13 @@
               <el-option v-for="item in projectList" :key="item.id" :value="item.code" :obj="item" :label="item.name"></el-option>
             </elx-select>
           </el-form-item>
-          <el-form-item label="考评科目">
+          <el-form-item label="自评科目">
             <elx-select v-model="form.expand.assessSubjects" placeholder="请选择">
+              <el-option v-for="item in unEnableStandardSubject" :key="item.code" :value="item.code" :label="item.name"></el-option>
+            </elx-select>
+          </el-form-item>
+          <el-form-item label="学业科目">
+            <elx-select v-model="form.expand.academicSubjects" placeholder="请选择">
               <el-option v-for="item in unEnableStandardSubject" :key="item.code" :value="item.code" :label="item.name"></el-option>
             </elx-select>
           </el-form-item>
@@ -279,6 +284,7 @@ export default {
         attrDetailBean: null,
         expand: {
           id: t.expand.id,
+          academicSubjects:t.expand.academicSubjects,//学业科目
           appraiseProjectCode: t.expand.appraiseProjectCode, //测评项目代码
           assessSubjects: t.expand.assessSubjects, //考评科目(无科目项)
           collegeSubjects: t.expand.collegeSubjects, //学院可管理科目

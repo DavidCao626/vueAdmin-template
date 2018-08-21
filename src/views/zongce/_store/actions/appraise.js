@@ -275,7 +275,61 @@ const truncateStdSubjectRecord = ({ commit, state }, params) => new Promise(reso
         resolve(response)
     })
 })
+
+const produceHcSubjectRecord = ({ commit, state }, params) => new Promise(resolve => {
+    api.produceHcSubjectRecord(params).then(response => {
+        console.log(["produceHcSubjectRecord", response])
+        resolve(response)
+    })
+})
+const truncateHcSubjectRecord = ({ commit, state }, params) => new Promise(resolve => {
+    api.truncateHcSubjectRecord(params).then(response => {
+        console.log(["truncateHcSubjectRecord", response])
+        resolve(response)
+    })
+})
+const queryHierarchicalRecord = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryHierarchicalRecord(params).then(response => {
+        console.log(["queryHierarchicalRecord", response])
+        resolve(response)
+    })
+})
+const queryStdSubjectListByCode = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryStdSubjectListByCode(params).then(response => {
+        console.log(["queryHierarchicalRecord", response])
+        resolve(response)
+    })
+})
+const startImportRecord = ({ commit, state }, params) => new Promise(resolve => {
+    api.startImportRecord(params).then(response => {
+        console.log(["startImportRecord", response])
+        resolve(response)
+    })
+})
+
+const truncateAppraiseBehaviorRegRecord = ({ commit, state }, params) => new Promise(resolve => {
+    api.truncateAppraiseBehaviorRegRecord(params).then(response => {
+        console.log(["truncateAppraiseBehaviorRegRecord", response])
+        resolve(response)
+    })
+})
+const queryAllEnableStandardSubject = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryAllEnableStandardSubject(params).then(response => {
+        console.log(["queryAllEnableStandardSubject", response])
+        resolve(response)
+    })
+})
+
+
+
 export default {
+    queryAllEnableStandardSubject,
+    truncateAppraiseBehaviorRegRecord,
+    startImportRecord,
+    queryStdSubjectListByCode,
+    queryHierarchicalRecord,
+    truncateHcSubjectRecord,
+    produceHcSubjectRecord,
     deleteItem,
     updateItem,
     deleteScore,
