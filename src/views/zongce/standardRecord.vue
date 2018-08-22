@@ -151,7 +151,7 @@ export default {
       this.queryStdSubjectTree({ projectId: this.projectId }).then(response => {
         console.log(["getSubjectTree", response]);
         this.stdSubjectList = response.resBody.subs;
-        this.stdSubjectList.unshift({label:"全部",code:"0",subs:[]})
+        this.stdSubjectList.unshift({label:"全部",code:"0"},{label:"综合测评结果",code:"S99999999"})
       });
     },
     getDict() {
