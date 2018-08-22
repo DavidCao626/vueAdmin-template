@@ -184,7 +184,7 @@ export default {
     },
 
     collegeBT() {
-      if (this.opType == "A") {
+      if (!this.schemeId ) {
         //增加
         console.log(["onSubmt", this.node]);
         var name = JSON.parse(JSON.stringify(this.formInline.name));

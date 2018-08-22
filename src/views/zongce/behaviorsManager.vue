@@ -431,6 +431,7 @@ export default {
         vm.getOrgList();
         vm.projectId = to.query.projectId;
         vm.getDict();
+        vm.getSubjectList();
       }
     });
   }

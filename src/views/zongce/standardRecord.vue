@@ -9,7 +9,7 @@
 
         <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
           <el-form-item label="标准科目">
-            <el-cascader v-model="formInline.subjectCode" placeholder="输入进行搜索" :options="stdSubjectList" expand-trigger="hover" filterable change-on-select :props="stdProps"></el-cascader>
+            <el-cascader v-model="formInline.subjectCode" placeholder="输入进行搜索" :options="stdSubjectList"  filterable change-on-select :props="stdProps"></el-cascader>
           </el-form-item>
           <el-form-item label="组织机构">
             <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
