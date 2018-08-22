@@ -80,6 +80,6 @@ export default {
     padding: 6px 5px;
   }
   .el-transfer-panel__body{
-      height:440px;
+      height:600px;
   }
 </style>

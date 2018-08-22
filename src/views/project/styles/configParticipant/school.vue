@@ -78,7 +78,7 @@ export default {
       if (scopeId == null) {
         console.log("没有传递scopeid,该页面不能访问");
       } else {
-        vm.serviceName = "ClassGroupReview";
+        vm.serviceName = "schoolGroupReview";
         vm
           .queryItemParticipant({
             scopeId: scopeId,
