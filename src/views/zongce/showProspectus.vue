@@ -54,9 +54,10 @@
 
       <template slot="footer">
         <div id="my-template">
-               <el-button size="mini" type="primary" @click="completeTask">完成</el-button>
-               </div>
-            </template>
+          <el-button size="mini" type="danger" @click="goBack">返回</el-button>
+          <el-button size="mini" type="primary" @click="completeTask">完成</el-button>
+        </div>
+      </template>
 
     </elx-table-layout>
   </div>
@@ -98,10 +99,13 @@ export default {
     }
   },
   methods: {
+    goBack(){
+      this.$router.go(-1)
+    },
     ...mapActions({
       getDictByDictNames: store.namespace + "/getDictByDictNames",
       queryAppraiseProspectus: store.namespace + "/queryAppraiseProspectus",
-      startAppraiseProject:store.namespace + "/startAppraiseProject"
+      startAppraiseProject: store.namespace + "/startAppraiseProject"
     }),
     stateFormatter(r, c, v, i) {
       if (v) {
@@ -110,15 +114,23 @@ export default {
         return "未完成";
       }
     },
-    completeTask(){
-      var requestData={
-        itemId:this.itemId,
-        scopeId:this.scopeId
-      }
-      this.startAppraiseProject(requestData).then(response=>{
-        this.$message.success("操作成功")
-        this.$router.go(-1)
+    completeTask() {
+      this.$confirm("此操将结束此节点,下级机构将无法提交 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          var requestData = {
+            itemId: this.itemId,
+            scopeId: this.scopeId
+          };
+          this.startAppraiseProject(requestData).then(response => {
+            this.$message.success("操作成功");
+            this.$router.go(-1);
+          });
         })
+        .catch(() => {});
     },
     getData() {
       var requestData = {
@@ -129,7 +141,7 @@ export default {
         console.log(["查询数据", response]);
         var res = response.resBody;
         this.formData = res;
-      console.log(["this",this.data])
+        console.log(["this", this.data]);
       });
     },
     onSubmit() {
@@ -176,8 +188,8 @@ export default {
 </script>
 
 <style scoped>
-#my-template{
- text-align: right;
+#my-template {
+  text-align: right;
 }
 
 .el-form-item {

@@ -82,6 +82,7 @@ export default {
   methods: {
     submit() {
       this.submitQuestionBean({scopeId:this.scopeId,"itemId":this.itemId});
+      this.$router.go(-1)
     },
     ...mapActions({
          loadQuestion: store.namespace + '/getQuestionBean',

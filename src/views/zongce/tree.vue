@@ -10,7 +10,7 @@
             <el-form-item label="名称:" >
               <el-input v-model="node[props.lable]" :disabled="serviceType!=0"></el-input>
             </el-form-item>
-            <el-form-item label="占比(%):" v-state-show="1">
+            <el-form-item label="占比:" v-state-show="1">
               <!-- <el-input maxlength="5" v-model="node[props.proportion]"></el-input> -->
                  <el-input-number size="mini"  :step="0.01" :max="1"  :min="0"  v-model="node[props.proportion]"></el-input-number>
             </el-form-item>
@@ -157,7 +157,7 @@ export default {
       if (this.serviceType == 1) {
         addNewNode = {
           [this.props.hcName]: "学院新节点", //节点名称
-          [this.props.hcScoreValue]: 80, //分值 《========================================================注意这里测试新增的分值字段，可能会造成后台异常！！！！！
+          [this.props.hcScoreValue]: 100, //分值 《========================================================注意这里测试新增的分值字段，可能会造成后台异常！！！！！
           [this.props.hcCode]: null,
           [this.props.hcLeaf]: true
         };

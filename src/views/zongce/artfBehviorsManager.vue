@@ -4,6 +4,7 @@
       <div slot="title">考评行为记录管理</div>
     </page>
     <el-dialog title="导入数据" :visible.sync="dialogVisible" width="50vw">
+      
       <el-form :model="importFormData" label-width="80px" size="small">
         <el-form-item label="机构">
           <elx-cascader @change="importOrgChange" v-model="importFormData.orgCode" :options="orgList" expand-trigger="hover" :props="orgProps"></elx-cascader>
@@ -26,6 +27,7 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
+        <el-button @click="downloadTemplatte" type="text">模板下载</el-button>
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="importSubmit">确 定</el-button>
       </span>
@@ -88,6 +90,8 @@
         <el-table-column prop="realityScore" label="实际得分值">
         </el-table-column>
         <el-table-column prop="recordTime" label="记录时间">
+        </el-table-column>
+        <el-table-column prop="batchNo" label="批次">
         </el-table-column>
 
       </el-table>
@@ -156,6 +160,9 @@ export default {
     }
   },
   methods: {
+    downloadTemplatte(){
+      window.open("http://39.105.132.61:88/fileResource/template/kptemplate.xls");
+    },
     goBackData(){
        this.$prompt('请输入批次号', '提示', {
           confirmButtonText: '确定',
