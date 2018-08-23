@@ -320,9 +320,29 @@ const queryAllEnableStandardSubject = ({ commit, state }, params) => new Promise
     })
 })
 
-
+const queryStdSubjectRank = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryStdSubjectRank(params).then(response => {
+        console.log(["queryStdSubjectRank", response])
+        resolve(response)
+    })
+})
+const truncateStdSubjectRank = ({ commit, state }, params) => new Promise(resolve => {
+    api.truncateStdSubjectRank(params).then(response => {
+        console.log(["truncateStdSubjectRank", response])
+        resolve(response)
+    })
+})
+const produceStdSubjectRank = ({ commit, state }, params) => new Promise(resolve => {
+    api.produceStdSubjectRank(params).then(response => {
+        console.log(["produceStdSubjectRank", response])
+        resolve(response)
+    })
+})
 
 export default {
+    queryStdSubjectRank,
+    truncateStdSubjectRank,
+    produceStdSubjectRank,
     queryAllEnableStandardSubject,
     truncateAppraiseBehaviorRegRecord,
     startImportRecord,

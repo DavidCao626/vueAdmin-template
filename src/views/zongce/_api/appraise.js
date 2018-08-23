@@ -337,7 +337,29 @@ const queryAllEnableStandardSubject = data =>
         data: data
     })
 
+const produceStdSubjectRank = data =>
+    request({
+        url: "/appraise/produceStdSubjectRank.do",
+        method: "post",
+        data: data
+    })
+const truncateStdSubjectRank = data =>
+    request({
+        url: "/appraise/truncateStdSubjectRank.do",
+        method: "post",
+        data: data
+    })
+const queryStdSubjectRank = data =>
+    request({
+        url: "/appraise/queryStdSubjectRank.do",
+        method: "post",
+        data: data
+    })
+
 export default {
+    queryStdSubjectRank,
+    truncateStdSubjectRank,
+    produceStdSubjectRank,
     queryAllEnableStandardSubject,
     truncateAppraiseBehaviorRegRecord,
     startImportRecord,

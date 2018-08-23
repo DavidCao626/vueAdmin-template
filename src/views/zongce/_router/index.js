@@ -101,6 +101,12 @@ export const zongceRouter = {
       name: "importBehaviors",
       component: () => import("../importBehaviors.vue"),
       meta: { title: "导入科目行为", icon: "example", hidden: true }
-    }
+    },
+    {
+      path: "standardRank",
+      name: "standardRank",
+      component: () => import("../standardRank.vue"),
+      meta: { title: "生成标准科目排名", icon: "example", hidden: true }
+    },
   ]
 };
