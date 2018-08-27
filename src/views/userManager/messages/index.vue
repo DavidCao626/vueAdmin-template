@@ -79,16 +79,7 @@ import {
 } from "~/api/notice";
 
 var noticeData = [
-  {
-    title: "",
-    content: "",
-    sendTime: "",
-    source: "",
-    userDutyCode: "",
-    userId: "",
-    status: "",
-    id: 0
-  }
+ 
 ];
 
 export default {
@@ -133,19 +124,15 @@ export default {
       if (notice.status == "N") {
         this.noReadNumber--;
         this.ReadNumber++;
-        this.$message({
-          message: "标为已读状态",
-          type: "success"
-        });
+        // this.$message({
+        //   message: "标为已读状态",
+        //   type: "success"
+        // });
         notice.status = "Y";
         this.changeNoticeStatus(itemID, "Y");
       } else {
         this.noReadNumber++;
         this.ReadNumber--;
-        this.$message({
-          message: "已取消已读状态",
-          type: "info"
-        });
         notice.status = "N";
         this.changeNoticeStatus(itemID, "N");
       }
