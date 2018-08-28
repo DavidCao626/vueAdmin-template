@@ -2,13 +2,13 @@
   <div class="form-container">
     <div class="title">
 
-      <img src="http://xgc.imu.edu.cn/images/logo.png" height="70px">
+      <img src="../../assets/img/logo.png" height="70px">
       <!--	<h3>学生工作管理系统</h3>-->
     </div>
     <el-card class="box-card  login-form ">
       <div slot="header" class="clearfix">
         <span>{{$t('login.title')}}</span>
-          <div style="float: right;" type="text"> <lang-select class="lang"></lang-select></div>
+          <!-- <div style="float: right;" type="text"> <lang-select class="lang"></lang-select></div> -->
       </div>
 
       <br />
@@ -27,9 +27,9 @@
           <el-button   type="success" size="medium" @click="submitForm('ruleLoginForm')" v-waves>{{$t('login.logIn')}}</el-button>
           <!-- <el-button type="text">忘记密码?</el-button> -->
           &nbsp;&nbsp;
-        	<router-link to="/register">
+        	<!-- <router-link to="/register">
 					<el-button style="" type="text"> {{$t('login.register')}}</el-button>
-				</router-link>
+				</router-link> -->
         </el-form-item>
       </el-form>
     </el-card>
@@ -106,7 +106,7 @@ html {
   width: 100%;
   height: 100%;
 
-  background-image: url("http://news.imu.edu.cn/images/17/08/25/1aw2kev8i5/10.jpg");
+  background-image: url("../../assets/img/10.jpg");
 
   background-size: cover;
   background-position: center;

@@ -10,12 +10,14 @@ export const projectRouter = {
       name: "我的项目",
       component: () => import("../myProject"),
       meta: { hidden: false }
-    }, {
+    },
+    {
       path: "myScope",
       name: "与我相关",
       component: () => import("../myScope"),
       meta: { hidden: false }
-    }, {
+    },
+    {
       path: "childScope",
       name: "子环节",
       component: () => import("../childScope"),
@@ -27,8 +29,6 @@ export const projectRouter = {
       component: () => import("../appraiseChildScope"),
       meta: { hidden: false }
     },
-    
-  
     { path: "todos", name: "我的待办", component: () => import("../myTodos") },
     {
       path: "dones",
@@ -38,6 +38,30 @@ export const projectRouter = {
     {
       path: "add",
       name: "新建项目",
+      component: () => import("../base.vue"),
+      meta: { hidden: true }
+    },
+    {
+      path: "addgj",
+      name: "新建国家奖学金",
+      component: () => import("../base.vue"),
+      meta: { hidden: true }
+    },
+    {
+      path: "addlz",
+      name: "新建励志奖学金",
+      component: () => import("../base.vue"),
+      meta: { hidden: true }
+    },
+    {
+      path: "addpk",
+      name: "新建贫困建档",
+      component: () => import("../base.vue"),
+      meta: { hidden: true }
+    },
+    {
+      path: "addzxj",
+      name: "新建国家助学金",
       component: () => import("../base.vue"),
       meta: { hidden: true }
     },
@@ -218,141 +242,159 @@ export const projectRouter = {
       component: () => import("../publicityEdit"),
       meta: { hidden: true }
     },
-    {//奖学金
+    {
+      //奖学金
       path: "scholarshipApply",
       name: "scholarshipApply",
       title: "国家奖学金申请",
       component: () => import("../styles/NationalScholarshipApply.vue"),
       meta: { hidden: true }
     },
-    {//励志奖学金
+    {
+      //励志奖学金
       path: "MotivationScholarshipApply",
       name: "MotivationScholarshipApply",
       title: "励志奖学金申请",
       component: () => import("../styles/MotivationScholarshipApply.vue"),
       meta: { hidden: true }
     },
-
-    
-    {//奖学金
+    {
+      //奖学金
       path: "NationSchClassCheck",
       name: "NationSchClassCheck",
       title: "班级审批",
       component: () => import("../styles/NationSchoCheck/classTable.vue"),
       meta: { hidden: true, title: "班级审批" }
     },
-    {//奖学金
+    {
+      //奖学金
       path: "NationSchCollegeCheck",
       name: "NationSchCollegeCheck",
       title: "学院审批",
       component: () => import("../styles/NationSchoCheck/collegeTable.vue"),
       meta: { hidden: true, title: "学院审批" }
     },
-    {//奖学金
+    {
+      //奖学金
       path: "NationSchSchoolCheck",
       name: "NationSchSchoolCheck",
       title: "学校审批",
       component: () => import("../styles/NationSchoCheck/schoolTable.vue"),
       meta: { hidden: true, title: "学校审批" }
     },
-    {//奖学金学院评
+    {
+      //奖学金学院评
       path: "gsxypingyi",
       name: "gsxypingyi",
       title: "学院组评",
       component: () => import("../styles/gsxypingyi.vue"),
       meta: { hidden: true, title: "学院组评" }
     },
-    {//奖学金学校评
+    {
+      //奖学金学校评
       path: "gsxxpingyi",
       name: "gsxxpingyi",
       title: "学校组评",
       component: () => import("../styles/gsxxpingyi.vue"),
       meta: { hidden: true, title: "学校组评" }
     },
-    {//奖学金
+    {
+      //奖学金
       path: "gsShowClassData",
       name: "gsShowClassData",
       title: "班级环节数据",
       component: () => import("../styles/showNationSchoData/classTable.vue"),
       meta: { hidden: true, title: "班级环节数据" }
     },
-    {//奖学金
+    {
+      //奖学金
       path: "gsShowCollegeData",
       name: "gsShowCollegeData",
       title: "学院环节数据",
       component: () => import("../styles/showNationSchoData/collegeTable.vue"),
       meta: { hidden: true, title: "学院环节数据" }
     },
-    {//奖学金
+    {
+      //奖学金
       path: "gsShowSchoolData",
       name: "gsShowSchoolData",
       title: "学校环节数据",
       component: () => import("../styles/showNationSchoData/schoolTable.vue"),
       meta: { hidden: true, title: "学校环节数据" }
-    }, {//国家助学金
+    },
+    {
+      //国家助学金
       path: "NationGrantsApply",
       name: "NationGrantsApply",
       title: "学生申请表",
       component: () => import("../styles/NationGrantsApply.vue"),
-      meta: { hidden: true } 
+      meta: { hidden: true }
     },
-    {//国家助学金
+    {
+      //国家助学金
       path: "NationGrantsClassCheck",
       name: "NationGrantsClassCheck",
       title: "班级审批",
       component: () => import("../styles/NationGrantsCheck/classTable.vue"),
       meta: { hidden: true, title: "班级审批" }
     },
-    {//国家助学金
+    {
+      //国家助学金
       path: "NationGrantsCollegeCheck",
       name: "NationGrantsCollegeCheck",
       title: "学院审批",
       component: () => import("../styles/NationGrantsCheck/collegeTable.vue"),
       meta: { hidden: true, title: "班级审批" }
     },
-    {//国家助学金
+    {
+      //国家助学金
       path: "NationGrantsSchoolCheck",
       name: "NationGrantsSchoolCheck",
       title: "学校审批",
       component: () => import("../styles/NationGrantsCheck/SchoolTable.vue"),
       meta: { hidden: true, title: "班级审批" }
     },
-    {//国家助学金
+    {
+      //国家助学金
       path: "ngShowClassData",
       name: "ngShowClassData",
       title: "班级环节数据",
       component: () => import("../styles/showNationGrantsData/classTable.vue"),
       meta: { hidden: true, title: "班级环节数据" }
     },
-    {//国家助学金
+    {
+      //国家助学金
       path: "ngShowCollegeData",
       name: "ngShowCollegeData",
       title: "学院环节数据",
-      component: () => import("../styles/showNationGrantsData/collegeTable.vue"),
+      component: () =>
+        import("../styles/showNationGrantsData/collegeTable.vue"),
       meta: { hidden: true, title: "学院环节数据" }
     },
-    {//国家助学金
+    {
+      //国家助学金
       path: "ngShowSchoolData",
       name: "ngShowSchoolData",
       title: "学校环节数据",
       component: () => import("../styles/showNationGrantsData/schoolTable.vue"),
       meta: { hidden: true, title: "学校环节数据" }
     },
-    {//国家助学金
+    {
+      //国家助学金
       path: "ngxypingyi",
       name: "ngxypingyi",
       title: "学院组评",
       component: () => import("../styles/ngxypingyi.vue"),
       meta: { hidden: true, title: "学院组评" }
     },
-    {//国家助学金
+    {
+      //国家助学金
       path: "ngxxpingyi",
       name: "ngxxpingyi",
       title: "学校组评",
       component: () => import("../styles/ngxxpingyi.vue"),
       meta: { hidden: true, title: "学校组评" }
-    },
-    //-------------综合测评----------
+    }, //-------------综合测评----------
     {
       path: "createAppraiseProject",
       name: "createAppraiseProject",
@@ -374,6 +416,5 @@ export const projectRouter = {
       component: () => import("../appraiseResult/createProject.vue"),
       meta: { hidden: true, title: "综测结果项目" }
     }
-    
   ]
 };

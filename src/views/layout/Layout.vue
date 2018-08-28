@@ -1,5 +1,5 @@
 <template>
-  <div class="app-wrapper" :class="{hideSidebar:!sidebar.opened}">
+  <div class="app-wrapper" :class="{'hideSidebar':!sidebar.opened}">
     <sidebar class="sidebar-container"></sidebar>
     <div class="main-container">
       <navbar ></navbar>

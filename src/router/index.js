@@ -38,7 +38,8 @@ export const constantRouterMap = [
       {
         path: "dashboard",
         meta: { title: "首页" },
-        component: () => import("~/views/dashboard/index")
+        component: () => import("~/views/dashboard/index"),
+        meta: { title: "首页", icon: "tree", hidden: true }
       },
       {
         path: "home",
@@ -113,18 +114,6 @@ export const constantRouterMap = [
         path: "results",
         name: "展现问卷结果",
         component: () => import("~/views/question/components/results")
-      }
-    ]
-  },
-  {
-    path: "/form",
-    component: stuLayout,
-    children: [
-      {
-        path: "index",
-        name: "表单",
-        component: () => import("~/views/form/index"),
-        meta: { title: "Form", icon: "form" }
       }
     ]
   },

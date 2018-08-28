@@ -39,7 +39,9 @@
                         <ul class="menu">
                           <li v-for="i in menuRenZhi" :key="i">
                             <a href="#">
-                             <h3><small v-if="i.isCurrent">[当前身份]</small> <small v-if="i.isDefault">[默认]</small> {{ i.schoolName }}
+                              <h3>
+                                <small v-if="i.isCurrent">[当前身份]</small>
+                                <small v-if="i.isDefault">[默认]</small> {{ i.schoolName }}
                                 <span class="text-green fontello-record" @click="ooDefault(i)" v-if="!i.isDefault">
                                   设为默认
                                 </span>
@@ -86,12 +88,16 @@
                         <i class="el-icon-date"></i>&nbsp; 账号详情
                       </el-dropdown-item>
                     </router-link>
-
-                    <router-link class="inlineBlock" to="/">
+                    <router-link class="inlineBlock" to="/user/userduty">
+                      <el-dropdown-item>
+                        <i class="el-icon-setting"></i>&nbsp; 我的任职
+                      </el-dropdown-item>
+                    </router-link>
+                    <!-- <router-link class="inlineBlock" to="/">
                       <el-dropdown-item>
                         <i class="el-icon-setting"></i>&nbsp; 功能设置
                       </el-dropdown-item>
-                    </router-link>
+                    </router-link> -->
                     <!-- divided -->
                     <el-dropdown-item>
                       <span @click="logout" style="display:block;">
@@ -120,9 +126,24 @@ export default {
       dutyRoles: null,
       radio2: "",
       menuRenZhi: [
-        { schoolName: "内蒙古大学", isDefault: false,isCurrent:true, zhiwu: "班主任" },
-        { schoolName: "内蒙古大学", isDefault: false, isCurrent:false,zhiwu: "系主任" },
-        { schoolName: "内蒙古农业大学", isDefault: true,isCurrent:false, zhiwu: "班主任" }
+        {
+          schoolName: "内蒙古大学",
+          isDefault: false,
+          isCurrent: true,
+          zhiwu: "班主任"
+        },
+        {
+          schoolName: "内蒙古大学",
+          isDefault: false,
+          isCurrent: false,
+          zhiwu: "系主任"
+        },
+        {
+          schoolName: "内蒙古农业大学",
+          isDefault: true,
+          isCurrent: false,
+          zhiwu: "班主任"
+        }
       ]
     };
   },
@@ -157,8 +178,8 @@ export default {
     }
   },
   methods: {
-    ooDefault(i){
-      i.isDefault=true
+    ooDefault(i) {
+      i.isDefault = true;
       //1.ajax更新后台设为默认
       //2,ajax重新获取菜单数据接口 用来刷新默认状态
     },
