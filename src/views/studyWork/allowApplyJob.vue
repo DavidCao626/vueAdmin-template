@@ -66,7 +66,7 @@
             <el-form :model="applyFormData">
                 <el-form-item label="简历">
                     <el-select v-model="applyFormData.resumeId" placeholder="请选择">
-                        <el-option v-for="item in resumeList" :key="item.id" :value="item.id" :label="item.label"></el-option>
+                        <el-option v-for="item in resumeList" :key="item.id" :value="item.id" :label="item.name"></el-option>
                     </el-select>
                 </el-form-item>
             </el-form>
