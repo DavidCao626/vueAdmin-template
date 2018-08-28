@@ -34,7 +34,7 @@
         </div>
       </div>
       <br>
-      <el-table :data="tableData" style="width: 100%" @row-click="onRowClick">
+      <el-table  class="i-cursor" :data="tableData" style="width: 100%" @row-click="onRowClick">
         <!-- <el-table-column prop="item_name" label="待办名称" min-width="180">
         </el-table-column>
         <el-table-column prop="projectInfo.project_service_type_name" label="所属项目业务" min-width="120">

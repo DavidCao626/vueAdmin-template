@@ -19,49 +19,50 @@
           <slot name="extra">
             <div class="navbar-account">
 
-              <div class="avatar-wrapper">
+              <div class="avatar-wrapper i-cursor">
                 <el-dropdown trigger="hover" size="medium">
-                  <div style="display: inline-flex;flex-direction:column;align-items:center">
-                    <el-badge class="item" >
+                  <div style="display: inline-flex;flex-direction:column;align-items:center" class="i-cursor">
+                    <el-badge class="item">
                       <i class="el-icon-sort message" style="transform:rotate(90deg);"></i>
 
                     </el-badge>
                     <span style="font-size:12px;color:#909399">身份切换</span>
                   </div>
 
-                   <el-dropdown-menu slot="dropdown">
-                                <ul class="dropdown-menu-devin">
-                                    <li class="header">你目前有2处任职:</li>
-                                    <li>
-                                        <!-- inner menu: contains the actual data -->
-                                        <ul class="menu">
-                                            <li> 
-                                                <a href="#">
-                                                    <h3>内蒙古大学数学学院 <span class="text-green fontello-record">切换</span>
-                                                        </h3>
-                                                    <p>[教职工]系主任</p>
-                                                </a>
-                                            </li>
-                                            <li> 
-                                                <a href="#">
-                                                    <h3>内蒙古大学数学学院2017级3班<span class="text-yellow fontello-record">切换</span>
-                                                        </h3>
-                                                    <p>[教职工]班主任</p>
-                                                </a>
-                                            </li>
-                                           
-                                        </ul>
-                                    </li>
-                             
-                                </ul>
-                            </el-dropdown-menu>
+                  <el-dropdown-menu slot="dropdown">
+
+                    <ul class="dropdown-menu-devin">
+
+                      <li class="header">任职情况:</li>
+                      <li>
+                        <!-- inner menu: contains the actual data -->
+                        <ul class="menu">
+                          <li v-for="i in menuRenZhi" :key="i">
+                            <a href="#">
+                              <h3>
+                                <small v-if="i.isCurrent">[当前身份]</small>
+                                <small v-if="i.isDefault">[默认]</small> {{ i.schoolName }}
+                                <span class="text-green fontello-record" @click="ooDefault(i)" v-if="!i.isDefault">
+                                  设为默认
+                                </span>
+                              </h3>
+                              <p>{{ i.zhiwu }}</p>
+
+                            </a>
+                          </li>
+
+                        </ul>
+                      </li>
+
+                    </ul>
+                  </el-dropdown-menu>
                 </el-dropdown>
                 &nbsp;&nbsp; &nbsp;&nbsp;
 
                 <router-link class="inlineBlock" to="/user/messages">
                   <div style="display: inline-flex;flex-direction:column;align-items:center">
-                        <el-badge class="item" :value="messageCount">
-                            <i class="el-icon-message message"></i>
+                    <el-badge class="item" :value="messageCount">
+                      <i class="el-icon-message message"></i>
 
                     </el-badge>
                     <span style="font-size:12px;color:#909399">我的通知</span>
@@ -72,7 +73,7 @@
 
                   <div class="avatar-container">
 
-                    <img :src="avatar" class="user-avatar" /> 
+                    <img :src="avatar" class="user-avatar" />
                     <div class="name">
                       <span class="name__1">{{name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <!-- <span class="name__2">学号：No.01521</span> --><br/>
@@ -87,16 +88,16 @@
                         <i class="el-icon-date"></i>&nbsp; 账号详情
                       </el-dropdown-item>
                     </router-link>
-                    <router-link class="inlineBlock" to="/user/userDuty">
+                    <router-link class="inlineBlock" to="/user/userduty">
                       <el-dropdown-item>
-                        <i class="el-icon-setting"></i>&nbsp; 任职详情
+                        <i class="el-icon-setting"></i>&nbsp; 我的任职
                       </el-dropdown-item>
                     </router-link>
-                    <router-link class="inlineBlock" to="/">
+                    <!-- <router-link class="inlineBlock" to="/">
                       <el-dropdown-item>
                         <i class="el-icon-setting"></i>&nbsp; 功能设置
                       </el-dropdown-item>
-                    </router-link>
+                    </router-link> -->
                     <!-- divided -->
                     <el-dropdown-item>
                       <span @click="logout" style="display:block;">
@@ -122,7 +123,28 @@ export default {
   data() {
     return {
       messageCount: "",
-      dutyRoles: null
+      dutyRoles: null,
+      radio2: "",
+      menuRenZhi: [
+        {
+          schoolName: "内蒙古大学",
+          isDefault: false,
+          isCurrent: true,
+          zhiwu: "班主任"
+        },
+        {
+          schoolName: "内蒙古大学",
+          isDefault: false,
+          isCurrent: false,
+          zhiwu: "系主任"
+        },
+        {
+          schoolName: "内蒙古农业大学",
+          isDefault: true,
+          isCurrent: false,
+          zhiwu: "班主任"
+        }
+      ]
     };
   },
   components: {},
@@ -156,6 +178,11 @@ export default {
     }
   },
   methods: {
+    ooDefault(i) {
+      i.isDefault = true;
+      //1.ajax更新后台设为默认
+      //2,ajax重新获取菜单数据接口 用来刷新默认状态
+    },
     toggleSideBar() {
       this.$store.dispatch("ToggleSideBar");
     },
@@ -260,7 +287,7 @@ export default {
     }
     .message {
       padding: 6px;
-      margin-bottom:2px;
+      margin-bottom: 2px;
       font-size: 14px;
       color: var(--color-grey-light-1);
       border: 1px solid var(--color-grey-light-3);
@@ -272,31 +299,103 @@ export default {
   margin-top: -3px;
 }
 
-.dropdown-menu-devin{max-width:280px;overflow-x:auto;list-style:none;margin:0;padding:0
+.dropdown-menu-devin {
+  max-width: 280px;
+  overflow-x: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-.dropdown-menu-devin .header{border-top-left-radius:4px;border-top-right-radius:4px;border-bottom-right-radius:0;border-bottom-left-radius:0;padding:10px 15px;color:#444444;font-size:14px
+.dropdown-menu-devin .header {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: 10px 15px;
+  color: #444444;
+  font-size: 14px;
 }
-.dropdown-menu-devin li{list-style:none;margin:0;padding:0
+.dropdown-menu-devin li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-.dropdown-menu-devin .footer{padding:15px;text-align:right
+.dropdown-menu-devin .footer {
+  padding: 15px;
+  text-align: right;
 }
-.dropdown-menu-devin .footer a{background:#ccc;color:#fff;padding:5px 15px;border-radius:30px;margin:0;position:relative;top:3px
+.dropdown-menu-devin .footer a {
+  background: #ccc;
+  color: #fff;
+  padding: 5px 15px;
+  border-radius: 30px;
+  margin: 0;
+  position: relative;
+  top: 3px;
 }
-.menu{margin:0;padding:0
+.menu {
+  margin: 0;
+  padding: 0;
 }
-.menu li{padding:0 15px;position:relative;float:left;display:inline-block;width:100%
+.menu li {
+  padding: 0 15px;
+  position: relative;
+  float: left;
+  display: inline-block;
+  width: 100%;
 }
-.menu li svg{stroke:red;height:40px;width:30px;display:inline-block;position:relative;left:0;top:0;line-height:30px;text-align:left;margin:10px 10px 0 0;padding-bottom:0;padding:0;font-size:16px;float:left
+.menu li svg {
+  stroke: red;
+  height: 40px;
+  width: 30px;
+  display: inline-block;
+  position: relative;
+  left: 0;
+  top: 0;
+  line-height: 30px;
+  text-align: left;
+  margin: 10px 10px 0 0;
+  padding-bottom: 0;
+  padding: 0;
+  font-size: 16px;
+  float: left;
 }
-.menu li i{height:40px;width:30px;display:inline-block;position:relative;left:0;top:0;line-height:30px;text-align:left;margin:10px 10px 0 0;padding-bottom:0;padding:0;font-size:16px;float:left
+.menu li i {
+  height: 40px;
+  width: 30px;
+  display: inline-block;
+  position: relative;
+  left: 0;
+  top: 0;
+  line-height: 30px;
+  text-align: left;
+  margin: 10px 10px 0 0;
+  padding-bottom: 0;
+  padding: 0;
+  font-size: 16px;
+  float: left;
 }
-.menu li a{color:#8c92a3 !important
+.menu li a {
+  color: #8c92a3 !important;
 }
-.menu li a h3{font-size:14px;margin:0;padding:10px 0 0;font-weight:bold;color:#8c92a3
+.menu li a h3 {
+  font-size: 14px;
+  margin: 0;
+  padding: 10px 0 0;
+  font-weight: bold;
+  color: #8c92a3;
 }
-.menu li a h3 span{font-size:11px;float:right;font-weight:100;font-style:italic
+.menu li a h3 span {
+  font-size: 11px;
+  float: right;
+  font-weight: 100;
+  font-style: italic;
 }
-.menu li a p{margin:0;padding:5px 0 15px;color:#8c92a3;border-bottom:1px solid rgba(0,0,0,0.1)
+.menu li a p {
+  margin: 0;
+  padding: 5px 0 15px;
+  color: #8c92a3;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 </style>
 
