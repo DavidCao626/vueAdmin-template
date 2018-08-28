@@ -93,7 +93,16 @@ const queryIncludEnableStandardSubject = data =>
         method: 'post',
         data: data
     })
+
+const startStudyWorkProject = data =>
+    request({
+        url: "/studyWork/startProject.do",
+        method: 'post',
+        data: data
+    })
+
 export default {
+    startStudyWorkProject,
     insertOrUpdateProject,
     uploadAttrUrl,
     queryServiceTypeList,

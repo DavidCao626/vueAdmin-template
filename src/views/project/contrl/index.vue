@@ -160,7 +160,7 @@ export default {
     next(vm => {
       var scopeId = commons.getRouterParam(to, "scopeId");
       if (scopeId == null) {
-        console.log("没有传递scopeid,该页面不能访问");
+        console.log(["没有传递scopeid,该页面不能访问",to]);
       } else {
         vm.scopeId = scopeId;
         vm.queryScopeIntegeratedDateView({ scopeId: scopeId });

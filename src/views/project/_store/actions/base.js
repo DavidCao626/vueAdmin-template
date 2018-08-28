@@ -119,6 +119,15 @@ const queryIncludEnableStandardSubject = ({ commit, state }, data) =>
     })
   })
 
+const startStudyWorkProject = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.startStudyWorkProject(data).then(response => {
+      resolve(response)
+
+    })
+  })
+
+
 export default {
   setProjectServiceType,
   insertOrUpdateProject,
@@ -132,5 +141,6 @@ export default {
   queryCategoryList,
   getStudentApplyProject,
   queryIncludUnEnableStandardSubject,
-  queryIncludEnableStandardSubject
+  queryIncludEnableStandardSubject,
+  startStudyWorkProject
 }

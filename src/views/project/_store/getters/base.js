@@ -3,6 +3,11 @@ export const getProjectFormData = state => {
     return state.baseproject.projectFormData
 };
 
+export const getStudyWorkProjectFormData = state => {
+    return state.baseproject.studyWorkProjectFormData
+};
+
+
 export const getAppraiseResultProjectFormData = state => {
     return state.baseproject.appraiseResultProjectFormData
 };

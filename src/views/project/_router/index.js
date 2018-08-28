@@ -27,8 +27,8 @@ export const projectRouter = {
       component: () => import("../appraiseChildScope"),
       meta: { hidden: false }
     },
-    
-  
+
+
     { path: "todos", name: "我的待办", component: () => import("../myTodos") },
     {
       path: "dones",
@@ -233,7 +233,7 @@ export const projectRouter = {
       meta: { hidden: true }
     },
 
-    
+
     {//奖学金
       path: "NationSchClassCheck",
       name: "NationSchClassCheck",
@@ -294,7 +294,7 @@ export const projectRouter = {
       name: "NationGrantsApply",
       title: "学生申请表",
       component: () => import("../styles/NationGrantsApply.vue"),
-      meta: { hidden: true } 
+      meta: { hidden: true }
     },
     {//国家助学金
       path: "NationGrantsClassCheck",
@@ -358,7 +358,7 @@ export const projectRouter = {
       name: "createAppraiseProject",
       title: "创建综测项目",
       component: () => import("../appraise/createProject.vue"),
-      meta: { hidden: true, title: "学校组评" }
+      meta: { hidden: true, title: "创建综测项目" }
     },
     {
       path: "issuedAppraiseProject",
@@ -373,7 +373,21 @@ export const projectRouter = {
       title: "综测结果项目",
       component: () => import("../appraiseResult/createProject.vue"),
       meta: { hidden: true, title: "综测结果项目" }
+    },
+    //-----------勤工俭学---------
+    {
+      path: "createStudyWorkProject",
+      name: "createStudyWorkProject",
+      title: "创建勤工俭学项目",
+      component: () => import("../studyWork/createProject.vue"),
+      meta: { hidden: true, title: "创建勤工俭学项目" }
+    },
+    {
+      path: "studyWorkConfig",
+      name: "studyWorkConfig",
+      title: "勤工俭学配置",
+      component: () => import("../studyWorkConfig/index.vue"),
+      meta: { hidden: true }
     }
-    
   ]
 };
