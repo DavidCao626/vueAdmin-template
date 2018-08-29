@@ -37,12 +37,13 @@
                       <li>
                         <!-- inner menu: contains the actual data -->
                         <ul class="menu">
-                          <li v-for="i in menuRenZhi" :key="i">
-                            <a href="#">
+                          <li v-for="(i,index) in user.roles" :key="index">
+                            <a @click="myswitch(i)">
                               <h3>
                                 <small v-if="i.isCurrent">[当前身份]</small>
-                                <small v-if="i.isDefault">[默认]</small> {{ i.schoolName }}
-                                <span class="text-green fontello-record" @click="ooDefault(i)" v-if="!i.isDefault">
+                                <!-- <small v-if="i.isDefault">[默认]</small>  -->
+                                {{ i.schoolName }}
+                                <span class="text-green fontello-record" @click.stop="ooDefault(i)" v-if="i.isCurrent">
                                   设为默认
                                 </span>
                               </h3>
@@ -149,7 +150,7 @@ export default {
   },
   components: {},
   computed: {
-    ...mapGetters(["sidebar", "avatar", "name", "roles"])
+    ...mapGetters(["sidebar", "avatar", "name", "roles", "user"])
   },
   mounted: function() {
     var that = this;
@@ -161,25 +162,54 @@ export default {
     });
   },
   created: function() {
-    for (const key in this.roles) {
-      if (key.length > 0) {
-        this.roles[key].forEach(element => {
-          if (element.currently === true) {
-            this.dutyRoles = element;
-            console.log(this.dutyRoles);
-            return element;
-          } else {
-            return this.roles.MemberDutyList[0];
-          }
-        });
-      } else {
-        return this.roles.MemberDutyList[0];
+    this.user.roles.forEach(key => {
+      console.log(["key", key]);
+      if (key.currently === true) {
+        this.dutyRoles = key;
+        console.log(["dutyR", this.dutyRoles]);
+        return key;
       }
-    }
+    });
   },
   methods: {
+    roleSwitchches(item, rolesItem) {
+      if (item.currently === "true") {
+        return;
+      }
+      const userTempRoles = this.user.roles;
+      this.$store.dispatch("SwitchDuty", item);
+    },
+    setDefaultDuty(item) {
+      this.$store
+        .dispatch("SetDefaultDuty", item)
+        .then(response => {
+          this.$message.success("设置成功");
+        })
+        .catch(response => {
+          this.$message.error("设置失败");
+        });
+    },
+    GetDutyList() {
+      this.$store.dispatch("GetDutyList", {});
+    },
+
+    myswitch(item) {
+      if (item.currently == true) {
+        this.$message.info("您已切换到当前职务");
+        return;
+      }
+      this.$store.dispatch("SwitchDuty", item);
+    },
     ooDefault(i) {
       i.isDefault = true;
+      this.$store
+        .dispatch("SetDefaultDuty", i)
+        .then(response => {
+          this.$message.success("设置成功");
+        })
+        .catch(response => {
+          this.$message.error("设置失败");
+        });
       //1.ajax更新后台设为默认
       //2,ajax重新获取菜单数据接口 用来刷新默认状态
     },

@@ -97,15 +97,6 @@ export default {
         return
       }
       const userTempRoles = this.user.roles
-      /* console.log(userTempRoles)
-      for(e in userTempRoles) {
-        e.forEach(element => {
-          element.currently=false;
-        });
-      };
-      userTempRoles[rolesItem].item.currently=true;
-
-      console.log(rolesItem.tostring())*/
       this.$store.dispatch('SwitchDuty', item)
     },
     setDefaultDuty(item) {

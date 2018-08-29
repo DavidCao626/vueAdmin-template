@@ -100,17 +100,33 @@ const user = {
             const MemberDutyList = []
             const AppointDutyList = []
             const data = response
-
             const members = data.resBody.MEMBER
-
+            const appoints = data.resBody.APPOINT
             for (let i = 0; i < members.length; i++) {
               MemberDutyList.push(members[i])
             }
-            const appoints = data.resBody.APPOINT
             for (let i = 0; i < appoints.length; i++) {
               AppointDutyList.push(appoints[i])
             }
-            commit('SET_ROLES', { MemberDutyList, AppointDutyList })
+            var dutyList = [];
+            for (let i = 0; i < members.length; i++) {
+              var temp = members[i];
+              temp.schoolName = members[i].managerNodeName
+              temp.isDefault = false
+              temp.zhiwu = members[i].dutyName
+              temp.isCurrent = members[i].currently
+              dutyList.push(temp)
+            }
+            for (let i = 0; i < appoints.length; i++) {
+              var temp = appoints[i];
+              temp.schoolName = appoints[i].managerNodeName
+              temp.isDefault = false
+              temp.zhiwu = appoints[i].dutyName
+              temp.isCurrent = appoints[i].currently
+              dutyList.push(temp)
+            }
+
+            commit('SET_ROLES', dutyList)
             resolve(response)
           })
           .catch(error => {
