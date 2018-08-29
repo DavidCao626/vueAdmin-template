@@ -19,11 +19,10 @@
                         </el-row>
                     </el-form-item>
                     <el-form-item label="课程表">
-                        <el-row>
-                            <el-col :span="11">
-                                <el-input v-model="formData['timetable']" type="textarea" rows="10" placeholder="课程表(样式调整))"></el-input>
-                            </el-col>
-                        </el-row>
+                        <datatable :rows="rows" ref="dataTable" :data="formData['timetable']"></datatable>
+                        <span v-if="serviceType == 'A'">调整行数:
+                            <el-input-number size="small" v-model="rows" :min="1" label="调整行数"></el-input-number>
+                        </span>
                     </el-form-item>
                     <el-form-item label="其他内容">
                         <el-row>
@@ -55,9 +54,14 @@ import Element from "element-ui-x";
 import { mapGetters, mapActions } from "vuex";
 import store from "./_store/index.js";
 import moment from "moment";
+import datatable from "~/components/Editable";
 export default {
+  components: {
+    datatable
+  },
   data() {
     return {
+      rows: 8,
       serviceType: "A", //页面操作类型默认A增加U更新
       projectList: [],
       formData: {
@@ -85,6 +89,9 @@ export default {
       });
     },
     onSubmit() {
+      var s = this.$refs["dataTable"];
+      this.formData.timetable = s.$el.outerHTML;
+      console.log(["html",s])
       if (this.serviceType == "A") {
         //增加
         this.insertResume(this.formData).then(response => {
