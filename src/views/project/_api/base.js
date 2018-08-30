@@ -100,8 +100,16 @@ const startStudyWorkProject = data =>
         method: 'post',
         data: data
     })
+const queryProjectList = data =>
+    request({
+        url: "/project/queryProjectList.do",
+        method: 'post',
+        data: data
+    })
+
 
 export default {
+    queryProjectList,
     startStudyWorkProject,
     insertOrUpdateProject,
     uploadAttrUrl,

@@ -126,9 +126,18 @@ const startStudyWorkProject = ({ commit, state }, data) =>
 
     })
   })
+const queryProjectList = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryProjectList(data).then(response => {
+      resolve(response)
+
+    })
+  })
+
 
 
 export default {
+  queryProjectList,
   setProjectServiceType,
   insertOrUpdateProject,
   queryServiceTypeList,

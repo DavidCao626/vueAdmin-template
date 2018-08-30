@@ -2,11 +2,6 @@
   <page id="bodybox">
     <span slot="title">账户详情</span>
     <div slot="panel">
-      <el-row>
-        <el-col :span="4">
-          <avatar @cropSuccess="onSuccess() " url="/upImg.do"></avatar>
-        </el-col>
-        <el-col :span="8" :offset="1">
           <div v-loading="loading">
             <el-form ref="form1" label-width="80px" size="mini" :model="userInfoFormStore.formData.data" :rules="userInfoFormStore.formData.rules">
               <el-form-item label="登录名" prop="login_name">
@@ -29,8 +24,6 @@
               </el-form-item>
             </el-form>
           </div>
-        </el-col>
-      </el-row>
 
     </div>
 
@@ -131,7 +124,9 @@ export default {
     });
   },
   methods: {
-    onSuccess() {},
+    onSuccess(obj) {
+      console.log(["obj", obj]);
+    },
     test: function() {
       console.log(["this", this]);
     },
