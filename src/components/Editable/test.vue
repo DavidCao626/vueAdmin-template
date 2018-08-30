@@ -23,9 +23,10 @@ export default {
   methods: {
     save() {
         this.rows=this.rows+1
-      //var s = this.$refs["dataTable"];
-     // console.log(s.$el);
-     // debugger;
+    
+      var s = this.$refs["dataTable"];
+     console.log(s.$el);
+     debugger;
     }
   }
 };
