@@ -105,7 +105,7 @@ export default {
       getDictByDictNames: store.namespace + "/getDictByDictNames",
       getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
       queryUserResume: store.namespace + "/queryUserResume",
-      deleteResume: store.namespace + "/queryUserResume"
+      deleteResume: store.namespace + "/deleteResume"
     }),
     getData() {
       var requestData = {
