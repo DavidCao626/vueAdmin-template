@@ -1,6 +1,6 @@
 <template>
-  <nav class="sidebar" >
-   
+  <nav class="sidebar">
+
     <ul class="sidebar-nav" v-if="navMenu.length">
       <li class="sidebar-item">
         <router-link to="/dashboard" class="sidebar-item__link">
@@ -8,8 +8,8 @@
           <span>首页</span>
         </router-link>
       </li>
-      <template v-for="item in navMenu" >
-        <li  class="sidebar-item"  :key="item.Key">
+      <template v-for="item in navMenu">
+        <li class="sidebar-item" :key="item.Key">
 
           <span class="sidebar-item__title">
             <svg-icon class="sidebar-item__icon" icon-class="user" v-if="0" />
@@ -29,22 +29,21 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import SidebarChildren from './SidebarChildren'
+import { mapGetters } from "vuex";
+import SidebarChildren from "./SidebarChildren";
 export default {
-  name: 'Sidebar',
-  components: { 'sidebar-children': SidebarChildren },
+  name: "Sidebar",
+  components: { "sidebar-children": SidebarChildren },
   computed: {
-    ...mapGetters(['navMenu'])
+    ...mapGetters(["navMenu"])
   },
-  data(){
-return {
-  showMenu:true
-}
+  data() {
+    return {
+      showMenu: true
+    };
   },
-  mounted: function() {
-  }
-}
+  mounted: function() {}
+};
 </script>
 
 
@@ -70,14 +69,14 @@ return {
     line-height: 1.6;
     position: relative;
     font-size: 18px;
-    color: var(--color-grey-dark-1);
+    color: #222;
   }
   &-item::before {
     content: " ";
     position: absolute;
     bottom: 0;
-    left: 98px;
-    width: 43%;
+    /* left: 60px; */
+    width: 100%;
     border-top: 1px solid #e4e8eb;
   }
 
@@ -102,7 +101,8 @@ return {
     max-width: 1.2em;
     max-height: 1.2em;
     margin: 0.8rem;
-    margin-left: 64px;
+    margin-left: 26px;
+    margin-right: 14px;
   }
 }
 

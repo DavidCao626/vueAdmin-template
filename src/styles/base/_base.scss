@@ -6,7 +6,7 @@
   --color-grey-light-1: #8d8d8d;
   --color-grey-light-2: #9a9a9a;
   --color-grey-light-3: #e4e8eb;
-  --color-grey-light-4: #f6f8f9;
+  --color-grey-light-4: #ebeff2;
   --color-grey-light-5: #fbfbfb;
 
   --color-grey-dark-1: #222222; //导航
@@ -85,9 +85,9 @@ a:hover {
 
 .app-container {
   width: 93%;
-  max-width: 1500px;
+  /* max-width: 1500px; */
   min-width: 700px;
-   margin-left: auto;
+  margin-left: 50px;
   margin-right: auto;
 }
 .app-footer {
