@@ -3,7 +3,7 @@
         <page>
             <div slot="title">简历信息</div>
             <div slot="panel">
-                <el-form :model="formData" label-width="100px">
+                <el-form :model="formData" label-width="100px" :disabled="onlyShow">
                     <el-form-item label="简历名称">
                         <el-row>
                             <el-col :span="7">
@@ -34,7 +34,7 @@
                 </el-form>
             </div>
         </page>
-        <page>
+        <page v-if="!onlyShow">
             <div slot="panel">
                 <el-row>
                     <el-col :span="7" justify="center">
@@ -61,6 +61,7 @@ export default {
   },
   data() {
     return {
+        onlyShow:false,
       rows: 8,
       serviceType: "A", //页面操作类型默认A增加U更新
       projectList: [],
@@ -110,6 +111,9 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       if (to.query.id) {
+          if(to.query.onlyShow){
+              vm.onlyShow = true;
+          }
         vm.serviceType = "U";
         vm.formData.id = to.query.id;
         vm.getResume();

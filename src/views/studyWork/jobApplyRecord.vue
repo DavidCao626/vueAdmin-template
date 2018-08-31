@@ -49,6 +49,7 @@
                 <i class="el-icon-arrow-down"></i>
               </el-button>
               <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item @click.native="showResume(scope.row)">查看简历</el-dropdown-item>
                 <el-dropdown-item @click.native="employ(scope.row)">录用</el-dropdown-item>
                 <!-- <el-dropdown-item @click.native="reEmploy(scope.row)">解除录用</el-dropdown-item> -->
                 <el-dropdown-item @click.native="post(scope.row)">到岗确认</el-dropdown-item>
@@ -139,6 +140,15 @@ export default {
   },
   watch: {},
   methods: {
+    showResume(row){
+ this.$router.push({
+        path: "/studyWork/resumeDetail",
+        query: {
+          id: row.resumeId,
+          onlyShow:true
+        }
+      });
+    },
     employSubmit() {
       this.affirmEmploy(this.employData).then(response => {
         this.$message.success("成功");
