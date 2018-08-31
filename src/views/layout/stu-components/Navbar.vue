@@ -229,6 +229,7 @@ export default {
 <style lang="scss" scoped>
 .navbar {
   background-color: #0c9bea;
+  background-image: linear-gradient(#0c9bea, #409EFF 50%);
   height: 100%;
   &__inner {
     padding: 0 40px;
