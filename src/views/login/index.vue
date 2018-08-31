@@ -21,7 +21,7 @@
         </el-form-item>
 
         <el-form-item :label="$t('login.password')" prop="pass">
-          <el-input type="password" v-model="ruleLoginForm.pass" name="pwd" :placeholder="$t('login.passwordPor')"></el-input>
+          <el-input type="password" v-model="ruleLoginForm.pass" name="pwd" :placeholder="$t('login.passwordPor')" @keyup.enter.native="submitForm('ruleLoginForm')"></el-input>
 
         </el-form-item>
         <br />
@@ -136,8 +136,8 @@ html {
   }
   .login-form {
     position: absolute;
-    right: 15%;
-    top: 450px;
+    right: 15vw;
+    top: 50vh;
     -webkit-transform: translatey(-60%);
     /* transform: translatey(-60%); */
     width: 350px;
