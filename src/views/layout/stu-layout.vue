@@ -1,18 +1,18 @@
 <template>
   <div>
-    <div class="headerWrapper">
+    <div class="headerWrapper" style="box-shadow:  0px 5px 20px 0px rgba(17, 17, 17, 0.1);">
       <header class="header">
         <navbar></navbar>
         <div style="position: absolute;top: 18px;left:18px;z-index: 99999;">
-          <el-button @click="sidebar=!sidebar" type="info" round size="mini" class="menuButton">
+          <button @click="sidebar=!sidebar"  class="menuButton">
             <!-- <i class="el-icon-d-arrow-left" v-if="sidebar"></i>
               <i class="el-icon-d-arrow-right" v-else></i> -->
-            <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon" style="pointer-events: none; display: block; width: 26px; height: 26px;fill:rgba(255,255,255,0.8)">
+            <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon" style="pointer-events: none; display: block; width: 24px; height: 24px;fill:rgba(255,255,255,0.8)">
               <g class="style-scope yt-icon">
                 <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" class="style-scope yt-icon"></path>
               </g>
             </svg>
-          </el-button>
+          </button>
           </Sticky>
         </div>
       </header>
@@ -20,7 +20,7 @@
 
     <el-scrollbar class="page-component__scroll" ref="componentScrollBar">
       <div class="page-container page-component ">
-
+        
         <el-scrollbar class="page-component__nav" style="padding-top: 10px;background-color: #fff;" v-show="sidebar">
           <sidebar></sidebar>
         </el-scrollbar>
@@ -142,7 +142,7 @@ export default {
   left: 0;
   top: 0;
   z-index: 1500;
-  box-shadow:  0px 5px 20px 0px rgba (17, 17, 17, 0.14);
+  box-shadow:  0px 5px 20px 0px rgba(17, 17, 17, 0.14);
 }
 .container {
   min-width: 1300;
@@ -345,6 +345,7 @@ export default {
   cursor: pointer;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
+      border-radius: 50%;
 }
 .menuButton:hover{
    background-color: rgba(255, 255, 255, 0.15);

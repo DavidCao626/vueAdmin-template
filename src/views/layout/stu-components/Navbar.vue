@@ -6,7 +6,7 @@
           <slot name="side">
             <h1 class="navbar-logo">
               <a href="#/" title="学生工作管理系统">
-              <svg-icon  icon-class="logo2" style="height:60px;width: 470px;margin-left: 10px;" ></svg-icon>
+              <svg-icon  icon-class="logo2" style="height:60px;width: 470px;margin-left: 35px;" ></svg-icon>
               </a>
             </h1>
           </slot>
@@ -231,7 +231,7 @@ export default {
   background-color: #0c9bea;
   height: 100%;
   &__inner {
-    padding: 0 65px;
+    padding: 0 40px;
   }
   &-layout {
     height: 80px;

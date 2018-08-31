@@ -1,9 +1,9 @@
 <template>
-  <page id="bodybox">
+  <page id="bodybox" style="width: 400px;">
     <span slot="title">账户详情</span>
-    <div slot="panel">
+    <div slot="panel" >
           <div v-loading="loading">
-            <el-form ref="form1" label-width="80px" size="mini" :model="userInfoFormStore.formData.data" :rules="userInfoFormStore.formData.rules">
+            <el-form style="width: 90%;" ref="form1" label-width="80px" size="mini" :model="userInfoFormStore.formData.data" :rules="userInfoFormStore.formData.rules">
               <el-form-item label="登录名" prop="login_name">
                 <el-input size="mini" v-model="userInfoFormStore.formData.data.login_name" disabled></el-input>
               </el-form-item>
