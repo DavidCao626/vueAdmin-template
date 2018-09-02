@@ -1,57 +1,57 @@
 <template>
-    <div>
-        <page>
-            <div slot="title">学生申请</div>
-            <div slot="panel">
-                <el-form :model="formData" label-width="100px">
-                    <el-form-item label="行为标题">
-                        <el-row>
-                            <el-col :span="8">
-                                <el-input v-model="formData.applyReason"  placeholder="请输入"></el-input>
-                            </el-col>
-                        </el-row>
-                    </el-form-item>
-                    <el-form-item label="测评项目">
-                        <elx-select v-model="formData.projectId" placeholder="请选择" @change="projectChange">
-                            <el-option v-for="item in projectList" :key="item.id" :value="item.id" :label="item.name"></el-option>
-                        </elx-select>
-                    </el-form-item>
-                    <el-form-item label="分值科目">
-                        <elx-cascader @change="kemuchange" expand-trigger="hover" v-model="formData.fzkemuCode" placeholder="输入进行搜索" :options="fzkmList" filterable :props="orgProps"></elx-cascader>
-                    </el-form-item>
+  <div>
+    <page>
+      <div slot="title">学生申请</div>
+      <div slot="panel">
+        <el-form :model="formData" label-width="100px">
+          <el-form-item label="行为标题">
+            <el-row>
+              <el-col :span="8">
+                <el-input v-model="formData.applyReason" placeholder="请输入"></el-input>
+              </el-col>
+            </el-row>
+          </el-form-item>
+          <el-form-item label="测评项目">
+            <elx-select v-model="formData.projectId" placeholder="请选择" @change="projectChange">
+              <el-option v-for="item in projectList" :key="item.id" :value="item.id" :label="item.name"></el-option>
+            </elx-select>
+          </el-form-item>
+          <el-form-item label="分值科目">
+            <elx-cascader @change="kemuchange" expand-trigger="hover" v-model="formData.fzkemuCode" placeholder="输入进行搜索" :options="fzkmList" filterable :props="orgProps"></elx-cascader>
+          </el-form-item>
 
-                    <el-form-item label="科目项">
-                        <elx-select v-model="formData.applyItemId" placeholder="请选择" @change="itemChange">
-                            <el-option v-for="(item,index) in subjectList" :key="index" :value="item.item.id" :label="item.item.name"></el-option>
-                        </elx-select>
-                    </el-form-item>
-                    <el-form-item label="分值项">
-                        <elx-select v-model="formData.applyScoreId" placeholder="请选择" @change="fenzhiChange">
-                            <el-option v-for="item in scoreItemList" :key="item.id" :value="item.id" :label="item.name" :config="item"></el-option>
-                        </elx-select>
-                    </el-form-item>
-                    <el-form-item label="时间日期">
-                        <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="formData.eventDate"  placeholder="选择日期">
-                        </el-date-picker>
-                    </el-form-item>
-                    <el-form-item label="数量/次">
-                        <el-input-number v-model="formData.quantity" :min="1" label="数量"></el-input-number>
-                    </el-form-item>
-                </el-form>
-            </div>
-        </page>
-        <page>
-            <div slot="panel">
-                <el-row>
-                    <el-col :span="7" justify="center">
-                    </el-col>
-                    <el-col :span="17">
-                        <el-button type="primary" @click="onSubmit">提交</el-button>
-                    </el-col>
-                </el-row>
-            </div>
-        </page>
-    </div>
+          <el-form-item label="科目项">
+            <elx-select v-model="formData.applyItemId" placeholder="请选择" @change="itemChange">
+              <el-option v-for="(item,index) in subjectList" :key="index" :value="item.item.id" :label="item.item.name"></el-option>
+            </elx-select>
+          </el-form-item>
+          <el-form-item label="分值项">
+            <elx-select v-model="formData.applyScoreId" placeholder="请选择" @change="fenzhiChange">
+              <el-option v-for="item in scoreItemList" :key="item.id" :value="item.id" :label="item.name" :config="item"></el-option>
+            </elx-select>
+          </el-form-item>
+          <el-form-item label="时间日期">
+            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="formData.eventDate" placeholder="选择日期">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="数量/次">
+            <el-input-number v-model="formData.quantity" :min="1" label="数量"></el-input-number>
+          </el-form-item>
+        </el-form>
+      </div>
+    </page>
+    <page>
+      <div slot="panel">
+        <el-row>
+          <el-col :span="7" justify="center">
+          </el-col>
+          <el-col :span="17">
+            <el-button type="primary" @click="onSubmit">提交</el-button>
+          </el-col>
+        </el-row>
+      </div>
+    </page>
+  </div>
 </template>
 
 <script>
@@ -151,11 +151,20 @@ export default {
       this.getSubjectByProjectIdAndSession({ projectId: val }).then(
         response => {
           console.log(["标准科目分值科目", response]);
+          this.delNoInclude(response.resBody.template.children);
           this.delFreeChildren(response.resBody.template.children);
           this.fzkmList = response.resBody.template.children;
         }
       );
     },
+    delNoInclude(children) {
+      children.forEach(it => {
+        if (it.include == false) {
+          children.splice(children.indexOf(it), 1);
+        }
+      });
+    },
+
     delFreeChildren(children) {
       children.forEach(it => {
         if (it.children.length == 0) {
@@ -187,7 +196,7 @@ export default {
       };
       this.studentApply(requestData).then(response => {
         this.$message.success("提交成功!");
-        this.$router.go(-1)
+        this.$router.go(-1);
       });
     }
   },

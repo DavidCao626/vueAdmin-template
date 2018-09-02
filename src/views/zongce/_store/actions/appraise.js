@@ -339,7 +339,121 @@ const produceStdSubjectRank = ({ commit, state }, params) => new Promise(resolve
     })
 })
 
+const queryCategoryListPage = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryCategoryListPage(params).then(response => {
+        console.log(["queryCategoryListPage", response])
+        resolve(response)
+    })
+})
+const queryAppraiseProject = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryAppraiseProject(params).then(response => {
+        console.log(["queryAppraiseProject", response])
+        resolve(response)
+    })
+})
+const queryProspectusStrict = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryProspectusStrict(params).then(response => {
+        console.log(["queryProspectusStrict", response])
+        resolve(response)
+    })
+})
+const querySchemes = ({ commit, state }, params) => new Promise(resolve => {
+    api.querySchemes(params).then(response => {
+        console.log(["querySchemes", response])
+        resolve(response)
+    })
+})
+const getProjectStateList = ({ commit, state }, params) => new Promise(resolve => {
+    api.getProjectStateList(params).then(response => {
+        console.log(["getProjectStateList", response])
+        resolve(response)
+    })
+})
+
+const getProsepectusOrgList = ({ commit, state }, params) => new Promise(resolve => {
+    api.getProsepectusOrgList(params).then(response => {
+        console.log(["getProsepectusOrgList", response])
+        resolve(response)
+    })
+})
+
+const queryCategoryList = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryCategoryList(params).then(response => {
+        console.log(["queryCategoryList", response])
+        resolve(response)
+    })
+})
+
+const queryIncludUnEnableStandardSubject = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryIncludUnEnableStandardSubject(params).then(response => {
+        console.log(["queryIncludUnEnableStandardSubject", response])
+        resolve(response)
+    })
+})
+const queryIncludEnableStandardSubject = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryIncludEnableStandardSubject(params).then(response => {
+        console.log(["queryIncludEnableStandardSubject", response])
+        resolve(response)
+    })
+})
+
+
+const queryStuBehabiorRegistered = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryStuBehabiorRegistered(params).then(response => {
+        console.log(["queryStuBehabiorRegistered", response])
+        resolve(response)
+    })
+})
+
+const queryStuBehaviorArtificial = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryStuBehaviorArtificial(params).then(response => {
+        console.log(["queryStuBehaviorArtificial", response])
+        resolve(response)
+    })
+})
+
+const queryStuHcRecord = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryStuHcRecord(params).then(response => {
+        console.log(["queryStuHcRecord", response])
+        resolve(response)
+    })
+})
+
+const queryStuRank = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryStuRank(params).then(response => {
+        console.log(["queryStuRank", response])
+        resolve(response)
+    })
+})
+
+const queryAllAppraiseProject = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryAllAppraiseProject(params).then(response => {
+        console.log(["queryAllAppraiseProject", response])
+        resolve(response)
+    })
+})
+
+
+
 export default {
+    queryStuBehabiorRegistered,
+    queryStuBehaviorArtificial,
+    queryStuHcRecord,
+    queryStuRank,
+    queryAllAppraiseProject,
+    
+
+
+    queryIncludUnEnableStandardSubject,
+    queryIncludEnableStandardSubject,
+    queryCategoryListPage,
+    queryAppraiseProject,
+    queryProspectusStrict,
+    querySchemes,
+    getProjectStateList,
+    getProsepectusOrgList,
+    queryCategoryList,
+
     queryStdSubjectRank,
     truncateStdSubjectRank,
     produceStdSubjectRank,

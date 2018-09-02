@@ -45,7 +45,7 @@
       <div slot="panel" style="text-align: right">
         <el-button size="mini" @click="createRecord" type="primary">生成</el-button>
         <el-button size="mini" @click="backRecord" type="danger">回退</el-button>
-        <el-button size="mini" @click="complateItem" type="primary">完成</el-button>
+        <el-button size="mini" @click="complateItem" v-show="complateBtnIsShow" type="primary">完成</el-button>
       </div>
     </page>
   </div>
@@ -90,6 +90,7 @@ export default {
       multipleSelection: [], //选中的值
       isMultipleSelection: false, //是否选中
       data: [],
+      complateBtnIsShow:true,
       nationObj: {}
     };
   },
@@ -207,13 +208,20 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (!to.query.itemId || !to.query.scopeId || !to.query.projectId) {
+      if (  !to.query.projectId) {
         vm.$message.error("参数不正确");
       } else {
+
+        if(!to.query.itemId || !to.query.scopeId){
+          vm.complateBtnIsShow = false
+        }else{
+   vm.itemId = to.query.itemId;
+        vm.scopeId = to.query.scopeId;
+        }
+
         vm.getOrgList();
         vm.projectId = to.query.projectId;
-        vm.itemId = to.query.itemId;
-        vm.scopeId = to.query.scopeId;
+     
         vm.getDict();
         vm.getSubjectTree();
       }

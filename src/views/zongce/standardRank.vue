@@ -46,7 +46,7 @@
       <div slot="panel" style="text-align: right">
         <el-button size="mini" @click="createRecord" type="primary">生成</el-button>
         <el-button size="mini" @click="backRecord" type="danger">回退</el-button>
-        <el-button size="mini" @click="complateItem" type="primary">完成</el-button>
+        <el-button size="mini" @click="complateItem" v-show="complateBtnIsShow" type="primary">完成</el-button>
       </div>
     </page>
   </div>
@@ -62,6 +62,7 @@ Vue.use(Element);
 export default {
   data() {
     return {
+      complateBtnIsShow:true,
       pageInfo: {
         currentPage: 1,
         pageSize: 10,
@@ -181,6 +182,7 @@ export default {
         requestData.targetOrgCode = targetOrgCode[targetOrgCode.length - 1];
       }else{
         this.$message.error("请选择班级后查看")
+        return;
       }
 
       this.queryStdSubjectRank(requestData).then(response => {
@@ -207,13 +209,17 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (!to.query.itemId || !to.query.scopeId || !to.query.projectId) {
+      if ( !to.query.projectId) {
         vm.$message.error("参数不正确");
       } else {
+            if (!to.query.itemId || to.query.scopeId) {
+          vm.complateBtnIsShow = false
+        } else {
+          vm.itemId = to.query.itemId;
+          vm.scopeId = to.query.scopeId;
+        }
         vm.getOrgList();
         vm.projectId = to.query.projectId;
-        vm.itemId = to.query.itemId;
-        vm.scopeId = to.query.scopeId;
         vm.getDict();
       }
     });
