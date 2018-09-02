@@ -124,8 +124,8 @@ export default {
           value: i.toString()
         };
         this.yearTypeList.push(temp);
-        this.yearTypeList.unshift({ label: "不限", value: "0" });
       }
+        this.yearTypeList.unshift({ label: "不限", value: "0" });
     },
     createProject() {
       this.$router.push({
