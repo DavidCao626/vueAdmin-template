@@ -33,11 +33,14 @@ var store = {
       'disabled': false
     },
     /* 这里为el-select的默认事件块 ,可以参考Element的数据格式定义*/
-    inner_event: {},
+    inner_event: {
+      
+
+    },
     /* 定义选项数据加载时进行的转换*/
     props: {
-      'label': 'val',
-      'title': 'alias'
+      'label': 'value',
+      'title': 'title'
     },
     groups: []
   },

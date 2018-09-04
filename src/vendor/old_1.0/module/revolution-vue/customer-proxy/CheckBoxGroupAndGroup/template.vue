@@ -3,11 +3,11 @@
 		<div class="grace-item-content">
 			<el-checkbox-group v-model="fields._value" v-bind="innerProp" v-on="innerEvent">
 				<template v-for="group in fields.groups">
-					<div :key="group.label" style="margin-top:2px">
-						<el-checkbox-button :disabled="true" :name="'group.label'" :label="'-1'"  :size="fields.size" :border="fields.isBorder" v-if="fields.isButton">{{group.name}}</el-checkbox-button>
-						<template v-for="item in group.options">
-							<el-checkbox-button :disabled="item.disabled" :name="getLabel(item)" :label="getLabel(item)" :key="getLabel(item)" :size="fields.size" :border="fields.isBorder" v-if="fields.isButton">{{getTitle(item)}}</el-checkbox-button>
-							<el-checkbox :disabled="item.disabled" :name="getLabel(item)" :label="getLabel(item)" :key="getLabel(item)" :size="fields.size" :border="fields.isBorder" v-else>{{getTitle(item)}}</el-checkbox>
+					<div :key="group.value" style="margin-top:2px">
+						<el-checkbox-button :disabled="true" :name="'group.value'" :label="'-1'"  :size="fields.size" :border="fields.isBorder" v-if="fields.isButton">{{group.type.title}}</el-checkbox-button>
+						<template v-for="item in group.privileges">
+							<el-checkbox-button :disabled="item.disabled" :name="'item.name'" :label="item.value" :key="item.value" :size="fields.size" :border="fields.isBorder" v-if="fields.isButton">{{item.title}}</el-checkbox-button>
+							<el-checkbox :disabled="item.disabled" :name="getLabel(item)" :label="getLabel(item)" :key="getLabel(item)" :size="fields.size" :border="fields.isBorder" v-else>{{getTitle(item)}}</el-checkbox> -->
 						</template>
 					</div>
 				</template>

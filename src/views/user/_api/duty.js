@@ -77,6 +77,13 @@ const getGrantRole = data =>
         data: data
     })
 
+const getDutyRoles = data =>
+  request({
+    url: "/systemManagerApi/getDutyRoles.do",
+    method: "post",
+    data: data
+  });
+
 const queryDutyListByMNCode = data =>
     request({
         url: "/duty/queryDutyListByMNCode.do",
@@ -112,18 +119,19 @@ const insertDuty = data =>
         data: data
     })
 export default {
-    getCurrentOrgListAndOwner,
-    deleteUserResigDutyById,
-    getDictByDictNames,
-    queryResignationByTypeAndSysCode,
-    updateUserResignation,
-    queryResigDutyBySessionAndType,
-    insertUserResignation,
-    getCurrentMNCodeOrgListAndOwner,
-    queryDutyListByMNCode,
-    querySocializeClassify,
-    getDutyByDutyId,
-    getGrantRole,
-    insertDuty,
-    updateDuty
+  getCurrentOrgListAndOwner,
+  deleteUserResigDutyById,
+  getDictByDictNames,
+  queryResignationByTypeAndSysCode,
+  updateUserResignation,
+  queryResigDutyBySessionAndType,
+  insertUserResignation,
+  getCurrentMNCodeOrgListAndOwner,
+  queryDutyListByMNCode,
+  querySocializeClassify,
+  getDutyByDutyId,
+  getGrantRole,
+  getDutyRoles,
+  insertDuty,
+  updateDuty
 };

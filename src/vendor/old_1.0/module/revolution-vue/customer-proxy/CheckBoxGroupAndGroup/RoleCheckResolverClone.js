@@ -53,10 +53,4 @@ resolver = resolver._assign_resolver(modelResolver)
 resolver = resolver._assign_resolver(ruleResolver)
 resolver = resolver._assign_resolver(dataStoreResolver)
 var component = factory.buildComponent(inner, store, resolver)
-component.getResolver().callStore(function(callback) {
-  GUtils.post(reqPath.queryUserGrantRole, {}, function(data) {
-    console.log(data)
-    callback.call(component.getResolver(), data.resBody)
-  })
-})
 export default component

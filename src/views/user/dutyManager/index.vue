@@ -36,7 +36,6 @@
               </el-button>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item @click.native="edit(scope.row)">编辑</el-dropdown-item>
-
               </el-dropdown-menu>
             </el-dropdown>
           </template>
@@ -64,12 +63,12 @@
         </el-form-item>
 
         <el-form-item label="对应角色">
-          <el-checkbox-group v-model="editData.resultRole">
+           <el-checkbox-group v-model="editData.resultRole">
             <template v-for="group in groupData">
-              <div :key="group.label" style="margin-top:2px">
-                <el-checkbox-button :disabled="true" :name="'group.label'" :label="'-1'" size="mini" border v-if="true">{{group.name}}</el-checkbox-button>
-                <template v-for="item in group.options">
-                  <el-checkbox-button :disabled="item.disabled" :name="item.val" :label="item.val" :key="item.val" size="mini" border v-if="true">{{item.alias}}</el-checkbox-button>
+              <div :key="group.type.value" style="margin-top:2px">
+                <el-checkbox-button :disabled="true" :name="'group.type.name'" :label="'-1'" size="mini" border v-if="true">{{group.type.title}}</el-checkbox-button>
+                <template v-for="item in group.privileges">
+                  <el-checkbox-button :disabled="item.disabled" :name="item.value" :label="item.value" :key="item.value" size="mini" border v-if="true">{{item.title}}</el-checkbox-button>
                 </template>
               </div>
             </template>
@@ -114,10 +113,10 @@
         <el-form-item label="对应角色">
           <el-checkbox-group v-model="addData.resultRole">
             <template v-for="group in groupData">
-              <div :key="group.label" style="margin-top:2px">
-                <el-checkbox-button :disabled="true" :name="'group.label'" :label="'-1'" size="mini" border v-if="true">{{group.name}}</el-checkbox-button>
-                <template v-for="item in group.options">
-                  <el-checkbox-button :disabled="item.disabled" :name="item.val" :label="item.val" :key="item.val" size="mini" border v-if="true">{{item.alias}}</el-checkbox-button>
+              <div :key="group.type.value" style="margin-top:2px">
+                <el-checkbox-button :disabled="true" :name="'group.type.name'" :label="'-1'" size="mini" border v-if="true">{{group.type.title}}</el-checkbox-button>
+                <template v-for="item in group.privileges">
+                  <el-checkbox-button :disabled="item.disabled" :name="item.value" :label="item.value" :key="item.value" size="mini" border v-if="true">{{item.title}}</el-checkbox-button>
                 </template>
               </div>
             </template>
