@@ -355,8 +355,121 @@ const queryStdSubjectRank = data =>
         method: "post",
         data: data
     })
+const queryCategoryListPage = data =>
+    request({
+        url: "/appraise/queryCategoryListPage.do",
+        method: "post",
+        data: data
+    })
+    
+const queryAppraiseProject = data =>
+    request({
+        url: "/appraise/queryAppraiseProject.do",
+        method: "post",
+        data: data
+    })
+
+
+const queryProspectusStrict = data =>
+    request({
+        url: "/appraise/queryProspectusStrict.do",
+        method: "post",
+        data: data
+    })
+
+
+const querySchemes = data =>
+    request({
+        url: "/appraise/querySchemes.do",
+        method: "post",
+        data: data
+    })
+
+
+const getProjectStateList = data =>
+    request({
+        url: "/appraise/getProjectStateList.do",
+        method: "post",
+        data: data
+    })
+
+const getProsepectusOrgList = data =>
+    request({
+        url: "/appraise/getProsepectusOrgList.do",
+        method: "post",
+        data: data
+    })
+
+const queryCategoryList = data =>
+    request({
+        url: "/appraise/queryCategoryList.do",
+        method: "post",
+        data: data
+    })
+const queryIncludEnableStandardSubject = data =>
+    request({
+        url: "/appraise/queryIncludEnableStandardSubject.do",
+        method: "post",
+        data: data
+    })
+
+const queryIncludUnEnableStandardSubject = data =>
+    request({
+        url: "/appraise/queryIncludUnEnableStandardSubject.do",
+        method: "post",
+        data: data
+    })
+
+const queryStuBehabiorRegistered = data =>
+    request({
+        url: "/appraise/queryStuBehabiorRegistered.do",
+        method: "post",
+        data: data
+    })
+const queryStuBehaviorArtificial = data =>
+    request({
+        url: "/appraise/queryStuBehaviorArtificial.do",
+        method: "post",
+        data: data
+    })
+const queryStuHcRecord = data =>
+    request({
+        url: "/appraise/queryStuHcRecord.do",
+        method: "post",
+        data: data
+    })
+const queryStuRank = data =>
+    request({
+        url: "/appraise/queryStuRank.do",
+        method: "post",
+        data: data
+    })
+const queryAllAppraiseProject = data =>
+    request({
+        url: "/appraise/queryAllAppraiseProject.do",
+        method: "post",
+        data: data
+    })
+
+
 
 export default {
+    queryStuBehabiorRegistered,
+    queryStuBehaviorArtificial,
+    queryStuHcRecord,
+    queryStuRank,
+    queryAllAppraiseProject,
+
+    queryIncludUnEnableStandardSubject,
+    queryIncludEnableStandardSubject,
+    queryCategoryListPage,
+    queryAppraiseProject,
+    queryProspectusStrict,
+    querySchemes,
+    getProjectStateList,
+    getProsepectusOrgList,
+    queryCategoryList,
+
     queryStdSubjectRank,
     truncateStdSubjectRank,
     produceStdSubjectRank,

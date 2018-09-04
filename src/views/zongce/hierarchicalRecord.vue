@@ -54,7 +54,7 @@
       <div slot="panel" style="text-align: right">
         <el-button size="mini" @click="createRecord" type="primary">生成</el-button>
         <el-button size="mini" @click="backRecord" type="danger">回退</el-button>
-        <el-button size="mini" @click="complateItem" type="primary">完成</el-button>
+        <el-button size="mini" @click="complateItem" v-if="complateBtnIsShow" type="primary">完成</el-button>
       </div>
     </page>
   </div>
@@ -91,6 +91,7 @@ export default {
         value: "code",
         children: "subs"
       },
+      complateBtnIsShow:true,
       hcSubjectList: [], //分值科目list
       stdSubjectCode: [], //路由传进来的 标准可目
       stdSubjectList: [],
@@ -241,18 +242,17 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (
-        !to.query.itemId ||
-        !to.query.scopeId ||
-        !to.query.projectId ||
-        !to.query.stdSubjectCode
-      ) {
+      if (!to.query.projectId || !to.query.stdSubjectCode) {
         vm.$message.error("参数不正确");
       } else {
+        if (!to.query.itemId || to.query.scopeId) {
+          vm.complateBtnIsShow = false
+        } else {
+          vm.itemId = to.query.itemId;
+          vm.scopeId = to.query.scopeId;
+        }
         vm.getOrgList();
         vm.projectId = to.query.projectId;
-        vm.itemId = to.query.itemId;
-        vm.scopeId = to.query.scopeId;
         vm.stdSubjectCode = to.query.stdSubjectCode;
         vm.getDict();
         vm.querystdSubjectList();
