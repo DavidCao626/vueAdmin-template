@@ -68,7 +68,7 @@
               <div :key="group.type.value" style="margin-top:2px">
                 <el-checkbox-button :disabled="true" :name="'group.type.name'" :label="'-1'" size="mini" border v-if="true">{{group.type.title}}</el-checkbox-button>
                 <template v-for="item in group.privileges">
-                  <el-checkbox-button :disabled="item.disabled" :name="item.value" :label="item.value" :key="item.value" size="mini" border v-if="true">{{item.title}}</el-checkbox-button>
+                  <el-checkbox-button :disabled="item.disabled" :name="item.name" :label="item.value" :key="item.value" size="mini" border v-if="true">{{item.title}}</el-checkbox-button>
                 </template>
               </div>
             </template>
@@ -116,7 +116,7 @@
               <div :key="group.type.value" style="margin-top:2px">
                 <el-checkbox-button :disabled="true" :name="'group.type.name'" :label="'-1'" size="mini" border v-if="true">{{group.type.title}}</el-checkbox-button>
                 <template v-for="item in group.privileges">
-                  <el-checkbox-button :disabled="item.disabled" :name="item.value" :label="item.value" :key="item.value" size="mini" border v-if="true">{{item.title}}</el-checkbox-button>
+                  <el-checkbox-button :disabled="item.disabled" :name="item.name" :label="item.value" :key="item.value" size="mini" border v-if="true">{{item.title}}</el-checkbox-button>
                 </template>
               </div>
             </template>
