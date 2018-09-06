@@ -6,37 +6,44 @@ import {
   getDutyList as getRuleList,
   switchDuty,
   setDefaultDuty
-} from '~/api/login'
-import { getToken, setToken, removeToken } from '~/utils/auth'
-import { uregister } from '~/api/register'
+} from "~/api/login";
+import { getToken, setToken, removeToken } from "~/utils/auth";
+import { uregister } from "~/api/register";
 
 const user = {
   state: {
     token: getToken(),
-    name: '',
-    avatar: '',
+    name: "",
+    avatar: "",
     roles: [],
     navMenu: []
   },
 
   mutations: {
     SET_TOKEN: (state, token) => {
-      state.token = token
+      state.token = token;
     },
     SET_NAME: (state, name) => {
-      state.name = name
+      state.name = name;
     },
     SET_AVATAR: (state, avatar) => {
-      state.avatar = avatar
+      state.avatar = avatar;
     },
     SET_ROLES: (state, roles) => {
-      state.roles = roles
+      state.roles = roles;
     },
     SET_NAVMENU: (state, navMenu) => {
-      state.navMenu = navMenu
+      navMenu.map((item, index) => {
+        if (index == 0) {
+          item.isShow = true;
+        } else {
+          item.isShow = false;
+        }
+      });
+      state.navMenu = navMenu;
     },
     SET_CURRENTLY: (state, currEntly) => {
-      state.roles = currEntly
+      state.roles = currEntly;
     }
   },
 
@@ -49,12 +56,12 @@ const user = {
           registerForm.checkPass
         )
           .then(response => {
-            resolve(response)
+            resolve(response);
           })
           .catch(error => {
-            reject(error)
-          })
-      })
+            reject(error);
+          });
+      });
     },
 
     // 登录
@@ -65,14 +72,14 @@ const user = {
           .then(response => {
             // const data = response.data
             // setToken(data.token)
-            setToken('user')
+            setToken("user");
             // commit('SET_TOKEN', data.token)
-            resolve(response)
+            resolve(response);
           })
           .catch(error => {
-            reject(error)
-          })
-      })
+            reject(error);
+          });
+      });
     },
 
     // 获取用户信息
@@ -80,94 +87,94 @@ const user = {
       return new Promise((resolve, reject) => {
         getInfo()
           .then(response => {
-            const data = response.resBody[0]
+            const data = response.resBody[0];
             // commit('SET_ROLES', data.roles)
-            commit('SET_NAME', data.userInfo[0].login_name)
-            commit('SET_AVATAR', data.userInfo[0].head_pic)
+            commit("SET_NAME", data.userInfo[0].login_name);
+            commit("SET_AVATAR", data.userInfo[0].head_pic);
 
-            resolve(response)
+            resolve(response);
           })
           .catch(error => {
-            reject(error)
-          })
-      })
+            reject(error);
+          });
+      });
     },
     // 获取用户rule职务
     GetDutyList({ commit, state }) {
       return new Promise((resolve, reject) => {
         getRuleList()
           .then(response => {
-            const MemberDutyList = []
-            const AppointDutyList = []
-            const data = response
-            const members = data.resBody.MEMBER
-            const appoints = data.resBody.APPOINT
+            const MemberDutyList = [];
+            const AppointDutyList = [];
+            const data = response;
+            const members = data.resBody.MEMBER;
+            const appoints = data.resBody.APPOINT;
             for (let i = 0; i < members.length; i++) {
-              MemberDutyList.push(members[i])
+              MemberDutyList.push(members[i]);
             }
             for (let i = 0; i < appoints.length; i++) {
-              AppointDutyList.push(appoints[i])
+              AppointDutyList.push(appoints[i]);
             }
             var dutyList = [];
             for (let i = 0; i < members.length; i++) {
               var temp = members[i];
-              temp.schoolName = members[i].managerNodeName
-              temp.isDefault = false
-              temp.zhiwu = members[i].dutyName
-              temp.isCurrent = members[i].currently
-              dutyList.push(temp)
+              temp.schoolName = members[i].managerNodeName;
+              temp.isDefault = false;
+              temp.zhiwu = members[i].dutyName;
+              temp.isCurrent = members[i].currently;
+              dutyList.push(temp);
             }
             for (let i = 0; i < appoints.length; i++) {
               var temp = appoints[i];
-              temp.schoolName = appoints[i].managerNodeName
-              temp.isDefault = false
-              temp.zhiwu = appoints[i].dutyName
-              temp.isCurrent = appoints[i].currently
-              dutyList.push(temp)
+              temp.schoolName = appoints[i].managerNodeName;
+              temp.isDefault = false;
+              temp.zhiwu = appoints[i].dutyName;
+              temp.isCurrent = appoints[i].currently;
+              dutyList.push(temp);
             }
 
-            commit('SET_ROLES', dutyList)
-            resolve(response)
+            commit("SET_ROLES", dutyList);
+            resolve(response);
           })
           .catch(error => {
-            reject(error)
-          })
-      })
+            reject(error);
+          });
+      });
     },
     // 切换职务
     SwitchDuty({ commit }, postData) {
       return new Promise((resolve, reject) => {
         switchDuty(postData)
           .then(response => {
-            const result = response.resBody
-            if (result.status === 'Y') {
+            const result = response.resBody;
+            if (result.status === "Y") {
               // debugger
               // this.$message('职务切换成功！' + result.type)
-              location.reload()
+              location.reload();
 
               // commit('SET_CURRENTLY',postData )
               // item.currently = true
             } else {
               //  this.$message(result.message)
             }
-            resolve(response)
+            resolve(response);
           })
           .catch(error => {
-            reject(error)
-          })
-      })
+            reject(error);
+          });
+      });
     },
 
     SetDefaultDuty({ commit }, dutyCode) {
       return new Promise((resolve, reject) => {
         setDefaultDuty(dutyCode)
           .then(response => {
-            resolve(response)
+            resolve(response);
           })
           .catch(error => {
-            reject(error)
-          })
-      })
+            reject(error);
+          });
+      });
     },
 
     // 获取用户组可用菜单
@@ -175,14 +182,15 @@ const user = {
       return new Promise((resolve, reject) => {
         getNavMenu(state.navMenu)
           .then(response => {
-            const data = response.resBody
-            commit('SET_NAVMENU', data)
-            resolve(response)
+            const data = response.resBody;
+
+            commit("SET_NAVMENU", data);
+            resolve(response);
           })
           .catch(error => {
-            reject(error)
-          })
-      })
+            reject(error);
+          });
+      });
     },
 
     // 登出
@@ -190,26 +198,26 @@ const user = {
       return new Promise((resolve, reject) => {
         logout(state.token)
           .then(() => {
-            commit('SET_TOKEN', '')
-            commit('SET_ROLES', [])
-            removeToken()
-            resolve()
+            commit("SET_TOKEN", "");
+            commit("SET_ROLES", []);
+            removeToken();
+            resolve();
           })
           .catch(error => {
-            reject(error)
-          })
-      })
+            reject(error);
+          });
+      });
     },
 
     // 前端 登出
     FedLogOut({ commit }) {
       return new Promise(resolve => {
-        commit('SET_TOKEN', '')
-        removeToken()
-        resolve()
-      })
+        commit("SET_TOKEN", "");
+        removeToken();
+        resolve();
+      });
     }
   }
-}
+};
 
-export default user
+export default user;

@@ -3,7 +3,7 @@
     <div class="title">
       <div style="width: 95%;margin: 0 auto;">
 
-         <svg-icon  icon-class="logo2" style="height:60px;width: 470px;margin-top: 8px;" ></svg-icon>
+        <svg-icon icon-class="logo2" style="height:60px;width: 470px;margin-top: 8px;"></svg-icon>
       </div>
       <!--	<h3>学生工作管理系统</h3>-->
     </div>
@@ -106,9 +106,9 @@ html {
 .form-container {
   width: 100%;
   height: 100%;
-  background-image: url(../../assets/img/bg.jpg);
+  background-image: url(../../assets/img/login-bg.jpg);
   background-size: cover;
-  background-position: 0 55%;
+  background-position: 40% 100%;
   position: fixed;
   background-color: #fff;
   .title {
@@ -124,8 +124,8 @@ html {
     box-shadow: rgba(0, 0, 0, 0.19) 1px 7px 8px 0px;
     padding: 10px;
     opacity: 0.6;
-    /* background: #0c9bea; */
-    background-color: #2c424e;
+    /* background: #155071; */
+    background-color: #031e2d;
     /* background-image: linear-gradient(#4e69a2, #3b5998 50%); */
 
     div {

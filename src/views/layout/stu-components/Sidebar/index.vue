@@ -10,14 +10,21 @@
       </li>
       <template v-for="item in navMenu">
         <li class="sidebar-item" :key="item.Key">
+          <div @click="showMenus(item)">
 
-          <span class="sidebar-item__title">
-            <svg-icon class="sidebar-item__icon" icon-class="user" v-if="0" />
-            <i :class="[item.icon,'sidebar-item__icon']"></i>
-            <span>{{item.title}}</span>
-          </span>
-          <sidebar-children v-if="item.children.length" :childeren="item.children"></sidebar-children>
+            <i :class="item.isShow?'el-icon-arrow-up':'el-icon-arrow-down'" style="font-size: 16px;float: right;margin: 10px;margin-right: 15px;color: #cccccc;" />
 
+            <span class="sidebar-item__title" @click="">
+              <svg-icon class="sidebar-item__icon" icon-class="user" v-if="0" />
+              <i :class="[item.icon,'sidebar-item__icon']"></i>
+
+              <span>{{ item.title}}</span>
+
+            </span>
+          </div>
+          <transition name="el-collapse-transition">
+            <sidebar-children v-if="item.isShow" :childeren="item.children"></sidebar-children>
+          </transition>
         </li>
       </template>
 
@@ -42,7 +49,23 @@ export default {
       showMenu: true
     };
   },
-  mounted: function() {}
+  methods: {
+    showMenus(item) {
+      if (item.isShow) {
+        return (item.isShow = false);
+      } else {
+        let showNavMenus = this.navMenu.filter(i => {
+          return i.isShow == true;
+        });
+        if (showNavMenus.length > 0) {
+          showNavMenus.forEach(element => {
+            element.isShow = false;
+          });
+        }
+        item.isShow = true;
+      }
+    }
+  }
 };
 </script>
 
@@ -68,7 +91,7 @@ export default {
     padding: 8px 0;
     line-height: 1.6;
     position: relative;
-    font-size: 18px;
+    font-size: 16px;
     color: #222;
   }
   &-item::before {

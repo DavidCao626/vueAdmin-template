@@ -4,7 +4,7 @@
       <header class="header">
         <navbar></navbar>
         <div style="position: absolute;top: 18px;left:18px;z-index: 99999;">
-          <button @click="sidebar=!sidebar"  class="menuButton">
+          <button @click="sidebar=!sidebar" class="menuButton">
             <!-- <i class="el-icon-d-arrow-left" v-if="sidebar"></i>
               <i class="el-icon-d-arrow-right" v-else></i> -->
             <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope yt-icon" style="pointer-events: none; display: block; width: 24px; height: 24px;fill:rgba(255,255,255,0.8)">
@@ -21,9 +21,9 @@
     <el-scrollbar class="page-component__scroll" ref="componentScrollBar">
       <div class="page-container page-component ">
         
-        <el-scrollbar class="page-component__nav" style="padding-top: 10px;background-color: #fff;" v-show="sidebar">
-          <sidebar></sidebar>
-        </el-scrollbar>
+          <el-scrollbar class="page-component__nav" style="padding-top: 0px;background-color: #fff;" v-show="sidebar">
+            <sidebar></sidebar>
+          </el-scrollbar>
 
         <div :class="['page-component__content', sidebar?'sidebar-hide':'']" style="margin-top: 25px;">
           <!-- <router-view class="content"></router-view> -->
@@ -183,7 +183,7 @@ export default {
   }
 
   .page-component__nav {
-    width: 210px;
+    width: 220px;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -329,7 +329,7 @@ export default {
 }
 
 .sidebar-hide {
-  padding-left: 210px;
+  padding-left: 220px;
 }
 .menuButton {
   vertical-align: middle;
@@ -345,12 +345,12 @@ export default {
   cursor: pointer;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
-      border-radius: 50%;
+  border-radius: 50%;
 }
-.menuButton:hover{
-   background-color: rgba(255, 255, 255, 0.15);
+.menuButton:hover {
+  background-color: rgba(255, 255, 255, 0.15);
 }
-.menuButton:active{
-   background-color: rgba(200, 200, 200,0.6);
+.menuButton:active {
+  background-color: rgba(200, 200, 200, 0.6);
 }
 </style>
