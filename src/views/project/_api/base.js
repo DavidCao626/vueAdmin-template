@@ -108,7 +108,15 @@ const queryProjectList = data =>
     })
 
 
+    
+const queryProjectServiceType = data =>
+    request({
+        url: "/project/queryProjectServiceType.do",
+        method: 'post',
+        data: data
+    })
 export default {
+    queryProjectServiceType,
     queryProjectList,
     startStudyWorkProject,
     insertOrUpdateProject,

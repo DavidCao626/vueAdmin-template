@@ -250,7 +250,11 @@ var index = new Vue({
     },
     updateMenu: function() {
       GUtils.post(reqPath.updateMenu, formDataStore.data, function(data) {
-        console.log(data)
+        f_vis_list.cleanData();
+        GUtils.assembleComponent(data.resBody, "visList", f_vis_list, {
+          name: "title",
+          val: "sortVal"
+        });
       }, function(error) {
         console.log(error)
       })

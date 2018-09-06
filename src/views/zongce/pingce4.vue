@@ -35,31 +35,31 @@
 
 
 <template>
-  <page :Breadcrumb="false">
-    <span slot="title">科目行为管理</span>
-    <div slot="panel">
+    <page :Breadcrumb="false">
+        <span slot="title">分值科目记录管理</span>
+        <div slot="panel">
 
-      <div class="content">
-        <br/>
-        <el-form label-width="80px" :model="formData">
-          <el-form-item label="测评项目">
-            <elx-select v-model="formData.projectId" placeholder="请选择" @change="projectChange">
-              <el-option v-for="item in projectList" :key="item.id" :value="item.id" :label="item.name"></el-option>
-            </elx-select>
-          </el-form-item>
-          <el-form-item label="标准科目">
+            <div class="content">
+                <br/>
+                <el-form label-width="80px" :model="formData">
+                    <el-form-item label="测评项目">
+                        <elx-select v-model="formData.projectId" placeholder="请选择" @change="projectChange">
+                            <el-option v-for="item in projectList" :key="item.id" :value="item.id" :label="item.name"></el-option>
+                        </elx-select>
+                    </el-form-item>
+                    <!-- <el-form-item label="标准科目">
             <elx-select v-model="formData.subjectCode" placeholder="请选择" @change="subjectChange">
               <el-option v-for="item in subjectList" :key="item.code" :value="item.code" :obj="item" :label="item.name"></el-option>
             </elx-select>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">下一步</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-    </div>
+          </el-form-item> -->
+                    <el-form-item>
+                        <el-button type="primary" @click="onSubmit">下一步</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
 
-  </page>
+    </page>
 </template>
 
 <script>
@@ -107,34 +107,25 @@ export default {
     },
     ...mapActions({
       queryAllEnableStandardSubject:
-        store.namespace + "/queryIncludEnableStandardSubject",
+        store.namespace + "/queryAllEnableStandardSubject",
       getStudentApplyProject: store.namespace + "/getStudentApplyProject"
     }),
     onSubmit() {
-      if(this.formData.projectId == null ||this.formData.subjectCode == ""){
-        this.$message.error("请完成所有选项!")
+      if (this.formData.projectId == null) {
+        this.$message.error("请完成所有选项!");
         return;
       }
       //路由逻辑
-      if (this.isInclude == true) {
-        this.$router.push({
-          path: "/zongce/behaviorsManager",
-          query: {
-            projectId: this.formData.projectId,
-            standardSubjectCode: this.formData.subjectCode
-          }
-        });
-      } else if (this.isInclude == false) {
-        this.$router.push({
-          path: "/zongce/artfBehviorsManager",
-          query: {
-            projectId: this.formData.projectId,
-            standardSubjectCode: this.formData.subjectCode
-          }
-        });
-      } else {
-        this.$message.error("跳转发生异常")
-      }
+      var stdSubjectCode = [];
+      this.subjectList.forEach(it => {
+        stdSubjectCode.push(it.code);
+      });
+      this.$router.push({
+        path: "/zongce/standardRecord",
+        query: {
+          projectId: this.formData.projectId
+        }
+      });
     }
   },
   beforeRouteEnter(to, from, next) {

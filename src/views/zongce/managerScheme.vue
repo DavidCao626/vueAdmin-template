@@ -1,14 +1,14 @@
 <template>
   <div>
     <page>
-      <div slot="title">资助项目管理</div>
+      <div slot="title">测评方案管理</div>
     </page>
     <elx-table-layout>
       <!-- <template slot="headerRight">
         <el-button-group>
-          <el-tooltip class="item" effect="dark" content="录入数据" placement="bottom">
+          <el-tooltip class="item" effect="dark" content="新增测评方案" placement="bottom">
             <el-button @click="dialogVisible = true" plain size="mini">
-              导入
+              新增
             </el-button>
           </el-tooltip>
         </el-button-group>
@@ -16,35 +16,29 @@
       <template slot="headerLeft">
 
         <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-          <el-form-item label="项目名称">
-            <el-input v-model="formInline.projectName" placeholder="项目名称"></el-input>
+          <el-form-item label="方案名称">
+            <el-input v-model="formInline.name" placeholder="方案名称"></el-input>
           </el-form-item>
-          <el-form-item label="项目状态">
-            <el-select v-model="formInline.state" placeholder="项目状态">
-              <el-option v-for="(item,index) in projectStateList" :key="index" :value="item.dict_key" :label="item.dict_desc"></el-option>
+          <el-form-item label="测评类别">
+            <el-select v-model="formInline.categoryId" placeholder="测评类别">
+              <el-option v-for="item in categoryList" :key="item.id" :value="item.id" :label="item.name"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="业务类别">
-            <el-select v-model="formInline.serviceType" placeholder="项目类别">
-              <el-option v-for="(item,index) in serviceTypeList" :key="index" :value="item.classifyCode" :label="item.classifyName"></el-option>
-            </el-select>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
-
         </el-form>
       </template>
       <el-table :data="data" style="width: 100%" border size="mini">
-        <el-table-column prop="projectName" label="项目名称">
+        <el-table-column prop="name" label="方案名称">
         </el-table-column>
-        <el-table-column prop="projectServiceType" label="项目类别" :formatter="serviceTypeFormatter">
+        <el-table-column prop="categoryId" :formatter="categoryFormatter" label="测评类别">
         </el-table-column>
-        <el-table-column prop="projectState" label="项目状态" :formatter="stateFormatter">
+        <el-table-column prop="orgName" label="所属机构">
         </el-table-column>
-        <el-table-column prop="createdTime" label="创建时间">
+        <el-table-column prop="createTime" label="创建时间">
         </el-table-column>
-        <el-table-column prop="planStartTime" label="计划开始时间">
-        </el-table-column>
-        <el-table-column prop="planCompleteTime" label="计划结束时间">
-        </el-table-column>
+
         <el-table-column label="操作" width="88" header-align="left" align="center">
           <template slot-scope="scope">
             <el-dropdown>
@@ -52,7 +46,7 @@
                 <i class="el-icon-arrow-down"></i>
               </el-button>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="getData(scope.row)">操作1</el-dropdown-item>
+                <el-dropdown-item @click.native="showDetail(scope.row)">查看详情</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </template>
@@ -63,12 +57,6 @@
         </el-pagination>
       </template>
     </elx-table-layout>
-    <page>
-      <div slot="panel" style="text-align: right">
-
-        <el-button size="mini" type="primary">完成</el-button>
-      </div>
-    </page>
   </div>
 </template>
 
@@ -88,34 +76,34 @@ export default {
         totalRecord: 0
       },
       formInline: {
-        projectName: "",
-        state: "0",
-        serviceType: "0"
+        name: "",
+        categoryId: 0
       },
       orgProps: {
         label: "org_name",
         value: "org_code",
         children: "children"
       },
-      serviceTypeList: [],
-      projectStateList: [],
+
       orgList: [],
-      data: []
+      data: [],
+      categoryList: []
     };
   },
   watch: {},
   methods: {
-    serviceTypeFormatter(r, c, v, i) {
-      for (var j = 0; j < this.serviceTypeList.length; j++) {
-        if (this.serviceTypeList[j].classifyCode == v) {
-          return this.serviceTypeList[j].classifyName;
+    showDetail(row) {
+      this.$router.push({
+        path: "/zongce/showScheme",
+        query: {
+          schemeId: row.id
         }
-      }
+      });
     },
-    stateFormatter(r, c, v, i) {
-      for (var j = 0; j < this.projectStateList.length; j++) {
-        if (this.projectStateList[j].dict_key == v) {
-          return this.projectStateList[j].dict_desc;
+    categoryFormatter(r, c, v, i) {
+      for (var j = 0; j < this.categoryList.length; j++) {
+        if (this.categoryList[j].id == v) {
+          return this.categoryList[j].name;
         }
       }
     },
@@ -132,22 +120,24 @@ export default {
     ...mapActions({
       getDictByDictNames: store.namespace + "/getDictByDictNames",
       getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
-      queryProjectList: store.namespace + "/queryProjectList",
-      queryProjectServiceType: store.namespace + "/queryProjectServiceType"
+      queryCategoryList: store.namespace + "/queryCategoryList",
+      querySchemes: store.namespace + "/querySchemes"
     }),
-    getServiceTypeList() {
-      this.queryProjectServiceType({}).then(response => {
-        this.serviceTypeList = response.resBody;
-        this.serviceTypeList.unshift({classifyCode:"0",classifyName:"全部"})
+    getCategory() {
+      this.queryCategoryList({}).then(response => {
+        this.categoryList = response.resBody;
+        this.categoryList.unshift({ id: 0, name: "全部" });
       });
     },
     getData() {
       var requestData = {
         currentPage: this.pageInfo.currentPage,
-        pageSize: this.pageInfo.pageSize
+        pageSize: this.pageInfo.pageSize,
+        name: this.formInline.name,
+        categoryId: this.formInline.categoryId
       };
       //查询数据的方法
-      this.queryProjectList(requestData).then(response => {
+      this.querySchemes(requestData).then(response => {
         console.log(["查询数据", response]);
         this.data = response.resBody.baseData;
         this.pageInfo = response.resBody.pageInfo;
@@ -161,15 +151,14 @@ export default {
     },
     getDict() {
       var requestData = {
-        dicts: ["project_state"]
+        dicts: ["nation"]
       };
       this.getDictByDictNames(requestData).then(response => {
-        this.projectStateList = response.resBody.project_state;
-        this.projectStateList.unshift({ dict_desc: "全部", dict_key: "0" });
-        this.getServiceTypeList();
+        this.getCategory();
         this.getData();
       });
     },
+
     onSubmit() {
       this.pageInfo.currentPage = 1;
       this.getData(this.projectId);

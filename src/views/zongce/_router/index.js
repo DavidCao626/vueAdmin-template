@@ -49,10 +49,34 @@ export const zongceRouter = {
       meta: { title: "多人评议", icon: "example", hidden: true }
     },
     {
-      path: "pc2",
-      name: "选择模版",
+      path: "stdManager",
+      name: "科目行为管理",
+      component: () => import("../pingce1.vue"),
+      meta: { title: "科目行为管理", icon: "example", hidden: true }
+    },
+    {
+      path: "asManager",
+      name: "考评行为管理",
       component: () => import("../pingce2.vue"),
-      meta: { title: "标准分", icon: "example", hidden: true }
+      meta: { title: "考评行为管理", icon: "example", hidden: true }
+    },
+    {
+      path: "hcManager",
+      name: "分值科目记录管理",
+      component: () => import("../pingce3.vue"),
+      meta: { title: "分值科目记录管理", icon: "example", hidden: true }
+    },
+    {
+      path: "stdResultManager",
+      name: "标准科目结果管理",
+      component: () => import("../pingce4.vue"),
+      meta: { title: "标准科目结果管理", icon: "example", hidden: true }
+    },
+    {
+      path: "rankManager",
+      name: "综测排名结果管理",
+      component: () => import("../pingce5.vue"),
+      meta: { title: "综测排名结果管理", icon: "example", hidden: true }
     },
     {
       path: "showProspectus",
@@ -108,5 +132,65 @@ export const zongceRouter = {
       component: () => import("../standardRank.vue"),
       meta: { title: "生成标准科目排名", icon: "example", hidden: true }
     },
+    {
+      path: "managerCategory",
+      name: "managerCategory",
+      component: () => import("../managerCategory.vue"),
+      meta: { title: "测评类别管理", icon: "example", hidden: true }
+    },
+    {
+      path: "managerProject",
+      name: "managerProject",
+      component: () => import("../managerProject.vue"),
+      meta: { title: "测评项目管理", icon: "example", hidden: true }
+    },
+    {
+      path: "managerProspectus",
+      name: "managerProspectus",
+      component: () => import("../managerProspectus.vue"),
+      meta: { title: "测评计划书管理", icon: "example", hidden: true }
+    },
+    {
+      path: "managerScheme",
+      name: "managerScheme",
+      component: () => import("../managerScheme.vue"),
+      meta: { title: "测评方案管理", icon: "example", hidden: true }
+    },
+    {
+      path: "stuBehaviorRegistered", 
+      name: "stuBehaviorRegistered",
+      component: () => import("../stuBehaviorRegistered.vue"),
+      meta: { title: "我的科目行为", icon: "example", hidden: true }
+    },
+    {
+      path: "stuBehaviorArtificial",
+      name: "stuBehaviorArtificial",
+      component: () => import("../stuBehaviorArtificial.vue"),
+      meta: { title: "我的考评行为", icon: "example", hidden: true }
+    },
+    {
+      path: "stuHcRecord",
+      name: "stuHcRecord",
+      component: () => import("../stuHcRecord.vue"),
+      meta: { title: "我的分值记录", icon: "example", hidden: true }
+    },
+    {
+      path: "stuRank",
+      name: "stuRank",
+      component: () => import("../stuRank.vue"),
+      meta: { title: "我的综测排名", icon: "example", hidden: true }
+    },
+      {
+      path: "showScheme",
+        name: "showScheme",
+      component: () => import("../schemeShow/showScheme.vue"),
+      meta: { title: "查看方案详情", icon: "example", hidden: true }
+    },
+    {
+      path: "showSchemeDetail",
+      name: "showSchemeDetail",
+      component: () => import("../schemeShow/zongce2.vue"),
+      meta: { title: "科目项与分值项详情", icon: "example", hidden: true }
+    }
   ]
 };

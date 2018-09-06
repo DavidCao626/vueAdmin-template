@@ -69,10 +69,10 @@ const getDutyByDutyId = ({ commit, state }, params) => new Promise(resolve => {
     })
 })
 const getGrantRole = ({ commit, state }, params) => new Promise(resolve => {
-    api.getGrantRole(params).then(response => {
-        console.log(["getGrantRole", response])
-        resolve(response)
-    })
+    api.getDutyRoles(params).then(response => {
+      console.log(["getGrantRole", response]);
+      resolve(response);
+    });
 })
 
 const updateDuty = ({ commit, state }, params) => new Promise(resolve => {

@@ -1,6 +1,7 @@
 import dataStoreFactory from '@/ElementDataFactory/DataStoreFactory.js'
 import validateUtils from 'validate.js'
 import GUtils from '@/components/Utils.js'
+import Vue from 'vue'
 /**
  * 定义Form需要的默认的属性
  */

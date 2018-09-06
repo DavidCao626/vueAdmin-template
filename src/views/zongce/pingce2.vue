@@ -36,7 +36,7 @@
 
 <template>
   <page :Breadcrumb="false">
-    <span slot="title">行为管理跳转</span>
+    <span slot="title">考评行为管理</span>
     <div slot="panel">
 
       <div class="content">
@@ -107,7 +107,7 @@ export default {
     },
     ...mapActions({
       queryAllEnableStandardSubject:
-        store.namespace + "/queryAllEnableStandardSubject",
+        store.namespace + "/queryIncludUnEnableStandardSubject",
       getStudentApplyProject: store.namespace + "/getStudentApplyProject"
     }),
     onSubmit() {

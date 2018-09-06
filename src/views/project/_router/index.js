@@ -12,6 +12,12 @@ export const projectRouter = {
       meta: { hidden: false }
     },
     {
+      path: "projectManager",
+      name: "资助项目管理",
+      component: () => import("../projectManager"),
+      meta: { hidden: false }
+    },
+    {
       path: "myScope",
       name: "与我相关",
       component: () => import("../myScope"),
