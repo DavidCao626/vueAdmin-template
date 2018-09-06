@@ -21,7 +21,7 @@
     <el-scrollbar class="page-component__scroll" ref="componentScrollBar">
       <div class="page-container page-component ">
         
-          <el-scrollbar class="page-component__nav" style="padding-top: 0px;background-color: #fff;" v-show="sidebar">
+          <el-scrollbar class="page-component__nav" style="box-shadow: inset 0 4px 3px 0px rgba(86, 86, 86, 0.12);padding-top: 0px;background-color: #fff;" v-show="sidebar">
             <sidebar></sidebar>
           </el-scrollbar>
 
