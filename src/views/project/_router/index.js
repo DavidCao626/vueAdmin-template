@@ -436,6 +436,41 @@ export const projectRouter = {
       title: "勤工俭学配置",
       component: () => import("../studyWorkConfig/index.vue"),
       meta: { hidden: true }
-    }
+    },
+    //--------------资助项目创建----------------------
+    {
+      path: "poverty",
+      name: "poverty",
+      title: "创建贫困建档项目",
+      component: () => import("../poverty/createProject.vue"),
+      meta: { hidden: true, title: "创建贫困建档项目" }
+    },
+    {
+      path: "nationalGrants",
+      name: "nationalGrants",
+      title: "创建国家助学金项目",
+      component: () => import("../nationalGrants/createProject.vue"),
+      meta: { hidden: true, title: "创建国家助学金项目" }
+    },
+    {
+      path: "motivationalScholarship",
+      name: "motivationalScholarship",
+      title: "创建励志奖学金项目",
+      component: () => import("../motivationalScholarship/createProject.vue"),
+      meta: { hidden: true, title: "创建励志奖学金项目" }
+    },
+    {
+      path: "nationalScholarship",
+      name: "nationalScholarship",
+      title: "创建国家奖学金项目",
+      component: () => import("../nationalScholarship/createProject.vue"),
+      meta: { hidden: true, title: "创建勤工俭学项目" }
+    },
+    //-----------------------------
+
+
+
+
+
   ]
 };

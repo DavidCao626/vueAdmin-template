@@ -1,5 +1,78 @@
 
 export const baseproject = {
+    povertyProjectFormData: {
+        projectId: 0,
+        projectName: "",
+        projectUserCode: "",
+        projectDesc: "",
+        projectServiceType: "",
+        planStartTime: "",
+        planCompleteTime: "",
+        isSendPublicNotice: "Y",
+        projectAttachmentId: [],
+        attrDetailBean: [],
+        expand: {
+            id: 0,
+            yearType: "2018"
+        }
+    },
+    //国家助学金
+    nationalGrantsProjectFormData: {
+        projectId: 0,
+        projectName: "",
+        projectUserCode: "",
+        projectDesc: "",
+        projectServiceType: "",
+        planStartTime: "",
+        planCompleteTime: "",
+        isSendPublicNotice: "Y",
+        projectAttachmentId: [],
+        attrDetailBean: [],
+        expand: {
+            id: 0,
+            yearType: "2018"
+        }
+    },
+    //励志奖学金
+    motivationalScholarshipProjectFormData: {
+        projectId: 0,
+        projectName: "",
+        projectUserCode: "",
+        projectDesc: "",
+        projectServiceType: "",
+        planStartTime: "",
+        planCompleteTime: "",
+        isSendPublicNotice: "Y",
+        projectAttachmentId: [],
+        attrDetailBean: [],
+        expand: {
+            id: 0,
+            yearType: "2018",
+            appraiseProjectCode: ""//测评项目代码
+        }
+    },
+    //国家奖学金
+    nationalScholarshipProjectFormData: {
+        projectId: 0,
+        projectName: "",
+        projectUserCode: "",
+        projectDesc: "",
+        projectServiceType: "",
+        planStartTime: "",
+        planCompleteTime: "",
+        isSendPublicNotice: "Y",
+        projectAttachmentId: [],
+        attrDetailBean: [],
+        expand: {
+            id: 0,
+            yearType: "2018",
+            appraiseProjectCode: ""//测评项目代码
+        }
+    },
+
+
+
+
     serviceTypeList: [],
     classifyType: [],
     appraiseResultProjectFormData: {
