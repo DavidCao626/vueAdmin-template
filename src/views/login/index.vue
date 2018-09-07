@@ -112,7 +112,7 @@ html {
   position: fixed;
   background-color: #fff;
   .title {
-    /*font-size: 21px; */
+        /* font-size: 21px; */
     position: absolute;
     right: 0;
     top: 0px;
@@ -121,11 +121,12 @@ html {
     /* font-family: "\5B8B\4F53"; */
     /* background-color: #ed6535; */
     width: 100%;
-    box-shadow: rgba(0, 0, 0, 0.19) 1px 7px 8px 0px;
-    padding: 10px;
+   // -webkit-box-shadow: rgba(0, 0, 0, 0.19) 1px 7px 8px 0px;
+    //box-shadow: rgba(0, 0, 0, 0.19) 1px 7px 8px 0px;
+    padding: 5px;
     opacity: 0.6;
     /* background: #155071; */
-    background-color: #031e2d;
+    background-color: #005e92;
     /* background-image: linear-gradient(#4e69a2, #3b5998 50%); */
 
     div {

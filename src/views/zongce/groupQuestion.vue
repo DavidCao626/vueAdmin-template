@@ -15,26 +15,27 @@
       <div class="approval-panel">
         <p>{{ getQuestion.question.desc }}</p>
       </div>
-      <div class="approval-panel" style="margin-top:20px;margin-bottom:20PX;" v-for="(i,index) in questions" :key="index">
-        <div class="item-head">
-          <div class="item-head-title">{{ index+=1 }}、{{ i.entry.title }}</div>
-          <div class="item-head-des">
-            <template v-for="(item) in i.expand">
-              {{item.key}}:{{ item.value }} &nbsp;
-            </template>
-          </div>
-        </div>
-        <div class="item-body">
-          <ul>
-            <li v-for="(item,index) in i.options" :key="index">
-              {{ item.option.title }}：
-              <el-input-number size="mini" v-model="item.option.score" :min="0" :max="item.expand.maxScore"></el-input-number>&nbsp;分
-              <small>最高{{item.expand.maxScore}}分</small>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <div class="approval-panel">
+        <table style="">
+          <tr>
+            <th>学生姓名</th>
+            <th>学号</th>
 
+            <th v-for="(item,index) in questions[0].options">{{ item.option.title }}
+              <small style="color:#777">(最高{{item.expand.maxScore}}分)</small>
+            </th>
+          </tr>
+          <tr v-for="(i,index) in questions" :key="index">
+            <td style="text-align: left;">{{ index+=1 }}、{{ i.entry.title }}</td>
+
+            <td v-for="(item,ii) in i.expand">{{ item.value }}</td>
+            <td v-for="(items,n) in i.options">
+              <el-input-number size="mini" v-model="items.option.score" :min="0" :max="items.expand.maxScore"></el-input-number>
+            </td>
+          </tr>
+        </table>
+      </div>
+      
       <div class="approval-panel  footer-toolbar clearfix">
         <div class="footer-toolbar__pagination">
           <el-button type="primary" @click="submit">提交</el-button>
@@ -46,7 +47,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import store from "./_store/index.js";
-import commons from '~/utils/common.js'
+import commons from "~/utils/common.js";
 import _ from "lodash";
 export default {
   data() {
@@ -55,25 +56,25 @@ export default {
       selectInput: "",
       oldchildren: [],
       value1: 30,
-      scopeId:null,
-      itemId:null
-    }
+      scopeId: null,
+      itemId: null
+    };
   },
-  computed:{
+  computed: {
     ...mapGetters({
-      getQuestion: store.namespace + '/getQuestionInfo'
+      getQuestion: store.namespace + "/getQuestionInfo"
     }),
-    questions:function(){
-       var entries=this.getQuestion.entries;
-       var temValues=[];
-       if (this.select == "1") {
+    questions: function() {
+      var entries = this.getQuestion.entries;
+      var temValues = [];
+      if (this.select == "1") {
         temValues = entries.filter(item => {
           return item.entry.title.indexOf(this.selectInput) != -1;
         });
       } else {
         temValues = entries.filter(item => {
           let keyitme = item.expand.filter(i => i.key == "学号");
-             return keyitme[0].value.indexOf(this.selectInput) != -1;
+          return keyitme[0].value.indexOf(this.selectInput) != -1;
         });
       }
       return temValues;
@@ -81,24 +82,24 @@ export default {
   },
   methods: {
     submit() {
-      this.submitQuestionBean({scopeId:this.scopeId,"itemId":this.itemId});
-            this.$router.go(-1)
+      this.submitQuestionBean({ scopeId: this.scopeId, itemId: this.itemId });
+      this.$router.go(-1);
     },
     ...mapActions({
-         loadQuestion: store.namespace + '/getQuestionBean',
-         submitQuestionBean:store.namespace +"/submitQuestionBean"
+      loadQuestion: store.namespace + "/getQuestionBean",
+      submitQuestionBean: store.namespace + "/submitQuestionBean"
     })
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-       var scopeId = commons.getRouterParam(to, 'scopeId');
-       var itemId=commons.getRouterParam(to,'itemId');
-       vm.scopeId=scopeId;
-       vm.itemId=itemId;
-      if (scopeId == null || itemId==null) {
-        console.log('参数错误,该页面不能访问')
+      var scopeId = commons.getRouterParam(to, "scopeId");
+      var itemId = commons.getRouterParam(to, "itemId");
+      vm.scopeId = scopeId;
+      vm.itemId = itemId;
+      if (scopeId == null || itemId == null) {
+        console.log("参数错误,该页面不能访问");
       } else {
-        vm.loadQuestion({ 'scopeId': scopeId,'itemId':itemId })
+        vm.loadQuestion({ scopeId: scopeId, itemId: itemId });
       }
     });
   },
@@ -111,8 +112,30 @@ export default {
 </script>
 
 <style scoped>
+.approval-panel table {
+  font-size: 12px;
+  color: #333333;
+  border-width: 1px;
+  border-color: #ccc;
+  border-collapse: collapse;
+  width: 100%;
+}
+.approval-panel table th {
+  border-width: 1px;
+  padding: 8px;
+  border-style: solid;
+  border-color: #ccc;
+  background-color: #dedede;
+}
+.approval-panel table td {
+  border-width: 1px;
+  padding: 8px;
+  border-style: solid;
+  border-color: #ccc;
+  background-color: #ffffff;
+  text-align: center;
+}
 .item-head {
-   
 }
 .item-head-title {
   float: left;
