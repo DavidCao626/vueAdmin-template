@@ -21,8 +21,7 @@
             <el-button type="primary" @click="onSearch">查 询</el-button>
           </el-form-item>
         </el-form>
-
-        <el-table class="i-cursor" @row-click="showDetail" :data="tableData" style="width: 100%">
+        <el-table class="i-cursor" @row-click="showDetail" :data="tableData" style="width: 100%;margin-top:5px">
           <el-table-column prop="projectInfo.project_name" label="项目名称" min-width="120">
           </el-table-column>
           <el-table-column prop="projectInfo.project_service_type_name" label="业务类别" min-width="100">

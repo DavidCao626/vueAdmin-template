@@ -1,70 +1,81 @@
 <template>
-  <page :Breadcrumb="true">
-    <div slot="title">项目控制台</div>
-    <div slot="Breadcrumb">
+  <div style="margin-top: -23px;">
+    <page>
+      <!-- <div slot="title">项目控制台</div> -->
+      <div slot="panel" >
+
+        <div class="project" style="display:flex;align-items: center;justify-content: space-between;">
+          <!--  -->
+          <div class="project-left" style="flex:1">
+            <div class="project-name">
+              {{projectInfo.projectName}}-任务控制台
+            </div>
+            <div class="project-desc">
+              <el-row>
+
+                <el-col :span="8">
+                  <ProjectScoped></ProjectScoped>
+                </el-col>
+                <el-col :span="12">
+                  <div>
+                    <p>项目类别：{{ projectInfo.projectServiceTypeName }}</p>
+                    <p>附件列表:</p>
+                    <span v-for="(attch,index) in projectInfo.files" :key="index">
+                      <a target="_blank" :href="attch.userPath">{{attch.userFileName}}</a>
+                    </span>
+
+                  </div>
+                </el-col>
+
+              </el-row>
+            </div>
+
+          </div>
+
+          <div class="project-reght" style="margin: 30px;display:flex;justify-content:center;">
+            <div style="display: flex;">
+
+              <div>
+                <template v-for="(fun,index) in interatedView.expandFunction">
+                  <el-button @click="routerTo(fun.path,fun.params)" :key="index" plain> {{fun.name}}</el-button>
+                  <!-- <svg-icon icon-class="seedate" width="20px" height="20px" /> -->
+                </template> &nbsp;&nbsp;&nbsp;&nbsp;
+                <el-popover placement="bottom" title="" width="auto" trigger="click">
+
+                  <el-tree class="filter-tree" :data="data2" :props="defaultProps" @node-click="nodeClick" :expand-on-click-node="false" :filter-node-method="filterNode" ref="tree2">
+                  </el-tree>
+
+                  <el-button slot="reference" plain>查看子任务进度</el-button>
+                  <!-- <svg-icon icon-class="seejindu" width="20px" height="20px"/> -->
+
+                </el-popover>
+              </div>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <el-button @click="showScopeData(interatedView.viewAction)" type="primary">查看环节数据</el-button>
+              <!-- <svg-icon icon-class="seedate" width="20px" height="20px"  />  -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </page>
+
+    <page :Breadcrumb="true">
+
+      <!-- <div slot="Breadcrumb">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
         <el-breadcrumb-item>项目控制台</el-breadcrumb-item>
       </el-breadcrumb>
-    </div>
-    <div slot="panel">
+    </div> -->
+      <div slot="panel">
 
-      <ProjectType :typeName="projectInfo.projectServiceTypeName"></ProjectType>
-      <div class="project" style="display:flex;align-items: center;justify-content: space-between;">
-        <div class="project-left" style="margin: 30px;display:flex;justify-content:center;">
-          <ProjectScoped></ProjectScoped>
-        </div>
-        <div class="project-right" style="margin:30px;flex:1">
-          <div class="project-name">
-            {{projectInfo.projectName}}
-          </div>
-          <div class="project-desc">
-            <!-- <p>
-              项目开始时间：{{projectInfo.planStartTime}}
-            </p>
-            <p>
-              项目结束时间：{{projectInfo.planCompleteTime}}
-            </p>
-            <p>
-              项目创建机构：{{projectInfo.createdUserOrgName}}
-            </p> -->
-            <p>附件列表:</p>
-            <p v-for="(attch,index) in projectInfo.files" :key="index">
-              <a target="_blank" :href="attch.userPath">{{attch.userFileName}}</a>
-            </p>
-          </div>
-          <div style="display: flex;">
-
-            <div>
-              <el-popover placement="bottom" title="" width="auto" trigger="click">
-
-                <el-tree class="filter-tree" :data="data2" :props="defaultProps" @node-click="nodeClick" :expand-on-click-node="false" :filter-node-method="filterNode" ref="tree2">
-                </el-tree>
-
-                <el-button slot="reference" style="color:#444;font-weight: 400;" type="text">
-                  <svg-icon icon-class="seejindu" width="20px" height="20px" />查看子任务进度</el-button>
-
-              </el-popover>
-            </div>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <el-button @click="showScopeData(interatedView.viewAction)" style="color:#444;font-weight: 400;" type="text">
-              <svg-icon icon-class="seedate" width="20px" height="20px" /> 查看环节数据</el-button>
-
-              <template v-for="(fun,index) in interatedView.expandFunction">
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <el-button @click="routerTo(fun.path,fun.params)" style="color:#444;font-weight: 400;" type="text" :key="index">
-                 <svg-icon icon-class="seedate" width="20px" height="20px" /> {{fun.name}}</el-button>
-              </template>
-          </div>
-        </div>
-
+        <ContrlTimeLine></ContrlTimeLine>
+        <br/> <br/> <br/>
       </div>
-      <ContrlTimeLine></ContrlTimeLine>
-      <br/> <br/> <br/>
-    </div>
 
-  </page>
-
+    </page>
+  </div>
 </template>
 
 <script>
@@ -138,14 +149,14 @@ export default {
         path: "/project/control",
         query: {
           scopeId: this.scopeId,
-          date:new Date().getTime()
+          date: new Date().getTime()
         }
       });
     },
-    routerTo:function(path,params){
+    routerTo: function(path, params) {
       this.$router.push({
         path: path,
-        query:params
+        query: params
       });
     },
     watch: {
@@ -155,12 +166,11 @@ export default {
     }
   },
 
-
   beforeRouteEnter(to, from, next) {
     next(vm => {
       var scopeId = commons.getRouterParam(to, "scopeId");
       if (scopeId == null) {
-        console.log(["没有传递scopeid,该页面不能访问",to]);
+        console.log(["没有传递scopeid,该页面不能访问", to]);
       } else {
         vm.scopeId = scopeId;
         vm.queryScopeIntegeratedDateView({ scopeId: scopeId });
@@ -181,7 +191,7 @@ export default {
   font-size: 14px;
   color: #666;
   font-weight: 500;
-  margin: 30px;
+  margin: 20px;
   line-height: 30px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

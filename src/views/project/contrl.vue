@@ -1,7 +1,7 @@
 <template>
   <page>
     <div slot="title">项目控制台</div>
-    <div slot="panel">
+    <div slot="panel" :Breadcrumb="false">
       <ProjectInfo></ProjectInfo>
       <br/>
       <hr color="#F6F8F9"/>

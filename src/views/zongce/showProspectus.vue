@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h2>查阅计划书</h2>
+  <page>
+    <div slot="title">查阅计划书</div>
     <elx-table-layout>
       <!-- <template slot="headerRight">
                 <el-button-group>
@@ -60,7 +60,7 @@
       </template>
 
     </elx-table-layout>
-  </div>
+  </page>
 </template>
 
   <script>

@@ -4,7 +4,7 @@
         <div class="weui-desktop-layout__main__bd weui-desktop-panel main_bd">
             <div class="weui-desktop-panel__bd">
                 <ul class="mp_news_list">
-                    <li class="mp_news_item" v-for="(i,index) in announceDate" :key="index">
+                    <li class="mp_news_item" v-for="(i,index) in announceDate" :key="index" style="list-style:none">
                         <router-link :to="{path:i.url,query:i.urlParams}">
                             <strong>{{i.title}}
                                 <i class="icon_common new"></i>
@@ -14,8 +14,8 @@
                     </li>
 
                 </ul>
-                <div class="pagination_wrp pageNavigator" v-if="announceDate.length>0">
-                    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="dataTotal">
+                <div class="pagination_wrp pageNavigator" v-if="announceDate.length>0" >
+                    <el-pagination style="float: right;" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="dataTotal">
                     </el-pagination>
                 </div>
             </div>

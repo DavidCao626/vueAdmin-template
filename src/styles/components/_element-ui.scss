@@ -4,20 +4,18 @@
     display: none !important;
   }
 }
-.el-badge__content.is-dot{
+.el-badge__content.is-dot {
   height: 0.7rem;
   width: 0.7rem;
 }
 
-
 //分页标签颜色
-.el-pagination{
+.el-pagination {
   color: var(--color-grey-light-1) !important ;
 }
-.el-pager li.active{
+.el-pager li.active {
   color: var(--color-grey-dark-1);
 }
-
 
 .el-upload__input {
   display: none;
@@ -41,8 +39,10 @@
     }
   }
 }
+.el-table {
+  //color: var(--color-grey-dark-2);
+}
 .el-table tr {
-
   & th {
     background-color: var(--color-grey-light-4) !important ;
   }
@@ -75,9 +75,8 @@
     font-weight: 400;
     padding: 0 10px;
   }
-  .el-collapse-item__wrap 
-  {
-padding: 0 35px;
+  .el-collapse-item__wrap {
+    padding: 0 35px;
   }
   & .is-active {
     .el-collapse-item__header {
@@ -87,8 +86,8 @@ padding: 0 35px;
       //transition: all 0.2s ease-in-out;
     }
     .el-collapse-item__wrap {
-       background-color: var(--color-grey-light-4) !important;
-      
+      background-color: var(--color-grey-light-4) !important;
+
       color: var(--color-grey-dark-2) !important ;
       font-size: 15px;
       //transition: all 0.2s ease-in-out;
@@ -96,18 +95,19 @@ padding: 0 35px;
   }
 }
 
-.el-tooltip__popper.is-light{
+.el-tooltip__popper.is-light {
   border: 1px solid #ececec !important;
 }
 
-.el-breadcrumb__inner, .el-breadcrumb__inner a{
+.el-breadcrumb__inner,
+.el-breadcrumb__inner a {
   font: weight 400 !important;
 }
 
-.demo-form-inline{
+.demo-form-inline {
   display: inline !important;
 }
 
-.elx-table-layout .el-table{
+.elx-table-layout .el-table {
   margin-top: 10px;
 }
