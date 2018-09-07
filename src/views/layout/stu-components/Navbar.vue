@@ -85,15 +85,15 @@
                     <i class="el-icon-caret-bottom" style="color:#fff"></i>
                   </div>
 
-                  <el-dropdown-menu class="user-dropdown" slot="dropdown">
+                  <el-dropdown-menu class="user-dropdown" size="medium" slot="dropdown">
                     <router-link class="inlineBlock" to="/user/updateUserInfo">
-                      <el-dropdown-item>
-                        <i class="el-icon-date"></i>&nbsp; 账号详情
+                      <el-dropdown-item size="medium">
+                        <i class="el-icon-date"></i>&nbsp; 个人资料
                       </el-dropdown-item>
                     </router-link>
-                    <router-link class="inlineBlock" to="/user/userduty">
+                    <router-link class="inlineBlock" to="/user/updateUserPwd">
                       <el-dropdown-item>
-                        <i class="el-icon-setting"></i>&nbsp; 我的任职
+                        <i class="el-icon-setting"></i>&nbsp; 修改密码
                       </el-dropdown-item>
                     </router-link>
                     <!-- <router-link class="inlineBlock" to="/">

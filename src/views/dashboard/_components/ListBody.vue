@@ -14,7 +14,7 @@
                 </router-link>
             </div>
         </div>
-        <hr color="#f6f8f9" class="line" />
+        <hr  class="line" />
         <div>
             <ul class="olli">
                 <template v-for="(i,index) in data">

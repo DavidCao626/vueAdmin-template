@@ -3,7 +3,7 @@
     <div slot="title">新建项目</div>
     <div slot="panel">
       <ProjectAddSteps :active="1"></ProjectAddSteps>
-      <br/>
+   
       <ProjectStart></ProjectStart>
     </div>
   </page>

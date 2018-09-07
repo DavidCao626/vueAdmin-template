@@ -33,7 +33,7 @@
           </router-link>
         </div>
       </div>
-      <br>
+         <hr  class="line" />
       <el-table  class="i-cursor" :data="tableData" style="width: 100%" @row-click="onRowClick">
         <!-- <el-table-column prop="item_name" label="待办名称" min-width="180">
         </el-table-column>
@@ -91,7 +91,7 @@
           </router-link>
         </div>
       </div>
-      <br>
+        <hr  class="line" />
       <myProject></myProject>
     </div>
     <!-- 我的发起的项目  end-->
@@ -232,3 +232,9 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.line{
+  margin-bottom: 5px;
+  width:90px;
+}
+</style>

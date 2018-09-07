@@ -1,9 +1,9 @@
 <template>
   <page class="page" :breadcrumb="false">
     <div slot="title">新建项目</div>
-    <div slot="panel">
+    <div slot="panel" >
       <ProjectAddSteps :active="0"></ProjectAddSteps>
-      <br/>
+
     </div>
       <ProjectInfoForm></ProjectInfoForm>
   </page>
