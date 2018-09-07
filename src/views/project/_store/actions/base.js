@@ -142,8 +142,78 @@ const queryProjectServiceType = ({ commit, state }, data) =>
     })
   })
 
+const queryPovertyProject = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryPovertyProject(data).then(response => {
+      resolve(response)
+    })
+  })
+
+const queryNationalGrantsProject = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryNationalGrantsProject(data).then(response => {
+      resolve(response)
+    })
+  })
+const queryMotivationalScholarshipProject = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryMotivationalScholarshipProject(data).then(response => {
+      resolve(response)
+    })
+  })
+const queryNationalScholarshipProject = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryNationalScholarshipProject(data).then(response => {
+      resolve(response)
+    })
+  })
+
+
+const queryPovertyApply = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryPovertyApply(data).then(response => {
+      resolve(response)
+    })
+  })
+
+const queryNationalGrantsApply = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryNationalGrantsApply(data).then(response => {
+      resolve(response)
+    })
+  })
+
+const queryMotivationalScholarshipApply = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryMotivationalScholarshipApply(data).then(response => {
+      resolve(response)
+    })
+  })
+
+const queryNationalScholarshipApply = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryNationalScholarshipApply(data).then(response => {
+      resolve(response)
+    })
+  })
+const queryAllClassifyChild = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryAllClassifyChild(data).then(response => {
+      resolve(response)
+    })
+  })
 
 export default {
+  queryAllClassifyChild,
+  queryPovertyProject,
+  queryNationalGrantsProject,
+  queryMotivationalScholarshipProject,
+  queryNationalScholarshipProject,
+  queryPovertyApply,
+  queryNationalGrantsApply,
+  queryMotivationalScholarshipApply,
+  queryNationalScholarshipApply,
+
   queryProjectServiceType,
   queryProjectList,
   setProjectServiceType,
