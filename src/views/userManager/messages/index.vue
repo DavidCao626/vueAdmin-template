@@ -39,9 +39,9 @@
                 <el-checkbox :true-label="12"></el-checkbox>
               </template>
               &nbsp;
-              <el-tooltip content="标记已读/未读" placement="top">
-                <div class="circle messages-readState" :class="{'messages-readState__true':(notice.status=='Y')}" @click="readSwitch(notice.id,notice)"></div>
-              </el-tooltip>
+              <!-- <el-tooltip content="标记已读/未读" placement="top"> -->
+                <div class="circle messages-readState" :class="{'messages-readState__true':(notice.status=='Y')}" @click.stop="readSwitch(notice.id,notice)"></div>
+              <!-- </el-tooltip> -->
               &nbsp;
               <span class="messages-title">{{notice.title}}</span>
 

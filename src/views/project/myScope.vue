@@ -23,8 +23,7 @@
             <el-button type="primary" @click="onSearch">查 询</el-button>
           </el-form-item>
         </el-form>
-
-        <el-table class="i-cursor" @row-click="showDetail" :data="tableData" style="width: 100%">
+        <el-table class="i-cursor" @row-click="showDetail" :data="tableData" style="width: 100%;margin-top:5px">
           <template>
             <el-table-column prop="project.project_name" label="项目名称" min-width="150">
             </el-table-column>

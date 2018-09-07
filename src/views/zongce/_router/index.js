@@ -8,7 +8,7 @@
 export const zongceRouter = {
   path: "/zongce",
   name: "综测中心",
-  redirect: "/zongce/addCategory",
+  //redirect: "/zongce/addCategory",
   component: () => import("../_layout/layout.vue"),
   meta: { title: "综测", icon: "example", hidden: true },
   children: [

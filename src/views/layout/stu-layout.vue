@@ -29,7 +29,7 @@
           <!-- <router-view class="content"></router-view> -->
           <app-main class=" app-container "></app-main>
           <div class="app-container app-footer">
-            <div class="app-footer__info">
+            <!-- <div class="app-footer__info">
               <ul>
                 <li>
                   <a href="">常见问题</a>
@@ -43,10 +43,10 @@
                 <li>|</li>
                 <li>123-{{sidebar}}</li>
               </ul>
-            </div>
+            </div> -->
 
-            <div class="app-footer__ext">
-              Copyright &copy; 2017-2018 Tabler. All Rights Reserved.
+            <div class="app-footer__ext" style="color:#666">
+              Copyright &copy; 2017-2018 内蒙古中融创科技有限公司 &nbsp;提供技术支持.
             </div>
 
           </div>
