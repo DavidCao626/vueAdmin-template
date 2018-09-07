@@ -35,37 +35,38 @@
             </template>
             <el-table :data="data" style="width: 100%" border size="mini" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="55">
-                    <el-table-column prop="name" label="岗位名称">
-                    </el-table-column>
-                    <el-table-column prop="numbers" label="招聘名额">
-                    </el-table-column>
-                    <el-table-column prop="checkState" label="审核状态" :formatter="checkStateFormatter">
-                    </el-table-column>
-                    <el-table-column prop="jobDemand" label="岗位要求">
-                    </el-table-column>
-                    <el-table-column prop="workTime" label="工作时间要求">
-                    </el-table-column>
-                    <el-table-column prop="monthWorkload" label="月工作时间">
-                    </el-table-column>
-                    <el-table-column prop="remark" label="备注">
-                    </el-table-column>
-                    <el-table-column prop="publisherMobile" label="联系电话">
-                    </el-table-column>
-                    <el-table-column prop="publisherTime" label="发布时间">
-                    </el-table-column>
-                    <el-table-column label="操作" width="88" header-align="left" align="center">
-                        <template slot-scope="scope">
-                            <el-dropdown>
-                                <el-button size="mini" @click="">
-                                    <i class="el-icon-arrow-down"></i>
-                                </el-button>
-                                <el-dropdown-menu slot="dropdown">
-                                    <el-dropdown-item @click.native="okCheck(scope.row)">通过</el-dropdown-item>
-                                    <el-dropdown-item @click.native="noCheck(scope.row)">不通过</el-dropdown-item>
-                                </el-dropdown-menu>
-                            </el-dropdown>
-                        </template>
-                    </el-table-column>
+                </el-table-column>
+                <el-table-column prop="name" label="岗位名称">
+                </el-table-column>
+                <el-table-column prop="numbers" label="招聘名额">
+                </el-table-column>
+                <el-table-column prop="checkState" label="审核状态" :formatter="checkStateFormatter">
+                </el-table-column>
+                <el-table-column prop="jobDemand" label="岗位要求">
+                </el-table-column>
+                <el-table-column prop="workTime" label="工作时间要求">
+                </el-table-column>
+                <el-table-column prop="monthWorkload" label="月工作时间">
+                </el-table-column>
+                <el-table-column prop="remark" label="备注">
+                </el-table-column>
+                <el-table-column prop="publisherMobile" label="联系电话">
+                </el-table-column>
+                <el-table-column prop="publisherTime" label="发布时间">
+                </el-table-column>
+                <el-table-column label="操作" width="88" header-align="left" align="center">
+                    <template slot-scope="scope">
+                        <el-dropdown>
+                            <el-button size="mini" @click="">
+                                <i class="el-icon-arrow-down"></i>
+                            </el-button>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item @click.native="okCheck(scope.row)">通过</el-dropdown-item>
+                                <el-dropdown-item @click.native="noCheck(scope.row)">不通过</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </template>
+                </el-table-column>
             </el-table>
             <template slot="footer">
                 <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
@@ -121,10 +122,15 @@ export default {
   watch: {},
   methods: {
     complateItem() {
-      this.completeUserPendingByItemId({ itemId: this.itemId }).then(
-        response => {
-          this.$message.success("操作成功");
-          this.$router.go(-1);
+      var that = this;
+      this.complateCheck({ scopeId: this.scopeId, itemId: this.itemId }).then(
+        resp => {
+          that
+            .completeUserPendingByItemId({ itemId: this.itemId })
+            .then(response => {
+              that.$message.success("操作成功");
+              that.$router.go(-1);
+            });
         }
       );
     },
@@ -194,7 +200,7 @@ export default {
       });
     },
     checkStateFormatter(val) {
-      var val = vala.checkState;
+      var val = val.checkState;
       console.log([val, this.jobCheckStateList]);
       for (var i = 0; i < this.jobCheckStateList.length; i++) {
         if (this.jobCheckStateList[i].value == val) {
@@ -259,8 +265,9 @@ export default {
       this.getData();
     },
     ...mapActions({
+      complateCheck: store.namespace + "/complateCheck",
       okCheckJobState: store.namespace + "/okCheckJobState",
-      noCheckJobState: store.namespace + "/noCheckJobState：store",
+      noCheckJobState: store.namespace + "/noCheckJobState",
       completeUserPendingByItemId:
         store.namespace + "/completeUserPendingByItemId",
       getDictByDictNames: store.namespace + "/getDictByDictNames",

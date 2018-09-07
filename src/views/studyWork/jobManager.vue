@@ -136,7 +136,7 @@ export default {
       });
     },
     checkStateFormatter(val) {
-      var val = vala.checkState;
+      var val = val.checkState;
       console.log([val, this.jobCheckStateList]);
       for (var i = 0; i < this.jobCheckStateList.length; i++) {
         if (this.jobCheckStateList[i].value == val) {

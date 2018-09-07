@@ -225,8 +225,14 @@ const okCheckJobState = ({ commit, state }, params) => new Promise(resolve => {
         resolve(response)
     })
 })
-
+const complateCheck = ({ commit, state }, params) => new Promise(resolve => {
+    api.complateCheck(params).then(response => {
+        console.log(["complateCheck", response])
+        resolve(response)
+    })
+})
 export default {
+    complateCheck,
     okCheckJobState,
     noCheckJobState,
     completeUserPendingByItemId,

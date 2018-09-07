@@ -248,7 +248,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       if (!to.query.jobCode) {
-        this.$message.error("参数错误");
+        vm.$message.error("参数错误");
       } else {
         vm.jobCode = to.query.jobCode;
         vm.getDict();

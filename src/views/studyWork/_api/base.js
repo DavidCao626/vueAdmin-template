@@ -218,8 +218,15 @@ const noCheckJobState = data =>
         method: 'post',
         data: data
     })
+const complateCheck = data =>
+    request({
+        url: "/studyWork/complateCheck.do",
+        method: 'post',
+        data: data
+    })
 
 export default {
+    complateCheck,
     okCheckJobState,
 noCheckJobState,
     completeUserPendingByItemId,
