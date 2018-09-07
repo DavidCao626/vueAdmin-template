@@ -466,8 +466,64 @@ export const projectRouter = {
       component: () => import("../nationalScholarship/createProject.vue"),
       meta: { hidden: true, title: "创建勤工俭学项目" }
     },
-    //-----------------------------
+    //-------------资助项目管理----------------
+    {
+      path: "povertyProjectM",
+      name: "povertyProjectM",
+      title: "贫困建档项目管理",
+      component: () => import("../projectManager/povertyProjectM.vue"),
+      meta: { hidden: true, title: "贫困建档项目管理" }
+    },
+    {
+      path: "nationalGrantsProjectM",
+      name: "nationalGrantsProjectM",
+      title: "国家助学金项目管理",
+      component: () => import("../projectManager/nationalGrantsProjectM.vue"),
+      meta: { hidden: true, title: "国家助学金项目管理" }
+    },
+    {
+      path: "motivationalScholarshipProjectM",
+      name: "motivationalScholarshipProjectM",
+      title: "励志奖学金项目管理",
+      component: () => import("../projectManager/motivationalScholarshipProjectM.vue"),
+      meta: { hidden: true, title: "励志奖学金项目管理" }
+    },
+    {
+      path: "nationalScholarshipProjectM",
+      name: "nationalScholarshipProjectM",
+      title: "国家奖学金项目管理",
+      component: () => import("../projectManager/nationalScholarshipProjectM.vue"),
+      meta: { hidden: true, title: "国家奖学金项目管理" }
+    },
 
+    {
+      path: "povertyProjectR",
+      name: "povertyProjectR",
+      title: "贫困建档申请记录",
+      component: () => import("../projectApplyRecord/povertyProjectR.vue"),
+      meta: { hidden: true, title: "贫困建档申请记录" }
+    },
+    {
+      path: "nationalGrantsR",
+      name: "nationalGrantsR",
+      title: "国家助学金申请记录",
+      component: () => import("../projectApplyRecord/nationalGrantsR.vue"),
+      meta: { hidden: true, title: "国家助学金申请记录" }
+    },
+    {
+      path: "motivationalScholarshipR",
+      name: "motivationalScholarshipR",
+      title: "励志奖学金申请记录",
+      component: () => import("../projectApplyRecord/motivationalScholarshipR.vue"),
+      meta: { hidden: true, title: "励志奖学金申请记录" }
+    },
+    {
+      path: "nationalScholarshipR",
+      name: "nationalScholarshipR",
+      title: "国家奖学金申请记录",
+      component: () => import("../projectApplyRecord/nationalScholarshipR.vue"),
+      meta: { hidden: true, title: "国家奖学金申请记录" }
+    }
 
 
 

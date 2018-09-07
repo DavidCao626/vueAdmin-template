@@ -2,7 +2,7 @@ import request from '~/utils/request'
 import ajax from '~/utils/ajax'
 
 //附件上传地址
-const uploadAttrUrl = process.env.BASE_API+"/project/uploadAttachment.do"
+const uploadAttrUrl = process.env.BASE_API + "/project/uploadAttachment.do"
 //增加或者更新项目
 const insertOrUpdateProject = data =>
     ajax({
@@ -46,7 +46,7 @@ const queryNoticeTemplateByItemId = data =>
     request({
         url: "/project/queryNoticeTemplateByItemId.do",
         method: 'post',
-        data:data
+        data: data
     })
 
 const getProjectAllDataByItemId = data =>
@@ -107,15 +107,80 @@ const queryProjectList = data =>
         data: data
     })
 
-
-    
 const queryProjectServiceType = data =>
     request({
         url: "/project/queryProjectServiceType.do",
         method: 'post',
         data: data
     })
+
+//----
+const queryPovertyProject = data =>
+    request({
+        url: "/project/queryPovertyProject.do",
+        method: 'post',
+        data: data
+    })
+const queryNationalGrantsProject = data =>
+    request({
+        url: "/project/queryNationalGrantsProject.do",
+        method: 'post',
+        data: data
+    })
+const queryMotivationalScholarshipProject = data =>
+    request({
+        url: "/project/queryMotivationalScholarshipProject.do",
+        method: 'post',
+        data: data
+    })
+const queryNationalScholarshipProject = data =>
+    request({
+        url: "/project/queryNationalScholarshipProject.do",
+        method: 'post',
+        data: data
+    })
+const queryPovertyApply = data =>
+    request({
+        url: "/project/queryPovertyApply.do",
+        method: 'post',
+        data: data
+    })
+const queryNationalGrantsApply = data =>
+    request({
+        url: "/project/queryNationalGrantsApply.do",
+        method: 'post',
+        data: data
+    })
+const queryMotivationalScholarshipApply = data =>
+    request({
+        url: "/project/queryMotivationalScholarshipApply.do",
+        method: 'post',
+        data: data
+    })
+const queryNationalScholarshipApply = data =>
+    request({
+        url: "/project/queryNationalScholarshipApply.do",
+        method: 'post',
+        data: data
+    })
+
+const queryAllClassifyChild = data =>
+    request({
+        url: "/project/queryAllClassifyChild.do",
+        method: 'post',
+        data: data
+    })
 export default {
+    queryAllClassifyChild,
+    queryPovertyProject,
+    queryNationalGrantsProject,
+    queryMotivationalScholarshipProject,
+    queryNationalScholarshipProject,
+    queryPovertyApply,
+    queryNationalGrantsApply,
+    queryMotivationalScholarshipApply,
+    queryNationalScholarshipApply,
+
     queryProjectServiceType,
     queryProjectList,
     startStudyWorkProject,
