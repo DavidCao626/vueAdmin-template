@@ -22,7 +22,7 @@
             <th>学号</th>
 
             <th v-for="(item,index) in questions[0].options">{{ item.option.title }}
-              <small style="color:#777">(最高{{item.expand.maxScore}}分)</small>
+              <small style="color:#333;font-weight:400;font-size:10px">(最高{{item.expand.maxScore}}分)</small>
             </th>
           </tr>
           <tr v-for="(i,index) in questions" :key="index">
