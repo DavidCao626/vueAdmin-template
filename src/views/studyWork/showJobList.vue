@@ -1,47 +1,62 @@
 <template>
-    <div>
-        <page>
-            <div slot="title">岗位列表</div>
-        </page>
-        <elx-table-layout>
-            <template slot="headerLeft">
+  <div>
+    <page>
+      <div slot="title">岗位列表</div>
+    </page>
+    <elx-table-layout>
+      <template slot="headerLeft">
 
-                <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-                    <el-form-item label="岗位状态">
-                        <el-select v-model="formInline.jobState" placeholder="岗位状态">
-                            <el-option v-for="item in jobStateList" :key="item.value" :value="item.value" :label="item.label"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="岗位名称">
-                        <el-input v-model="formInline.name" placeholder="岗位名称"></el-input>
-                    </el-form-item>
-                    <el-form-item label="">
-                        <el-button type="primary" @click="onSubmit">查询</el-button>
-                    </el-form-item>
-                </el-form>
-            </template>
-            <el-table :data="data" style="width: 100%" border size="mini">
-                <el-table-column prop="name" label="岗位名称">
-                </el-table-column>
-                <el-table-column prop="numbers" label="招聘名额">
-                </el-table-column>
-                <el-table-column prop="state" label="岗位状态" :formatter="stateFormatter">
-                </el-table-column>
-                <el-table-column prop="applyNum" label="申请人数">
-                </el-table-column>
-                <el-table-column prop="noDisposeNum" label="录用人数">
-                </el-table-column>
-                <el-table-column prop="publisherMobile" label="联系电话">
-                </el-table-column>
-                <el-table-column prop="publisherTime" label="发布时间">
-                </el-table-column>
-            </el-table>
-            <template slot="footer">
-                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-                </el-pagination>
-            </template>
-        </elx-table-layout>
-    </div>
+        <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
+          <el-form-item label="岗位状态">
+            <el-select v-model="formInline.jobState" placeholder="岗位状态">
+              <el-option v-for="item in jobStateList" :key="item.value" :value="item.value" :label="item.label"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="审核状态">
+            <el-select v-model="formInline.jobCheckState" placeholder="岗位状态">
+              <el-option v-for="item in jobCheckStateList" :key="item.value" :value="item.value" :label="item.label"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="岗位名称">
+            <el-input v-model="formInline.name" placeholder="岗位名称"></el-input>
+          </el-form-item>
+          <el-form-item label="">
+            <el-button type="primary" @click="onSubmit">查询</el-button>
+          </el-form-item>
+        </el-form>
+      </template>
+      <el-table :data="data" style="width: 100%" border size="mini">
+        <el-table-column prop="name" label="岗位名称">
+        </el-table-column>
+        <el-table-column prop="numbers" label="招聘名额">
+        </el-table-column>
+        <el-table-column prop="state" label="岗位状态" :formatter="stateFormatter">
+        </el-table-column>
+        <el-table-column prop="checkState" label="审核状态" :formatter="checkStateFormatter">
+        </el-table-column>
+        <el-table-column prop="jobDemand" label="岗位要求">
+        </el-table-column>
+        <el-table-column prop="workTime" label="工作时间要求">
+        </el-table-column>
+        <el-table-column prop="monthWorkload" label="月工作时间">
+        </el-table-column>
+        <el-table-column prop="remark" label="备注">
+        </el-table-column>
+        <el-table-column prop="applyNum" label="申请人数">
+        </el-table-column>
+        <el-table-column prop="noDisposeNum" label="录用人数">
+        </el-table-column>
+        <el-table-column prop="publisherMobile" label="联系电话">
+        </el-table-column>
+        <el-table-column prop="publisherTime" label="发布时间">
+        </el-table-column>
+      </el-table>
+      <template slot="footer">
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+        </el-pagination>
+      </template>
+    </elx-table-layout>
+  </div>
 </template>
 
   <script>
@@ -66,6 +81,7 @@ export default {
       formInline: {
         projectId: 0,
         name: "",
+        jobCheckState: "",
         jobState: ""
       },
       orgProps: {
@@ -73,6 +89,7 @@ export default {
         value: "org_code",
         children: "children"
       },
+      jobCheckStateList: [],
       orgList: [],
       data: []
     };
@@ -86,6 +103,15 @@ export default {
           jobCode: row.code
         }
       });
+    },
+    checkStateFormatter(val) {
+      var val = vala.checkState;
+      console.log([val, this.jobCheckStateList]);
+      for (var i = 0; i < this.jobCheckStateList.length; i++) {
+        if (this.jobCheckStateList[i].value == val) {
+          return this.jobCheckStateList[i].label;
+        }
+      }
     },
     stateFormatter(vala) {
       var val = vala.state;
@@ -151,15 +177,23 @@ export default {
       getJobStateDict: store.namespace + "/getJobStateDict",
       checkAllowJobUpdate: store.namespace + "/checkAllowJobUpdate",
       deleteJob: store.namespace + "/deleteJob",
-      getProjectStateDict: store.namespace + "/getProjectStateDict"
+      getProjectStateDict: store.namespace + "/getProjectStateDict",
+      getJobCheckStateDict: store.namespace + "/getJobCheckStateDict"
     }),
+    getJobCheckStateList() {
+      this.getJobCheckStateDict({}).then(response => {
+        this.jobCheckStateList = response.resBody;
+        this.jobCheckStateList.unshift({ label: "全部", value: "0" });
+      });
+    },
     getData() {
       var requestData = {
         currentPage: this.pageInfo.currentPage,
         pageSize: this.pageInfo.pageSize,
         projectId: this.formInline.projectId,
         name: this.formInline.name,
-        jobState: this.formInline.jobState
+        jobState: this.formInline.jobState,
+        jobCheckState: this.formInline.jobCheckState
       };
       //查询数据的方法
       this.queryMyJobList(requestData).then(response => {
@@ -193,6 +227,7 @@ export default {
       this.getDictByDictNames(requestData).then(response => {
         console.log(["dict", response]);
         this.getData();
+        this.getJobCheckStateList();
         this.getProjectList();
         this.getJobStateList();
         this.getProjectStateList();
