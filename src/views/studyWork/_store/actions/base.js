@@ -185,7 +185,7 @@ const affirmPost = ({ commit, state }, params) => new Promise(resolve => {
         resolve(response)
     })
 })
-    
+
 const queryProjectList = ({ commit, state }, params) => new Promise(resolve => {
     api.queryProjectList(params).then(response => {
         console.log(["queryProjectList", response])
@@ -199,11 +199,38 @@ const queryJobByProjectId = ({ commit, state }, params) => new Promise(resolve =
         resolve(response)
     })
 })
+const getJobCheckStateDict = ({ commit, state }, params) => new Promise(resolve => {
+    api.getJobCheckStateDict(params).then(response => {
+        console.log(["getJobCheckStateDict", response])
+        resolve(response)
+    })
+})
+const completeUserPendingByItemId = ({ commit, state }, params) => new Promise(resolve => {
+    api.completeUserPendingByItemId(params).then(response => {
+        console.log(["completeUserPendingByItemId", response])
+        resolve(response)
+    })
+})
 
+const noCheckJobState = ({ commit, state }, params) => new Promise(resolve => {
+    api.noCheckJobState(params).then(response => {
+        console.log(["noCheckJobState", response])
+        resolve(response)
+    })
+})
+
+const okCheckJobState = ({ commit, state }, params) => new Promise(resolve => {
+    api.okCheckJobState(params).then(response => {
+        console.log(["okCheckJobState", response])
+        resolve(response)
+    })
+})
 
 export default {
-
-
+    okCheckJobState,
+    noCheckJobState,
+    completeUserPendingByItemId,
+    getJobCheckStateDict,
     queryProjectList,
     queryJobByProjectId,
 

@@ -191,9 +191,39 @@ const queryJobByProjectId = data =>
         data: data
     })
 
+const getJobCheckStateDict = data =>
+    request({
+        url: "/studyWork/getJobCheckStateDict.do",
+        method: 'post',
+        data: data
+    })
+
+const completeUserPendingByItemId = data =>
+    request({
+        url: "/project/completeUserPendingByItemId.do",
+        method: "post",
+        data: data
+    })
+
+const okCheckJobState = data =>
+    request({
+        url: "/studyWork/okCheckJobState.do",
+        method: 'post',
+        data: data
+    })
+
+const noCheckJobState = data =>
+    request({
+        url: "/studyWork/noCheckJobState.do",
+        method: 'post',
+        data: data
+    })
 
 export default {
-
+    okCheckJobState,
+noCheckJobState,
+    completeUserPendingByItemId,
+    getJobCheckStateDict,
     queryProjectList,
     queryJobByProjectId,
 
