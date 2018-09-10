@@ -77,6 +77,12 @@ export const studyWorkRouter = {
       name: "checkJob",
       component: () => import("../checkJob.vue"),
       meta: { title: "岗位审核", icon: "example", hidden: true }
+    },
+    {
+      path: "insertJob",
+      name: "insertJob",
+      component: () => import("../insertJob.vue"),
+      meta: { title: "岗位发布", icon: "example", hidden: true }
     }
 
     

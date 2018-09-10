@@ -225,7 +225,22 @@ const complateCheck = data =>
         data: data
     })
 
+const updateJobNumbers = data =>
+    request({
+        url: "/studyWork/updateJobNumbers.do",
+        method: 'post',
+        data: data
+    })
+
+const queryCanApplyJobOrg = data =>
+    request({
+        url: "/studyWork/queryCanApplyJobOrg.do",
+        method: 'post',
+        data: data
+    })
 export default {
+     queryCanApplyJobOrg,
+    updateJobNumbers,
     complateCheck,
     okCheckJobState,
 noCheckJobState,

@@ -166,7 +166,7 @@ export default {
     },
     insertJob() {
       this.$router.push({
-        path: "/studyWork/publishJob"
+        path: "/studyWork/insertJob"
       });
     },
     deleteJoba(row) {

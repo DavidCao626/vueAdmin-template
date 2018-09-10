@@ -7,12 +7,17 @@
       <template slot="headerLeft">
 
         <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-          <el-form-item label="所属项目">
+          <!-- <el-form-item label="所属项目">
             <el-select v-model="formInline.projectId" placeholder="项目">
-              <el-option v-for="(item,index) in projectList" :key="index" :value="item.id" :label="item.name">
+              <el-option v-for="(item,index) in projectList" :key="index" :value="item.id" :label="item.name"> -->
                 <!-- <span style="float: left">{{ item.label }}</span> -->
                 <!-- <span style="float: right; color: #8492a6; font-size: 13px" v-html="projectState(item.state)"></span> -->
-              </el-option>
+              <!-- </el-option>
+            </el-select>
+          </el-form-item> -->
+          <el-form-item label="机构">
+            <el-select v-model="formInline.orgCode" placeholder="请选择" no-data-text="暂无可申请岗位">
+              <el-option v-for="(item,index)" :key="index" :label="item.org_name" :value="item.org_code"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="岗位状态">
@@ -110,7 +115,8 @@ export default {
       formInline: {
         projectId: null,
         name: "",
-        jobState: ""
+        jobState: "",
+        orgCode:""
       },
       orgProps: {
         label: "org_name",
@@ -214,7 +220,8 @@ export default {
       deleteJob: store.namespace + "/deleteJob",
       getProjectStateDict: store.namespace + "/getProjectStateDict",
       insertApplyRecord: store.namespace + "/insertApplyRecord",
-      queryUserResume: store.namespace + "/queryUserResume"
+      queryUserResume: store.namespace + "/queryUserResume",
+      queryCanApplyJobOrg:store.namespace + "/queryCanApplyJobOrg"
     }),
     getResumeList() {
       var requestData = {
@@ -226,20 +233,17 @@ export default {
       });
     },
     getData() {
-      if (
-        this.formInline.projectId == null ||
-        this.formInline.projectId == 0 ||
-        this.formInline.projectId == "0"
-      ) {
-        this.$message.error("请选择一个项目");
+      if(this.formInline.orgCode == null ||this.formInline.orgCode == ''){
+        this.$message.error("请选择一个机构");
         return;
       }
-      var requestData = {
+      var requestData = { 
         currentPage: this.pageInfo.currentPage,
         pageSize: this.pageInfo.pageSize,
         projectId: this.formInline.projectId,
         name: this.formInline.name,
-        jobState: this.formInline.jobState
+        jobState: this.formInline.jobState,
+        orgCode:this.formInline.orgCode
       };
       //查询数据的方法
       this.queryMyJobList(requestData).then(response => {
@@ -260,7 +264,7 @@ export default {
       });
     },
     getOrgList() {
-      this.getCurrentOrgListAndOwner({}).then(response => {
+      this.queryCanApplyJobOrg({}).then(response => {
         console.log(["orgList", response]);
         this.orgList = response.resBody;
       });
@@ -272,6 +276,7 @@ export default {
       this.getDictByDictNames(requestData).then(response => {
         console.log(["dict", response]);
         // this.getData();
+        this.getOrgList();
         this.getProjectList();
         this.getJobStateList();
         this.getProjectStateList();
