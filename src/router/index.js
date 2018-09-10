@@ -17,10 +17,10 @@ Vue.use(Router);
 
 import _lodash from "lodash";
 import { userRouter } from "~/views/user/_router/index";
-//import { projectRouter } from "~/views/project/_router/index";
-//import { messagesRouter } from "~/views/messages/_router/index";
-//import { zongceRouter } from "~/views/zongce/_router/index";
-//import { componentsRouter } from "~/components/_router";
+import { projectRouter } from "~/views/project/_router/index";
+import { messagesRouter } from "~/views/messages/_router/index";
+import { zongceRouter } from "~/views/zongce/_router/index";
+import { componentsRouter } from "~/components/_router";
 import { studyWorkRouter } from "~/views/studyWork/_router/index"
 const registerRouterModules = [];
 import stuLayout from "../views/layout/stu-Layout";
@@ -32,11 +32,11 @@ export const constantRouterMap = [
     name: "home_index",
     children: [
       studyWorkRouter,
-     // zongceRouter,
+      zongceRouter,
       userRouter,
-     // componentsRouter,
-    //  projectRouter,
-    //  messagesRouter,
+      componentsRouter,
+      projectRouter,
+      messagesRouter,
       {
         path: "dashboard",
         meta: { title: "首页" },

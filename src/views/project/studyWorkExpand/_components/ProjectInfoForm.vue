@@ -98,8 +98,8 @@ export default {
       uploadAttrUrl: state.namespace + "/getUploadAttrUrl",
       ioptions: state.namespace + "/getServiceTypeList",
       ClassifyTypeList: state.namespace + "/getClassifyTypeList",
-      categoryList: state.namespace + "/getappraiseCategoryList",
-      queryEndProject: state.namespace + "/queryEndProject"
+      categoryList: state.namespace + "/getappraiseCategoryList"
+   
     })
   },
   data() {
@@ -142,7 +142,8 @@ export default {
       queryServiceTypeList: state.namespace + "/queryServiceTypeList",
       insertOrUpdateProject: state.namespace + "/insertOrUpdateProject",
       insertOrUpdateAndNext: state.namespace + "/insertOrUpdateAndNext",
-      startStudyWorkProject: state.namespace + "/startStudyWorkProject"
+      startStudyWorkProject: state.namespace + "/startStudyWorkProject",
+         queryEndProject: state.namespace + "/queryEndProject"
       //    queryClassifyTypeByCode:store.namespace + "/queryClassifyTypeByCode"
     }),
     appraiseServiceTypeChange(val) {
