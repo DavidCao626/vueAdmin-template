@@ -17,7 +17,7 @@
           </el-form-item> -->
           <el-form-item label="机构">
             <el-select v-model="formInline.orgCode" placeholder="请选择" no-data-text="暂无可申请岗位">
-              <el-option v-for="(item,index)" :key="index" :label="item.org_name" :value="item.org_code"></el-option>
+              <el-option v-for="(item,index) in orgList" :key="index" :label="item.org_name" :value="item.org_code"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="岗位状态">
