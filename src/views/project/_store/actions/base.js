@@ -203,7 +203,17 @@ const queryAllClassifyChild = ({ commit, state }, data) =>
     })
   })
 
+const queryEndProject = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryEndProject(data).then(response => {
+      resolve(response)
+    })
+  })
+
+
+
 export default {
+  queryEndProject,
   queryAllClassifyChild,
   queryPovertyProject,
   queryNationalGrantsProject,

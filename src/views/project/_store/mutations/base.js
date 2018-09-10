@@ -26,6 +26,7 @@ export const setProjectServiceType = (state, serType) => {
     state.baseproject.nationalGrantsProjectFormData.projectServiceType = serType
     state.baseproject.motivationalScholarshipProjectFormData.projectServiceType = serType
     state.baseproject.nationalScholarshipProjectFormData.projectServiceType = serType
+    state.baseproject.studyWorkProjectExpandFormData.projectServiceType = serType
 }
 
 //设置项目表单内容表单
