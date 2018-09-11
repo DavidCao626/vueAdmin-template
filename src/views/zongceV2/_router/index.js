@@ -16,6 +16,12 @@ export const zongceV2Router = {
       name: "schoolYear",
       component: () => import("../schoolYear/index.vue"),
       meta: { title: "学年管理", hidden: true }
+    },
+    {
+      path: "stuScore",
+      name: "stuScore",
+      component: () => import("../stuScore/index.vue"),
+      meta: { title: "学生成绩管理", hidden: true }
     }
   ]
 };

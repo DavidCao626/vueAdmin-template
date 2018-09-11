@@ -367,11 +367,12 @@ export default {
         endTime: Date.parse(this.formInlines.enddate),
         numbers: this.formInlines.num
       };
-      this.insertSchoolYear(requestData).then(response => {
+      this.insertBatchSchoolYear(requestData).then(response => {
         var res = response.resBody;
         if (res) {
           this.$message.success("添加成功");
-          this.dialogVisiblePL = false;
+          this.dialogVisiblePl = false;
+          this.getData();
           this.formInlines.begindate = "";
           this.formInlines.enddate = "";
           this.formInlines.num = 1;
