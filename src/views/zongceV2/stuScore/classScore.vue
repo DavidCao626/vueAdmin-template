@@ -1,6 +1,6 @@
  <template>
     <page>
-        <div slot="title">学生成绩查询</div>
+        <div slot="title">班级成绩排名管理</div>
         <div slot="panel">
             <div>
                 <el-dialog title="导入班级成绩" :visible.sync="dialogVisible" width="400px">
@@ -27,42 +27,35 @@
 
                 <elx-table-layout>
                     <template slot="headerRight">
-                        <el-button-group>
-                            <el-tooltip class="item" effect="dark" content="导入数据" placement="bottom" v-if="importOpen">
-                                <el-button plain size="mini" @click="dialogVisible = true">
-                                    <i class="el-icon-download"></i>
-                                </el-button>
-                            </el-tooltip>
-                            <el-tooltip class="item" effect="dark" content="导出数据" placement="bottom" v-if="exportOpen">
+                        <el-button type="primary" size="mini" @click="onSubmit">生成排名</el-button>
+                        <el-tooltip class="item" effect="dark" content="导入班级成绩" placement="bottom" v-if="importOpen">
+                            <el-button plain size="mini" @click="dialogVisible = true">
+                                <i class="el-icon-download"></i>
+                            </el-button>
+                        </el-tooltip>
+                        <!-- <el-tooltip class="item" effect="dark" content="导出成绩" placement="bottom" v-if="exportOpen">
                                 <el-button plain size="mini" @click="onExportExcel">
                                     <i class="el-icon-upload2"></i>
                                 </el-button>
-                            </el-tooltip>
-                        </el-button-group>
+                            </el-tooltip> -->
                     </template>
 
                     <template slot="headerLeft">
-                        <span v-if="deleteOpen && isMultipleSelection">
-                            <el-button plain @click="onMultipleSelectionDel" size="mini" style="margin-top: 1px;margin-right: 20px;">
-                                <i class="el-icon-delete"> ({{ multipleSelection.length }})</i>
-                            </el-button>
+                        <span v-if="exportOpen && isMultipleSelection">
+                            <el-button-group>
+                                <el-button plain @click="onExportExcel" size="mini" style="margin-top: 1px;">
+                                    <i class="el-icon-upload2"></i> (导出选中{{ multipleSelection.length }}条)</i>
+                                </el-button>
+                                <el-button plain @click="onExportExcel" size="mini" style="margin-top: 1px;margin-right: 20px;">
+                                    <i class="el-icon-upload2"></i> 导出全部</i>
+                                </el-button>
+                            </el-button-group>
                         </span>
                         <el-form label-position="left" :inline="true" :model="formInline" size="mini" label-width="80px" class="demo-form-inline">
-                            <el-form-item label="筛选机构:">
+                            <el-form-item label="筛选学年">
                                 <el-input v-model="formInline.user" placeholder="所属学年等"></el-input>
                             </el-form-item>
-                            <el-form-item label="学生学号:">
-                                <el-input v-model="formInline.user" placeholder="学号"></el-input>
-                            </el-form-item>
-                            <el-form-item label="学生姓名:">
-                                <el-input v-model="formInline.user" placeholder="学生姓名"></el-input>
-                            </el-form-item>
-                            <el-form-item label="学科:">
-                                <el-input v-model="formInline.user" placeholder="学科"></el-input>
-                            </el-form-item>
-                            <el-form-item label="所属学年:">
-                                <el-input v-model="formInline.user" placeholder="所属学年等"></el-input>
-                            </el-form-item>
+
                             <el-form-item>
                                 <el-button type="primary" @click="onSubmit">查询</el-button>
                             </el-form-item>
@@ -124,8 +117,8 @@ export default {
 
       dialogVisible: false,
       deleteOpen: false,
-      importOpen: true,
-      exportOpen: false,
+      importOpen: false,
+      exportOpen: true,
       newOpen: false,
       data: [
         {

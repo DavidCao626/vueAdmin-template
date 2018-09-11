@@ -21,7 +21,25 @@ export const zongceV2Router = {
       path: "stuScore",
       name: "stuScore",
       component: () => import("../stuScore/index.vue"),
-      meta: { title: "学生成绩管理", hidden: true }
+      meta: { title: "学生成绩查询", hidden: true }
+    },
+    {
+      path: "myScore",
+      name: "myScore",
+      component: () => import("../stuScore/myScore.vue"),
+      meta: { title: "我的成绩查询", hidden: true }
+    },
+    {
+      path: "myRanking",
+      name: "myRanking",
+      component: () => import("../stuScore/myRanking.vue"),
+      meta: { title: "我的排名查询", hidden: true }
+    },
+    {
+      path: "classScore",
+      name: "classScore",
+      component: () => import("../stuScore/classScore.vue"),
+      meta: { title: "班级成绩排名管理", hidden: true }
     }
   ]
 };

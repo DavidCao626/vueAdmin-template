@@ -1,28 +1,16 @@
  <template>
-    <page>
-        <div slot="title">学生成绩查询</div>
+    <page :Breadcrumb="false">
+        <div slot="title">我的成绩查询</div>
         <div slot="panel">
             <div>
-                <el-dialog title="导入班级成绩" :visible.sync="dialogVisible" width="400px">
-                    <el-form :model="formInline" style="margin-top: -25px;">
-                        <el-form-item label="筛选学年">
-                            <el-input v-model="formInline.user" placeholder="所属学年等"></el-input>
-                        </el-form-item>
-                        <el-form-item label="上传数据">
-                            <el-upload class="upload-demo" drag :action="action" :limit='1' @onSuccess="onUploadSuccess">
-                                <i class="el-icon-upload"></i>
-                                <div class="el-upload__text">将文件拖到此处，或
-                                    <em>点击上传</em>
-                                </div>
-                                <div class="el-upload__tip" slot="tip">只能上传xlx/xlsx</div>
-                            </el-upload>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary" @click="onSubmit">提交后台运行</el-button>
-                            <el-button @click="dialogVisible=false">取消</el-button>
-                        </el-form-item>
-                    </el-form>
-
+                <el-dialog title="导入数据" :visible.sync="dialogVisible" width="400px" :before-close="handleClose">
+                    <el-upload class="upload-demo" drag :action="action" :limit='1' @onSuccess="onUploadSuccess">
+                        <i class="el-icon-upload"></i>
+                        <div class="el-upload__text">将文件拖到此处，或
+                            <em>点击上传</em>
+                        </div>
+                        <div class="el-upload__tip" slot="tip">只能上传xlx/xlsx</div>
+                    </el-upload>
                 </el-dialog>
 
                 <elx-table-layout>
@@ -48,21 +36,13 @@
                             </el-button>
                         </span>
                         <el-form label-position="left" :inline="true" :model="formInline" size="mini" label-width="80px" class="demo-form-inline">
-                            <el-form-item label="筛选机构:">
+                            <el-form-item label="筛选学科:">
                                 <el-input v-model="formInline.user" placeholder="所属学年等"></el-input>
-                            </el-form-item>
-                            <el-form-item label="学生学号:">
-                                <el-input v-model="formInline.user" placeholder="学号"></el-input>
-                            </el-form-item>
-                            <el-form-item label="学生姓名:">
-                                <el-input v-model="formInline.user" placeholder="学生姓名"></el-input>
-                            </el-form-item>
-                            <el-form-item label="学科:">
-                                <el-input v-model="formInline.user" placeholder="学科"></el-input>
                             </el-form-item>
                             <el-form-item label="所属学年:">
-                                <el-input v-model="formInline.user" placeholder="所属学年等"></el-input>
+                                <el-input v-model="formInline.user" placeholder="学号"></el-input>
                             </el-form-item>
+
                             <el-form-item>
                                 <el-button type="primary" @click="onSubmit">查询</el-button>
                             </el-form-item>
@@ -73,15 +53,14 @@
                         <el-table-column type="selection" width="38" v-if="deleteOpen">
                         </el-table-column>
 
-                        <el-table-column prop="date" sortable label="学号">
-                        </el-table-column>
                         <el-table-column prop="name" sortable label="学生姓名">
                         </el-table-column>
-                        <el-table-column prop="address" label="学科名称">
+                        <el-table-column prop="date" sortable label="学号">
+                        </el-table-column>
+
+                        <el-table-column prop="address" label="所属学年">
                         </el-table-column>
                         <el-table-column prop="address" label="分值">
-                        </el-table-column>
-                        <el-table-column prop="address" label="所属学年">
                         </el-table-column>
 
                         <!-- <el-table-column type="expand" label="#" width="42">
@@ -124,7 +103,7 @@ export default {
 
       dialogVisible: false,
       deleteOpen: false,
-      importOpen: true,
+      importOpen: false,
       exportOpen: false,
       newOpen: false,
       data: [
