@@ -431,6 +431,13 @@ export const projectRouter = {
       meta: { hidden: true, title: "创建勤工俭学项目" }
     },
     {
+      path: "studyWorkExpand",
+      name: "studyWorkExpand",
+      title: "创建勤工俭学扩展",
+      component: () => import("../studyWorkExpand/createProject.vue"),
+      meta: { hidden: true, title: "创建勤工俭学扩展" }
+    },
+    {
       path: "studyWorkConfig",
       name: "studyWorkConfig",
       title: "勤工俭学配置",

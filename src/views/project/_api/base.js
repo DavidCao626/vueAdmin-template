@@ -170,7 +170,16 @@ const queryAllClassifyChild = data =>
         method: 'post',
         data: data
     })
+
+const queryEndProject = data =>
+    request({
+        url: "/studyWork/queryEndProject.do",
+        method: 'post',
+        data: data
+    })
+
 export default {
+    queryEndProject,
     queryAllClassifyChild,
     queryPovertyProject,
     queryNationalGrantsProject,

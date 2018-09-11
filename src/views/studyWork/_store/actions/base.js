@@ -225,8 +225,32 @@ const okCheckJobState = ({ commit, state }, params) => new Promise(resolve => {
         resolve(response)
     })
 })
+const complateCheck = ({ commit, state }, params) => new Promise(resolve => {
+    api.complateCheck(params).then(response => {
+        console.log(["complateCheck", response])
+        resolve(response)
+    })
+})
+
+
+const updateJobNumbers = ({ commit, state }, params) => new Promise(resolve => {
+    api.updateJobNumbers(params).then(response => {
+        console.log(["updateJobNumbers", response])
+        resolve(response)
+    })
+})
+const queryCanApplyJobOrg = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryCanApplyJobOrg(params).then(response => {
+        console.log(["queryCanApplyJobOrg", response])
+        resolve(response)
+    })
+})
+
 
 export default {
+    queryCanApplyJobOrg,
+    updateJobNumbers,
+    complateCheck,
     okCheckJobState,
     noCheckJobState,
     completeUserPendingByItemId,

@@ -8,11 +8,11 @@
 
                 <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
 
-                    <el-form-item label="记录状态">
+                    <!-- <el-form-item label="记录状态">
                         <el-select v-model="formInline.recordState" placeholder="记录状态">
                             <el-option v-for="item in recordStateList" :key="item.value" :value="item.value" :label="item.label"></el-option>
                         </el-select>
-                    </el-form-item>
+                    </el-form-item> -->
 
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -34,10 +34,10 @@
                 </el-table-column>
                 <el-table-column prop="employ_time" label="录用时间">
                 </el-table-column>
-                <el-table-column prop="post_time" label="到岗时间">
+                <el-table-column prop="should_post_time" label="应到岗时间">
                 </el-table-column>
 
-                <el-table-column label="操作" width="88" header-align="left" align="center">
+                <!-- <el-table-column label="操作" width="88" header-align="left" align="center">
                     <template slot-scope="scope">
                         <el-dropdown>
                             <el-button size="mini" @click="">
@@ -49,7 +49,7 @@
                             </el-dropdown-menu>
                         </el-dropdown>
                     </template>
-                </el-table-column>
+                </el-table-column> -->
             </el-table>
             <template slot="footer">
                 <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">

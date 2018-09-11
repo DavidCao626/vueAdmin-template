@@ -19,13 +19,6 @@
           <el-form-item label="招聘名额">
             <el-input-number v-model="formData.numbers" :min="1" label="名额"></el-input-number>
           </el-form-item>
-          <el-form-item label="联系电话">
-            <el-row>
-              <el-col :span="7">
-                <el-input v-model="formData.publisherMobile" placeholder="联系电话"></el-input>
-              </el-col>
-            </el-row>
-          </el-form-item>
           <el-form-item label="工作时间要求">
             <el-row>
               <el-col :span="7">
@@ -51,13 +44,6 @@
             <el-row>
               <el-col :span="11">
                 <el-input v-model="formData.jobDesc" type="textarea" rows="3" placeholder="请填写岗位相关信息及招聘条件"></el-input>
-              </el-col>
-            </el-row>
-          </el-form-item>
-          <el-form-item label="备注">
-            <el-row>
-              <el-col :span="11">
-                <el-input v-model="formData.remark" type="textarea" rows="3" placeholder="备注"></el-input>
               </el-col>
             </el-row>
           </el-form-item>

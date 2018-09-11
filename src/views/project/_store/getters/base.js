@@ -11,6 +11,9 @@ export const getStudyWorkProjectFormData = state => {
 export const getAppraiseResultProjectFormData = state => {
     return state.baseproject.appraiseResultProjectFormData
 };
+export const getStudyWorkProjectExpandFormData = state => {
+    return state.baseproject.studyWorkProjectExpandFormData
+};
 
 
 export const getUploadAttrUrl = state => { 

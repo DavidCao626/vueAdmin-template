@@ -50,9 +50,9 @@
               </el-button>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item @click.native="showResume(scope.row)">查看简历</el-dropdown-item>
-                <el-dropdown-item @click.native="employ(scope.row)">录用</el-dropdown-item>
-                <!-- <el-dropdown-item @click.native="reEmploy(scope.row)">解除录用</el-dropdown-item> -->
-                <el-dropdown-item @click.native="post(scope.row)">到岗确认</el-dropdown-item>
+                <el-dropdown-item @click.native="showInfo(scope.row)">查看信息</el-dropdown-item>
+                <el-dropdown-item v-if="scope.row.state == 'NE' " @click.native="employ(scope.row)">录用</el-dropdown-item>
+                <el-dropdown-item v-if="scope.row.state == 'EM' " @click.native="post(scope.row)">到岗确认</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </template>
@@ -133,13 +133,20 @@ export default {
         value: "org_code",
         children: "children"
       },
-
       orgList: [],
       data: []
     };
   },
   watch: {},
   methods: {
+    showInfo(row){
+      this.$router.push({
+        path:"/user/info",
+        query:{
+          stuNo:row.applyUserCode
+        }
+      })
+    },
     showResume(row){
  this.$router.push({
         path: "/studyWork/resumeDetail",
@@ -248,7 +255,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       if (!to.query.jobCode) {
-        this.$message.error("参数错误");
+        vm.$message.error("参数错误");
       } else {
         vm.jobCode = to.query.jobCode;
         vm.getDict();

@@ -134,6 +134,23 @@ export const baseproject = {
             yearType: "2018"//年度
         }
     },
+    //勤工俭学扩展
+    studyWorkProjectExpandFormData: {
+        projectId: 0,
+        projectName: "",
+        projectUserCode: "",
+        projectDesc: "",
+        projectServiceType: "",
+        planStartTime: "",
+        planCompleteTime: "",
+        isSendPublicNotice: "Y",
+        projectAttachmentId: [],
+        attrDetailBean: [],
+        expand: {
+            id: 0,
+            projectCode: ""//名称
+        }
+    },
     tempProjectId: "",//临时储存当前项目id
     uploadAttrUrl: "",
     appraiseCategoryList: [],
