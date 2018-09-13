@@ -42,7 +42,13 @@ const querySchoolYearDict = ({ commit, state }, params) =>
       resolve(response);
     });
   });
-
+const getCurrentOrgListAndOwner = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.getCurrentOrgListAndOwner(params).then(response => {
+      console.log(["getCurrentOrgListAndOwner", response]);
+      resolve(response);
+    });
+  });
   
 export default {
   queryStuScoreForStaff,
@@ -52,4 +58,5 @@ export default {
   importStuScoreForClass,
   processRank,
   querySchoolYearDict,
+  getCurrentOrgListAndOwner
 };

@@ -4,25 +4,28 @@
         <div slot="panel">
             <div>
                 <el-dialog title="导入班级成绩" :visible.sync="dialogVisible" width="400px">
-                    <el-form :model="formInline" style="margin-top: -25px;">
-                        <el-form-item label="筛选学年">
-                            <el-input v-model="formInline.user" placeholder="所属学年等"></el-input>
+                    <el-form :model="importForm" style="margin-top: -25px;">
+                        <el-form-item label="1、选择要导入到的学年：">
+                            <el-select v-model="importForm.schoolYearId" placeholder="全部">
+                                <el-option v-for="item in schoolYearDict" :key="item.value" :label="item.name" :value="item.id">
+                                </el-option>
+                            </el-select>
                         </el-form-item>
-                        <el-form-item label="上传数据">
-                            <el-upload class="upload-demo" drag :action="action" :limit='1' @onSuccess="onUploadSuccess">
-                                <i class="el-icon-upload"></i>
-                                <div class="el-upload__text">将文件拖到此处，或
-                                    <em>点击上传</em>
-                                </div>
+                        <el-form-item label="2、">
+                            <br/>
+                            <el-upload class="upload-demo" :action="action" :limit='1' :onSuccess="onUploadSuccess">
+                                <el-button size="small" type="primary" plain>
+                                    <i class="el-icon-upload"></i> 点击上传成绩文件</el-button>
                                 <div class="el-upload__tip" slot="tip">只能上传xlx/xlsx</div>
                             </el-upload>
                         </el-form-item>
-                        <el-form-item>
-                            <el-button type="primary" @click="onSubmit">提交后台运行</el-button>
-                            <el-button @click="dialogVisible=false">取消</el-button>
-                        </el-form-item>
-                    </el-form>
 
+                    </el-form>
+                    <div slot="footer">
+                        <el-button type="primary" @click="onSubmitUpload">
+                            <i class="el-icon-news"></i> 提交后台导入</el-button>
+                        <el-button @click="dialogVisible=false">取消</el-button>
+                    </div>
                 </el-dialog>
 
                 <elx-table-layout>
@@ -47,64 +50,64 @@
                                 <i class="el-icon-delete"> ({{ multipleSelection.length }})</i>
                             </el-button>
                         </span>
+
                         <el-form label-position="left" :inline="true" :model="formInline" size="mini" label-width="80px" class="demo-form-inline">
                             <el-form-item label="筛选机构:">
-                                <el-input v-model="formInline.user" placeholder="所属学年等"></el-input>
+                                <el-cascader v-model="formInline.orgCode" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
+
                             </el-form-item>
                             <el-form-item label="学生学号:">
-                                <el-input v-model="formInline.user" placeholder="学号"></el-input>
+                                <el-input v-model="formInline.stuNo" placeholder="全部"></el-input>
                             </el-form-item>
                             <el-form-item label="学生姓名:">
-                                <el-input v-model="formInline.user" placeholder="学生姓名"></el-input>
+                                <el-input v-model="formInline.stuName" placeholder="全部"></el-input>
                             </el-form-item>
                             <el-form-item label="学科:">
-                                <el-input v-model="formInline.user" placeholder="学科"></el-input>
+                                <el-input v-model="formInline.subject" placeholder="全部"></el-input>
                             </el-form-item>
                             <el-form-item label="所属学年:">
-                                <el-input v-model="formInline.user" placeholder="所属学年等"></el-input>
+                                <el-select v-model="formInline.schoolYearId" placeholder="全部">
+                                    <el-option v-for="item in schoolYearDict" :key="item.value" :label="item.name" :value="item.id">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="排序规则:">
+                                <el-select v-model="formInline.orderRule" placeholder="选择成绩排序规则">
+                                    <el-option label="成绩从高到低" value="desc">
+                                    </el-option>
+                                    <el-option label="成绩从低到高" value="asc">
+                                    </el-option>
+                                    <el-option label="最新" value="">
+                                    </el-option>
+                                </el-select>
                             </el-form-item>
                             <el-form-item>
-                                <el-button type="primary" @click="onSubmit">查询</el-button>
+                                <el-button type="primary" :loading="loading" @click="onSubmit">查询</el-button>
                             </el-form-item>
                         </el-form>
                     </template>
 
-                    <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop: 'name',prop: 'address'}" @selection-change="handleSelectionChange">
+                    <el-table v-loading="loading" :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop:'score',prop: 'name',prop: 'address'}" @selection-change="handleSelectionChange">
                         <el-table-column type="selection" width="38" v-if="deleteOpen">
                         </el-table-column>
 
-                        <el-table-column prop="date" sortable label="学号">
+                        <el-table-column prop="stu_no" sortable label="学号">
                         </el-table-column>
-                        <el-table-column prop="name" sortable label="学生姓名">
-                        </el-table-column>
-                        <el-table-column prop="address" label="学科名称">
-                        </el-table-column>
-                        <el-table-column prop="address" label="分值">
-                        </el-table-column>
-                        <el-table-column prop="address" label="所属学年">
+                        <el-table-column prop="stu_name" sortable label="学生姓名">
                         </el-table-column>
 
-                        <!-- <el-table-column type="expand" label="#" width="42">
-                            <template slot-scope="props" style="background-color:#f7f8f9">
-                                <el-form label-position="left" inline class="demo-table-expand">
-                                    <el-form-item label="身份证号码:">
-                                        <span>{{ props.row.name }}</span>
-                                    </el-form-item>
-                                    <br/>
-                                    <el-form-item label="高考成绩:">
-                                        <span>{{ props.row.category }}</span>
-                                    </el-form-item>
-                                    <br/>
-                                    <el-form-item label="备注资料:">
-                                        <span>{{ props.row.category }}</span>
-                                    </el-form-item>
-                                </el-form>
-                            </template>
-                        </el-table-column> -->
+                        <el-table-column prop="org_name" label="所属机构">
+                        </el-table-column>
+                        <el-table-column prop="subject" label="学科名称">
+                        </el-table-column>
+                        <el-table-column prop="score" sortable label="分值">
+                        </el-table-column>
+                        <el-table-column prop="school_year_name" label="所属学年">
+                        </el-table-column>
                     </el-table>
 
                     <template slot="footer">
-                        <el-pagination :page-size="100" layout="prev, pager, next, jumper" :total="1000">
+                        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
                         </el-pagination>
                     </template>
 
@@ -116,114 +119,119 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import store from "../_store/index.js";
+import api from "../_api/stuScore.js";
+import elxTable from "../_mixin/elxTable.js";
+import store from "../_mixin/store.js";
 export default {
+  mixins: [elxTable, store],
   data() {
     return {
-      multipleSelection: [], //选中的值
-      isMultipleSelection: false, //是否选中
-
-      dialogVisible: false,
-      deleteOpen: false,
-      importOpen: true,
-      exportOpen: false,
-      newOpen: false,
-      data: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ],
+      
       formInline: {
         orgCode: [], //组织机构
-        user:''
+        user: "",
+        schoolYearId: "",
+        stuNo: "",
+        stuName: "",
+        subject: "",
+        orderRule: ""
       },
+      importForm: {
+        schoolYearId: "",
+        urlPath: ""
+      },
+
       orgProps: {
         label: "org_name",
         value: "org_code",
         children: "children"
       },
-
       orgList: [],
-      data: [],
-      action: "https://jsonplaceholder.typicode.com/posts/"
+      schoolYearDict: [],
+      action: api.uploadStuScore
     };
   },
-  watch: {
-    multipleSelection() {
-      return this.multipleSelection.length > 0
-        ? (this.isMultipleSelection = true)
-        : (this.isMultipleSelection = false);
-    }
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.getOrgList();
+      vm.getSchoolYearDict();
+    });
   },
   methods: {
     getOrgList() {
       this.getCurrentOrgListAndOwner({}).then(response => {
-        console.log(["orgList", response]);
         this.orgList = response.resBody;
+        this.formInline.orgCode.push(this.orgList[0]["org_code"]);
+        this.getData(this.orgList[0]["org_code"]);
       });
-    },
-    handleClose(done) {
-      this.$confirm("确认关闭？")
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
     },
     onSubmit() {
-      console.log("submit!");
+      this.getData();
     },
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
-    onMultipleSelectionDel() {
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(() => {
-        this.$message({
-          type: "success",
-          message: "删除成功!"
+    onSubmitUpload() {
+      if (!this.importForm.schoolYearId || !this.importForm.urlPath) {
+        return this.$message.error("学年和文件字段必须都有值");
+      }
+      this.$confirm(
+        "此操作将在后台执行导入任务, 稍后您可以凭借任务单号查看导入结果",
+        "提示",
+        {
+          confirmButtonText: "知道了",
+          cancelButtonText: "取消操作",
+          type: "warning"
+        }
+      ).then(() => {
+        this.importStuScoreForClass({
+          fileId: this.importForm.urlPath,
+          schoolYearId: this.importForm.schoolYearId
+        }).then(response => {
+          this.dialogVisible = false;
+          this.$notify({
+            title: "后台任务提醒",
+            message:
+              "任务单号:" +
+              response.resBody.batch +
+              ",已创建。<br/><a href='http://baidu.com' target='_blank'><small>点击了解</small></a>",
+            duration: 0,
+            type: "info",
+            dangerouslyUseHTMLString: true
+          });
         });
-        this.$emit("onSelectionDel", this.multipleSelection);
       });
     },
-    onExportExcel() {
-      this.$emit("onExportExcel");
+
+    onUploadSuccess(response, file, fileList) {
+      this.importForm.urlPath = response.body.resBody.fileId;
     },
-    onUploadSuccess() {
-      this.$emit("onUploadSuccess");
+
+    getData(orgCode) {
+      //debugger;
+      this.loading = true;
+      var requestData = {
+        currentPage: this.pageInfo.currentPage,
+        pageSize: this.pageInfo.pageSize,
+        orgCode:
+          orgCode ||
+          this.formInline.orgCode[this.formInline.orgCode.length - 1],
+        stuNo: this.formInline.stuNo,
+        stuName: this.formInline.stuName,
+        schoolYearId: this.formInline.schoolYearId,
+        subject: this.formInline.subject,
+        orderRule: this.formInline.orderRule.toString()
+      };
+      this.queryStuScoreForStaff(requestData).then(response => {
+        this.loading = false;
+        this.data = response.resBody.baseData;
+        this.pageInfo = response.resBody.pageInfo;
+      });
     },
-    onNew() {
-      this.$emit("onNew");
+    getSchoolYearDict() {
+      this.querySchoolYearDict({}).then(response => {
+        this.loading = false;
+        this.schoolYearDict = response.resBody;
+      });
     }
   }
 };
 </script>
 
-<style scoped>
-.el-form-item {
-  margin-bottom: 0px;
-}
-.demo-form-inline {
-  display: inline !important;
-}
-</style>

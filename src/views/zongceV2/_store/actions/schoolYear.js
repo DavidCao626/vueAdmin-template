@@ -39,6 +39,7 @@ const deleteSchoolYear = ({ commit, state }, params) =>
       resolve(response);
     });
   });
+
 export default {
   deleteSchoolYear,
   insertBatchSchoolYear,

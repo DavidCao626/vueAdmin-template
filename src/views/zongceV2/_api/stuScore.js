@@ -3,7 +3,7 @@ import ajax from "~/utils/ajax";
 const api_path = "/stuScore";
 
 //学生成绩上传地址
-const uploadStuScore = "/public/uploadStuScore.do";
+const uploadStuScore = process.env.BASE_API+"/public/uploadStuScore.do";
 
 //老师查学生成绩
 
@@ -16,7 +16,7 @@ const queryStuScoreForStaff = data =>
 //学生自己查询自己成绩
 const queryStuScoreForStu = data =>
   request({
-    url: api_path + "/queryStuScoreForStaff.do",
+    url: api_path + "/queryStuScoreForStu.do",
     method: "post",
     data: data
   });
@@ -53,11 +53,16 @@ const importStuScoreForClass = data =>
 //查询学年列表(下拉框)
 const querySchoolYearDict = data =>
   request({
-    url: api_path + "/querySchoolYearDict.do",
+    url: "/schoolYear/querySchoolYearDict.do",
     method: "post",
     data: data
   });
-  
+const getCurrentOrgListAndOwner = data =>
+  request({
+    url: "/systemManagerApi/getCurrentOrgListAndOwner.do",
+    method: 'post',
+    data: data
+  })
 export default {
   queryStuScoreForStaff,
   queryStuScoreForStu,
@@ -65,6 +70,7 @@ export default {
   queryScoreRankForStu,
   importStuScoreForClass,
   processRank,
+  getCurrentOrgListAndOwner,
   querySchoolYearDict,
   uploadStuScore,
 };

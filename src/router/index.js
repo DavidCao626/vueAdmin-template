@@ -19,7 +19,7 @@ import _lodash from "lodash";
 import { userRouter } from "~/views/user/_router/index";
 //import { projectRouter } from "~/views/project/_router/index";
 //import { messagesRouter } from "~/views/messages/_router/index";
-//import { zongceRouter } from "~/views/zongce/_router/index";
+import { zongceRouter } from "~/views/zongce/_router/index";
 //import { componentsRouter } from "~/components/_router";
 //import { studyWorkRouter } from "~/views/studyWork/_router/index"
 import { zongceV2Router } from "~/views/zongceV2/_router/index";
@@ -34,7 +34,7 @@ export const constantRouterMap = [
     name: "home_index",
     children: [
       zongceV2Router, // studyWorkRouter,
-      //zongceRouter,
+      zongceRouter,
       userRouter, //componentsRouter,
       //projectRouter,
       //messagesRouter,
