@@ -4,7 +4,7 @@ const filePath = "/Users/davidcao/chifen.docx";
 
 const basePath ="stuPunish"
 
-const OUTPUT_PATH = "./src/views/zongceV2/_store/_actions/" + basePath+".js";
+const OUTPUT_PATH = "./src/views/zongceV2/_store/actions/" + basePath+".js";
 
 
 var render = require("json-templater/string");
