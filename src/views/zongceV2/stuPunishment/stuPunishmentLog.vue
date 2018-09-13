@@ -1,9 +1,32 @@
  <template>
     <page>
-        <div slot="title">学生成绩查询</div>
+        <div slot="title">学生处分查询</div>
         <div slot="panel">
             <div>
-                <el-dialog title="导入班级成绩" :visible.sync="dialogVisible" width="400px">
+                <el-dialog title="新建处分方案" :visible.sync="dialogVisible_new" width="500px">
+                    <el-form :model="formInline" class="demo-form-inline" label-width="100px">
+                        <el-form-item label="所属学年">
+                            <el-input v-model="formInline.name" placeholder="请输入学年名称"></el-input>
+                        </el-form-item>
+                        <el-form-item label="创建日期">
+                            <el-date-picker v-model="formInline.begindate" type="date" placeholder="选择日期">
+                            </el-date-picker>
+                        </el-form-item>
+                        <el-form-item label="生效日期">
+                            <el-date-picker v-model="formInline.enddate" type="date" placeholder="选择日期">
+                            </el-date-picker>
+                        </el-form-item>
+
+                        <el-form-item label="方案编号">
+                            <el-input v-model="formInline.describe" placeholder="请输入简称"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="onSave">确定提交</el-button>
+                            <el-button @click="dialogVisible=false">取消</el-button>
+                        </el-form-item>
+                    </el-form>
+                </el-dialog>
+                <el-dialog title="导入学生处分数据" :visible.sync="dialogVisible" width="400px">
                     <el-form :model="formInline" style="margin-top: -25px;">
                         <el-form-item label="筛选学年">
                             <el-input v-model="formInline.user" placeholder="所属学年等"></el-input>
@@ -28,6 +51,11 @@
                 <elx-table-layout>
                     <template slot="headerRight">
                         <el-button-group>
+                            <el-tooltip class="item" effect="dark" content="新增记录" placement="bottom" v-if="newOpen">
+                                <el-button plain size="mini" @click="dialogVisible_new = true">
+                                    <i class="el-icon-plus"></i>
+                                </el-button>
+                            </el-tooltip>
                             <el-tooltip class="item" effect="dark" content="导入数据" placement="bottom" v-if="importOpen">
                                 <el-button plain size="mini" @click="dialogVisible = true">
                                     <i class="el-icon-download"></i>
@@ -116,19 +144,17 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import store from "../_store/index.js";
 export default {
   data() {
     return {
       multipleSelection: [], //选中的值
       isMultipleSelection: false, //是否选中
-
+      dialogVisible_new: false,
       dialogVisible: false,
       deleteOpen: false,
       importOpen: true,
       exportOpen: false,
-      newOpen: false,
+      newOpen: true,
       data: [
         {
           date: "2016-05-02",
@@ -152,17 +178,9 @@ export default {
         }
       ],
       formInline: {
-        orgCode: [], //组织机构
-        user:''
+        user: "",
+        region: ""
       },
-      orgProps: {
-        label: "org_name",
-        value: "org_code",
-        children: "children"
-      },
-
-      orgList: [],
-      data: [],
       action: "https://jsonplaceholder.typicode.com/posts/"
     };
   },
@@ -174,12 +192,6 @@ export default {
     }
   },
   methods: {
-    getOrgList() {
-      this.getCurrentOrgListAndOwner({}).then(response => {
-        console.log(["orgList", response]);
-        this.orgList = response.resBody;
-      });
-    },
     handleClose(done) {
       this.$confirm("确认关闭？")
         .then(_ => {
