@@ -1,4 +1,4 @@
- <template>
+stuPunishLog <template>
     <page>
         <div slot="title">学生处分查询</div>
         <div slot="panel">

@@ -61,6 +61,10 @@ fs.writeFile(OUTPUT_PATH, template, err => {
   //将./2.txt替换为你要输出的文件路径
   if (err) throw err;
 });
+// fs.writeFile("./src/views/zongceV2/stuPunish/index.vue", template, err => {
+//   //将./2.txt替换为你要输出的文件路径
+//   if (err) throw err;
+// });
 
 console.log("[build entry] DONE:", OUTPUT_PATH);
 //接口地址/stuPunish/queryPunishList.do接口

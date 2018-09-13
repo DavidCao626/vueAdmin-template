@@ -42,21 +42,21 @@ export const zongceV2Router = {
       meta: { title: "班级成绩排名管理", hidden: true }
     },
     {
-      path: "stuPunishment",
-      name: "stuPunishment",
-      component: () => import("../stuPunishment/index.vue"),
+      path: "stuPunish",
+      name: "stuPunish",
+      component: () => import("../stuPunish/index.vue"),
       meta: { title: "学生处分管理", hidden: true }
     },
     {
-      path: "myPunishment",
-      name: "myPunishment",
-      component: () => import("../stuPunishment/myPunishment.vue"),
+      path: "myPunish",
+      name: "myPunish",
+      component: () => import("../stuPunish/myPunish.vue"),
       meta: { title: "我的处分查询", hidden: true }
     },
     {
-      path: "stuPunishmentLog",
-      name: "stuPunishmentLog",
-      component: () => import("../stuPunishment/stuPunishmentLog.vue"),
+      path: "stuPunishLog",
+      name: "stuPunishLog",
+      component: () => import("../stuPunish/stuPunishLog.vue"),
       meta: { title: "学生处分查询", hidden: true }
     }
   ]
