@@ -31,6 +31,13 @@
                 <elx-table-layout>
                     <template slot="headerRight">
                         <el-button-group>
+                            <el-tooltip class="item" effect="dark" content="下载模版" placement="bottom" >
+                                <el-button plain size="mini">
+                                    <a :href="urldo" target='_blank'>
+                                        <i class="el-icon-sold-out"></i>
+                                    </a>
+                                </el-button>
+                            </el-tooltip>
                             <el-tooltip class="item" effect="dark" content="导入数据" placement="bottom" v-if="importOpen">
                                 <el-button plain size="mini" @click="dialogVisible = true">
                                     <i class="el-icon-download"></i>
@@ -126,7 +133,6 @@ export default {
   mixins: [elxTable, store],
   data() {
     return {
-      
       formInline: {
         orgCode: [], //组织机构
         user: "",
@@ -148,16 +154,23 @@ export default {
       },
       orgList: [],
       schoolYearDict: [],
+      urldo: "",
       action: api.uploadStuScore
     };
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.getOrgList();
+       vm.geturldo();
       vm.getSchoolYearDict();
     });
   },
   methods: {
+    geturldo() {
+      this.getApi(this.getScoreTemplateUrl, {}, (r, v) => {
+        v.urldo = r.url;
+      });
+    },
     getOrgList() {
       this.getCurrentOrgListAndOwner({}).then(response => {
         this.orgList = response.resBody;

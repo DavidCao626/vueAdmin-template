@@ -49,8 +49,16 @@ const getCurrentOrgListAndOwner = ({ commit, state }, params) =>
       resolve(response);
     });
   });
-  
+const getScoreTemplateUrl = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.getScoreTemplateUrl(params).then(response => {
+      console.log(["getScoreTemplateUrl", response]);
+      resolve(response);
+    });
+  });
+
 export default {
+  getScoreTemplateUrl,
   queryStuScoreForStaff,
   queryStuScoreForStu,
   queryScoreRankForStaff,

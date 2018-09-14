@@ -3,6 +3,13 @@
 import request from "~/utils/request";
 import ajax from "~/utils/ajax";
 
+const queryStudentBaseInfo = data =>
+  request({
+    url: "/appraise/queryStudentBaseInfo.do",
+    method: "post",
+    data: data
+  });
+
 const queryPunishList = data =>
   request({
     url: "/stuPunish/queryPunishList.do",
@@ -135,7 +142,14 @@ const importPunishRecord = data =>
     method: "post",
     data: data
   });
+const getPunishTemplateUrl = data =>
+  request({
+    url: "/stuPunish/getPunishTemplateUrl.do",
+    method: "post",
+    data: data
+  });
 export default {
+  getPunishTemplateUrl,
   queryPunishList,
   getPunishStateDict,
   getPunishItemStateDict,
@@ -154,5 +168,7 @@ export default {
   deletePunishRecord,
   getPunshiRecordById,
   uploadStuPunish,
-  importPunishRecord
+  importPunishRecord,
+
+  queryStudentBaseInfo
 };

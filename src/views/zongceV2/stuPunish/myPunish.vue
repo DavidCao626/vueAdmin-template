@@ -16,7 +16,7 @@
                                     </el-option>
                                 </el-select>
                             </el-form-item>
-                            <el-form-item label="相关科目:">
+                            <el-form-item label="相关科目:" v-show="formInline.schoolYearId">
                                 <el-select v-model="formInline.subjectCode" placeholder="全部">
                                     <el-option v-for="(km,k) in schoolKm" :key="k" :label="km.name" :value="km.code">
                                     </el-option>

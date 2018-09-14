@@ -43,7 +43,10 @@ export default {
       deletePunishRecord: store.namespace + "/deletePunishRecord",
       getPunshiRecordById: store.namespace + "/getPunshiRecordById",
       uploadStuPunish: store.namespace + "/uploadStuPunish",
-      importPunishRecord: store.namespace + "/importPunishRecord"
+      importPunishRecord: store.namespace + "/importPunishRecord",
+      queryStudentBaseInfo: store.namespace + "/queryStudentBaseInfo",
+      getScoreTemplateUrl: store.namespace + "/getScoreTemplateUrl",
+      getPunishTemplateUrl: store.namespace + "/getPunishTemplateUrl"
     })
   }
 };

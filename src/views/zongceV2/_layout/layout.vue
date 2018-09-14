@@ -1,6 +1,6 @@
 <style scoped>
 .zongceV2 >>> .el-form-item {
-  margin-bottom:10px;
+  margin-bottom:18px;
 }
 .zongceV2 >>> .demo-form-inline {
   display: inline !important;

@@ -2,6 +2,8 @@ import request from "~/utils/request";
 import ajax from "~/utils/ajax";
 const api_path = "/stuScore";
 
+
+
 //学生成绩上传地址
 const uploadStuScore = process.env.BASE_API+"/public/uploadStuScore.do";
 
@@ -63,7 +65,14 @@ const getCurrentOrgListAndOwner = data =>
     method: 'post',
     data: data
   })
+const getScoreTemplateUrl = data =>
+  request({
+    url: "/stuScore/getScoreTemplateUrl.do",
+    method: "post",
+    data: data
+  });
 export default {
+  getScoreTemplateUrl,
   queryStuScoreForStaff,
   queryStuScoreForStu,
   queryScoreRankForStaff,
