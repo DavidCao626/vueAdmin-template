@@ -21,7 +21,7 @@ export default {
       uploadStuScore: store.namespace + "/uploadStuScore",
       processRank: store.namespace + "/processRank",
       queryScoreRankForStu: store.namespace + "/queryScoreRankForStu",
-
+      queryStuScoreForStu: store.namespace + "/queryStuScoreForStu",
       //--------
       queryPunishList: store.namespace + "/queryPunishList",
       getPunishStateDict: store.namespace + "/getPunishStateDict",
@@ -32,9 +32,11 @@ export default {
       processPunishName: store.namespace + "/processPunishName",
       deletePunishById: store.namespace + "/deletePunishById",
       startPunish: store.namespace + "/startPunish",
-      getPunishItemBeanByPunishId:store.namespace + "/getPunishItemBeanByPunishId",
+      getPunishItemBeanByPunishId:
+        store.namespace + "/getPunishItemBeanByPunishId",
       savePunishItemBean: store.namespace + "/savePunishItemBean",
-      queryPunishItemByShoolYearId:store.namespace + "/queryPunishItemByShoolYearId",
+      queryPunishItemByShoolYearId:
+        store.namespace + "/queryPunishItemByShoolYearId",
       queryPunishRecordForStaff: store.namespace + "/queryPunishRecordForStaff",
       queryPunishRecordForStu: store.namespace + "/queryPunishRecordForStu",
       insertPunishRecord: store.namespace + "/insertPunishRecord",

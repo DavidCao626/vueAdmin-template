@@ -5,93 +5,140 @@
       <div slot="panel">
         <div>
           <el-dialog title="新建处分方案" :visible.sync="dialogVisible" width="500px">
-            <el-form :model="formInline" class="demo-form-inline" label-width="100px">
-              <el-form-item label="所属学年">
-                <el-input v-model="formInline.name" placeholder="请输入学年名称"></el-input>
-              </el-form-item>
-              <el-form-item label="创建日期">
-                <el-date-picker v-model="formInline.begindate" type="date" placeholder="选择日期">
-                </el-date-picker>
-              </el-form-item>
-              <el-form-item label="生效日期">
-                <el-date-picker v-model="formInline.enddate" type="date" placeholder="选择日期">
-                </el-date-picker>
-              </el-form-item>
+            <el-row>
+              <el-col :span="22">
+                <el-form :model="formInline" label-width="100px">
+                  <el-form-item label="所属学年:">
+                    <el-select v-model="formInline.schoolYearId">
+                      <el-option v-for="item in this.formInline.schoolYearDict" :key="item.value" :label="item.name" :value="item.id">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
 
-              <el-form-item label="方案编号">
-                <el-input v-model="formInline.describe" placeholder="请输入简称"></el-input>
-              </el-form-item>
-              <el-form-item>
-                <el-button type="primary" @click="onSave">确定提交</el-button>
-                <el-button @click="dialogVisible=false">取消</el-button>
-              </el-form-item>
-            </el-form>
+                  <el-form-item label="方案名称">
+                    <el-input v-model="formInline.name" placeholder="请输入方案名称"></el-input>
+                  </el-form-item>
+
+                </el-form>
+              </el-col>
+            </el-row>
+            <div slot="footer">
+              <el-button type="primary" @click="onSave">确定提交</el-button>
+              <el-button @click="dialogVisible=false">取消</el-button>
+            </div>
           </el-dialog>
 
           <el-dialog title="编辑处分方案" :visible.sync="dialogVisibleEdit" width="500px">
 
-            <el-form :model="formInline" class="demo-form-inline" label-width="100px">
-              <el-form-item label="开始日期">
-                <el-date-picker v-model="formInlineEdit.begindate" type="date" placeholder="选择日期">
-                </el-date-picker>
+            <el-form :model="formInlineEdit" label-width="100px">
+              <el-form-item label="所属学年:">
+                <el-select v-model="formInlineEdit.schoolYearId">
+                  <el-option v-for="item in this.formInline.schoolYearDict" :key="item.value" :label="item.name" :value="item.id">
+                  </el-option>
+                </el-select>
               </el-form-item>
-              <el-form-item label="结束日期">
-                <el-date-picker v-model="formInlineEdit.enddate" type="date" placeholder="选择日期">
-                </el-date-picker>
+
+              <el-form-item label="方案名称">
+                <el-input v-model="formInlineEdit.name" placeholder="请输入方案名称"></el-input>
               </el-form-item>
-              <el-form-item label="学年名称">
-                <el-input v-model="formInlineEdit.name" placeholder="请输入学年名称"></el-input>
-              </el-form-item>
-              <el-form-item label="学年简称">
-                <el-input v-model="formInlineEdit.describe" placeholder="请输入简称"></el-input>
-              </el-form-item>
-              <el-form-item>
-                <el-button type="primary" @click="onSaveEdit">保存提交</el-button>
-                <el-button @click="dialogVisibleEdit=false">取消</el-button>
-              </el-form-item>
+
             </el-form>
+
+            <div slot="footer">
+              <el-button type="primary" @click="onSaveEdit">保存提交</el-button>
+              <el-button @click="dialogVisibleEdit=false">取消</el-button>
+            </div>
           </el-dialog>
 
           <el-dialog title="配置方案处分条目" :visible.sync="dialogVisible_todos" width="880px" style="max-hegth:50vh">
             <div style="overflow: auto;overflow-x: hidden;max-height: 50vh;">
 
-              <todos></todos>
+              <todos :todos="todosdata" :todoIsRuning="todoIsRuning"></todos>
             </div>
             <div slot="footer">
-              <el-button type="primary">提交配置</el-button>
+              <el-button type="primary" @click="onSaveTodos">提交保存条目</el-button>
               <el-button @click="dialogVisible_todos=false">取消</el-button>
+            </div>
+          </el-dialog>
+
+          <el-dialog title="拷贝为新副本方案" :visible.sync="dialogVisible_copy" width="500px">
+
+            <el-form :model="formInlines" label-width="100px">
+              <el-form-item label="新方案学年:">
+                <el-select v-model="formInlines.schoolYearId">
+                  <el-option v-for="item in this.formInline.schoolYearDict" :key="item.value" :label="item.name" :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="新方案名称">
+                <el-input v-model="formInlines.name" placeholder="请输入方案名称"></el-input>
+              </el-form-item>
+
+            </el-form>
+
+            <div slot="footer">
+              <el-button type="primary" @click="onSaveCopy">保存提交</el-button>
+              <el-button @click="dialogVisible_copy=false">取消</el-button>
             </div>
           </el-dialog>
 
           <elx-table-layout>
 
             <template slot="headerLeft">
+              <el-form :inline="true" size="small">
+                <el-form-item label="所属学年:">
+                  <el-select v-model="schoolYearId" placeholder="全部">
+                    <el-option v-for="item in schoolYearDict" :key="item.value" :label="item.name" :value="item.id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="方案名称:">
+                  <el-input v-model="name" placeholder="全部"></el-input>
+                </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" :loading="loading" @click="onSubmit">查询</el-button>
+                </el-form-item>
+              </el-form>
+            </template>
+
+            <template slot="headerRight">
               <el-button @click="add" size="small" type="primary">新建处分方案</el-button>
             </template>
 
-            <el-table v-loading="loading" :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop: 'name',prop: 'address', prop: 'startTime'}" @selection-change="handleSelectionChange">
+            <el-table v-loading="loading" :row-class-name="tableRowClassName" :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'name', prop: 'createTime',prop: 'effectTime', prop: 'state'}" @selection-change="handleSelectionChange">
               <el-table-column type="selection" width="38" v-if="deleteOpen">
               </el-table-column>
-              <el-table-column prop="startTime" sortable label="方案编号" :formatter="dateFormat">
+              <el-table-column prop="state" sortable width="80" label="状态">
+                <template slot-scope="scope">
+                  <el-tag type="success" v-if="scope.row.state === 'EF'" disable-transitions>已生效</el-tag>
+                  <span v-else> [草稿]</span>
+                </template>
               </el-table-column>
-              <el-table-column prop="endTime" label="方案名称" :formatter="dateFormat">
-              </el-table-column>
-              <el-table-column prop="endTime" label="方案的状态" :formatter="dateFormat">
-              </el-table-column>
-              <el-table-column prop="name" sortable label="所属学年">
-              </el-table-column>
-              <el-table-column prop="shortName" sortable label="生效日期">
+              <el-table-column prop="name" sortable label="方案名称">
               </el-table-column>
 
-              <el-table-column prop="createUserLogin" label="所属的学院">
+              <el-table-column prop="schoolYearName" sortable label="所属学年">
+              </el-table-column>
+              <el-table-column prop="createTime" sortable label="创建日期" :formatter="dateFormat">
+              </el-table-column>
+              <el-table-column prop="effectTime" sortable label="生效日期" :formatter="dateFormat">
+              </el-table-column>
+
+              <el-table-column prop="orgName" label="组织名称">
               </el-table-column>
 
               <el-table-column label="操作" width="305px">
                 <template slot-scope="scope">
-                  <el-button-group>
+                  <div v-if="scope.row.state === 'EF'">
+                    <el-button size="small" type="text" @click="handleSeeTodos(scope.$index, scope.row)">
+                      <i class="el-icon-view"></i>&nbsp;&nbsp;查看配置</el-button>
+                    <el-button size="small" type="text" @click="handleCopy(scope.$index, scope.row)">
+                      <i class="el-icon-document"></i>&nbsp;&nbsp;拷贝为方案副本</el-button>
+                  </div>
+                  <el-button-group v-else>
                     <el-button size="mini" plain @click="handleTodos(scope.$index, scope.row)">
                       <i class="el-icon-setting"></i> 配置</el-button>
-                    <el-button size="mini" plain @click="handleEdit(scope.$index, scope.row)">
+                    <el-button size="mini" plain @click="handleRun(scope.$index, scope.row)">
                       <i class="el-icon-caret-right"></i> 启动</el-button>
                     <!-- <el-button size="mini"  @click="handleEdit(scope.$index, scope.row)">拷贝</el-button> -->
                     <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">
@@ -118,9 +165,8 @@
 <script>
 import moment from "moment";
 import todos from "./_components/todosManagement";
-
 import elxTable from "../_mixin/elxTable.js";
-import store1 from "../_mixin/store.js";
+import store from "../_mixin/store.js";
 export default {
   mixins: [elxTable, store],
   components: {
@@ -130,21 +176,14 @@ export default {
     return {
       dialogVisibleEdit: false,
       dialogVisible_todos: false,
-      multipleSelection: [], //选中的值
-      isMultipleSelection: false, //是否选中
-
+      dialogVisible_copy: false,
       dialogVisible: false,
       dialogVisiblePl: false,
-      deleteOpen: false,
       importOpen: false,
-      exportOpen: false,
-      newOpen: false,
-      pageInfo: {
-        currentPage: 1,
-        pageSize: 10,
-        totalRecord: 0
-      },
-      data: [],
+
+      schoolYearDict: [],
+      schoolYearId: "",
+      name: "",
       formItems: {
         schoolYear: "2017",
         enddate: "",
@@ -153,62 +192,45 @@ export default {
       },
 
       formInline: {
-        begindate: "",
-        enddate: "",
-        name: "",
-        describe: ""
+        schoolYearDict: [],
+        schoolYearId: "",
+        name: ""
       },
+
       formInlines: {
-        begindate: "",
-        enddate: "",
-        num: 1,
-        name: "",
-        describe: ""
+        id: 0,
+        schoolYearId: "",
+        name: ""
       },
       formInlineEdit: {
-        id: 0,
-        begindate: "",
-        enddate: "",
+        schoolYearId: "",
         name: "",
-        describe: ""
+        id: 0
       },
-      loading: true
+      todosdata: [],
+      formtodos: {
+        id: 0
+      },
+      todoIsRuning: false
     };
   },
   watch: {
-    multipleSelection() {
-      return this.multipleSelection.length > 0
-        ? (this.isMultipleSelection = true)
-        : (this.isMultipleSelection = false);
-    },
     formInline: {
       handler: function(val, oldVal) {
         if (
-          oldVal.begindate == "" ||
-          oldVal.enddate == "" ||
-          oldVal.begindate == null ||
-          oldVal.enddate == null
+          oldVal.schoolYearId == "" ||
+          oldVal.schoolYearId == null ||
+          oldVal.schoolYearId == 0
         ) {
           return;
         }
-        if (
-          new Date(Date.parse(oldVal.enddate)) <=
-          new Date(Date.parse(oldVal.begindate))
-        ) {
-          this.$message.error("结束日期必须大于开始日期");
-          return (val.enddate = "");
-        }
-
-        var requestData = {
-          startTime: Date.parse(val.begindate),
-          endTime: Date.parse(val.enddate)
-        };
-        this.getSchoolYearName(requestData).then(response => {
-          console.log(["getSchoolYearName", response]);
-          var res = response.resBody;
-          val.name = res.name;
-          val.describe = res.shortName;
-        });
+        this.getApi(
+          this.processPunishName,
+          { schoolYearId: oldVal.schoolYearId },
+          res => {
+            val.name = res.name;
+          }
+        );
       },
       deep: true
     },
@@ -246,69 +268,149 @@ export default {
     formInlines: {
       handler: function(val, oldVal) {
         if (
-          val.begindate == "" ||
-          val.begindate == NaN ||
-          val.enddate == NaN ||
-          val.enddate == ""
+          oldVal.schoolYearId == "" ||
+          oldVal.schoolYearId == null ||
+          oldVal.schoolYearId == 0
         ) {
           return;
         }
-        if (
-          new Date(Date.parse(val.enddate)) <=
-          new Date(Date.parse(val.begindate))
-        ) {
-          this.$message.error("结束日期必须大于开始日期");
-          return (val.enddate = "");
+
+        if (val.name.length > 0) {
+          return;
         }
+        this.getApi(
+          this.processPunishName,
+          { schoolYearId: oldVal.schoolYearId },
+          res => {
+            val.name = res.name;
+          }
+        );
       },
       deep: true
     }
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
+      vm.getSchoolYearDict();
       vm.getData();
     });
   },
   methods: {
-    ...mapActions({
-      getSchoolYearName: store.namespace + "/getSchoolYearName",
-      insertSchoolYear: store.namespace + "/insertSchoolYear",
-      querySchoolYear: store.namespace + "/querySchoolYear",
-      updateSchoolYear: store.namespace + "/updateSchoolYear",
-      insertBatchSchoolYear: store.namespace + "/insertBatchSchoolYear",
-      deleteSchoolYear: store.namespace + "/deleteSchoolYear"
-    }),
-    handleTodos(index, row) {
+    tableRowClassName({ row, rowIndex }) {
+      if (row.state !== "DR") {
+        return "success-row";
+      }
+      return "";
+    },
+    handleSeeTodos(index, row) {
+      this.todoIsRuning = true;
       this.dialogVisible_todos = true;
+      this.formtodos.id = row.id;
+      this.getPunishItemBeanByPunishId({
+        punishId: row.id
+      }).then(res => {
+        let arr = [];
+        if (!res.resBody) {
+          return (this.todosdata = arr);
+        }
+        res.resBody.itemBeans.forEach(i => {
+          if (i.state == "EF") {
+            i.state = true;
+          } else {
+            i.state = false;
+          }
+          i.isNew = false;
+          arr.push(i);
+        });
+        this.todosdata = arr;
+      });
+    },
+    handleTodos(index, row) {
+       this.todoIsRuning = false;
+      this.dialogVisible_todos = true;
+      this.formtodos.id = row.id;
+      this.getPunishItemBeanByPunishId({
+        punishId: row.id
+      }).then(res => {
+        let arr = [];
+        if (!res.resBody) {
+          return (this.todosdata = arr);
+        }
+        res.resBody.itemBeans.forEach(i => {
+          if (i.state == "EF") {
+            i.state = true;
+          } else {
+            i.state = false;
+          }
+          i.isNew = false;
+          arr.push(i);
+        });
+        this.todosdata = arr;
+      });
+    },
+    handleCopy(index, row) {
+      this.dialogVisible_copy = true;
+      this.formInlines.id = row.id;
+    },
+    handleRun(index, row) {
+      this.isOk("启动生效后将不能编辑删除信息，是否继续？", () => {
+        this.getApi(this.startPunish, {
+          punishId: row.id
+        });
+      });
     },
     handleEdit(index, row) {
       this.dialogVisibleEdit = true;
-      this.formInlineEdit.begindate = row.startTime;
-      this.formInlineEdit.enddate = row.endTime;
-      this.formInlineEdit.name = row.name;
-      this.formInlineEdit.describe = row.shortName;
       this.formInlineEdit.id = row.id;
-      console.log(index, row);
+      this.formInlineEdit.name = row.name;
+      this.formInlineEdit.schoolYearId = row.schoolYearId;
+    },
+    onSaveTodos() {
+      let temp = [];
+      this.todosdata.forEach(element => {
+        delete element.isNew;
+        element.state ? (element.state = "EF") : (element.state = "DR");
+        temp.push(element);
+      });
+      this.savePunishItemBean({
+        punishId: this.formtodos.id,
+        itemBean: { itemBeans: temp }
+      }).then(res => {
+        this.$message.success("保存成功！");
+        this.dialogVisible_todos = false;
+      });
+    },
+    onSaveCopy() {
+      this.getApi(
+        this.copyPunish,
+        {
+          punishId: this.formInlines.id,
+          name: this.formInlines.name,
+          schoolYearId: this.formInlines.schoolYearId
+        },
+        (res, vm) => {
+          vm.dialogVisible_copy = false;
+          vm.getData();
+        }
+      );
     },
     onSaveEdit() {
-      var requestData = {
-        startTime: Date.parse(this.formInlineEdit.begindate),
-        endTime: Date.parse(this.formInlineEdit.enddate),
-        name: this.formInlineEdit.name,
-        shortName: this.formInlineEdit.describe,
-        id: this.formInlineEdit.id
-      };
-      this.updateSchoolYear(requestData).then(response => {
-        var res = response.resBody;
-        if (res) {
-          this.dialogVisibleEdit = false;
-          this.$message({
+      this.getApi(
+        this.updatePunish,
+        {
+          name: this.formInlineEdit.name,
+          schoolYearId: this.formInlineEdit.schoolYearId,
+          id: this.formInlineEdit.id
+        },
+        (res, vm) => {
+          vm.dialogVisibleEdit = false;
+          vm.$message({
             type: "success",
             message: "更新成功!"
           });
-          this.getData();
+          vm.getData();
         }
-      });
+      );
     },
     handleDelete(index, row) {
       this.$confirm("此操作将永久删除该信息, 是否继续?", "提示", {
@@ -316,17 +418,13 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        var requestData = {
-          id: row.id
-        };
-        this.deleteSchoolYear(requestData).then(response => {
-          var res = response.resBody;
+        this.getApi(this.deletePunishById, { punishId: row.id }, (res, vm) => {
           if (res) {
-            this.$message({
+            vm.$message({
               type: "success",
               message: "删除成功!"
             });
-            this.getData();
+            vm.getData();
           }
         });
       });
@@ -338,47 +436,27 @@ export default {
       }
       return moment(date).format("YYYY年MM月DD日");
     },
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-      this.pageInfo.pageSize = val;
-      this.getData();
-    },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-      this.pageInfo.currentPage = val;
-      this.getData();
-    },
     getData() {
-      var requestData = {
-        currentPage: this.pageInfo.currentPage,
-        pageSize: this.pageInfo.pageSize
-      };
-      //查询数据的方法
-      this.querySchoolYear(requestData).then(response => {
-        this.loading = false;
-        this.data = response.resBody.baseData;
-        this.pageInfo = response.resBody.pageInfo;
+      this.data = [];
+      this.getApi(this.queryPunishList, {
+        schoolYearId: this.schoolYearId,
+        name: this.name
       });
     },
     onSave() {
-      var requestData = {
-        startTime: Date.parse(this.formInline.begindate),
-        endTime: Date.parse(this.formInline.enddate),
-        name: this.formInline.name,
-        shortName: this.formInline.describe
-      };
-      this.insertSchoolYear(requestData).then(response => {
-        console.log(["insertSchoolYear", response]);
-        var res = response.resBody;
-        if (res) {
-          this.$message.success("添加成功");
-          this.dialogVisible = false;
-          for (let key in this.formInline) {
-            this.formInline[key] = "";
-          }
-          this.getData();
+      this.getApi(
+        this.insertPunish,
+        {
+          name: this.formInline.name,
+          schoolYearId: this.formInline.schoolYearId
+        },
+        function(resBody, vm) {
+          vm.formInline["name"] = "";
+          vm.dialogVisible = false;
+
+          vm.getData();
         }
-      });
+      );
     },
     onSavePL() {
       var requestData = {
@@ -409,41 +487,20 @@ export default {
     onSubmitPL() {
       this.dialogVisiblePL = false;
     },
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
-    onMultipleSelectionDel() {
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(() => {
-        this.$message({
-          type: "success",
-          message: "删除成功!"
-        });
-        this.$emit("onSelectionDel", this.multipleSelection);
+    getSchoolYearDict() {
+      this.querySchoolYearDict({}).then(response => {
+        this.loading = false;
+        this.schoolYearDict = response.resBody;
+        this.schoolYearDict.unshift({ id: 0, name: "全部" });
+        let a = response.resBody.shift();
+        this.formInline.schoolYearDict = response.resBody;
       });
-    },
-    onExportExcel() {
-      this.$emit("onExportExcel");
-    },
-    onUploadSuccess() {
-      this.$emit("onUploadSuccess");
-    },
-    onNew() {
-      this.$emit("onNew");
     }
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.page-component__scroll {
-  height: 50vh;
-
-  .el-scrollbar__bar {
-    display: none;
-  }
+<style >
+.el-table .success-row {
+  background: #f0f9eb;
 }
 </style>

@@ -1,8 +1,9 @@
 import multipleSelection from "./multipleSelection";
 import page from "./page";
 import api from "./api";
+import navigation from "./navigation";
 export default {
-  mixins: [multipleSelection, page, api],
+  mixins: [multipleSelection, page, api, navigation],
   data: function() {
     return {
       dialogVisible: false,
@@ -38,6 +39,9 @@ export default {
         this.data = response.resBody.baseData;
         this.pageInfo = response.resBody.pageInfo;
       }
+    },
+    onSubmit() {
+      this.getData();
     }
   }
 };

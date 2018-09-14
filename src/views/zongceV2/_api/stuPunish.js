@@ -74,8 +74,8 @@ const getPunishItemBeanByPunishId = data =>
   });
 
 const savePunishItemBean = data =>
-  request({
-    url: "/stuPunish/savePunishItemBean.do    (json请求)",
+  ajax({
+    url: "/stuPunish/savePunishItemBean.do",
     method: "post",
     data: data
   });

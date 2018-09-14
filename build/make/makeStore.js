@@ -2,10 +2,25 @@ const fs = require("fs");
 const AdmZip = require("adm-zip"); //引入查看zip文件的包
 const filePath = "/Users/davidcao/chifen.docx";
 
-const basePath ="tmpStore"
+function read(prompt, callback) {
+  process.stdout.write(prompt + ":");
+  process.stdin.resume();
+  process.stdin.setEncoding("utf-8");
+  process.stdin.on("data", function(chunk) {
+    process.stdin.pause();
+    callback(chunk);
+  });
+}
+const basePath = "tmpStore";
 
-const OUTPUT_PATH = "./src/views/zongceV2/_mixin/" + basePath+".js";
+const OUTPUT_PATH = "./src/views/zongceV2/_mixin/" + basePath + ".js";
 
+read("输入模块名称", chunk => {
+  basePath = chunk;
+});
+read("输入新建文件目标路径，以项目根目录为准", chunk => {
+  OUTPUT_PATH = chunk;
+});
 
 var render = require("json-templater/string");
 var endOfLine = require("os").EOL;
@@ -28,8 +43,8 @@ str.match(/接口地址[\s\S]*?接口需求描述/gi).forEach(item => {
   let temp = item.match(/\/[\s\S]*?\.do/gi)[0].slice(11, -3);
   includeComponentTemplate.push(
     render(IMPORT_TEMPLATE, {
-      apiname: temp,
-     //apiurl: item.slice(5, -6)
+      apiname: temp
+      //apiurl: item.slice(5, -6)
     })
   );
   //varname1.push(temp);

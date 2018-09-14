@@ -108,8 +108,7 @@ export default {
 
       orgList: [],
 
-      schoolYearDict: [],
-      action: api.uploadStuScore
+      schoolYearDict: []
     };
   },
 
@@ -120,6 +119,9 @@ export default {
     });
   },
   methods: {
+    onSubmit() {
+      this.getData();
+    },
     getData() {
       this.getApi(this.queryStuScoreForStu, {
         schoolYearId: this.formInline.schoolYearId,
