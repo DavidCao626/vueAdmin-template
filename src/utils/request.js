@@ -34,6 +34,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     loading.close();
+    
     if (response.data.respStatus > 0) {
       return response.data.body;
     } else {
