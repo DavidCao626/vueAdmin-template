@@ -1,8 +1,8 @@
 const fs = require("fs");
 const AdmZip = require("adm-zip"); //引入查看zip文件的包
-const filePath = "/Users/davidcao/chifen.docx";
+const filePath = "c:/1.docx";
 
-const basePath ="stuPunish"
+const basePath = "baseQuality";
 
 const OUTPUT_PATH = "./src/views/zongceV2/_store/actions/" + basePath+".js";
 

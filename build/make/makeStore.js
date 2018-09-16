@@ -11,7 +11,7 @@ function read(prompt, callback) {
     callback(chunk);
   });
 }
-const basePath = "tmpStore";
+const basePath = "baseQuality";
 
 const OUTPUT_PATH = "./src/views/zongceV2/_mixin/" + basePath + ".js";
 

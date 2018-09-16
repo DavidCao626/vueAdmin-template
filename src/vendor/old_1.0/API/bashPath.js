@@ -1,2 +1,2 @@
-var bashPath = '/act'
+var bashPath = "/StuService";
 export default bashPath

@@ -1,7 +1,7 @@
 const fs = require("fs");
 const AdmZip = require("adm-zip"); //引入查看zip文件的包
-const filePath = "/Users/davidcao/chifen.docx";
-const OUTPUT_PATH = "./src/views/zongceV2/_api/stuPunish.js";
+const filePath = "c:/1.docx";
+const OUTPUT_PATH = "./src/views/zongceV2/_api/baseQuality.js";
 
 
 var render = require("json-templater/string");
