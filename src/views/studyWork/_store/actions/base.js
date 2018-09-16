@@ -246,8 +246,17 @@ const queryCanApplyJobOrg = ({ commit, state }, params) => new Promise(resolve =
     })
 })
 
+const mytest = ({ commit, state }, params) => new Promise(resolve => {
+    api.mytest(params).then(response => {
+        console.log(["mytest", response])
+        resolve(response)
+    })
+})
+
+
 
 export default {
+    mytest,
     queryCanApplyJobOrg,
     updateJobNumbers,
     complateCheck,

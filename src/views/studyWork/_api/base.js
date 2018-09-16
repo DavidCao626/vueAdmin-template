@@ -4,6 +4,12 @@ import ajax from '~/utils/ajax'
 //附件上传地址
 const importArtRecord = process.env.BASE_API +"/appraise/importArtRecord.do"
 
+const mytest = data =>
+    request({
+        url: "/baseQuality/getBaseQualtityItemBeanBySchemeId.do",
+        method: 'post',
+        data: data
+    })
 
 const getDictByDictNames = data =>
     request({
@@ -239,6 +245,7 @@ const queryCanApplyJobOrg = data =>
         data: data
     })
 export default {
+    mytest,
      queryCanApplyJobOrg,
     updateJobNumbers,
     complateCheck,
