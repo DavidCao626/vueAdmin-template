@@ -1,30 +1,29 @@
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
+  parser: "babel-eslint",
   parserOptions: {
-    sourceType: 'module'
+    sourceType: "module"
   },
   env: {
     browser: true,
     node: true,
-    es6: true,
+    es6: true
   },
-  extends: 'eslint:recommended',
+  extends: "eslint:recommended",
   // required to lint *.vue files
-  plugins: [
-    'html'
-  ],
+  plugins: ["html"],
   // check if imports actually resolve
-  'settings': {
-    'import/resolver': {
-      'webpack': {
-        'config': 'build/webpack.base.conf.js'
+  settings: {
+    "import/resolver": {
+      webpack: {
+        config: "build/webpack.base.conf.js"
       }
     }
   },
+  rules: {}
   // add your custom rules here
   //it is base on https://github.com/vuejs/eslint-config-vue
-  rules: {
+  /*rules: {
     'accessor-pairs': 2,
     'arrow-spacing': [2, {
       'before': true,
@@ -194,5 +193,5 @@ module.exports = {
       objectsInObjects: false
     }],
     'array-bracket-spacing': [2, 'never']
-  }
-}
+  }*/
+};
