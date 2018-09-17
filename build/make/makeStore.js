@@ -1,6 +1,6 @@
 const fs = require("fs");
 const AdmZip = require("adm-zip"); //引入查看zip文件的包
-const filePath = "/Users/davidcao/chifen.docx";
+const filePath = "c:/2.docx";
 
 function read(prompt, callback) {
   process.stdout.write(prompt + ":");

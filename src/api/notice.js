@@ -2,7 +2,7 @@ import request from '~/utils/request'
 import ajax from '~/utils/ajax'
 
 /**
- * 查询通知根据status Y/N
+ * 查询通知根据status N
  * @param {*} data
  */
 export function queryUserNoticeByStatus(data) {
