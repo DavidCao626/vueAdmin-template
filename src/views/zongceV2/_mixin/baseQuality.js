@@ -10,7 +10,7 @@ export default {
       queryPunishList2: store.namespace + "/queryPunishList2",
       querySchoolYearDict: store.namespace + "/querySchoolYearDict",
       getPunishStateDict: store.namespace + "/getPunishStateDict",
-
+      getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
       updateScheme: store.namespace + "/updateScheme",
 
       insertScheme: store.namespace + "/insertScheme",

@@ -63,7 +63,7 @@ export const zongceV2Router = {
       path: "baseQuality",
       name: "baseQuality",
       component: () => import("../baseQuality/index.vue"),
-      meta: { title: "学生处分管理", hidden: true }
+      meta: { title: "学生基础素质方案管理", hidden: true }
     },
     {
       path: "myQuality",
@@ -75,7 +75,7 @@ export const zongceV2Router = {
       path: "stuQualityLog",
       name: "stuQualityLog",
       component: () => import("../baseQuality/stuQualityLog.vue"),
-      meta: { title: "学生处分查询", hidden: true }
+      meta: { title: "学生基础素质查询", hidden: true }
     }
   ]
 };
