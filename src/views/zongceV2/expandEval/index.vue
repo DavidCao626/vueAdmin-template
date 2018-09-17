@@ -1,7 +1,7 @@
 <template>
   <div>
     <page>
-      <div slot="title">学生基础素质管理</div>
+      <div slot="title">学生扩展素质管理</div>
       <div slot="panel">
         <div>
           <el-dialog title="新建基础素质方案" :visible.sync="dialogVisible" width="500px">
@@ -28,7 +28,7 @@
             </div>
           </el-dialog>
 
-          <el-dialog title="编辑基础素质方案" :visible.sync="dialogVisibleEdit" width="500px">
+          <el-dialog title="编辑扩展素质方案" :visible.sync="dialogVisibleEdit" width="500px">
 
             <el-form :model="formInlineEdit" label-width="100px">
               <el-form-item label="所属学年:">
@@ -50,7 +50,7 @@
             </div>
           </el-dialog>
 
-          <el-dialog title="配置方案基础素质条目  (每一个分类下条目分数之和必须为100分)" :visible.sync="dialogVisible_todos" width="880px" style="max-hegth:50vh">
+          <el-dialog title="配置扩展素方案质条目  (每一个分类下条目分数之和必须为100分)" :visible.sync="dialogVisible_todos" width="880px" style="max-hegth:50vh">
             <div style="overflow: auto;overflow-x: hidden;max-height: 50vh;">
 
               <todos :todos="todosdata" :todoIsRuning="todoIsRuning"></todos>
@@ -102,7 +102,7 @@
             </template>
 
             <template slot="headerRight">
-              <el-button @click="add" size="small" type="primary">新建基础素质方案</el-button>
+              <el-button @click="add" size="small" type="primary">新建扩展素质方案</el-button>
             </template>
 
             <el-table v-loading="loading" :row-class-name="tableRowClassName" :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'name', prop: 'createTime',prop: 'effectTime', prop: 'state'}" @selection-change="handleSelectionChange">
@@ -166,9 +166,9 @@
 import moment from "moment";
 import todos from "./_components/todosManagement";
 import elxTable from "../_mixin/elxTable.js";
-import baseQuality from "../_mixin/baseQuality.js";
+import expandEval from "../_mixin/expandEval.js";
 export default {
-  mixins: [elxTable, baseQuality],
+  mixins: [elxTable, expandEval],
   components: {
     todos
   },
@@ -306,7 +306,7 @@ export default {
       this.todoIsRuning = true;
       this.dialogVisible_todos = true;
       this.formtodos.id = row.id;
-      this.getBaseQualtityItemBeanBySchemeId({
+      this.getEvalItemBeanBySchemeId({
         id: row.id
       }).then(res => {
         let arr = [];
@@ -329,7 +329,7 @@ export default {
       this.todoIsRuning = false;
       this.dialogVisible_todos = true;
       this.formtodos.id = row.id;
-      this.getBaseQualtityItemBeanBySchemeId({
+      this.getEvalItemBeanBySchemeId({
         id: row.id
       }).then(res => {
         let arr = [];
@@ -443,7 +443,7 @@ export default {
     },
     getData() {
       this.data = [];
-      this.getApi(this.queryPunishList2, {
+      this.getApi(this.queryPunishList, {
         schoolYearId: this.schoolYearId,
         name: this.name
       });

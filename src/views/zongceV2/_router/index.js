@@ -76,6 +76,12 @@ export const zongceV2Router = {
       name: "stuQualityLog",
       component: () => import("../baseQuality/stuQualityLog.vue"),
       meta: { title: "学生基础素质查询", hidden: true }
+    },
+    {
+      path: "expandEval",
+      name: "expandEval",
+      component: () => import("../expandEval/index.vue"),
+      meta: { title: "学生扩展素质方案管理", hidden: true }
     }
   ]
 };
