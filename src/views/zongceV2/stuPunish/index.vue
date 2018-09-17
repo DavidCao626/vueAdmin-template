@@ -326,7 +326,7 @@ export default {
       });
     },
     handleTodos(index, row) {
-       this.todoIsRuning = false;
+      this.todoIsRuning = false;
       this.dialogVisible_todos = true;
       this.formtodos.id = row.id;
       this.getPunishItemBeanByPunishId({
@@ -390,6 +390,7 @@ export default {
         },
         (res, vm) => {
           vm.dialogVisible_copy = false;
+          this.$message.success("拷贝成功！");
           vm.getData();
         }
       );

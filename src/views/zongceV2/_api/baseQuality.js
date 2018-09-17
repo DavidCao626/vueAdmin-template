@@ -5,84 +5,84 @@ import ajax from "~/utils/ajax";
 
 const queryPunishList = data =>
   request({
-    url: "/seQuality/queryPunishList.do",
+    url: "/baseQuality/queryPunishList.do",
     method: "post",
     data: data
   });
 
 const getPunishStateDict = data =>
   request({
-    url: "/seQuality/getPunishStateDict.do",
+    url: "/baseQuality/getPunishStateDict.do",
     method: "post",
     data: data
   });
 
 const updateScheme = data =>
   request({
-    url: "/seQuality/updateScheme.do",
+    url: "/baseQuality/updateScheme.do",
     method: "post",
     data: data
   });
 
 const insertScheme = data =>
   request({
-    url: "/seQuality/insertScheme.do",
+    url: "/baseQuality/insertScheme.do",
     method: "post",
     data: data
   });
 
 const copyScheme = data =>
   request({
-    url: "/seQuality/copyScheme.do",
+    url: "/baseQuality/copyScheme.do",
     method: "post",
     data: data
   });
 
 const processSchemeName = data =>
   request({
-    url: "/seQuality/processSchemeName.do",
+    url: "/baseQuality/processSchemeName.do",
     method: "post",
     data: data
   });
 
 const deleteSchemeById = data =>
   request({
-    url: "/seQuality/deleteSchemeById.do",
+    url: "/baseQuality/deleteSchemeById.do",
     method: "post",
     data: data
   });
 
 const startScheme = data =>
   request({
-    url: "/seQuality/startScheme.do",
+    url: "/baseQuality/startScheme.do",
     method: "post",
     data: data
   });
 
 const getBaseQualtityItemBeanBySchemeId = data =>
   request({
-    url: "/seQuality/getBaseQualtityItemBeanBySchemeId.do",
+    url: "/baseQuality/getBaseQualtityItemBeanBySchemeId.do",
     method: "post",
     data: data
   });
 
 const saveBaseQualtityItemBean = data =>
-  request({
-    url: "/seQuality/saveBaseQualtityItemBean.do(json请求)",
+  ajax({
+    url: "/baseQuality/saveBaseQualtityItemBean.do",
     method: "post",
     data: data
   });
 
 const queryBaseQualtityCategory = data =>
   request({
-    url: "/seQuality/queryBaseQualtityCategory.do",
+    url: "/baseQuality/queryBaseQualtityCategory.do",
     method: "post",
     data: data
   });
 
 const queryEvalList = data =>
   request({
-    url: "/seQuality/queryEvalList.do",
+    url: "/baseQuality/queryEvalList.do",
     method: "post",
     data: data
   });

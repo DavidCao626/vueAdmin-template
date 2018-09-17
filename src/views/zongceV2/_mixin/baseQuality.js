@@ -7,30 +7,30 @@ export default {
   },
   methods: {
     ...mapActions({
-      queryPunishList2: store.namespace + "queryPunishList2",
+      queryPunishList2: store.namespace + "/queryPunishList2",
+      querySchoolYearDict: store.namespace + "/querySchoolYearDict",
+      getPunishStateDict: store.namespace + "/getPunishStateDict",
 
-      getPunishStateDict: store.namespace + "getPunishStateDict",
+      updateScheme: store.namespace + "/updateScheme",
 
-      updateScheme: store.namespace + "updateScheme",
+      insertScheme: store.namespace + "/insertScheme",
 
-      insertScheme: store.namespace + "insertScheme",
+      copyScheme: store.namespace + "/copyScheme",
 
-      copyScheme: store.namespace + "copyScheme",
+      processSchemeName: store.namespace + "/processSchemeName",
 
-      processSchemeName: store.namespace + "processSchemeName",
+      deleteSchemeById: store.namespace + "/deleteSchemeById",
 
-      deleteSchemeById: store.namespace + "deleteSchemeById",
-
-      startScheme: store.namespace + "startScheme",
+      startScheme: store.namespace + "/startScheme",
 
       getBaseQualtityItemBeanBySchemeId:
-        store.namespace + "getBaseQualtityItemBeanBySchemeId",
+        store.namespace + "/getBaseQualtityItemBeanBySchemeId",
 
-      saveBaseQualtityItemBean: store.namespace + "saveBaseQualtityItemBean",
+      saveBaseQualtityItemBean: store.namespace + "/saveBaseQualtityItemBean",
 
-      queryBaseQualtityCategory: store.namespace + "queryBaseQualtityCategory",
+      queryBaseQualtityCategory: store.namespace + "/queryBaseQualtityCategory",
 
-      queryEvalList: store.namespace + "queryEvalList"
+      queryEvalList: store.namespace + "/queryEvalList"
     })
   }
 };
