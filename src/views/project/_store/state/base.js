@@ -151,6 +151,24 @@ export const baseproject = {
             projectCode: ""//名称
         }
     },
+    evalProjectFormData: {
+        projectId: 0,
+        projectName: "",
+        projectUserCode: "",
+        projectDesc: "",
+        projectServiceType: "",
+        planStartTime: "",
+        planCompleteTime: "",
+        isSendPublicNotice: "Y",
+        projectAttachmentId: [],
+        attrDetailBean: [],
+        expand: {
+            id: 0,
+            name: "",//名称
+            happenTime: "",//开始时间
+            schoolYearId: 0//学年
+        }
+    },
     tempProjectId: "",//临时储存当前项目id
     uploadAttrUrl: "",
     appraiseCategoryList: [],

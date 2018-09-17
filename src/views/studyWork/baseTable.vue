@@ -17,7 +17,7 @@ export default {
     return {
       data: null
     };
-  },
+  }, 
   watch: {},
   methods: {
     ...mapActions({

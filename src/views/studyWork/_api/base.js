@@ -9,7 +9,7 @@ const mytest = data =>
         url: "/baseQuality/getBaseQualtityItemBeanBySchemeId.do",
         method: 'post',
         data: data
-    })
+    }) 
 
 const getDictByDictNames = data =>
     request({

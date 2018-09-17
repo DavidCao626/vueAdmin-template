@@ -530,7 +530,30 @@ export const projectRouter = {
       title: "国家奖学金申请记录",
       component: () => import("../projectApplyRecord/nationalScholarshipR.vue"),
       meta: { hidden: true, title: "国家奖学金申请记录" }
+    },
+    //最新综测-==============================
+    {
+      path: "evalSelf",
+      name: "evalSelf",
+      title: "进行学生自评",
+      component: () => import("../eval/createProject.vue"),
+      meta: { hidden: true, title: "进行学生自评" }
+    },
+    {
+      path: "evalEach",
+      name: "evalEach",
+      title: "进行小组评议",
+      component: () => import("../eval/createProject.vue"),
+      meta: { hidden: true, title: "进行小组评议" }
+    },
+    {
+      path: "evalDemoc",
+      name: "evalDemoc",
+      title: "进行民主评议",
+      component: () => import("../eval/createProject.vue"),
+      meta: { hidden: true, title: "进行民主评议" }
     }
+
 
 
 
