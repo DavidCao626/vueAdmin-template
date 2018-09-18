@@ -50,8 +50,8 @@
             </div>
           </el-dialog>
 
-          <el-dialog title="配置扩展素方案质条目  (每一个分类下条目分数之和必须为100分)" :visible.sync="dialogVisible_todos" width="880px" style="max-hegth:50vh">
-            <div style="overflow: auto;overflow-x: hidden;max-height: 50vh;">
+          <el-dialog title="配置扩展素方案质条目 " :visible.sync="dialogVisible_todos" width="980px" style="max-hegth:80vh">
+            <div style="overflow: auto;overflow-x: hidden;max-height: 80vh;">
 
               <todos :todos="todosdata" :todoIsRuning="todoIsRuning"></todos>
             </div>
@@ -368,17 +368,10 @@ export default {
       this.formInlineEdit.schoolYearId = row.schoolYearId;
     },
     onSaveTodos() {
-      let temp = [];
-      this.todosdata.forEach(element => {
-        element.list.forEach(e => {
-          delete e.isNew;
-        });
-
-        temp.push(element);
-      });
-      this.saveBaseQualtityItemBean({
+      
+      this.saveExEveluateBean({
         schemeId: this.formtodos.id,
-        eveluateBean: { list: temp }
+        expandEvalBean: { list: this.todosdata }
       }).then(res => {
         this.$message.success("保存成功！");
         this.dialogVisible_todos = false;
