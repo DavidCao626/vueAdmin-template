@@ -13,7 +13,6 @@ const getDictByDictNames = data =>
     })
 
   
-
 const addAppraiseCategory = data =>
     ajax({
         url: "/appraise/addAppraiseCategory.do",
@@ -50,9 +49,6 @@ const addProspectus = data =>
         method: 'post',
         data: data
     })
-
-
-
 const querySchemesByOrgCodeAndCategoryId = data =>
     request({
         url: "/appraise/querySchemesByOrgCodeAndCategoryId.do",
@@ -459,7 +455,6 @@ export default {
     queryStuHcRecord,
     queryStuRank,
     queryAllAppraiseProject,
-
     queryIncludUnEnableStandardSubject,
     queryIncludEnableStandardSubject,
     queryCategoryListPage,
@@ -469,7 +464,6 @@ export default {
     getProjectStateList,
     getProsepectusOrgList,
     queryCategoryList,
-
     queryStdSubjectRank,
     truncateStdSubjectRank,
     produceStdSubjectRank,

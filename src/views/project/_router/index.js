@@ -552,11 +552,13 @@ export const projectRouter = {
       title: "进行民主评议",
       component: () => import("../eval/createProject.vue"),
       meta: { hidden: true, title: "进行民主评议" }
+    },
+    {
+      path: "appraisalProject",
+      name: "appraisalProject",
+      title: "综测项目",
+      component: () => import("../appraisal/createProject.vue"),
+      meta: { hidden: true, title: "综测项目" }
     }
-
-
-
-
-
   ]
 };
