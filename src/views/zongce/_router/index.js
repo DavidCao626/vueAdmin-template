@@ -23,6 +23,18 @@ export const zongceRouter = {
       name: "小组评议",
       component: () => import("../groupQuestion.vue"),
       meta: { title: "多人评议", icon: "example", hidden: true }
+    },
+    {
+      path: "childScopeTable",
+      name: "childScopeTable",
+      component: () => import("../childScopeTable.vue"),
+      meta: { title: "学院完成情况", icon: "example", hidden: true }
+    },
+    {
+      path: "configDetail",
+      name: "configDetail",
+      component: () => import("../configDetail.vue"),
+      meta: { title: "配置分数项", icon: "example", hidden: true }
     }
   
 

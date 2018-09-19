@@ -18,10 +18,30 @@ const completeUserPendingByItemId = data =>
         data: data
     })
 
+const queryConfigList = data =>
+    request({
+        url: "/appraisal/queryConfigList.do",
+        method: "post",
+        data: data
+    })
+const getEvaluateTemplate = data =>
+    request({
+        url: "/appraisal/getEvaluateTemplate.do",
+        method: "post",
+        data: data
+    })
+const saveEvaluateTemplate = data =>
+    ajax({
+        url: "/appraisal/saveEvaluateTemplate.do",
+        method: "post",
+        data: data
+    })
 
 
 
 export default {
-   
+    queryConfigList,
+    getEvaluateTemplate,
+    saveEvaluateTemplate
     
 };

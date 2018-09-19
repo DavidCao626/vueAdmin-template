@@ -52,13 +52,13 @@
             </el-input>
           </el-form-item>
           <el-form-item label="代码">
-            <el-input v-model="form.expand.userCode " autosize focus style="width:50%;">
+            <el-input v-model="form.expand.userCode" autosize focus style="width:50%;">
               <i slot="suffix" class="el-icon-edit el-input__icon"></i>
             </el-input>
           </el-form-item>
           <el-form-item label="学年">
             <elx-select v-model="form.expand.schoolYearId" placeholder="请选择">
-              <el-option v-for="" :key="">
+              <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :value="item.id">
               </el-option>
             </elx-select>
           </el-form-item>
@@ -145,7 +145,8 @@ export default {
       classifyTypedetailPath: "",
       iopt: [],
       classifyType: "",
-      yearTypeList: []
+      yearTypeList: [],
+      schoolYearList: []
     };
   },
   methods: {
@@ -176,7 +177,8 @@ export default {
       insertOrUpdateProject: state.namespace + "/insertOrUpdateProject",
       insertOrUpdateAndNext: state.namespace + "/insertOrUpdateAndNext",
       getSchoolYear: state.namespace + "/getSchoolYear",
-      startStudyWorkProject: state.namespace + "/startStudyWorkProject"
+      startStudyWorkProject: state.namespace + "/startStudyWorkProject",
+      querySchoolYear: state.namespace + "/querySchoolYear"
       //    queryClassifyTypeByCode:store.namespace + "/queryClassifyTypeByCode"
     }),
     appraiseServiceTypeChange(val) {
@@ -228,27 +230,20 @@ export default {
         }
       };
       console.log(this.form);
-      this.getSchoolYear({ date: t.expand.happenTime }).then(re => {
-        if (re.resBody == null) {
-          this.$message.error("发生时间不在已有学年内");
-          return;
-        }
-        requestData.expand.schoolYearId = re.resBody.id;
-        this.insertOrUpdateAndNext(requestData).then(response => {
-          this.$message.success("保存成功!");
-          this.form.id = response.resBody.projectId;
-          console.log(["insertOrUpdateAndNext", response]);
-          this.startStudyWorkProject({
-            scopeId: response.resBody.scopeId
-          }).then(responsex => {
-            console.log(
-              "insertOrUpdateAndNext" +
-                ["insertOrUpdateAndNext", response.resBody.scopeId]
-            );
-            this.$router.push({
-              path: "/project/control",
-              query: { scopeId: response.resBody.scopeId }
-            });
+      this.insertOrUpdateAndNext(requestData).then(response => {
+        this.$message.success("保存成功!");
+        this.form.id = response.resBody.projectId;
+        console.log(["insertOrUpdateAndNext", response]);
+        this.startStudyWorkProject({
+          scopeId: response.resBody.scopeId
+        }).then(responsex => {
+          console.log(
+            "insertOrUpdateAndNext" +
+              ["insertOrUpdateAndNext", response.resBody.scopeId]
+          );
+          this.$router.push({
+            path: "/project/control",
+            query: { scopeId: response.resBody.scopeId }
           });
         });
       });
@@ -302,10 +297,18 @@ export default {
         };
         this.yearTypeList.push(temp);
       }
+    },
+    getSchoolYearList() {
+      this.querySchoolYear({ currentPage: 1, pageSize: 99999 }).then(
+        response => {
+          this.schoolYearList = response.resBody.baseData;
+        }
+      );
     }
   },
   mounted() {
     this.createYearTypeList();
+    this.getSchoolYearList();
   }
 };
 </script>

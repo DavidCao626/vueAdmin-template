@@ -184,7 +184,17 @@ const getSchoolYear = data =>
         method: 'post',
         data: data
     })
+
+const querySchoolYear = data =>
+    request({
+        url: "/schoolYear/querySchoolYear.do",
+        method: 'post',
+        data: data
+    })
+
+
 export default {
+    querySchoolYear,
     getSchoolYear,
     queryEndProject,
     queryAllClassifyChild,
