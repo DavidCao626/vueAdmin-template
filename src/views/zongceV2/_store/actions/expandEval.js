@@ -78,7 +78,105 @@ const queryExpandEvalCategory = ({ commit, state }, params) =>
       resolve(response);
     });
   });
+
+const getExpandEvalCatagoryBySchoolYearId = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.getExpandEvalCatagoryBySchoolYearId(params).then(response => {
+      resolve(response);
+    });
+  });
+
+const getExpandEvalCatagoryByDate = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.getExpandEvalCatagoryByDate(params).then(response => {
+      resolve(response);
+    });
+  });
+
+const createExpandRecord = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.createExpandRecord(params).then(response => {
+      resolve(response);
+    });
+  });
+
+const applyExpandRecord = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.applyExpandRecord(params).then(response => {
+      resolve(response);
+    });
+  });
+
+const checkExpandRecord = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.checkExpandRecord(params).then(response => {
+      resolve(response);
+    });
+  });
+
+const getExpandEvalRecordById = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.getExpandEvalRecordById(params).then(response => {
+      resolve(response);
+    });
+  });
+
+const getExpandCheckStateDict = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.getExpandCheckStateDict(params).then(response => {
+      resolve(response);
+    });
+  });
+
+const getDataSourceDict = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.getDataSourceDict(params).then(response => {
+      resolve(response);
+    });
+  });
+
+const queryExpandEvalRecordForStaff = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.queryExpandEvalRecordForStaff(params).then(response => {
+      resolve(response);
+    });
+  });
+
+const queryExpandEvalRecordForStu = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.queryExpandEvalRecordForStu(params).then(response => {
+      resolve(response);
+    });
+  });
+
+const queryExpandEvalRecordForCheck = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.queryExpandEvalRecordForCheck(params).then(response => {
+      resolve(response);
+    });
+  });
+
+const adStuExpandEval = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.adStuExpandEval(params).then(response => {
+      resolve(response);
+    });
+  });
+
+const importExpandEvalRecord = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.importExpandEvalRecord(params).then(response => {
+      resolve(response);
+    });
+  });
+const getExpandEvalTemplateUrl = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.getExpandEvalTemplateUrl(params).then(response => {
+      resolve(response);
+    });
+  });
 export default {
+  getExpandEvalTemplateUrl,
   queryPunishList3,
   getSchemeStateDict,
   updateScheme,
@@ -89,5 +187,18 @@ export default {
   startScheme,
   getEvalItemBeanBySchemeId,
   saveExEveluateBean,
-  queryExpandEvalCategory
+  queryExpandEvalCategory,
+  getExpandEvalCatagoryBySchoolYearId,
+  getExpandEvalCatagoryByDate,
+  createExpandRecord,
+  applyExpandRecord,
+  checkExpandRecord,
+  getExpandEvalRecordById,
+  getExpandCheckStateDict,
+  getDataSourceDict,
+  queryExpandEvalRecordForStaff,
+  queryExpandEvalRecordForStu,
+  queryExpandEvalRecordForCheck,
+  adStuExpandEval,
+  importExpandEvalRecord
 };

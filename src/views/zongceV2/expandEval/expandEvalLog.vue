@@ -1,6 +1,6 @@
 <template>
     <page>
-        <div slot="title">学生处分管理</div>
+        <div slot="title">学生扩展素质评价管理</div>
         <div slot="panel">
             <div>
                 <el-dialog title="点击选择学生" :visible.sync="switchStudentDV" top="3vh" width="70%">
@@ -43,28 +43,34 @@
                     </div>
                 </el-dialog>
 
-                <el-dialog title="录入学生处分" :visible.sync="dialogVisible_new" width="600px">
+                <el-dialog title="录入学生扩展评价记录" :visible.sync="dialogVisible_new" width="600px">
                     <el-form :model="formAdd" class="demo-form-inline" label-width="100px">
+
                         <el-form-item label="目标学生:">
-                            {{ formAdd.name }}&nbsp;{{ formAdd.stuNo?'(学号:'+formAdd.stuNo+')':'' }}&nbsp;
-                            <el-button type="primary" size="mini" plain @click="switchStudentDV=true">{{ formAdd.name?'重新选择':'选择要处分的学生' }}</el-button>
+                            {{ formAdd.stuName }}&nbsp;{{ formAdd.stuNo?'(学号:'+formAdd.stuNo+')':'' }}&nbsp;
+                            <el-button type="primary" size="mini" plain @click="switchStudentDV=true">{{ formAdd.name?'重新选择':'选择要评价的学生' }}</el-button>
                         </el-form-item>
-                        <el-form-item label="处分条目:">
-                            <el-select v-model="formAdd.subjectCode">
-                                <el-option v-for="(km,k) in schoolKm2" :key="k" :label="km.name" :value="km.code">
-                                </el-option>
-                            </el-select>
+                        <el-form-item label="事件标题:">
+                            <el-input v-model="formAdd.title"></el-input>
                         </el-form-item>
-                        <el-form-item label="事件时间:">
+                        <!-- <el-form-item label="组织名称:">
+                             <el-cascader v-model="formAdd.orgCode" :options="orgList" 
+                             filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
+
+                        </el-form-item> -->
+                        <el-form-item label="发生时间:">
                             <el-date-picker v-model="formAdd.happenTime" align="right" type="date" placeholder="选择事件发生日期" :picker-options="pickerOptions1">
                             </el-date-picker>
                         </el-form-item>
-
-                        <el-form-item label="事件原因描述:">
-                            <el-input v-model="formAdd.desc" type="textarea"></el-input>
+                        <el-form-item label="测评类别:" v-if="formAdd.happenTime">
+                            <Catag :date="Date.parse(formAdd.happenTime)" @handleChange='onHandleChange__add'></Catag>
                         </el-form-item>
 
-                        <el-form-item label="项目附件:">
+                        <!-- <el-form-item label="分数:">
+                            <el-input v-model="formAdd.score" type="textarea"></el-input>
+                        </el-form-item> -->
+
+                        <el-form-item label="附件:">
                             <el-upload class="upload-demo" :action="uploadStuPunishurl" multiple :limit="1" :onSuccess="onUploadSuccess">
                                 <el-button size="small" type="primary" plain>
                                     <i class="el-icon-upload"></i> 点击上传</el-button>
@@ -76,9 +82,15 @@
                         <el-button @click="dialogVisible=false">关闭</el-button>
                     </div>
                 </el-dialog>
-                <el-dialog title="导入学生处分数据" :visible.sync="dialogVisible" width="400px">
-                    <el-form style="margin-top: -25px;">
-                        <el-form-item label="选择学生处分数据：">
+                <el-dialog title="1、导入学生扩展素质评价记录" :visible.sync="dialogVisible" width="400px">
+                    <el-form>
+                        <el-form-item label="所属目标评价分类:">
+                            <el-select v-model="EvalCategoryName" placeholder="全部">
+                                <el-option v-for="(item,i) in EvalCategory" :key="i" :label="item.name" :value="item.code">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="2、选择学生扩展素质评价数据：">
                             <br/>
                             <el-upload class="upload-demo" :action="uploadStuPunishurl" :limit='1' :onSuccess="onUploadSuccess2">
                                 <el-button size="small" type="primary" plain>
@@ -101,7 +113,9 @@
                         <el-button-group>
                             <el-tooltip class="item" effect="dark" content="下载模版" placement="bottom" v-if="newOpen">
                                 <el-button plain size="mini">
-                                    <a :href="urldo" target='_blank'><i class="el-icon-sold-out"></i></a>
+                                    <a :href="urldo" target='_blank'>
+                                        <i class="el-icon-sold-out"></i>
+                                    </a>
                                 </el-button>
                             </el-tooltip>
                             <el-tooltip class="item" effect="dark" content="新增记录" placement="bottom" v-if="newOpen">
@@ -126,6 +140,15 @@
 
                         <el-form label-position="left" :inline="true" :model="formInline" size="mini" label-width="80px" class="demo-form-inline">
 
+                            <el-form-item label="所属学年:">
+                                <el-select v-model="formInline.schoolYearId" placeholder="全部">
+                                    <el-option v-for="(item,i) in schoolYearDict" :key="i" :label="item.name" :value="item.id">
+                                    </el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="测评类别:" v-if="formInline.schoolYearId">
+                                <Catag :schoolYearId="formInline.schoolYearId" @handleChange='onHandleChange'></Catag>
+                            </el-form-item>
                             <el-form-item label="学生姓名:">
                                 <el-input v-model="formInline.name" placeholder="全部"></el-input>
                             </el-form-item>
@@ -137,19 +160,12 @@
                                 <el-cascader v-model="formInline.orgCode" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
 
                             </el-form-item>
-                            <br/>
-                            <el-form-item label="所属学年:">
-                                <el-select v-model="formInline.schoolYearId" placeholder="全部">
-                                    <el-option v-for="(item,i) in schoolYearDict" :key="i" :label="item.name" :value="item.id">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                            <el-form-item label="处分条目:" v-show="formInline.schoolYearId">
+                            <!-- <el-form-item label="处分条目:" v-show="formInline.schoolYearId">
                                 <el-select v-model="formInline.subjectCode" placeholder="全部">
                                     <el-option v-for="(km,k) in schoolKm" :key="k" :label="km.name" :value="km.code">
                                     </el-option>
                                 </el-select>
-                            </el-form-item>
+                            </el-form-item> -->
                             <el-form-item label="筛选范围:">
                                 <el-date-picker v-model="formInline.value" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
                                 </el-date-picker>
@@ -158,6 +174,8 @@
                             <el-form-item>
                                 <el-button type="primary" @click="onSubmit">
                                     <i class="el-icon-search"></i> 查询</el-button>
+                                <el-button @click="refresh">
+                                    <i class="el-icon-refresh"></i> 重置</el-button>
                             </el-form-item>
                         </el-form>
                     </template>
@@ -166,33 +184,32 @@
                         <el-table-column type="selection" width="38" v-if="deleteOpen">
                         </el-table-column>
 
+                        <el-table-column prop="schoolYearName" label="所属学年">
+                        </el-table-column>
+
+                        <el-table-column prop="title" label="事件标题">
+                        </el-table-column>
                         <el-table-column prop="stuNo" sortable label="学号">
                         </el-table-column>
                         <el-table-column prop="stuName" sortable label="学生姓名">
                         </el-table-column>
                         <el-table-column prop="orgName" label="组织名称">
                         </el-table-column>
-                        <el-table-column prop="subjectScore" label="分值">
-                        </el-table-column>
-                        <el-table-column prop="address" label="所属学年">
-                        </el-table-column>
-                        <el-table-column prop="address" label="所属学年">
+                        <el-table-column prop="score" label="分数">
                         </el-table-column>
                         <el-table-column prop="happenTime" label="发生时间" :formatter="dateFormat">
                         </el-table-column>
-                        <el-table-column prop="matterDesc" label="事件描述">
-                        </el-table-column>
-                        <el-table-column prop="attrPath" label="相关附件">
+                        <el-table-column prop="title" label="相关附件">
                             <template slot-scope="scope">
-                                <a :href="scope.row.attrPath" target="_blank">
+                                <a :href="scope.row.attPath" target="_blank">
                                     <i class="el-icon-download"></i> 下载</a>
                             </template>
                         </el-table-column>
-                        <el-table-column label="操作" width="66px">
+                        <!-- <el-table-column label="操作" width="66px">
                             <template slot-scope="scope">
                                 <el-button type="danger" size="mini" icon="el-icon-delete" plain @click="onDel(scope.row)"></el-button>
                             </template>
-                        </el-table-column>
+                        </el-table-column> -->
                         <!-- <el-table-column type="expand" label="#" width="42">
                             <template slot-scope="props" style="background-color:#f7f8f9">
                                 <el-form label-position="left" inline class="demo-table-expand">
@@ -227,11 +244,14 @@
 <script>
 import moment from "moment";
 import elxTable from "../_mixin/elxTable.js";
-import store from "../_mixin/store.js";
-const uploadStuPunishUrl = process.env.BASE_API + "/public/uploadStuPunish.do";
+import expandEval from "../_mixin/expandEval.js";
+import Catag from "./_components/expandEvalCatagory.vue";
+const uploadStuPunishUrl =
+  process.env.BASE_API + "/public/uploadStuExpandEval.do";
 
 export default {
-  mixins: [elxTable, store],
+  mixins: [elxTable, expandEval],
+  components: { Catag },
   data() {
     return {
       uploadStuPunishurl: uploadStuPunishUrl,
@@ -245,21 +265,41 @@ export default {
       schoolKm2: [],
       formAdd: {
         stuNo: "",
-        name: "",
-        subjectCode: "",
+        stuName: "",
+        title: "",
+        schoolYearName: "",
         schoolYearId: "",
         happenTime: {},
         desc: "",
+        score: 0,
+        expend: {
+          expendCategoryCode: "",
+          expendCategoryName: "",
+
+          expendGradeName: "",
+
+          expandItemCode: "",
+          expandItemName: ""
+        },
         fileId: "",
         orgCode: []
       },
       formInline: {
         stuNo: "",
         name: "",
-        subjectCode: "",
+        evalTypeCode: "",
         schoolYearId: "",
         orgCode: [],
-        value: []
+        value: [],
+        expend: {
+          expendCategoryCode: "",
+          expendCategoryName: "",
+
+          expendGradeName: "",
+
+          expandItemCode: "",
+          expandItemName: ""
+        }
       },
       fileId: 0,
       orgList: [],
@@ -280,7 +320,9 @@ export default {
         pageSize: 10,
         totalRecord: 0
       },
-      urldo: ""
+      urldo: "",
+      EvalCategory: [],
+      EvalCategoryName: ""
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -288,11 +330,67 @@ export default {
       vm.getSchoolYearDict();
       vm.geturldo();
       vm.getOrgList();
+      vm.getExpandEvalCategory();
     });
   },
   methods: {
+    refresh() {
+      this.formInline = {
+        stuNo: "",
+        name: "",
+        evalTypeCode: "",
+        schoolYearId: "",
+        orgCode: [],
+        value: [],
+        expend: {
+          expendCategoryCode: "",
+          expendCategoryName: "",
+          expendGradeName: "",
+          expandItemCode: "",
+          expandItemName: ""
+        }
+      };
+      this.getData();
+    },
+    onHandleChange__add(o) {
+      if (!o) return;
+      o.forEach((element, index) => {
+        if (index == 0) {
+          this.formAdd.expend.expendCategoryCode = element.value;
+          this.formAdd.expend.expendCategoryName = element.label;
+        }
+        if (index == 1) {
+          this.formAdd.expend.expendGradeName = element.value;
+        }
+        if (index == 2) {
+          this.formAdd.expend.expandItemCode = element.value;
+          this.formAdd.expend.expandItemName = element.label;
+        }
+      });
+    },
+    onHandleChange(o) {
+      if (!o) return;
+      o.forEach((element, index) => {
+        if (index == 0) {
+          this.formInline.expend.expendCategoryCode = element.value;
+          this.formInline.expend.expendCategoryName = element.label;
+        }
+        if (index == 1) {
+          this.formInline.expend.expendGradeName = element.value;
+        }
+        if (index == 2) {
+          this.formInline.expend.expandItemCode = element.value;
+          this.formInline.expend.expandItemName = element.label;
+        }
+      });
+    },
+    getExpandEvalCategory() {
+      this.getApi(this.queryExpandEvalCategory, {}, (r, v) => {
+        v.EvalCategory = r;
+      });
+    },
     geturldo() {
-      this.getApi(this.getPunishTemplateUrl, {}, (r, v) => {
+      this.getApi(this.getExpandEvalTemplateUrl, {}, (r, v) => {
         v.urldo = r.url;
       });
     },
@@ -309,8 +407,9 @@ export default {
           type: "warning"
         }
       ).then(() => {
-        this.importPunishRecord({
-          fileId: this.fileId
+        this.importExpandEvalRecord({
+          fileId: this.fileId,
+          expendCategoryCode: this.EvalCategoryName
         }).then(response => {
           this.dialogVisible = false;
           this.$notify({
@@ -361,19 +460,24 @@ export default {
     },
     studentClick(row, event, column) {
       this.formAdd.stuNo = row.userObjectNo;
-      this.formAdd.name = row.userObjectName;
+      this.formAdd.stuName = row.userObjectName;
       this.switchStudentDV = false;
     },
     onSave() {
       this.getApi(
-        this.insertPunishRecord,
+        this.createExpandRecord,
         {
           stuNo: this.formAdd.stuNo,
-          name: this.formAdd.name,
-          subjectCode: this.formAdd.subjectCode,
+          stuName: this.formAdd.stuName,
+          title: this.formAdd.title,
           happenTime: Date.parse(this.formAdd.happenTime),
-          desc: this.formAdd.desc,
-          fileId: this.formAdd.fileId
+          expendCategoryCode: this.formAdd.expend.expendCategoryCode || "",
+          expendCategoryName: this.formAdd.expend.expendCategoryName || "",
+          expendGradeName: this.formAdd.expend.expendGradeName || "",
+          expandItemCode: this.formAdd.expend.expandItemCode || "",
+          expandItemName: this.formAdd.expend.expandItemName || "",
+          //  desc: this.formAdd.desc,
+          attrId: this.formAdd.fileId
         },
         (r, v) => {
           v.dialogVisible_new = false;
@@ -386,6 +490,7 @@ export default {
       this.getCurrentOrgListAndOwner({}).then(response => {
         this.orgList = response.resBody;
         this.formInline.orgCode.push(this.orgList[0]["org_code"]);
+
         this.getData(this.orgList[0]["org_code"]);
       });
     },
@@ -440,15 +545,28 @@ export default {
     },
     getData() {
       this.data = [];
-      this.getApi(this.queryPunishRecordForStaff, {
-        subjectCode: this.formInline.subjectCode,
-        schoolYearId: this.formInline.schoolYearId,
-        name: this.formInline.name,
-        orgCode: this.formInline.orgCode,
-        stuNo: this.formInline.stuNo,
-        startTime: Date.parse(this.formInline.value[0]) || "",
-        endTime: Date.parse(this.formInline.value[1]) || ""
-      });
+      this.getApi(
+        this.queryExpandEvalRecordForCheck,
+        {
+          subjectCode: this.formInline.subjectCode,
+          schoolYearId: this.formInline.schoolYearId,
+          name: this.formInline.name,
+          orgCode: this.formInline.orgCode,
+          stuNo: this.formInline.stuNo,
+          startTime: Date.parse(this.formInline.value[0]) || "",
+          endTime: Date.parse(this.formInline.value[1]) || "",
+          expendCategoryCode: this.formInline.expend.expendCategoryCode || "",
+          expendCategoryName: this.formInline.expend.expendCategoryName || "",
+          expendGradeName: this.formInline.expend.expendGradeName || "",
+          expandItemCode: this.formInline.expend.expandItemCode || "",
+          expandItemName: this.formInline.expend.expandItemName || ""
+        },
+        (r, v) => {
+          {
+            v.data = r.baseData;
+          }
+        }
+      );
     }
   }
 };

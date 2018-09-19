@@ -8,11 +8,16 @@ export default {
   },
   methods: {
     ...mapActions({
+      getExpandEvalTemplateUrl: store.namespace + "/getExpandEvalTemplateUrl",
       queryPunishList: store.namespace + "/queryPunishList3",
-
       getSchemeStateDict: store.namespace + "/getSchemeStateDict",
       querySchoolYearDict: store.namespace + "/querySchoolYearDict",
       getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
+      queryPunishItemByShoolYearId:
+        store.namespace + "/queryPunishItemByShoolYearId",
+      getSchemeStateDict: store.namespace + "/getSchemeStateDict",
+
+      queryStudentBaseInfo: store.namespace + "/queryStudentBaseInfo",
       updateScheme: store.namespace + "/updateScheme",
 
       insertScheme: store.namespace + "/insertScheme",
@@ -29,7 +34,38 @@ export default {
 
       saveExEveluateBean: store.namespace + "/saveExEveluateBean",
 
-      queryExpandEvalCategory: store.namespace + "/queryExpandEvalCategory"
+      queryExpandEvalCategory: store.namespace + "/queryExpandEvalCategory",
+
+      getExpandEvalCatagoryBySchoolYearId:
+        store.namespace + "/getExpandEvalCatagoryBySchoolYearId",
+
+      getExpandEvalCatagoryByDate:
+        store.namespace + "/getExpandEvalCatagoryByDate",
+
+      createExpandRecord: store.namespace + "/createExpandRecord",
+
+      applyExpandRecord: store.namespace + "/applyExpandRecord",
+
+      checkExpandRecord: store.namespace + "/checkExpandRecord",
+
+      getExpandEvalRecordById: store.namespace + "/getExpandEvalRecordById",
+
+      getExpandCheckStateDict: store.namespace + "/getExpandCheckStateDict",
+
+      getDataSourceDict: store.namespace + "/getDataSourceDict",
+
+      queryExpandEvalRecordForStaff:
+        store.namespace + "/queryExpandEvalRecordForStaff",
+
+      queryExpandEvalRecordForStu:
+        store.namespace + "/queryExpandEvalRecordForStu",
+
+      queryExpandEvalRecordForCheck:
+        store.namespace + "/queryExpandEvalRecordForCheck",
+
+      adStuExpandEval: store.namespace + "/adStuExpandEval",
+
+      importExpandEvalRecord: store.namespace + "/importExpandEvalRecord"
     })
   }
 };
