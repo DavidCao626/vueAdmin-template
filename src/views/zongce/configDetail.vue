@@ -2,7 +2,7 @@
     <div>
 
         <page>
-            <div slot="title">学院完成情况</div>
+            <div slot="title">配置测评方案</div>
             <div slot="panel">
                 {{data}}
                 <el-input type="textarea" v-model="responseData" :row="50" placeholder=""></el-input>

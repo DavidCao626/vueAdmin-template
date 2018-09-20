@@ -35,6 +35,18 @@ export const zongceRouter = {
       name: "configDetail",
       component: () => import("../configDetail.vue"),
       meta: { title: "配置分数项", icon: "example", hidden: true }
+    },
+      {
+        path: "projectManager",
+        name: "projectManager",
+        component: () => import("../projectManagerV2.vue"),
+      meta: { title: "我的项目管理", icon: "example", hidden: true }
+    },
+        {
+          path: "appraisalResultRecord",
+          name: "appraisalResultRecord",
+          component: () => import("../appraisalResultRecord.vue"),
+      meta: { title: "测评结果记录", icon: "example", hidden: true }
     }
   
 
