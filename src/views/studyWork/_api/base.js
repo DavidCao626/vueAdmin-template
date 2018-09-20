@@ -5,11 +5,11 @@ import ajax from '~/utils/ajax'
 const importArtRecord = process.env.BASE_API +"/appraise/importArtRecord.do"
 
 const mytest = data =>
-    request({
-        url: "/baseQuality/getBaseQualtityItemBeanBySchemeId.do",
+    ajax({
+        url: "/expandEval/saveExEveluateBean.do",
         method: 'post',
         data: data
-    })
+    }) 
 
 const getDictByDictNames = data =>
     request({

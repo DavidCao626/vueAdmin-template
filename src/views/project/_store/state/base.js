@@ -70,9 +70,6 @@ export const baseproject = {
         }
     },
 
-
-
-
     serviceTypeList: [],
     classifyType: [],
     appraiseResultProjectFormData: {
@@ -149,6 +146,45 @@ export const baseproject = {
         expand: {
             id: 0,
             projectCode: ""//名称
+        }
+    },
+    evalProjectFormData: {
+        projectId: 0,
+        projectName: "",
+        projectUserCode: "",
+        projectDesc: "",
+        projectServiceType: "",
+        planStartTime: "",
+        planCompleteTime: "",
+        isSendPublicNotice: "Y",
+        projectAttachmentId: [],
+        attrDetailBean: [],
+        expand: {
+            id: 0,
+            name: "",//名称
+            happenTime: "",//开始时间
+            schoolYearId: 0//学年
+        }
+    },
+    appraisalProjectFormData: {
+        projectId: 0,
+        projectName: "",
+        projectUserCode: "",
+        projectDesc: "",
+        projectServiceType: "",
+        planStartTime: "",
+        planCompleteTime: "",
+        isSendPublicNotice: "Y",
+        projectAttachmentId: [],
+        attrDetailBean: [],
+        expand: {
+            id: 0,
+            name: "",//名称
+            userCode: "",//编码
+            schoolYearId: null,//学年
+            schoolYearName: "",//学年名称
+            stuType: [],
+            grade: []
         }
     },
     tempProjectId: "",//临时储存当前项目id

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="" @click="test"></el-button>
+    <el-button type="" @click="test">Go</el-button>
     <hr/> {{data}}
   </div>
 </template>
@@ -25,7 +25,35 @@ export default {
     }),
     test() {
       var requestData = {
-        id: 26,
+        schemeId: 37,
+        expandEvalBean: {
+          list: [
+            {
+              node: {
+                nameSpace: null,
+                code: "EM010101",
+                name: "职业技能",
+                ratio: 10.0
+              },
+              list: [
+                {
+                  name: "国家级",
+                  list: [
+                    { code: null, name: "一等奖", score: 99 },
+                    { code: null, name: "二等奖", score: 80 }
+                  ]
+                },
+                {
+                  name: "自治区级",
+                  list: [
+                    { code: null, name: "一等奖", score: 99 },
+                    { code: null, name: "二等奖", score: 80 }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
       };
       this.mytest(requestData).then(response => {
         this.data = response;

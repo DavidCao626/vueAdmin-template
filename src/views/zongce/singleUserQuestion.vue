@@ -46,7 +46,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import store from "./_store/index.js";
-import commons from '~/utils/common.js'
+import commons from "~/utils/common.js";
 import _ from "lodash";
 export default {
   data() {
@@ -55,25 +55,25 @@ export default {
       selectInput: "",
       oldchildren: [],
       value1: 30,
-      scopeId:null,
-      itemId:null
-    }
+      scopeId: null,
+      itemId: null
+    };
   },
-  computed:{
+  computed: {
     ...mapGetters({
-      getQuestion: store.namespace + '/getQuestionInfo'
+      getQuestion: store.namespace + "/getQuestionInfo"
     }),
-    questions:function(){
-       var entries=this.getQuestion.entries;
-       var temValues=[];
-       if (this.select == "1") {
+    questions: function() {
+      var entries = this.getQuestion.entries;
+      var temValues = [];
+      if (this.select == "1") {
         temValues = entries.filter(item => {
           return item.entry.title.indexOf(this.selectInput) != -1;
         });
       } else {
         temValues = entries.filter(item => {
           let keyitme = item.expand.filter(i => i.key == "学号");
-             return keyitme[0].value.indexOf(this.selectInput) != -1;
+          return keyitme[0].value.indexOf(this.selectInput) != -1;
         });
       }
       return temValues;
@@ -81,24 +81,29 @@ export default {
   },
   methods: {
     submit() {
-      this.submitQuestionBean({scopeId:this.scopeId,"itemId":this.itemId});
-      this.$router.go(-1)
+          this.submitQuestionBean({
+            scopeId: this.scopeId,
+            itemId: this.itemId
+          });
+          this.$router.go(-1);
     },
     ...mapActions({
-         loadQuestion: store.namespace + '/getQuestionBean',
-         submitQuestionBean:store.namespace +"/submitSingleQuestionBean"
+      loadQuestion: store.namespace + "/getQuestionBean",
+      submitQuestionBean: store.namespace + "/submitSingleQuestionBean",
+      completeUserPendingByItemId:
+        store.namespace + "/completeUserPendingByItemId"
     })
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-       var scopeId = commons.getRouterParam(to, 'scopeId');
-       var itemId=commons.getRouterParam(to,'itemId');
-       vm.scopeId=scopeId;
-       vm.itemId=itemId;
-      if (scopeId == null || itemId==null) {
-        console.log('参数错误,该页面不能访问')
+      var scopeId = commons.getRouterParam(to, "scopeId");
+      var itemId = commons.getRouterParam(to, "itemId");
+      vm.scopeId = scopeId;
+      vm.itemId = itemId;
+      if (scopeId == null || itemId == null) {
+        console.log("参数错误,该页面不能访问");
       } else {
-        vm.loadQuestion({ 'scopeId': scopeId,'itemId':itemId })
+        vm.loadQuestion({ scopeId: scopeId, itemId: itemId });
       }
     });
   },
@@ -112,7 +117,6 @@ export default {
 
 <style scoped>
 .item-head {
-   
 }
 .item-head-title {
   float: left;
