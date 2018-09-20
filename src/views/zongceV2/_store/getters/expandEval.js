@@ -10,3 +10,8 @@ export const GET_DataSourceDictByValue = state => value => {
 export const GET_ExpandCheckStateDict = state => {
   return state.ExpandCheckStateDict;
 };
+export const GET_ExpandCheckStateDictByValue = state => value => {
+  if (state.ExpandCheckStateDict) {
+    return state.ExpandCheckStateDict.find(e => e.value === value);
+  }
+};

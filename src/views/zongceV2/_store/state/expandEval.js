@@ -1,4 +1,2 @@
-export const ExpandCheckStateDict = {
-};
+export const ExpandCheckStateDict = {};
 export const DataSourceDict = {};
-;

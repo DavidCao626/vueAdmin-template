@@ -8,9 +8,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-      GET_expandCheckStateDict: store.namespace + "/GET_expandCheckStateDict",
+      GET_ExpandCheckStateDict: store.namespace + "/GET_ExpandCheckStateDict",
       GET_DataSourceDict: store.namespace + "/GET_DataSourceDict",
-      GET_DataSourceDictByValue: store.namespace + "/GET_DataSourceDictByValue"
+      GET_DataSourceDictByValue: store.namespace + "/GET_DataSourceDictByValue",
+      GET_ExpandCheckStateDictByValue:
+        store.namespace + "/GET_ExpandCheckStateDictByValue"
     })
   },
   methods: {

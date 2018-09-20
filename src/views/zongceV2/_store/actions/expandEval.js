@@ -124,7 +124,8 @@ const getExpandEvalRecordById = ({ commit, state }, params) =>
 const getExpandCheckStateDict = ({ commit, state }, params) =>
   new Promise(resolve => {
     api.getExpandCheckStateDict(params).then(response => {
-      commit("SET_expandCheckStateDict"), response.resBody;
+   
+      commit("SET_ExpandCheckStateDict", response.resBody);
       resolve(response);
     });
   });

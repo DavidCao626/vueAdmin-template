@@ -566,7 +566,7 @@ export default {
           expendGradeName: this.formInline.expend.expendGradeName || "",
           expandItemCode: this.formInline.expend.expandItemCode || "",
           expandItemName: this.formInline.expend.expandItemName || "",
-          dateSource: this.formInline.dateSource || ""
+          sourceState: this.formInline.dateSource || ""
         },
         (r, v) => {
           {
