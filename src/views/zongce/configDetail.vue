@@ -59,6 +59,7 @@ export default {
       };
       this.saveEvaluateTemplate(requestData).then(response => {
         this.$message.success("保存成功");
+        this.getData()
       });
     },
     getData() {
