@@ -1,20 +1,20 @@
-<template>
-    <div>
 
-        <page>
-            <div slot="title">配置测评方案</div>
-            <div slot="panel">
-                {{data}}
-                <el-input type="textarea" v-model="responseData" :row="50" placeholder=""></el-input>
-            </div>
-        </page>
-        <page>
-            <div slot="panel" style="text-align: right">
-                <el-button @click="save">保存</el-button>
-                <el-button size="mini" type="primary" @click="complate">完成</el-button>
-            </div>
-        </page>
-    </div>
+<template>
+  <div>
+
+    <page>
+      <div slot="title">配置测评方案</div>
+      <div slot="panel">
+        <tree :data="data.list"></tree>
+      </div>
+    </page>
+    <page>
+      <div slot="panel" style="text-align: right">
+        <el-button @click="save">保存</el-button>
+        <el-button size="mini" type="primary" @click="complate">完成</el-button>
+      </div>
+    </page>
+  </div>
 </template>
 
 <script>
@@ -23,16 +23,24 @@ import Element from "element-ui-x";
 import { mapGetters, mapActions } from "vuex";
 import store from "./_store/index.js";
 import moment from "moment";
+import tree from "./_components/tree";
 export default {
   data() {
     return {
+      show: true,
       itemId: 0,
       scopeId: 0,
       projectCode: "",
-      data: null,
+      data: {
+        list: []
+      },
       responseData: null
     };
   },
+  components: {
+    tree
+  },
+
   methods: {
     ...mapActions({
       getEvaluateTemplate: store.namespace + "/getEvaluateTemplate",
@@ -40,97 +48,14 @@ export default {
       completeUserPendingByItemId:
         store.namespace + "/completeUserPendingByItemId"
     }),
+
     save() {
+      this.data.list.forEach(element => {
+        delete element.isShow;
+      });
       var requestData = {
         projectCode: this.projectCode,
-        template: {
-          list: [
-            {
-              nameSpace: null,
-              code: "ED0102",
-              name: "创新评价",
-              ratio: 10.22,
-              orientation: "N",
-              mutuals: [
-                {
-                  nameSpace: null,
-                  code: "EM010201",
-                  name: "学术科研",
-                  ratio: 90
-                },
-                {
-                  nameSpace: null,
-                  code: "EM010202",
-                  name: "课外学术论文",
-                  ratio: 10
-                }
-              ],
-              handler: ""
-            },
-            {
-              nameSpace: null,
-              code: "ED0101",
-              name: "能力评价",
-              ratio: 10.22,
-              orientation: "N",
-              mutuals: [
-                {
-                  nameSpace: null,
-                  code: "EM010101",
-                  name: "职业技能",
-                  ratio: 100
-                }
-              ],
-              handler: ""
-            },
-            {
-              nameSpace: null,
-              code: "ED0201",
-              name: "学生考评",
-              ratio: 10.22,
-              orientation: "N",
-              mutuals: [
-                {
-                  nameSpace: null,
-                  code: "EM020101",
-                  name: "学生自评",
-                  ratio: 30
-                },
-                {
-                  nameSpace: null,
-                  code: "EM020102",
-                  name: "班级互评",
-                  ratio: 20
-                },
-                {
-                  nameSpace: null,
-                  code: "EM020103",
-                  name: "民主互评",
-                  ratio: 50
-                }
-              ],
-              handler: ""
-            },
-            {
-              nameSpace: null,
-              code: "ED0001",
-              name: "学业评价",
-              ratio: 10.22,
-              orientation: "N",
-              mutuals: [],
-              handler: ""
-            },
-            {
-              nameSpace: null,
-              code: "ED0202",
-              name: "学生处分",
-              ratio: 10.22,
-              orientation: "N",
-              mutuals: [],
-              handler: ""
-            }
-          ]
-        }
+        template: this.data
       };
       this.saveEvaluateTemplate(requestData).then(response => {
         this.$message.success("保存成功");
