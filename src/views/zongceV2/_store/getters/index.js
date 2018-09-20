@@ -1,5 +1,4 @@
-import * as appraise from './appraise.js'
-import * as question from './question.js'
+import * as expandEval from "./expandEval.js";
 import _lodash from 'lodash'
-export default _lodash.assign({}, appraise, question);
+export default _lodash.assign({}, expandEval);
  

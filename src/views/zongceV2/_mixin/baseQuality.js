@@ -5,10 +5,11 @@ export default {
   data: function() {
     return {};
   },
+
   methods: {
     ...mapActions({
       queryPunishList2: store.namespace + "/queryPunishList2",
-      
+
       querySchoolYearDict: store.namespace + "/querySchoolYearDict",
       getPunishStateDict: store.namespace + "/getPunishStateDict",
       getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",

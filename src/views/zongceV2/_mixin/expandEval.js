@@ -6,6 +6,13 @@ export default {
   data: function() {
     return {};
   },
+  computed: {
+    ...mapGetters({
+      GET_expandCheckStateDict: store.namespace + "/GET_expandCheckStateDict",
+      GET_DataSourceDict: store.namespace + "/GET_DataSourceDict",
+      GET_DataSourceDictByValue: store.namespace + "/GET_DataSourceDictByValue"
+    })
+  },
   methods: {
     ...mapActions({
       getExpandEvalTemplateUrl: store.namespace + "/getExpandEvalTemplateUrl",
