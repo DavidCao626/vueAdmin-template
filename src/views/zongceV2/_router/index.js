@@ -94,6 +94,12 @@ export const zongceV2Router = {
       name: "myApply",
       component: () => import("../expandEval/myApply.vue"),
       meta: { title: "我的申请扩展测评", hidden: true }
+    }, 
+    {
+      path: "check",
+      name: "check",
+      component: () => import("../expandEval/check.vue"),
+      meta: { title: "扩展测评审核", hidden: true }
     }
   ]
 };
