@@ -1,7 +1,9 @@
 const fs = require("fs");
 const AdmZip = require("adm-zip"); //引入查看zip文件的包
-const filePath = "/Users/davidcao/chifen.docx";
-const OUTPUT_PATH = "./src/views/zongceV2/_api/stuPunish.js";
+const filePath = "/Users/davidcao/123.docx";
+const basePath = "expandEval";
+
+const OUTPUT_PATH = "./src/views/zongceV2/_api/expandEval.js";
 
 
 var render = require("json-templater/string");
@@ -27,7 +29,8 @@ var includeComponentTemplate = [];
 var varname1 = [];
 
 str.match(/接口地址[\s\S]*?接口需求描述/gi).forEach(item => {
-  let temp = item.match(/\/[\s\S]*?\.do/gi)[0].slice(11, -3);
+  let temp = item.match(/\/[\s\S]*?\.do/gi)[0].slice(12, -3);
+  console.log(temp);
   includeComponentTemplate.push(
     render(IMPORT_TEMPLATE, {
       apiname: temp,
@@ -35,6 +38,7 @@ str.match(/接口地址[\s\S]*?接口需求描述/gi).forEach(item => {
     })
   );
   varname1.push(temp);
+  console.log(temp);
   //newstr += item.slice(5, -6);
 });
 

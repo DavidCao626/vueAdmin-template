@@ -1,6 +1,10 @@
+
+import page from "./page";
+  
 export default {
+  mixins: [page],
   methods: {
-    getApi(apiName, requestData, callback = function () { }) {
+    getApi(apiName = function() {}, requestData, callback = function() {}) {
       this.loading = true;
       apiName(Object.assign(requestData, this.gatPage())).then(response => {
         this.loading = false;
@@ -13,6 +17,6 @@ export default {
         this.setData(response);
         callback(response.resBody, this);
       });
-    },
+    }
   }
 };

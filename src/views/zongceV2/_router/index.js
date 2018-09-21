@@ -58,6 +58,36 @@ export const zongceV2Router = {
       name: "stuPunishLog",
       component: () => import("../stuPunish/stuPunishLog.vue"),
       meta: { title: "学生处分查询", hidden: true }
+    },
+    {
+      path: "baseQuality",
+      name: "baseQuality",
+      component: () => import("../baseQuality/index.vue"),
+      meta: { title: "学生基础素质方案管理", hidden: true }
+    },
+    {
+      path: "myQuality",
+      name: "myQuality",
+      component: () => import("../baseQuality/myQuality.vue"),
+      meta: { title: "我的处分查询", hidden: true }
+    },
+    {
+      path: "stuQualityLog",
+      name: "stuQualityLog",
+      component: () => import("../baseQuality/stuQualityLog.vue"),
+      meta: { title: "学生基础素质查询", hidden: true }
+    },
+    {
+      path: "expandEval",
+      name: "expandEval",
+      component: () => import("../expandEval/index.vue"),
+      meta: { title: "学生扩展素质方案管理", hidden: true }
+    },
+    {
+      path: "expandEvalLog",
+      name: "expandEvalLog",
+      component: () => import("../expandEval/expandEvalLog.vue"),
+      meta: { title: "学生扩展素质方案评价管理", hidden: true }
     }
   ]
 };

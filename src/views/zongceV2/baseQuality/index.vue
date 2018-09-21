@@ -1,10 +1,10 @@
 <template>
   <div>
     <page>
-      <div slot="title">学生处分方案管理</div>
+      <div slot="title">学生基础素质管理</div>
       <div slot="panel">
         <div>
-          <el-dialog title="新建处分方案" :visible.sync="dialogVisible" width="500px">
+          <el-dialog title="新建基础素质方案" :visible.sync="dialogVisible" width="500px">
             <el-row>
               <el-col :span="22">
                 <el-form :model="formInline" label-width="100px">
@@ -28,7 +28,7 @@
             </div>
           </el-dialog>
 
-          <el-dialog title="编辑处分方案" :visible.sync="dialogVisibleEdit" width="500px">
+          <el-dialog title="编辑基础素质方案" :visible.sync="dialogVisibleEdit" width="500px">
 
             <el-form :model="formInlineEdit" label-width="100px">
               <el-form-item label="所属学年:">
@@ -50,7 +50,7 @@
             </div>
           </el-dialog>
 
-          <el-dialog title="配置方案处分条目" :visible.sync="dialogVisible_todos" width="880px" style="max-hegth:50vh">
+          <el-dialog title="配置方案基础素质条目  (每一个分类下条目分数之和必须为100分)" :visible.sync="dialogVisible_todos" width="880px" style="max-hegth:50vh">
             <div style="overflow: auto;overflow-x: hidden;max-height: 50vh;">
 
               <todos :todos="todosdata" :todoIsRuning="todoIsRuning"></todos>
@@ -102,7 +102,7 @@
             </template>
 
             <template slot="headerRight">
-              <el-button @click="add" size="small" type="primary">新建处分方案</el-button>
+              <el-button @click="add" size="small" type="primary">新建基础素质方案</el-button>
             </template>
 
             <el-table v-loading="loading" :row-class-name="tableRowClassName" :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'name', prop: 'createTime',prop: 'effectTime', prop: 'state'}" @selection-change="handleSelectionChange">
@@ -166,9 +166,9 @@
 import moment from "moment";
 import todos from "./_components/todosManagement";
 import elxTable from "../_mixin/elxTable.js";
-import store from "../_mixin/store.js";
+import baseQuality from "../_mixin/baseQuality.js";
 export default {
-  mixins: [elxTable, store],
+  mixins: [elxTable, baseQuality],
   components: {
     todos
   },
@@ -225,7 +225,7 @@ export default {
           return;
         }
         this.getApi(
-          this.processPunishName,
+          this.processSchemeName,
           { schoolYearId: oldVal.schoolYearId },
           res => {
             val.name = res.name;
@@ -279,7 +279,7 @@ export default {
           return;
         }
         this.getApi(
-          this.processPunishName,
+          this.processSchemeName,
           { schoolYearId: oldVal.schoolYearId },
           res => {
             val.name = res.name;
@@ -306,58 +306,60 @@ export default {
       this.todoIsRuning = true;
       this.dialogVisible_todos = true;
       this.formtodos.id = row.id;
-      this.getPunishItemBeanByPunishId({
-        punishId: row.id
+      this.getBaseQualtityItemBeanBySchemeId({
+        id: row.id
       }).then(res => {
         let arr = [];
         if (!res.resBody) {
           return (this.todosdata = arr);
         }
-        res.resBody.itemBeans.forEach(i => {
-          if (i.state == "EF") {
-            i.state = true;
-          } else {
-            i.state = false;
-          }
-          i.isNew = false;
-          arr.push(i);
-        });
-        this.todosdata = arr;
+        // res.resBody.itemBeans.forEach(i => {
+        //   if (i.state == "EF") {
+        //     i.state = true;
+        //   } else {
+        //     i.state = false;
+        //   }
+        //   i.isNew = false;
+        //   arr.push(i);
+        // });
+        this.todosdata = res.resBody.list;
       });
     },
     handleTodos(index, row) {
       this.todoIsRuning = false;
       this.dialogVisible_todos = true;
       this.formtodos.id = row.id;
-      this.getPunishItemBeanByPunishId({
-        punishId: row.id
+      this.getBaseQualtityItemBeanBySchemeId({
+        id: row.id
       }).then(res => {
         let arr = [];
         if (!res.resBody) {
           return (this.todosdata = arr);
         }
-        res.resBody.itemBeans.forEach(i => {
-          if (i.state == "EF") {
-            i.state = true;
-          } else {
-            i.state = false;
-          }
-          i.isNew = false;
-          arr.push(i);
-        });
-        this.todosdata = arr;
+        // res.resBody.itemBeans.forEach(i => {
+        //   if (i.state == "EF") {
+        //     i.state = true;
+        //   } else {
+        //     i.state = false;
+        //   }
+        //   i.isNew = false;
+        //   arr.push(i);
+        // });
+        this.todosdata = res.resBody.list;
       });
     },
     handleCopy(index, row) {
       this.dialogVisible_copy = true;
       this.formInlines.id = row.id;
+
     },
     handleRun(index, row) {
       this.isOk("启动生效后将不能编辑删除信息，是否继续？", () => {
-        this.getApi(this.startPunish, {
+        this.getApi(this.startScheme, {
           punishId: row.id
         });
       });
+      this.getData();
     },
     handleEdit(index, row) {
       this.dialogVisibleEdit = true;
@@ -368,13 +370,15 @@ export default {
     onSaveTodos() {
       let temp = [];
       this.todosdata.forEach(element => {
-        delete element.isNew;
-        element.state ? (element.state = "EF") : (element.state = "DR");
+        element.list.forEach(e => {
+          delete e.isNew;
+        });
+
         temp.push(element);
       });
-      this.savePunishItemBean({
-        punishId: this.formtodos.id,
-        itemBean: { itemBeans: temp }
+      this.saveBaseQualtityItemBean({
+        schemeId: this.formtodos.id,
+        eveluateBean: { list: temp }
       }).then(res => {
         this.$message.success("保存成功！");
         this.dialogVisible_todos = false;
@@ -382,7 +386,7 @@ export default {
     },
     onSaveCopy() {
       this.getApi(
-        this.copyPunish,
+        this.copyScheme,
         {
           punishId: this.formInlines.id,
           name: this.formInlines.name,
@@ -390,14 +394,14 @@ export default {
         },
         (res, vm) => {
           vm.dialogVisible_copy = false;
-          this.$message.success("拷贝成功！");
+           this.$message.success("拷贝成功！");
           vm.getData();
         }
       );
     },
     onSaveEdit() {
       this.getApi(
-        this.updatePunish,
+        this.updateScheme,
         {
           name: this.formInlineEdit.name,
           schoolYearId: this.formInlineEdit.schoolYearId,
@@ -419,7 +423,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        this.getApi(this.deletePunishById, { punishId: row.id }, (res, vm) => {
+        this.getApi(this.deleteSchemeById, { punishId: row.id }, (res, vm) => {
           if (res) {
             vm.$message({
               type: "success",
@@ -439,14 +443,14 @@ export default {
     },
     getData() {
       this.data = [];
-      this.getApi(this.queryPunishList, {
+      this.getApi(this.queryPunishList2, {
         schoolYearId: this.schoolYearId,
         name: this.name
       });
     },
     onSave() {
       this.getApi(
-        this.insertPunish,
+        this.insertScheme,
         {
           name: this.formInline.name,
           schoolYearId: this.formInline.schoolYearId

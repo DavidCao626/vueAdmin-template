@@ -11,14 +11,19 @@
     "build:report": "npm_config_report=true node build/build.js",
     "lint": "eslint --ext .js,.vue src",
     "test": "npm run lint",
-    "make": "node build/make/makeActions.js && node build/make/makeApi.js &&node build/make/makeStore.js"
+    "make": "node build/make/makeActions.js && node build/make/makeApi.js &&node build/make/makeStore.js",
+    "make:actions":"node build/make/makeActions.js",
+    "make:store": "node build/make/makeStore.js",
+    "make:api": "node build/make/makeApi.js "
   },
   "dependencies": {
+    "adm-zip": "^0.4.11",
     "axios": "0.17.1",
     "element-ui": "^2.4.5",
     "element-ui-x": "^0.1.7",
     "js-calendar": "^1.2.3",
     "js-cookie": "2.2.0",
+    "json-templater": "^1.2.0",
     "mockjs": "^1.0.1-beta3",
     "moment": "^2.22.2",
     "normalize.css": "7.0.0",

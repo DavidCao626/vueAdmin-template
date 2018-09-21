@@ -104,14 +104,7 @@ export default {
     onNew() {
       this.$emit("onNew");
     },
-    gatPage() {
-      if (this.pageInfo.currentPage && this.pageInfo.pageSize) {
-        return {
-          currentPage: this.pageInfo.currentPage,
-          pageSize: this.pageInfo.pageSize
-        };
-      }
-    },
+  
     setData(response) {
       if (response.resBody.baseData && response.resBody.pageInfo) {
         this.data = response.resBody.baseData;

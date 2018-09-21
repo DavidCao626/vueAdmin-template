@@ -1,5 +1,4 @@
-
-export default   {
+export default {
   data: function() {
     return {
       pageInfo: {
@@ -10,6 +9,14 @@ export default   {
     };
   },
   methods: {
+    gatPage() {
+      if (this.pageInfo.currentPage && this.pageInfo.pageSize) {
+        return {
+          currentPage: this.pageInfo.currentPage,
+          pageSize: this.pageInfo.pageSize
+        };
+      }
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageInfo.pageSize = val;
