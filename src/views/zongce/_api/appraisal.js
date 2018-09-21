@@ -74,7 +74,30 @@ const querySchoolYear = data =>
         data: data
     })
 
+const queryAppraisalRankList = data =>
+    request({
+        url: "/appraisal/queryAppraisalRankList.do",
+        method: "post",
+        data: data
+    })
+
+const queryAppraisalRankForStaff = data =>
+    request({
+        url: "/appraisal/queryAppraisalRankForStaff.do",
+        method: "post",
+        data: data
+    })
+
+const queryAppraisalRankForStu = data =>
+    request({
+        url: "/appraisal/queryAppraisalRankForStu.do",
+        method: "post",
+        data: data
+    })
 export default {
+    queryAppraisalRankList,
+    queryAppraisalRankForStaff,
+    queryAppraisalRankForStu,
     querySchoolYear,
     getAppraisalProjectState,
     getAppraisalRecordState,

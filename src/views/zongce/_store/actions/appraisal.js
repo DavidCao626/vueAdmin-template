@@ -64,7 +64,33 @@ const querySchoolYear = ({ commit, state }, params) => new Promise(resolve => {
     })
 })
 
+const queryAppraisalRankList = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryAppraisalRankList(params).then(response => {
+        console.log(["queryAppraisalRankList", response])
+        resolve(response)
+    })
+})
+
+const queryAppraisalRankForStaff = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryAppraisalRankForStaff(params).then(response => {
+        console.log(["queryAppraisalRankForStaff", response])
+        resolve(response)
+    })
+})
+
+const queryAppraisalRankForStu = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryAppraisalRankForStu(params).then(response => {
+        console.log(["queryAppraisalRankForStu", response])
+        resolve(response)
+    })
+})
+
+
+
 export default {
+    queryAppraisalRankList,
+    queryAppraisalRankForStaff,
+    queryAppraisalRankForStu,
     querySchoolYear,
     getAppraisalProjectState,
     getAppraisalRecordState,

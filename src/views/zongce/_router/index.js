@@ -47,6 +47,24 @@ export const zongceRouter = {
           name: "appraisalResultRecord",
           component: () => import("../appraisalResultRecord.vue"),
       meta: { title: "测评结果记录", icon: "example", hidden: true }
+    },
+    {
+      path: "appraisalRankList",
+      name: "appraisalRankList",
+      component: () => import("../appraisalRankList.vue"),
+      meta: { title: "测评排名查询", icon: "example", hidden: true }
+    },
+    {
+      path: "showAppraisalRankForStaff",
+      name: "showAppraisalRankForStaff",
+      component: () => import("../showAppraisalRankForStaff.vue"),
+      meta: { title: "测评排名详情", icon: "example", hidden: true }
+    },
+    {
+      path: "showAppraisalRankForStu",
+      name: "showAppraisalRankForStu",
+      component: () => import("../showAppraisalRankForStu.vue"),
+      meta: { title: "我的测评排名", icon: "example", hidden: true }
     }
   
 
