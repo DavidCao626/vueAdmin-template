@@ -50,12 +50,13 @@ export default {
     }),
 
     save() {
-      this.data.list.forEach(element => {
+      var temp = JSON.parse(JSON.stringify(this.data.list)) ;
+      temp.forEach(element => {
         delete element.isShow;
       });
       var requestData = {
         projectCode: this.projectCode,
-        template: this.data
+        template: {list:temp}
       };
       this.saveEvaluateTemplate(requestData).then(response => {
         this.$message.success("保存成功");
@@ -68,96 +69,13 @@ export default {
       });
     },
     complate() {
+      var temp = JSON.parse(JSON.stringify(this.data.list)) ;
+      temp.forEach(element => {
+        delete element.isShow;
+      });
       var requestData = {
         projectCode: this.projectCode,
-        template: {
-          list: [
-            {
-              nameSpace: null,
-              code: "ED0102",
-              name: "创新评价",
-              ratio: 10.22,
-              orientation: "N",
-              mutuals: [
-                {
-                  nameSpace: null,
-                  code: "EM010201",
-                  name: "学术科研",
-                  ratio: 90
-                },
-                {
-                  nameSpace: null,
-                  code: "EM010202",
-                  name: "课外学术论文",
-                  ratio: 10
-                }
-              ],
-              handler: ""
-            },
-            {
-              nameSpace: null,
-              code: "ED0101",
-              name: "能力评价",
-              ratio: 10.22,
-              orientation: "N",
-              mutuals: [
-                {
-                  nameSpace: null,
-                  code: "EM010101",
-                  name: "职业技能",
-                  ratio: 100
-                }
-              ],
-              handler: ""
-            },
-            {
-              nameSpace: null,
-              code: "ED0201",
-              name: "学生考评",
-              ratio: 10.22,
-              orientation: "N",
-              mutuals: [
-                {
-                  nameSpace: null,
-                  code: "EM020101",
-                  name: "学生自评",
-                  ratio: 30
-                },
-                {
-                  nameSpace: null,
-                  code: "EM020102",
-                  name: "班级互评",
-                  ratio: 20
-                },
-                {
-                  nameSpace: null,
-                  code: "EM020103",
-                  name: "民主互评",
-                  ratio: 50
-                }
-              ],
-              handler: ""
-            },
-            {
-              nameSpace: null,
-              code: "ED0001",
-              name: "学业评价",
-              ratio: 10.22,
-              orientation: "N",
-              mutuals: [],
-              handler: ""
-            },
-            {
-              nameSpace: null,
-              code: "ED0202",
-              name: "学生处分",
-              ratio: 10.22,
-              orientation: "N",
-              mutuals: [],
-              handler: ""
-            }
-          ]
-        }
+        template: {list:temp}
       };
       this.saveEvaluateTemplate(requestData).then(response => {
         this.completeUserPendingByItemId({ itemId: this.itemId }).then(
