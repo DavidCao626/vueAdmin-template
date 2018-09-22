@@ -8,6 +8,7 @@ export default {
   },
   methods: {
     ...mapActions({
+      querySchoolYearDict: store.namespace + "/querySchoolYearDict",
       queryMajorList: store.namespace + "/queryMajorList",
       insertOrg: store.namespace + "/insertOrg",
       getOrgTreeView: store.namespace + "/getOrgTreeView",

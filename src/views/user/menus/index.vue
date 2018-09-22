@@ -52,20 +52,76 @@
 
 <template>
   <page>
-    <div slot="title">机构测试</div>
+    <div slot="title">机构管理</div>
     <div slot="panel" style="">
       <div class="block">
-        <!-- <el-dialog title="新增科目项" :visible.sync="dialogVisible" width="30%">
-          <el-form ref="form" label-position="top" label-width="100px">
-            <el-form-item label="科目项名称：">
-              <el-input size="medium" placeholder="输入科目项名称" v-model="addlabel"></el-input>
-            </el-form-item>
+        <el-dialog title="新增下级节点" :visible.sync="dialogVisible" width="30%">
+
+          <el-form :inline="true" :model="formAdd" size="small" label-width="100px">
+            <el-card shadow="hover">
+              <el-form-item label="新建节点类型:">
+                <el-select v-model="isOrgAdd">
+                  <el-option v-for="(item,i) in DiverseOrgBean" :key="i" :label="item.name" :value="item.type">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-card>
+            <el-card shadow="hover" v-show="isOrgAdd!='10'||isOrgAdd=='10'">
+              <el-form-item label="组织名称:">
+                <el-input v-model="formAdd.orgName"></el-input>
+              </el-form-item>
+              <el-form-item label="组织简称:">
+                <el-input v-model="formAdd.orgTitle"></el-input>
+              </el-form-item>
+              <el-form-item label="社会属性:">
+                <el-input v-model="formAdd.socialCode"></el-input>
+              </el-form-item>
+              <!-- <el-form-item label="是否可用:"> 新增时 文档中没有写需要available字段
+                <el-switch v-model="formAdd.available" active-color="#13ce66" inactive-color="#ccc">
+                </el-switch>
+              </el-form-item> -->
+            </el-card>
+            <br/>
+            <el-card shadow="hover" v-show="isOrgAdd=='10'">
+              <el-form-item label="所属学年:">
+                <elx-select v-model="formAdd.expandData.schoolYearId">
+                  <el-option v-for="(item,i) in schoolYearDict" :key="i" :label="item.name" :value="item.id">
+                  </el-option>
+                </elx-select>
+              </el-form-item>
+              <el-form-item label="学制:">
+                <elx-select v-model="formAdd.expandData.academic">
+                  <el-option v-for="(item,i) in educationalType" :key="i" :label="item.dict_desc" :value="item.dict_key">
+                  </el-option>
+                </elx-select>
+              </el-form-item>
+              <el-form-item label="成员类型:">
+                <elx-select v-model="formAdd.expandData.memberType">
+                  <el-option v-for="(item,i) in study_degree_code" :key="i" :label="item.dict_desc" :value="item.dict_key">
+                  </el-option>
+                </elx-select>
+              </el-form-item>
+
+              <el-form-item label="专业名称:">
+                <elx-select v-model="formAdd.expandData.majorCode">
+                  <el-option v-for="(item,i) in MajorList" :key="i" :label="item.majorName" :value="item.majorCode">
+                  </el-option>
+                </elx-select>
+              </el-form-item>
+              <el-form-item label="组织状态:">
+                <elx-select v-model="formAdd.expandData.orgState">
+                  <el-option v-for="(item,i) in orgState" :key="i" :label="item.dict_desc" :value="item.dict_key">
+                  </el-option>
+                </elx-select>
+              </el-form-item>
+            </el-card>
           </el-form>
           <span slot="footer" class="dialog-footer">
+
+            <el-button type="primary" @click="addNode()" size="medium">确 定</el-button>
             <el-button @click="dialogVisible = false" size="medium">取 消</el-button>
-            <el-button type="primary" @click="addNode(nodeObj,addlabel)" size="medium">确 定</el-button>
           </span>
-        </el-dialog> -->
+        </el-dialog>
         <el-row>
           <el-col :span="6">
             <div class="block-left">
@@ -79,39 +135,87 @@
               </div>
             </div>
           </el-col>
-          <el-col :span="18" style="background-color:#f4f7fa">
+          <el-col :span="18" style="background-color:#f4f7fa" v-loading="loading">
             <div class="block-right">
               <div class="block-header">
-                <h3>{{ org.orgName }}&nbsp;&nbsp;
-                  <small>({{ org.orgTitle }})</small>
+                <h3>{{ form.orgName }}&nbsp;&nbsp;
+                  <small>({{ form.orgTitle }})</small>
+                  <span style="font-size: 12px;font-weight: 400;margin-left: 10px;"> 组织代码:{{ form.orgCode }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 社会属性代码:{{ form.socialCode }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 是否可用（Y/N）:{{ form.available=='Y'?'是':'否' }}
+                  </span>
                 </h3>
+
               </div>
               <div>
-                <el-button type="text">修改机构信息</el-button>&nbsp;&nbsp;&nbsp;|
-                <el-button type="text">新增子节点</el-button>&nbsp;&nbsp;&nbsp;|
-                <el-button type="text">删除</el-button>
+                <template  v-if="form.orgType!='10'">
+
+                <el-button type="text" @click="add(form)">新增子节点</el-button>&nbsp;&nbsp;&nbsp;|
+                </template>
+                <el-button type="text" @click="onNodeDel(form)">删除</el-button>
               </div>
+              <div class="block-line"></div>
+              <div style="margin-bottom: 10px;color: #999;    font-size: 12px;">基础信息维护:</div>
+              <el-form :inline="true" :model="form" size="small" label-width="100px">
+                <el-card shadow="hover">
+                  <el-form-item label="组织名称:">
+                    <el-input v-model="form.orgName"></el-input>
+                  </el-form-item>
+                  <el-form-item label="组织简称:">
+                    <el-input v-model="form.orgTitle"></el-input>
+                  </el-form-item>
+                  <el-form-item label="社会属性:">
+                    <el-input v-model="form.socialCode"></el-input>
+                  </el-form-item>
+                  <el-form-item label="是否可用:">
+                    <el-switch v-model="form.available" active-color="#13ce66" inactive-color="#ccc">
+                    </el-switch>
+                  </el-form-item>
+                </el-card>
+                <br/>
+                <template v-if="form.expandData && form.orgType=='10'">
+                  <div style="margin-bottom: 10px;color: #999;font-size: 12px;">扩展信息维护:</div>
+                  <el-card shadow="hover">
+                    <el-form-item label="所属学年:">
+                      <elx-select v-model="form.expandData.schoolYearId">
+                        <el-option v-for="(item,i) in schoolYearDict" :key="i" :label="item.name" :value="item.id">
+                        </el-option>
+                      </elx-select>
+                    </el-form-item>
+                    <el-form-item label="学制:">
+                      <elx-select v-model="form.expandData.academic">
+                        <el-option v-for="(item,i) in educationalType" :key="i" :label="item.dict_desc" :value="item.dict_key">
+                        </el-option>
+                      </elx-select>
+                    </el-form-item>
+                    <el-form-item label="成员类型:">
+                      <elx-select v-model="form.expandData.memberType">
+                        <el-option v-for="(item,i) in study_degree_code" :key="i" :label="item.dict_desc" :value="item.dict_key">
+                        </el-option>
+                      </elx-select>
+                    </el-form-item>
+
+                    <el-form-item label="专业名称:">
+                      <elx-select v-model="form.expandData.majorCode">
+                        <el-option v-for="(item,i) in MajorList" :key="i" :label="item.majorName" :value="item.majorCode">
+                        </el-option>
+                      </elx-select>
+                    </el-form-item>
+                    <el-form-item label="组织状态:">
+                      <elx-select v-model="form.expandData.orgState">
+                        <el-option v-for="(item,i) in orgState" :key="i" :label="item.dict_desc" :value="item.dict_key">
+                        </el-option>
+                      </elx-select>
+                    </el-form-item>
+                  </el-card>
+                </template>
+              </el-form>
+              <br/>
               <div>
                 <el-card shadow="hover">
-                  鼠标悬浮时显示
+                  <el-button type="primary" @click="save">保存信息</el-button>
                 </el-card>
               </div>
             </div>
-            <!-- <div class="block-line" style="    margin-top: 0px">
-            </div> -->
-            <div class="block-body">
-
-            </div>
           </el-col>
-
-          <template v-if="org.orgName =='10'">
-
-          </template>
-
-          <template v-if="org.orgName !='10'">
-
-          </template>
-
         </el-row>
       </div>
     </div>
@@ -123,182 +227,234 @@
 import menus from "../_mixin/menus.js";
 export default {
   mixins: [menus],
-  props: {
-    props: {
-      type: Object,
-      default() {
-        return {
-          id: "id",
-          label: "label",
-          type: "type",
-          children: "children",
-          enable: "enable",
-          ratio: "ratio"
-        };
-      }
-    }
-  },
-
   data() {
     return {
-      ShowStateBit: 1, //权限位
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
+      formAdd: {
+        //ADD绑定form
+        orgCode: "",
+        orgType: "",
+        orgName: "",
+        orgTitle: "",
+        available: true,
+        socialCode: "",
+        expandData: {
+          schoolYearId: "",
+          schoolYearName: "",
+          academic: "",
+          memberType: "",
+          majorCode: "",
+          majorName: "",
+          orgState: ""
+        }
       },
-      schemeId: 0,
-      addlabel: "",
+      form: {
+        //更新绑定form
+        orgCode: "",
+        orgType: "",
+        orgName: "",
+        orgTitle: "",
+        available: "",
+        socialCode: "",
+        expandData: {
+          schoolYearId: "",
+          schoolYearName: "",
+          academic: "",
+          memberType: "",
+          majorCode: "",
+          majorName: "",
+          orgState: ""
+        }
+      },
       dialogVisible: false,
-      nodeObj: { label: "我的学校", id: 1, type: 1 }, //当前点击节点
-      filterText: "",
+      filterText: "", //树节点搜索
       treeProps: {
+        //树prop映射字段
         label: function(data, node) {
           return data.org.orgName;
         }
       },
-      data: [],
-      org: {}
+      data: [], //左侧树结构数据
+      org: {}, //暂没有用
+      educationalType: [], //当前可用的学制码表数据
+      study_degree_code: [], //当前可用的成员类型码表数据
+      orgState: [], //当前可用的组织状态码表数据
+      schoolYearDict: [], //当前可用的学年码表数据
+      loading: false,
+      MajorList: [], //专业码表数据
+      DiverseOrgBean: [], //当前节点可以创建的下级节点类型
+      isOrgAdd: "" //当前新建节点选择的创建类别 0x4、0x10 。。。。
     };
   },
   watch: {
+    //搜索数节点
     filterText(val) {
       this.$refs.tree2.filter(val);
     }
   },
   methods: {
-    // ...mapActions({
-    //   getSchemeTree: store.namespace + "/getSchemeTree",
-    //   getItemListAndScore: store.namespace + "/getItemListAndScore",
-    //   addItem: store.namespace + "/addItem",
-    //   deleteItem: store.namespace + "/deleteItem",
-    //   getSchemeEnableUpdateState:
-    //     store.namespace + "/getSchemeEnableUpdateState"
-    // }),
-    addKmBT() {
-      this.checkState().then(res => {
-        if (!res) {
-          return;
-        }
-        this.dialogVisible = true;
+    //获取字典api内容
+    getDict(key, callback) {
+      this.getDictByDictNames({ dicts: [key] }).then(response => {
+        callback(response.resBody);
       });
     },
-    checkState() {
-      return new Promise(resolve => {
-        this.getSchemeEnableUpdateState({ schemeId: this.schemeId }).then(
-          response => {
-            var res = response.resBody;
-            if (res.state == false) {
-              //当前状态不可更新
-              //需要另存为
-              this.$message.error("此方案已经被使用，请另存为后修改");
-              //  return false;
-              resolve(false);
-            } else {
-              resolve(true);
-            }
-          }
-        );
-      });
-    },
+    //获取树结构加载全部api内容
     getData() {
+      this.loading = true;
       this.getOrgTreeView().then(response => {
         this.data = [];
         console.log(["tree", response]);
         var res = response.resBody;
         this.data = [res];
+        this.form =this.data[0].org;
+        this.loading = false;
       });
     },
+
+    //查找数节点名称
     filterNode(value, data) {
       if (!value) return true;
       return data.org.orgName.indexOf(value) !== -1;
     },
+    //新建子节点按钮
+
+    add() {
+      this.dialogVisible = true;
+    },
+    //单击组织树某个节点所触发的方法
     handleNodeClick(data, node) {
-      //点击的是分值科目，要查询数据
+      this.isOrgAdd = "";
+      this.DiverseOrgBean = data.childTypes;
+      this.loading = true;
       var requestData = {
         orgCode: data.org.orgCode,
         orgType: data.org.orgType
       };
+      //点击树某一节点，查询回当前节点树的详细一个组织信息
       this.getOrg(requestData).then(response => {
         console.log(["itemAndScore", response]);
         var res = response.resBody;
-        this.org = res;
+        res.available = res.available == "Y" ? true : false; //Y和true 的布尔值转换，用来显示el组件
+        this.form = res; //将查询结果付值到更新form表单中
+        this.org = res; //暂无用处
+        this.loading = false;
       });
     },
     onNodeDel(nodeData) {
-      this.checkState().then(res => {
-        if (!res) {
-          return;
-        }
-        if (nodeData.scoreList && nodeData.scoreList.length > 0) {
-          this.$message.error("包含子节点的节点不能删除");
-        } else {
-          this.$confirm("此操作将永久删除该节点, 是否继续?", "删除节点", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            type: "warning"
-          })
-            .then(() => {
-              //删除
-              this.deleteItem({ itemId: nodeData.item.id }).then(response => {
-                this.kemuList.splice(this.kemuList.indexOf(nodeData), 1);
-                this.$message({
-                  type: "success",
-                  message: "删除成功!"
-                });
-              });
-            })
-            .catch(() => {
-              // this.$message({
-              //   type: "info",
-              //   message: "已取消删除"
-              // });
-            });
-        }
+      this.$confirm("此操作将永久删除该节点, 是否继续?", "删除节点", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        //删除
+        this.deleteOrg({
+          orgCode: nodeData.orgCode,
+          orgType: nodeData.orgType
+        }).then(response => {
+          //this.org.splice(this.org.indexOf(nodeData), 1); //无用
+          this.$message({
+            type: "success",
+            message: "删除成功!"
+          });
+          this.getData(); //重新加载树全部数据
+        });
       });
     },
-    addNode(nodeObj, label) {
-      this.checkState().then(res => {
-        if (!res) {
-          return;
-        }
-
-        console.log(["增加之前的kemulist", this.kemuList]);
-        var requestData = {
-          name: label,
-          subjectCode: nodeObj.id,
-          schemeId: this.schemeId
+    addNode() {
+      var requestData;
+      if (this.isOrgAdd == "10") {
+        //如果当前选择的班级 加载班级所需要的提交字段
+        requestData = {
+          parentCode: this.form.orgCode, //上级组织
+          orgType: this.isOrgAdd, //新建节点的类型 （从第一步选择中结果中拿到）
+          orgName: this.formAdd.orgName,
+          orgTitle: this.formAdd.orgTitle,
+          socialCode: this.formAdd.socialCode,
+          expandData: {
+            schoolYearId: this.formAdd.expandData.schoolYearId,
+            schoolYearName: this.formAdd.expandData.schoolYearName,
+            academic: this.formAdd.expandData.academic,
+            memberType: this.formAdd.expandData.memberType,
+            majorCode: this.formAdd.expandData.majorCode,
+            majorName: this.formAdd.expandData.majorName,
+            orgState: this.formAdd.expandData.orgState
+          }
         };
-        this.addItem(requestData).then(response => {
-          var temp = {
-            item: response.resBody,
-            scoreList: []
-          };
-          this.kemuList.push(temp);
-          this.dialogVisible = false;
-          this.addlabel = "";
-          this.$message({
-            message: "恭喜你，添加成功",
-            type: "success"
-          });
-          console.log(["增加之后的kemulist", this.kemuList]);
+      } else {
+        //如果当前新建类型不是班级的，加载通用提交字段
+        requestData = {
+          parentCode: this.form.orgCode, //上级组织
+          orgType: this.isOrgAdd, //新建节点的类型 （从第一步选择中结果中拿到）
+          orgName: this.formAdd.orgName,
+          orgTitle: this.formAdd.orgTitle,
+          socialCode: this.formAdd.socialCode,
+          expandData: {}
+        };
+      }
+
+      this.insertOrg(requestData).then(response => {
+        this.dialogVisible = false;
+        this.$message({
+          message: "添加成功",
+          type: "success"
         });
-
-        //   this.kemuList.push({ [this.props["label"]]: this.addlabel });
-
-        // 真实情况触发ajax插入
-        //nodeObj.children.push({ label: label, children: [] });
+        this.getData(); //重新请求加载 刷新左侧树的全部数据
+      });
+    },
+    save() {
+      this.updateOrg({
+        orgCode: this.form.orgCode,
+        orgType: this.form.orgType,
+        orgName: this.form.orgName,
+        orgTitle: this.form.orgTitle,
+        socialCode: this.form.socialCode,
+        available: this.form.available ? "Y" : "N",
+        expandData: {
+          schoolYearId: this.form.expandData.schoolYearId,
+          schoolYearName: this.form.expandData.schoolYearName,
+          academic: this.form.expandData.academic,
+          memberType: this.form.expandData.memberType,
+          majorCode: this.form.expandData.majorCode,
+          majorName: this.form.expandData.majorName,
+          orgState: this.form.expandData.orgState
+        }
+      }).then(r => {
+        this.$message({
+          message: "更新成功！",
+          type: "success"
+        });
+      });
+    },
+    getSchoolYearDict() {
+      this.querySchoolYearDict({}).then(response => {
+        this.loading = false;
+        this.schoolYearDict = response.resBody;
+        this.queryMajorList().then(response => {
+          this.MajorList = response.resBody;
+        });
+      });
+    },
+    //获取码表
+    getDictlist() {
+      this.loading = true;
+      this.getDict("educationalType", body => {
+        this.educationalType = body.educationalType;
+        this.getDict("study_degree_code", body => {
+          this.study_degree_code = body.study_degree_code;
+          this.getDict("orgState", body => {
+            this.orgState = body.orgState;
+            this.loading = false;
+            this.getData();
+          });
+        });
       });
     }
   },
+
   beforeRouteEnter(to, form, next) {
     next(vm => {
-      vm.getData();
+      vm.getSchoolYearDict();
+      vm.getDictlist();
     });
   }
 };

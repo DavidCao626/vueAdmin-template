@@ -2,7 +2,13 @@
 
 import request from "~/utils/request";
 import ajax from "~/utils/ajax";
-
+//查询学年列表(下拉框)
+const querySchoolYearDict = data =>
+  request({
+    url: "/schoolYear/querySchoolYearDict.do",
+    method: "post",
+    data: data
+  });
 const queryMajorList = data =>
   request({
     url: "/dOrg/queryMajorList.do",
@@ -25,7 +31,7 @@ const getOrgTreeView = data =>
   });
 
 const updateOrg = data =>
-  request({
+  ajax({
     url: "/dOrg/updateOrg.do",
     method: "post",
     data: data
@@ -52,6 +58,7 @@ const getDictByDictNames = data =>
     data: data
   });
 export default {
+  querySchoolYearDict,
   queryMajorList,
   insertOrg,
   getOrgTreeView,
