@@ -13,14 +13,16 @@
 }
 .block-right {
   padding: 15px;
-  padding-left: 30px;
-  height: 800px;
 }
 .block-right__noBody {
   text-align: center;
   font-size: 24px;
   font-weight: 200;
   margin-top: 35%;
+}
+.block-body {
+  padding: 15px;
+  height: 800px;
 }
 .block-header {
   font-size: 16px;
@@ -29,7 +31,6 @@
 }
 .block-header h3 {
   height: 0px;
-
   line-height: 14px;
   font-size: 20px !important;
 }
@@ -50,12 +51,11 @@
 </style>
 
 <template>
-    <page>
-        <div slot="title">机构测试</div>
-        <div slot="panel" style="">
-            <div class="block">
-
-                <!-- <el-dialog title="新增科目项" :visible.sync="dialogVisible" width="30%">
+  <page>
+    <div slot="title">机构测试</div>
+    <div slot="panel" style="">
+      <div class="block">
+        <!-- <el-dialog title="新增科目项" :visible.sync="dialogVisible" width="30%">
           <el-form ref="form" label-position="top" label-width="100px">
             <el-form-item label="科目项名称：">
               <el-input size="medium" placeholder="输入科目项名称" v-model="addlabel"></el-input>
@@ -66,163 +66,63 @@
             <el-button type="primary" @click="addNode(nodeObj,addlabel)" size="medium">确 定</el-button>
           </span>
         </el-dialog> -->
-
-                <el-row>
-                    <el-col :span="6">
-                        <div class="block-left">
-                            <div class="block-header">
-                                <i class="el-icon-menu"></i> 机构列表</div>
-                            <div class="block-line"></div>
-                            <div class="block-nav">
-                                <el-input placeholder="输入关键字进行过滤" v-model="filterText">
-                                </el-input>
-
-                                <el-tree ref="tree2" :data="data" :filter-node-method="filterNode" node-key="id" :default-expanded-keys="[1]" :expand-on-click-node="false" default-expand-all @node-click="handleNodeClick"></el-tree>
-                            </div>
-                        </div>
-                    </el-col>
-                    <el-col :span="18" style="background-color:#f4f7fa">
-                        <!-- <template v-if="nodeObj[props['type']]=='rootType'"> -->
-                            <div class="block-right" v-if="JSON.stringify(nodeObj) != '{}'">
-
-                                <div class="block-header">
-                                    <h3>{{ nodeObj[props['label']] }}</h3>
-                                </div>
-
-                            </div>
-                        <!-- </template> -->
-
-                        <!-- <template v-if="nodeObj[props['type']]=='standardType'">
-
-                            <div class="approval-panel">
-                                <h3>基本信息</h3>
-                                <el-form size="mini" inline-message :model="nodeObj" disabled label-width="80px">
-                     
-                                    <el-form-item label="名称">
-                                        <el-row>
-                                            <el-col :span="5">
-                                                <el-input v-model="nodeObj[props['label']]"></el-input>
-                                            </el-col>
-                                        </el-row>
-                                    </el-form-item>
-                                    <el-form-item label="占比">
-                                        <el-row>
-                                            <el-col :span="5">
-                                                <el-input v-model="nodeObj[props['ratio']]"></el-input>
-                                            </el-col>
-                                        </el-row>
-                                    </el-form-item>
-
-                                    <el-form-item label="代码">
-                                        <el-row>
-                                            <el-col :span="5">
-                                                <el-input v-model="nodeObj.code"></el-input>
-                                            </el-col>
-                                        </el-row>
-                                    </el-form-item>
-                                    <el-form-item label="含科目项">
-                                        <el-radio-group v-model="nodeObj.include">
-                                            <el-radio-button :label="true">是</el-radio-button>
-                                            <el-radio-button :label="false">否</el-radio-button>
-                                        </el-radio-group>
-                                    </el-form-item>
-                                    <el-form-item label="方向">
-                                        <el-radio-group v-model="nodeObj.orientation">
-                                            <el-radio-button :label="1">正</el-radio-button>
-                                            <el-radio-button :label="0">负</el-radio-button>
-                                        </el-radio-group>
-                                    </el-form-item>
-                                </el-form>
-                            </div>
-
-                        </template>
-
-                        <template v-if="nodeObj[props['type']]=='hcType' &&nodeObj[props['enable']]=='N'">
-                            <div class="approval-panel">
-                                <h3>基本信息</h3>
-                                <el-form inline-message size="mini" :model="nodeObj" disabled label-width="80px">
-                                    <el-form-item label="名称">
-                                        <el-row>
-                                            <el-col :span="5">
-                                                <el-input v-model="nodeObj[props['label']]"></el-input>
-                                            </el-col>
-                                        </el-row>
-                                    </el-form-item>
-                                    <el-form-item label="代码">
-                                        <el-row>
-                                            <el-col :span="5">
-                                                <el-input v-model="nodeObj.code"></el-input>
-                                            </el-col>
-                                        </el-row>
-                                    </el-form-item>
-                                    <el-form-item label="最大分值">
-                                        <el-row>
-                                            <el-col :span="5">
-                                                <el-input v-model="nodeObj.scoreValue"></el-input>
-                                            </el-col>
-                                        </el-row>
-                                    </el-form-item>
-                                </el-form>
-                            </div>
-                            <div class="approval-panel" style="margin-bottom: 0px;">
-                                <h3>分值科目维护</h3>
-                                <h4>此分值科目不包含科目项</h4>
-                            </div>
-                        </template>
-
-                        <template v-if="nodeObj[props['type']]=='hcType' &&nodeObj[props['enable']]=='Y' ">
-                          
-                            <div class="approval-panel">
-                                <h3>基本信息</h3>
-                                <el-form inline-message size="mini" :model="nodeObj" disabled label-width="80px">
-                                    <el-form-item label="名称">
-                                        <el-row>
-                                            <el-col :span="5">
-                                                <el-input v-model="nodeObj[props['label']]"></el-input>
-                                            </el-col>
-                                        </el-row>
-                                    </el-form-item>
-                                    <el-form-item label="代码">
-                                        <el-row>
-                                            <el-col :span="5">
-                                                <el-input v-model="nodeObj.code"></el-input>
-                                            </el-col>
-                                        </el-row>
-                                    </el-form-item>
-                                    <el-form-item label="最大分值">
-                                        <el-row>
-                                            <el-col :span="5">
-                                                <el-input v-model="nodeObj.scoreValue"></el-input>
-                                            </el-col>
-                                        </el-row>
-                                    </el-form-item>
-                                </el-form>
-                            </div>
-                            <div class="approval-panel" style="margin-bottom: 0px;">
-                                <h3>分值科目维护</h3>
-                                <div style="margin-top:20px">
-                                    <zongceCollapse :data="this.kemuList" :ShowStateBit="ShowStateBit" @onNodeDel="onNodeDel" :schemeId="schemeId"></zongceCollapse>
-                                </div>
-                                <div>
-                                  
-                                </div>
-                            </div>
-
-                        </template> -->
-
-                    </el-col>
-                </el-row>
+        <el-row>
+          <el-col :span="6">
+            <div class="block-left">
+              <div class="block-header">
+                <i class="el-icon-menu"></i> 机构列表</div>
+              <div class="block-line"></div>
+              <div class="block-nav">
+                <el-input placeholder="输入关键字进行过滤" v-model="filterText">
+                </el-input>
+                <el-tree ref="tree2" :props="treeProps" :data="data" :filter-node-method="filterNode" node-key="id" :default-expanded-keys="[1]" :expand-on-click-node="false" default-expand-all @node-click="handleNodeClick"></el-tree>
+              </div>
             </div>
-        </div>
-    </page>
+          </el-col>
+          <el-col :span="18" style="background-color:#f4f7fa">
+            <div class="block-right">
+              <div class="block-header">
+                <h3>{{ org.orgName }}&nbsp;&nbsp;
+                  <small>({{ org.orgTitle }})</small>
+                </h3>
+              </div>
+              <div>
+                <el-button type="text">修改机构信息</el-button>&nbsp;&nbsp;&nbsp;|
+                <el-button type="text">新增子节点</el-button>&nbsp;&nbsp;&nbsp;|
+                <el-button type="text">删除</el-button>
+              </div>
+              <div>
+                <el-card shadow="hover">
+                  鼠标悬浮时显示
+                </el-card>
+              </div>
+            </div>
+            <!-- <div class="block-line" style="    margin-top: 0px">
+            </div> -->
+            <div class="block-body">
+
+            </div>
+          </el-col>
+
+          <template v-if="org.orgName =='10'">
+
+          </template>
+
+          <template v-if="org.orgName !='10'">
+
+          </template>
+
+        </el-row>
+      </div>
+    </div>
+  </page>
 
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import store from "../_store/index.js";
-import moment from "moment";
+import menus from "../_mixin/menus.js";
 export default {
+  mixins: [menus],
   props: {
     props: {
       type: Object,
@@ -257,57 +157,13 @@ export default {
       dialogVisible: false,
       nodeObj: { label: "我的学校", id: 1, type: 1 }, //当前点击节点
       filterText: "",
-      data: [
-        {
-          id: 1,
-          label: "一级 1",
-          children: [
-            {
-              id: 4,
-              label: "二级 1-1",
-              children: [
-                {
-                  id: 9,
-                  label: "三级 1-1-1"
-                },
-                {
-                  id: 10,
-                  label: "三级 1-1-2"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          id: 2,
-          label: "一级 2",
-          children: [
-            {
-              id: 5,
-              label: "二级 2-1"
-            },
-            {
-              id: 6,
-              label: "二级 2-2"
-            }
-          ]
-        },
-        {
-          id: 3,
-          label: "一级 3",
-          children: [
-            {
-              id: 7,
-              label: "二级 3-1"
-            },
-            {
-              id: 8,
-              label: "二级 3-2"
-            }
-          ]
+      treeProps: {
+        label: function(data, node) {
+          return data.org.orgName;
         }
-      ],
-      kemuList: []
+      },
+      data: [],
+      org: {}
     };
   },
   watch: {
@@ -351,43 +207,28 @@ export default {
       });
     },
     getData() {
-      var requestData = {
-        schemeId: this.schemeId
-      };
-      this.getSchemeTree(requestData).then(response => {
+      this.getOrgTreeView().then(response => {
         this.data = [];
         console.log(["tree", response]);
         var res = response.resBody;
-        this.data.push(res.template);
+        this.data = [res];
       });
     },
     filterNode(value, data) {
       if (!value) return true;
-      return data[this.props["label"]].indexOf(value) !== -1;
+      return data.org.orgName.indexOf(value) !== -1;
     },
-    handleNodeClick(nodeDataObj, nodeObj) {
-      this.nodeObj = nodeDataObj;
-      this.kemuList = [];
-      if (
-        this.nodeObj[this.props["type"]] == "hcType" &&
-        this.nodeObj[this.props["enable"]] == "Y"
-      ) {
-        //点击的是分值科目，要查询数据
-        var requestData = {
-          subjectCode: this.nodeObj.id,
-          schemeId: this.schemeId
-        };
-        // var requestData = {
-        //   subjectCode: 1,
-        //   schemeId: 1
-        // };
-
-        this.getItemListAndScore(requestData).then(response => {
-          console.log(["itemAndScore", response]);
-          var res = response.resBody;
-          this.kemuList = res;
-        });
-      }
+    handleNodeClick(data, node) {
+      //点击的是分值科目，要查询数据
+      var requestData = {
+        orgCode: data.org.orgCode,
+        orgType: data.org.orgType
+      };
+      this.getOrg(requestData).then(response => {
+        console.log(["itemAndScore", response]);
+        var res = response.resBody;
+        this.org = res;
+      });
     },
     onNodeDel(nodeData) {
       this.checkState().then(res => {
@@ -455,17 +296,11 @@ export default {
       });
     }
   },
-//   beforeRouteEnter(to, form, next) {
-//     next(vm => {
-//       if (!to.query.schemeId) {
-//         vm.$message.error("参数不正确");
-//         vm.$router.go(-1);
-//         return;
-//       }
-//       vm.schemeId = to.query.schemeId;
-//       vm.getData();
-//     });
-//   }
+  beforeRouteEnter(to, form, next) {
+    next(vm => {
+      vm.getData();
+    });
+  }
 };
 </script>
 
