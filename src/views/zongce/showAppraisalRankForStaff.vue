@@ -1,16 +1,16 @@
 <template>
     <div>
         <page>
-            <div slot="title">测评记录生成进度</div>
+            <div slot="title">综测排名详情</div>
         </page>
         <elx-table-layout>
-
             <template slot="headerLeft">
                 <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-                    <el-form-item label="状态">
-                        <el-select v-model="formInline.state" placeholder="请选择">
-                            <el-option v-for="item in recordStateList" :value="item.value" :label="item.label" :key="item.value"></el-option>
-                        </el-select>
+                    <el-form-item label="学号">
+                        <el-input v-model="formInline.stuNo" placeholder="学号"></el-input>
+                    </el-form-item>
+                    <el-form-item label="姓名">
+                        <el-input v-model="formInline.stuName" placeholder="姓名"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -22,23 +22,13 @@
                 </el-table-column>
                 <el-table-column prop="orgName" label="组织名称">
                 </el-table-column>
-                <el-table-column prop="state" :formatter="stateFormatter" label="状态">
+                <el-table-column prop="stuNo" label="学号">
                 </el-table-column>
-                <el-table-column prop="startTime" label="开始时间">
+                <el-table-column prop="stuName" label="学生名称">
                 </el-table-column>
-                <el-table-column prop="complateTime" label="完成时间">
+                <el-table-column prop="score" label="成绩">
                 </el-table-column>
-                <el-table-column label="操作" width="88" header-align="left" align="center">
-                    <template slot-scope="scope">
-                        <el-dropdown>
-                            <el-button size="mini" @click="">
-                                <i class="el-icon-arrow-down"></i>
-                            </el-button>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item :disabled="scope.row.state != 'CO'" @click.native="showRank(scope.row)">查看排名</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
-                    </template>
+                <el-table-column prop="rank" label="班级排名">
                 </el-table-column>
             </el-table>
             <template slot="footer">
@@ -64,42 +54,18 @@ export default {
         pageSize: 10,
         totalRecord: 0
       },
-      formInline: {
-        state: ""
-      },
       projectCode: "",
-      data: [],
-      recordStateList: []
+      orgCode: "",
+      formInline: {
+        stuName: "",
+        stuNo: ""
+      },
+
+      data: []
     };
   },
   watch: {},
   methods: {
-    stateFormatter(r, c, v, i) {
-      var arr = this.recordStateList;
-      for (var i = 0; i < arr.length; i++) {
-        if (arr[i].value == v) {
-          return arr[i].label;
-        }
-      }
-      return v;
-    },
-    showRank(row) {
-      //查看排名
-      this.$router.push({
-        path: "/zongce/showAppraisalRankForStaff",
-        query: {
-          orgCode: row.orgCode,
-          projectCode: row.projectCode
-        }
-      });
-    },
-    getRecordState() {
-      this.recordStateList = [];
-      this.getAppraisalRecordState({}).then(response => {
-        this.recordStateList = response.resBody;
-        this.recordStateList.unshift({ label: "全部", value: "0" });
-      });
-    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageInfo.pageSize = val;
@@ -112,43 +78,47 @@ export default {
     },
     ...mapActions({
       getDictByDictNames: store.namespace + "/getDictByDictNames",
-      getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
-      getAppraisalRecordState: store.namespace + "/getAppraisalRecordState",
-      queryAppraisalRecord: store.namespace + "/queryAppraisalRecord"
+      queryAppraisalRankForStaff:
+        store.namespace + "/queryAppraisalRankForStaff"
     }),
     getData() {
       var requestData = {
         currentPage: this.pageInfo.currentPage,
         pageSize: this.pageInfo.pageSize,
-        state: this.formInline.state,
-        projectCode: this.projectCode
+        projectCode: this.projectCode,
+        orgCode: this.orgCode,
+        stuName: this.formInline.stuName,
+        stuNo: this.formInline.stuNo
       };
       //查询数据的方法
-      this.queryAppraisalRecord(requestData).then(response => {
+      this.queryAppraisalRankForStaff(requestData).then(response => {
         console.log(["查询数据", response]);
         this.data = response.resBody.baseData;
         this.pageInfo = response.resBody.pageInfo;
       });
     },
-    getOrgList() {
-      this.getCurrentOrgListAndOwner({}).then(response => {
-        console.log(["orgList", response]);
-        this.orgList = response.resBody;
+    getDict() {
+      var requestData = {
+        dicts: ["nation"]
+      };
+      this.getDictByDictNames(requestData).then(response => {
+        this.getData();
       });
     },
+
     onSubmit() {
       this.pageInfo.currentPage = 1;
-      this.getData();
+      this.getData(this.projectId);
     }
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (!to.query.projectCode) {
+      vm.getDict();
+      if (!to.query.projectCode || !to.query.orgCode) {
         vm.$message.error("参数不正确");
       }
       vm.projectCode = to.query.projectCode;
-      vm.getData();
-      vm.getRecordState();
+      vm.orgCode = to.query.orgCode;
     });
   }
 };
