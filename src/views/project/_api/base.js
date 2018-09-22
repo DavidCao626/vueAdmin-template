@@ -178,7 +178,24 @@ const queryEndProject = data =>
         data: data
     })
 
+const getSchoolYear = data =>
+    request({
+        url: "/baseQuality/getSchoolYear.do",
+        method: 'post',
+        data: data
+    })
+
+const querySchoolYear = data =>
+    request({
+        url: "/schoolYear/querySchoolYear.do",
+        method: 'post',
+        data: data
+    })
+
+
 export default {
+    querySchoolYear,
+    getSchoolYear,
     queryEndProject,
     queryAllClassifyChild,
     queryPovertyProject,

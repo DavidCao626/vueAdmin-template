@@ -33,10 +33,11 @@ export const constantRouterMap = [
     redirect: "/dashboard",
     name: "home_index",
     children: [
-      zongceV2Router, // studyWorkRouter,
+      zongceV2Router,
+      //studyWorkRouter,
       zongceRouter,
       userRouter, //componentsRouter,
-    projectRouter,
+      projectRouter,
       //messagesRouter,
       {
         path: "dashboard",

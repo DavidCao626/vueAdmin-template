@@ -209,10 +209,24 @@ const queryEndProject = ({ commit, state }, data) =>
       resolve(response)
     })
   })
+const getSchoolYear = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.getSchoolYear(data).then(response => {
+      resolve(response)
+    })
+  })
+const querySchoolYear = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.querySchoolYear(data).then(response => {
+      resolve(response)
+    })
+  })
 
 
 
 export default {
+  querySchoolYear,
+  getSchoolYear,
   queryEndProject,
   queryAllClassifyChild,
   queryPovertyProject,

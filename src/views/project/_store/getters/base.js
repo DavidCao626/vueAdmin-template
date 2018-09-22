@@ -15,6 +15,13 @@ export const getStudyWorkProjectExpandFormData = state => {
     return state.baseproject.studyWorkProjectExpandFormData
 };
 
+export const getEvalProjectFormData = state => {
+    return state.baseproject.evalProjectFormData
+};
+
+export const getAppraisalProjectFormData = state => {
+    return state.baseproject.appraisalProjectFormData
+};
 
 export const getUploadAttrUrl = state => { 
     return state.baseproject.uploadAttrUrl;
@@ -46,3 +53,4 @@ export const getMotivationalScholarshipProjectFormData = state => {
 export const getNationalScholarshipProjectFormData = state => {
     return state.baseproject.nationalScholarshipProjectFormData
 };
+
