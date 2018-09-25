@@ -13,7 +13,11 @@ export const baseproject = {
         attrDetailBean: [],
         expand: {
             id: 0,
-            yearType: "2018"
+            userCode: "",
+            grade: [],
+            stuType: [],
+            name: "",
+            schoolYearId:null
         }
     },
     //国家助学金
@@ -30,7 +34,11 @@ export const baseproject = {
         attrDetailBean: [],
         expand: {
             id: 0,
-            yearType: "2018"
+            userCode: "",
+            grade: [],
+            stuType: [],
+            name: "",
+            schoolYearId: null
         }
     },
     //励志奖学金
@@ -47,8 +55,12 @@ export const baseproject = {
         attrDetailBean: [],
         expand: {
             id: 0,
-            yearType: "2018",
-            appraiseProjectCode: ""//测评项目代码
+            userCode: "",
+            grade: [],
+            stuType: [],
+            name: "",
+            appraiseProjectCode:"",
+            schoolYearId: null
         }
     },
     //国家奖学金
@@ -65,8 +77,12 @@ export const baseproject = {
         attrDetailBean: [],
         expand: {
             id: 0,
-            yearType: "2018",
-            appraiseProjectCode: ""//测评项目代码
+            userCode: "",
+            grade: [],
+            stuType: [],
+            name: "",
+            appraiseProjectCode: "",
+            schoolYearId: null
         }
     },
 
