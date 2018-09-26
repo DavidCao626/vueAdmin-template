@@ -43,7 +43,7 @@
         </el-form>
       </div>
     </slot>
-    <div>
+       <div class="approval-panel"  style="padding: 10px;">
       <el-table :data="data" style="width: 100%;" size="mini">
         <el-table-column type="expand">
           <template slot-scope="props">
@@ -386,4 +386,7 @@ td {
 .showLine {
   background-color: #ebeef5;
 }
+/* .el-table tr th {
+    background-color: #ffffff !important;
+} */
 </style>
