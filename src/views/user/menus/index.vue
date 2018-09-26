@@ -9,10 +9,11 @@
   padding: 10px;
   border-right: 1px solid #d2d2d2;
   background: #f4f7fa;
-  height: 810px;
+  min-height: 810px;
 }
 .block-right {
   padding: 15px;
+  min-height: 810px;
 }
 .block-right__noBody {
   text-align: center;
@@ -55,67 +56,68 @@
     <div slot="title">机构管理</div>
     <div slot="panel" style="">
       <div class="block">
-        <el-dialog title="新增下级节点" :visible.sync="dialogVisible" width="30%">
-
-          <el-form :inline="true" :model="formAdd" size="small" label-width="100px">
-            <el-card shadow="hover">
-              <el-form-item label="新建节点类型:">
-                <el-select v-model="isOrgAdd">
-                  <el-option v-for="(item,i) in DiverseOrgBean" :key="i" :label="item.name" :value="item.type">
-                  </el-option>
-                </el-select>
-              </el-form-item>
-            </el-card>
-            <el-card shadow="hover" v-show="isOrgAdd!='10'||isOrgAdd=='10'">
-              <el-form-item label="组织名称:">
-                <el-input v-model="formAdd.orgName"></el-input>
-              </el-form-item>
-              <el-form-item label="组织简称:">
-                <el-input v-model="formAdd.orgTitle"></el-input>
-              </el-form-item>
-              <el-form-item label="社会属性:">
-                <el-input v-model="formAdd.socialCode"></el-input>
-              </el-form-item>
-              <!-- <el-form-item label="是否可用:"> 新增时 文档中没有写需要available字段
+        <el-dialog title="新增下级节点" :visible.sync="dialogVisible" width="880px" style="max-hegth:50vh">
+          <div style="overflow: auto;overflow-x: hidden;max-height: 50vh;">
+            <el-form :inline="true" :model="formAdd" size="small" label-width="100px">
+              <el-card shadow="hover">
+                <el-form-item label="新建节点类型:">
+                  <el-select v-model="isOrgAdd">
+                    <el-option v-for="(item,i) in DiverseOrgBean" :key="i" :label="item.name" :value="item.type">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-card>
+              <el-card shadow="hover" v-show="isOrgAdd!='10'||isOrgAdd=='10'">
+                <el-form-item label="组织名称:">
+                  <el-input v-model="formAdd.orgName"></el-input>
+                </el-form-item>
+                <el-form-item label="组织简称:">
+                  <el-input v-model="formAdd.orgTitle"></el-input>
+                </el-form-item>
+                <el-form-item label="社会属性:">
+                  <el-input v-model="formAdd.socialCode"></el-input>
+                </el-form-item>
+                <!-- <el-form-item label="是否可用:"> 新增时 文档中没有写需要available字段
                 <el-switch v-model="formAdd.available" active-color="#13ce66" inactive-color="#ccc">
                 </el-switch>
               </el-form-item> -->
-            </el-card>
-            <br/>
-            <el-card shadow="hover" v-show="isOrgAdd=='10'">
-              <el-form-item label="所属学年:">
-                <elx-select v-model="formAdd.expandData.schoolYearId">
-                  <el-option v-for="(item,i) in schoolYearDict" :key="i" :label="item.name" :value="item.id">
-                  </el-option>
-                </elx-select>
-              </el-form-item>
-              <el-form-item label="学制:">
-                <elx-select v-model="formAdd.expandData.academic">
-                  <el-option v-for="(item,i) in educationalType" :key="i" :label="item.dict_desc" :value="item.dict_key">
-                  </el-option>
-                </elx-select>
-              </el-form-item>
-              <el-form-item label="成员类型:">
-                <elx-select v-model="formAdd.expandData.memberType">
-                  <el-option v-for="(item,i) in study_degree_code" :key="i" :label="item.dict_desc" :value="item.dict_key">
-                  </el-option>
-                </elx-select>
-              </el-form-item>
+              </el-card>
+              <br/>
+              <el-card shadow="hover" v-show="isOrgAdd=='10'">
+                <el-form-item label="所属学年:">
+                  <elx-select v-model="formAdd.expandData.schoolYearId">
+                    <el-option v-for="(item,i) in schoolYearDict" :key="i" :label="item.name" :value="item.id">
+                    </el-option>
+                  </elx-select>
+                </el-form-item>
+                <el-form-item label="学制:">
+                  <elx-select v-model="formAdd.expandData.academic">
+                    <el-option v-for="(item,i) in educationalType" :key="i" :label="item.dict_desc" :value="item.dict_key">
+                    </el-option>
+                  </elx-select>
+                </el-form-item>
+                <el-form-item label="成员类型:">
+                  <elx-select v-model="formAdd.expandData.memberType">
+                    <el-option v-for="(item,i) in study_degree_code" :key="i" :label="item.dict_desc" :value="item.dict_key">
+                    </el-option>
+                  </elx-select>
+                </el-form-item>
 
-              <el-form-item label="专业名称:">
-                <elx-select v-model="formAdd.expandData.majorCode">
-                  <el-option v-for="(item,i) in MajorList" :key="i" :label="item.majorName" :value="item.majorCode">
-                  </el-option>
-                </elx-select>
-              </el-form-item>
-              <el-form-item label="组织状态:">
-                <elx-select v-model="formAdd.expandData.orgState">
-                  <el-option v-for="(item,i) in orgState" :key="i" :label="item.dict_desc" :value="item.dict_key">
-                  </el-option>
-                </elx-select>
-              </el-form-item>
-            </el-card>
-          </el-form>
+                <el-form-item label="专业名称:">
+                  <elx-select v-model="formAdd.expandData.majorCode">
+                    <el-option v-for="(item,i) in MajorList" :key="i" :label="item.majorName" :value="item.majorCode">
+                    </el-option>
+                  </elx-select>
+                </el-form-item>
+                <el-form-item label="组织状态:">
+                  <elx-select v-model="formAdd.expandData.orgState">
+                    <el-option v-for="(item,i) in orgState" :key="i" :label="item.dict_desc" :value="item.dict_key">
+                    </el-option>
+                  </elx-select>
+                </el-form-item>
+              </el-card>
+            </el-form>
+          </div>
           <span slot="footer" class="dialog-footer">
 
             <el-button type="primary" @click="addNode()" size="medium">确 定</el-button>
@@ -140,7 +142,7 @@
               <div class="block-header">
                 <h3>{{ form.orgName }}&nbsp;&nbsp;
                   <small>({{ form.orgTitle }})</small>
-                  <span style="font-size: 12px;font-weight: 400;margin-left: 10px;"> 组织代码:{{ form.orgCode }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 社会属性代码:{{ form.socialCode }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 是否可用（Y/N）:{{ form.available=='Y'?'是':'否' }}
+                  <span style="font-size: 12px;font-weight: 400;margin-left: 10px;"> 组织代码:{{ form.orgCode }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 社会属性代码:{{ form.socialCode }}
                   </span>
                 </h3>
 

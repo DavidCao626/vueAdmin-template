@@ -36,7 +36,8 @@
             </div>
           </div>
           <hr class="line" />
-          <el-table class="i-cursor" :data="tableData" @row-click="onRowClick">
+    
+         <el-table class="i-cursor" :data="tableData" @row-click="onRowClick" style="width:99%">
             <el-table-column prop="item_name" label="待办事项">
             </el-table-column>
             <el-table-column prop="projectInfo.project_service_type_name" label="业务类别">
@@ -49,7 +50,7 @@
                 <span v-html="overTimeFormatter(scope.row)"></span>
               </template>
             </el-table-column>
-          </el-table>
+          </el-table> 
         </div>
       </div>
 
