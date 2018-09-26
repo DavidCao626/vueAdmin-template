@@ -38,7 +38,7 @@
     </div>
 </template>
 <script>
-import transfer from './ProjectParticipantsTransfer.vue'
+import transfer from '../_components/ProjectParticipantsTransfer.vue'
 import { mapGetters, mapActions } from 'vuex'
 import moment from 'moment'
 import store from "../../_store/index.js"

@@ -29,7 +29,7 @@
             <transfer ref="tran" v-show="start.datalistType==1"></transfer>
             <br/><br/><br/><br/>
         </el-form>
-        <br/>
+        <br/> 
         <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
             <el-col :span="7">
                 <el-button ref="back" @click="onSaveAndNext" type="primary">下发任务</el-button>
@@ -38,7 +38,7 @@
     </div>
 </template>
 <script>
-import transfer from './ProjectParticipantsTransfer.vue'
+import transfer from '../_components/ProjectParticipantsTransfer.vue'
 import { mapGetters, mapActions } from 'vuex'
 import moment from 'moment'
 import store from "../../_store/index.js"

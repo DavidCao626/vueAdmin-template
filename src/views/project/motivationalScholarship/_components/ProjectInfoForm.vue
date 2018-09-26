@@ -194,7 +194,7 @@ export default {
     }),
     getAppraisalList() {
       this.queryAppraisalProjectList({}).then(response => {
-        this.appraiseProjectList = response.resBody.queryAppraisalProjectList;
+        this.appraiseProjectList = response.resBody;
       });
     },
     getSchoolYearList() {

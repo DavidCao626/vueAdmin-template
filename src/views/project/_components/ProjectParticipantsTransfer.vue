@@ -8,7 +8,8 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import moment from "moment";
-import store from "../_store/index.js";
+import store from "../_store/index.js"; 
+import commons from "~/utils/common.js";
 export default {
   data() {
     return {
@@ -22,7 +23,9 @@ export default {
     }),
     generateData() {
       // Todo ajax查询我的下级可用节点
-      this.queryChildOrg().then(response => {
+      this.queryChildOrg({
+        scopeId: commons.getRouterParam(this.$route, "scopeId")
+      }).then(response => {
         console.log(["穿梭框", response]);
         var org = response.resBody;
         let data = [];
@@ -38,9 +41,6 @@ export default {
   },
   mounted() {
     this.generateData();
-  },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {});
   }
 };
 </script>
