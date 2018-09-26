@@ -64,12 +64,12 @@
           </el-form-item>
           <el-form-item label="学生类别">
             <el-checkbox-group v-model="form.expand.stuType" :min="1">
-              <el-checkbox v-for="item in stuTypeList" :label="item.value" :key="item.value">{{item.label}}</el-checkbox>
+              <el-checkbox v-for="item in stuTypeList" :label="item.dict_key" :key="item.dict_key">{{item.dict_desc}}</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
           <el-form-item label="年级">
             <el-checkbox-group v-model="form.expand.grade" :min="1">
-              <el-checkbox v-for="item in gradeList" :label="item.value" :key="item.value">{{item.label}}</el-checkbox>
+              <el-checkbox v-for="item in gradeList" :label="item.dict_key" :key="item.dict_key">{{item.dict_desc}}</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
         </el-form>
@@ -120,20 +120,14 @@ export default {
       ioptions: state.namespace + "/getServiceTypeList",
       ClassifyTypeList: state.namespace + "/getClassifyTypeList",
       categoryList: state.namespace + "/getappraiseCategoryList"
+     
     })
   },
   data() {
     return {
       stuTypeList: [
-        { label: "本科生", value: "BKS" },
-        { label: "研究生", value: "YJS" }
       ],
       gradeList: [
-        { label: "一年级", value: "1" },
-        { label: "二年级", value: "2" },
-        { label: "三年级", value: "3" },
-        { label: "四年级", value: "4" },
-        { label: "五年级", value: "5" }
       ],
       currentCategoryId: 0, //当前选中的测评类别id
       appraiseTypeList: [
@@ -150,6 +144,15 @@ export default {
     };
   },
   methods: {
+    getDict(){
+      var requestData={
+        dicts:["study_degree_code","grade"]
+      }
+      this.getDictByDictNames(requestData).then(response=>{
+        this.gradeList = response.resBody.grade;
+        this.stuTypeList =  response.resBody.study_degree_code;
+      })
+    },
     updateCategory() {
       this.currentCategoryId = this.form.expand.appraiseServiceType;
       if (!this.currentCategoryId) {
@@ -176,9 +179,10 @@ export default {
       queryServiceTypeList: state.namespace + "/queryServiceTypeList",
       insertOrUpdateProject: state.namespace + "/insertOrUpdateProject",
       insertOrUpdateAndNext: state.namespace + "/insertOrUpdateAndNext",
-      getSchoolYear: state.namespace + "/getSchoolYear",
       startStudyWorkProject: state.namespace + "/startStudyWorkProject",
-      querySchoolYear: state.namespace + "/querySchoolYear"
+      getSchoolYear: state.namespace + "/getSchoolYear",
+      querySchoolYear: state.namespace + "/querySchoolYear",
+       getDictByDictNames:state.namespace + "/getDictByDictNames"
       //    queryClassifyTypeByCode:store.namespace + "/queryClassifyTypeByCode"
     }),
     appraiseServiceTypeChange(val) {
@@ -307,6 +311,7 @@ export default {
     }
   },
   mounted() {
+    this.getDict();
     this.createYearTypeList();
     this.getSchoolYearList();
   }

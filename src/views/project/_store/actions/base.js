@@ -222,9 +222,23 @@ const querySchoolYear = ({ commit, state }, data) =>
     })
   })
 
+const queryAppraisalProjectList = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryAppraisalProjectList(data).then(response => {
+      resolve(response)
+    })
+  })
+const querySubsidizeProjectState = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.querySubsidizeProjectState(data).then(response => {
+      resolve(response)
+    })
+  })
 
 
 export default {
+  querySubsidizeProjectState,
+  queryAppraisalProjectList,
   querySchoolYear,
   getSchoolYear,
   queryEndProject,

@@ -1,52 +1,56 @@
 <template>
-    <div>
-        <page>
-            <div slot="title">励志奖学金项目管理</div>
-        </page>
-        <elx-table-layout>
-            <template slot="headerRight">
-                <el-button-group>
-                    <el-tooltip class="item" effect="dark" content="新建项目" placement="bottom">
-                        <el-button @click="createProject" plain size="mini">
-                            新建
-                        </el-button>
-                    </el-tooltip>
-                </el-button-group>
-            </template>
-            <template slot="headerLeft">
+  <div>
+    <page>
+      <div slot="title">励志奖学金项目管理</div>
+    </page>
+    <elx-table-layout>
+      <template slot="headerRight">
+        <el-button-group>
+          <el-tooltip class="item" effect="dark" content="新建项目" placement="bottom">
+            <el-button @click="createProject" plain size="mini">
+              新建
+            </el-button>
+          </el-tooltip>
+        </el-button-group>
+      </template>
+      <template slot="headerLeft">
 
-                <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-                    <el-form-item label="项目名称">
-                        <el-input v-model="formInline.name" placeholder="项目名称"></el-input>
-                    </el-form-item>
-                    <el-form-item label="年度">
-                        <el-select v-model="formInline.yearType" placeholder="请选择" no-data-text="无数据,请尝试刷新页面">
-                            <el-option v-for="item in yearTypeList" :key="item.value" :label="item.label" :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="状态">
-                        <el-select v-model="formInline.state" placeholder="项目状态">
-                            <el-option v-for="(item,index) in projectStateList" :key="index" :value="item.dict_key" :label="item.dict_desc"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="onSubmit">查询</el-button>
-                    </el-form-item>
-                </el-form>
-            </template>
-            <el-table :data="data" style="width: 100%" border size="mini">
-                <el-table-column prop="project_name" label="名称">
-                </el-table-column>
-                <el-table-column prop="year_type" label="年度">
-                </el-table-column>
-                <el-table-column prop="plan_start_time" label="计划开始时间">
-                </el-table-column>
-                <el-table-column prop="plan_complete_time" label="计划结束时间">
-                </el-table-column>
-                <el-table-column prop="project_state" label="状态" :formatter="stateFormatter">
-                </el-table-column>
-                <!-- <el-table-column label="操作" width="88" header-align="left" align="center">
+        <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
+          <el-form-item label="项目名称">
+            <el-input v-model="formInline.name" placeholder="项目名称"></el-input>
+          </el-form-item>
+          <el-form-item label="学年">
+            <el-select v-model="formInline.yearType" placeholder="请选择" no-data-text="无数据,请尝试刷新页面">
+              <el-option v-for="item in yearTypeList" :key="item.id" :label="item.name" :value="item.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="状态">
+            <el-select v-model="formInline.state" placeholder="项目状态">
+              <el-option v-for="(item,index) in projectStateList" :key="index" :value="item.value" :label="item.label"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
+          </el-form-item>
+        </el-form>
+      </template>
+      <el-table :data="data" style="width: 100%" border size="mini">
+        <el-table-column prop="user_code" label="编码">
+        </el-table-column>
+        <el-table-column prop="name" label="名称">
+        </el-table-column>
+        <el-table-column prop="school_year_name" label="学年">
+        </el-table-column>
+        <el-table-column prop="grade" label="年级" :formatter="gradeFormatter">
+        </el-table-column>
+        <el-table-column prop="stu_type" label="学生类型" :formatter="stuTypeFormatter">
+        </el-table-column>
+        <el-table-column prop="state" label="状态" :formatter="stateFormatter">
+        </el-table-column>
+        <el-table-column prop="create_time" label="创建时间">
+        </el-table-column>
+        <!-- <el-table-column label="操作" width="88" header-align="left" align="center">
                     <template slot-scope="scope">
                         <el-dropdown>
                             <el-button size="mini" @click="">
@@ -58,13 +62,13 @@
                         </el-dropdown>
                     </template>
                 </el-table-column> -->
-            </el-table>
-            <template slot="footer">
-                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-                </el-pagination>
-            </template>
-        </elx-table-layout>
-    </div>
+      </el-table>
+      <template slot="footer">
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+        </el-pagination>
+      </template>
+    </elx-table-layout>
+  </div>
 </template>
 
   <script>
@@ -83,39 +87,65 @@ export default {
         totalRecord: 0
       },
       formInline: {
-        yearType: "0",
+        yearType: 0,
         name: "",
         state: "0"
       },
-      orgProps: {
-        label: "org_name",
-        value: "org_code",
-        children: "children"
-      },
       yearTypeList: [],
       data: [],
-      projectStateList: []
+      projectStateList: [],
+      stuTypeList: [],
+      gradeList: []
     };
   },
   watch: {},
   methods: {
+    gradeFormatter(r, c, v, i) {
+      if (v == null || v.length == 0) {
+        return;
+      }
+      var stArr = v.split(",");
+      var a = "";
+      stArr.forEach(it => {
+        a = a + it + ",";
+      });
+      a = a.substring(0, a.length - 1);
+      return a;
+    },
+    stuTypeFormatter(r, c, v, i) {
+      if (v == null || v.length == 0) {
+        return;
+      }
+      var stArr = v.split(",");
+      var a = "";
+      stArr.forEach(it => {
+        a = a + it + ",";
+      });
+      a = a.substring(0, a.length - 1);
+      return a;
+    },
+    getSchoolYearList() {
+      this.querySchoolYear({ currentPage: 1, pageSize: 99999 }).then(
+        response => {
+          this.yearTypeList = response.resBody.baseData;
+          this.yearTypeList.unshift({id:0,name:"全部 "})
+        }
+      );
+    },
     stateFormatter(r, c, v, i) {
-      for (var j = 0; j < this.projectStateList.length; j++) {
-        if (this.projectStateList[j].dict_key == v) {
-          return this.projectStateList[j].dict_desc;
+      var arr = this.projectStateList;
+      for (var j = 0; j < arr.length; j++) {
+        if (arr[j].value == v) {
+          return arr[j].label;
         }
       }
     },
-    createYearTypeList() {
-      this.yearTypeList = [];
-      for (var i = 2000; i < 2050; i++) {
-        var temp = {
-          label: i + "年",
-          value: i.toString()
-        };
-        this.yearTypeList.push(temp);
-      }
-      this.yearTypeList.unshift({ label: "不限", value: "0" });
+    getProjectState() {
+      this.querySubsidizeProjectState({}).then(response => {
+        this.projectStateList = [];
+        this.projectStateList = response.resBody;
+        this.projectStateList.unshift({ label: "全部", value: "0" });
+      });
     },
     createProject() {
       this.$router.push({
@@ -133,9 +163,12 @@ export default {
       this.getData();
     },
     ...mapActions({
-      getProjectStateList: store.namespace + "/getProjectStateList",
       getDictByDictNames: store.namespace + "/getDictByDictNames",
-      queryPovertyProject: store.namespace + "/queryMotivationalScholarshipProject"
+      queryPovertyProject:
+        store.namespace + "/queryMotivationalScholarshipProject",
+      querySchoolYear: state.namespace + "/querySchoolYear",
+      querySubsidizeProjectState:
+        state.namespace + "/querySubsidizeProjectState"
     }),
     getData() {
       var requestData = {
@@ -154,12 +187,11 @@ export default {
     },
     getDict() {
       var requestData = {
-        dicts: ["project_state"]
+        dicts: ["study_degree_code", "grade"]
       };
-      this.createYearTypeList();
       this.getDictByDictNames(requestData).then(response => {
-        this.projectStateList = response.resBody.project_state;
-        this.projectStateList.unshift({ dict_desc: "全部", dict_key: "0" });
+        this.gradeList = requestData.resBody.grade;
+        this.stuTypeList = requestData.resBody.study_degree_code;
         this.getData();
       });
     },
@@ -171,6 +203,8 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.getDict();
+      vm.getSchoolYearList();
+      vm.getProjectState();
     });
   }
 };

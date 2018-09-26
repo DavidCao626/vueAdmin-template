@@ -193,7 +193,25 @@ const querySchoolYear = data =>
     })
 
 
+const queryAppraisalProjectList = data =>
+    request({
+        url: "/appraisal/queryAppraisalProjectList.do",
+        method: 'post',
+        data: data
+    })
+
+
+
+
+const querySubsidizeProjectState = data =>
+    request({
+        url: "/project/querySubsidizeProjectState.do",
+        method: 'post',
+        data: data
+    })
 export default {
+    querySubsidizeProjectState,
+    queryAppraisalProjectList,
     querySchoolYear,
     getSchoolYear,
     queryEndProject,

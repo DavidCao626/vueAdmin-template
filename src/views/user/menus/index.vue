@@ -168,7 +168,7 @@
                     <el-input v-model="form.socialCode"></el-input>
                   </el-form-item>
                   <el-form-item label="是否可用:">
-                    <el-switch v-model="form.available" active-color="#13ce66" inactive-color="#ccc">
+                    <el-switch v-model="form.available" active-color="#13ce66" inactive-color="#ccc" active-value="Y" inactive-value="N">
                     </el-switch>
                   </el-form-item>
                 </el-card>
@@ -255,7 +255,7 @@ export default {
         orgType: "",
         orgName: "",
         orgTitle: "",
-        available: "",
+        available: "Y",
         socialCode: "",
         expandData: {
           schoolYearId: "",
@@ -308,7 +308,9 @@ export default {
         console.log(["tree", response]);
         var res = response.resBody;
         this.data = [res];
-        this.form = this.data[0].org;
+
+        //this.form = this.data[0].org;
+
         this.loading = false;
       });
     },
@@ -336,8 +338,24 @@ export default {
       this.getOrg(requestData).then(response => {
         console.log(["itemAndScore", response]);
         var res = response.resBody;
-        res.available = res.available == "Y" ? true : false; //Y和true 的布尔值转换，用来显示el组件
-        this.form = res; //将查询结果付值到更新form表单中
+        //res.available = res.available == "Y" ? true : false; //Y和true 的布尔值转换，用来显示el组件
+        //    this.form = res; //将查询结果付值到更新form表单中
+        this.form = {
+          orgCode: "",
+          orgType: "",
+          orgName: "",
+          orgTitle: "",
+          available: "Y",
+          socialCode: "",
+          expandData: {}
+        };
+        this.form.orgCode = res.orgCode;
+        this.form.orgType = res.orgType;
+        this.form.orgName = res.orgName;
+        this.form.orgTitle = res.orgTitle;
+        this.form.available = res.available;
+        this.form.socialCode = res.socialCode;
+        this.form.expandData = res.expandData;
         this.org = res; //暂无用处
         this.loading = false;
       });
@@ -404,23 +422,24 @@ export default {
       });
     },
     save() {
-      this.updateOrg({
-        orgCode: this.form.orgCode,
-        orgType: this.form.orgType,
-        orgName: this.form.orgName,
-        orgTitle: this.form.orgTitle,
-        socialCode: this.form.socialCode,
-        available: this.form.available ? "Y" : "N",
-        expandData: {
-          schoolYearId: this.form.expandData.schoolYearId,
-          schoolYearName: this.form.expandData.schoolYearName,
-          academic: this.form.expandData.academic,
-          memberType: this.form.expandData.memberType,
-          majorCode: this.form.expandData.majorCode,
-          majorName: this.form.expandData.majorName,
-          orgState: this.form.expandData.orgState
-        }
-      }).then(r => {
+      this.updateOrg(
+        this.form
+        // orgCode: this.form.orgCode,
+        // orgType: this.form.orgType,
+        // orgName: this.form.orgName,
+        // orgTitle: this.form.orgTitle,
+        // socialCode: this.form.socialCode,
+        // available: this.form.available ? "Y" : "N",
+        // expandData: {
+        //   schoolYearId: this.form.expandData.schoolYearId,
+        //   schoolYearName: this.form.expandData.schoolYearName,
+        //   academic: this.form.expandData.academic,
+        //   memberType: this.form.expandData.memberType,
+        //   majorCode: this.form.expandData.majorCode,
+        //   majorName: this.form.expandData.majorName,
+        //   orgState: this.form.expandData.orgState
+        // }
+      ).then(r => {
         this.$message({
           message: "更新成功！",
           type: "success"

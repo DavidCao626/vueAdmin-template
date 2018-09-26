@@ -4,16 +4,6 @@
       <div slot="panel">
         <h3>一、项目信息</h3>
         <el-form ref="form" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
-          <el-form-item label="项目名称:">
-            <el-input v-model="form.projectName" autosize focus style="width:50%;">
-              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-            </el-input>
-          </el-form-item>
-          <el-form-item label="项目编号:">
-            <el-input v-model="form.projectUserCode" autosize focus style="width:50%;">
-              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-            </el-input>
-          </el-form-item>
           <el-form-item label="业务类型:">
             <ProjectTypeSelect @selectValue="selectValue" :value="form.projectServiceType" :options="ioptions" :disabled="isProjectTypeSelectDisDisabled"></ProjectTypeSelect>
           </el-form-item>
@@ -55,14 +45,33 @@
       <div slot="panel">
 
         <h3>二、其他信息</h3>
+
         <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
-
-
-          <el-form-item label="年度">
-            <el-select v-model="form.expand.yearType" placeholder="请选择" no-data-text="无数据,请尝试刷新页面">
-              <el-option v-for="item in yearTypeList" :key="item.value" :label="item.label" :value="item.value">
+          <el-form-item label="名称">
+            <el-input v-model="form.expand.name" autosize focus style="width:50%;">
+              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="代码">
+            <el-input v-model="form.expand.userCode" autosize focus style="width:50%;">
+              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="学年">
+            <elx-select v-model="form.expand.schoolYearId" placeholder="请选择">
+              <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :value="item.id">
               </el-option>
-            </el-select>
+            </elx-select>
+          </el-form-item>
+          <el-form-item label="学生类别">
+            <el-checkbox-group v-model="form.expand.stuType" :min="1">
+              <el-checkbox v-for="item in stuTypeList" :label="item.dict_key" :key="item.dict_key">{{item.dict_desc}}</el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
+          <el-form-item label="年级">
+            <el-checkbox-group v-model="form.expand.grade" :min="1">
+              <el-checkbox v-for="item in gradeList" :label="item.dict_key" :key="item.dict_key">{{item.dict_desc}}</el-checkbox>
+            </el-checkbox-group>
           </el-form-item>
 
         </el-form>
@@ -118,6 +127,9 @@ export default {
   },
   data() {
     return {
+      stuTypeList: [],
+      gradeList: [],
+      schoolYearList: [],
       currentCategoryId: 0, //当前选中的测评类别id
       appraiseTypeList: [
         {
@@ -128,10 +140,19 @@ export default {
       classifyTypedetailPath: "",
       iopt: [],
       classifyType: "",
-      yearTypeList:[]
+      yearTypeList: []
     };
   },
   methods: {
+    getDict() {
+      var requestData = {
+        dicts: ["study_degree_code", "grade"]
+      };
+      this.getDictByDictNames(requestData).then(response => {
+        this.gradeList = response.resBody.grade;
+        this.stuTypeList = response.resBody.study_degree_code;
+      });
+    },
     updateCategory() {
       this.currentCategoryId = this.form.expand.appraiseServiceType;
       if (!this.currentCategoryId) {
@@ -157,9 +178,19 @@ export default {
     ...mapActions({
       queryServiceTypeList: state.namespace + "/queryServiceTypeList",
       insertOrUpdateProject: state.namespace + "/insertOrUpdateProject",
-      insertOrUpdateAndNext: state.namespace + "/insertOrUpdateAndNext"
+      insertOrUpdateAndNext: state.namespace + "/insertOrUpdateAndNext",
+      getSchoolYear: state.namespace + "/getSchoolYear",
+      querySchoolYear: state.namespace + "/querySchoolYear",
+      getDictByDictNames: state.namespace + "/getDictByDictNames"
       //    queryClassifyTypeByCode:store.namespace + "/queryClassifyTypeByCode"
     }),
+    getSchoolYearList() {
+      this.querySchoolYear({ currentPage: 1, pageSize: 99999 }).then(
+        response => {
+          this.schoolYearList = response.resBody.baseData;
+        }
+      );
+    },
     appraiseServiceTypeChange(val) {
       this.currentCategoryId = val;
     },
@@ -188,8 +219,8 @@ export default {
       console.log(this.form);
       var t = this.form;
       var requestData = {
-        projectName: t.projectName,
-        projectUserCode: t.projectUserCode,
+        projectName: t.expand.name,
+        projectUserCode: t.expand.userCode,
         projectDesc: t.projectDesc,
         projectServiceType: t.projectServiceType,
         planStartTime: t.planStartTime,
@@ -200,8 +231,13 @@ export default {
         classifyType: this.classifyType,
         attrDetailBean: null,
         expand: {
-          id: t.expand.id,
-          yearType: t.expand.yearType //年度
+          id: 0,
+          name: t.expand.name, //名称
+          userCode: t.expand.userCode, //编码
+          schoolYearId: t.expand.schoolYearId, //学年
+          schoolYearName: t.expand.schoolYearName, //学年名称
+          stuType: t.expand.stuType, //学生类别
+          grade: t.expand.grade //年级
         }
       };
       this.insertOrUpdateAndNext(requestData).then(response => {
@@ -257,21 +293,21 @@ export default {
       }
       this.form.projectAttachmentId = tempArr;
     },
-    createYearTypeList(){
+    createYearTypeList() {
       this.yearTypeList = [];
-      for(var i = 2000;i<2050;i++){
+      for (var i = 2000; i < 2050; i++) {
         var temp = {
-          label:i + "年",
-          value:i.toString()
-        }
-        this.yearTypeList.push(temp)
+          label: i + "年",
+          value: i.toString()
+        };
+        this.yearTypeList.push(temp);
       }
-
-    },
+    }
   },
   mounted() {
+    this.getDict();
     this.createYearTypeList();
-
+    this.getSchoolYearList();
   }
 };
 </script>
