@@ -100,14 +100,19 @@ export default {
   },
   watch: {},
   methods: {
-    gradeFormatter(r, c, v, i) {
+        gradeFormatter(r, c, v, i) {
       if (v == null || v.length == 0) {
         return;
       }
       var stArr = v.split(",");
       var a = "";
       stArr.forEach(it => {
-        a = a + it + ",";
+        this.gradeList.forEach(p => {
+          if (p.dict_key == it) {
+            a = a + p.dict_desc + ",";
+            return;
+          }
+        });
       });
       a = a.substring(0, a.length - 1);
       return a;
@@ -119,7 +124,12 @@ export default {
       var stArr = v.split(",");
       var a = "";
       stArr.forEach(it => {
-        a = a + it + ",";
+        this.stuTypeList.forEach(p => {
+          if (p.dict_key == it) {
+            a = a + p.dict_desc + ",";
+            return;
+          }
+        });
       });
       a = a.substring(0, a.length - 1);
       return a;
@@ -166,9 +176,9 @@ export default {
       getDictByDictNames: store.namespace + "/getDictByDictNames",
       queryPovertyProject:
         store.namespace + "/queryPovertyProject",
-      querySchoolYear: state.namespace + "/querySchoolYear",
+      querySchoolYear: store.namespace + "/querySchoolYear",
       querySubsidizeProjectState:
-        state.namespace + "/querySubsidizeProjectState"
+        store.namespace + "/querySubsidizeProjectState"
     }),
     getData() {
       var requestData = {
@@ -190,8 +200,8 @@ export default {
         dicts: ["study_degree_code", "grade"]
       };
       this.getDictByDictNames(requestData).then(response => {
-        this.gradeList = requestData.resBody.grade;
-        this.stuTypeList = requestData.resBody.study_degree_code;
+        this.gradeList = response.resBody.grade;
+        this.stuTypeList = response.resBody.study_degree_code;
         this.getData();
       });
     },

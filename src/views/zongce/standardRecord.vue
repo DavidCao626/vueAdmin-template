@@ -72,8 +72,8 @@ export default {
         targetId: "" //测评对象id（学号）
       },
       orgProps: {
-        label: "org_name",
-        value: "org_code",
+        label: "orgName",
+        value: "orgCode",
         children: "children"
       },
       stdProps: {

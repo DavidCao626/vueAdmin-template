@@ -121,8 +121,8 @@ export default {
         name: ""
       },
       orgProps: {
-        label: "org_name",
-        value: "org_code",
+         label: "orgName",
+        value: "orgCode",
         children: "children"
       },
       pageInfo2: {

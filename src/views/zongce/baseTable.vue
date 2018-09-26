@@ -73,8 +73,8 @@ export default {
         orgCode: [] //组织机构
       },
       orgProps: {
-        label: "org_name",
-        value: "org_code",
+        label: "orgName",
+        value: "orgCode",
         children: "children"
       },
 

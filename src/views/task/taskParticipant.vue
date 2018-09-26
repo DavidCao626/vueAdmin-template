@@ -134,8 +134,9 @@ export default {
       dutyList: [],
       orgList: [],
       orgProps: {
-        value: "org_code",
-        label: "org_name"
+       label: "orgName",
+        value: "orgCode",
+        children: "children"
       },
       data: generateData,
       valueItem: [

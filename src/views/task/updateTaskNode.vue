@@ -63,8 +63,9 @@ export default {
       dutyList: [],
       userList: [],
       orgProps: {
-        value: "org_code",
-        label: "org_name"
+        label: "orgName",
+        value: "orgCode",
+        children: "children"
       }
     };
   },

@@ -23,9 +23,9 @@ const disChildScope = ({ commit, state }, data) => new Promise((resolve, reject)
 })
 
 
-const queryChildOrg = ({ commit, state },) => new Promise((resolve, reject) => {
+const queryChildOrg = ({ commit, state },data) => new Promise((resolve, reject) => {
   api
-    .queryChildOrg()
+    .queryChildOrg(data)
     .then(result => {
       resolve(result)
     })

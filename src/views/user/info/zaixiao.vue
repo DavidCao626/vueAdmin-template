@@ -129,8 +129,8 @@ export default {
   data() {
     return {
       orgProps: {
-        label: "org_name",
-        value: "org_code",
+        label: "orgName",
+        value: "orgCode",
         children: "children"
       },
       orgList: [], //组织
