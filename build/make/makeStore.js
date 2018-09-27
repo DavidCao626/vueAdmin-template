@@ -2,7 +2,9 @@ const fs = require("fs");
 const AdmZip = require("adm-zip"); //引入查看zip文件的包
 
 const filePath = "/Users/davidcao/123.docx";
-const basePath = "menus";
+const basePath = "scheme";
+
+
 
 function read(prompt, callback) {
   process.stdout.write(prompt + ":");
@@ -14,7 +16,7 @@ function read(prompt, callback) {
   });
 }
 
-const OUTPUT_PATH = "./src/views/user/_mixin/" + basePath + ".js";
+const OUTPUT_PATH = "./src/views/zongceV2/_mixin/" + basePath + ".js";
 
 read("输入模块名称", chunk => {
   basePath = chunk;
@@ -43,7 +45,7 @@ var varname1 = [];
 str.match(/接口地址[\s\S]*?接口需求描述/gi).forEach(item => {
   //console.log(item.match(/\/[\s\S]*?\.do/gi))[0];
   
-  let temp = item.match(/\/[\s\S]*?\.do/gi)[0].slice(6, -3);
+  let temp = item.match(/\/[\s\S]*?\.do/gi)[0].slice(8, -3);
   includeComponentTemplate.push(
     render(IMPORT_TEMPLATE, {
       apiname: temp
