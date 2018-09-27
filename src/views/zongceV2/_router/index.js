@@ -88,18 +88,24 @@ export const zongceV2Router = {
       name: "expandEvalLog",
       component: () => import("../expandEval/expandEvalLog.vue"),
       meta: { title: "学生扩展素质方案评价管理", hidden: true }
-    }, 
+    },
     {
       path: "myApply",
       name: "myApply",
       component: () => import("../expandEval/myApply.vue"),
       meta: { title: "我的申请扩展测评", hidden: true }
-    }, 
+    },
     {
       path: "check",
       name: "check",
       component: () => import("../expandEval/check.vue"),
       meta: { title: "扩展测评审核", hidden: true }
+    },
+    {
+      path: "appraisalConfig",
+      name: "appraisalConfig",
+      component: () => import("../config/index.vue"),
+      meta: { title: "方案可配置时间设置", hidden: true }
     }
   ]
 };

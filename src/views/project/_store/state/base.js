@@ -179,7 +179,7 @@ export const baseproject = {
             id: 0,
             name: "",//名称
             happenTime: "",//开始时间
-            schoolYearId: 0//学年
+            schoolYearId: null//学年
         }
     },
     appraisalProjectFormData: {

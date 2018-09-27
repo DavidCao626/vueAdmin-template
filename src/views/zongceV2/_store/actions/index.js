@@ -3,6 +3,7 @@ import stuScore from "./stuScore.js";
 import stuPunish from "./stuPunish.js";
 import baseQuality from "./baseQuality.js";
 import expandEval from "./expandEval.js";
+import appraisalConfig from "./appraisalConfig.js";
 
 import _lodash from "lodash";
 export default _lodash.assign(
@@ -11,5 +12,6 @@ export default _lodash.assign(
   stuScore,
   stuPunish,
   baseQuality,
-  expandEval
+  expandEval,
+  appraisalConfig
 );
