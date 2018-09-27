@@ -147,13 +147,8 @@
 
                             <el-table-column label="操作" width="315px">
                                 <template slot-scope="scope">
-                                    <div v-if="scope.row.state === 'EF'">
-                                        <el-button size="small" type="text" @click="handleSeeTodos(scope.$index, scope.row)">
-                                            <i class="el-icon-view"></i>&nbsp;&nbsp;查看配置</el-button>
-                                        <el-button size="small" type="text" @click="handleCopy(scope.$index, scope.row)">
-                                            <i class="el-icon-document"></i>&nbsp;&nbsp;拷贝为方案副本</el-button>
-                                    </div>
-                                    <el-button-group v-else>
+                                   
+                                    <el-button-group >
                                         <el-button size="mini" plain @click="handleCopy(scope.$index, scope.row)">
                                             <i class="el-icon-document"></i>&nbsp;&nbsp;拷贝</el-button>
                                         <el-button size="mini" plain @click="handleTodos(scope.$index, scope.row)">
@@ -408,7 +403,7 @@ export default {
     },
     onSaveCopy() {
       this.copyScheme({
-        punishId: this.formInlines.id,
+        schemeId: this.formInlines.id,
         name: this.formInlines.name,
         schoolYearId: this.formInlines.schoolYearId,
         stuType: this.formInlines.stuType
@@ -422,7 +417,7 @@ export default {
       this.updateScheme({
         name: this.formInlineEdit.name,
         schoolYearId: this.formInlineEdit.schoolYearId,
-        id: this.formInlineEdit.id,
+        schemeId: this.formInlineEdit.id,
         stuType: this.formInlineEdit.stuType
       }).then(res => {
         this.dialogVisibleEdit = false;
