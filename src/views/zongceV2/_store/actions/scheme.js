@@ -14,34 +14,40 @@ const getDictByDictNames = ({ commit, state }, params) =>
       resolve(response);
     });
   });
-const processPunishName = ({ commit, state }, params) =>
+const processSchemeName1 = ({ commit, state }, params) =>
   new Promise(resolve => {
-    api.processPunishName(params).then(response => {
+    api.processSchemeName(params).then(response => {
       resolve(response);
     });
   });
 
-const insertScheme = ({ commit, state }, params) =>
+const insertScheme1 = ({ commit, state }, params) =>
   new Promise(resolve => {
     api.insertScheme(params).then(response => {
       resolve(response);
     });
   });
 
-const copyScheme = ({ commit, state }, params) =>
+const copyScheme1 = ({ commit, state }, params) =>
   new Promise(resolve => {
     api.copyScheme(params).then(response => {
       resolve(response);
     });
   });
 
-const deleteScheme = ({ commit, state }, params) =>
+const deleteScheme1 = ({ commit, state }, params) =>
   new Promise(resolve => {
     api.deleteScheme(params).then(response => {
       resolve(response);
     });
   });
-
+const updateScheme1 = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.updateScheme(params).then(response => {
+      resolve(response);
+    });
+  });
+;
 const querySchemeList = ({ commit, state }, params) =>
   new Promise(resolve => {
     api.querySchemeList(params).then(response => {
@@ -105,12 +111,13 @@ const getInnovateItems = ({ commit, state }, params) =>
     });
   });
 export default {
+  updateScheme1,
   getDictByDictNames,
   getItemsTree,
-  processPunishName,
-  insertScheme,
-  copyScheme,
-  deleteScheme,
+  processSchemeName1,
+  insertScheme1,
+  copyScheme1,
+  deleteScheme1,
   querySchemeList,
   savePunishItems,
   saveEvalItems,

@@ -115,7 +115,10 @@
                                     </el-select>
                                 </el-form-item>
                                 <el-form-item>
-                                    <el-button type="primary" :loading="loading" @click="onSubmit">查询</el-button>
+                                    <el-button type="primary" @click="onSubmit">
+                                        <i class="el-icon-search"></i> 查询</el-button>
+                                    <el-button @click="refresh">
+                                        <i class="el-icon-refresh"></i> 重置</el-button>
                                 </el-form-item>
                             </el-form>
                         </template>
@@ -142,7 +145,7 @@
                             <el-table-column prop="lastUpdateTime" sortable label="最后更新时间" :formatter="dateFormat">
                             </el-table-column>
 
-                            <el-table-column label="操作" width="305px">
+                            <el-table-column label="操作" width="315px">
                                 <template slot-scope="scope">
                                     <div v-if="scope.row.state === 'EF'">
                                         <el-button size="small" type="text" @click="handleSeeTodos(scope.$index, scope.row)">
@@ -151,6 +154,8 @@
                                             <i class="el-icon-document"></i>&nbsp;&nbsp;拷贝为方案副本</el-button>
                                     </div>
                                     <el-button-group v-else>
+                                        <el-button size="mini" plain @click="handleCopy(scope.$index, scope.row)">
+                                            <i class="el-icon-document"></i>&nbsp;&nbsp;拷贝</el-button>
                                         <el-button size="mini" plain @click="handleTodos(scope.$index, scope.row)">
                                             <i class="el-icon-setting"></i> 配置</el-button>
 
@@ -180,14 +185,13 @@
 import moment from "moment";
 import elxTable from "../_mixin/elxTable.js";
 import scheme from "../_mixin/scheme.js";
-import expandEval from "../_mixin/expandEval.js";
 import config from "./index";
 
 export default {
   components: {
     config
   },
-  mixins: [elxTable, expandEval, scheme],
+  mixins: [elxTable, scheme],
   data() {
     return {
       dialogVisibleEdit: false,
@@ -246,7 +250,7 @@ export default {
           return;
         }
         this.getApi(
-          this.processPunishName,
+          this.processSchemeName,
           { schoolYearId: oldVal.schoolYearId },
           res => {
             val.name = res.name;
@@ -317,6 +321,12 @@ export default {
     });
   },
   methods: {
+    refresh() {
+      this.schoolYearId = "";
+      this.name = "";
+      this.stuType = "";
+      this.getData();
+    },
     dataStuType: function(row, column) {
       var date = row[column.property];
       if (date == undefined) {
@@ -397,37 +407,31 @@ export default {
       });
     },
     onSaveCopy() {
-      this.getApi(
-        this.copyScheme,
-        {
-          punishId: this.formInlines.id,
-          name: this.formInlines.name,
-          schoolYearId: this.formInlines.schoolYearId
-        },
-        (res, vm) => {
-          vm.dialogVisible_copy = false;
-          this.$message.success("拷贝成功！");
-          vm.getData();
-        }
-      );
+      this.copyScheme({
+        punishId: this.formInlines.id,
+        name: this.formInlines.name,
+        schoolYearId: this.formInlines.schoolYearId,
+        stuType: this.formInlines.stuType
+      }).then(res => {
+        this.dialogVisible_copy = false;
+        this.$message.success("拷贝成功！");
+        this.getData();
+      });
     },
     onSaveEdit() {
-      this.getApi(
-        this.updateScheme,
-        {
-          name: this.formInlineEdit.name,
-          schoolYearId: this.formInlineEdit.schoolYearId,
-          id: this.formInlineEdit.id
-        },
-        (res, vm) => {
-          vm.dialogVisibleEdit = false;
-          vm.$message({
-            type: "success",
-            message: "更新成功!"
-          });
-          vm.getData();
-        }
-      );
+      this.updateScheme({
+        name: this.formInlineEdit.name,
+        schoolYearId: this.formInlineEdit.schoolYearId,
+        id: this.formInlineEdit.id,
+        stuType: this.formInlineEdit.stuType
+      }).then(res => {
+        this.dialogVisibleEdit = false;
+        this.$message({
+          type: "success",
+          message: "更新成功!"
+        });
+        this.getData();
+      });
     },
     handleDelete(index, row) {
       this.$confirm("此操作将永久删除该信息, 是否继续?", "提示", {
@@ -435,13 +439,13 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        this.getApi(this.deleteScheme, { schemeId: row.id }, (res, vm) => {
+        this.deleteScheme({ schemeId: row.id }).then(res => {
           if (res) {
-            vm.$message({
+            this.$message({
               type: "success",
               message: "删除成功!"
             });
-            vm.getData();
+            this.getData();
           }
         });
       });
@@ -462,19 +466,16 @@ export default {
       });
     },
     onSave() {
-      this.getApi(
-        this.insertScheme,
-        {
-          name: this.formInline.name,
-          schoolYearId: this.formInline.schoolYearId
-        },
-        function(resBody, vm) {
-          vm.formInline["name"] = "";
-          vm.dialogVisible = false;
+      this.insertScheme({
+        name: this.formInline.name,
+        schoolYearId: this.formInline.schoolYearId,
+        stuType: this.formInline.stuType
+      }).then(resBody => {
+        this.formInline["name"] = "";
+        this.dialogVisible = false;
 
-          vm.getData();
-        }
-      );
+        this.getData();
+      });
     },
     onSavePL() {
       var requestData = {
