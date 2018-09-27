@@ -99,8 +99,8 @@ export default {
         projectId: 0
       },
       orgProps: {
-        label: "org_name",
-        value: "org_code",
+        label: "orgName",
+        value: "orgCode",
         children: "children"
       },
       projectList: [],

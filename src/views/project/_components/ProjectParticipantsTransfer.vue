@@ -23,6 +23,7 @@ export default {
     }),
     generateData() {
       // Todo ajax查询我的下级可用节点
+      console.log(["scopeIdTr",commons.getRouterParam(this.$route, "scopeId")])
       this.queryChildOrg({
         scopeId: commons.getRouterParam(this.$route, "scopeId")
       }).then(response => {

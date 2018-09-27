@@ -16,10 +16,11 @@ const disChildScope = data => {
   })
 }
 
-const queryChildOrg = () => { 
+const queryChildOrg = data => { 
   return request({
     url: '/project/queryChildOrg.do',
-    method: 'post'
+    method: 'post',
+    data: data
   })
 
 }
