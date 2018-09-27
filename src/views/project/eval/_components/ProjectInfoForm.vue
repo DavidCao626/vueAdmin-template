@@ -1,19 +1,31 @@
 <template>
   <div>
+
+  <page class="page" :breadcrumb="false">
+      <div slot="panel">
+
+        <h3>一、测评信息</h3>
+        <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
+          <el-form-item label="名称">
+            <el-input v-model="form.expand.name" autosize focus style="width:50%;">
+              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
+            </el-input>
+          </el-form-item>
+         <el-form-item label="学年">
+            <elx-select v-model="form.expand.schoolYearId" placeholder="请选择">
+              <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :value="item.id">
+              </el-option>
+            </elx-select>
+          </el-form-item>
+        </el-form>
+      </div>
+    </page>
+
+
     <page class="page" :breadcrumb="false">
       <div slot="panel">
-        <h3>一、项目信息</h3>
+        <h3>二、项目信息</h3>
         <el-form ref="form" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
-          <el-form-item label="项目名称:">
-            <el-input v-model="form.projectName" autosize focus style="width:50%;">
-              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-            </el-input>
-          </el-form-item>
-          <el-form-item label="项目编号:">
-            <el-input v-model="form.projectUserCode" autosize focus style="width:50%;">
-              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-            </el-input>
-          </el-form-item>
           <el-form-item label="业务类型:">
             <ProjectTypeSelect @selectValue="selectValue" :value="form.projectServiceType" :options="ioptions" :disabled="isProjectTypeSelectDisDisabled"></ProjectTypeSelect>
           </el-form-item>
@@ -51,23 +63,7 @@
       </div>
     </page>
 
-    <page class="page" :breadcrumb="false">
-      <div slot="panel">
-
-        <h3>二、测评信息</h3>
-        <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
-          <el-form-item label="名称">
-            <el-input v-model="form.expand.name" autosize focus style="width:50%;">
-              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-            </el-input>
-          </el-form-item>
-          <el-form-item label="开始时间">
-            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.expand.happenTime" type="date" placeholder="选择日期">
-            </el-date-picker>
-          </el-form-item>
-        </el-form>
-      </div>
-    </page>
+  
 
     <page class="page" :breadcrumb="false">
       <div slot="panel">
@@ -114,6 +110,7 @@ export default {
       ioptions: state.namespace + "/getServiceTypeList",
       ClassifyTypeList: state.namespace + "/getClassifyTypeList",
       categoryList: state.namespace + "/getappraiseCategoryList"
+      
     })
   },
   data() {
@@ -128,10 +125,18 @@ export default {
       classifyTypedetailPath: "",
       iopt: [],
       classifyType: "",
-      yearTypeList: []
+      yearTypeList: [],
+      schoolYearList:[]
     };
   },
   methods: {
+    getSchoolYearList() {
+      this.querySchoolYear({ currentPage: 1, pageSize: 99999 }).then(
+        response => {
+          this.schoolYearList = response.resBody.baseData;
+        }
+      );
+    },
     updateCategory() {
       this.currentCategoryId = this.form.expand.appraiseServiceType;
       if (!this.currentCategoryId) {
@@ -159,7 +164,8 @@ export default {
       insertOrUpdateProject: state.namespace + "/insertOrUpdateProject",
       insertOrUpdateAndNext: state.namespace + "/insertOrUpdateAndNext",
       getSchoolYear: state.namespace + "/getSchoolYear",
-      startStudyWorkProject: state.namespace + "/startStudyWorkProject"
+      startStudyWorkProject: state.namespace + "/startStudyWorkProject",
+      querySchoolYear: state.namespace + "/querySchoolYear"
       //    queryClassifyTypeByCode:store.namespace + "/queryClassifyTypeByCode"
     }),
     appraiseServiceTypeChange(val) {
@@ -189,7 +195,7 @@ export default {
       }
       var t = this.form;
       var requestData = {
-        projectName: t.projectName,
+        projectName: t.expand.name,
         projectUserCode: t.projectUserCode,
         projectDesc: t.projectDesc,
         projectServiceType: t.projectServiceType,
@@ -208,12 +214,7 @@ export default {
         }
       };
       console.log(this.form);
-      this.getSchoolYear({ date: t.expand.happenTime }).then(re => {
-        if (re.resBody == null) {
-          this.$message.error("发生时间不在已有学年内");
-          return;
-        }
-        requestData.expand.schoolYearId = re.resBody.id;
+     
         this.insertOrUpdateAndNext(requestData).then(response => {
           this.$message.success("保存成功!");
           this.form.id = response.resBody.projectId;
@@ -231,7 +232,7 @@ export default {
             });
           });
         });
-      });
+
     },
     onSave(e) {
       console.log(this.form);
@@ -286,6 +287,7 @@ export default {
   },
   mounted() {
     this.createYearTypeList();
+    this.getSchoolYearList();
   }
 };
 </script>
