@@ -36,20 +36,6 @@
                 </el-table-column>
                 <el-table-column prop="lastUpdateTime" label="最后变更时间">
                 </el-table-column>
-
-                <el-table-column label="操作" width="88" header-align="left" align="center">
-                    <template slot-scope="scope">
-                        <el-dropdown>
-                            <el-button size="mini" @click="">
-                                <i class="el-icon-arrow-down"></i>
-                            </el-button>
-                            <el-dropdown-menu slot="dropdown">
-                                <!-- <el-dropdown-item @click.native="edit(scope.row)">编辑</el-dropdown-item> -->
-                                <el-dropdown-item @click.native="rollBack(scope.row)">回滚</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
-                    </template>
-                </el-table-column>
                 <el-table-column type="expand" label="#" width="42">
                     <template slot-scope="props" style="background-color:#f7f8f9">
                         <el-form label-position="left" inline class="demo-table-expand">

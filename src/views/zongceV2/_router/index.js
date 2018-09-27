@@ -106,6 +106,17 @@ export const zongceV2Router = {
       name: "appraisalConfig",
       component: () => import("../config/index.vue"),
       meta: { title: "方案可配置时间设置", hidden: true }
+    }, 
+    {
+      path: "fangan",
+      name: "fangan",
+      component: () => import("../fangan/index.vue"),
+      meta: { title: "扩展测评审核", hidden: true }
+    }, {
+      path: "scheme",
+      name: "scheme",
+      component: () => import("../fangan/add.vue"),
+      meta: { title: "扩展测评审核", hidden: true }
     }
   ]
 };

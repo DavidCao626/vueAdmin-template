@@ -3,7 +3,7 @@ const AdmZip = require("adm-zip"); //引入查看zip文件的包
 const filePath = "/Users/davidcao/123.docx";
 const basePath = "menus";
 
-const OUTPUT_PATH = "./src/views/user/_api/menus.js";
+const OUTPUT_PATH = "./src/views/zongceV2/_api/scheme.js";
 
 
 var render = require("json-templater/string");
@@ -29,7 +29,7 @@ var includeComponentTemplate = [];
 var varname1 = [];
 
 str.match(/接口地址[\s\S]*?接口需求描述/gi).forEach(item => {
-  let temp = item.match(/\/[\s\S]*?\.do/gi)[0].slice(6, -3);
+  let temp = item.match(/\/[\s\S]*?\.do/gi)[0].slice(8, -3);
   console.log(temp);
   includeComponentTemplate.push(
     render(IMPORT_TEMPLATE, {

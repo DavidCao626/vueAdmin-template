@@ -174,9 +174,7 @@
                         </el-table-column>
                         <el-table-column prop="subjectScore" label="分值">
                         </el-table-column>
-                        <el-table-column prop="address" label="所属学年">
-                        </el-table-column>
-                        <el-table-column prop="address" label="所属学年">
+                        <el-table-column prop="schoolYearName" label="所属学年">
                         </el-table-column>
                         <el-table-column prop="happenTime" label="发生时间" :formatter="dateFormat">
                         </el-table-column>
