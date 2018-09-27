@@ -100,6 +100,17 @@ export const zongceV2Router = {
       name: "check",
       component: () => import("../expandEval/check.vue"),
       meta: { title: "扩展测评审核", hidden: true }
+    }, 
+    {
+      path: "fangan",
+      name: "fangan",
+      component: () => import("../fangan/index.vue"),
+      meta: { title: "扩展测评审核", hidden: true }
+    }, {
+      path: "scheme",
+      name: "scheme",
+      component: () => import("../fangan/add.vue"),
+      meta: { title: "扩展测评审核", hidden: true }
     }
   ]
 };
