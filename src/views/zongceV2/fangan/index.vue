@@ -340,7 +340,6 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       }).then(({ value }) => {
-        debugger;
         data.list.push({
           esCode: null,
           code: null,
@@ -356,13 +355,11 @@ export default {
           itemBean: {
             itemBeans: this.formData.PunishItems
           }
-        }.then(r => {
+        }).then(r => {
           this.$message.success("保存成功");
-        })
-      );
+        });
     },
     onSaveEvalItems() {
-      debugger;
       this.saveEvalItems({
         schemeId: this.id,
         eveluateBean: {

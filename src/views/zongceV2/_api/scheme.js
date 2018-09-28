@@ -10,9 +10,9 @@ const getItemsTree = data =>
     data: data
   });
 
-const processPunishName = data =>
+const processSchemeName = data =>
   request({
-    url: "/scheme/processPunishName.do",
+    url: "/scheme/processSchemeName.do",
     method: "post",
     data: data
   });
@@ -105,10 +105,17 @@ const getInnovateItems = data =>
     method: "post",
     data: data
   });
+const updateScheme = data =>
+  request({
+    url: "/scheme/updateScheme.do",
+    method: "post",
+    data: data
+  });
 export default {
   getDictByDictNames,
   getItemsTree,
-  processPunishName,
+  processSchemeName,
+  updateScheme,
   insertScheme,
   copyScheme,
   deleteScheme,
