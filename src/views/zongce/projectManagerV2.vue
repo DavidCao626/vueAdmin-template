@@ -23,9 +23,9 @@
 
       <template slot="headerRight">
         <el-button-group>
-          <el-tooltip class="item" effect="dark" content="生成数据" placement="bottom">
+          <el-tooltip class="item" effect="dark" content="生成综测结果" placement="bottom">
             <el-button @click="createDataBT" plain size="mini">
-              生成数据
+              生成综测结果
             </el-button>
           </el-tooltip>
         </el-button-group>
@@ -46,6 +46,7 @@
               </el-button>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item @click.native="showSchedule(scope.row)">查看进度</el-dropdown-item>
+                <el-dropdown-item @click.native="deleteProject(scope.row)">删除项目</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </template>
@@ -113,6 +114,12 @@ export default {
   },
   watch: {},
   methods: {
+    deleteProject(row) {
+      this.deleteAppraisalProject({ projectCode: row.code }).then(vm => {
+        this.getData();
+        this.$message.success("删除成功");
+      });
+    },
     createDataBT() {
       this.createDataDV = true;
     },
@@ -184,7 +191,8 @@ export default {
       queryProjectList: store.namespace + "/queryProjectList",
       processAppraisalRecord: store.namespace + "/processAppraisalRecord",
       getAppraisalProjectState: store.namespace + "/getAppraisalProjectState",
-      querySchoolYear: store.namespace + "/querySchoolYear"
+      querySchoolYear: store.namespace + "/querySchoolYear",
+      deleteAppraisalProject: store.namespace + "/deleteAppraisalProject"
     }),
     getProjectStateList() {
       this.projectStateList = [];

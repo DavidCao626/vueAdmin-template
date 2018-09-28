@@ -78,7 +78,7 @@
                         </el-table-column>
                         <el-table-column prop="stu_no" sortable label="学号">
                         </el-table-column>
-                        <el-table-column prop="score" label="总分">
+                        <el-table-column prop="score" label="平均分">
                         </el-table-column>
                         <el-table-column prop="school_year_name" label="学年名称">
                         </el-table-column>
@@ -167,7 +167,11 @@ export default {
     onProcessRank() {
       this.getApi(this.processRank, {
         schoolYearId: this.formInline.schoolYearId
+      },(r,vm)=>{
+          vm.$message.success("生成成功")
+          vm.getData();
       });
+      
     },
     onSubmit() {
       this.getData();

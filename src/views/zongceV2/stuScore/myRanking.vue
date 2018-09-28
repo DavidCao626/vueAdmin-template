@@ -33,7 +33,7 @@
                         </el-table-column>
                         <el-table-column prop="rank" sortable label="排名">
                         </el-table-column>
-                        <el-table-column prop="score" sortable label="总分">
+                        <el-table-column prop="score" sortable label="平均分">
                         </el-table-column>
                         <el-table-column prop="school_year_name" sortable label="学年名称">
                         </el-table-column>

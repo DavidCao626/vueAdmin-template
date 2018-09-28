@@ -94,7 +94,23 @@ const queryAppraisalRankForStu = data =>
         method: "post",
         data: data
     })
+const deleteAppraisalProject = data =>
+    request({
+        url: "/appraisal/deleteAppraisalProject.do",
+        method: "post",
+        data: data
+    })
+
+const queryAppraisalRankForCollegeAndClass = data =>
+    request({
+        url: "/appraisal/queryAppraisalRankForCollegeAndClass.do",
+        method: "post",
+        data: data
+    })
+
 export default {
+    queryAppraisalRankForCollegeAndClass,
+    deleteAppraisalProject,
     queryAppraisalRankList,
     queryAppraisalRankForStaff,
     queryAppraisalRankForStu,

@@ -45,14 +45,14 @@
                     <el-form-item label="开始时间">
                         <el-row>
                             <el-col :span="8">
-                                <el-input v-model="formData.startTime" type="number" placeholder="开始时间"></el-input>
+                                <el-input v-model="formData.startTime"  placeholder="开始时间"></el-input>
                             </el-col>
                         </el-row>
                     </el-form-item>
                     <el-form-item label="结束时间">
                         <el-row>
                             <el-col :span="8">
-                                <el-input v-model="formData.endTime" type="number" placeholder="开始时间"></el-input>
+                                <el-input v-model="formData.endTime"  placeholder="开始时间"></el-input>
                             </el-col>
                         </el-row>
                     </el-form-item>
