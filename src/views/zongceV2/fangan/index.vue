@@ -82,7 +82,7 @@
                 <el-input placeholder="输入关键字进行过滤" v-model="filterText">
                 </el-input>
 
-                <el-tree ref="tree2" :indent="26" :highlight-current="true" :props="treeProps" :data="data" :filter-node-method="filterNode" node-key="id" :default-expanded-keys="[1]" default-expand-all @node-click="handleNodeClick"></el-tree>
+                <el-tree ref="tree2" :indent="26" :highlight-current="true" :props="treeProps" :data="data" :filter-node-method="filterNode" node-key="id" :expand-on-click-node="false" :default-expanded-keys="[1]" default-expand-all @node-click="handleNodeClick"></el-tree>
               </div>
             </div>
           </el-col>
@@ -102,7 +102,7 @@
 
                       <span>
                         {{ data.node.name }}：
-                        <el-input-number size="mini" v-model="data.node.ratio">
+                        <el-input-number :min='0' :max='100' size="mini" v-model="data.node.ratio">
                         </el-input-number>&nbsp;&nbsp;分
                         <!-- <el-row>
                         <el-col :span="6">
@@ -128,7 +128,7 @@
                         {{ data.name }}
                       </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <span>
-                        <el-input-number size="mini" v-model="data.score"></el-input-number>
+                        <el-input-number :min='0' :max='100' size="mini" v-model="data.score"></el-input-number>
                       </span>&nbsp;&nbsp;分
                       <span style="float: right;">
                         <el-button type="text" size="mini" @click="() => remove(node, data)">
@@ -149,7 +149,7 @@
                         {{ data.node.name }}
                       </span>：
                       <span>
-                        <el-input-number size="mini" v-model="data.node.ratio"></el-input-number>&nbsp;&nbsp;分
+                        <el-input-number :min='0' :max='100' size="mini" v-model="data.node.ratio"></el-input-number>&nbsp;&nbsp;分
                       </span>
                       <span style="float: right;">
 
@@ -177,7 +177,7 @@
                         {{ data.name }}
                       </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <span>
-                        <el-input-number size="mini" v-model="data.score"></el-input-number>
+                        <el-input-number :min='0' :max='100' size="mini" v-model="data.score"></el-input-number>
                       </span>&nbsp;&nbsp;分
                       <span style="float: right;">
                         <el-button type="text" size="mini" @click="() => remove(node, data)">
@@ -197,7 +197,7 @@
                         {{ data.node.name }}
                       </span>：
                       <span>
-                        <el-input-number size="mini" v-model="data.node.ratio"></el-input-number>&nbsp;&nbsp;分
+                        <el-input-number :min='0' :max='100' size="mini" v-model="data.node.ratio"></el-input-number>&nbsp;&nbsp;分
                       </span>
                       <span style="float: right;">
 
@@ -225,7 +225,7 @@
                         {{ data.name }}
                       </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <span>
-                        <el-input-number size="mini" v-model="data.score"></el-input-number>
+                        <el-input-number :min='0' :max='100' size="mini" v-model="data.score"></el-input-number>
                       </span>&nbsp;&nbsp;分
                       <span style="float: right;">
                         <el-button type="text" size="mini" @click="() => remove(node, data)">
@@ -245,7 +245,7 @@
                       {{ data.name }}
                     </span>：
                     <span>
-                      <el-input-number size="mini" v-model="data.score"></el-input-number>&nbsp;&nbsp;分
+                      <el-input-number :min='0' :max='100' size="mini" v-model="data.score"></el-input-number>&nbsp;&nbsp;分
                     </span>
                     <span style="float: right;">
 
@@ -349,15 +349,14 @@ export default {
       });
     },
     onSavePunishItems() {
-      this.savePunishItems(
-        {
-          punishId: this.id,
-          itemBean: {
-            itemBeans: this.formData.PunishItems
-          }
-        }).then(r => {
-          this.$message.success("保存成功");
-        });
+      this.savePunishItems({
+        punishId: this.id,
+        itemBean: {
+          itemBeans: this.formData.PunishItems
+        }
+      }).then(r => {
+        this.$message.success("保存成功");
+      });
     },
     onSaveEvalItems() {
       this.saveEvalItems({
@@ -491,6 +490,9 @@ export default {
       return data[this.treeProps["label"]].indexOf(value) !== -1;
     },
     handleNodeClick(data, nodeObj) {
+      if (data.behaviors && data.behaviors.length > 0) {
+        return;
+      }
       this.formData = {
         nodeData: {},
         evalItems: [],

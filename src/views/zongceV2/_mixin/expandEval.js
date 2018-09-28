@@ -17,6 +17,8 @@ export default {
   },
   methods: {
     ...mapActions({
+      getExpandEvalCatagoryByStuNo: store.namespace + "/getExpandEvalCatagoryByStuNo",
+      queryExpandCatagory2:store.namespace + "/queryExpandCatagory2",
       getExpandEvalTemplateUrl: store.namespace + "/getExpandEvalTemplateUrl",
       queryPunishList: store.namespace + "/queryPunishList3",
       getSchemeStateDict: store.namespace + "/getSchemeStateDict",

@@ -8,6 +8,7 @@ export default {
 
   methods: {
     ...mapActions({
+      queryEvalListForStu: store.namespace + "/queryEvalListForStu",
       queryPunishList2: store.namespace + "/queryPunishList2",
 
       querySchoolYearDict: store.namespace + "/querySchoolYearDict",

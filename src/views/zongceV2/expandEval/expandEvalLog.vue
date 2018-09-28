@@ -62,7 +62,7 @@
               </el-date-picker>
             </el-form-item>
             <el-form-item label="测评类别:" v-if="formAdd.happenTime">
-              <Catag :date="Date.parse(formAdd.happenTime)" @handleChange='onHandleChange__add'></Catag>
+              <Catagx :stuNo="formAdd.stuNo" :date="Date.parse(formAdd.happenTime)" @handleChange='onHandleChange__add'></Catagx>
             </el-form-item>
             <!-- <el-form-item label="分数:">
                             <el-input v-model="formAdd.score" type="textarea"></el-input>
@@ -82,14 +82,15 @@
         <el-dialog title="导入学生扩展素质评价记录" :visible.sync="dialogVisible" width="400px">
           <el-form>
             <el-form-item label="1、选择所属目标评价分类:">
-              <el-select v-model="EvalCategoryName" placeholder="全部">
-                <el-option v-for="(item,i) in EvalCategory" :key="i" :label="item.name" :value="item.code">
-                </el-option>
-              </el-select>
+
+              <el-form-item label="测评类别:">
+                <el-cascader v-model="EvalCategoryName" :options="ExpandEvalCategory" filterable expand-trigger="hover" :props="orgProps2"></el-cascader>
+              </el-form-item>
+
             </el-form-item>
             <el-form-item label="2、选择学生扩展素质评价数据：">
               <br/>
-              <el-upload class="upload-demo" :action="uploadStuPunishurl" :limit='1' :onSuccess="onUploadSuccess2">
+              <el-upload class="upload-demo" ref="upload" :action="uploadStuPunishurl" :limit='1' :onSuccess="onUploadSuccess2">
                 <el-button size="small" type="primary" plain>
                   <i class="el-icon-upload"></i> 点击上传文件</el-button>
                 <div class="el-upload__tip" slot="tip">只能上传xlx/xlsx</div>
@@ -137,9 +138,15 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="测评类别:" v-if="formInline.schoolYearId">
+
+              <!-- <el-form-item label="测评类别:" >
                 <Catag :schoolYearId="formInline.schoolYearId" @handleChange='onHandleChange'></Catag>
+              </el-form-item> -->
+
+              <el-form-item label="测评类别:">
+                <el-cascader v-model="formInline.expendCategoryCode" :options="ExpandEvalCategory" filterable expand-trigger="hover" :props="orgProps2"></el-cascader>
               </el-form-item>
+
               <el-form-item label="事件标题:">
                 <el-input v-model="formInline.title" placeholder="标题关键字"></el-input>
               </el-form-item>
@@ -153,12 +160,7 @@
               <el-form-item label="所属机构:">
                 <el-cascader v-model="formInline.orgCode" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
               </el-form-item>
-              <!-- <el-form-item label="处分条目:" v-show="formInline.schoolYearId">
-                                <el-select v-model="formInline.subjectCode" placeholder="全部">
-                                    <el-option v-for="(km,k) in schoolKm" :key="k" :label="km.name" :value="km.code">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item> -->
+
               <el-form-item label="筛选范围:">
                 <el-date-picker v-model="formInline.value" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
                 </el-date-picker>
@@ -169,7 +171,7 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-              
+
               <el-form-item>
                 <el-button type="primary" @click="onSubmit">
                   <i class="el-icon-search"></i> 查询</el-button>
@@ -247,12 +249,13 @@ import moment from "moment";
 import elxTable from "../_mixin/elxTable.js";
 import expandEval from "../_mixin/expandEval.js";
 import Catag from "./_components/expandEvalCatagory.vue";
+import Catagx from "./_components/expandEvalCatagory2.vue";
 const uploadStuPunishUrl =
   process.env.BASE_API + "/public/uploadStuExpandEval.do";
 
 export default {
   mixins: [elxTable, expandEval],
-  components: { Catag },
+  components: { Catag, Catagx },
   data() {
     return {
       uploadStuPunishurl: uploadStuPunishUrl,
@@ -282,6 +285,11 @@ export default {
         fileId: "",
         orgCode: []
       },
+      orgProps2: {
+        label: "name",
+        value: "code",
+        children: "children"
+      },
       formInline: {
         title: "",
         stuNo: "",
@@ -289,6 +297,7 @@ export default {
         evalTypeCode: "",
         schoolYearId: "",
         orgCode: [],
+        expendCategoryCode: [],
         value: [],
         expend: {
           expendCategoryCode: "",
@@ -313,6 +322,8 @@ export default {
         value: "orgCode",
         children: "children"
       },
+      ExpandEvalCategory: [],
+
       pageInfo2: {
         currentPage: 1,
         pageSize: 10,
@@ -320,7 +331,7 @@ export default {
       },
       urldo: "",
       EvalCategory: [],
-      EvalCategoryName: ""
+      EvalCategoryName: []
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -330,8 +341,10 @@ export default {
       vm.getOrgList();
       vm.getExpandEvalCategory();
       vm.getDict();
+      vm.queryExpandEvalCategory2();
     });
   },
+
   methods: {
     getDict() {
       this.getDataSourceDict();
@@ -342,10 +355,12 @@ export default {
     },
     refresh() {
       this.formInline = {
+        title: "",
         stuNo: "",
         name: "",
         evalTypeCode: "",
         schoolYearId: "",
+        expendCategoryCode: [],
         orgCode: [],
         value: [],
         expend: {
@@ -361,14 +376,14 @@ export default {
     onHandleChange__add(o) {
       if (!o) return;
       o.forEach((element, index) => {
-        if (index == 0) {
+        if (index == 1) {
           this.formAdd.expend.expendCategoryCode = element.value;
           this.formAdd.expend.expendCategoryName = element.label;
         }
-        if (index == 1) {
+        if (index == 2) {
           this.formAdd.expend.expendGradeName = element.value;
         }
-        if (index == 2) {
+        if (index == 3) {
           this.formAdd.expend.expandItemCode = element.value;
           this.formAdd.expend.expandItemName = element.label;
         }
@@ -390,6 +405,11 @@ export default {
         }
       });
     },
+    queryExpandEvalCategory2() {
+      this.queryExpandCatagory2({}).then(response => {
+        this.ExpandEvalCategory = response.resBody;
+      });
+    },
     getExpandEvalCategory() {
       this.getApi(this.queryExpandEvalCategory, {}, (r, v) => {
         v.EvalCategory = r;
@@ -401,6 +421,12 @@ export default {
       });
     },
     onSubmitUpload() {
+      var tr = this.EvalCategoryName;
+      if (tr.length == 0) {
+        this.$message.error("请选择分类!");
+        return;
+      }
+
       if (!this.fileId) {
         return this.$message.error("请先上传数据文件！");
       }
@@ -415,9 +441,11 @@ export default {
       ).then(() => {
         this.importExpandEvalRecord({
           fileId: this.fileId,
-          expendCategoryCode: this.EvalCategoryName
+          expendCategoryCode: tr[tr.length - 1]
         }).then(response => {
           this.dialogVisible = false;
+          this.EvalCategoryName = [];
+          this.$refs["upload"].clearFiles();
           this.$notify({
             title: "后台任务提醒",
             message:
@@ -505,21 +533,21 @@ export default {
         this.loading = false;
         this.schoolYearDict = response.resBody;
         this.schoolYearDict.unshift({ id: 0, name: "全部" });
-        this.getPunishItemByShoolYearId(this.formInline.schoolYearId);
+        //this.getPunishItemByShoolYearId(this.formInline.schoolYearId);
       });
     },
-    getPunishItemByShoolYearId(id) {
-      this.queryPunishItemByShoolYearId({
-        schoolYearId: id
-      }).then(response => {
-        this.loading = false;
-        this.schoolKm = Object.assign(
-          { code: 0, name: "全部" },
-          response.resBody.itemBeans
-        );
-        this.schoolKm2 = response.resBody.itemBeans;
-      });
-    },
+    // getPunishItemByShoolYearId(id) {
+    //   this.queryPunishItemByShoolYearId({
+    //     schoolYearId: id
+    //   }).then(response => {
+    //     this.loading = false;
+    //     this.schoolKm = Object.assign(
+    //       { code: 0, name: "全部" },
+    //       response.resBody.itemBeans
+    //     );
+    //     this.schoolKm2 = response.resBody.itemBeans;
+    //   });
+    // },
     handleSizeChange2(val) {
       console.log(`每页 ${val} 条`);
       this.pageInfo.pageSize = val;
@@ -561,11 +589,16 @@ export default {
           stuNo: this.formInline.stuNo,
           startTime: Date.parse(this.formInline.value[0]) || "",
           endTime: Date.parse(this.formInline.value[1]) || "",
-          expendCategoryCode: this.formInline.expend.expendCategoryCode || "",
-          expendCategoryName: this.formInline.expend.expendCategoryName || "",
-          expendGradeName: this.formInline.expend.expendGradeName || "",
-          expandItemCode: this.formInline.expend.expandItemCode || "",
-          expandItemName: this.formInline.expend.expandItemName || "",
+          expendCategoryCode:
+            this.formInline.expendCategoryCode.length > 0
+              ? this.formInline.expendCategoryCode[
+                  this.formInline.expendCategoryCode.length - 1
+                ]
+              : "",
+          //expendCategoryName: this.formInline.expend.expendCategoryName || "",
+          //expendGradeName: this.formInline.expend.expendGradeName || "",
+          //expandItemCode: this.formInline.expend.expandItemCode || "",
+          //expandItemName: this.formInline.expend.expandItemName || "",
           sourceState: this.formInline.dateSource || ""
         },
         (r, v) => {

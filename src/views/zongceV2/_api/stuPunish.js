@@ -148,7 +148,17 @@ const getPunishTemplateUrl = data =>
     method: "post",
     data: data
   });
+
+const queryPunishListByStuNoAndDate = data =>
+  request({
+    url: "/stuPunish/queryPunishListByStuNoAndDate.do",
+    method: "post",
+    data: data
+  });
+
+
 export default {
+  queryPunishListByStuNoAndDate,
   getPunishTemplateUrl,
   queryPunishList,
   getPunishStateDict,

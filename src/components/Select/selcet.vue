@@ -21,7 +21,7 @@
       <i slot="suffix" :class="['el-select__caret', 'el-input__icon', 'el-icon-' + iconClass]" @click="handleIconClick"></i>
     </el-input>
     <transition name="el-zoom-in-top" @before-enter="handleMenuEnter" @after-leave="doDestroy">
-      <el-select-menu ref="popper" :append-to-body="popperAppendToBody" v-show="visible && emptyText !== false">
+      <el-select-menu ref="popper" :append-to-body="popperAppendToBody" v-show="visible && emptyText !== false" style="z-index: 3000;">
         <el-scrollbar tag="ul" wrap-class="el-select-dropdown__wrap" view-class="el-select-dropdown__list" ref="scrollbar" :class="{ 'is-empty': !allowCreate && query && filteredOptionsCount === 0 }" v-show="options.length > 0 && !loading">
           <el-option :value="query" created v-if="showNewOption">
           </el-option>

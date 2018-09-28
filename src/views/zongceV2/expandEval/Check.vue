@@ -26,8 +26,8 @@
                                 {{tag.title}}({{tag.stuName}})
                             </el-tag>
                         </el-form-item>
-                        <el-form-item label="2、审核：">
-                            <el-switch v-model="formCheck.isok" active-color="#ccc" inactive-color="#13ce66" active-text="通过" inactive-text="不通过">
+                        <el-form-item label="2、">
+                            <el-switch v-model="formCheck.isok" active-color="#13ce66" inactive-color="#ccc" active-text="通过" inactive-text="不通过">
                             </el-switch>
 
                         </el-form-item>
@@ -49,7 +49,7 @@
                         </el-form-item>
                         <el-form-item label="2、选择学生扩展素质评价数据：">
                             <br/>
-                            <el-upload class="upload-demo" :action="uploadStuPunishurl" :limit='1' :onSuccess="onUploadSuccess2">
+                            <el-upload class="upload-demo" ref="upload" :action="uploadStuPunishurl" :limit='1' :onSuccess="onUploadSuccess2">
                                 <el-button size="small" type="primary" plain>
                                     <i class="el-icon-upload"></i> 点击上传文件</el-button>
                                 <div class="el-upload__tip" slot="tip">只能上传xlx/xlsx</div>
@@ -66,12 +66,10 @@
                     <template slot="headerRight">
                         <el-button-group>
 
-                            <el-button  size="mini" type="primary" @click="delAll" :disabled="this.multipleSelection.length==0">
+                            <el-button size="mini" type="primary" @click="delAll" :disabled="this.multipleSelection.length==0">
                                 <i class="el-icon-circle-check"></i> 批量审核
                             </el-button>
-                            <el-button  size="mini"  type="primary" @click="showAdd">
-                                <i class="el-icon-plus"></i> 导入审核数据
-                            </el-button>
+                        
                         </el-button-group>
                     </template>
                     <template slot="headerLeft">
@@ -117,9 +115,12 @@
                     <el-table :data="data" v-loading="loading" style="width: 100%" border size="mini" :default-sort="{prop: 'score',prop: 'schoolYearName', prop: 'happenTime',prop: 'lastUpdateTime'}" @selection-change="handleSelectionChange">
                         <el-table-column type="selection" width="38" v-if="deleteOpen">
                         </el-table-column>
-                        <el-table-column prop="schoolYearName" sortable label="所属学年">
+                        <el-table-column prop="checkState" sortable label="审核状态" :formatter="ExpandCheckStateDict">
+                            <template slot-scope="scope">
+                                <el-tag :type="scope.row.checkState == 'NO' ? 'danger' : 'success'" disable-transitions>{{scope.row.checkState== 'NO'?'未通过':'已通过'}}</el-tag>
+                            </template>
                         </el-table-column>
-                        <el-table-column prop="title" label="事件标题">
+                        <el-table-column prop="title" label="事件标题" width="200">
                         </el-table-column>
                         <el-table-column prop="stuName" label="学生姓名">
                         </el-table-column>
@@ -135,15 +136,7 @@
                         </el-table-column>
                         <el-table-column prop="happenTime" sortable label="发生时间" :formatter="dateFormat">
                         </el-table-column>
-                        <el-table-column prop="dateSource" label="数据来源" :formatter="dateSource">
-                        </el-table-column>
-                        <el-table-column prop="checkState" label="审核状态" :formatter="ExpandCheckStateDict">
-                        </el-table-column>
 
-                        <el-table-column prop="checkUserLogin" label="审核人">
-                        </el-table-column>
-                        <el-table-column prop="lastUpdateTime" sortable label="变动时间">
-                        </el-table-column>
                         <el-table-column label="相关附件">
                             <template slot-scope="scope">
                                 <span v-if="!scope.row.attPath">无</span>
@@ -151,7 +144,7 @@
                                     <i class="el-icon-download"></i> 下载</a>
                             </template>
                         </el-table-column>
-                        <el-table-column label="操作">
+                        <el-table-column fixed="right" label="操作" width="120">
                             <template slot-scope="scope">
                                 <!-- <el-button size="small" type="text" @click="see(scope.$index, scope.row)">
                                     <i class="el-icon-view"></i>&nbsp;&nbsp;详情</el-button> -->
@@ -160,7 +153,7 @@
 
                             </template>
                         </el-table-column>
-                        <el-table-column type="expand" label="#" width="42">
+                        <el-table-column type="expand" fixed="right" label="#" width="42">
                             <template slot-scope="props">
                                 <el-form label-position="left" inline class="demo-table-expand">
 
@@ -399,6 +392,8 @@ export default {
           fileId: this.formImport.fileId,
           expendCategoryCode: this.formImport.EvalCategoryName
         }).then(response => {
+          this.formImport.EvalCategoryName = "";
+          this.$refs["upload"].clearFiles();
           this.dialogVisible_new = false;
           this.$notify({
             title: "后台任务提醒",

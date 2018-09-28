@@ -1,180 +1,180 @@
 <template>
-    <div>
-        <page :Breadcrumb="false">
-            <div slot="title">方案管理</div>
-            <div slot="panel">
-                <div>
-                    <el-dialog title="新建方案" :visible.sync="dialogVisible" width="500px">
-                        <el-row>
-                            <el-col :span="22">
-                                <el-form :model="formInline" label-width="100px">
-                                    <el-form-item label="所属学年:">
-                                        <el-select v-model="formInline.schoolYearId">
-                                            <el-option v-for="item in this.formInline.schoolYearDict" :key="item.value" :label="item.name" :value="item.id">
-                                            </el-option>
-                                        </el-select>
-                                    </el-form-item>
+  <div>
+    <page :Breadcrumb="false">
+      <div slot="title">方案管理</div>
+      <div slot="panel">
+        <div>
+          <el-dialog title="新建方案" :visible.sync="dialogVisible" width="500px">
+            <el-row>
+              <el-col :span="22">
+                <el-form :model="formInline" label-width="100px">
+                  <el-form-item label="所属学年:">
+                    <el-select v-model="formInline.schoolYearId">
+                      <el-option v-for="item in this.formInline.schoolYearDict" :key="item.value" :label="item.name" :value="item.id">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
 
-                                    <el-form-item label="方案名称">
-                                        <el-input v-model="formInline.name" placeholder="请输入方案名称"></el-input>
-                                    </el-form-item>
-                                    <el-form-item label="所属学历:">
-                                        <el-select v-model="formInline.stuType">
-                                            <el-option v-for="item in stuTypes" :key="item.dict_key" :label="item.dict_desc" :value="item.dict_key">
-                                            </el-option>
-                                        </el-select>
-                                    </el-form-item>
-                                </el-form>
-                            </el-col>
-                        </el-row>
-                        <div slot="footer">
-                            <el-button type="primary" @click="onSave">确定提交</el-button>
-                            <el-button @click="dialogVisible=false">取消</el-button>
-                        </div>
-                    </el-dialog>
-
-                    <el-dialog title="编辑方案" :visible.sync="dialogVisibleEdit" width="500px">
-
-                        <el-form :model="formInlineEdit" label-width="100px">
-                            <el-form-item label="所属学年:">
-                                <el-select v-model="formInlineEdit.schoolYearId">
-                                    <el-option v-for="item in this.formInline.schoolYearDict" :key="item.value" :label="item.name" :value="item.id">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-
-                            <el-form-item label="方案名称">
-                                <el-input v-model="formInlineEdit.name" placeholder="请输入方案名称"></el-input>
-                            </el-form-item>
-                            <el-form-item label="所属学历:">
-                                <el-select v-model="formInlineEdit.stuType">
-                                    <el-option v-for="item in stuTypes" :key="item.dict_key" :label="item.dict_desc" :value="item.dict_key">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-form>
-
-                        <div slot="footer">
-                            <el-button type="primary" @click="onSaveEdit">保存提交</el-button>
-                            <el-button @click="dialogVisibleEdit=false">取消</el-button>
-                        </div>
-                    </el-dialog>
-
-                    <el-dialog title="配置方案质条目 " :visible.sync="dialogVisible_todos" width="980px" style="max-hegth:80vh">
-                        <div style="overflow: auto;overflow-x: hidden;max-height: 80vh;">
-                        </div>
-                        <div slot="footer">
-                            <el-button type="primary" @click="onSaveTodos">提交保存条目</el-button>
-                            <el-button @click="dialogVisible_todos=false">取消</el-button>
-                        </div>
-                    </el-dialog>
-
-                    <el-dialog title="拷贝为新副本方案" :visible.sync="dialogVisible_copy" width="500px">
-
-                        <el-form :model="formInlines" label-width="100px">
-                            <el-form-item label="新方案学年:">
-                                <el-select v-model="formInlines.schoolYearId">
-                                    <el-option v-for="item in this.formInline.schoolYearDict" :key="item.value" :label="item.name" :value="item.id">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                            <el-form-item label="新方案名称">
-                                <el-input v-model="formInlines.name" placeholder="请输入方案名称"></el-input>
-                            </el-form-item>
-                            <el-form-item label="所属学历:">
-                                <el-select v-model="formInlines.stuType">
-                                    <el-option v-for="item in stuTypes" :key="item.dict_key" :label="item.dict_desc" :value="item.dict_key">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-form>
-
-                        <div slot="footer">
-                            <el-button type="primary" @click="onSaveCopy">保存提交</el-button>
-                            <el-button @click="dialogVisible_copy=false">取消</el-button>
-                        </div>
-                    </el-dialog>
-
-                    <elx-table-layout>
-
-                        <template slot="headerLeft">
-                            <el-form :inline="true" size="small">
-                                <el-form-item label="所属学年:">
-                                    <el-select v-model="schoolYearId" placeholder="全部">
-                                        <el-option v-for="item in schoolYearDict" :key="item.value" :label="item.name" :value="item.id">
-                                        </el-option>
-                                    </el-select>
-                                </el-form-item>
-                                <el-form-item label="方案名称:">
-                                    <el-input v-model="name" placeholder="全部"></el-input>
-                                </el-form-item>
-                                <el-form-item label="所属学历:">
-                                    <el-select v-model="stuType" placeholder="全部">
-                                        <el-option v-for="item in stuTypes" :key="item.dict_key" :label="item.dict_desc" :value="item.dict_key">
-                                        </el-option>
-                                    </el-select>
-                                </el-form-item>
-                                <el-form-item>
-                                    <el-button type="primary" @click="onSubmit">
-                                        <i class="el-icon-search"></i> 查询</el-button>
-                                    <el-button @click="refresh">
-                                        <i class="el-icon-refresh"></i> 重置</el-button>
-                                </el-form-item>
-                            </el-form>
-                        </template>
-
-                        <template slot="headerRight">
-                            <el-button @click="add" size="small" type="primary">新建方案</el-button>
-                        </template>
-
-                        <el-table v-loading="loading" :row-class-name="tableRowClassName" :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'name', prop: 'createTime',prop: 'effectTime', prop: 'state'}" @selection-change="handleSelectionChange">
-                            <el-table-column type="selection" width="38" v-if="deleteOpen">
-                            </el-table-column>
-
-                            <el-table-column prop="name" sortable label="方案名称">
-                            </el-table-column>
-                            <el-table-column prop="stuType" sortable label="学生类型" :formatter="dataStuType">
-                            </el-table-column>
-                            <el-table-column prop="schoolYearName" sortable label="所属学年">
-                            </el-table-column>
-                            <el-table-column prop="createTime" sortable label="创建日期" :formatter="dateFormat">
-                            </el-table-column>
-
-                            <el-table-column prop="orgName" label="组织名称">
-                            </el-table-column>
-                            <el-table-column prop="lastUpdateTime" sortable label="最后更新时间" :formatter="dateFormat">
-                            </el-table-column>
-
-                            <el-table-column label="操作" width="315px">
-                                <template slot-scope="scope">
-                                   
-                                    <el-button-group >
-                                        <el-button size="mini" plain @click="handleCopy(scope.$index, scope.row)">
-                                            <i class="el-icon-document"></i>&nbsp;&nbsp;拷贝</el-button>
-                                        <el-button size="mini" plain @click="handleTodos(scope.$index, scope.row)">
-                                            <i class="el-icon-setting"></i> 配置</el-button>
-
-                                        <!-- <el-button size="mini"  @click="handleEdit(scope.$index, scope.row)">拷贝</el-button> -->
-                                        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">
-                                            <i class="el-icon-edit-outline"></i> 编辑</el-button>
-                                        <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">
-                                            <i class="el-icon-delete"></i> 删除</el-button>
-                                    </el-button-group>
-                                </template>
-                            </el-table-column>
-
-                        </el-table>
-
-                        <template slot="footer">
-                            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-                            </el-pagination>
-                        </template>
-
-                    </elx-table-layout>
-                </div>
+                  <el-form-item label="方案名称">
+                    <el-input v-model="formInline.name" placeholder="请输入方案名称"></el-input>
+                  </el-form-item>
+                  <el-form-item label="所属学历:">
+                    <el-select v-model="formInline.stuType">
+                      <el-option v-for="item in stuTypes" :key="item.dict_key" :label="item.dict_desc" :value="item.dict_key">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-form>
+              </el-col>
+            </el-row>
+            <div slot="footer">
+              <el-button type="primary" @click="onSave">确定提交</el-button>
+              <el-button @click="dialogVisible=false">取消</el-button>
             </div>
-        </page>
-    </div>
+          </el-dialog>
+
+          <el-dialog title="编辑方案" :visible.sync="dialogVisibleEdit" width="500px">
+
+            <el-form :model="formInlineEdit" label-width="100px">
+              <el-form-item label="所属学年:">
+                <el-select v-model="formInlineEdit.schoolYearId">
+                  <el-option v-for="item in this.formInline.schoolYearDict" :key="item.value" :label="item.name" :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+
+              <el-form-item label="方案名称">
+                <el-input v-model="formInlineEdit.name" placeholder="请输入方案名称"></el-input>
+              </el-form-item>
+              <el-form-item label="所属学历:">
+                <el-select v-model="formInlineEdit.stuType">
+                  <el-option v-for="item in stuTypes" :key="item.dict_key" :label="item.dict_desc" :value="item.dict_key">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-form>
+
+            <div slot="footer">
+              <el-button type="primary" @click="onSaveEdit">保存提交</el-button>
+              <el-button @click="dialogVisibleEdit=false">取消</el-button>
+            </div>
+          </el-dialog>
+
+          <el-dialog title="配置方案质条目 " :visible.sync="dialogVisible_todos" width="980px" style="max-hegth:80vh">
+            <div style="overflow: auto;overflow-x: hidden;max-height: 80vh;">
+            </div>
+            <div slot="footer">
+              <el-button type="primary" @click="onSaveTodos">提交保存条目</el-button>
+              <el-button @click="dialogVisible_todos=false">取消</el-button>
+            </div>
+          </el-dialog>
+
+          <el-dialog title="拷贝为新副本方案" :visible.sync="dialogVisible_copy" width="500px">
+
+            <el-form :model="formInlines" label-width="100px">
+              <el-form-item label="新方案学年:">
+                <el-select v-model="formInlines.schoolYearId">
+                  <el-option v-for="item in this.formInline.schoolYearDict" :key="item.value" :label="item.name" :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="新方案名称">
+                <el-input v-model="formInlines.name" placeholder="请输入方案名称"></el-input>
+              </el-form-item>
+              <el-form-item label="所属学历:">
+                <el-select v-model="formInlines.stuType">
+                  <el-option v-for="item in stuTypes" :key="item.dict_key" :label="item.dict_desc" :value="item.dict_key">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-form>
+
+            <div slot="footer">
+              <el-button type="primary" @click="onSaveCopy">保存提交</el-button>
+              <el-button @click="dialogVisible_copy=false">取消</el-button>
+            </div>
+          </el-dialog>
+
+          <elx-table-layout>
+
+            <template slot="headerLeft">
+              <el-form :inline="true" size="small">
+                <el-form-item label="所属学年:">
+                  <el-select v-model="schoolYearId" placeholder="全部">
+                    <el-option v-for="item in schoolYearDict" :key="item.value" :label="item.name" :value="item.id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="方案名称:">
+                  <el-input v-model="name" placeholder="全部"></el-input>
+                </el-form-item>
+                <el-form-item label="所属学历:">
+                  <el-select v-model="stuType" placeholder="全部">
+                    <el-option v-for="item in stuTypes" :key="item.dict_key" :label="item.dict_desc" :value="item.dict_key">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" @click="onSubmit">
+                    <i class="el-icon-search"></i> 查询</el-button>
+                  <el-button @click="refresh">
+                    <i class="el-icon-refresh"></i> 重置</el-button>
+                </el-form-item>
+              </el-form>
+            </template>
+
+            <template slot="headerRight">
+              <el-button @click="add" size="small" type="primary">新建方案</el-button>
+            </template>
+
+            <el-table v-loading="loading" :row-class-name="tableRowClassName" :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'name', prop: 'createTime',prop: 'effectTime', prop: 'state'}" @selection-change="handleSelectionChange">
+              <el-table-column type="selection" width="38" v-if="deleteOpen">
+              </el-table-column>
+
+              <el-table-column prop="name" sortable label="方案名称">
+              </el-table-column>
+              <el-table-column prop="stuType" sortable label="学生类型" :formatter="dataStuType">
+              </el-table-column>
+              <el-table-column prop="schoolYearName" sortable label="所属学年">
+              </el-table-column>
+              <el-table-column prop="createTime" sortable label="创建日期" :formatter="dateFormat">
+              </el-table-column>
+
+              <el-table-column prop="orgName" label="组织名称">
+              </el-table-column>
+              <el-table-column prop="lastUpdateTime" sortable label="最后更新时间" :formatter="dateFormat">
+              </el-table-column>
+
+              <el-table-column label="操作" width="315px">
+                <template slot-scope="scope">
+
+                  <el-button-group>
+                    <el-button size="mini" plain @click="handleCopy(scope.$index, scope.row)">
+                      <i class="el-icon-document"></i>&nbsp;&nbsp;拷贝</el-button>
+                    <el-button size="mini" plain @click="handleTodos(scope.$index, scope.row)">
+                      <i class="el-icon-setting"></i> 配置</el-button>
+
+                    <!-- <el-button size="mini"  @click="handleEdit(scope.$index, scope.row)">拷贝</el-button> -->
+                    <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">
+                      <i class="el-icon-edit-outline"></i> 编辑</el-button>
+                    <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">
+                      <i class="el-icon-delete"></i> 删除</el-button>
+                  </el-button-group>
+                </template>
+              </el-table-column>
+
+            </el-table>
+
+            <template slot="footer">
+              <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+              </el-pagination>
+            </template>
+
+          </elx-table-layout>
+        </div>
+      </div>
+    </page>
+  </div>
 </template>
 <script>
 import moment from "moment";
@@ -244,6 +244,9 @@ export default {
         ) {
           return;
         }
+        if (val.name) {
+          return;
+        }
         this.getApi(
           this.processSchemeName,
           { schoolYearId: oldVal.schoolYearId },
@@ -271,7 +274,9 @@ export default {
           this.$message.error("结束日期必须大于开始日期");
           return (val.enddate = "");
         }
-
+        if (val.name) {
+          return;
+        }
         var requestData = {
           startTime: Date.parse(val.begindate),
           endTime: Date.parse(val.enddate)
