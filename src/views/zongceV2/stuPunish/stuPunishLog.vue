@@ -73,7 +73,7 @@
                     </el-form>
                     <div slot="footer">
                         <el-button type="primary" @click="onSave">确定提交</el-button>
-                        <el-button @click="dialogVisible=false">关闭</el-button>
+                        <el-button @click="dialogVisible_new=false">关闭</el-button>
                     </div>
                 </el-dialog>
                 <el-dialog title="导入学生处分数据" :visible.sync="dialogVisible" width="400px">
@@ -91,7 +91,7 @@
                     <div slot="footer">
                         <el-button type="primary" @click="onSubmitUpload">
                             <i class="el-icon-news"></i> 提交后台导入</el-button>
-                        <el-button @click="dialogVisible_new=false">取消</el-button>
+                        <el-button @click="dialogVisible=false">取消</el-button>
                     </div>
 
                 </el-dialog>

@@ -183,6 +183,9 @@ export default {
           return (val.enddate = "");
         }
 
+        if (val.name || val.describe) {
+          return;
+        }
         var requestData = {
           startTime: Date.parse(val.begindate),
           endTime: Date.parse(val.enddate)
@@ -213,7 +216,9 @@ export default {
           this.$message.error("结束日期必须大于开始日期");
           return (val.enddate = "");
         }
-
+        if (val.name || val.describe) {
+          return;
+        }
         var requestData = {
           startTime: Date.parse(val.begindate),
           endTime: Date.parse(val.enddate)
