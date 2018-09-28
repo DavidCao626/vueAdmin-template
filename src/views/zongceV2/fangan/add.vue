@@ -124,7 +124,7 @@
                         </template>
 
                         <template slot="headerRight">
-                            <el-button @click="add" size="small" type="primary">新建扩展素质方案</el-button>
+                            <el-button @click="add" size="small" type="primary">新建方案</el-button>
                         </template>
 
                         <el-table v-loading="loading" :row-class-name="tableRowClassName" :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'name', prop: 'createTime',prop: 'effectTime', prop: 'state'}" @selection-change="handleSelectionChange">
@@ -391,6 +391,7 @@ export default {
       this.formInlineEdit.id = row.id;
       this.formInlineEdit.name = row.name;
       this.formInlineEdit.schoolYearId = row.schoolYearId;
+      this.formInlineEdit.stuType = row.stuType;
     },
     onSaveTodos() {
       this.saveExEveluateBean({

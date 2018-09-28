@@ -1,26 +1,6 @@
 <template>
   <span>
-    <!-- <el-row>
-            <el-col :span="8">
-                <elx-select placeholder="请选择" @change="changeValue1">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :config="item" :value="item.value">
-                    </el-option>
-                </elx-select>
-            </el-col>
-            <el-col :span="8" v-if="selectedOptions1">
-                <elx-select placeholder="请选择" @change="handleChange2">
-                    <el-option v-for="item in selectedOptions1.children" :key="item.value" :label="item.label" :config="item" :value="item.value">
-                    </el-option>
-                </elx-select>
-            </el-col>
-            <el-col :span="8" v-if="selectedOptions2">
-                <elx-select placeholder="请选择" @change="handleChange3 ">
-                    <el-option v-for="item in selectedOptions2.children" :key="item.value " :label="item.label " :config="item" :value="item.value">
-                    </el-option>
-                </elx-select>
-            </el-col>
-        </el-row> -->
-    <elx-cascader :options="options " v-model="selectedOptions" :show-all-levels="false" :change-on-select="true" @change="handleChange ">
+    <elx-cascader style="z-index:9999" :options="options " v-model="selectedOptions" :show-all-levels="false" :change-on-select="true" @change="handleChange ">
     </elx-cascader>
   </span>
 
