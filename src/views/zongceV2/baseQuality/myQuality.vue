@@ -1,6 +1,6 @@
  <template>
     <page :Breadcrumb="false">
-        <div slot="title">我的处分查询</div>
+        <div slot="title">我的基础素质评价查询</div>
         <div slot="panel">
             <div>
 

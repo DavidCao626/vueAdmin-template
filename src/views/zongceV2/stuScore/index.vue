@@ -13,7 +13,7 @@
                         </el-form-item>
                         <el-form-item label="2、">
                             <br/>
-                            <el-upload class="upload-demo" :action="action" :limit='1' :onSuccess="onUploadSuccess">
+                            <el-upload class="upload-demo" ref="upload" :action="action" :limit='1' :onSuccess="onUploadSuccess">
                                 <el-button size="small" type="primary" plain>
                                     <i class="el-icon-upload"></i> 点击上传成绩文件</el-button>
                                 <div class="el-upload__tip" slot="tip">只能上传xlx/xlsx</div>
@@ -31,7 +31,7 @@
                 <elx-table-layout>
                     <template slot="headerRight">
                         <el-button-group>
-                            <el-tooltip class="item" effect="dark" content="下载模版" placement="bottom" >
+                            <el-tooltip class="item" effect="dark" content="下载模版" placement="bottom">
                                 <el-button plain size="mini">
                                     <a :href="urldo" target='_blank'>
                                         <i class="el-icon-sold-out"></i>
@@ -148,7 +148,7 @@ export default {
       },
 
       orgProps: {
-       label: "orgName",
+        label: "orgName",
         value: "orgCode",
         children: "children"
       },
@@ -161,7 +161,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.getOrgList();
-       vm.geturldo();
+      vm.geturldo();
       vm.getSchoolYearDict();
     });
   },
@@ -179,6 +179,9 @@ export default {
       });
     },
     onSubmit() {
+      if (!this.formInline.orgCode[this.formInline.orgCode.length - 1]) {
+        return this.$message.error("请筛选机构再查询");
+      }
       this.getData();
     },
     onSubmitUpload() {
@@ -199,6 +202,8 @@ export default {
           schoolYearId: this.importForm.schoolYearId
         }).then(response => {
           this.dialogVisible = false;
+          this.$refs["upload"].clearFiles();
+          this.importForm.schoolYearId = "";
           this.$notify({
             title: "后台任务提醒",
             message:

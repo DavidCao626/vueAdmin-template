@@ -74,7 +74,7 @@
                 <el-form-item label="组织简称:">
                   <el-input v-model="formAdd.orgTitle"></el-input>
                 </el-form-item>
-                <el-form-item label="社会属性:">
+                <el-form-item label="社会代码:">
                   <el-input v-model="formAdd.socialCode"></el-input>
                 </el-form-item>
                 <!-- <el-form-item label="是否可用:"> 新增时 文档中没有写需要available字段
@@ -84,7 +84,7 @@
               </el-card>
               <br/>
               <el-card shadow="hover" v-show="isOrgAdd=='10'">
-                <el-form-item label="所属学年:">
+                <el-form-item label="创建学年:">
                   <elx-select v-model="formAdd.expandData.schoolYearId">
                     <el-option v-for="(item,i) in schoolYearDict" :key="i" :label="item.name" :value="item.id">
                     </el-option>
@@ -109,12 +109,12 @@
                     </el-option>
                   </elx-select>
                 </el-form-item>
-                <el-form-item label="组织状态:">
+                <!-- <el-form-item label="组织状态:">
                   <elx-select v-model="formAdd.expandData.orgState">
                     <el-option v-for="(item,i) in orgState" :key="i" :label="item.dict_desc" :value="item.dict_key">
                     </el-option>
                   </elx-select>
-                </el-form-item>
+                </el-form-item> -->
               </el-card>
             </el-form>
           </div>
@@ -131,7 +131,7 @@
                 <i class="el-icon-menu"></i> 机构列表</div>
               <div class="block-line"></div>
               <div class="block-nav">
-                <el-input placeholder="输入关键字进行过滤" v-model="filterText">
+                <el-input placeholder="输入关键字进行过滤" v-model="filterText" style="margin-bottom: 5px;">
                 </el-input>
                 <el-tree ref="tree2" :props="treeProps" :data="data" :filter-node-method="filterNode" node-key="id" :default-expanded-keys="[1]" :expand-on-click-node="false" default-expand-all @node-click="handleNodeClick"></el-tree>
               </div>
@@ -139,83 +139,82 @@
           </el-col>
           <el-col :span="18" style="background-color:#f4f7fa" v-loading="loading">
             <div class="block-right">
-              <div class="block-header">
-                <h3>{{ form.orgName }}&nbsp;&nbsp;
-                  <small>({{ form.orgTitle }})</small>
-                  <span style="font-size: 12px;font-weight: 400;margin-left: 10px;"> 组织代码:{{ form.orgCode }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 社会属性代码:{{ form.socialCode }}
-                  </span>
-                </h3>
+              <template v-if="form.orgName">
 
-              </div>
-              <div>
-                <template v-if="form.orgType!='10'">
+                <div class="block-header">
+                  <h3>{{ form.orgName }}&nbsp;&nbsp;
+                    <small>({{ form.orgTitle }})</small>
+                    <span style="font-size: 12px;font-weight: 400;margin-left: 10px;"> 组织代码:{{ form.orgCode }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 社会属性代码:{{ form.socialCode }}
+                    </span>
+                  </h3>
 
-                  <el-button type="text" @click="add(form)">新增子节点</el-button>&nbsp;&nbsp;&nbsp;|
-                </template>
-                <el-button type="text" @click="onNodeDel(form)">删除</el-button>
-              </div>
-              <div class="block-line"></div>
-              <div style="margin-bottom: 10px;color: #999;    font-size: 12px;">基础信息维护:</div>
-              <el-form :inline="true" :model="form" size="small" label-width="100px">
-                <el-card shadow="hover">
-                  <el-form-item label="组织名称:">
-                    <el-input v-model="form.orgName"></el-input>
-                  </el-form-item>
-                  <el-form-item label="组织简称:">
-                    <el-input v-model="form.orgTitle"></el-input>
-                  </el-form-item>
-                  <el-form-item label="社会属性:">
-                    <el-input v-model="form.socialCode"></el-input>
-                  </el-form-item>
-                  <el-form-item label="是否可用:">
-                    <el-switch v-model="form.available" active-color="#13ce66" inactive-color="#ccc" active-value="Y" inactive-value="N">
-                    </el-switch>
-                  </el-form-item>
-                </el-card>
-                <br/>
-                <template v-if="form.expandData && form.orgType=='10'">
-                  <div style="margin-bottom: 10px;color: #999;font-size: 12px;">扩展信息维护:</div>
+                </div>
+                <div>
+                  <template v-if="form.orgType!='10'">
+
+                    <el-button type="text" @click="add(form)">新增子节点</el-button>&nbsp;&nbsp;&nbsp;|
+                  </template>
+                  <el-button type="text" @click="onNodeDel(form)">删除</el-button>
+                </div>
+                <div class="block-line"></div>
+                <div style="margin-bottom: 10px;color: #999;    font-size: 12px;">基础信息维护:</div>
+                <el-form :inline="true" :model="form" size="small" label-width="100px">
                   <el-card shadow="hover">
-                    <el-form-item label="所属学年:">
-                      <elx-select v-model="form.expandData.schoolYearId">
-                        <el-option v-for="(item,i) in schoolYearDict" :key="i" :label="item.name" :value="item.id">
-                        </el-option>
-                      </elx-select>
+                    <el-form-item label="组织名称:">
+                      <el-input v-model="form.orgName"></el-input>
                     </el-form-item>
-                    <el-form-item label="学制:">
-                      <elx-select v-model="form.expandData.academic">
-                        <el-option v-for="(item,i) in educationalType" :key="i" :label="item.dict_desc" :value="item.dict_key">
-                        </el-option>
-                      </elx-select>
+                    <el-form-item label="组织简称:">
+                      <el-input v-model="form.orgTitle"></el-input>
                     </el-form-item>
-                    <el-form-item label="成员类型:">
-                      <elx-select v-model="form.expandData.memberType">
-                        <el-option v-for="(item,i) in study_degree_code" :key="i" :label="item.dict_desc" :value="item.dict_key">
-                        </el-option>
-                      </elx-select>
+                    <el-form-item label="社会代码:">
+                      <el-input v-model="form.socialCode"></el-input>
                     </el-form-item>
-
-                    <el-form-item label="专业名称:">
-                      <elx-select v-model="form.expandData.majorCode">
-                        <el-option v-for="(item,i) in MajorList" :key="i" :label="item.majorName" :value="item.majorCode">
-                        </el-option>
-                      </elx-select>
-                    </el-form-item>
-                    <el-form-item label="组织状态:">
-                      <elx-select v-model="form.expandData.orgState">
-                        <el-option v-for="(item,i) in orgState" :key="i" :label="item.dict_desc" :value="item.dict_key">
-                        </el-option>
-                      </elx-select>
+                    <el-form-item label="是否可用:">
+                      <el-switch v-model="form.available" active-color="#13ce66" inactive-color="#ccc" active-value="Y" inactive-value="N">
+                      </el-switch>
                     </el-form-item>
                   </el-card>
-                </template>
-              </el-form>
-              <br/>
-              <div>
-                <el-card shadow="hover">
-                  <el-button type="primary" @click="save">保存信息</el-button>
-                </el-card>
-              </div>
+                  <br/>
+                  <template v-if="form.expandData && form.orgType=='10'">
+                    <div style="margin-bottom: 10px;color: #999;font-size: 12px;">扩展信息维护:</div>
+                    <el-card shadow="hover">
+                      <el-form-item label="创建学年:">
+                        <elx-select v-model="form.expandData.schoolYearId">
+                          <el-option v-for="(item,i) in schoolYearDict" :key="i" :label="item.name" :value="item.id">
+                          </el-option>
+                        </elx-select>
+                      </el-form-item>
+                      <el-form-item label="学制:">
+                        <elx-select v-model="form.expandData.academic">
+                          <el-option v-for="(item,i) in educationalType" :key="i" :label="item.dict_desc" :value="item.dict_key">
+                          </el-option>
+                        </elx-select>
+                      </el-form-item>
+                      <el-form-item label="成员类型:">
+                        <elx-select v-model="form.expandData.memberType">
+                          <el-option v-for="(item,i) in study_degree_code" :key="i" :label="item.dict_desc" :value="item.dict_key">
+                          </el-option>
+                        </elx-select>
+                      </el-form-item>
+
+                      <el-form-item label="专业名称:">
+                        <elx-select v-model="form.expandData.majorCode">
+                          <el-option v-for="(item,i) in MajorList" :key="i" :label="item.majorName" :value="item.majorCode">
+                          </el-option>
+                        </elx-select>
+                      </el-form-item>
+
+                    </el-card>
+                  </template>
+                </el-form>
+                <br/>
+                <div>
+                  <el-card shadow="hover">
+                    <el-button type="primary" @click="save">保存信息</el-button>
+                  </el-card>
+                </div>
+
+              </template>
             </div>
           </el-col>
         </el-row>
@@ -376,6 +375,7 @@ export default {
             type: "success",
             message: "删除成功!"
           });
+          this.form.orgName = "";
           this.getData(); //重新加载树全部数据
         });
       });
@@ -419,7 +419,28 @@ export default {
           type: "success"
         });
         this.getData(); //重新请求加载 刷新左侧树的全部数据
+
+        this.shuaxin();
       });
+    },
+    shuaxin() {
+      this.formAdd = {
+        orgCode: "",
+        orgType: "",
+        orgName: "",
+        orgTitle: "",
+        available: true,
+        socialCode: "",
+        expandData: {
+          schoolYearId: "",
+          schoolYearName: "",
+          academic: "",
+          memberType: "",
+          majorCode: "",
+          majorName: "",
+          orgState: ""
+        }
+      };
     },
     save() {
       this.updateOrg(

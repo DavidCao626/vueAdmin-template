@@ -80,7 +80,7 @@
                     <el-form style="margin-top: -25px;">
                         <el-form-item label="选择学生处分数据：">
                             <br/>
-                            <el-upload class="upload-demo" :action="uploadStuPunishurl" :limit='1' :onSuccess="onUploadSuccess2">
+                            <el-upload class="upload-demo" :action="uploadStuPunishurl" ref="upload" :limit='1' :onSuccess="onUploadSuccess2">
                                 <el-button size="small" type="primary" plain>
                                     <i class="el-icon-upload"></i> 点击上传文件</el-button>
                                 <div class="el-upload__tip" slot="tip">只能上传xlx/xlsx</div>
@@ -310,7 +310,8 @@ export default {
         this.importPunishRecord({
           fileId: this.fileId
         }).then(response => {
-          this.dialogVisible = false;
+          this.dialogVisible = false; 
+          this.$refs["upload"].clearFiles();
           this.$notify({
             title: "后台任务提醒",
             message:
@@ -320,7 +321,10 @@ export default {
             duration: 0,
             type: "info",
             dangerouslyUseHTMLString: true
+            
           });
+
+          //
         });
       });
     },
