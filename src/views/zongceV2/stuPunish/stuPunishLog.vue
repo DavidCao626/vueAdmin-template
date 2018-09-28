@@ -8,7 +8,7 @@
                         <template slot="headerLeft">
                             <el-form :inline="true" :model="studentSearchForm" size="mini" class="demo-form-inline">
                                 <el-form-item label="组织机构">
-                                    <el-cascader v-model="studentSearchForm.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select :props="orgProps"></el-cascader>
+                                    <el-cascader v-model="studentSearchForm.orgCode" placeholder="输入进行搜索" expand-trigger="click" :options="orgList" filterable change-on-select :props="orgProps"></el-cascader>
                                 </el-form-item>
                                 <el-form-item label="学号">
                                     <el-input v-model="studentSearchForm.sysNo" placeholder="学号"></el-input>
@@ -134,7 +134,7 @@
                                 <el-input v-model="formInline.stuNo" placeholder="全部"></el-input>
                             </el-form-item>
                             <el-form-item label="所属机构:">
-                                <el-cascader v-model="formInline.orgCode" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
+                                <el-cascader v-model="formInline.orgCode" :options="orgList" filterable change-on-select expand-trigger="click" :props="orgProps"></el-cascader>
 
                             </el-form-item>
                             <br/>
@@ -333,7 +333,7 @@ export default {
         this.importPunishRecord({
           fileId: this.fileId
         }).then(response => {
-          this.dialogVisible = false; 
+          this.dialogVisible = false;
           this.$refs["upload"].clearFiles();
           this.$notify({
             title: "后台任务提醒",
@@ -344,7 +344,6 @@ export default {
             duration: 0,
             type: "info",
             dangerouslyUseHTMLString: true
-            
           });
 
           //
@@ -474,16 +473,23 @@ export default {
       });
     },
     getData() {
-      this.data = [];
-      this.getApi(this.queryPunishRecordForStaff, {
+      var requestData = {
         subjectCode: this.formInline.subjectCode,
         schoolYearId: this.formInline.schoolYearId,
         name: this.formInline.name,
-        orgCode: this.formInline.orgCode,
+
         stuNo: this.formInline.stuNo,
         startTime: Date.parse(this.formInline.value[0]) || "",
         endTime: Date.parse(this.formInline.value[1]) || ""
-      });
+      };
+      if (this.formInline.orgCode.length > 0) {
+        requestData.orgCode = this.formInline.orgCode[
+          this.formInline.orgCode.length - 1
+        ];
+      }
+
+      this.data = [];
+      this.getApi(this.queryPunishRecordForStaff, requestData);
     }
   }
 };
