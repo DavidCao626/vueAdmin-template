@@ -2,7 +2,7 @@
   <div>
     <page class="page" :breadcrumb="false">
       <div slot="panel">
-        <h3>一、项目信息</h3>
+        <div class="pannel_title">任务配置</div>
         <el-form ref="form" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
           <el-form-item label="业务类型:">
             <ProjectTypeSelect @selectValue="selectValue" :value="form.projectServiceType" :options="ioptions" :disabled="isProjectTypeSelectDisDisabled"></ProjectTypeSelect>
@@ -44,8 +44,7 @@
     <page class="page" :breadcrumb="false">
       <div slot="panel">
 
-        <h3>二、其他信息</h3>
-
+         <div class="pannel_title">奖学金</div>
         <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
           <el-form-item label="名称">
             <el-input v-model="form.expand.name" autosize focus style="width:50%;">
@@ -327,4 +326,9 @@ export default {
 };
 </script>
 <style>
+  .pannel_title{
+    background-color: papayawhip;
+    line-height: 32px;
+  }
+
 </style>

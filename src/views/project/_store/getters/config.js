@@ -60,7 +60,20 @@ const _getHourDay = (timeLong) => {
 
 const _durationHour = (timeLong) => {
   var duration = moment.duration(timeLong, "hours");
-  return duration.days() + "天" + duration.hours()+"小时";
+  var monthVal = duration.months();
+  var dayVal = duration.days();
+  var hourVal = duration.hours();
+  var disStr = "";
+  if (monthVal > 0) { 
+    disStr = disStr + monthVal + "月";
+  }
+  if (dayVal > 0) { 
+     disStr = disStr + dayVal + "天";
+  }
+  if (hourVal > 0) { 
+     disStr = disStr + hourVal + "小时";
+  } 
+  return disStr;
 }
 
 
