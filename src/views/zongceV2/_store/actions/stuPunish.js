@@ -147,7 +147,16 @@ const getPunishTemplateUrl = ({ commit, state }, params) =>
       resolve(response);
     });
   });
+
+const queryPunishListByStuNoAndDate = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.queryPunishListByStuNoAndDate(params).then(response => {
+      resolve(response);
+    });
+  });
+
 export default {
+  queryPunishListByStuNoAndDate,
   queryPunishList,
   getPunishTemplateUrl,
   getPunishStateDict,

@@ -49,15 +49,15 @@
                             {{ formAdd.name }}&nbsp;{{ formAdd.stuNo?'(学号:'+formAdd.stuNo+')':'' }}&nbsp;
                             <el-button type="primary" size="mini" plain @click="switchStudentDV=true">{{ formAdd.name?'重新选择':'选择要处分的学生' }}</el-button>
                         </el-form-item>
+                        <el-form-item label="事件时间:">
+                            <el-date-picker v-model="formAdd.happenTime" align="right" type="date" placeholder="选择事件发生日期" :picker-options="pickerOptions1">
+                            </el-date-picker>
+                        </el-form-item>
                         <el-form-item label="处分条目:">
                             <el-select v-model="formAdd.subjectCode">
                                 <el-option v-for="(km,k) in schoolKm2" :key="k" :label="km.name" :value="km.code">
                                 </el-option>
                             </el-select>
-                        </el-form-item>
-                        <el-form-item label="事件时间:">
-                            <el-date-picker v-model="formAdd.happenTime" align="right" type="date" placeholder="选择事件发生日期" :picker-options="pickerOptions1">
-                            </el-date-picker>
                         </el-form-item>
 
                         <el-form-item label="事件原因描述:">
@@ -144,12 +144,12 @@
                                     </el-option>
                                 </el-select>
                             </el-form-item>
-                            <el-form-item label="处分条目:" v-show="formInline.schoolYearId">
+                            <!-- <el-form-item label="处分条目:" v-show="formInline.schoolYearId">
                                 <el-select v-model="formInline.subjectCode" placeholder="全部">
                                     <el-option v-for="(km,k) in schoolKm" :key="k" :label="km.name" :value="km.code">
                                     </el-option>
                                 </el-select>
-                            </el-form-item>
+                            </el-form-item> -->
                             <el-form-item label="筛选范围:">
                                 <el-date-picker v-model="formInline.value" type="daterange" align="right" unlink-panels range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions2">
                                 </el-date-picker>
@@ -171,6 +171,8 @@
                         <el-table-column prop="stuName" sortable label="学生姓名">
                         </el-table-column>
                         <el-table-column prop="orgName" label="组织名称">
+                        </el-table-column>
+                        <el-table-column prop="subjectName" label="条目名称">
                         </el-table-column>
                         <el-table-column prop="subjectScore" label="分值">
                         </el-table-column>
@@ -269,7 +271,7 @@ export default {
         name: ""
       },
       orgProps: {
-         label: "orgName",
+        label: "orgName",
         value: "orgCode",
         children: "children"
       },
@@ -287,6 +289,27 @@ export default {
       vm.geturldo();
       vm.getOrgList();
     });
+  },
+  watch: {
+    "formAdd.happenTime": function(newValue) {
+      var temp = Date.parse(this.formAdd.happenTime);
+      if (temp && this.formAdd.stuNo != "") {
+        this.getPunishItem(
+          this.formAdd.stuNo,
+          Date.parse(this.formAdd.happenTime)
+        );
+      }
+    },
+    "formAdd.stuNo": function(newValue) {
+      var temp = Date.parse(this.formAdd.happenTime);
+      console.log(temp);
+      if (this.formAdd.stuNo != "" && temp) {
+        this.getPunishItem(
+          this.formAdd.stuNo,
+          Date.parse(this.formAdd.happenTime)
+        );
+      }
+    }
   },
   methods: {
     geturldo() {
@@ -380,6 +403,14 @@ export default {
         }
       );
     },
+    getPunishItem(stuNo, happenTime) {
+      this.queryPunishListByStuNoAndDate({
+        stuNo: stuNo,
+        happenTime: happenTime
+      }).then(response => {
+        this.schoolKm2 = response.resBody.itemBeans;
+      });
+    },
     getOrgList() {
       this.getCurrentOrgListAndOwner({}).then(response => {
         this.orgList = response.resBody;
@@ -392,9 +423,10 @@ export default {
         this.loading = false;
         this.schoolYearDict = response.resBody;
         this.schoolYearDict.unshift({ id: 0, name: "全部" });
-        this.getPunishItemByShoolYearId(this.formInline.schoolYearId);
+        // this.getPunishItemByShoolYearId(this.formInline.schoolYearId);
       });
     },
+
     getPunishItemByShoolYearId(id) {
       this.queryPunishItemByShoolYearId({
         schoolYearId: id
@@ -407,6 +439,7 @@ export default {
         this.schoolKm2 = response.resBody.itemBeans;
       });
     },
+
     handleSizeChange2(val) {
       console.log(`每页 ${val} 条`);
       this.pageInfo.pageSize = val;

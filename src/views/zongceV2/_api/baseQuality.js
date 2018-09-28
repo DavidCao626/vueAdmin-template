@@ -86,7 +86,17 @@ const queryEvalList = data =>
     method: "post",
     data: data
   });
+
+const queryEvalListForStu = data =>
+  request({
+    url: "/baseQuality/queryEvalListForStu.do",
+    method: "post",
+    data: data
+  });
+
+
 export default {
+  queryEvalListForStu,
   queryPunishList,
   getPunishStateDict,
   updateScheme,
