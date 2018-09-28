@@ -69,9 +69,7 @@
                             <el-button  size="mini" type="primary" @click="delAll" :disabled="this.multipleSelection.length==0">
                                 <i class="el-icon-circle-check"></i> 批量审核
                             </el-button>
-                            <el-button  size="mini"  type="primary" @click="showAdd">
-                                <i class="el-icon-plus"></i> 导入审核数据
-                            </el-button>
+                        
                         </el-button-group>
                     </template>
                     <template slot="headerLeft">
