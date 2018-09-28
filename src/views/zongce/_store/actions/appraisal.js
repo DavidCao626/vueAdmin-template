@@ -84,10 +84,22 @@ const queryAppraisalRankForStu = ({ commit, state }, params) => new Promise(reso
         resolve(response)
     })
 })
+const deleteAppraisalProject = ({ commit, state }, params) => new Promise(resolve => {
+    api.deleteAppraisalProject(params).then(response => {
+        console.log(["deleteAppraisalProject", response])
+        resolve(response)
+    })
+})
 
-
-
+const queryAppraisalRankForCollegeAndClass = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryAppraisalRankForCollegeAndClass(params).then(response => {
+        console.log(["queryAppraisalRankForCollegeAndClass", response])
+        resolve(response)
+    })
+})
 export default {
+    queryAppraisalRankForCollegeAndClass,
+    deleteAppraisalProject,
     queryAppraisalRankList,
     queryAppraisalRankForStaff,
     queryAppraisalRankForStu,

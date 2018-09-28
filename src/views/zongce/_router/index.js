@@ -65,6 +65,12 @@ export const zongceRouter = {
       name: "showAppraisalRankForStu",
       component: () => import("../showAppraisalRankForStu.vue"),
       meta: { title: "我的测评排名", icon: "example", hidden: true }
+    },
+    {
+      path: "showAppraisalRankForCollegeAndClass",
+      name: "showAppraisalRankForCollegeAndClass",
+      component: () => import("../showAppraisalRankForCollegeAndClass.vue"),
+      meta: { title: "查看综测排名", icon: "example", hidden: true }//班级和学院查看
     }
   
 

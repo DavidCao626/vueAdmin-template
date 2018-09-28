@@ -1,52 +1,53 @@
 <template>
-    <div>
-        <page>
-            <div slot="title">测评记录生成进度</div>
-        </page>
-        <elx-table-layout>
+  <div>
+    <page>
+      <div slot="title">测评记录生成进度</div>
+    </page>
+    <elx-table-layout>
 
-            <template slot="headerLeft">
-                <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-                    <el-form-item label="状态">
-                        <el-select v-model="formInline.state" placeholder="请选择">
-                            <el-option v-for="item in recordStateList" :value="item.value" :label="item.label" :key="item.value"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="onSubmit">查询</el-button>
-                    </el-form-item>
-                </el-form>
-            </template>
-            <el-table :data="data" style="width: 100%" border size="mini">
-                <el-table-column prop="projectName" label="项目名称">
-                </el-table-column>
-                <el-table-column prop="orgName" label="组织名称">
-                </el-table-column>
-                <el-table-column prop="state" :formatter="stateFormatter" label="状态">
-                </el-table-column>
-                <el-table-column prop="startTime" label="开始时间">
-                </el-table-column>
-                <el-table-column prop="complateTime" label="完成时间">
-                </el-table-column>
-                <el-table-column label="操作" width="88" header-align="left" align="center">
-                    <template slot-scope="scope">
-                        <el-dropdown>
-                            <el-button size="mini" @click="">
-                                <i class="el-icon-arrow-down"></i>
-                            </el-button>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item :disabled="scope.row.state != 'CO'" @click.native="showRank(scope.row)">查看排名</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <template slot="footer">
-                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-                </el-pagination>
-            </template>
-        </elx-table-layout>
-    </div>
+      <template slot="headerLeft">
+        <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
+          <el-form-item label="状态">
+            <el-select v-model="formInline.state" placeholder="请选择">
+              <el-option v-for="item in recordStateList" :value="item.value" :label="item.label" :key="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
+          </el-form-item>
+        </el-form>
+      </template>
+      <el-table :data="data" style="width: 100%" border size="mini">
+        <el-table-column prop="projectName" label="项目名称">
+        </el-table-column>
+        <el-table-column prop="orgName" label="组织名称">
+        </el-table-column>
+        <el-table-column prop="state" :formatter="stateFormatter" label="状态">
+        </el-table-column>
+        <el-table-column prop="startTime" label="开始时间">
+        </el-table-column>
+        <el-table-column prop="complateTime" label="完成时间">
+        </el-table-column>
+        <el-table-column label="操作" width="88" header-align="left" align="center">
+          <template slot-scope="scope">
+            <el-dropdown>
+              <el-button size="mini" @click="">
+                <i class="el-icon-arrow-down"></i>
+              </el-button>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item :disabled="scope.row.state != 'ER'" @click.native="showError(scope.row)">查看错误</el-dropdown-item>
+                <el-dropdown-item :disabled="scope.row.state != 'CO'" @click.native="showRank(scope.row)">查看排名</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </template>
+        </el-table-column>
+      </el-table>
+      <template slot="footer">
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+        </el-pagination>
+      </template>
+    </elx-table-layout>
+  </div>
 </template>
 
   <script>
@@ -74,6 +75,12 @@ export default {
   },
   watch: {},
   methods: {
+    showError(row) {
+      this.$alert(row.errorCause, "错误原因", {
+        confirmButtonText: "确定",
+        callback: action => {}
+      });
+    },
     stateFormatter(r, c, v, i) {
       var arr = this.recordStateList;
       for (var i = 0; i < arr.length; i++) {
