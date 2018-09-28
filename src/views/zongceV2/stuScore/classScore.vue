@@ -13,7 +13,7 @@
                         </el-form-item>
                         <el-form-item label="2、">
                             <br/>
-                            <el-upload class="upload-demo" :action="action" :limit='1' :onSuccess="onUploadSuccess">
+                            <el-upload class="upload-demo" ref="upload" :action="action" :limit='1' :onSuccess="onUploadSuccess">
                                 <el-button size="small" type="primary" plain>
                                     <i class="el-icon-upload"></i> 点击上传成绩文件</el-button>
                                 <div class="el-upload__tip" slot="tip">只能上传xlx/xlsx</div>
@@ -30,7 +30,6 @@
 
                 <elx-table-layout>
                     <template slot="headerRight">
-
                         <el-tooltip class="item" effect="dark" content="导入班级成绩" placement="bottom" v-if="importOpen">
                             <el-button plain size="mini" @click="dialogVisible = true">
                                 <i class="el-icon-download"></i>
@@ -146,6 +145,8 @@ export default {
           schoolYearId: this.importForm.schoolYearId
         }).then(response => {
           this.dialogVisible = false;
+          this.$refs["upload"].clearFiles();
+          this.importForm.schoolYearId = "";
           this.$notify({
             title: "后台任务提醒",
             message:

@@ -89,7 +89,7 @@
             </el-form-item>
             <el-form-item label="2、选择学生扩展素质评价数据：">
               <br/>
-              <el-upload class="upload-demo" :action="uploadStuPunishurl" :limit='1' :onSuccess="onUploadSuccess2">
+              <el-upload class="upload-demo" ref="upload" :action="uploadStuPunishurl" :limit='1' :onSuccess="onUploadSuccess2">
                 <el-button size="small" type="primary" plain>
                   <i class="el-icon-upload"></i> 点击上传文件</el-button>
                 <div class="el-upload__tip" slot="tip">只能上传xlx/xlsx</div>
@@ -169,7 +169,7 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-              
+
               <el-form-item>
                 <el-button type="primary" @click="onSubmit">
                   <i class="el-icon-search"></i> 查询</el-button>
@@ -418,6 +418,8 @@ export default {
           expendCategoryCode: this.EvalCategoryName
         }).then(response => {
           this.dialogVisible = false;
+          this.EvalCategoryName = "";
+          this.$refs["upload"].clearFiles();
           this.$notify({
             title: "后台任务提醒",
             message:
