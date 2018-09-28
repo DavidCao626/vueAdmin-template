@@ -178,7 +178,22 @@ const getExpandEvalTemplateUrl = ({ commit, state }, params) =>
       resolve(response);
     });
   });
+const queryExpandCatagory2 = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.queryExpandCatagory2(params).then(response => {
+      resolve(response);
+    });
+  });
+
+const getExpandEvalCatagoryByStuNo = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.getExpandEvalCatagoryByStuNo(params).then(response => {
+      resolve(response);
+    });
+  });
 export default {
+  getExpandEvalCatagoryByStuNo,
+  queryExpandCatagory2,
   getExpandEvalTemplateUrl,
   queryPunishList3,
   getSchemeStateDict,
