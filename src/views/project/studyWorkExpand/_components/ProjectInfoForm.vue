@@ -1,8 +1,20 @@
 <template>
   <div>
+     <page class="page" :breadcrumb="false">
+      <div slot="panel">
+        <h3>一、项目信息</h3>
+        <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
+          <el-form-item label="测评项目">
+            <el-select v-model="form.expand.projectCode" placeholder="请选择">
+              <el-option v-for="(item,index) in projectList" :label="item.name" :value="item.code" :key="index"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+      </div>
+    </page>
     <page class="page" :breadcrumb="false">
       <div slot="panel">
-        <h3>一、任务信息</h3>
+        <h3>二、任务信息</h3>
         <el-form ref="form" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
           <el-form-item label="业务类型:">
             <ProjectTypeSelect @selectValue="selectValue" :value="form.projectServiceType" :options="ioptions" :disabled="isProjectTypeSelectDisDisabled"></ProjectTypeSelect>
@@ -41,18 +53,7 @@
       </div>
     </page>
 
-    <page class="page" :breadcrumb="false">
-      <div slot="panel">
-        <h3>二、项目信息</h3>
-        <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
-          <el-form-item label="测评项目">
-            <el-select v-model="form.expand.projectCode" placeholder="请选择">
-              <el-option v-for="(item,index) in projectList" :label="item.name" :value="item.code" :key="index"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-form>
-      </div>
-    </page>
+   
 
     <page class="page" :breadcrumb="false">
       <div slot="panel">

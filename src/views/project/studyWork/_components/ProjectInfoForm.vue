@@ -2,18 +2,38 @@
   <div>
     <page class="page" :breadcrumb="false">
       <div slot="panel">
+
         <h3>一、项目信息</h3>
+        <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
+          <el-form-item label="名称">
+            <el-input v-model="form.expand.name" autosize focus style="width:50%;">
+              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
+            </el-input>
+          </el-form-item>
+
+          <el-form-item label="年度">
+            <el-select v-model="form.expand.yearType" placeholder="请选择" no-data-text="无数据,请尝试刷新页面">
+              <el-option v-for="item in yearTypeList" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="开始时间">
+            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.expand.startTime" type="date" placeholder="选择日期">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="结束时间">
+            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.expand.endTime" type="date" placeholder="选择日期">
+            </el-date-picker>
+          </el-form-item>
+        </el-form>
+      </div>
+    </page>
+
+    <page class="page" :breadcrumb="false">
+      <div slot="panel">
+        <h3>二、任务信息</h3>
         <el-form ref="form" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
-          <el-form-item label="项目名称:">
-            <el-input v-model="form.projectName" autosize focus style="width:50%;">
-              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-            </el-input>
-          </el-form-item>
-          <el-form-item label="项目编号:">
-            <el-input v-model="form.projectUserCode" autosize focus style="width:50%;">
-              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-            </el-input>
-          </el-form-item>
+        
           <el-form-item label="业务类型:">
             <ProjectTypeSelect @selectValue="selectValue" :value="form.projectServiceType" :options="ioptions" :disabled="isProjectTypeSelectDisDisabled"></ProjectTypeSelect>
           </el-form-item>
@@ -51,35 +71,7 @@
       </div>
     </page>
 
-    <page class="page" :breadcrumb="false">
-      <div slot="panel">
-
-        <h3>二、测评信息</h3>
-        <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
-          <el-form-item label="名称">
-            <el-input v-model="form.expand.name" autosize focus style="width:50%;">
-              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-            </el-input>
-          </el-form-item>
-
-          <el-form-item label="年度">
-            <el-select v-model="form.expand.yearType" placeholder="请选择" no-data-text="无数据,请尝试刷新页面">
-              <el-option v-for="item in yearTypeList" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="开始时间">
-            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.expand.startTime" type="date" placeholder="选择日期">
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item label="结束时间">
-            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.expand.endTime" type="date" placeholder="选择日期">
-            </el-date-picker>
-          </el-form-item>
-        </el-form>
-      </div>
-    </page>
-
+    
     <page class="page" :breadcrumb="false">
       <div slot="panel">
         <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
@@ -192,8 +184,8 @@ export default {
       console.log(this.form);
       var t = this.form;
       var requestData = {
-        projectName: t.projectName,
-        projectUserCode: t.projectUserCode,
+        projectName: t.expand.name,
+        projectUserCode: "0",
         projectDesc: t.projectDesc,
         projectServiceType: t.projectServiceType,
         planStartTime: t.planStartTime,
