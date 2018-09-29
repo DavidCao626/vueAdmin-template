@@ -85,7 +85,16 @@ const queryEvalList = ({ commit, state }, params) =>
       resolve(response);
     });
   });
+
+const queryEvalListForStu = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.queryEvalListForStu(params).then(response => {
+      resolve(response);
+    });
+  });
+
 export default {
+  queryEvalListForStu,
   queryPunishList2,
   getPunishStateDict,
   updateScheme,

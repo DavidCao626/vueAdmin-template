@@ -177,7 +177,26 @@ const getExpandEvalTemplateUrl = data =>
     method: "post",
     data: data
   }); 
+
+const queryExpandCatagory2 = data =>
+  request({
+    url: "/expandEval/queryExpandCatagory.do",
+    method: "post",
+    data: data
+  }); 
+
+const getExpandEvalCatagoryByStuNo = data =>
+  request({
+    url: "/expandEval/getExpandEvalCatagoryByStuNo.do",
+    method: "post",
+    data: data
+  }); 
+
+getExpandEvalCatagoryByStuNo
+
 export default {
+  getExpandEvalCatagoryByStuNo,
+  queryExpandCatagory2,
   getExpandEvalTemplateUrl,
   queryPunishList,getSchemeStateDict,updateScheme,insertScheme,copyScheme,processSchemeName,deleteSchemeById,startScheme,getEvalItemBeanBySchemeId,saveExEveluateBean,queryExpandEvalCategory,getExpandEvalCatagoryBySchoolYearId,getExpandEvalCatagoryByDate,createExpandRecord,applyExpandRecord,checkExpandRecord,getExpandEvalRecordById,getExpandCheckStateDict,getDataSourceDict,queryExpandEvalRecordForStaff,queryExpandEvalRecordForStu,queryExpandEvalRecordForCheck,adStuExpandEval,importExpandEvalRecord
 };

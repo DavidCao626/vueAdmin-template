@@ -13,6 +13,7 @@ export default {
   },
   methods: {
     ...mapActions({
+      queryPunishListByStuNoAndDate: store.namespace + "/queryPunishListByStuNoAndDate",
       getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
       queryStuScoreForStaff: store.namespace + "/queryStuScoreForStaff",
       querySchoolYearDict: store.namespace + "/querySchoolYearDict",

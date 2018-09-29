@@ -3,8 +3,21 @@ import moment from 'moment'
 
 const _getHourDay = timeLong => {
   //return _lodash.round(_lodash.divide(timeLong, 24), 1)
-  var duration = moment.duration(timeLong, 'hours');
-  return duration.days() + "天" + duration.hours() + "小时";
+ var duration = moment.duration(timeLong, "hours");
+ var monthVal = duration.months();
+ var dayVal = duration.days();
+ var hourVal = duration.hours();
+ var disStr = "";
+ if (monthVal > 0) {
+   disStr = disStr + monthVal + "月";
+ }
+ if (dayVal > 0) {
+   disStr = disStr + dayVal + "天";
+ }
+ if (hourVal > 0) {
+   disStr = disStr + hourVal + "小时";
+ }
+ return disStr;
 }
 
 export const getIntegratedView = state => {
@@ -22,7 +35,7 @@ export const getInteratedScopeInfo = state => {
   var dispenseView = state.scopeIntegratedView
   var scope = dispenseView.scope
   if (dispenseView.scopeDelayedTimeLong >0) {
-    scope.delayDay = "预计超时"+_getHourDay(dispenseView.scopeDelayedTimeLong)
+    scope.delayDay = "预计超时"+_getHourDay(dispenseView.scopeDelayedTimeLong)+"天"
   } else {
     scope.delayDay = "未超时"
   }
