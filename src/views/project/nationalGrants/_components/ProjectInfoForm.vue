@@ -1,5 +1,40 @@
 <template>
-  <div>
+  <div> <page class="page" :breadcrumb="false">
+      <div slot="panel">
+
+        <h3>二、其他信息</h3>
+
+        <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
+          <el-form-item label="名称">
+            <el-input v-model="form.expand.name" autosize focus style="width:50%;">
+              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="代码">
+            <el-input v-model="form.expand.userCode" autosize focus style="width:50%;">
+              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="学年">
+            <elx-select v-model="form.expand.schoolYearId" placeholder="请选择">
+              <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :value="item.id">
+              </el-option>
+            </elx-select>
+          </el-form-item>
+          <el-form-item label="学生类别">
+            <el-checkbox-group v-model="form.expand.stuType" :min="1">
+              <el-checkbox v-for="item in stuTypeList" :label="item.dict_key" :key="item.dict_key">{{item.dict_desc}}</el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
+          <el-form-item label="年级">
+            <el-checkbox-group v-model="form.expand.grade" :min="1">
+              <el-checkbox v-for="item in gradeList" :label="item.dict_key" :key="item.dict_key">{{item.dict_desc}}</el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
+
+        </el-form>
+      </div>
+    </page>
     <page class="page" :breadcrumb="false">
       <div slot="panel">
         <h3>一、项目信息</h3>
@@ -41,42 +76,7 @@
       </div>
     </page>
 
-    <page class="page" :breadcrumb="false">
-      <div slot="panel">
-
-        <h3>二、其他信息</h3>
-
-        <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
-          <el-form-item label="名称">
-            <el-input v-model="form.expand.name" autosize focus style="width:50%;">
-              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-            </el-input>
-          </el-form-item>
-          <el-form-item label="代码">
-            <el-input v-model="form.expand.userCode" autosize focus style="width:50%;">
-              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-            </el-input>
-          </el-form-item>
-          <el-form-item label="学年">
-            <elx-select v-model="form.expand.schoolYearId" placeholder="请选择">
-              <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :value="item.id">
-              </el-option>
-            </elx-select>
-          </el-form-item>
-          <el-form-item label="学生类别">
-            <el-checkbox-group v-model="form.expand.stuType" :min="1">
-              <el-checkbox v-for="item in stuTypeList" :label="item.dict_key" :key="item.dict_key">{{item.dict_desc}}</el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
-          <el-form-item label="年级">
-            <el-checkbox-group v-model="form.expand.grade" :min="1">
-              <el-checkbox v-for="item in gradeList" :label="item.dict_key" :key="item.dict_key">{{item.dict_desc}}</el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
-
-        </el-form>
-      </div>
-    </page>
+   
 
     <page class="page" :breadcrumb="false">
       <div slot="panel">

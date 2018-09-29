@@ -4,16 +4,7 @@
       <div slot="panel">
        <div class="pannel_title">项目信息</div>
         <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
-          <el-form-item label="项目名称">
-            <el-input v-model="form.expand.name" autosize focus style="width:50%;">
-              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-            </el-input>
-          </el-form-item>
-          <el-form-item label="项目代码">
-            <el-input v-model="form.expand.userCode" autosize focus style="width:50%;">
-              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-            </el-input>
-          </el-form-item>
+          
            <el-form-item label="所属学年">
             <elx-select v-model="form.expand.schoolYearId" placeholder="请选择">
               <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :value="item.id">

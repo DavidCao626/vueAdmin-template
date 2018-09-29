@@ -2,47 +2,6 @@
   <div>
     <page class="page" :breadcrumb="false">
       <div slot="panel">
-        <div class="pannel_title">任务配置</div>
-        <el-form ref="form" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
-          <el-form-item label="业务类型:">
-            <ProjectTypeSelect @selectValue="selectValue" :value="form.projectServiceType" :options="ioptions" :disabled="isProjectTypeSelectDisDisabled"></ProjectTypeSelect>
-          </el-form-item>
-
-          <el-form-item label="子类型:">
-            <el-select v-model="classifyType" placeholder="请选择" @change="classifyTypeDetail">
-              <el-option v-for="item in ClassifyTypeList" :key="item.value" :label="item.typeName" :value="item.templateKey">
-              </el-option>
-            </el-select>
-            <el-button size="small" @click="clasDetail">详细</el-button>
-
-          </el-form-item>
-
-          <el-form-item label="计划开始日期">
-            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planStartTime" type="date" placeholder="选择日期">
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item label="计划结束日期">
-            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planCompleteTime" type="date" placeholder="选择日期">
-            </el-date-picker>
-          </el-form-item>
-
-          <el-form-item label="项目附件:">
-            <ProjectAttachmentUplad :fileList2="form.attrDetailBean" :url="uploadAttrUrl" style="width: 30%;" @onSuccess="formUploadOnSuccess"></ProjectAttachmentUplad>
-          </el-form-item>
-
-          <el-form-item label="是否生成公告:">
-            <el-switch v-model="form.isSendPublicNotice" active-value="Y" inactive-value="N"></el-switch>
-          </el-form-item>
-          <el-form-item label="公告内容:" v-show="form.isSendPublicNotice=='Y'?true:false">
-            <!-- <el-input type="textarea" :autosize="{ minRows: 3}" v-model="form.projectDesc"></el-input> -->
-            <tinymce :height="300" v-model="form.projectDesc" id='tinymce'></tinymce>
-          </el-form-item>
-        </el-form>
-      </div>
-    </page>
-
-    <page class="page" :breadcrumb="false">
-      <div slot="panel">
 
          <div class="pannel_title">奖学金</div>
         <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
@@ -83,6 +42,48 @@
       </div>
     </page>
 
+    <page class="page" :breadcrumb="false">
+      <div slot="panel">
+        <div class="pannel_title">任务配置</div>
+        <el-form ref="form" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
+          <el-form-item label="业务类型:">
+            <ProjectTypeSelect @selectValue="selectValue" :value="form.projectServiceType" :options="ioptions" :disabled="isProjectTypeSelectDisDisabled"></ProjectTypeSelect>
+          </el-form-item>
+
+          <el-form-item label="子类型:">
+            <el-select v-model="classifyType" placeholder="请选择" @change="classifyTypeDetail">
+              <el-option v-for="item in ClassifyTypeList" :key="item.value" :label="item.typeName" :value="item.templateKey">
+              </el-option>
+            </el-select>
+            <el-button size="small" @click="clasDetail">详细</el-button>
+
+          </el-form-item>
+
+          <el-form-item label="计划开始日期">
+            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planStartTime" type="date" placeholder="选择日期">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="计划结束日期">
+            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planCompleteTime" type="date" placeholder="选择日期">
+            </el-date-picker>
+          </el-form-item>
+
+          <el-form-item label="项目附件:">
+            <ProjectAttachmentUplad :fileList2="form.attrDetailBean" :url="uploadAttrUrl" style="width: 30%;" @onSuccess="formUploadOnSuccess"></ProjectAttachmentUplad>
+          </el-form-item>
+
+          <el-form-item label="是否生成公告:">
+            <el-switch v-model="form.isSendPublicNotice" active-value="Y" inactive-value="N"></el-switch>
+          </el-form-item>
+          <el-form-item label="公告内容:" v-show="form.isSendPublicNotice=='Y'?true:false">
+            <!-- <el-input type="textarea" :autosize="{ minRows: 3}" v-model="form.projectDesc"></el-input> -->
+            <tinymce :height="300" v-model="form.projectDesc" id='tinymce'></tinymce>
+          </el-form-item>
+        </el-form>
+      </div>
+    </page>
+
+    
     <page class="page" :breadcrumb="false">
       <div slot="panel">
         <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
