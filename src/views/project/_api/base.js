@@ -209,7 +209,48 @@ const querySubsidizeProjectState = data =>
         method: 'post',
         data: data
     })
+
+const queryPovertyResult = data =>
+    request({
+        url: "/project/queryPovertyResult.do",
+        method: 'post',
+        data: data
+    })
+
+const queryNationalGrantsResult = data =>
+    request({
+        url: "/project/queryNationalGrantsResult.do",
+        method: 'post',
+        data: data
+    })
+
+const queryMotivationalScholarshipResult = data =>
+    request({
+        url: "/project/queryMotivationalScholarshipResult.do",
+        method: 'post',
+        data: data
+    })
+
+const queryNationalScholarshipResult = data =>
+    request({
+        url: "/project/queryNationalScholarshipResult.do",
+        method: 'post',
+        data: data
+    })
+
+
+
+
+
+
+
 export default {
+    queryPovertyResult,
+    queryNationalGrantsResult,
+    queryMotivationalScholarshipResult,
+queryNationalScholarshipResult,
+        
+        
     querySubsidizeProjectState,
     queryAppraisalProjectList,
     querySchoolYear,

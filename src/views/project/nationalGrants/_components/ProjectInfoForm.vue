@@ -2,7 +2,7 @@
   <div> <page class="page" :breadcrumb="false">
       <div slot="panel">
 
-        <h3>二、其他信息</h3>
+        <h3>一、项目信息</h3>
 
         <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
           <el-form-item label="名称">

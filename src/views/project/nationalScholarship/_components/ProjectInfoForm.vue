@@ -1,11 +1,15 @@
 <template>
   <div>
-     <page class="page" :breadcrumb="false">
+    <page class="page" :breadcrumb="false">
       <div slot="panel">
-       <div class="pannel_title">项目信息</div>
+        <div class="pannel_title">项目信息</div>
         <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
-          
-           <el-form-item label="所属学年">
+          <el-form-item label="名称">
+            <el-input v-model="form.expand.name" autosize focus style="width:50%;">
+              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="所属学年">
             <elx-select v-model="form.expand.schoolYearId" placeholder="请选择">
               <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :value="item.id">
               </el-option>
@@ -17,7 +21,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-         
+
           <el-form-item label="学生类别">
             <el-checkbox-group v-model="form.expand.stuType" :min="1">
               <el-checkbox v-for="item in stuTypeList" :label="item.dict_key" :key="item.dict_key">{{item.dict_desc}}</el-checkbox>
@@ -72,8 +76,6 @@
         </el-form>
       </div>
     </page>
-
-   
 
     <page class="page" :breadcrumb="false">
       <div slot="panel">
@@ -318,11 +320,11 @@ export default {
 };
 </script>
 <style>
-  .pannel_title {
-     background-color:#336699;
-     line-height:32px;
-     color:#FFFFFF;
-     padding-left: 5px;
-     margin:-10px;
-  }
+.pannel_title {
+  background-color: #336699;
+  line-height: 32px;
+  color: #ffffff;
+  padding-left: 5px;
+  margin: -10px;
+}
 </style>

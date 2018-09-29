@@ -234,9 +234,37 @@ const querySubsidizeProjectState = ({ commit, state }, data) =>
       resolve(response)
     })
   })
-
+const queryPovertyResult = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryPovertyResult(data).then(response => {
+      resolve(response)
+    })
+  })
+const queryNationalGrantsResult = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryNationalGrantsResult(data).then(response => {
+      resolve(response)
+    })
+  })
+const queryMotivationalScholarshipResult = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryMotivationalScholarshipResult(data).then(response => {
+      resolve(response)
+    })
+  })
+const queryNationalScholarshipResult = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryNationalScholarshipResult(data).then(response => {
+      resolve(response)
+    })
+  })
 
 export default {
+  queryPovertyResult,
+  queryNationalGrantsResult,
+  queryMotivationalScholarshipResult,
+  queryNationalScholarshipResult,
+
   querySubsidizeProjectState,
   queryAppraisalProjectList,
   querySchoolYear,

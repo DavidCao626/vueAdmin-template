@@ -1,6 +1,6 @@
-stuPunishLog <template>
+ <template>
     <page>
-        <div slot="title">学生资助结果查询2</div>
+        <div slot="title">贫困建档结果查询</div>
         <div slot="panel">
             <div>
                 <elx-table-layout>
@@ -37,30 +37,28 @@ stuPunishLog <template>
                         </el-form>
                     </template>
 
-                    <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{ prop: 'stuNo',prop: 'stuName',prop: 'orgName'}">
+                <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{ prop: 'stuNo',prop: 'stuName',prop: 'orgName'}">
+            <el-table-column prop="projectName" label="项目名称">
+            </el-table-column>
+            <el-table-column prop="stuNo" label="学号">
+            </el-table-column>
+            <el-table-column prop="studentName" label="学生姓名">
+            </el-table-column>
+            <el-table-column prop="stuOrgName" label="组织名称">
+            </el-table-column>
+            <el-table-column prop="schoolRecommend" :formatter="schoolRecommendFormatter" label="归档结果">
+            </el-table-column>
+          </el-table>
 
-                        <el-table-column prop="stuNo" sortable label="学号">
-                        </el-table-column>
-                        <el-table-column prop="stuName" sortable label="学生姓名">
-                        </el-table-column>
-                        <el-table-column prop="orgName" label="组织名称">
-                        </el-table-column>
+          <template slot="footer">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+            </el-pagination>
+          </template>
 
-                        </el-table-column>
-                        <el-table-column prop="createTime" sortable label="创建时间" :formatter="dateFormat">
-                        </el-table-column>
-
-                    </el-table>
-
-                    <template slot="footer">
-                        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-                        </el-pagination>
-                    </template>
-
-                </elx-table-layout>
-            </div>
-        </div>
-    </page>
+        </elx-table-layout>
+      </div>
+    </div>
+  </page>
 
 </template>
 
@@ -80,7 +78,7 @@ export default {
         orgCode: []
       },
       orgList: [],
-
+      childServiceTypeList: [],
       orgProps: {
         label: "orgName",
         value: "orgCode",
@@ -92,9 +90,18 @@ export default {
     next(vm => {
       vm.getSchoolYearDict();
       vm.getOrgList();
+      vm.getChildServiceTypeList();
     });
   },
   methods: {
+    schoolRecommendFormatter(r, c, v, i) {
+      var arr = this.childServiceTypeList;
+      for (var j = 0; j < arr.length; j++) {
+        if (arr[j].classifyCode == v) {
+          return arr[j].classifyName;
+        }
+      }
+    },
     refresh() {
       this.formInline = {
         stuNo: "",
@@ -127,13 +134,18 @@ export default {
         this.schoolYearDict.unshift({ id: 0, name: "全部" });
       });
     },
+    getChildServiceTypeList() {
+      this.queryAllClassifyChild({}).then(response => {
+        this.childServiceTypeList = response.resBody;
+      });
+    },
 
     getData() {
       this.data = [];
       var requestData = {
         stuNo: this.formInline.stuNo,
         schoolYearId: this.formInline.schoolYearId,
-        name: this.formInline.name
+        stuName: this.formInline.name
       };
       if (this.formInline.orgCode.length > 0) {
         requestData.orgCode = this.formInline.orgCode[
@@ -141,8 +153,9 @@ export default {
         ];
       }
 
-        debugger
-      // this.getApi(this.queryEvalList, requestData); 发起ajax加载表格区域数据
+        this.getApi(this.queryPovertyResult, requestData,(r,vm)=>{
+         vm.data  = r.baseData;
+       }); 
     }
   }
 };

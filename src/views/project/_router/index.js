@@ -559,32 +559,32 @@ export const projectRouter = {
       meta: { hidden: true, title: "综测项目" }
     },
     {
-      path: "results1",
-      name: "results1",
-      title: "资助结果查询1",
-      component: () => import("../zizhu/results1.vue"),
-      meta: { hidden: true, title: "资助结果查询1" }
+      path: "gjjxjResult",
+      name: "gjjxjResult",
+      title: "国家奖学金结果",
+      component: () => import("../zizhu/gjjxj.vue"),
+      meta: { hidden: true, title: "国家奖学金结果" }
     },
     {
-      path: "results2",
-      name: "results2",
-      title: "资助结果查询2",
-      component: () => import("../zizhu/results2.vue"),
-      meta: { hidden: true, title: "资助结果查询2" }
+      path: "gjzxjResult",
+      name: "gjzxjResult",
+      title: "国家助学金结果",
+      component: () => import("../zizhu/gjzxj.vue"),
+      meta: { hidden: true, title: "国家助学金结果" }
     },
     {
-      path: "results3",
-      name: "results3",
-      title: "资助结果查询3",
-      component: () => import("../zizhu/results3.vue"),
-      meta: { hidden: true, title: "资助结果查询3" }
+      path: "lzjxjResult",
+      name: "lzjxjResult",
+      title: "励志奖学金结果",
+      component: () => import("../zizhu/lzjxj.vue"),
+      meta: { hidden: true, title: "励志奖学金结果" }
     },
     {
-      path: "results4",
-      name: "results4",
-      title: "资助结果查询4",
-      component: () => import("../zizhu/results4.vue"),
-      meta: { hidden: true, title: "资助结果查询4" }
+      path: "pkjdResult",
+      name: "pkjdResult",
+      title: "贫困建档结果",
+      component: () => import("../zizhu/pkjd.vue"),
+      meta: { hidden: true, title: "贫困建档结果" }
     }
   ]
 }; //-----------勤工俭学--------- //-------------综合测评---------- //--------------资助项目创建---------------------- //-------------资助项目管理---------------- //最新综测-==============================

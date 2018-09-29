@@ -8,6 +8,12 @@ export default {
 
   methods: {
     ...mapActions({
+
+      queryPovertyResult: store.namespace + "/queryPovertyResult",
+      queryNationalGrantsResult: store.namespace + "/queryNationalGrantsResult",
+      queryMotivationalScholarshipResult: store.namespace + "/queryMotivationalScholarshipResult",
+      queryNationalScholarshipResult: store.namespace + "/queryNationalScholarshipResult",
+      queryAllClassifyChild:store.namespace + "/queryAllClassifyChild",
        querySchoolYearDict: store.namespace + "/querySchoolYearDict",//获取学年
       // getPunishStateDict: store.namespace + "/getPunishStateDict",//获取字典
       getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
