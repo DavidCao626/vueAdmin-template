@@ -400,7 +400,7 @@ export const projectRouter = {
       title: "学校组评",
       component: () => import("../styles/ngxxpingyi.vue"),
       meta: { hidden: true, title: "学校组评" }
-    }, //-------------综合测评----------
+    },
     {
       path: "createAppraiseProject",
       name: "createAppraiseProject",
@@ -422,7 +422,6 @@ export const projectRouter = {
       component: () => import("../appraiseResult/createProject.vue"),
       meta: { hidden: true, title: "综测结果项目" }
     },
-    //-----------勤工俭学---------
     {
       path: "createStudyWorkProject",
       name: "createStudyWorkProject",
@@ -444,7 +443,6 @@ export const projectRouter = {
       component: () => import("../studyWorkConfig/index.vue"),
       meta: { hidden: true }
     },
-    //--------------资助项目创建----------------------
     {
       path: "poverty",
       name: "poverty",
@@ -473,7 +471,6 @@ export const projectRouter = {
       component: () => import("../nationalScholarship/createProject.vue"),
       meta: { hidden: true, title: "创建勤工俭学项目" }
     },
-    //-------------资助项目管理----------------
     {
       path: "povertyProjectM",
       name: "povertyProjectM",
@@ -492,17 +489,18 @@ export const projectRouter = {
       path: "motivationalScholarshipProjectM",
       name: "motivationalScholarshipProjectM",
       title: "励志奖学金项目管理",
-      component: () => import("../projectManager/motivationalScholarshipProjectM.vue"),
+      component: () =>
+        import("../projectManager/motivationalScholarshipProjectM.vue"),
       meta: { hidden: true, title: "励志奖学金项目管理" }
     },
     {
       path: "nationalScholarshipProjectM",
       name: "nationalScholarshipProjectM",
       title: "国家奖学金项目管理",
-      component: () => import("../projectManager/nationalScholarshipProjectM.vue"),
+      component: () =>
+        import("../projectManager/nationalScholarshipProjectM.vue"),
       meta: { hidden: true, title: "国家奖学金项目管理" }
     },
-
     {
       path: "povertyProjectR",
       name: "povertyProjectR",
@@ -521,7 +519,8 @@ export const projectRouter = {
       path: "motivationalScholarshipR",
       name: "motivationalScholarshipR",
       title: "励志奖学金申请记录",
-      component: () => import("../projectApplyRecord/motivationalScholarshipR.vue"),
+      component: () =>
+        import("../projectApplyRecord/motivationalScholarshipR.vue"),
       meta: { hidden: true, title: "励志奖学金申请记录" }
     },
     {
@@ -531,7 +530,6 @@ export const projectRouter = {
       component: () => import("../projectApplyRecord/nationalScholarshipR.vue"),
       meta: { hidden: true, title: "国家奖学金申请记录" }
     },
-    //最新综测-==============================
     {
       path: "evalSelf",
       name: "evalSelf",
@@ -559,6 +557,34 @@ export const projectRouter = {
       title: "综测项目",
       component: () => import("../appraisal/createProject.vue"),
       meta: { hidden: true, title: "综测项目" }
+    },
+    {
+      path: "results1",
+      name: "results1",
+      title: "资助结果查询1",
+      component: () => import("../zizhu/results1.vue"),
+      meta: { hidden: true, title: "资助结果查询1" }
+    },
+    {
+      path: "results2",
+      name: "results2",
+      title: "资助结果查询2",
+      component: () => import("../zizhu/results2.vue"),
+      meta: { hidden: true, title: "资助结果查询2" }
+    },
+    {
+      path: "results3",
+      name: "results3",
+      title: "资助结果查询3",
+      component: () => import("../zizhu/results3.vue"),
+      meta: { hidden: true, title: "资助结果查询3" }
+    },
+    {
+      path: "results4",
+      name: "results4",
+      title: "资助结果查询4",
+      component: () => import("../zizhu/results4.vue"),
+      meta: { hidden: true, title: "资助结果查询4" }
     }
   ]
-};
+}; //-----------勤工俭学--------- //-------------综合测评---------- //--------------资助项目创建---------------------- //-------------资助项目管理---------------- //最新综测-==============================
