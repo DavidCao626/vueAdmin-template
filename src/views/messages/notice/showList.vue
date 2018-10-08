@@ -1,26 +1,34 @@
 <template>
-    <page>
-        <div slot="title">公示</div>
-        <div class="weui-desktop-layout__main__bd weui-desktop-panel main_bd">
-            <div class="weui-desktop-panel__bd">
-                <ul class="mp_news_list">
-                    <li class="mp_news_item" v-for="(i,index) in announceDate" :key="index" style="list-style:none">
-                        <router-link :to="{path:i.url,query:i.urlParams}">
-                            <strong>{{i.title}}
-                                <i class="icon_common new"></i>
-                            </strong>
-                            <span class="read_more">{{i.publicOrg}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{i.date}}</span>
-                        </router-link>
-                    </li>
+  <page>
+    <div slot="title">公示</div>
+    <div class="weui-desktop-layout__main__bd weui-desktop-panel main_bd">
+      <div class="weui-desktop-panel__bd">
+        <el-form :inline="true" size="small">
+          <el-form-item label="">
+            <el-input v-model="searchData" placeholder="输入标题搜索"></el-input>
+          </el-form-item>
+          <el-form-item label="">
+            <el-button type="primary" @click="search">查询</el-button>
+          </el-form-item>
+        </el-form>
+        <ul class="mp_news_list">
+          <li class="mp_news_item" v-for="(i,index) in announceDate" :key="index" style="list-style:none">
+            <router-link :to="{path:i.url,query:i.urlParams}">
+              <strong>{{i.title}}
+                <i class="icon_common new"></i>
+              </strong>
+              <span class="read_more">{{i.publicOrg}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{i.date}}</span>
+            </router-link>
+          </li>
 
-                </ul>
-                <div class="pagination_wrp pageNavigator" v-if="announceDate.length>0" >
-                    <el-pagination style="float: right;" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="dataTotal">
-                    </el-pagination>
-                </div>
-            </div>
+        </ul>
+        <div class="pagination_wrp pageNavigator" v-if="announceDate.length>0" >
+          <el-pagination style="float: right;" @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="dataTotal">
+          </el-pagination>
         </div>
-    </page>
+      </div>
+    </div>
+  </page>
 </template>
 
 <script>
@@ -29,15 +37,20 @@ import store from "../_store/index.js";
 export default {
   data() {
     return {
+      searchData:"",
       dataTotal: 0,
       pageSize: 10,
       currentPage: 1,
-      announceDate: [
-        
-      ]
+      announceDate: []
     };
   },
   methods: {
+    search(){
+      this.currentPage = 1;
+      this.queryData();
+    },
+
+
     handleSizeChange(val) {
       this.pageSize = val;
       this.queryData();
@@ -49,7 +62,8 @@ export default {
     queryData() {
       var requestData = {
         currentPage: this.currentPage,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
+        title:this.searchData
       };
       this.pullPublicNoticeP(requestData).then(response => {
         this.announceDate = [];
@@ -61,13 +75,13 @@ export default {
             url: "",
             urlParams: {},
             date: "",
-            publicOrg:""
+            publicOrg: ""
           };
           temp.title = element.title;
           temp.url = "/messages/notice/show"; //详情地址
           temp.urlParams = { publicNoticeId: element.id };
           temp.date = element.publicTime;
-           temp.publicOrg = element.publicOrgName;
+          temp.publicOrg = element.publicOrgName;
           this.announceDate.push(temp);
         });
       });

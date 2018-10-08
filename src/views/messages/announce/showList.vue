@@ -3,6 +3,14 @@
     <div slot="title">公告</div>
     <div class="weui-desktop-layout__main__bd weui-desktop-panel main_bd">
       <div class="weui-desktop-panel__bd">
+        <el-form :inline="true" size="small">
+          <el-form-item label="">
+            <el-input v-model="searchData" placeholder="输入标题搜索"></el-input>
+          </el-form-item>
+          <el-form-item label="">
+            <el-button type="primary" @click="search">查询</el-button>
+          </el-form-item>
+        </el-form>
         <ul class="mp_news_list">
           <li class="mp_news_item" v-for="(i,index) in announceDate" :key="index" style="list-style:none">
             <router-link :to="{path:i.url,query:i.urlParams}">
@@ -29,6 +37,7 @@ import store from "../_store/index.js";
 export default {
   data() {
     return {
+      searchData:"",
       dataTotal: 0,
       pageSize: 10,
       currentPage: 1,
@@ -36,6 +45,12 @@ export default {
     };
   },
   methods: {
+    search(){
+      this.currentPage = 1;
+      this.queryData();
+    },
+
+
     handleSizeChange(val) {
       this.pageSize = val;
       this.queryData();
@@ -47,7 +62,8 @@ export default {
     queryData() {
       var requestData = {
         currentPage: this.currentPage,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
+        title:this.searchData
       };
       this.pullPublicNoticeA(requestData).then(response => {
         this.announceDate = [];

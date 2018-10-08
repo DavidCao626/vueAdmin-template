@@ -11,7 +11,15 @@
           </el-tooltip>
         </el-button-group>
       </template>
-
+      <template slot="headerLeft">
+        <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
+          <el-form-item label="职务名称:">
+            <el-input v-model="formInline.dutyName" placeholder="输入职务名称进行搜索"></el-input>
+          </el-form-item>
+          <el-button type="primary" size="small" @click="search">查 询</el-button>
+          </el-form-item>
+        </el-form>
+      </template>
       <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop: 'name',prop: 'address'}" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="38">
         </el-table-column>
@@ -63,7 +71,7 @@
         </el-form-item>
 
         <el-form-item label="对应角色">
-           <el-checkbox-group v-model="editData.resultRole">
+          <el-checkbox-group v-model="editData.resultRole">
             <template v-for="group in groupData">
               <div :key="group.type.value" style="margin-top:2px">
                 <el-checkbox-button :disabled="true" :name="'group.type.name'" :label="'-1'" size="mini" border v-if="true">{{group.type.title}}</el-checkbox-button>
@@ -195,8 +203,7 @@ export default {
       isMultipleSelection: false, //是否选中
       data: [],
       formInline: {
-        staffCode: "",
-        name: ""
+        dutyName: ""
       },
       orgList: [],
       availableObj: {},
@@ -229,6 +236,10 @@ export default {
         };
         this.getData();
       });
+    },
+    search() {
+      this.pageInfo.currentPage = 1;
+      this.getData();
     },
     addDuty() {
       this.addDV = true;
@@ -348,7 +359,8 @@ export default {
     getData() {
       var requestData = {
         currentPage: this.pageInfo.currentPage,
-        pageSize: this.pageInfo.pageSize
+        pageSize: this.pageInfo.pageSize,
+        dutyName: this.formInline.dutyName
       };
       this.queryDutyListByMNCode(requestData).then(response => {
         console.log(["查询数据", response]);

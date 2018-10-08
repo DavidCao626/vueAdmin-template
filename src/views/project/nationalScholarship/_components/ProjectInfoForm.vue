@@ -326,5 +326,5 @@ export default {
   color: #ffffff;
   padding-left: 5px;
   margin: -10px;
-}
+} 
 </style>

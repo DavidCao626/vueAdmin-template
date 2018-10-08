@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       searchData: {
-        state: "A",
+        state: "N",
         type: "A"
       },
       stateList: [

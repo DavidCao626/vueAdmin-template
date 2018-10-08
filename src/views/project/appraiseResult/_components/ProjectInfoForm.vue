@@ -2,7 +2,7 @@
   <div>
     <page class="page" :breadcrumb="false">
       <div slot="panel">
-        <h3>一、项目信息</h3>
+        <div class="pannel_title">项目信息</div>
         <el-form ref="form" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
           <el-form-item label="项目名称:">
             <el-input v-model="form.projectName" autosize focus style="width:50%;">
@@ -54,7 +54,8 @@
     <page class="page" :breadcrumb="false">
       <div slot="panel">
 
-        <h3>二、测评信息</h3>
+      
+ <div class="pannel_title">任务配置</div>
         <el-form label-position="left" :model="form.expand" label-width="110px" style="margin: 20px;">
           <el-form-item label="测评项目">
             <elx-select v-model="form.expand.appraiseProjectCode" placeholder="请选择" @change="projectChange">
@@ -362,4 +363,11 @@ export default {
 };
 </script>
 <style>
+.pannel_title {
+  background-color: #336699;
+  line-height: 32px;
+  color: #ffffff;
+  padding-left: 5px;
+  margin: -10px;
+} 
 </style>

@@ -3,7 +3,7 @@
     <page class="page" :breadcrumb="false">
       <div slot="panel">
 
-         <div class="pannel_title">奖学金</div>
+          <div class="pannel_title">项目信息</div>
         <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
           <el-form-item label="名称">
             <el-input v-model="form.expand.name" autosize focus style="width:50%;">
@@ -327,9 +327,12 @@ export default {
 };
 </script>
 <style>
-  .pannel_title{
-    background-color: papayawhip;
-    line-height: 32px;
-  }
+  .pannel_title {
+  background-color: #336699;
+  line-height: 32px;
+  color: #ffffff;
+  padding-left: 5px;
+  margin: -10px;
+} 
 
 </style>

@@ -9,13 +9,10 @@
                         <i class="el-icon-delete"> ({{ multipleSelection.length }})</i>
                     </el-button>
                 </span> -->
-                <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-                    <!-- <el-form-item label="编号:">
-                        <el-input v-model="formInline.sysNo" placeholder="编号"></el-input>
+                <el-form :inline="true"  size="mini" class="demo-form-inline">
+                    <el-form-item>
+                      <el-input v-model="searchData" placeholder="输入批次号进行搜索"></el-input>
                     </el-form-item>
-                    <el-form-item label="姓名:">
-                        <el-input v-model="formInline.name" placeholder="姓名"></el-input>
-                    </el-form-item> -->
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit">查询</el-button>
                     </el-form-item>
@@ -67,6 +64,7 @@ Vue.use(Element);
 export default {
   data() {
     return {
+      searchData:"",
       pageInfo: {
         currentPage: 1,
         pageSize: 10,
@@ -144,7 +142,8 @@ export default {
     getData() {
       var requestData = {
         currentPage: this.pageInfo.currentPage,
-        pageSize: this.pageInfo.pageSize
+        pageSize: this.pageInfo.pageSize,
+        betchNo:this.searchData
       };
       this.queryImportRecordList(requestData).then(response => {
         console.log(["查询数据", response]);

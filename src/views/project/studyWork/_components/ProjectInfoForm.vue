@@ -3,7 +3,7 @@
     <page class="page" :breadcrumb="false">
       <div slot="panel">
 
-        <h3>一、项目信息</h3>
+          <div class="pannel_title">项目信息</div>
         <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
           <el-form-item label="名称">
             <el-input v-model="form.expand.name" autosize focus style="width:50%;">
@@ -31,7 +31,7 @@
 
     <page class="page" :breadcrumb="false">
       <div slot="panel">
-        <h3>二、任务信息</h3>
+        <div class="pannel_title">任务配置</div>
         <el-form ref="form" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
         
           <el-form-item label="业务类型:">
@@ -275,4 +275,11 @@ export default {
 };
 </script>
 <style>
+.pannel_title {
+  background-color: #336699;
+  line-height: 32px;
+  color: #ffffff;
+  padding-left: 5px;
+  margin: -10px;
+} 
 </style>
