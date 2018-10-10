@@ -244,7 +244,34 @@ const queryCanApplyJobOrg = data =>
         method: 'post',
         data: data
     })
+
+const importJob = data =>
+    request({
+        url: "/studyWork/importJob.do",
+        method: 'post',
+        data: data
+    })
+    
+
+const getJobTemplateUrl = data =>
+    request({
+        url: "/studyWork/getJobTemplateUrl.do",
+        method: 'post',
+        data: data
+    })
+const getJobTypeDict = data =>
+    request({
+        url: "/studyWork/getJobTypeDict.do",
+        method: 'post',
+        data: data
+    })
+
+
+
 export default {
+    getJobTypeDict,
+    getJobTemplateUrl,
+    importJob,
     mytest,
      queryCanApplyJobOrg,
     updateJobNumbers,

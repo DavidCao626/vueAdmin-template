@@ -253,9 +253,30 @@ const mytest = ({ commit, state }, params) => new Promise(resolve => {
     })
 })
 
+const importJob = ({ commit, state }, params) => new Promise(resolve => {
+    api.importJob(params).then(response => {
+        console.log(["importJob", response])
+        resolve(response)
+    })
+})
+const getJobTemplateUrl = ({ commit, state }, params) => new Promise(resolve => {
+    api.getJobTemplateUrl(params).then(response => {
+        console.log(["getJobTemplateUrl", response])
+        resolve(response)
+    })
+})
 
+const getJobTypeDict = ({ commit, state }, params) => new Promise(resolve => {
+    api.getJobTypeDict(params).then(response => {
+        console.log(["getJobTypeDict", response])
+        resolve(response)
+    })
+})
 
 export default {
+    getJobTypeDict,
+    getJobTemplateUrl,
+    importJob,
     mytest,
     queryCanApplyJobOrg,
     updateJobNumbers,

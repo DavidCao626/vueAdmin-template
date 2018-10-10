@@ -5,7 +5,7 @@
             <div slot="panel">
                 <el-form :model="headerForm" label-width="100px">
                     <el-form-item label="项目">
-                        <elx-select v-model="headerForm.projectId" placeholder="" @change="projectChange" >
+                        <elx-select v-model="headerForm.projectId" placeholder="" @change="projectChange">
                             <el-option v-for="item in projectList" :key="item.id" :obj="item" :value="item.id" :label="item.name"></el-option>
                         </elx-select>
                     </el-form-item>
@@ -68,6 +68,17 @@
                             </el-col>
                         </el-row>
                     </el-form-item>
+
+                    <el-form-item label="岗位类型">
+                        <el-row>
+                            <el-col :span="11">
+                                <el-radio-group v-model="formData.jobType">
+                                    <el-radio v-for="item in jobTypeList" :key="item.value" :label="item.value">{{item.label}}</el-radio>
+                                </el-radio-group>
+                            </el-col>
+                        </el-row>
+                    </el-form-item>
+
                     <el-form-item label="">
                         <el-button @click="deleteForm(formData)" type="danger" size="small">删除</el-button>
                     </el-form-item>
@@ -104,6 +115,11 @@ export default {
         projectCode: ""
       },
       projectList: [],
+      jobTypeList: [
+        { label: "校级岗位", value: "XJ" },
+        { label: "学院内部", value: "NB" }
+      ],
+
       dataSource: [
         {
           id: 0,
@@ -116,7 +132,8 @@ export default {
           jobDemand: "",
           workTime: "",
           monthWorkload: "",
-          remark: ""
+          remark: "",
+          jobType: "XJ"
         }
       ]
     };
@@ -134,7 +151,8 @@ export default {
         jobDemand: "",
         workTime: "",
         monthWorkload: "",
-        remark: ""
+        remark: "",
+        jobType: "XJ"
       });
     },
     deleteForm(obj) {
@@ -146,8 +164,14 @@ export default {
       queryAllowPublishJobProject:
         store.namespace + "/queryAllowPublishJobProject",
       updateJob: store.namespace + "/updateJob",
-      getJobById: store.namespace + "/getJobById"
+      getJobById: store.namespace + "/getJobById",
+      getJobTypeDict: store.namespace + "/getJobTypeDict"
     }),
+    getJobTypeList() {
+      this.getJobTypeDict({}).then(response => {
+        this.jobTypeList = response.resBody;
+      });
+    },
     onSubmit() {
       //增加
       if (this.dataSource.length == 0) {
@@ -160,8 +184,8 @@ export default {
         item.projectCode = that.headerForm.projectCode;
         that.insertJob(item).then(response => {});
       });
-        this.$message.success("成功!");
-        this.$router.go(-1);
+      this.$message.success("成功!");
+      this.$router.go(-1);
     },
     projectChange(val, vueCom, obj) {
       this.headerForm.projectCode = obj.obj.code;
@@ -175,6 +199,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.getProjectList();
+      vm.getJobTypeList();
     });
   }
 };

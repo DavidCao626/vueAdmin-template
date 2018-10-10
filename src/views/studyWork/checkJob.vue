@@ -4,7 +4,7 @@
       <div slot="title">岗位审核</div>
     </page>
     <elx-table-layout>
-      <template slot="headerLeft">
+      <template slot="headerLeft"> 
         <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
           <el-form-item label="审核状态">
             <el-select v-model="formInline.jobCheckState" placeholder="岗位状态">

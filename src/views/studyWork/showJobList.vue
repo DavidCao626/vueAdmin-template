@@ -104,7 +104,7 @@ export default {
         }
       });
     },
-    checkStateFormatter(val) {
+    checkStateFormatter(vala) {
       var val = vala.checkState;
       console.log([val, this.jobCheckStateList]);
       for (var i = 0; i < this.jobCheckStateList.length; i++) {

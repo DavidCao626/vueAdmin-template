@@ -11,6 +11,11 @@
               发布岗位
             </el-button>
           </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="导入岗位" placement="bottom">
+            <el-button @click="importJobBT" plain size="mini">
+              导入岗位
+            </el-button>
+          </el-tooltip>
         </el-button-group>
       </template>
       <template slot="headerLeft">
@@ -57,7 +62,7 @@
         </el-table-column>
         <el-table-column prop="monthWorkload" label="月工作时间">
         </el-table-column>
-        <el-table-column prop="remark" label="备注">
+        <el-table-column prop="jobType" :formatter="jobTypeFormatter" label="岗位类型">
         </el-table-column>
         <el-table-column prop="applyNum" label="申请人数">
         </el-table-column>
@@ -87,6 +92,32 @@
         </el-pagination>
       </template>
     </elx-table-layout>
+
+    <el-dialog title="导入岗位" :visible.sync="importDV">
+      <el-form :model="formData">
+        <el-form-item label="项目">
+          <elx-select v-model="formData.projectId" placeholder="" @change="projectChange">
+            <el-option v-for="item in projectList2" :key="item.id" :obj="item" :value="item.id" :label="item.name"></el-option>
+          </elx-select>
+        </el-form-item>
+        <el-form-item label="文件上传">
+          <br />
+          <el-upload class="upload-demo" ref="upload" :action="importJobUrl" :limit='1' :onSuccess="onUploadSuccess2">
+            <el-button size="small" type="primary" plain>
+              <i class="el-icon-upload"></i> 点击上传文件</el-button>
+            <div class="el-upload__tip" slot="tip">只能上传xlx/xlsx</div>
+          </el-upload>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <a :href="templateUrl" style="color:blue" target='_blank'>
+          模板下载
+        </a>
+        <el-button @click="importDV = false">取 消</el-button>
+        <el-button type="primary" @click="importSubmit">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -96,16 +127,30 @@ import Element from "element-ui-x";
 import { mapGetters, mapActions } from "vuex";
 import store from "./_store/index.js";
 import moment from "moment";
+
+const importJobUrl = process.env.BASE_API + "/public/uploadJobFile.do";
+
 Vue.use(Element);
 export default {
   data() {
     return {
+      importJobUrl: importJobUrl,
+      projectList2: [], //导入岗位时选择
+      formData: {
+        id: 0,
+        projectId: null,
+        projectCode: "",
+        fileId: 0
+      },
+      importDV: false,
+
       insertJobDV: false,
       pageInfo: {
         currentPage: 1,
         pageSize: 10,
         totalRecord: 0
       },
+      templateUrl: "",
       jobStateList: [],
       projectList: [],
       projectStateList: [],
@@ -116,7 +161,7 @@ export default {
         jobCheckState: ""
       },
       orgProps: {
-       label: "orgName",
+        label: "orgName",
         value: "orgCode",
         children: "children"
       },
@@ -127,6 +172,56 @@ export default {
   },
   watch: {},
   methods: {
+    onUploadSuccess2(response, file, fileList) {
+      this.formData.fileId = response.body.resBody.fileId;
+    },
+    importSubmit() {
+      this.importDV = false;
+
+      if (!this.formData.fileId) {
+        return this.$message.error("请先上传数据文件！");
+      }
+      this.$confirm(
+        "此操作将在后台执行导入任务, 稍后您可以凭借任务单号查看导入结果",
+        "提示",
+        {
+          confirmButtonText: "知道了",
+          cancelButtonText: "取消操作",
+          type: "warning"
+        }
+      ).then(() => {
+        this.importJob({
+          fileId: this.formData.fileId,
+          projectId: this.formData.projectId,
+          projectCode: this.formData.projectCode
+        }).then(response => {
+          this.dialogVisible = false;
+          this.$refs["upload"].clearFiles();
+          this.$notify({
+            title: "后台任务提醒",
+            message: "任务单号:" + response.resBody.batch + ",已创建。",
+            duration: 0,
+            type: "info",
+            dangerouslyUseHTMLString: true
+          });
+        });
+      });
+    },
+    importJobBT() {
+      this.importDV = true;
+    },
+    jobTypeFormatter(r, c, v, i) {
+      if (v == "NB") {
+        return "学院内部";
+      } else if (v == "XJ") {
+        return "校级岗位";
+      } else {
+        return v;
+      }
+    },
+    projectChange(val, vueCom, obj) {
+      this.formData.projectCode = obj.obj.code;
+    },
     showRecord(row) {
       this.$router.push({
         path: "/studyWork/jobApplyRecord",
@@ -201,6 +296,9 @@ export default {
       this.getData();
     },
     ...mapActions({
+      importJob: store.namespace + "/importJob",
+      queryAllowPublishJobProject:
+        store.namespace + "/queryAllowPublishJobProject",
       getDictByDictNames: store.namespace + "/getDictByDictNames",
       getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
       queryMyJobList: store.namespace + "/queryMyJobList",
@@ -209,12 +307,23 @@ export default {
       checkAllowJobUpdate: store.namespace + "/checkAllowJobUpdate",
       deleteJob: store.namespace + "/deleteJob",
       getProjectStateDict: store.namespace + "/getProjectStateDict",
-      getJobCheckStateDict: store.namespace + "/getJobCheckStateDict"
+      getJobCheckStateDict: store.namespace + "/getJobCheckStateDict",
+      getJobTemplateUrl: store.namespace + "/getJobTemplateUrl"
     }),
     getJobCheckStateList() {
       this.getJobCheckStateDict({}).then(response => {
         this.jobCheckStateList = response.resBody;
         this.jobCheckStateList.unshift({ label: "全部", value: "0" });
+      });
+    },
+    getProjectList2() {
+      this.queryAllowPublishJobProject({}).then(response => {
+        this.projectList2 = response.resBody;
+      });
+    },
+    getUrl() {
+      this.getJobTemplateUrl({}).then(r => {
+        this.templateUrl = r.resBody.url;
       });
     },
     getData() {
@@ -272,7 +381,9 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
+      vm.getProjectList2();
       vm.getDict();
+      vm.getUrl();
     });
   }
 };
