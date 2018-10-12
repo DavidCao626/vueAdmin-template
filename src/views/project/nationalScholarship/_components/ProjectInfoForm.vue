@@ -33,6 +33,46 @@
             </el-checkbox-group>
           </el-form-item>
 
+          <el-form-item label="关联贫困建档">
+            <el-radio-group v-model="form.expand.rules.relationPoverty.flag">
+              <el-radio-button label="Y">是</el-radio-button>
+              <el-radio-button label="N">否</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="关联校内测评">
+            <el-radio-group v-model="form.expand.rules.schoolAppraisal.flag">
+              <el-radio-button label="Y">是</el-radio-button>
+              <el-radio-button label="N">否</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="校内测评名次" v-show="form.expand.rules.schoolAppraisal.flag == 'Y'">
+            <el-input-number v-model="form.expand.rules.schoolAppraisal.first" :min="1" label="班级排名"></el-input-number>
+          </el-form-item>
+
+          <el-form-item label="关联年度测评">
+            <el-radio-group v-model="form.expand.rules.yearAppraisal.flag">
+              <el-radio-button label="Y">是</el-radio-button>
+              <el-radio-button label="N">否</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="年度测评名次" v-show="form.expand.rules.yearAppraisal.flag == 'Y'">
+            <el-input-number v-model="form.expand.rules.yearAppraisal.first" :min="1" label="班级排名"></el-input-number>
+          </el-form-item>
+
+          <el-form-item label="关联体能测试">
+            <el-radio-group v-model="form.expand.rules.physical.flag">
+              <el-radio-button label="Y">是</el-radio-button>
+              <el-radio-button label="N">否</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="体能测试分数" v-show="form.expand.rules.physical.flag == 'Y'">
+            <el-input-number v-model="form.expand.rules.physical.score" label="分数"></el-input-number>
+          </el-form-item>
+
         </el-form>
       </div>
     </page>
@@ -126,6 +166,10 @@ export default {
   },
   data() {
     return {
+      schoolAppraisal: "N",
+      yearAppraisal: "N",
+      physical: "N",
+
       stuTypeList: [],
       gradeList: [],
       schoolYearList: [],
@@ -222,6 +266,7 @@ export default {
         this.$message.error("子类型不能为空!");
         return;
       }
+
       console.log(this.form);
       var t = this.form;
       var requestData = {
@@ -244,9 +289,12 @@ export default {
           schoolYearId: t.expand.schoolYearId, //学年
           schoolYearName: t.expand.schoolYearName, //学年名称
           stuType: t.expand.stuType, //学生类别
-          grade: t.expand.grade //年级
+          grade: t.expand.grade, //年级
+          rules: t.expand.rules //参与者规则
         }
       };
+
+
       this.insertOrUpdateAndNext(requestData).then(response => {
         this.$message.success("保存成功!");
         this.form.id = response.resBody.projectId;
@@ -326,5 +374,5 @@ export default {
   color: #ffffff;
   padding-left: 5px;
   margin: -10px;
-} 
+}
 </style>

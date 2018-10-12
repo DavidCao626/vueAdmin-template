@@ -1,7 +1,7 @@
 <template>
   <div>
     <page>
-      <div slot="title">年度测评记录生成进度</div>
+      <div slot="title">校内测评记录生成进度</div>
     </page>
     <elx-table-layout>
 

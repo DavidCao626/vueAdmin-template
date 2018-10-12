@@ -468,7 +468,7 @@ export default {
     },
     searchButton() {
       this.loading = true;
-      this.pageInfo.currentPage = 1;
+      this.pageInfo2.currentPage = 1;
       this.getStudentData();
     },
     onDel(row) {
@@ -550,12 +550,12 @@ export default {
     // },
     handleSizeChange2(val) {
       console.log(`每页 ${val} 条`);
-      this.pageInfo.pageSize = val;
+      this.pageInfo2.pageSize = val;
       this.getStudentData();
     },
     handleCurrentChange2(val) {
       console.log(`当前页: ${val}`);
-      this.pageInfo.currentPage = val;
+      this.pageInfo2.currentPage = val;
       this.getStudentData();
     },
     getStudentData() {

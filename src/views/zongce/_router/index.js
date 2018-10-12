@@ -36,16 +36,16 @@ export const zongceRouter = {
       component: () => import("../configDetail.vue"),
       meta: { title: "配置分数项", icon: "example", hidden: true }
     },
-      {
-        path: "projectManager",
-        name: "projectManager",
-        component: () => import("../projectManagerV2.vue"),
+    {
+      path: "projectManager",
+      name: "projectManager",
+      component: () => import("../projectManagerV2.vue"),
       meta: { title: "我的项目管理", icon: "example", hidden: true }
     },
-        {
-          path: "appraisalResultRecord",
-          name: "appraisalResultRecord",
-          component: () => import("../appraisalResultRecord.vue"),
+    {
+      path: "appraisalResultRecord",
+      name: "appraisalResultRecord",
+      component: () => import("../appraisalResultRecord.vue"),
       meta: { title: "测评结果记录", icon: "example", hidden: true }
     },
     {
@@ -71,14 +71,25 @@ export const zongceRouter = {
       name: "showAppraisalRankForCollegeAndClass",
       component: () => import("../showAppraisalRankForCollegeAndClass.vue"),
       meta: { title: "查看综测排名", icon: "example", hidden: true }//班级和学院查看
-    }
-  
+    },
+    {
+      path: "physicalForStu",
+      name: "physicalForStu",
+      component: () => import("../physicalForStu.vue"),
+      meta: { title: "我的体能测试", icon: "example", hidden: true }
+    }, {
+      path: "physicalForStaff",
+      name: "physicalForStaff",
+      component: () => import("../physicalForStaff.vue"),
+      meta: { title: "体能测试管理", icon: "example", hidden: true }
+    },
 
 
 
-    
 
-  
+
+
+
     // {
     //   path: "addCategory",
     //   name: "addCategory",

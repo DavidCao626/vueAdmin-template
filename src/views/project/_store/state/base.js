@@ -17,7 +17,7 @@ export const baseproject = {
             grade: [],
             stuType: [],
             name: "",
-            schoolYearId:null
+            schoolYearId: null
         }
     },
     //国家助学金
@@ -38,7 +38,24 @@ export const baseproject = {
             grade: [],
             stuType: [],
             name: "",
-            schoolYearId: null
+            schoolYearId: null,
+            rules: {
+                relationPoverty: {
+                    flag: "N"
+                },
+                schoolAppraisal: {
+                    flag: "N",
+                    first: 0
+                },
+                yearAppraisal: {
+                    flag: "N",
+                    first: 0
+                },
+                physical: {
+                    flag: "N",
+                    score: 0
+                }
+            }
         }
     },
     //励志奖学金
@@ -59,8 +76,25 @@ export const baseproject = {
             grade: [],
             stuType: [],
             name: "",
-            appraiseProjectCode:"",
-            schoolYearId: null
+            appraiseProjectCode: "",
+            schoolYearId: null,
+            rules: {
+                relationPoverty: {
+                    flag: "N"
+                },
+                schoolAppraisal: {
+                    flag: "N",
+                    first: 0
+                },
+                yearAppraisal: {
+                    flag: "N",
+                    first: 0
+                },
+                physical: {
+                    flag: "N",
+                    score: 0
+                }
+            }
         }
     },
     //国家奖学金
@@ -82,7 +116,24 @@ export const baseproject = {
             stuType: [],
             name: "",
             appraiseProjectCode: "",
-            schoolYearId: null
+            schoolYearId: null,
+            rules: {
+                relationPoverty: {
+                    flag: "N"
+                },
+                schoolAppraisal: {
+                    flag: "N",
+                    first: 0
+                },
+                yearAppraisal: {
+                    flag: "N",
+                    first: 0
+                },
+                physical: {
+                    flag: "N",
+                    score: 0
+                }
+            }
         }
     },
 

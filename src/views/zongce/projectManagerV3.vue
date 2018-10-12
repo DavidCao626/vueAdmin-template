@@ -1,19 +1,13 @@
 <template>
   <div>
     <page>
-      <div slot="title">年度综测项目</div>
+      <div slot="title">校内综测项目</div>
     </page>
     <elx-table-layout>
       <template slot="headerLeft">
         <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
           <el-form-item label="项目名称">
             <el-input v-model="formInline.name" placeholder="请输入"></el-input>
-          </el-form-item>
-          <el-form-item label="学年">
-            <elx-select v-model="formInline.schoolYearId" placeholder="请选择">
-              <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :value="item.id">
-              </el-option>
-            </elx-select>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -33,8 +27,6 @@
 
       <el-table :data="data" style="width: 100%" border size="mini">
         <el-table-column prop="name" label="项目名称">
-        </el-table-column>
-        <el-table-column prop="schoolYearName" label="学年">
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间">
         </el-table-column>
@@ -60,12 +52,7 @@
 
     <el-dialog title="数据生成" :visible.sync="createDataDV">
       <el-form :model="createDataForm">
-        <el-form-item label="学年" label-width="80px">
-          <el-select v-model="createDataForm.schoolYearId" placeholder="">
-            <el-option v-for="item in schoolYearList2" :key="item.id" :label="item.name" :value="item.id">
-            </el-option>
-          </el-select>
-        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="createDataDV = false">取 消</el-button>
@@ -87,7 +74,6 @@ export default {
   data() {
     return {
       createDataForm: {
-        schoolYearId: null
       },
       pageInfo: {
         currentPage: 1,
@@ -97,8 +83,6 @@ export default {
       schoolYearList2: [],
       formInline: {
         name: "",
-        schoolYearId: 0,
-        state: ""
       },
       orgProps: {
         label: "orgName",
@@ -115,38 +99,12 @@ export default {
   watch: {},
   methods: {
     deleteProject(row) {
-      this.deleteAppraisalProject({ projectCode: row.code }).then(vm => {
-        this.getData();
-        this.$message.success("删除成功");
-      });
     },
     createDataBT() {
       this.createDataDV = true;
     },
     createDataSubmit() {
       this.createDataDV = false;
-      this.processAppraisalRecord({
-        schoolYearId: this.createDataForm.schoolYearId
-      }).then(response => {
-        this.$message.success("操作成功");
-
-        this.getData();
-      });
-    },
-    stateFormatter(r, c, v, i) {
-      var arr = this.projectStateList;
-      for (var i = 0; i < arr.length; i++) {
-        if (arr[i].value == v) {
-          return arr[i].label;
-        }
-      }
-      return v;
-    },
-    stuTypeFormatter(r, c, v, i) {
-      return v;
-    },
-    gradeFormatter(r, c, v, i) {
-      return v;
     },
     showSchedule(row) {
       this.$router.push({
@@ -154,12 +112,6 @@ export default {
         query: {
           projectCode: row.code
         }
-      });
-    },
-    createRecord(row) {
-      this.processAppraisalRecord({ projectCode: row.code }).then(response => {
-        this.$message.success("操作成功");
-        this.getData();
       });
     },
     handleSizeChange(val) {
@@ -172,49 +124,15 @@ export default {
       this.pageInfo.currentPage = val;
       this.getData();
     },
-    getSchoolYearList() {
-      this.schoolYearList = [];
-      this.querySchoolYear({ currentPage: 1, pageSize: 99999 }).then(
-        response => {
-          this.schoolYearList2 = JSON.parse(
-            JSON.stringify(response.resBody.baseData)
-          );
-
-          this.schoolYearList = response.resBody.baseData;
-          this.schoolYearList.unshift({ id: 0, name: "全部" });
-        }
-      );
-    },
     ...mapActions({
-      getDictByDictNames: store.namespace + "/getDictByDictNames",
-      getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
-      queryProjectList: store.namespace + "/queryProjectList",
-      processAppraisalRecord: store.namespace + "/processAppraisalRecord",
-      getAppraisalProjectState: store.namespace + "/getAppraisalProjectState",
-      querySchoolYear: store.namespace + "/querySchoolYear",
-      deleteAppraisalProject: store.namespace + "/deleteAppraisalProject"
+      getDictByDictNames: store.namespace + "/getDictByDictNames"
     }),
-    getProjectStateList() {
-      this.projectStateList = [];
-      this.getAppraisalProjectState({}).then(response => {
-        this.projectStateList = response.resBody;
-        this.projectStateList.unshift({ value: "0", label: "全部" });
-      });
-    },
     getData() {
       var requestData = {
         currentPage: this.pageInfo.currentPage,
         pageSize: this.pageInfo.pageSize,
         name: this.formInline.name,
-        schoolYearId: this.formInline.schoolYearId,
-        state: this.formInline.state
       };
-      //查询数据的方法
-      this.queryProjectList(requestData).then(response => {
-        console.log(["查询数据", response]);
-        this.data = response.resBody.baseData;
-        this.pageInfo = response.resBody.pageInfo;
-      });
     },
     onSubmit() {
       this.pageInfo.currentPage = 1;
@@ -224,8 +142,6 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.getData();
-      vm.getSchoolYearList();
-      vm.getProjectStateList();
     });
   }
 };

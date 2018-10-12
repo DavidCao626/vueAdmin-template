@@ -3,7 +3,7 @@
     <page class="page" :breadcrumb="false">
       <div slot="panel">
 
-          <div class="pannel_title">项目信息</div>
+        <div class="pannel_title">项目信息</div>
         <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
           <el-form-item label="名称">
             <el-input v-model="form.expand.name" autosize focus style="width:50%;">
@@ -36,6 +36,45 @@
             <el-checkbox-group v-model="form.expand.grade" :min="1">
               <el-checkbox v-for="item in gradeList" :label="item.dict_key" :key="item.dict_key">{{item.dict_desc}}</el-checkbox>
             </el-checkbox-group>
+          </el-form-item>
+          <el-form-item label="关联贫困建档">
+            <el-radio-group v-model="form.expand.rules.relationPoverty.flag">
+              <el-radio-button label="Y">是</el-radio-button>
+              <el-radio-button label="N">否</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="关联校内测评">
+            <el-radio-group v-model="form.expand.rules.schoolAppraisal.flag">
+              <el-radio-button label="Y">是</el-radio-button>
+              <el-radio-button label="N">否</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="校内测评名次" v-show="form.expand.rules.schoolAppraisal.flag == 'Y'">
+            <el-input-number v-model="form.expand.rules.schoolAppraisal.first" :min="1" label="班级排名"></el-input-number>
+          </el-form-item>
+
+          <el-form-item label="关联年度测评">
+            <el-radio-group v-model="form.expand.rules.yearAppraisal.flag">
+              <el-radio-button label="Y">是</el-radio-button>
+              <el-radio-button label="N">否</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="年度测评名次" v-show="form.expand.rules.yearAppraisal.flag == 'Y'">
+            <el-input-number v-model="form.expand.rules.yearAppraisal.first" :min="1" label="班级排名"></el-input-number>
+          </el-form-item>
+
+          <el-form-item label="关联体能测试">
+            <el-radio-group v-model="form.expand.rules.physical.flag">
+              <el-radio-button label="Y">是</el-radio-button>
+              <el-radio-button label="N">否</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="体能测试分数" v-show="form.expand.rules.physical.flag == 'Y'">
+            <el-input-number v-model="form.expand.rules.physical.score" label="分数"></el-input-number>
           </el-form-item>
 
         </el-form>
@@ -83,7 +122,6 @@
       </div>
     </page>
 
-    
     <page class="page" :breadcrumb="false">
       <div slot="panel">
         <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
@@ -251,7 +289,8 @@ export default {
           schoolYearId: t.expand.schoolYearId, //学年
           schoolYearName: t.expand.schoolYearName, //学年名称
           stuType: t.expand.stuType, //学生类别
-          grade: t.expand.grade //年级
+          grade: t.expand.grade, //年级
+          rules: t.expand.rules //参与者规则
         }
       };
       this.insertOrUpdateAndNext(requestData).then(response => {
@@ -327,12 +366,11 @@ export default {
 };
 </script>
 <style>
-  .pannel_title {
+.pannel_title {
   background-color: #336699;
   line-height: 32px;
   color: #ffffff;
   padding-left: 5px;
   margin: -10px;
-} 
-
+}
 </style>
