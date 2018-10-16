@@ -23,6 +23,10 @@ export const getAppraisalProjectFormData = state => {
     return state.baseproject.appraisalProjectFormData
 };
 
+export const getSchoolAppraisalProjectFormData = state => {
+    return state.baseproject.schoolAppraisalProjectFormData
+};
+
 export const getUploadAttrUrl = state => { 
     return state.baseproject.uploadAttrUrl;
 }

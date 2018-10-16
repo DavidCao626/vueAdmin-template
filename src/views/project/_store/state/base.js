@@ -254,6 +254,25 @@ export const baseproject = {
             grade: []
         }
     },
+    schoolAppraisalProjectFormData: {
+        projectId: 0,
+        projectName: "",
+        projectUserCode: "",
+        projectDesc: "",
+        projectServiceType: "",
+        planStartTime: "",
+        planCompleteTime: "",
+        isSendPublicNotice: "Y",
+        projectAttachmentId: [],
+        attrDetailBean: [],
+        expand: {
+            id: 0,
+            name: "",//名称
+            stuType: [],
+            grade: [],
+            dateDue:null//截止日期
+        }
+    },
     tempProjectId: "",//临时储存当前项目id
     uploadAttrUrl: "",
     appraiseCategoryList: [],

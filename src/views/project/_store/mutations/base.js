@@ -29,6 +29,7 @@ export const setProjectServiceType = (state, serType) => {
     state.baseproject.studyWorkProjectExpandFormData.projectServiceType = serType
     state.baseproject.evalProjectFormData.projectServiceType = serType
     state.baseproject.appraisalProjectFormData.projectServiceType = serType
+    state.baseproject.schoolAppraisalProjectFormData.projectServiceType = serType
 }
 //设置项目表单内容表单
 export const setProjectFormData = (state, projectFormData) => {
