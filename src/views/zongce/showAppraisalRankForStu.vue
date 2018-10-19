@@ -1,7 +1,7 @@
 <template>
   <div>
     <page>
-      <div slot="title">年度综测排名详情</div>
+      <div slot="title">综测排名详情</div>
     </page>
     <elx-table-layout>
       <template slot="headerLeft">

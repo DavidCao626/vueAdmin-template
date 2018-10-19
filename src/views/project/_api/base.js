@@ -241,10 +241,63 @@ const queryNationalScholarshipResult = data =>
 
 
 
+const getStuEconmyInfo = data =>
+    request({
+        url: "/stuInfo/getStuEconmyInfo.do",
+        method: 'post',
+        data: data
+    })
+const updateStuEcoInfo = data =>
+    ajax({
+        url: "/stuInfo/updateStuEcoInfo.do",
+        method: 'post',
+        data: data
+    })
 
+const getSubsidizeScoreDataForNG = data =>
+    request({
+        url: "/projectApply/getSubsidizeScoreDataForNG.do",
+        method: 'post',
+        data: data
+    })
+
+const getSubsidizeScoreDataForNS = data =>
+    request({
+        url: "/projectApply/getSubsidizeScoreDataForNS.do",
+        method: 'post',
+        data: data
+    })
+
+const queryParticipantRules = data =>
+    request({
+        url: "/project/queryParticipantRules.do",
+        method: 'post',
+        data: data
+    })
+
+const checkParticipantRules = data =>
+    request({
+        url: "/project/checkParticipantRules.do",
+        method: 'post',
+        data: data
+    })
+
+const stopScope = data =>
+    request({
+        url: "/project/stopScope.do",
+        method: 'post',
+        data: data
+    })
 
 
 export default {
+    stopScope,
+    queryParticipantRules,
+checkParticipantRules,
+    getSubsidizeScoreDataForNG,
+    getSubsidizeScoreDataForNS,
+    getStuEconmyInfo,
+    updateStuEcoInfo,
     queryPovertyResult,
     queryNationalGrantsResult,
     queryMotivationalScholarshipResult,

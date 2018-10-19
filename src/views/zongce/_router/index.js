@@ -70,7 +70,7 @@ export const zongceRouter = {
       path: "showAppraisalRankForCollegeAndClass",
       name: "showAppraisalRankForCollegeAndClass",
       component: () => import("../showAppraisalRankForCollegeAndClass.vue"),
-      meta: { title: "查看综测排名", icon: "example", hidden: true }//班级和学院查看
+      meta: { title: "查看年度综测排名", icon: "example", hidden: true }//班级和学院查看
     },
     {
       path: "physicalForStu",
@@ -83,8 +83,18 @@ export const zongceRouter = {
       component: () => import("../physicalForStaff.vue"),
       meta: { title: "体能测试管理", icon: "example", hidden: true }
     },
-
-
+    {
+      path: "projectManagerSchool",
+      name: "projectManagerSchool",
+      component: () => import("../projectManagerV3.vue"),
+      meta: { title: "校内综测项目", icon: "example", hidden: true }
+    },
+    {
+      path: "showAppraisalRankForCollegeAndClassSchool",
+      name: "showAppraisalRankForCollegeAndClassSchool",
+      component: () => import("../showAppraisalRankForCollegeAndClassSchool.vue"),
+      meta: { title: "查看校内综测排名", icon: "example", hidden: true }//班级和学院查看
+    },
 
 
 

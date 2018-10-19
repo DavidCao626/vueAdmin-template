@@ -259,7 +259,60 @@ const queryNationalScholarshipResult = ({ commit, state }, data) =>
     })
   })
 
+const updateStuEcoInfo = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.updateStuEcoInfo(data).then(response => {
+      resolve(response)
+    })
+  })
+const getStuEconmyInfo = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.getStuEconmyInfo(data).then(response => {
+      resolve(response)
+    })
+  })
+
+const getSubsidizeScoreDataForNG = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.getSubsidizeScoreDataForNG(data).then(response => {
+      resolve(response)
+    })
+  })
+
+const getSubsidizeScoreDataForNS = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.getSubsidizeScoreDataForNS(data).then(response => {
+      resolve(response)
+    })
+  })
+
+const queryParticipantRules = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryParticipantRules(data).then(response => {
+      resolve(response)
+    })
+  })
+
+const checkParticipantRules = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.checkParticipantRules(data).then(response => {
+      resolve(response)
+    })
+  })
+const stopScope = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.stopScope(data).then(response => {
+      resolve(response)
+    })
+  })
 export default {
+  stopScope,
+  queryParticipantRules,
+  checkParticipantRules,
+  getSubsidizeScoreDataForNG,
+  getSubsidizeScoreDataForNS,
+  getStuEconmyInfo,
+  updateStuEcoInfo,
   queryPovertyResult,
   queryNationalGrantsResult,
   queryMotivationalScholarshipResult,

@@ -4,7 +4,7 @@
       <!-- <div slot="title">学生业务申请</div> -->
       <div slot="panel">
         <h2>{{formTitle}}</h2>
-        <hr/>
+        <hr />
         <proInfo :itemId="itemId"></proInfo>
         <!-- <div>项目名称：{{resData.projectData.projectName}}</div>
         <div>项目类别：{{resData.projectData.projectServiceTypeName}}</div>
@@ -25,7 +25,8 @@
     </page>
     <page style="width: 1000px;margin: 0 auto;">
       <div slot="panel">
-        <h3 style="font-weight:400">一、填写申请信息</h3><hr/>
+        <h3 style="font-weight:400">一、填写申请信息</h3>
+        <hr />
         <el-form ref="form" :model="form" label-width="120px">
           <el-row>
             <el-col :span="10">
@@ -86,40 +87,42 @@
     </page>
     <page style="width: 1000px;margin: 0 auto;">
       <div slot="panel">
-        <h3 style="font-weight:400">二、相关信息</h3><hr/>
-        <el-form ref="form" :model="form" label-width="120px" size="small">
+        <h3 style="font-weight:400">二、相关信息</h3>
+        <hr />
+        <el-form ref="form" :model="scoreData" label-width="120px" size="small">
           <el-row>
             <el-col :span="10">
               <el-form-item label="成绩排名">
-                <el-input v-model="form.username" disabled></el-input>
+                <el-input v-model="scoreData.scoreRank" disabled></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="10" :offset="1">
               <el-form-item label="成绩排名人数">
-                <el-input v-model=" form.username " disabled></el-input>
+                <el-input v-model=" scoreData.scoreRankNum " disabled></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="10 ">
               <el-form-item label="必修课数量 ">
-                <el-input v-model="form.username " disabled></el-input>
+                <el-input v-model="scoreData.requiredCourse " disabled></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="10 " :offset="1 ">
               <el-form-item label="必修课及格数 ">
-                <el-input v-model="form.username " disabled></el-input>
+                <el-input v-model="scoreData.requiredCourseQualified " disabled></el-input>
               </el-form-item>
             </el-col>
-          </el-row> <el-row>
+          </el-row>
+          <el-row>
             <el-col :span="10 ">
               <el-form-item label="综合考评名次 ">
-                <el-input v-model="form.username " disabled></el-input>
+                <el-input v-model="scoreData.appraisalRank " disabled></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="10 " :offset="1 ">
               <el-form-item label="综合考评总人数">
-                <el-input v-model="form.username" disabled></el-input>
+                <el-input v-model="scoreData.appraisalNum" disabled></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -196,51 +199,10 @@ export default {
             });
           });
         }
-      } else if (to.params.itemId != undefined) {
-        let itemId = to.query.itemId;
-        if (itemId != "" && itemId != null) {
-          vm.itemId = itemId;
-          vm.getApplyData({ itemId: itemId }).then(response => {
-            var resp = response.resBody;
-            vm.projectSystemCode = resp.projectData.projectSystemCode;
-            vm.formTitle = resp.projectData.projectName + "申请表";
-            //附件
-            vm.formFiles = [];
-            if (resp.projectData.files) {
-              resp.projectData.files.forEach(item => {
-                let temp = {
-                  name: "",
-                  url: ""
-                };
-                temp.name = item.userFileName;
-                temp.url = item.userPath;
-                vm.formFiles.push(temp);
-              });
-            }
-            if (
-              resp.itemData.planCompleteTime != null &&
-              resp.itemData.planCompleteTime != ""
-            ) {
-              vm.formDays = vm.DateDiff(
-                resp.itemData.planCompleteTime,
-                moment(new Date()).format("YYYY-MM-DD")
-              );
-            }
-            vm.form.username = resp.studentData.userName;
-            vm.form.number = resp.studentData.userNo;
-            vm.form.class = resp.studentData.userOrgsName;
-            vm.form.type = resp.projectData.projectServiceTypeName;
-            vm.form.options = [];
-            resp.childServiceType.forEach(item => {
-              let temp = {
-                value: item.classifyCode,
-                label: item.classifyName
-              };
-              vm.form.options.push(temp);
-            });
-          });
-        }
+      } else {
+        vm.$message.error("参数不正确");
       }
+    vm.getScoreData();
     });
   },
   components: {
@@ -304,11 +266,32 @@ export default {
         delivery: false,
         fileList: [] //申请附件
       },
+      scoreData: {
+        appraisalRank: 0,
+        appraisalNum: 0,
+        scoreRank: 0,
+        scoreRankNum: 0,
+        requiredCourse: 0,
+        requiredCourseQualified: 0
+      },
+
       attArr: []
     };
   },
   methods: {
+    getScoreData() {
+      var requestData = {
+        itemId: this.itemId,
+        scopeId: 0
+      };
+      this.getSubsidizeScoreDataForNS(requestData).then(response => {
+        this.scoreData = response.resBody;
+      });
+    },
+
     ...mapActions({
+      getSubsidizeScoreDataForNS:
+        store.namespace + "/getSubsidizeScoreDataForNS",
       getApplyData: store.namespace + "/getApplyData",
       insertScholarshipApply: store.namespace + "/insertScholarshipApply",
       getDictByDictNames: store.namespace + "/getDictByDictNames"
@@ -365,13 +348,25 @@ export default {
       this.attArr = tempArr;
     },
     onSubmit() {
+      if(this.scoreData.scoreRank == 0 || this.scoreData.appraisalRank == 0){
+        this.$message.error('您没有成绩信息或测评信息');
+        return;
+      }
+
+
       console.log("submit!");
       var requestData = {
         itemId: this.itemId,
         childServiceTypeCode: this.form.typeValue,
         projectSystemCode: this.projectSystemCode,
         applyReason: this.form.desc, //申请原因
-        attachment: this.attArr // 附件
+        attachment: this.attArr, // 附件
+        appraisalRank: this.scoreData.appraisalRank,
+        appraisalNum:  this.scoreData.appraisalNum,
+        scoreRank: this.scoreData.scoreRank,
+        scoreRankNum:  this.scoreData.scoreRankNum,
+        requiredCourse:  this.scoreData.requiredCourse,
+        requiredCourseQualified:  this.scoreData.requiredCourseQualified
       };
       console.log(["requestData", requestData]);
       this.insertScholarshipApply(requestData).then(response => {

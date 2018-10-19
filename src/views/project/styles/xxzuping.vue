@@ -137,6 +137,7 @@ export default {
     }),
     subForm() {
       this.$store.dispatch("subTaskItemQuestionTable",{"scopeId":this.scopeId,"itemId":this.itemId});
+       this.$router.go(-1)
     }
   }
 };

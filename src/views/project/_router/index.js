@@ -585,6 +585,13 @@ export const projectRouter = {
       title: "贫困建档结果",
       component: () => import("../zizhu/pkjd.vue"),
       meta: { hidden: true, title: "贫困建档结果" }
-    }
+    },
+    {
+      path: "checkParticipant",
+      name: "checkParticipant",
+      title: "检查参与者规则",
+      component: () => import("../checkParticipant.vue"),
+      meta: { hidden: true, title: "检查参与者规则" }
+    },
   ]
 }; 

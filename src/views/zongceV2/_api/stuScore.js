@@ -71,7 +71,17 @@ const getScoreTemplateUrl = data =>
     method: "post",
     data: data
   });
+
+
+const getSubjectTypeDict = data =>
+  request({
+    url: "/stuScore/getSubjectTypeDict.do",
+    method: "post",
+    data: data
+  });
+
 export default {
+  getSubjectTypeDict,
   getScoreTemplateUrl,
   queryStuScoreForStaff,
   queryStuScoreForStu,

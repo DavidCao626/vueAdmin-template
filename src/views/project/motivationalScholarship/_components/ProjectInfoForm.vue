@@ -15,12 +15,12 @@
               <i slot="suffix" class="el-icon-edit el-input__icon"></i>
             </el-input>
           </el-form-item>
-          <el-form-item label="测评项目">
+          <!-- <el-form-item label="测评项目">
             <el-select v-model="form.expand.appraiseProjectCode" placeholder="请选择" no-data-text="无数据,请尝试刷新页面">
               <el-option v-for="item in appraiseProjectList" :key="item.code" :label="item.name" :value="item.code">
               </el-option>
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="学年">
             <elx-select v-model="form.expand.schoolYearId" placeholder="请选择">
               <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :value="item.id">
@@ -283,7 +283,7 @@ export default {
         attrDetailBean: null,
         expand: {
           id: 0,
-          appraiseProjectCode: t.expand.appraiseProjectCode, //测评项目名称
+          appraiseProjectCode: "000", //测评项目名称
           name: t.expand.name, //名称
           userCode: t.expand.userCode, //编码
           schoolYearId: t.expand.schoolYearId, //学年

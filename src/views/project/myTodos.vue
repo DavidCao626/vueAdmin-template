@@ -117,7 +117,7 @@ export default {
       } else {
         this.$router.push({
           path: row.action,
-          quert: {
+          query: {
             itemId: row.item_id,
             scopeId: row.scope_id
           }

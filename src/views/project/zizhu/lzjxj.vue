@@ -40,6 +40,8 @@
                <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{ prop: 'stuNo',prop: 'stuName',prop: 'orgName'}">
             <el-table-column prop="projectName" label="项目名称">
             </el-table-column>
+             <el-table-column prop="schoolYearName" label="所属学年">
+            </el-table-column>
             <el-table-column prop="stuNo" label="学号">
             </el-table-column>
             <el-table-column prop="studentName" label="学生姓名">
@@ -124,7 +126,7 @@ export default {
       this.getCurrentOrgListAndOwner({}).then(response => {
         this.orgList = response.resBody;
         this.formInline.orgCode.push(this.orgList[0]["orgCode"]);
-        this.getData(this.orgList[0]["orgCode"]); //获取完组织以后 自动加载table daata区域数据
+       // this.getData(this.orgList[0]["orgCode"]); //获取完组织以后 自动加载table daata区域数据
       });
     },
     getSchoolYearDict() {

@@ -142,6 +142,7 @@ export default {
         scopeId: this.scopeId,
         itemId: this.itemId
       });
+       this.$router.go(-1)
     }
   }
 };

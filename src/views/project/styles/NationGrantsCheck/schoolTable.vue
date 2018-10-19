@@ -32,13 +32,13 @@
                 <span>{{ props.row.cid }}</span>
               </el-form-item>
               <br/>
-              <el-form-item label="证件类型:">
+              <!-- <el-form-item label="证件类型:">
                 <span>{{ props.row.zjlx }}</span>
               </el-form-item>
               <el-form-item label="证件号码">
                 <span>{{ props.row.zjhm }}</span>
               </el-form-item>
-              <br/>
+              <br/> -->
               <el-form-item label="申请原因">
                 <span>{{ props.row.sqyy }}</span>
               </el-form-item>
@@ -60,11 +60,11 @@
         </el-table-column>
         <el-table-column label="申请等级" width="80" prop="sqdj">
         </el-table-column>
-        <el-table-column label="证件类型" prop="zjlx">
+        <!-- <el-table-column label="证件类型" prop="zjlx">
         </el-table-column>
         </el-table-column>
         <el-table-column label="证件号码" width="80" prop="zjhm">
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column label="申请原因" prop="sqyy"></el-table-column>
         <el-table-column label="学校评议" prop="xxpy"></el-table-column>
         <el-table-column label="学院推荐" prop="xytj"></el-table-column>

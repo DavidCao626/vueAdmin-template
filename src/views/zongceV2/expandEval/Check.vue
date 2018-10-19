@@ -48,7 +48,7 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="2、选择学生扩展素质评价数据：">
-                            <br/>
+                            <br />
                             <el-upload class="upload-demo" ref="upload" :action="uploadStuPunishurl" :limit='1' :onSuccess="onUploadSuccess2">
                                 <el-button size="small" type="primary" plain>
                                     <i class="el-icon-upload"></i> 点击上传文件</el-button>
@@ -69,7 +69,7 @@
                             <el-button size="mini" type="primary" @click="delAll" :disabled="this.multipleSelection.length==0">
                                 <i class="el-icon-circle-check"></i> 批量审核
                             </el-button>
-                        
+
                         </el-button-group>
                     </template>
                     <template slot="headerLeft">
@@ -117,7 +117,10 @@
                         </el-table-column>
                         <el-table-column prop="checkState" sortable label="审核状态" :formatter="ExpandCheckStateDict">
                             <template slot-scope="scope">
-                                <el-tag :type="scope.row.checkState == 'NO' ? 'danger' : 'success'" disable-transitions>{{scope.row.checkState== 'NO'?'未通过':'已通过'}}</el-tag>
+
+                                <el-tag v-if="scope.row.checkState == 'NO'" type="danger" disable-transitions>未通过</el-tag>
+                                <el-tag v-if="scope.row.checkState == 'OK'" type="success" disable-transitions>通过</el-tag>
+                                <el-tag v-if="scope.row.checkState == 'CI'" type="warning" disable-transitions>审核中</el-tag>
                             </template>
                         </el-table-column>
                         <el-table-column prop="title" label="事件标题" width="200">

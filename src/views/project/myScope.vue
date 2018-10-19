@@ -35,8 +35,8 @@
             </el-table-column>
             <el-table-column prop="scope.realStartTime" label="开始时间" min-width="150">
             </el-table-column>
-             <el-table-column prop="isMine" :formatter="isMineFormatter" label="来源" min-width="80">
-      </el-table-column>
+             <!-- <el-table-column prop="isMine" :formatter="isMineFormatter" label="来源" min-width="80">
+      </el-table-column> -->
             <el-table-column prop="scope.scopeState" :formatter="scopeStateFormatter" label="环节状态" min-width="80">
             </el-table-column>
           </template>

@@ -57,7 +57,15 @@ const getScoreTemplateUrl = ({ commit, state }, params) =>
     });
   });
 
+const getSubjectTypeDict = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.getSubjectTypeDict(params).then(response => {
+      console.log(["getSubjectTypeDict", response]);
+      resolve(response);
+    });
+  });
 export default {
+  getSubjectTypeDict,
   getScoreTemplateUrl,
   queryStuScoreForStaff,
   queryStuScoreForStu,

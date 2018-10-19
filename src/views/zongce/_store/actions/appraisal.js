@@ -97,7 +97,40 @@ const queryAppraisalRankForCollegeAndClass = ({ commit, state }, params) => new 
         resolve(response)
     })
 })
+
+const deleteAppraisalProjectSchool = ({ commit, state }, params) => new Promise(resolve => {
+    api.deleteAppraisalProjectSchool(params).then(response => {
+        console.log(["deleteAppraisalProjectSchool", response])
+        resolve(response)
+    })
+})
+const queryProjectListSchool = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryProjectListSchool(params).then(response => {
+        console.log(["queryProjectListSchool", response])
+        resolve(response)
+    })
+})
+const processSchoolAppraisalRecord = ({ commit, state }, params) => new Promise(resolve => {
+    api.processSchoolAppraisalRecord(params).then(response => {
+        console.log(["processSchoolAppraisalRecord", response])
+        resolve(response)
+    })
+})
+
+const querySchoolAppraisalRankForCollegeAndClass = ({ commit, state }, params) => new Promise(resolve => {
+    api.querySchoolAppraisalRankForCollegeAndClass(params).then(response => {
+        console.log(["querySchoolAppraisalRankForCollegeAndClass", response])
+        resolve(response)
+    })
+})
+
+
 export default {
+    querySchoolAppraisalRankForCollegeAndClass,
+    deleteAppraisalProjectSchool,
+    queryProjectListSchool,
+    processSchoolAppraisalRecord,
+
     queryAppraisalRankForCollegeAndClass,
     deleteAppraisalProject,
     queryAppraisalRankList,

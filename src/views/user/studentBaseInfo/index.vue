@@ -77,6 +77,7 @@
               </el-button>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item @click.native="resignation(scope.row)">任职</el-dropdown-item>
+                 <el-dropdown-item @click.native="edit(scope.row)">详情</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </template>

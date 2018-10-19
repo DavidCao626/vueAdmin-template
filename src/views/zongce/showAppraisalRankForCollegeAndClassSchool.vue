@@ -115,10 +115,8 @@ export default {
       querySchoolYear: store.namespace + "/querySchoolYear",
       getDictByDictNames: store.namespace + "/getDictByDictNames",
       getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
-      queryAppraisalRankForStaff:
-        store.namespace + "/queryAppraisalRankForStaff",
       queryAppraisalRankForCollegeAndClass:
-        store.namespace + "/queryAppraisalRankForCollegeAndClass"
+        store.namespace + "/querySchoolAppraisalRankForCollegeAndClass"
     }),
     getData() {
       if (this.formInline.schoolYearId == null) {

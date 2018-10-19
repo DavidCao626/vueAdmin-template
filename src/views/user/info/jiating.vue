@@ -1,13 +1,6 @@
 <template>
     <div style="margin: 10px;">
         <el-form ref="baseform" label-position="left" size="mini" :inline="true" :model="baseform">
-            <!-- <el-row>
-                <el-col :span="8">
-                    <el-form-item label="学号:">
-                        <el-input v-model="baseform.nid"></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row> -->
             <el-row :gutter="0">
                 <el-col :span="8">
                     <el-form-item label="是否农村五保户:">
@@ -27,11 +20,11 @@
 
                 <el-col :span="8">
                     <el-form-item label="是否孤儿:">
-                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isGE" @change="onGEChange" active-color="#13ce66" inactive-color="#ccc">
+                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isGE"  active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
                     </el-form-item>
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="8" v-if="baseform.isGE == 'N'">
                     <el-form-item label="是否单亲家庭子女:">
                         <el-switch active-value="Y" inactive-value="N" v-model="baseform.isDQJTZN" ref="isDQJTZN" active-color="#13ce66" inactive-color="#ccc">
                         </el-switch>
@@ -68,9 +61,11 @@
                         </el-switch>
                     </el-form-item>
                 </el-col>
-                <el-col :span="8" v-if="baseform.isBRSFCJ">
+                <el-col :span="8" v-if="baseform.isBRSFCJ == 'Y'">
                     <el-form-item label="残疾类别:">
-                        <elx-select @change="changeCjlb" :value="baseform.cjlb" :options="checkDisableType"></elx-select>
+                        <el-select v-model="baseform.cjlb" placeholder="">
+                          <el-option v-for="item in checkDisableType" :key="item.value" :value="item.value" :label="item.label"></el-option>
+                        </el-select>
 
                     </el-form-item>
                 </el-col>
@@ -106,8 +101,9 @@
 
                 <el-col :span="9">
                     <el-form-item label="家庭主要收入来源:">
-                        <elx-select @change="changeJTZYSRLY" :value="baseform.JTZYSRLY" :options="checkFamilyIncomeType"></elx-select>
-
+                        <el-select v-model="baseform.JTZYSRLY" placeholder="家庭主要收入来源">
+                            <el-option v-for="item in checkFamilyIncomeType" :key="item.value" :value="item.value" :label="item.label"></el-option>
+                        </el-select>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -154,7 +150,6 @@
                 </el-col>
             </el-row>
             <el-row>
-
                 <el-col :span="8">
                     <el-form-item label="家庭人口数:">
                         <el-input v-model="baseform.JTRKS" type="Number" ::maxlength="2"></el-input>
@@ -172,7 +167,6 @@
                 </el-col>
             </el-row>
             <el-row>
-
                 <el-col :span="8">
                     <el-form-item label="赡养人口数:">
                         <el-input v-model="baseform.SYRKS"></el-input>
@@ -185,7 +179,6 @@
                 </el-col>
             </el-row>
             <el-row>
-
                 <el-col :span="8">
                     <el-form-item label="是否农村低保户:">
                         <el-switch active-value="Y" inactive-value="N" v-model="baseform.isNCDBH" active-color="#13ce66" inactive-color="#ccc">
@@ -204,41 +197,6 @@
                     </el-form-item>
                 </el-col>
             </el-row>
-            <!-- <el-row>
-
-                <el-col :span="8">
-                    <el-form-item label="认定困难级别名称:">
-                        <elx-select @change="changeDiffName" :value="baseform.checkDiffName" :options="checkDiffNames"></elx-select>
-
-                    </el-form-item>
-                </el-col>
-                <el-col :span="8">
-                    <el-form-item label="认定时间:">
-                        <el-input v-model="baseform.RDSJ"></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-col :span="24">
-                <el-form-item label="认定原因:">
-                    <el-input v-model="baseform.RDYY" :maxlength="30" style="width:300%"></el-input>
-                </el-form-item>
-            </el-col>
-            <el-row>
-
-                <el-col :span="24">
-                    <el-form-item label="班级认定意见:">
-                        <el-input v-model="baseform.BJTDYJ" :maxlength="33" style="width:300%"></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row>
-            <el-row>
-
-                <el-col :span="24">
-                    <el-form-item label="年级认定意见:">
-                        <el-input v-model="baseform.NJRDYJ" :maxlength="33" style="width:300%"></el-input>
-                    </el-form-item>
-                </el-col>
-            </el-row> -->
             <el-row style="margin: 0 auto;width: 150px;">
                 <el-form-item>
                     <el-button type="primary" size="mini" round @click="onSubmit">保存家庭信息</el-button>
@@ -255,9 +213,9 @@ import { mapGetters, mapActions } from "vuex";
 import store from "../_store/index.js";
 import moment from "moment";
 export default {
-     watch: {
+  watch: {
     stuNo(newVal, oldVal) {
-     this.getDict();
+      this.getDict();
     }
   },
   props: {
@@ -267,7 +225,6 @@ export default {
     }
   },
   mounted() {
-   
     this.getDict();
   },
   data() {
@@ -320,8 +277,8 @@ export default {
       updateStuEcoInfo: store.namespace + "/updateStuEcoInfo"
     }),
     getData() {
-                var requestData={};
-      if(this.stuNo!=0){
+      var requestData = {};
+      if (this.stuNo != 0) {
         requestData.stuNo = this.stuNo;
       }
       this.getStuEconmyInfo(requestData).then(response => {
@@ -380,7 +337,7 @@ export default {
           this.checkDisableType.push(t1);
         });
       });
-       this.getData();
+      this.getData();
     },
 
     onSubmit() {
@@ -406,7 +363,7 @@ export default {
         emergencyDesc: this.baseform.JTSFZSYTFYWSJ_text,
         liabilitiesMoney: this.baseform.JTQZJE,
         liabilitiesReason: this.baseform.JTQZYY,
-        familyPerson: this.baseform.JTRKS,
+        familyPersonNum: this.baseform.JTRKS,
         labourPersonNum: this.baseform.LDRKS,
         unemploymentPersonNum: this.baseform.JTCYSYS,
         supportPersonNum: this.baseform.SYRKS,
@@ -423,12 +380,12 @@ export default {
       this.baseform.cjlb = value;
     },
     onGEChange() {
-      if (this.baseform.isGE) {
-        this.baseform.isDQJTZN = false;
-        this.$refs["isDQJTZN"].disabled = true;
-      } else {
-        this.$refs["isDQJTZN"].disabled = false;
-      }
+      //   if (this.baseform.isGE) {
+      //     this.baseform.isDQJTZN = false;
+      //     this.$refs["isDQJTZN"].disabled = true;
+      //   } else {
+      //     this.$refs["isDQJTZN"].disabled = false;
+      //   }
     },
     changeJTZYSRLY() {
       this.baseform.JTZYSRLY = value;

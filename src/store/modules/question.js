@@ -374,7 +374,7 @@ const actions = {
     });
   },
   subTaskItemQuestionTable(commit, data) { 
-    
+     
     var questionResult = this.getters["getQssToAjax1"];
     data["result"] = questionResult;
     //data['content_type'] = 'application/json'

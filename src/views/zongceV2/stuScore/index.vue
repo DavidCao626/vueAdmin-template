@@ -109,6 +109,10 @@
                         </el-table-column>
                         <el-table-column prop="score" sortable label="分值">
                         </el-table-column>
+                        <el-table-column prop="type" :formatter="typeFormatter" sortable label="类型">
+                        </el-table-column>
+
+
                         <el-table-column prop="school_year_name" label="所属学年">
                         </el-table-column>
                     </el-table>
@@ -154,18 +158,29 @@ export default {
       },
       orgList: [],
       schoolYearDict: [],
+      subjectDict:[],
       urldo: "",
       action: api.uploadStuScore
     };
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
+        vm.getScoreSubjectTypeDict();
       vm.getOrgList();
       vm.geturldo();
       vm.getSchoolYearDict();
     });
   },
   methods: {
+      typeFormatter(r,c,v,index){
+          var arr = this.subjectDict;
+          for(var i = 0; i < arr.length;i++){
+              if(arr[i].value = v){
+                  return arr[i].label;
+              }
+          }
+          return v;
+      },
     geturldo() {
       this.getApi(this.getScoreTemplateUrl, {}, (r, v) => {
         v.urldo = r.url;
@@ -183,6 +198,11 @@ export default {
         return this.$message.error("请筛选机构再查询");
       }
       this.getData();
+    },
+    getScoreSubjectTypeDict(){
+        this.getSubjectTypeDict({}).then(response=>{
+            this.subjectDict = response.resBody;
+        })
     },
     onSubmitUpload() {
       if (!this.importForm.schoolYearId || !this.importForm.urlPath) {
