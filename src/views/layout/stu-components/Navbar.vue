@@ -200,7 +200,10 @@ export default {
         this.$message.info("您已切换到当前职务");
         return;
       }
-      this.$store.dispatch("SwitchDuty", item);
+      this.$router.push({
+        path:"/"
+      })
+      this.$store.dispatch("SwitchDuty", item); 
     },
     ooDefault(i) {
       i.isDefault = true;

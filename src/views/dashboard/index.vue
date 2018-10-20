@@ -211,7 +211,7 @@ export default {
           vm.noticeDate.push(temp);
         });
       });
-      vm.queryUserPending().then(response => {
+      vm.queryUserPending({state:"N"}).then(response => {
         vm.tableData = response.resBody.baseData;
       });
     });

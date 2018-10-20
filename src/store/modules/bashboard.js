@@ -31,7 +31,7 @@ const bashboard = {
         })
       }),
     queryUserPending : ({ commit, state }) => new Promise(resolve => {
-      api.queryUserPending({'currentPage':1,'pageSize':5 ,'isActive':'Y'}).then(response => {
+      api.queryUserPending({ 'currentPage': 1, 'pageSize': 3, 'isActive': 'Y', 'state': "N"}).then(response => {
         console.log(["queryUserPendingAction", response])
         resolve(response)
       })

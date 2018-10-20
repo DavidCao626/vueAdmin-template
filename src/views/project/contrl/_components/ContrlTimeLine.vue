@@ -17,6 +17,10 @@
             </td>
         </tr>
         <template v-for="(item,index) in items">
+
+
+
+
             <tr v-if="item.item.state=='F'" :key="index">
                 <td class="timeline-box">
                     <span class="timeline-serial">
@@ -41,6 +45,37 @@
                         </div>
                         <div class="tag-flex status-mark" style="margin-left:20px;">
                             <!-- 已完成图标 -->
+                            <svg-icon icon-class="status-ok" width="65px" height="65px" />
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+
+      <tr v-else-if="item.item.state=='T'" :key="index">
+                <td class="timeline-box">
+                    <span class="timeline-serial">
+                        <i class="el-icon-check"></i>
+                    </span>
+                    <div class="timeline-line" v-if="item.item.position!=='complete'"></div>
+                </td>
+                <td>
+                    <div class="tag tag-flex">
+                        <div class="tag-flex tag-flex-direction__column">
+                            <div class=" tag-flex tag-flex-justify__content">
+                                <span>
+                                    <el-tooltip class="item" effect="dark" :content="item.item.stepName" placement="right">
+                                        <span class="tag-title">{{item.item.stepName}}
+                                            <small class="el-icon-question"></small>
+                                        </span>
+                                    </el-tooltip>
+                                </span>
+                                <span v-if="item.item.itemType=='automatic'">计划{{transHourToDayAndHour(item.item.planTimeLong)}}天</span>
+                            </div>
+                            <div class="tag-description">实际用时（{{transHourToDayAndHour(item.usedHourLong)}}）</div>
+                        </div>
+                        <div class="tag-flex status-mark" style="margin-left:20px;">
+                            <!-- 已终止图标 -->
                             <svg-icon icon-class="status-ok" width="65px" height="65px" />
                         </div>
                     </div>

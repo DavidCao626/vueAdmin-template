@@ -36,8 +36,8 @@
         </el-form>
       </template>
       <el-table :data="data" style="width: 100%" border size="mini">
-        <el-table-column prop="user_code" label="编码">
-        </el-table-column>
+        <!-- <el-table-column prop="user_code" label="编码">
+        </el-table-column> -->
         <el-table-column prop="name" label="名称">
         </el-table-column>
         <el-table-column prop="school_year_name" label="学年">
