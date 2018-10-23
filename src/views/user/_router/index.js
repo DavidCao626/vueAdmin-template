@@ -66,6 +66,7 @@ export const userRouter = {
       name: "authManager",
       component: () => import("../authManager")
     },
-    { path: "menu", name: "menu", component: () => import("../menus") }
+    { path: "menu", name: "menu", component: () => import("../menus") },
+    { path: "classManager", name: "classManager", component: () => import("../classManager") }
   ]
 };
