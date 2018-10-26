@@ -5,8 +5,9 @@ const api_path = "/stuScore";
 
 
 //学生成绩上传地址
-const uploadStuScore = process.env.BASE_API+"/public/uploadStuScore.do";
+const uploadStuScore = process.env.BASE_API + "/public/uploadStuScore.do";
 
+const uploadStuScoreRank = process.env.BASE_API + "/public/uploadScoreRank.do";
 //老师查学生成绩
 
 const queryStuScoreForStaff = data =>
@@ -80,7 +81,23 @@ const getSubjectTypeDict = data =>
     data: data
   });
 
+const importStuScoreRank = data =>
+  request({
+    url: "/stuScore/importStuScoreRank.do",
+    method: "post",
+    data: data
+  });
+
+const getScoreRankTemplateUrl = data =>
+  request({
+    url: "/stuScore/getScoreRankTemplateUrl.do",
+    method: "post",
+    data: data
+  });
+
 export default {
+  importStuScoreRank,
+  getScoreRankTemplateUrl,
   getSubjectTypeDict,
   getScoreTemplateUrl,
   queryStuScoreForStaff,
@@ -92,4 +109,5 @@ export default {
   getCurrentOrgListAndOwner,
   querySchoolYearDict,
   uploadStuScore,
+  uploadStuScoreRank
 };

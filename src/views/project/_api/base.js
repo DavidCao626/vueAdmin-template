@@ -289,8 +289,14 @@ const stopScope = data =>
         data: data
     })
 
-
+const queryStuTypeByEducationLevelCode = data =>
+    request({
+        url: "/dOrg/queryStuTypeByEducationLevelCode.do",
+        method: 'post',
+        data: data
+    })
 export default {
+    queryStuTypeByEducationLevelCode,
     stopScope,
     queryParticipantRules,
 checkParticipantRules,

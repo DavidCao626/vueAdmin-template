@@ -92,7 +92,56 @@ const updateStuUniverInfo = ({ commit, state }, params) => new Promise(resolve =
         resolve(response)
     })
 })
+const queryProvince = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryProvince(params).then(response => {
+        console.log(["queryProvince", response])
+        resolve(response)
+    })
+})
+const queryCityByProvinceCode = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryCityByProvinceCode(params).then(response => {
+        console.log(["queryCityByProvinceCode", response])
+        resolve(response)
+    })
+})
+const queryAreaByCityCode = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryAreaByCityCode(params).then(response => {
+        console.log(["queryAreaByCityCode", response])
+        resolve(response)
+    })
+})
+const queryStreetByAreaCode = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryStreetByAreaCode(params).then(response => {
+        console.log(["queryStreetByAreaCode", response])
+        resolve(response)
+    })
+})
+const queryVillageByStreetCode = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryVillageByStreetCode(params).then(response => {
+        console.log(["queryVillageByStreetCode", response])
+        resolve(response)
+    })
+})
+const queryCollegeClassByCollegeSocailCode = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryCollegeClassByCollegeSocailCode(params).then(response => {
+        console.log(["queryCollegeClassByCollegeSocailCode", response])
+        resolve(response)
+    })
+})
+const importStudentApi = ({ commit, state }, params) => new Promise(resolve => {
+    api.importStudentApi(params).then(response => {
+        console.log(["importStudentApi", response])
+        resolve(response)
+    })
+})
 export default {
+    importStudentApi,
+queryCollegeClassByCollegeSocailCode,
+    queryCityByProvinceCode,
+    queryAreaByCityCode,
+    queryStreetByAreaCode,
+    queryVillageByStreetCode,
+    queryProvince,
     getStuEconmyInfo,
     getStuPerInfo,
     getStuUniverInfo,

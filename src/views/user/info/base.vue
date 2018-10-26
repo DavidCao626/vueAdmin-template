@@ -1,6 +1,6 @@
 <template>
   <div style="margin: 10px;">
-    <el-form ref="baseform" label-position="left" size="mini" :inline="true" :model="baseform" label-width="100px">
+    <el-form ref="baseform" label-position="left" size="mini" disabled :inline="true" :model="baseform" label-width="100px">
       <el-row :gutter="0">
         <el-col :span="8">
           <el-form-item label="学生姓名:">
@@ -32,7 +32,11 @@
             <el-input v-model="baseform.cid"></el-input>
           </el-form-item>
         </el-col>
-
+ <el-col :span="8">
+          <el-form-item label="民族:">
+            <elx-select @change="change" v-model="baseform.minzu" :options="minzulist"></elx-select>
+          </el-form-item>
+        </el-col>
       </el-row>
       <el-row :gutter="0">
         <el-col :span="8">
@@ -53,20 +57,19 @@
 
       </el-row>
       <el-row>
-        <el-col :span="8">
+        <!-- <el-col :span="8">
           <el-form-item label="政治面貌:">
             <elx-select @change="changeCheckZZMM" v-model="baseform.checkZZMM" :options="checkZZMMs"></elx-select>
-
           </el-form-item>
-        </el-col>
-        <el-col :span="8">
+        </el-col> -->
+        <!-- <el-col :span="8">
           <el-form-item label="民族:">
             <elx-select @change="change" v-model="baseform.minzu" :options="minzulist"></elx-select>
           </el-form-item>
-        </el-col>
+        </el-col> -->
       </el-row>
 
-      <el-row>
+      <!-- <el-row>
         <el-col :span="8">
           <el-form-item label="是否农村学生:">
             <el-switch active-value="Y" inactive-value="N" v-model="baseform.isNongCun" active-color="#13ce66" inactive-color="#ccc">
@@ -74,13 +77,13 @@
 
           </el-form-item>
         </el-col>
-      </el-row>
+      </el-row> -->
 
-      <el-row style="margin: 0 auto;width: 150px;">
+      <!-- <el-row style="margin: 0 auto;width: 150px;">
         <el-form-item>
           <el-button type="primary" ref="btn" size="mini" round @click="onSubmit($event)">保存个人资料</el-button>
         </el-form-item>
-      </el-row>
+      </el-row> -->
     </el-form>
   </div>
 </template>

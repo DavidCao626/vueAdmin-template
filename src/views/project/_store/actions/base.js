@@ -305,7 +305,14 @@ const stopScope = ({ commit, state }, data) =>
       resolve(response)
     })
   })
+const queryStuTypeByEducationLevelCode = ({ commit, state }, data) =>
+  new Promise(resolve => {
+    api.queryStuTypeByEducationLevelCode(data).then(response => {
+      resolve(response)
+    })
+  })
 export default {
+queryStuTypeByEducationLevelCode,
   stopScope,
   queryParticipantRules,
   checkParticipantRules,

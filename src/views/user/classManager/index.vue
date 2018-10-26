@@ -13,7 +13,6 @@
           </el-tooltip>
         </el-button-group>
       </template>
-
       <template slot="headerLeft">
         <el-form :inline="true" :model="formInline" label-width="80px" size="mini" class="demo-form-inline">
           <el-form-item label="班级名称">
@@ -74,6 +73,7 @@
               </el-button>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item @click.native="updateBT(scope.row)">更新</el-dropdown-item>
+                <el-dropdown-item @click.native="allotStudent(scope.row)">分配学生</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </template>
@@ -147,7 +147,6 @@
             <el-input v-model="form.socialCode"></el-input>
           </el-form-item>
         </el-card>
-
         <el-card shadow="hover">
           <el-form-item label="创建学年:">
             <el-select v-model="form.expandData.schoolYearId">
@@ -187,6 +186,53 @@
       </span>
     </el-dialog>
 
+    <el-dialog title="请选择学生" :visible.sync="switchStudentDV" top="3vh" width="70%">
+      <elx-table-layout>
+        <template slot="headerLeft">
+          <el-form :inline="true" :model="studentSearchForm" size="mini" class="demo-form-inline">
+            <el-form-item label="学号">
+              <el-input v-model="studentSearchForm.stuNo" placeholder="学号"></el-input>
+            </el-form-item>
+            <el-form-item label="姓名">
+              <el-input v-model="studentSearchForm.name" placeholder="姓名"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="searchButton">
+                <i class="el-icon-search"></i> 查询</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+        <div style="overflow-y:scroll;height:53vh;padding:0 15px">
+          <el-table :data="studentData" v-loading="switchLoading" style="width: 100%" border size="mini" @selection-change="handleSelectionChange">
+            <el-table-column type="selection" width="55">
+            </el-table-column>
+            <el-table-column prop="stu_no" label="学号">
+            </el-table-column>
+            <el-table-column prop="name" label="姓名">
+            </el-table-column>
+            <el-table-column prop="study_degree_name" label="攻读学历">
+            </el-table-column>
+            <el-table-column prop="stu_type_name" label="学生类型">
+            </el-table-column>
+            <el-table-column prop="department_name" label="系">
+            </el-table-column>
+            <el-table-column prop="major_social_name" label="专业">
+            </el-table-column>
+            <el-table-column prop="start_school_year_name" label="入学学年">
+            </el-table-column>
+          </el-table>
+        </div>
+        <template slot="footer">
+          <el-pagination @size-change="handleSizeChange2" @current-change="handleCurrentChange2" :current-page="pageInfo2.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo2.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo2.totalRecord">
+          </el-pagination>
+        </template>
+      </elx-table-layout>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="switchStudentDV = false">取 消</el-button>
+        <el-button @click="submitAllot">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -203,9 +249,22 @@ export default {
   mixins: [menus],
   data() {
     return {
+      switchLoading: false,
+      switchStudentDV: false,
       updateClassDV: false,
       addClassDV: false,
+      multipleSelection: [],
+      studentSearchForm: {
+        stuNo: "",
+        name: "",
+        classOrgCode: ""
+      },
       pageInfo: {
+        currentPage: 1,
+        pageSize: 10,
+        totalRecord: 0
+      },
+      pageInfo2: {
         currentPage: 1,
         pageSize: 10,
         totalRecord: 0
@@ -263,11 +322,41 @@ export default {
       majorListALL: [],
       educationLevelListALL: [],
       memberTypeALL: [],
-      data: []
+      data: [],
+      studentData: []
     };
   },
   watch: {},
   methods: {
+    allotStudent(row) {
+      this.studentSearchForm.classOrgCode = row.orgCode;
+      this.getData2();
+      this.switchStudentDV = true;
+    },
+    submitAllot() {
+      var stuNos = [];
+      var sourceArr = this.multipleSelection;
+      if (sourceArr.length == 0) {
+        this.$message.error("至少选择一条数据");
+        return;
+      }
+      this.switchLoading = true;
+      sourceArr.forEach(it => {
+        stuNos.push(it.stu_no);
+      });
+      this.allotStudentToClass({
+        stuNos: stuNos,
+        orgCode: this.studentSearchForm.classOrgCode
+      })
+        .then(response => {
+          this.switchLoading = false;
+          this.switchStudentDV = false;
+          this.$message.success("分配成功");
+        })
+        .catch(e => {
+          this.switchStudentDV = false;
+        });
+    },
     updateBT(row) {
       this.getMemberType(row.educationLevelCode);
       this.getMajorList(row.departmentCode);
@@ -357,10 +446,8 @@ export default {
       });
     },
     getMemberType(value) {
-
       this.formAdd.expandData.memberType = null;
       this.form.expandData.memberType = null;
-      
       this.queryStuTypeByEducationLevelCode({
         educationLevelCode: value
       }).then(response => {
@@ -368,10 +455,8 @@ export default {
       });
     },
     getMajorList(value) {
-
       this.formAdd.expandData.majorCode = null;
       this.form.expandData.majorCode = null;
-
       this.queryMajorByDepartmentCode({
         departmentCode: value
       }).then(response => {
@@ -396,7 +481,6 @@ export default {
         this.majorListALL.unshift({ code: "0", name: "全部" });
       });
     },
-
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageInfo.pageSize = val;
@@ -407,6 +491,19 @@ export default {
       this.pageInfo.currentPage = val;
       this.getData();
     },
+    handleSizeChange2(val) {
+      console.log(`每页 ${val} 条`);
+      this.pageInfo2.pageSize = val;
+      this.getData2();
+    },
+    handleCurrentChange2(val) {
+      console.log(`当前页: ${val}`);
+      this.pageInfo2.currentPage = val;
+      this.getData2();
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
     ...mapActions({
       getDictByDictNames: store.namespace + "/getDictByDictNames",
       queryCollegeClass: store.namespace + "/queryCollegeClass",
@@ -415,8 +512,27 @@ export default {
         store.namespace + "/queryMajorByDepartmentCode",
       queryEducationLevel: store.namespace + "/queryEducationLevel",
       queryStuTypeByEducationLevelCode:
-        store.namespace + "/queryStuTypeByEducationLevelCode"
+        store.namespace + "/queryStuTypeByEducationLevelCode",
+      queryAllowAllotStudent: store.namespace + "/queryAllowAllotStudent",
+      allotStudentToClass: store.namespace + "/allotStudentToClass"
     }),
+    searchButton() {
+      this.pageInfo2.currentPage = 1;
+      this.getData2();
+    },
+    getData2() {
+      this.switchLoading = true;
+      var requestData = this.studentSearchForm;
+      this.queryAllowAllotStudent(requestData)
+        .then(response => {
+          this.studentData = response.resBody.baseData;
+          this.pageInfo2 = response.resBody.pageInfo;
+          this.switchLoading = false;
+        })
+        .catch(e => {
+          this.switchLoading = false;
+        });
+    },
     getData() {
       var requestData = {
         currentPage: this.pageInfo.currentPage,

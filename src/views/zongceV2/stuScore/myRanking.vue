@@ -41,6 +41,12 @@
                         </el-table-column>
                         <el-table-column prop="org_name" label="组织名称">
                         </el-table-column>
+                        <el-table-column prop="source" :formatter="sourceFormatter" label="来源">
+                        </el-table-column>
+                        <el-table-column prop="must_num" label="必修课数量">
+                        </el-table-column>
+                        <el-table-column prop="must_pass_num" label="必修课及格数">
+                        </el-table-column>
                     </el-table>
 
                     <template slot="footer">
@@ -76,6 +82,9 @@ export default {
     });
   },
   methods: {
+    sourceFormatter(r, c, v, index) {
+      return v == "C" ? "生成" : "导入";
+    },
     onSubmit() {
       this.getData();
     },

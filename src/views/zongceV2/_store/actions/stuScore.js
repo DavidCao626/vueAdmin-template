@@ -64,7 +64,27 @@ const getSubjectTypeDict = ({ commit, state }, params) =>
       resolve(response);
     });
   });
+
+const importStuScoreRank = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.importStuScoreRank(params).then(response => {
+      console.log(["importStuScoreRank", response]);
+      resolve(response);
+    });
+  });
+
+const getScoreRankTemplateUrl = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.getScoreRankTemplateUrl(params).then(response => {
+      console.log(["getScoreRankTemplateUrl", response]);
+      resolve(response);
+    });
+  });
+
+
 export default {
+  importStuScoreRank,
+getScoreRankTemplateUrl,
   getSubjectTypeDict,
   getScoreTemplateUrl,
   queryStuScoreForStaff,

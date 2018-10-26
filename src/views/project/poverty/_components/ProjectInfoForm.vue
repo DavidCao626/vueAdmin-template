@@ -24,7 +24,7 @@
           </el-form-item>
           <el-form-item label="学生类别">
             <el-checkbox-group v-model="form.expand.stuType" :min="1">
-              <el-checkbox v-for="item in stuTypeList" :label="item.dict_key" :key="item.dict_key">{{item.dict_desc}}</el-checkbox>
+              <el-checkbox v-for="item in stuTypeList" :label="item.code" :key="item.code">{{item.name}}</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
           <el-form-item label="年级">
@@ -152,6 +152,10 @@ export default {
         this.gradeList = response.resBody.grade;
         this.stuTypeList = response.resBody.study_degree_code;
       });
+      this.queryStuTypeByEducationLevelCode({}).then(response=>{
+         this.stuTypeList = response.resBody;
+      })
+
     },
     updateCategory() {
       this.currentCategoryId = this.form.expand.appraiseServiceType;
@@ -176,6 +180,7 @@ export default {
       });
     },
     ...mapActions({
+      queryStuTypeByEducationLevelCode:state.namespace + "/queryStuTypeByEducationLevelCode",
       queryServiceTypeList: state.namespace + "/queryServiceTypeList",
       insertOrUpdateProject: state.namespace + "/insertOrUpdateProject",
       insertOrUpdateAndNext: state.namespace + "/insertOrUpdateAndNext",

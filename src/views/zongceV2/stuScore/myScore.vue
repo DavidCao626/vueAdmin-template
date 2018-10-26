@@ -47,7 +47,10 @@
                         </el-table-column>
                         <el-table-column prop="school_year_name" label="所属学年">
                         </el-table-column>
-
+                        <el-table-column prop="type" :formatter="typeFormatter" sortable label="类型">
+                        </el-table-column>
+                        <el-table-column prop="pass" :formatter="passFormatter" sortable label="及格">
+                        </el-table-column>
                         <!-- <el-table-column type="expand" label="#" width="42">
                             <template slot-scope="props" style="background-color:#f7f8f9">
                                 <el-form label-position="left" inline class="demo-table-expand">
@@ -101,7 +104,7 @@ export default {
         urlPath: ""
       },
       orgProps: {
-         label: "orgName",
+        label: "orgName",
         value: "orgCode",
         children: "children"
       },
@@ -119,6 +122,18 @@ export default {
     });
   },
   methods: {
+    passFormatter(r, c, v, index) {
+      return v == "Y" ? "及格" : "不及格";
+    },
+    typeFormatter(r, c, v, index) {
+      var arr = this.subjectDict;
+      for (var i = 0; i < arr.length; i++) {
+        if ((arr[i].value = v)) {
+          return arr[i].label;
+        }
+      }
+      return v;
+    },
     onSubmit() {
       this.getData();
     },

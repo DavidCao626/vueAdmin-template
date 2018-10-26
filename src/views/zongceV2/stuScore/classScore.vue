@@ -11,8 +11,11 @@
                                 </el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="2、">
-                            <br/>
+                        <el-form-item label="2、选择组织"><br/>
+                            <el-cascader v-model="importForm.orgCode" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
+                        </el-form-item>
+                        <el-form-item label="3、">
+                            <br />
                             <el-upload class="upload-demo" ref="upload" :action="action" :limit='1' :onSuccess="onUploadSuccess">
                                 <el-button size="small" type="primary" plain>
                                     <i class="el-icon-upload"></i> 点击上传成绩文件</el-button>
@@ -30,11 +33,22 @@
 
                 <elx-table-layout>
                     <template slot="headerRight">
-                        <el-tooltip class="item" effect="dark" content="导入班级成绩" placement="bottom" v-if="importOpen">
-                            <el-button plain size="mini" @click="dialogVisible = true">
-                                <i class="el-icon-download"></i>
-                            </el-button>
-                        </el-tooltip>
+                        <el-button-group>
+                            <el-tooltip class="item" effect="dark" content="下载模版" placement="bottom">
+                                <el-button plain size="mini">
+                                    <a :href="urldo" target='_blank'>
+                                        <i class="el-icon-sold-out"></i>
+                                    </a>
+                                </el-button>
+                            </el-tooltip>
+
+                            <el-tooltip class="item" effect="dark" content="导入班级成绩" placement="bottom">
+                                <el-button plain size="mini" @click="dialogVisible = true">
+                                    <i class="el-icon-download"></i>
+                                </el-button>
+                            </el-tooltip>
+                        </el-button-group>
+
                     </template>
 
                     <template slot="headerLeft">
@@ -73,7 +87,6 @@
                         </el-table-column>
                         <el-table-column prop="rank" label="排名">
                         </el-table-column>
-
                         <el-table-column prop="stu_name" sortable label="学生姓名">
                         </el-table-column>
                         <el-table-column prop="stu_no" sortable label="学号">
@@ -83,6 +96,12 @@
                         <el-table-column prop="school_year_name" label="学年名称">
                         </el-table-column>
                         <el-table-column prop="org_name" label="组织名称">
+                        </el-table-column>
+                        <el-table-column prop="source" :formatter="sourceFormatter" label="来源">
+                        </el-table-column>
+                        <el-table-column prop="must_num" label="必修课数量">
+                        </el-table-column>
+                        <el-table-column prop="must_pass_num" label="必修课及格数">
                         </el-table-column>
                     </el-table>
 
@@ -106,6 +125,12 @@ export default {
   mixins: [elxTable, store],
   data() {
     return {
+      orgProps: {
+        label: "orgName",
+        value: "orgCode",
+        children: "children"
+      },
+      orgList: [],
       importOpen: false,
       formInline: {
         stuNo: "",
@@ -115,21 +140,40 @@ export default {
       importForm: {
         schoolYearId: "",
         schoolYearDict: [],
+        orgCode: [],
         urlPath: ""
       },
-      schoolYearDict: []
+      schoolYearDict: [],
+      urldo: "",
+      action: api.uploadStuScoreRank
     };
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.getSchoolYearDict();
       vm.getData();
+      vm.getOrgList();
+      vm.geturldo();
     });
   },
   methods: {
+    getOrgList() {
+      this.getCurrentOrgListAndOwner({}).then(response => {
+        this.orgList = response.resBody;
+        this.importForm.orgCode.push(this.orgList[0]["org_code"]);
+        this.getData(this.orgList[0]["org_code"]);
+      });
+    },
+    sourceFormatter(r, c, v, index) {
+      return v == "C" ? "生成" : "导入";
+    },
     onSubmitUpload() {
-      if (!this.importForm.schoolYearId || !this.importForm.urlPath) {
-        return this.$message.error("学年和文件字段必须都有值");
+      if (
+        !this.importForm.schoolYearId ||
+        !this.importForm.orgCode ||
+        !this.importForm.urlPath
+      ) {
+        return this.$message.error("组织、学年和文件字段必须都有值");
       }
       this.$confirm(
         "此操作将在后台执行导入任务, 稍后您可以凭借任务单号查看导入结果",
@@ -140,13 +184,15 @@ export default {
           type: "warning"
         }
       ).then(() => {
-        this.importStuScoreForClass({
+        this.importStuScoreRank({
           fileId: this.importForm.urlPath,
-          schoolYearId: this.importForm.schoolYearId
+          schoolYearId: this.importForm.schoolYearId,
+          orgCode: this.importForm.orgCode[this.importForm.orgCode.length - 1]
         }).then(response => {
           this.dialogVisible = false;
           this.$refs["upload"].clearFiles();
           this.importForm.schoolYearId = "";
+          this.importForm.orgCode = [];
           this.$notify({
             title: "后台任务提醒",
             message:
@@ -160,18 +206,25 @@ export default {
         });
       });
     },
-
     onUploadSuccess(response, file, fileList) {
       this.importForm.urlPath = response.body.resBody.fileId;
     },
     onProcessRank() {
-      this.getApi(this.processRank, {
-        schoolYearId: this.formInline.schoolYearId
-      },(r,vm)=>{
-          vm.$message.success("生成成功")
+      this.getApi(
+        this.processRank,
+        {
+          schoolYearId: this.formInline.schoolYearId
+        },
+        (r, vm) => {
+          vm.$message.success("生成成功");
           vm.getData();
+        }
+      );
+    },
+    geturldo() {
+      this.getApi(this.getScoreRankTemplateUrl, {}, (r, v) => {
+        v.urldo = r.url;
       });
-      
     },
     onSubmit() {
       this.getData();
@@ -179,7 +232,7 @@ export default {
     getSchoolYearDict() {
       this.querySchoolYearDict({}).then(response => {
         this.loading = false;
-        this.importForm.schoolYearDict = response.resBody;
+        this.importForm.schoolYearDict = JSON.parse(JSON.stringify(response.resBody));
         this.schoolYearDict = response.resBody;
         this.schoolYearDict.unshift({ id: 0, name: "全部" });
       });

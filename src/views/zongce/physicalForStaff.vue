@@ -52,6 +52,8 @@
                 </el-table-column>
                 <el-table-column prop="score" label="分数">
                 </el-table-column>
+                <el-table-column prop="grade" label="等级" :formatter="gradeFormatter">
+                </el-table-column>
                 <el-table-column prop="remark" label="备注">
                 </el-table-column>
                 <el-table-column label="操作" width="88" header-align="left" align="center">
@@ -112,6 +114,12 @@
                 <el-form-item label="成绩">
                     <el-input-number v-model="updateFormData.score" :precision="2" :step="1" :min="0" :max="100"></el-input-number>
                 </el-form-item>
+                <el-form-item label="等级">
+                    <el-select v-model="updateFormData.grade" placeholder="">
+                        <el-option v-for="item in physicalGradeList" :key="item.dict_key" :value="item.dict_key" :label="item.dict_desc"></el-option>
+                    </el-select>
+                </el-form-item>
+
                 <el-form-item label="备注">
                     <el-input v-model="updateFormData.remark" placeholder=""></el-input>
                 </el-form-item>
@@ -135,6 +143,11 @@
                 </el-form-item>
                 <el-form-item label="成绩">
                     <el-input-number v-model="insertFormData.score" :precision="2" :step="1" :min="0" :max="100"></el-input-number>
+                </el-form-item>
+                <el-form-item label="等级">
+                    <el-select v-model="insertFormData.grade" placeholder="">
+                        <el-option v-for="item in physicalGradeList" :key="item.dict_key" :value="item.dict_key" :label="item.dict_desc"></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="备注">
                     <el-input v-model="insertFormData.remark" placeholder=""></el-input>
@@ -212,6 +225,7 @@ export default {
         id: null,
         stuName: "",
         stuNo: "",
+        grade: null,
         schoolYearName: "",
         score: 0.0,
         remark: ""
@@ -221,6 +235,7 @@ export default {
         stuNo: "",
         orgCode: "",
         schoolUearId: null,
+        grade: null,
         score: 0.0,
         remark: ""
       },
@@ -257,7 +272,8 @@ export default {
         pageSize: 10,
         totalRecord: 0
       },
-      schoolYearList2: [] //不包含全部
+      schoolYearList2: [], //不包含全部
+      physicalGradeList: []
     };
   },
   watch: {},
@@ -271,6 +287,7 @@ export default {
       this.updateFormData.score = row.score;
       this.updateFormData.remark = row.remark;
       this.updateFormData.id = row.id;
+      this.updateFormData.grade = row.grade;
     },
     updateSubmit() {
       //确认修改
@@ -278,7 +295,8 @@ export default {
       this.updatePhysical({
         id: this.updateFormData.id,
         remark: this.updateFormData.remark,
-        score: this.updateFormData.score
+        score: this.updateFormData.score,
+        grade: this.updateFormData.grade
       }).then(response => {
         this.$message.success("修改成功");
         this.getData();
@@ -296,7 +314,8 @@ export default {
         orgCode: this.insertFormData.orgCode,
         schoolYearId: this.insertFormData.schoolYearId,
         score: this.insertFormData.score,
-        remark: this.insertFormData.remark
+        remark: this.insertFormData.remark,
+        grade: this.insertFormData.grade
       };
       this.insertPhysical(requestData).then(response => {
         this.$message.success("增加成功");
@@ -441,6 +460,24 @@ export default {
       this.pageInfo.currentPage = 1;
       this.getData();
     },
+    gradeFormatter(r, c, v, index) {
+      var arr = this.physicalGradeList;
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i].dict_key == v) {
+          return arr[i].dict_desc;
+        }
+      }
+      return v;
+    },
+    getDict() {
+      var requestData = {
+        dicts: ["physical_grade"]
+      };
+      this.getDictByDictNames(requestData).then(response => {
+        var res = response.resBody;
+        this.physicalGradeList = res.physical_grade;
+      });
+    },
     getOrgList() {
       this.getCurrentOrgListAndOwner({}).then(response => {
         console.log(["orgList", response]);
@@ -454,6 +491,7 @@ export default {
       vm.getUrl();
       vm.getOrgList();
       vm.getSchoolYearList();
+      vm.getDict();
     });
   }
 };

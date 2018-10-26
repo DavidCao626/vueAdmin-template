@@ -97,9 +97,57 @@ const updateStuUniverInfo = data =>
         method: 'post',
         data: data
     })
+const queryProvince = data =>
+    ajax({
+        url: "/stuInfo/queryProvince.do",
+        method: 'post',
+        data: data
+    })
 
-
+const queryCityByProvinceCode = data =>
+    request({
+        url: "/stuInfo/queryCityByProvinceCode.do",
+        method: 'post',
+        data: data
+    })
+const queryAreaByCityCode = data =>
+    request({
+        url: "/stuInfo/queryAreaByCityCode.do",
+        method: 'post',
+        data: data
+    })
+const queryStreetByAreaCode = data =>
+    request({
+        url: "/stuInfo/queryStreetByAreaCode.do",
+        method: 'post',
+        data: data
+    })
+const queryVillageByStreetCode = data =>
+    request({
+        url: "/stuInfo/queryVillageByStreetCode.do",
+        method: 'post',
+        data: data
+    })
+const queryCollegeClassByCollegeSocailCode = data =>
+    request({
+        url: "/dOrg/queryCollegeClassByCollegeSocailCode.do",
+        method: 'post',
+        data: data
+    })
+const importStudentApi = data =>
+    request({
+        url: "/stuInfo/importStudent.do",
+        method: 'post',
+        data: data
+    })
 export default {
+    importStudentApi,
+    queryCollegeClassByCollegeSocailCode,
+    queryCityByProvinceCode,
+    queryAreaByCityCode,
+    queryStreetByAreaCode,
+    queryVillageByStreetCode,
+    queryProvince,
     getStuEconmyInfo,
     getStuUniverInfo,
     getStuPerInfo,

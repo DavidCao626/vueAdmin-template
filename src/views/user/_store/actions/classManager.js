@@ -35,8 +35,21 @@ const queryStuTypeByEducationLevelCode = ({ commit, state }, params) => new Prom
     })
 })
 
-
+const queryAllowAllotStudent = ({ commit, state }, params) => new Promise(resolve => {
+    api.queryAllowAllotStudent(params).then(response => {
+        console.log(["queryAllowAllotStudent", response])
+        resolve(response)
+    })
+})
+const allotStudentToClass = ({ commit, state }, params) => new Promise(resolve => {
+    api.allotStudentToClass(params).then(response => {
+        console.log(["allotStudentToClass", response])
+        resolve(response)
+    })
+})
 export default {
+    queryAllowAllotStudent,
+    allotStudentToClass,
     queryCollegeClass,
     queryDepartmentList,
     queryMajorByDepartmentCode,

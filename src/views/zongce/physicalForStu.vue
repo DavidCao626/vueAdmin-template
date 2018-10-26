@@ -29,6 +29,8 @@
                 </el-table-column>
                 <el-table-column prop="score" label="分数">
                 </el-table-column>
+                <el-table-column prop="grade" label="等级" :formatter="gradeFormatter">
+                </el-table-column>
                 <el-table-column prop="remark" label="备注">
                 </el-table-column>
             </el-table>
@@ -111,7 +113,8 @@ export default {
         pageSize: 10,
         totalRecord: 0
       },
-      schoolYearList2: [] //不包含全部
+       schoolYearList2: [], //不包含全部
+      physicalGradeList: []
     };
   },
   watch: {},
@@ -295,6 +298,24 @@ export default {
       this.pageInfo.currentPage = 1;
       this.getData();
     },
+     gradeFormatter(r,c,v,index){
+        var arr =  this.physicalGradeList;
+        for(var i = 0;i<arr.length;i++){
+            if(arr[i].dict_key == v){
+                return arr[i].dict_desc;
+            }
+        }
+        return v;
+    },
+     getDict() {
+      var requestData = {
+        dicts: ["physical_grade"]
+      };
+      this.getDictByDictNames(requestData).then(response => {
+        var res = response.resBody;
+        this.physicalGradeList = res.physical_grade;
+      });
+    },
     getOrgList() {
       this.getCurrentOrgListAndOwner({}).then(response => {
         console.log(["orgList", response]);
@@ -305,6 +326,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.getData();
+      vm.getDict();
       vm.getSchoolYearList();
     });
   }

@@ -61,7 +61,6 @@
                         <el-form label-position="left" :inline="true" :model="formInline" size="mini" label-width="80px" class="demo-form-inline">
                             <el-form-item label="筛选机构:">
                                 <el-cascader v-model="formInline.orgCode" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
-
                             </el-form-item>
                             <el-form-item label="学生学号:">
                                 <el-input v-model="formInline.stuNo" placeholder="全部"></el-input>
@@ -111,7 +110,8 @@
                         </el-table-column>
                         <el-table-column prop="type" :formatter="typeFormatter" sortable label="类型">
                         </el-table-column>
-
+                        <el-table-column prop="pass" :formatter="passFormatter" sortable label="及格">
+                        </el-table-column>
 
                         <el-table-column prop="school_year_name" label="所属学年">
                         </el-table-column>
@@ -172,6 +172,9 @@ export default {
     });
   },
   methods: {
+      passFormatter(r,c,v,index){
+          return v == 'Y' ? '及格' : '不及格'
+      },
       typeFormatter(r,c,v,index){
           var arr = this.subjectDict;
           for(var i = 0; i < arr.length;i++){

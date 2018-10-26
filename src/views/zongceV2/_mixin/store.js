@@ -48,7 +48,9 @@ export default {
       importPunishRecord: store.namespace + "/importPunishRecord",
       queryStudentBaseInfo: store.namespace + "/queryStudentBaseInfo",
       getScoreTemplateUrl: store.namespace + "/getScoreTemplateUrl",
-      getPunishTemplateUrl: store.namespace + "/getPunishTemplateUrl"
+      getPunishTemplateUrl: store.namespace + "/getPunishTemplateUrl",
+      importStuScoreRank: store.namespace + "/importStuScoreRank",
+      getScoreRankTemplateUrl: store.namespace + "/getScoreRankTemplateUrl"
     })
   }
 };

@@ -34,7 +34,24 @@ const queryStuTypeByEducationLevelCode = data =>
         method: 'post',
         data: data
     })
+
+const queryAllowAllotStudent = data =>
+    request({
+        url: "/dOrg/queryAllowAllotStudent.do",
+        method: 'post',
+        data: data
+    })
+
+const allotStudentToClass = data =>
+    request({
+        url: "/dOrg/allotStudentToClass.do",
+        method: 'post',
+        data: data
+    })
+
 export default {
+    queryAllowAllotStudent,
+    allotStudentToClass,
     queryCollegeClass,
     queryDepartmentList,
     queryMajorByDepartmentCode,
