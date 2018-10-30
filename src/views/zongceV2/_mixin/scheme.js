@@ -36,7 +36,8 @@ export default {
 
       getCapacityItems: store.namespace + "/getCapacityItems",
 
-      getInnovateItems: store.namespace + "/getInnovateItems"
+      getInnovateItems: store.namespace + "/getInnovateItems",
+      queryStuTypeByEducationLevelCode: store.namespace + "/queryStuTypeByEducationLevelCode"
     })
   }
 };

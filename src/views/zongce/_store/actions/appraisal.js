@@ -141,8 +141,14 @@ const queryAppraisalClassRecord = ({ commit, state }, params) => new Promise(res
         resolve(response)
     })
 })
-
+const lockAppraisalResult = ({ commit, state }, params) => new Promise(resolve => {
+    api.lockAppraisalResult(params).then(response => {
+        console.log(["lockAppraisalResult", response])
+        resolve(response)
+    })
+})
 export default {
+    lockAppraisalResult,
     processAppraisalRecordSchoolB,
     processAppraisalRecordB,
     queryAppraisalClassRecord,

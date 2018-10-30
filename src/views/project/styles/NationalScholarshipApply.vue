@@ -98,26 +98,26 @@
             </el-col>
             <el-col :span="10" :offset="1">
               <el-form-item label="成绩排名人数">
-                <el-input v-model=" scoreData.scoreRankNum " disabled></el-input>
+                <el-input v-model=" scoreData.scoreRankNum" disabled></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="10 ">
               <el-form-item label="必修课数量 ">
-                <el-input v-model="scoreData.requiredCourse " disabled></el-input>
+                <el-input v-model="scoreData.requiredCourse"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="10 " :offset="1 ">
               <el-form-item label="必修课及格数 ">
-                <el-input v-model="scoreData.requiredCourseQualified " disabled></el-input>
+                <el-input v-model="scoreData.requiredCourseQualified"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="10 ">
               <el-form-item label="综合考评名次 ">
-                <el-input v-model="scoreData.appraisalRank " disabled></el-input>
+                <el-input v-model="scoreData.appraisalRank" disabled></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="10 " :offset="1 ">
@@ -202,7 +202,7 @@ export default {
       } else {
         vm.$message.error("参数不正确");
       }
-    vm.getScoreData();
+      vm.getScoreData();
     });
   },
   components: {
@@ -286,6 +286,16 @@ export default {
       };
       this.getSubsidizeScoreDataForNS(requestData).then(response => {
         this.scoreData = response.resBody;
+        if (
+          this.scoreData.scoreRank == 0 ||
+          this.scoreData.appraisalRank == 0
+        ) {
+          this.$prompt("您没有成绩信息或测评信息，请联系相关人员。", "提示", {
+            confirmButtonText: "确定"
+          }).then(() => {
+            this.$router.go(-1);
+          });
+        }
       });
     },
 
@@ -348,11 +358,10 @@ export default {
       this.attArr = tempArr;
     },
     onSubmit() {
-      if(this.scoreData.scoreRank == 0 || this.scoreData.appraisalRank == 0){
-        this.$message.error('您没有成绩信息或测评信息');
+      if (this.scoreData.scoreRank == 0 || this.scoreData.appraisalRank == 0) {
+        this.$message.error("您没有成绩信息或测评信息");
         return;
       }
-
 
       console.log("submit!");
       var requestData = {
@@ -362,11 +371,11 @@ export default {
         applyReason: this.form.desc, //申请原因
         attachment: this.attArr, // 附件
         appraisalRank: this.scoreData.appraisalRank,
-        appraisalNum:  this.scoreData.appraisalNum,
+        appraisalNum: this.scoreData.appraisalNum,
         scoreRank: this.scoreData.scoreRank,
-        scoreRankNum:  this.scoreData.scoreRankNum,
-        requiredCourse:  this.scoreData.requiredCourse,
-        requiredCourseQualified:  this.scoreData.requiredCourseQualified
+        scoreRankNum: this.scoreData.scoreRankNum,
+        requiredCourse: this.scoreData.requiredCourse,
+        requiredCourseQualified: this.scoreData.requiredCourseQualified
       };
       console.log(["requestData", requestData]);
       this.insertScholarshipApply(requestData).then(response => {

@@ -38,6 +38,9 @@
       </template>
       <template slot="headerRight">
         <el-button-group>
+           <el-button @click="lockAppraisal" plain size="mini">
+           锁定测评结果
+          </el-button>
           <el-button @click="createDataBT" plain size="mini">
             生成年度综测结果
           </el-button>
@@ -185,6 +188,11 @@ export default {
         this.getData();
       });
     },
+    lockAppraisal(){
+      this.lockAppraisalResult({}).then(vm=>{
+        this.$message.success("操作成功");
+      })
+    },
     ...mapActions({
       processAppraisalRecordSchoolB:
         store.namespace + "/processAppraisalRecordSchoolB",
@@ -192,7 +200,8 @@ export default {
       getDictByDictNames: store.namespace + "/getDictByDictNames",
       getAppraisalRecordState: store.namespace + "/getAppraisalRecordState",
       queryAppraisalClassRecord: store.namespace + "/queryAppraisalClassRecord",
-      querySchoolYear: store.namespace + "/querySchoolYear"
+      querySchoolYear: store.namespace + "/querySchoolYear",
+      lockAppraisalResult:store.namespace + "/lockAppraisalResult"
     }),
     showError(row) {
       this.$alert(row.errorCause, "错误原因", {

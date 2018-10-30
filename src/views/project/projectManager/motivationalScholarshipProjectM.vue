@@ -123,25 +123,13 @@ export default {
       }
       var stArr = v.split(",");
       var a = "";
-      stArr.forEach(it => {
+   stArr.forEach(it => {
         this.stuTypeList.forEach(p => {
-          if (p.dict_key == it) {
-            a = a + p.dict_desc + ",";
+          if (p.code == it) {
+            a = a + p.name + ",";
             return;
           }
         });
-      });
-      a = a.substring(0, a.length - 1);
-      return a;
-    },
-    stuTypeFormatter(r, c, v, i) {
-      if (v == null || v.length == 0) {
-        return;
-      }
-      var stArr = v.split(",");
-      var a = "";
-      stArr.forEach(it => {
-        a = a + it + ",";
       });
       a = a.substring(0, a.length - 1);
       return a;
@@ -189,6 +177,7 @@ export default {
       queryPovertyProject:
         store.namespace + "/queryMotivationalScholarshipProject",
       querySchoolYear: store.namespace + "/querySchoolYear",
+       queryStuTypeByEducationLevelCode:store.namespace + "/queryStuTypeByEducationLevelCode",
       querySubsidizeProjectState:
         store.namespace + "/querySubsidizeProjectState"
     }),
@@ -213,7 +202,9 @@ export default {
       };
       this.getDictByDictNames(requestData).then(response => {
         this.gradeList = response.resBody.grade;
-        this.stuTypeList = response.resBody.study_degree_code;
+        this.queryStuTypeByEducationLevelCode({}).then(response=>{
+         this.stuTypeList = response.resBody;
+      })
         this.getData();
       });
     },

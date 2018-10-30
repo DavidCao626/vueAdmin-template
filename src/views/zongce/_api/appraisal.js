@@ -153,8 +153,14 @@ const queryAppraisalClassRecord = data =>
         data: data
     })
 
-
+const lockAppraisalResult = data =>
+    request({
+        url: "/appraisal/lockAppraisalResult.do",
+        method: "post",
+        data: data
+    })
 export default {
+    lockAppraisalResult,
     processAppraisalRecordSchoolB,
     processAppraisalRecordB,
     queryAppraisalClassRecord,

@@ -4,7 +4,7 @@
       <!-- <div slot="title">学生业务申请</div> -->
       <div slot="panel">
         <h2>{{formTitle}}</h2>
-        <hr/>
+        <hr />
         <proInfo :itemId="itemId"></proInfo>
         <!-- <div>项目名称：{{resData.projectData.projectName}}</div>
         <div>项目类别：{{resData.projectData.projectServiceTypeName}}</div>
@@ -25,7 +25,8 @@
     </page>
     <page style="width: 1000px;margin: 0 auto;">
       <div slot="panel">
-        <h3 style="font-weight:400">一、填写申请信息</h3><hr/>
+        <h3 style="font-weight:400">一、填写申请信息</h3>
+        <hr />
         <el-form ref="form" :model="form" label-width="120px">
           <el-row>
             <el-col :span="10">
@@ -62,7 +63,7 @@
             </el-col>
           </el-row>
 
-          <el-row>
+          <!-- <el-row>
             <el-col :span="21">
               <el-form-item label="申请原因">
                 <el-checkbox-group v-model="form.mainReason">
@@ -70,7 +71,7 @@
                 </el-checkbox-group>
               </el-form-item>
             </el-col>
-          </el-row>
+          </el-row> -->
 
           <el-row>
             <el-col :span="21">
@@ -114,6 +115,16 @@
         </div>
       </div>
     </page>
+
+    <el-dialog :show-close="false" title="提示" :visible.sync="jiatingDV" width="30%" :close-on-click-modal="false" :close-on-press-escape="false">
+      <span v-if="hasEconmyData">是否前往维护家庭信息</span>
+      <span v-else>您还没有家庭信息，请先完善家庭信息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button v-if="hasEconmyData" @click="jiatingDV = false">取 消</el-button>
+        <el-button type="primary" @click="createjiating">前往完善</el-button>
+      </span>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -125,6 +136,7 @@ import moment from "moment";
 export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
+      vm.getEconmyData();
       vm.getReasonList();
       if (to.query.itemId != undefined) {
         let itemId = to.query.itemId;
@@ -240,6 +252,8 @@ export default {
   },
   data() {
     return {
+      jiatingDV: true,
+      hasEconmyData: false,
       reasonList: [],
       resData: {
         projectData: {
@@ -283,11 +297,27 @@ export default {
     };
   },
   methods: {
+    createjiating() {
+      this.$router.push({
+        path: "/user/info"
+      });
+    },
+    getEconmyData() {
+      this.getStuEconmyInfo().then(response => {
+        console.log(["getStuEconmyInfo", response]);
+        var res = response.resBody;
+        if (res != null) {
+           this.hasEconmyData = true;
+        } else {
+          this.hasEconmyData = false;
+        }
+      });
+    },
     ...mapActions({
       getApplyData: store.namespace + "/getApplyData",
-      insertNationalGrantsApply:
-        store.namespace + "/insertNationalGrantsApply",
-      getDictByDictNames: store.namespace + "/getDictByDictNames"
+      insertNationalGrantsApply: store.namespace + "/insertNationalGrantsApply",
+      getDictByDictNames: store.namespace + "/getDictByDictNames",
+      getStuEconmyInfo: store.namespace + "/getStuEconmyInfo"
     }),
     cancle() {
       this.$router.go(-1);
@@ -347,7 +377,7 @@ export default {
         childServiceTypeCode: this.form.typeValue,
         projectSystemCode: this.projectSystemCode,
         applyReason: this.form.desc, //申请原因
-        mainReason:this.form.mainReason,
+        mainReason: this.form.mainReason,
         attachment: this.attArr // 附件
       };
       console.log(["requestData", requestData]);

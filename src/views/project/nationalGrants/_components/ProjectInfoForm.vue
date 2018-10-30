@@ -68,9 +68,9 @@
             </el-radio-group>
           </el-form-item>
 
-          <el-form-item label="体能测试分数" v-show="form.expand.rules.physical.flag == 'Y'">
+          <!-- <el-form-item label="体能测试分数" v-show="form.expand.rules.physical.flag == 'Y'">
             <el-input-number v-model="form.expand.rules.physical.score" label="分数"></el-input-number>
-          </el-form-item>
+          </el-form-item> -->
 
         </el-form>
       </div>

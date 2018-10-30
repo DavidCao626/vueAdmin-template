@@ -128,7 +128,7 @@ export default {
     typeFormatter(r, c, v, index) {
       var arr = this.subjectDict;
       for (var i = 0; i < arr.length; i++) {
-        if ((arr[i].value = v)) {
+        if ((arr[i].value == v)) {
           return arr[i].label;
         }
       }
