@@ -27,8 +27,6 @@
         </el-form>
       </template>
       <el-table :data="data" style="width: 100%" border size="mini">
-        <el-table-column prop="projectName" label="项目名称">
-        </el-table-column>
         <el-table-column prop="orgName" label="组织名称">
         </el-table-column>
         <el-table-column prop="stuNo" label="学号">

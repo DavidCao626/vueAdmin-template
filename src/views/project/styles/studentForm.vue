@@ -590,7 +590,9 @@ export default {
       this.jiatingDV = true;
     },
     createjiating() {
-      this.jiatingDV = true;
+      this.$router.push({
+        path:"/user/info"
+      })
     },
     handleCloseJT() {
       this.$confirm("确认关闭？")
