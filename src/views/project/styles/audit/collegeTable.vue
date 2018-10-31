@@ -76,9 +76,6 @@
               <el-form-item label="家庭收入:">
                 <span>{{ props.row.jtsr }}</span>
               </el-form-item>
-              <el-form-item label="家庭支出:">
-                <span>{{ props.row.jtzc }}</span>
-              </el-form-item>
               <br/>
 
               <el-form-item label="学院评议:">
@@ -279,7 +276,6 @@ export default {
             tempLis.jtisjdlk = "否";
           }
           tempLis.jtdesc += "家庭收入:" + tempLis.jtsr + "元,";
-          tempLis.jtdesc += "家庭支出:" + tempLis.jtzc + "元";
           //处理班互评或者组评
           //   item.groupComment = {
           //     "201804": 4,

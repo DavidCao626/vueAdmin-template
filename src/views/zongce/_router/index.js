@@ -96,7 +96,12 @@ export const zongceRouter = {
       meta: { title: "查看校内综测排名", icon: "example", hidden: true }//班级和学院查看
     },
 
-
+    {
+      path: "appraisalManagerV3",
+      name: "appraisalManagerV3",
+      component: () => import("../appraisalManagerV3.vue"),
+      meta: { title: "综合测评管理", icon: "example", hidden: true }//班级和学院查看
+    },
 
 
 

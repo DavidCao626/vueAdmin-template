@@ -134,8 +134,36 @@ const querySchoolAppraisalRankForCollegeAndClass = data =>
         data: data
     })
 
+const processAppraisalRecordSchoolB = data =>
+    request({
+        url: "/appraisal/processAppraisalRecordSchoolB.do",
+        method: "post",
+        data: data
+    })
+const processAppraisalRecordB = data =>
+    request({
+        url: "/appraisal/processAppraisalRecordB.do",
+        method: "post",
+        data: data
+    })
+const queryAppraisalClassRecord = data =>
+    request({
+        url: "/appraisal/queryAppraisalClassRecord.do",
+        method: "post",
+        data: data
+    })
 
+const lockAppraisalResult = data =>
+    request({
+        url: "/appraisal/lockAppraisalResult.do",
+        method: "post",
+        data: data
+    })
 export default {
+    lockAppraisalResult,
+    processAppraisalRecordSchoolB,
+    processAppraisalRecordB,
+    queryAppraisalClassRecord,
     querySchoolAppraisalRankForCollegeAndClass,
     deleteAppraisalProjectSchool,
     queryProjectListSchool,

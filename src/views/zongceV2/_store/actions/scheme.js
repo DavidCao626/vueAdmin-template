@@ -110,7 +110,14 @@ const getInnovateItems = ({ commit, state }, params) =>
       resolve(response);
     });
   });
+const queryStuTypeByEducationLevelCode = ({ commit, state }, params) =>
+  new Promise(resolve => {
+    api.queryStuTypeByEducationLevelCode(params).then(response => {
+      resolve(response);
+    });
+  });
 export default {
+  queryStuTypeByEducationLevelCode,
   updateScheme1,
   getDictByDictNames,
   getItemsTree,

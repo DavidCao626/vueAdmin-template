@@ -123,10 +123,10 @@ export default {
       }
       var stArr = v.split(",");
       var a = "";
-      stArr.forEach(it => {
+     stArr.forEach(it => {
         this.stuTypeList.forEach(p => {
-          if (p.dict_key == it) {
-            a = a + p.dict_desc + ",";
+          if (p.code == it) {
+            a = a + p.name + ",";
             return;
           }
         });
@@ -176,6 +176,7 @@ export default {
       getDictByDictNames: store.namespace + "/getDictByDictNames",
       queryPovertyProject: store.namespace + "/queryNationalScholarshipProject",
       querySchoolYear: store.namespace + "/querySchoolYear",
+       queryStuTypeByEducationLevelCode:store.namespace + "/queryStuTypeByEducationLevelCode",
       querySubsidizeProjectState:
         store.namespace + "/querySubsidizeProjectState"
     }),
@@ -200,7 +201,9 @@ export default {
       };
       this.getDictByDictNames(requestData).then(response => {
         this.gradeList = response.resBody.grade;
-        this.stuTypeList = response.resBody.study_degree_code;
+        this.queryStuTypeByEducationLevelCode({}).then(response=>{
+         this.stuTypeList = response.resBody;
+      })
         this.getData();
       });
     },

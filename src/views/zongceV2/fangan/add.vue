@@ -20,7 +20,7 @@
                   </el-form-item>
                   <el-form-item label="所属学历:">
                     <el-select v-model="formInline.stuType">
-                      <el-option v-for="item in stuTypes" :key="item.dict_key" :label="item.dict_desc" :value="item.dict_key">
+                      <el-option v-for="item in stuTypes" :key="item.code" :label="item.name" :value="item.code">
                       </el-option>
                     </el-select>
                   </el-form-item>
@@ -48,7 +48,7 @@
               </el-form-item>
               <el-form-item label="所属学历:">
                 <el-select v-model="formInlineEdit.stuType">
-                  <el-option v-for="item in stuTypes" :key="item.dict_key" :label="item.dict_desc" :value="item.dict_key">
+                  <el-option v-for="item in stuTypes" :key="item.code" :label="item.name" :value="item.code">
                   </el-option>
                 </el-select>
               </el-form-item>
@@ -83,7 +83,7 @@
               </el-form-item>
               <el-form-item label="所属学历:">
                 <el-select v-model="formInlines.stuType">
-                  <el-option v-for="item in stuTypes" :key="item.dict_key" :label="item.dict_desc" :value="item.dict_key">
+                  <el-option v-for="item in stuTypes" :key="item.code" :label="item.name" :value="item.code">
                   </el-option>
                 </el-select>
               </el-form-item>
@@ -110,7 +110,7 @@
                 </el-form-item>
                 <el-form-item label="所属学历:">
                   <el-select v-model="stuType" placeholder="全部">
-                    <el-option v-for="item in stuTypes" :key="item.dict_key" :label="item.dict_desc" :value="item.dict_key">
+                    <el-option v-for="item in stuTypes" :key="item.code" :label="item.name" :value="item.code">
                     </el-option>
                   </el-select>
                 </el-form-item>
@@ -336,8 +336,8 @@ export default {
         return;
       }
       let a = this.stuTypes.find(e => {
-        return e.dict_key == date;
-      }).dict_desc;
+        return e.code == date;
+      }).name;
       return a;
       //moment(date).format("YYYY年MM月DD日");
     },
@@ -519,8 +519,9 @@ export default {
         this.schoolYearDict.unshift({ id: 0, name: "全部" });
         let a = response.resBody.shift();
         this.formInline.schoolYearDict = response.resBody;
-        this.getDict("study_degree_code", body => {
-          this.stuTypes = body["study_degree_code"];
+
+        this.queryStuTypeByEducationLevelCode({}).then(response => {
+          this.stuTypes = response.resBody;
           this.loading = false;
           this.getData();
         });

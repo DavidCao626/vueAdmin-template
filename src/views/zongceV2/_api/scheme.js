@@ -111,7 +111,19 @@ const updateScheme = data =>
     method: "post",
     data: data
   });
+
+
+const queryStuTypeByEducationLevelCode = data =>
+  request({
+    url: "/dOrg/queryStuTypeByEducationLevelCode.do",
+    method: "post",
+    data: data
+  });
+
+
+
 export default {
+  queryStuTypeByEducationLevelCode,
   getDictByDictNames,
   getItemsTree,
   processSchemeName,

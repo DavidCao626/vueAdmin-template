@@ -6,15 +6,6 @@
         <h2>{{formTitle}}</h2>
         <hr />
         <proInfo :itemId="itemId"></proInfo>
-        <!-- <div>项目名称：{{resData.projectData.projectName}}</div>
-        <div>项目类别：{{resData.projectData.projectServiceTypeName}}</div>
-        <div>环节名称：{{resData.scopeData.scopeName}}</div>
-        <div>过期时间：{{endTime}}</div> -->
-
-        <!-- <h4 v-if="formDesc">
-                    填写要求：
-                    <div>{{formDesc}}</div>
-                </h4> -->
         <h4 v-if="formFiles.length>0">
           下载附件：
           <div>
@@ -97,7 +88,7 @@
 
       </div>
     </page>
-    <page style="width: 1000px;margin: 0 auto;" v-if="hasEconmyData">
+    <!-- <page style="width: 1000px;margin: 0 auto;" v-if="hasEconmyData">
       <div slot="panel">
         <h3 style="font-weight:400">二、家庭情况信息 <el-button type="text" @click="editEn">修改</el-button>
         </h3>
@@ -140,15 +131,15 @@
           </el-row>
         </el-form>
       </div>
-    </page>
+    </page> -->
 
-    <page style="width: 1000px;margin: 0 auto;" v-else>
+    <!-- <page style="width: 1000px;margin: 0 auto;" v-else>
       <div slot="panel">
         <h3 style="font-weight:400">二、家庭情况信息 <el-button type="text" @click="createjiating">创建家庭信息</el-button>
         </h3>
         <hr />
       </div>
-    </page>
+    </page> -->
 
     <page style="width: 1000px;margin: 0 auto;">
       <div slot="panel">
@@ -163,7 +154,7 @@
       </div>
     </page>
 
-    <el-dialog title="家庭信息" :visible.sync="jiatingDV" width="70%" :before-close="handleCloseJT">
+    <!-- <el-dialog title="家庭信息" :visible.sync="jiatingDV" width="70%" :before-close="handleCloseJT">
 
       <el-form ref="baseform" label-position="left" size="mini" :inline="true" :model="baseform">
         <el-row :gutter="0">
@@ -368,6 +359,15 @@
         <el-button @click="jiatingDV = false">取 消</el-button>
         <el-button type="primary" @click="submitjiating">确 定</el-button>
       </span>
+    </el-dialog> -->
+
+    <el-dialog :show-close="false" title="提示" :visible.sync="jiatingDV" width="30%" :close-on-click-modal="false" :close-on-press-escape="false">
+      <span v-if="hasEconmyData">是否前往维护家庭信息</span>
+      <span v-else>您还没有家庭信息，请先完善家庭信息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button v-if="hasEconmyData" @click="jiatingDV = false">取 消</el-button>
+        <el-button type="primary" @click="createjiating">前往完善</el-button>
+      </span>
     </el-dialog>
 
   </div>
@@ -505,7 +505,7 @@ export default {
           planTimeLong: 0
         }
       },
-      jiatingDV: false,
+      jiatingDV: true,
       itemId: "",
       projectSystemCode: "",
       formTitle: "",
@@ -590,7 +590,9 @@ export default {
       this.jiatingDV = true;
     },
     createjiating() {
-      this.jiatingDV = true;
+      this.$router.push({
+        path: "/user/info"
+      });
     },
     handleCloseJT() {
       this.$confirm("确认关闭？")
@@ -599,181 +601,181 @@ export default {
         })
         .catch(_ => {});
     },
- 
-  ...mapActions({
-    getApplyData: store.namespace + "/getApplyData",
-    povertyApply: store.namespace + "/povertyApply",
-    getDictByDictNames: store.namespace + "/getDictByDictNames",
-    getStuEconmyInfo: store.namespace + "/getStuEconmyInfo",
-    updateStuEcoInfo: store.namespace + "/updateStuEcoInfo"
-  }),
-  cancle() {
-    this.$router.go(-1);
-  },
-  getData() {
-    var requestData = {};
-    this.getStuEconmyInfo(requestData).then(response => {
-      console.log("getStuEconmyInfo", response);
-      var res = response.resBody;
-      this.baseform.nid = res.stuNo; //学号
-      this.baseform.isNCWBH = res.isFiveGuarantees; //是否农村五保户
-      this.baseform.isDBH = res.isSubsistenceAllowances; //是否低保户
-      this.baseform.isGE = res.isOrphan; //是否孤儿
-      this.baseform.isDQJTZN = res.isSingleParent; //是否单亲家庭子女
-      this.baseform.isFMSSLDNL = res.isDisabilityChildren; //是否残疾人子女
-      this.baseform.isJZYDBHZ = res.isParentLoseLabour; //是否父母丧失劳动能力
-      this.baseform.isBRSFCJ = res.isHasSeriousIllness; //是否家中有大病患者
-      this.baseform.isCJRZN = res.isDisability; //本人是否残疾
-      this.baseform.cjlb = res.disabilityType; //残疾类别
-      this.baseform.isJDLKPKJT = res.isCreatedFile; //是否建档立卡贫困家庭
-      this.baseform.isDSRJT = res.isLowIncome; //是否低收入家庭
-      this.baseform.isJLSHYFZN = res.isSoldierChildren; //是否军烈属或优抚子女
-      this.baseform.JTRJSR = res.capitaIncomeYear; //家庭人均收入
-      this.baseform.JTZYSRLY = res.incomeType; //家庭主要收入来源类别
-      this.baseform.JTSFZSZRZH = res.isNaturalHazard; //家庭是否遭受自然灾害
-      this.baseform.JTSFZSZRZH_text = res.naturalHazardDesc; //家庭自然灾害具体情况描述
-      this.baseform.JTSFZSYTFYWSJ = res.isEmergency; //家庭是否遭受突发意外事件
-      this.baseform.JTSFZSYTFYWSJ_text = res.emergencyDesc; //突发意外事件具体描述
-      this.baseform.JTQZJE = res.liabilitiesMoney; //家庭欠债金额
-      this.baseform.JTQZYY = res.liabilitiesReason; //家庭欠债原因
-      this.baseform.JTRKS = res.familyPersonNum; //家庭人口数
-      this.baseform.LDRKS = res.labourPersonNum; //劳动力人口数
-      this.baseform.JTCYSYS = res.unemploymentPersonNum; //家庭成员失业人数
-      this.baseform.SYRKS = res.supportPersonNum; //赡养人口数
-      this.baseform.QTJTJJXX = res.otherInfo; //其他家庭经济信息
-      this.baseform.isNCDBH = res.isVillageSubsistenceAllowances; //是否农村低保户
-      this.baseform.isNCTKGY = res.isPovertySupport; //是否农村特困供养
-      this.baseform.QT = res.other; //填写农村特困供养、农村低户、建档立卡相关信息
-    });
-  },
-  getEconmyData() {
-    this.getStuEconmyInfo().then(response => {
-      console.log(["getStuEconmyInfo", response]);
-      var res = response.resBody;
-      if (res != null) {
-        this.hasEconmyData = true;
-        this.form.familyNumber = res.familyPersonNum;
-        if (res.isOrphan == "Y") {
-          this.form.familyStatus = "G";
-        } else if (res.isSingleParent == "Y") {
-          this.form.familyStatus = "D";
-        } else {
-          this.form.familyStatus = "S";
-        }
-        this.form.isSubsistenceAllowance = res.isSubsistenceAllowances;
-        this.form.isRecord = res.isCreatedFile;
-        this.form.income = res.capitaIncomeYear;
-      } else {
-        this.hasEconmyData = false;
-      }
-    });
-  },
-  getReasonList() {
-    console.log(["getReasonList"]);
-    var requestData = {
-      dicts: ["poverty_apply_reason", "income_type", "disability_type"]
-    };
-    this.getDictByDictNames(requestData).then(response => {
-      console.log(["getDictByDictNames1", response]);
-      this.reasonList = response.resBody.poverty_apply_reason;
-      console.log(["getDictByDictNames2", this.reasonList]);
-      var res = response.resBody;
-      this.zzlxType = [];
-      console.log(["dict", response]);
-      res.income_type.forEach(element => {
-        var t1 = {};
-        t1.label = element.dict_desc;
-        t1.value = element.dict_key;
-        this.checkFamilyIncomeType.push(t1);
-      });
-      res.disability_type.forEach(element => {
-        var t1 = {};
-        t1.label = element.dict_desc;
-        t1.value = element.dict_key;
-        this.checkDisableType.push(t1);
-      });
-    });
-  },
-  DateDiff(sDate1, sDate2) {
-    //sDate1和sDate2是2006-12-18格式
-    var aDate, oDate1, oDate2, iDays;
-    aDate = sDate1.split("-");
-    oDate1 = new Date(aDate[1] + "-" + aDate[2] + "-" + aDate[0]); //转换为12-18-2006格式
-    aDate = sDate2.split("-");
-    oDate2 = new Date(aDate[1] + "-" + aDate[2] + "-" + aDate[0]);
-    iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24); //把相差的毫秒数转换为天数
-    return iDays;
-  },
-  handlePreview(file) {
-    console.log(file);
-  },
-  handleExceed(files, fileList) {
-    this.$message.warning(
-      `当前限制选择 3 个文件，本次选择了 ${
-        files.length
-      } 个文件，共选择了 ${files.length + fileList.length} 个文件`
-    );
-  },
-  beforeRemove(file, fileList) {
-    return this.$confirm(`确定移除 ${file.name}？`);
-  },
-  handleSuccess(response, file, fileList) {
-    console.log(["上传成功", file, fileList]);
-    var tempArr = [];
-    for (var i = 0; i < fileList.length; i++) {
-      tempArr[i] = fileList[i].response.body.resBody.fileId;
-    }
-    this.attArr = tempArr;
-  },
-  handleRemove(response, fileList) {
-    console.log(["移除成功", fileList]);
-    var tempArr = [];
-    for (var i = 0; i < fileList.length; i++) {
-      tempArr[i] = fileList[i].response.body.resBody.fileId;
-    }
-    this.attArr = tempArr;
-  },
-  onSubmit() {
-    if (!this.hasEconmyData) {
-      this.$message.error("请完善家庭信息");
-      return;
-    }
-    console.log("submit!");
-    var requestData = {
-      mainReason: this.form.mainReason,
-      itemId: this.itemId,
-      childServiceTypeCode: this.form.typeValue,
-      projectSystemCode: this.projectSystemCode,
-      applyReason: this.form.desc, //申请原因
-      attachment: this.attArr, // 附件
-      homePersonCount: this.form.familyNumber, // 家庭人口数
-      isSingleParent: "", // 是否单亲
-      isOrphan: "", // 孤儿
-      isBasicAllowance: this.form.isSubsistenceAllowance, // 低保
-      isCreateFile: this.form.isRecord, // 建档立卡
-      perCapitaIncome: this.form.income, // 人均收入
-      perCapitalExpenditure: this.form.spending // 人均支出
-    };
-    if (this.form.familyStatus == "S") {
-      requestData.isSingleParent = "N";
-      requestData.isOrphan = "N";
-    } else if (this.form.familyStatus == "D") {
-      requestData.isSingleParent = "Y";
-      requestData.isOrphan = "N";
-    } else if (this.form.familyStatus == "G") {
-      requestData.isSingleParent = "N";
-      requestData.isOrphan = "Y";
-    }
-    console.log(["requestData", requestData]);
-    this.povertyApply(requestData).then(response => {
-      this.$message.success("提交成功");
+
+    ...mapActions({
+      getApplyData: store.namespace + "/getApplyData",
+      povertyApply: store.namespace + "/povertyApply",
+      getDictByDictNames: store.namespace + "/getDictByDictNames",
+      getStuEconmyInfo: store.namespace + "/getStuEconmyInfo",
+      updateStuEcoInfo: store.namespace + "/updateStuEcoInfo"
+    }),
+    cancle() {
       this.$router.go(-1);
-    });
-  },
-  handleChange(val) {
-    console.log(val);
-  } 
-  },
+    },
+    getData() {
+      var requestData = {};
+      this.getStuEconmyInfo(requestData).then(response => {
+        console.log("getStuEconmyInfo", response);
+        var res = response.resBody;
+        this.baseform.nid = res.stuNo; //学号
+        this.baseform.isNCWBH = res.isFiveGuarantees; //是否农村五保户
+        this.baseform.isDBH = res.isSubsistenceAllowances; //是否低保户
+        this.baseform.isGE = res.isOrphan; //是否孤儿
+        this.baseform.isDQJTZN = res.isSingleParent; //是否单亲家庭子女
+        this.baseform.isFMSSLDNL = res.isDisabilityChildren; //是否残疾人子女
+        this.baseform.isJZYDBHZ = res.isParentLoseLabour; //是否父母丧失劳动能力
+        this.baseform.isBRSFCJ = res.isHasSeriousIllness; //是否家中有大病患者
+        this.baseform.isCJRZN = res.isDisability; //本人是否残疾
+        this.baseform.cjlb = res.disabilityType; //残疾类别
+        this.baseform.isJDLKPKJT = res.isCreatedFile; //是否建档立卡贫困家庭
+        this.baseform.isDSRJT = res.isLowIncome; //是否低收入家庭
+        this.baseform.isJLSHYFZN = res.isSoldierChildren; //是否军烈属或优抚子女
+        this.baseform.JTRJSR = res.capitaIncomeYear; //家庭人均收入
+        this.baseform.JTZYSRLY = res.incomeType; //家庭主要收入来源类别
+        this.baseform.JTSFZSZRZH = res.isNaturalHazard; //家庭是否遭受自然灾害
+        this.baseform.JTSFZSZRZH_text = res.naturalHazardDesc; //家庭自然灾害具体情况描述
+        this.baseform.JTSFZSYTFYWSJ = res.isEmergency; //家庭是否遭受突发意外事件
+        this.baseform.JTSFZSYTFYWSJ_text = res.emergencyDesc; //突发意外事件具体描述
+        this.baseform.JTQZJE = res.liabilitiesMoney; //家庭欠债金额
+        this.baseform.JTQZYY = res.liabilitiesReason; //家庭欠债原因
+        this.baseform.JTRKS = res.familyPersonNum; //家庭人口数
+        this.baseform.LDRKS = res.labourPersonNum; //劳动力人口数
+        this.baseform.JTCYSYS = res.unemploymentPersonNum; //家庭成员失业人数
+        this.baseform.SYRKS = res.supportPersonNum; //赡养人口数
+        this.baseform.QTJTJJXX = res.otherInfo; //其他家庭经济信息
+        this.baseform.isNCDBH = res.isVillageSubsistenceAllowances; //是否农村低保户
+        this.baseform.isNCTKGY = res.isPovertySupport; //是否农村特困供养
+        this.baseform.QT = res.other; //填写农村特困供养、农村低户、建档立卡相关信息
+      });
+    },
+    getEconmyData() {
+      this.getStuEconmyInfo().then(response => {
+        console.log(["getStuEconmyInfo", response]);
+        var res = response.resBody;
+        if (res != null) {
+          this.hasEconmyData = true;
+          this.form.familyNumber = res.familyPersonNum;
+          if (res.isOrphan == "Y") {
+            this.form.familyStatus = "G";
+          } else if (res.isSingleParent == "Y") {
+            this.form.familyStatus = "D";
+          } else {
+            this.form.familyStatus = "S";
+          }
+          this.form.isSubsistenceAllowance = res.isSubsistenceAllowances;
+          this.form.isRecord = res.isCreatedFile;
+          this.form.income = res.capitaIncomeYear;
+        } else {
+          this.hasEconmyData = false;
+        }
+      });
+    },
+    getReasonList() {
+      console.log(["getReasonList"]);
+      var requestData = {
+        dicts: ["poverty_apply_reason", "income_type", "disability_type"]
+      };
+      this.getDictByDictNames(requestData).then(response => {
+        console.log(["getDictByDictNames1", response]);
+        this.reasonList = response.resBody.poverty_apply_reason;
+        console.log(["getDictByDictNames2", this.reasonList]);
+        var res = response.resBody;
+        this.zzlxType = [];
+        console.log(["dict", response]);
+        res.income_type.forEach(element => {
+          var t1 = {};
+          t1.label = element.dict_desc;
+          t1.value = element.dict_key;
+          this.checkFamilyIncomeType.push(t1);
+        });
+        res.disability_type.forEach(element => {
+          var t1 = {};
+          t1.label = element.dict_desc;
+          t1.value = element.dict_key;
+          this.checkDisableType.push(t1);
+        });
+      });
+    },
+    DateDiff(sDate1, sDate2) {
+      //sDate1和sDate2是2006-12-18格式
+      var aDate, oDate1, oDate2, iDays;
+      aDate = sDate1.split("-");
+      oDate1 = new Date(aDate[1] + "-" + aDate[2] + "-" + aDate[0]); //转换为12-18-2006格式
+      aDate = sDate2.split("-");
+      oDate2 = new Date(aDate[1] + "-" + aDate[2] + "-" + aDate[0]);
+      iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24); //把相差的毫秒数转换为天数
+      return iDays;
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(
+        `当前限制选择 3 个文件，本次选择了 ${
+          files.length
+        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
+      );
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    handleSuccess(response, file, fileList) {
+      console.log(["上传成功", file, fileList]);
+      var tempArr = [];
+      for (var i = 0; i < fileList.length; i++) {
+        tempArr[i] = fileList[i].response.body.resBody.fileId;
+      }
+      this.attArr = tempArr;
+    },
+    handleRemove(response, fileList) {
+      console.log(["移除成功", fileList]);
+      var tempArr = [];
+      for (var i = 0; i < fileList.length; i++) {
+        tempArr[i] = fileList[i].response.body.resBody.fileId;
+      }
+      this.attArr = tempArr;
+    },
+    onSubmit() {
+      if (!this.hasEconmyData) {
+        this.$message.error("请完善家庭信息");
+        return;
+      }
+      console.log("submit!");
+      var requestData = {
+        mainReason: this.form.mainReason,
+        itemId: this.itemId,
+        childServiceTypeCode: this.form.typeValue,
+        projectSystemCode: this.projectSystemCode,
+        applyReason: this.form.desc, //申请原因
+        attachment: this.attArr, // 附件
+        homePersonCount: this.form.familyNumber, // 家庭人口数
+        isSingleParent: "", // 是否单亲
+        isOrphan: "", // 孤儿
+        isBasicAllowance: this.form.isSubsistenceAllowance, // 低保
+        isCreateFile: this.form.isRecord, // 建档立卡
+        perCapitaIncome: this.form.income, // 人均收入
+        perCapitalExpenditure: this.form.spending // 人均支出
+      };
+      if (this.form.familyStatus == "S") {
+        requestData.isSingleParent = "N";
+        requestData.isOrphan = "N";
+      } else if (this.form.familyStatus == "D") {
+        requestData.isSingleParent = "Y";
+        requestData.isOrphan = "N";
+      } else if (this.form.familyStatus == "G") {
+        requestData.isSingleParent = "N";
+        requestData.isOrphan = "Y";
+      }
+      console.log(["requestData", requestData]);
+      this.povertyApply(requestData).then(response => {
+        this.$message.success("提交成功");
+        this.$router.go(-1);
+      });
+    },
+    handleChange(val) {
+      console.log(val);
+    }
+  }
 };
 </script>
 

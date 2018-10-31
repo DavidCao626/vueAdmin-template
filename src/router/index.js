@@ -21,7 +21,7 @@ import { projectRouter } from "~/views/project/_router/index";
 import { messagesRouter } from "~/views/messages/_router/index";
 import { zongceRouter } from "~/views/zongce/_router/index";
 import { componentsRouter } from "~/components/_router";
-import { studyWorkRouter } from "~/views/studyWork/_router/index";
+import { studyWorkRouter } from "~/views/studyWork/_router/index"
 import { zongceV2Router } from "~/views/zongceV2/_router/index";
 
 const registerRouterModules = [];

@@ -148,9 +148,9 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.getSchoolYearDict();
-      vm.getData();
       vm.getDataSourceDict().then(() => {
         vm.getExpandCheckStateDict().then(() => {
+      vm.getData();
           vm.loading = true;
         });
       });
