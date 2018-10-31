@@ -137,6 +137,7 @@ export default {
         stuName: "",
         schoolYearId: ""
       },
+        subjectDict:[],
       importForm: {
         schoolYearId: "",
         schoolYearDict: [],
@@ -150,6 +151,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
+          vm.getScoreSubjectTypeDict();
       vm.getSchoolYearDict();
       vm.getData();
       vm.getOrgList();
@@ -220,6 +222,11 @@ export default {
           vm.getData();
         }
       );
+    },
+     getScoreSubjectTypeDict(){
+        this.getSubjectTypeDict({}).then(response=>{
+            this.subjectDict = response.resBody;
+        })
     },
     geturldo() {
       this.getApi(this.getScoreRankTemplateUrl, {}, (r, v) => {

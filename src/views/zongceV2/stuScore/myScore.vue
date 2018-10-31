@@ -110,13 +110,14 @@ export default {
       },
 
       orgList: [],
-
+ subjectDict:[],
       schoolYearDict: []
     };
   },
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
+        vm.getScoreSubjectTypeDict();
       vm.getSchoolYearDict();
       vm.getData();
     });
@@ -133,6 +134,11 @@ export default {
         }
       }
       return v;
+    },
+     getScoreSubjectTypeDict(){
+        this.getSubjectTypeDict({}).then(response=>{
+            this.subjectDict = response.resBody;
+        })
     },
     onSubmit() {
       this.getData();
