@@ -4,53 +4,60 @@
     <div slot="panel">
       <template>
 
-        <el-form :inline="true" :model="searchData" class="demo-form-inline" size="mini">
-          <el-form-item label="状态">
-            <el-select v-model="searchData.state" placeholder="请选择状态">
-              <el-option v-for="item in stateList" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="类型">
-            <el-select v-model="searchData.type" placeholder="请选择类型">
-              <el-option v-for="item in typeList" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSearch">查 询</el-button>
-          </el-form-item>
-        </el-form>
-        <el-table class="i-cursor" @row-click="showDetail" :data="tableData" style="width: 100%;margin-top:5px">
-          <el-table-column prop="projectInfo.project_name" label="项目名称" min-width="120">
+        <div>
+          <el-form :inline="true" :model="searchData" size="mini">
+            <el-form-item label="状态:">
+              <el-select v-model="searchData.state" placeholder="请选择状态">
+                <el-option v-for="item in stateList" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="类型:">
+              <el-select v-model="searchData.type" placeholder="请选择类型">
+                <el-option v-for="item in typeList" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSearch">查 询</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+        <el-table @row-click="showDetail" :data="tableData" style="width: 100%;margin-top:5px" >
+          <el-table-column prop="projectInfo.project_name" label="项目名称">
           </el-table-column>
-          <el-table-column prop="projectInfo.project_service_type_name" label="业务类别" min-width="100">
+          <el-table-column prop="projectInfo.project_service_type_name" label="业务类别" width="160">
           </el-table-column>
           <!-- <el-table-column prop="scope_name" label="待办来源" min-width="80">
           </el-table-column> -->
-          <el-table-column prop="org_name" label="组织" min-width="80">
+          <el-table-column prop="org_name" label="组织" width="160">
           </el-table-column>
-          <el-table-column prop="item_name" label="待办名称" min-width="80">
+          <el-table-column prop="item_name" label="待办名称" width="160">
           </el-table-column>
           <!-- <el-table-column prop="real_start_time" label="开始时间" min-width="120">
           </el-table-column> -->
-          <el-table-column prop="over_time" label="结束时间" :formatter="overTimeFormatter" min-width="120">
+          <el-table-column prop="over_time" label="结束时间" :formatter="overTimeFormatter" width="120">
             <template slot-scope="scope">
               <span v-html="overTimeFormatter(scope.row)"></span>
             </template>
           </el-table-column>
           <!-- <el-table-column prop="create_time" label="创建时间" width="120">
           </el-table-column> -->
-          <el-table-column prop="state" :formatter="stateFormatter" label="状态" min-width="80">
+          <el-table-column prop="state" :formatter="stateFormatter" label="状态" width="80">
+            <template slot-scope="scope">
+              <el-tag :type="scope.row.state === 'N' ? 'danger' : 'success'" disable-transitions>{{ stateFormatter(scope.row,null,scope.row.state) }}</el-tag>
+            </template>
           </el-table-column>
-          <el-table-column prop="pending_type" :formatter="typeFormatter" label="类型" min-width="80">
+          <el-table-column prop="pending_type" :formatter="typeFormatter" label="类型" width="80">
           </el-table-column>
         </el-table>
+
         <div style="margin-top: 20px">
           <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="dataTotal">
           </el-pagination>
           <div class="clearfix"></div>
         </div>
+
       </template>
     </div>
   </page>
@@ -70,15 +77,14 @@ export default {
         { label: "全部", value: "A" },
         { label: "已处理", value: "F" },
         { label: "未处理", value: "N" },
-         { label: "已过期", value: "Y" }
+        { label: "已过期", value: "Y" }
       ],
-      typeList  : [
+      typeList: [
         { label: "全部", value: "A" },
         { label: "工序", value: "Popular" },
         { label: "任务", value: "Item" }
       ],
-      tableData: [
-      ],
+      tableData: [],
       dataTotal: 0,
       pageSize: 10,
       currentPage: 1
@@ -98,12 +104,12 @@ export default {
       this.queryData();
     },
     showDetail(row, event, column) {
-      if(row.isActive == "N"){
-        this.$message.error("该代办已经过期!不可操作!")
+      if (row.isActive == "N") {
+        this.$message.error("该代办已经过期!不可操作!");
         return;
       }
-      if(row.itemState == "F"){
-        this.$message.error("该代办已经处理!不可操作!")
+      if (row.itemState == "F") {
+        this.$message.error("该代办已经处理!不可操作!");
         return;
       }
       console.log(row);
@@ -132,27 +138,26 @@ export default {
       }
     },
     stateFormatter(row, column, cellValue, index) {
-      if(row.isActive == "Y"){
-        if(cellValue == "F"){
-          return "已处理"
+      if (row.isActive == "Y") {
+        if (cellValue == "F") {
+          return "已处理";
         }
-        if(cellValue == "N"){
-          return "未处理"
+        if (cellValue == "N") {
+          return "未处理";
         }
-      }else{
-       if(cellValue == "F"){
-          return "已处理"
+      } else {
+        if (cellValue == "F") {
+          return "已处理";
         }
-          return "已过期"
+        return "已过期";
       }
-     
     },
     overTimeFormatter(row) {
       var date = row.over_time;
       if (date == undefined) {
         return "";
       }
-      return moment(date).format("YYYY-MM-DD HH:mm:ss");
+      return moment(date).format("YYYY-MM-DD");
       //return date;
     },
     handleSizeChange(val) {
@@ -193,7 +198,4 @@ export default {
 };
 </script>
 <style scoped>
-.i-cursor:hover {
-  cursor: pointer;
-}
 </style>

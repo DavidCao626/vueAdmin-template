@@ -3,7 +3,7 @@ import Vue from 'vue'
 // import 'normalize.css/normalize.css'// A modern alternative to CSS resets
 
 import ElementUI from 'element-ui-x'
-import 'element-ui-x/lib/theme-chalk/index.css'
+import '~/styles/theme/index.css'
 
 
 import App from './App'
@@ -31,7 +31,7 @@ Vue.component("elx-cascader", ElxCascader);
 
 Vue.use(ElementUI, {
   i18n: (key, value) => i18n.t(key, value),
-  size: 'medium'
+  size: 'small'
 })
 // register global utility filters.
 Object.keys(filters).forEach(key => {

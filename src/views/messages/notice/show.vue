@@ -7,10 +7,11 @@
                 <h2>{{noticeInfo.baseData.title}}</h2>
                 <p>发表时间：{{noticeInfo.baseData.publicTime}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布者：{{noticeInfo.baseData.publicOrgName}}</p>
             </div>
-            <div class="body" v-html="noticeInfo.baseData.content">
+            <div class="post-body" v-html="noticeInfo.baseData.content">
             </div>
-            
+             <br/><br/>
         </div>
+        
     </page>
 </template>
 
@@ -67,45 +68,5 @@ export default {
 };
 </script>
 
-<style>
-.body-title {
-  text-align: center;
-  color: #222;
-}
-
-.body p{
-    line-height:32px;
-    font-size:16px;
-}
-.body {
-    font-family:宋体
-}
-
-.data_table{
-    width:90%;
-    margin-top:15px;
-    margin-bottom:15px;
-    font-size:14px;
-    margin-left:auto;
-    margin-right:auto;
-    /*table-layout: fixed;*/
-}
-
-.data_label{
-    text-align:right;
-    padding-right:5px;
-    border-bottom: 1px solid #f2f3f5;
-    padding-top:5px;
-    line-height:36px;
-    color:#333333;
-
-}
-.data_value{
-    text-align:left;
-    padding-left:5px;
-    border-bottom: 1px solid #f2f3f5;
-    padding-top: 5px;
-    line-height:48px;
-}
-
+<style socped>
 </style>

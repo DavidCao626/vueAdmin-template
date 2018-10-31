@@ -1,57 +1,60 @@
 <template>
-    <div>
+  <page>
+    <div slot="title">系统后台运行任务</div>
+    <div slot="panel">
+      <elx-table-layout>
 
-        <elx-table-layout>
-
-            <template slot="headerLeft">
-                <!-- <span v-if="deleteOpen && isMultipleSelection">
+        <template slot="headerLeft">
+          <!-- <span v-if="deleteOpen && isMultipleSelection">
                     <el-button plain @click="onMultipleSelectionDel" size="mini" style="margin-top: 1px;margin-right: 20px;">
                         <i class="el-icon-delete"> ({{ multipleSelection.length }})</i>
                     </el-button>
                 </span> -->
-                <el-form :inline="true"  size="mini" class="demo-form-inline">
-                    <el-form-item>
-                      <el-input v-model="searchData" placeholder="输入批次号进行搜索"></el-input>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="onSubmit">查询</el-button>
-                    </el-form-item>
-                </el-form>
+          <el-form :inline="true" size="mini" class="demo-form-inline">
+            <el-form-item>
+              <el-input v-model="searchData" placeholder="输入批次号进行搜索"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit">查询</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+
+        <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop: 'name',prop: 'address'}" @selection-change="handleSelectionChange">
+          <el-table-column type="selection" width="38">
+          </el-table-column>
+
+          <el-table-column prop="batch" label="批次">
+          </el-table-column>
+          <el-table-column prop="serviceType" :formatter="typeFormatter" label="导入类型">
+          </el-table-column>
+          <el-table-column prop="state" :formatter="stateFormatter" label="状态">
+          </el-table-column>
+          <el-table-column prop="createTime" label="操作时间">
+          </el-table-column>
+          <el-table-column prop="lastUpdateTime" label="最后变更时间">
+          </el-table-column>
+          <el-table-column type="expand" label="#" width="42">
+            <template slot-scope="props" style="background-color:#f7f8f9">
+              <el-form label-position="left" inline class="demo-table-expand">
+                <el-form-item label="失败原因:">
+                  <span>{{ props.row.errorCause }}</span>
+                </el-form-item>
+                <br />
+              </el-form>
             </template>
+          </el-table-column>
+        </el-table>
 
-            <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop: 'name',prop: 'address'}" @selection-change="handleSelectionChange">
-                <el-table-column type="selection" width="38">
-                </el-table-column>
+        <template slot="footer">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+          </el-pagination>
+        </template>
 
-                <el-table-column prop="batch" label="批次">
-                </el-table-column>
-                <el-table-column prop="serviceType" :formatter="typeFormatter" label="导入类型">
-                </el-table-column>
-                <el-table-column prop="state" :formatter="stateFormatter" label="状态">
-                </el-table-column>
-                <el-table-column prop="createTime" label="操作时间">
-                </el-table-column>
-                <el-table-column prop="lastUpdateTime" label="最后变更时间">
-                </el-table-column>
-                <el-table-column type="expand" label="#" width="42">
-                    <template slot-scope="props" style="background-color:#f7f8f9">
-                        <el-form label-position="left" inline class="demo-table-expand">
-                            <el-form-item label="失败原因:">
-                                <span>{{ props.row.errorCause }}</span>
-                            </el-form-item>
-                            <br/>
-                        </el-form>
-                    </template>
-                </el-table-column>
-            </el-table>
+      </elx-table-layout>
 
-            <template slot="footer">
-                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-                </el-pagination>
-            </template>
-
-        </elx-table-layout>
     </div>
+  </page>
 </template>
 
   <script>
@@ -64,7 +67,7 @@ Vue.use(Element);
 export default {
   data() {
     return {
-      searchData:"",
+      searchData: "",
       pageInfo: {
         currentPage: 1,
         pageSize: 10,
@@ -143,7 +146,7 @@ export default {
       var requestData = {
         currentPage: this.pageInfo.currentPage,
         pageSize: this.pageInfo.pageSize,
-        betchNo:this.searchData
+        betchNo: this.searchData
       };
       this.queryImportRecordList(requestData).then(response => {
         console.log(["查询数据", response]);

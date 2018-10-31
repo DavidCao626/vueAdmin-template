@@ -3,33 +3,27 @@
     <span slot="title">通知中心</span>
 
     <div slot="panel" class="messages">
-      <div class="panel-control">
+      <!-- <div class="panel-control">
         <div class="panel-control__flex">
           <div class="panel-control__flex-left">
-            <el-button size="small" type="text" style="color:#8d8d8d" @click="queryDataByStatus('')"> 全部({{allNumber}})</el-button>
-            &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
-            <!-- <el-badge :value="noReadNumber" :max="99" class="item">
-							<el-button size="small" plain @click="queryDataByStatus('N')">未读</el-button>
-						</el-badge> -->
-            &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
-
-            <!-- <el-button size="small" type="text" style="color:#8d8d8d"> 已收藏({{messagesMarkCount}})</el-button>
-                        &nbsp; &nbsp;&nbsp; -->
-            <!-- <el-button size="small" type="text" style="color:#8d8d8d" @click="queryDataByStatus('Y')"> 已读({{ReadNumber}})</el-button> -->
-
           </div>
           <div class="panel-control__flex-right" style="margin-right:20px;">
 
-            <el-input placeholder="消息标题或内容" v-model="currentShowContent" style="width:255px;">
-              <i slot="suffix" class="el-input__icon el-icon-search" @click="queryDataByStatus('')"></i>
-            </el-input>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="panel-body">
-        <div style="margin:30px 0 10px;font-size:12px;">
-          总共 ( {{allNumber}} 封)
+        <div style="margin:5px 0 0px;font-size:12px;">
+
+          <el-form :inline="true" size="mini">
+            <el-form-item label="">
+              <el-input v-model="currentShowContent" placeholder="输入消息标题或关键字搜索"></el-input>
+            </el-form-item>
+            <el-form-item label="">
+              <el-button type="primary" @click="queryDataByStatus('')">查询</el-button>
+            </el-form-item>
+          </el-form>
         </div>
         <el-collapse accordion>
 
@@ -40,10 +34,11 @@
               </template>
               &nbsp;
               <!-- <el-tooltip content="标记已读/未读" placement="top"> -->
-                <div class="circle messages-readState" :class="{'messages-readState__true':(notice.status=='Y')}" @click.stop="readSwitch(notice.id,notice)"></div>
+              <div class="circle messages-readState" :class="{'messages-readState__true':(notice.status=='Y')}">
+              </div>
               <!-- </el-tooltip> -->
               &nbsp;
-              <span class="messages-title">{{notice.title}}</span>
+              <span class="messages-title" style="font-size:14px">{{notice.title}}</span>
 
               <!-- <span class="messages-mark" @click.stop="markSwitch">
                                 <i class="el-icon-star-off" :class="{'messages-mark__true':isMarkForMessage}"></i>
@@ -63,7 +58,7 @@
           <el-pagination @size-change="handleSizeChange" :current-page="currentPage" @current-change="handleCurrentChange" :page-sizes="[10, 20, 50, 100]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="dataCount">
           </el-pagination>
         </div>
-        <div class="clearfix"><br/></div>
+        <div class="clearfix"></div>
       </div>
     </div>
 
@@ -78,9 +73,7 @@ import {
   queryUserNoticeCount
 } from "~/api/notice";
 
-var noticeData = [
- 
-];
+var noticeData = [];
 
 export default {
   data() {
@@ -274,7 +267,6 @@ export default {
   &-pagination {
     margin-top: 30px;
     margin-bottom: 40px;
-    float: right;
   }
 }
 </style>

@@ -1,5 +1,6 @@
 :root {
-  --color-primary: #409eff;
+  --color-2-primary:#0B48D1;
+  --color-primary: #0F6DEC;
   --color-primary-light: #379ef3;
   --color-primary-dark: #65769d;
 
@@ -30,7 +31,7 @@ body {
   font-weight: 400;
   min-height: 100vh;
   color: var(--color-grey-dark-2);
-  background-color: var(--color-grey-light-4);
+  background-color: #fafafa;
   margin: 0px;
 }
 
@@ -82,9 +83,11 @@ a:hover {
 .app-main {
   min-height: 100%;
 }
-
+.i-cursor:hover {
+  cursor: pointer;
+}
 .app-container {
-  width: 95.5%;
+  width: 100%;
   max-width: 1900px; 
   min-width: 700px;
   margin-left: auto;

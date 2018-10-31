@@ -1,18 +1,19 @@
 <template>
   <page>
     <div slot="title">公告信息</div>
-    <div slot="panel">
+    <div slot="panel" >
       <div class="body-title">
         <h2>{{noticeInfo.baseData.title}}</h2>
         <p>发表时间：{{noticeInfo.baseData.publicTime}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布者：{{noticeInfo.baseData.publicOrgName}}</p>
       </div>
-      <div class="content" v-html="noticeInfo.baseData.content">
+      <div class="post-body" v-html="noticeInfo.baseData.content">
       </div>
       <div>
           附件:</br>
           <a v-for="(item,index) in noticeInfo.baseData.files" :download="item.userFileName" :key="index" :href="item.userPath">{{item.userFileName}}</a>
       </div>
     </div>
+    <br/><br/>
   </page>
 </template>
 

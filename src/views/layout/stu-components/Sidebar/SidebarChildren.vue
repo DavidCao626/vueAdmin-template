@@ -24,17 +24,17 @@ export default {
 .sidebar-child {
   padding: 8px 0;
   line-height: 1.6;
-  font-size: 15px;
 }
 .sidebar-child:hover {
   background-color: #ebeef5;
 }
 .sidebar-child__link {
-  padding-left: 60px;
+  padding-left: 55px;
   color: #444;
 }
 
 .router-link-active {
   color: var(--color-primary);
+  font-weight: 500;
 }
 </style>

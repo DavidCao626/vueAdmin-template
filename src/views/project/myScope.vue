@@ -5,14 +5,14 @@
 
       <template>
         <el-form :inline="true" :model="searchDataF" class="demo-form-inline" size="mini">
-          <el-form-item label="状态">
+          <el-form-item label="状态:">
             <el-select v-model="searchDataF.state" placeholder="请选择状态">
               <el-option v-for="item in stateList" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
 
-          <el-form-item label="类型">
+          <el-form-item label="类型:">
             <el-select v-model="searchDataF.type" placeholder="请选择类型">
               <el-option v-for="item in serviceTypeList" :key="item.classifyCode" :label="item.classifyName" :value="item.classifyCode">
               </el-option>
@@ -25,19 +25,25 @@
         </el-form>
         <el-table class="i-cursor" @row-click="showDetail" :data="tableData" style="width: 100%;margin-top:5px">
           <template>
-            <el-table-column prop="project.project_name" label="项目名称" min-width="150">
+            <el-table-column prop="project.project_name" label="项目名称">
             </el-table-column>
-            <el-table-column prop="project.project_service_type_name" label="业务类别" min-width="130">
+            <el-table-column prop="project.project_service_type_name" label="业务类别" width="200">
             </el-table-column>
-            <el-table-column prop="scope.scopeName" label="环节名称" min-width="100">
+            <el-table-column prop="scope.scopeName" label="环节名称" width="100">
             </el-table-column>
-            <el-table-column prop="scope.orgName" label="相关组织" min-width="150">
+            <el-table-column prop="scope.orgName" label="相关组织" width="150">
             </el-table-column>
-            <el-table-column prop="scope.realStartTime" label="开始时间" min-width="150">
+            <el-table-column prop="scope.realStartTime"  label="开始时间"  width="100">
+              <template slot-scope="scope">
+                <span v-html="overTimeFormatter(scope.row)"></span>
+              </template>
             </el-table-column>
-             <!-- <el-table-column prop="isMine" :formatter="isMineFormatter" label="来源" min-width="80">
+            <!-- <el-table-column prop="isMine" :formatter="isMineFormatter" label="来源" min-width="80">
       </el-table-column> -->
-            <el-table-column prop="scope.scopeState" :formatter="scopeStateFormatter" label="环节状态" min-width="80">
+            <el-table-column prop="scope.scopeState" :formatter="scopeStateFormatter" label="环节状态" width="80">
+               <template slot-scope="scope">
+              <el-tag :type="scope.row.scope.scopeState === 'S' ? '' : 'success'" disable-transitions>{{ scopeStateFormatter(scope.row,null,scope.row.scope.scopeState) }}</el-tag>
+            </template>
             </el-table-column>
           </template>
         </el-table>
@@ -54,6 +60,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import store from "./_store/index.js";
+import moment from "moment";
 export default {
   data() {
     return {
@@ -79,11 +86,20 @@ export default {
     })
   },
   methods: {
-     isMineFormatter(row, column, cellValue, index){
-      if(cellValue=="Y"){
-        return "我发起的"
-      }else{
-        return "发给我的"
+    overTimeFormatter(row) {
+     
+      var date = row.scope.realStartTime;
+      if (typeof date == "undefined") {
+        return "-";
+      }
+      return moment(date).format("YYYY-MM-DD");
+      //return date;
+    },
+    isMineFormatter(row, column, cellValue, index) {
+      if (cellValue == "Y") {
+        return "我发起的";
+      } else {
+        return "发给我的";
       }
     },
     ...mapActions({
@@ -103,10 +119,10 @@ export default {
     },
     scopeStateFormatter(row, column, cellValue, index) {
       if (cellValue == "S") {
-        return "开始";
+        return "已开始";
       }
       if (cellValue == "F") {
-        return "完成";
+        return "已完成";
       }
       if (cellValue == "C") {
         return "创建";

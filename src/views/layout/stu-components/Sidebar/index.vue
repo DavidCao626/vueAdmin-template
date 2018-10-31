@@ -4,8 +4,8 @@
     <ul class="sidebar-nav" v-if="navMenu.length">
       <li class="sidebar-item">
         <router-link to="/dashboard" class="sidebar-item__link">
-          <svg-icon class="sidebar-item__icon" icon-class="home" />
-          <span>首页</span>
+          <svg-icon class="sidebar-item__icon" icon-class="home"/>
+          <span style="font-size:16px">首页</span>
         </router-link>
       </li>
       <template v-for="item in navMenu">
@@ -74,12 +74,14 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 .router-link-active {
   color: var(--color-primary);
+  font-weight:700 !important;
   .sidebar-item__icon {
     fill: var(--color-primary);
   }
 }
 
 .sidebar {
+  max-width: 250px;
   flex: 0 0 250px;
   display: flex;
   flex-direction: column;
@@ -88,10 +90,10 @@ export default {
     list-style: none;
   }
   &-item {
-    padding: 8px 0;
+    //padding: 2px 0;
     line-height: 1.6;
     position: relative;
-    font-size: 16px;
+    font-size: 14px;
     color: #222;
   }
   &-item::before {
@@ -104,7 +106,7 @@ export default {
   }
 
   &-item__link {
-    line-height: 50px;
+    //line-height: 50px;
     //padding-left: 64px;
   }
   &-item__link:link,
@@ -121,11 +123,11 @@ export default {
   &-item__icon {
     fill: var(--color-grey-light-2);
     color: var(--color-grey-light-2);
-    max-width: 1.2em;
-    max-height: 1.2em;
+    max-width: 1em;
+    max-height: 1em;
     margin: 0.8rem;
-    margin-left: 26px;
-    margin-right: 14px;
+    margin-left: 24px;
+    margin-right: 16px;
   }
 }
 

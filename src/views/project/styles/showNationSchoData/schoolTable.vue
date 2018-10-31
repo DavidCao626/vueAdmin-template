@@ -9,7 +9,7 @@
           <el-button-group>
           </el-button-group>
         </div>
-        <projectinfo :item-id="itemId"></projectinfo>
+        <!-- <projectinfo :item-id="itemId"></projectinfo> -->
         <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
           <el-form-item label="申请人学号">
             <el-input v-model="formInline.user" placeholder="申请人"></el-input>

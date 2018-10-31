@@ -1,41 +1,16 @@
 <template>
   <page>
     <div slot="title">
-      学校环节数据
+      学校环节数据123
     </div>
     <slot name="header">
       <div class="approval-panel" style="">
         <div style="float: right;    margin-top: 4px;">
-          <el-button-group>
-            <!-- <el-button plain size="mini">
-                            <i class="el-icon-sort-down"></i>
-                        </el-button>
-                        //排序
-                        <el-button plain size="mini">
-
-                            <i class="el-icon-sort-up"></i>
-                        </el-button> -->
-          </el-button-group>
         </div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
-          <!-- <el-form-item label="业务类别">
-                        <el-select v-model="formInline.region" placeholder="筛选类别">
-                            <el-option label="全部" value="shanghai"></el-option>
-                            <el-option label="贫困建档" value="beijing"></el-option>
-                            <el-option label="助学金" value="beijing2"></el-option>
-                            <el-option label="奖学金" value="beijing3"></el-option>
-                            <el-option label="学生资助" value="beijing4"></el-option>
-                            <el-option label="其他" value="beijing5"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="相关项目">
-                        <el-autocomplete v-model="state4" :fetch-suggestions="querySearchAsync" placeholder="请输入相关项目名称" @select="handleSelect"></el-autocomplete>
-                    </el-form-item>
-                    <el-form-item label="上报机构">
-                        <el-autocomplete v-model="state4" :fetch-suggestions="querySearchAsync" placeholder="请输入相关项目名称" @select="handleSelect"></el-autocomplete>
-                    </el-form-item> -->
+
           <el-form-item label="申请人学号">
-            <el-input v-model="formInline.user" placeholder="申请人"></el-input>
+            <el-input v-model="formInline.user" placeholder="输入申请人"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查 询</el-button>
@@ -43,7 +18,7 @@
         </el-form>
       </div>
     </slot>
-       <div class="approval-panel"  style="padding: 10px;">
+    <div class="approval-panel" style="padding: 10px;">
       <el-table :data="data" style="width: 100%;" size="mini">
         <el-table-column type="expand">
           <template slot-scope="props">
@@ -57,7 +32,7 @@
               <el-form-item label="学号:">
                 <span>{{ props.row.cid }}</span>
               </el-form-item>
-              <br/>
+              <br />
               <el-form-item label="家庭情况:">
                 <span>{{ props.row.jtQk }}</span>
               </el-form-item>
@@ -78,17 +53,17 @@
               <el-form-item label="家庭支出:">
                 <span>{{ props.row.jtzc }}</span>
               </el-form-item>
-              <br/>
+              <br />
 
               <el-form-item label="学校评议:">
                 <span>{{ props.row.xxpy }}</span>
               </el-form-item>
 
-              <br/>
+              <br />
 
-               <el-form-item label="学院推荐:">
-                                <span>{{ props.row.xytj }}</span>
-                            </el-form-item>
+              <el-form-item label="学院推荐:">
+                <span>{{ props.row.xytj }}</span>
+              </el-form-item>
 
             </el-form>
           </template>
@@ -110,7 +85,7 @@
         </el-table-column>
         <el-table-column label="学院推荐" prop="xytj" width="80">
         </el-table-column>
-<el-table-column label="学校推荐" :formatter="banjiFormatter" width="80" prop="xuexiaopingshen">
+        <el-table-column label="学校推荐" :formatter="banjiFormatter" width="80" prop="xuexiaopingshen">
         </el-table-column>
       </el-table>
     </div>
@@ -129,17 +104,17 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 import store from "../../_store/index.js";
 export default {
   methods: {
- banjiFormatter(row, column, cellValue, index) {
+    banjiFormatter(row, column, cellValue, index) {
       if (row.isDot == true) {
-        var result="";
+        var result = "";
         this.serviceTypeList.forEach(item => {
           if (item.value == row.xuexiaopingshen) {
-            result=item.label;
+            result = item.label;
             return false;
           }
         });
         return result;
-      } else{
+      } else {
         return " ";
       }
     },
@@ -238,16 +213,19 @@ export default {
             shenqin: item.childServiceTypeName,
             banjipingshen: item.classRecommend,
             xueyuanpingshen: item.collegeRecommend,
-            xuexiaopingshen:item.schoolRecommend,
+            xuexiaopingshen: item.schoolRecommend,
             bjtj: "",
             xypy: "",
-            xxpy:""
+            xxpy: ""
           };
           var _this = this;
-          if (item.collegeRecommend != null && item.collegeRecommend != undefined) {
+          if (
+            item.collegeRecommend != null &&
+            item.collegeRecommend != undefined
+          ) {
             _this.serviceTypeList.forEach(el => {
-              if(el.value == item.collegeRecommend){
-                tempLis.xytj = el.label
+              if (el.value == item.collegeRecommend) {
+                tempLis.xytj = el.label;
               }
             });
           } else {

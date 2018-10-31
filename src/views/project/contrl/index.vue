@@ -1,61 +1,61 @@
 <template>
-  <div style="margin-top: -23px;">
+  <div class="project-control">
     <page>
-      <!-- <div slot="title">项目控制台</div> -->
-      <div slot="panel" >
+      <div slot="title">{{ projectInfo.projectName}} [{{ projectInfo.projectServiceTypeName }}任务配置控制台]</div>
+      <div slot="panel" style="padding-bottom: 0px;">
 
         <div class="project" style="display:flex;align-items: center;justify-content: space-between;">
           <!--  -->
           <div class="project-left" style="flex:1">
             <div class="project-name">
-              {{projectInfo.projectName}}-任务控制台
+              <div style="float: left;margin-left: 10px;">{{ scopeInfo.orgName }}</div>
+              <div style="float: left;margin: -5px 10px;">
+                <el-popover placement="bottom" title="" width="auto" trigger="click">
+
+                  <el-tree class="filter-tree" :data="data2" :props="defaultProps" @node-click="nodeClick" :expand-on-click-node="false" :filter-node-method="filterNode" ref="tree2">
+                  </el-tree>
+                  <el-button slot="reference" size="mini">查看子任务进度</el-button>
+                </el-popover>
+              </div>
+              <div style="float: left;margin: -5px auto;">
+                <el-button @click="showScopeData(interatedView.viewAction)" size="mini">查看环节数据</el-button>
+              </div>
+              <div style="float: left;margin: -5px auto;" v-if="interatedView.expandFunction">
+                <template v-for="(fun,index) in interatedView.expandFunction">
+                  <el-button @click="routerTo(fun.path,fun.params)" :key="index" plain> {{fun.name}}</el-button>
+                  <!-- <svg-icon icon-class="seedate" width="20px" height="20px" /> -->
+                </template>
+              </div>
+              <div class="clearfix"></div>
             </div>
             <div class="project-desc">
               <el-row>
 
-                <el-col :span="8">
-                  <ProjectScoped></ProjectScoped>
-                </el-col>
                 <el-col :span="12">
-                  <div>
-                    <p>项目类别：{{ projectInfo.projectServiceTypeName }}</p>
-                    <p>附件列表:</p>
-                    <span v-for="(attch,index) in projectInfo.files" :key="index">
-                      <a target="_blank" :href="attch.userPath">{{attch.userFileName}}</a>
-                    </span>
-
-                  </div>
+                  <p>环节开始时间：{{ scopeInfo.planStartTime}}</p>
+                  <p>环节结束时间：{{scopeInfo.planEndTime}}</p>
+                  <p v-if="projectInfo.files">附件列表:</p>
+                  <span v-for="(attch,index) in projectInfo.files" :key="index">
+                    <a target="_blank" :href="attch.userPath">{{attch.userFileName}}</a>
+                  </span>
                 </el-col>
 
               </el-row>
             </div>
 
           </div>
-
-          <div class="project-reght" style="margin: 30px;display:flex;justify-content:center;">
+          <!-- <div class="project-reght" style="margin: 30px;display:flex;justify-content:center;">
             <div style="display: flex;">
 
               <div>
-                <template v-for="(fun,index) in interatedView.expandFunction">
-                  <el-button @click="routerTo(fun.path,fun.params)" :key="index" plain> {{fun.name}}</el-button>
-                  <!-- <svg-icon icon-class="seedate" width="20px" height="20px" /> -->
-                </template> &nbsp;&nbsp;&nbsp;&nbsp;
-                <el-popover placement="bottom" title="" width="auto" trigger="click">
+                &nbsp;&nbsp;&nbsp;&nbsp;
 
-                  <el-tree class="filter-tree" :data="data2" :props="defaultProps" @node-click="nodeClick" :expand-on-click-node="false" :filter-node-method="filterNode" ref="tree2">
-                  </el-tree>
-
-                  <el-button slot="reference" plain>查看子任务进度</el-button>
-                  <!-- <svg-icon icon-class="seejindu" width="20px" height="20px"/> -->
-
-                </el-popover>
               </div>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <el-button @click="showScopeData(interatedView.viewAction)" type="primary">查看环节数据</el-button>
-              <!-- <svg-icon icon-class="seedate" width="20px" height="20px"  />  -->
+
 
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </page>
@@ -68,10 +68,17 @@
         <el-breadcrumb-item>项目控制台</el-breadcrumb-item>
       </el-breadcrumb>
     </div> -->
-      <div slot="panel">
+      <div slot="panel" style="padding-top: 0px;">
+        <el-card class="box-card" shadow="hover" size="mini">
+          <div slot="header" class="clearfix">
+            <span>环节配置</span>
+            <!-- <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button> -->
+          </div>
+          <div class="text item">
+            <ContrlTimeLine></ContrlTimeLine>
+          </div>
+        </el-card>
 
-        <ContrlTimeLine></ContrlTimeLine>
-        <br/> <br/> <br/>
       </div>
 
     </page>
@@ -106,7 +113,8 @@ export default {
   computed: {
     ...mapGetters({
       projectInfo: store.namespace + "/getInteratedProjectInfo",
-      interatedView: store.namespace + "/getIntegratedView"
+      interatedView: store.namespace + "/getIntegratedView",
+      scopeInfo: store.namespace + "/getInteratedScopeInfo"
     })
   },
   methods: {
@@ -188,11 +196,11 @@ export default {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .project-desc {
-  font-size: 14px;
-  color: #666;
-  font-weight: 500;
-  margin: 20px;
-  line-height: 30px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 8px 20px;
+  line-height: 24px;
+}
+.project-control .el-card__header {
+  background-color: var(--color-grey-light-4) !important;
+  padding: 5px 10px !important;
 }
 </style>

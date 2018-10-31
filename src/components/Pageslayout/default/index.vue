@@ -3,20 +3,28 @@
 
         <template v-if="$slots.title">
 
-            <div class="weui-desktop-layout__main__hd">
-                <div class="weui-desktop-page__title ">
-                    <slot name="title">
-
-                    </slot>
-                </div>
-                <div v-if="this.$root.$route['meta'].hidden  && this.Breadcrumb ">
+            <div class="weui-desktop-layout__main__hd" style="padding:6px 10px 5px 15px;    border-bottom: 1px solid rgb(220, 220, 220)">
+                <div v-if="this.$root.$route['meta'].hidden  && this.Breadcrumb " style="float: right;margin-top: 3px;">
                     <Breadcrumb></Breadcrumb>
                 </div>
-                <template v-if="$slots.Breadcrumb">
+                <template v-if="$slots.Breadcrumb" style=" float: right;margin-top: 3px;">
                     <slot name="Breadcrumb">
 
                     </slot>
                 </template>
+
+                <div class="weui-desktop-page__title " style=" float: left;margin-top: 4px;  font-size: 16px;">
+                    <slot name="title">
+
+                    </slot>
+
+                </div>
+                <div>
+                    <el-button-group style="margin-left:15px;margin-top:0px;">
+                        <el-button icon="el-icon-arrow-left" size="mini" style="padding: 5px 8px;" type="primary" @click="go()"></el-button>
+                        <el-button disabled icon="el-icon-arrow-right el-icon--right" size="mini" style="padding: 5px 8px;" type="primary"></el-button>
+                    </el-button-group>
+                </div>
                 <!-- <el-tabs>
                    
                     <el-tab-pane label="用户管理" name="first">{{route}}</el-tab-pane>
@@ -40,15 +48,15 @@
         </template>
 
         <template v-if="$slots.panel">
-            <div class=" weui-desktop-panel">
+            <div class=" weui-desktop-panel i-cursor ">
                 <slot name="panel">
                 </slot>
             </div>
         </template>
 
-        <slot></slot>
+<slot></slot>
 
-    </div>
+</div>
 </template>
 <script>
 import Breadcrumb from "~/components/Breadcrumb";
@@ -72,6 +80,11 @@ export default {
   },
   components: {
     Breadcrumb
+  },
+  methods: {
+    go() {
+      this.$router.back();
+    }
   }
 };
 </script>

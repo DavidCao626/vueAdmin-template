@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="headerWrapper" style="box-shadow:  0px 5px 20px 0px rgba(17, 17, 17, 0.1);">
+    <div class="headerWrapper" style="">
       <header class="header">
         <navbar></navbar>
-        <div style="position: absolute;top: 18px;left:18px;z-index: 99999;">
+        <div style="position: absolute;top: 12px;left:12px;z-index: 99999;">
           <button @click="sidebar=!sidebar" class="menuButton">
             <!-- <i class="el-icon-d-arrow-left" v-if="sidebar"></i>
               <i class="el-icon-d-arrow-right" v-else></i> -->
@@ -20,12 +20,15 @@
 
     <el-scrollbar class="page-component__scroll" ref="componentScrollBar">
       <div class="page-container page-component ">
-        
-          <el-scrollbar class="page-component__nav" style="box-shadow: inset 0 4px 3px 0px rgba(86, 86, 86, 0.12);padding-top: 0px;background-color: #fff;" v-show="sidebar">
-            <sidebar></sidebar>
-          </el-scrollbar>
 
-        <div :class="['page-component__content', sidebar?'sidebar-hide':'']" style="margin-top: 25px;">
+        <el-scrollbar class="page-component__nav" style="
+      padding-top: 0px;
+    background-color: #f5f5f5;
+    border-right: #dcdcdc solid 1px;" v-show="sidebar">
+          <sidebar></sidebar>
+        </el-scrollbar>
+
+        <div :class="['page-component__content', sidebar?'sidebar-hide':'']">
           <!-- <router-view class="content"></router-view> -->
           <app-main class=" app-container "></app-main>
           <div class="app-container app-footer">
@@ -45,7 +48,7 @@
               </ul>
             </div> -->
 
-            <div class="app-footer__ext" style="color:#666">
+            <div class="app-footer__ext" style="width: 400px;margin: 20px auto;">
               Copyright &copy; 2017-2018 内蒙古中融创科技有限公司 &nbsp;提供技术支持.
             </div>
 
@@ -142,7 +145,7 @@ export default {
   left: 0;
   top: 0;
   z-index: 1500;
-  box-shadow:  0px 5px 20px 0px rgba(17, 17, 17, 0.14);
+  // box-shadow: 0px 5px 20px 0px rgba(17, 17, 17, 0.14);
 }
 .container {
   min-width: 1300;
@@ -151,7 +154,7 @@ export default {
 .header {
   //box-shadow: var(--shadow-dark);
 
-  height: 80px;
+  height: 60px;
   background-color: #fff;
   color: #fff;
   top: 0;
@@ -162,12 +165,12 @@ export default {
   position: relative;
 }
 .content {
-  padding: 40px 0 80px;
+  padding: 40px 0 60px;
   display: flex;
 }
 .page-component__scroll {
-  height: calc(100% - 80px);
-  margin-top: 80px;
+  height: calc(100% - 60px);
+  margin-top: 60px;
 
   .el-scrollbar__wrap {
     overflow-x: auto;
@@ -187,7 +190,7 @@ export default {
     position: fixed;
     top: 0;
     bottom: 0;
-    margin-top: 80px;
+    margin-top: 60px;
     transition: padding-top 0.3s;
 
     .el-scrollbar__wrap {

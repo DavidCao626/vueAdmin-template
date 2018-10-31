@@ -2,13 +2,14 @@
   border-bottom: 1px solid #e7e7eb;
 }
 .mp_news_list {
-  padding: 0 30px;
+  border-top: 1px solid #e7e7eb;
 }
 .mp_news_item {
   position: relative;
   border-bottom: 1px solid #e7e7eb;
   font-size: 14px;
-  line-height: 40px;
+  line-height: 48px;
+  padding-left: 10px;
 }
 .mp_news_item:first-child {
   border-top-width: 0;
@@ -17,7 +18,7 @@
   display: block;
   padding-right: 10em;
   padding-left: 0;
-  color: #222;
+  color: var(--color-grey-light-1) !important;
   text-decoration: none;
   cursor: pointer;
 }

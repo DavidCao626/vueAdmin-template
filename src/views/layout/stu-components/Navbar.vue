@@ -6,7 +6,7 @@
           <slot name="side">
             <h1 class="navbar-logo">
               <a href="#/" title="学生工作管理系统">
-              <svg-icon  icon-class="logo2" style="height:60px;width: 470px;margin-left: 35px;" ></svg-icon>
+              <svg-icon  icon-class="logo2" style="height:45px;width: 360px;" ></svg-icon>
               </a>
             </h1>
           </slot>
@@ -231,14 +231,13 @@ export default {
 </script>
 <style lang="scss" scoped>
 .navbar {
-  background-color: #0c9bea;
-  background-image: linear-gradient(#0c9bea, #409EFF 50%);
+  background-image: linear-gradient(-145deg, #1183FC 2%, #0B48D1 100%);
   height: 100%;
   &__inner {
     padding: 0 40px;
   }
   &-layout {
-    height: 80px;
+    height: 60px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -290,7 +289,7 @@ export default {
     color: red;
   }
   .avatar-wrapper {
-    height: 80px;
+    height: 60px;
     display: flex;
     align-items: center;
     align-content: center;
@@ -316,7 +315,7 @@ export default {
       }
     }
     .message {
-      padding: 8px;
+      padding: 5px;
       margin-bottom: 2px;
       font-size: 20px;
       color:  #ffffff !important;

@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard">
+  <div class="dashboard" >
     <div class="page-box">
       <div class="page-box__1">
         <div class="page-box__block flex">
@@ -222,5 +222,8 @@ export default {
 .line {
   margin-bottom: 5px;
   width: 90px;
+}
+.dashboard{
+  margin: 10px;
 }
 </style>

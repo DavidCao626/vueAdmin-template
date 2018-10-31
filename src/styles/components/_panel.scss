@@ -7,18 +7,23 @@
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.05);
 }
 .weui-desktop-panel {
-  padding: 30px;
+  margin: 0px;
+  padding: 10px 15px;
+
+  .el-form-item {
+    margin-bottom: 5px;
+  }
 }
 .weui-desktop-panel__hd {
-  padding: 16px 0;
+      padding: 5px 0;
 }
 .weui-desktop-panel__title {
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1;
 }
 .weui-desktop-panel__bd {
-  padding: 16px 0;
+    padding: 5px 0;
 }
 .weui-desktop-panel__title__desc {
   margin-top: 10px;
@@ -72,18 +77,12 @@
 }
 
 .weui-desktop-page__title {
-  font-size: 26px;
+  font-size: 18px;
   font-weight: 400;
   line-height: 1;
-  margin-bottom: 20px;
 }
 .weui-desktop-layout__main__hd {
-  margin-bottom: 25px;
 }
-
-
-
-
 
 /**DavidCao**/
 .panel {
@@ -121,8 +120,8 @@
       & .filter-container {
       }
 
-      & .el-input__inner{
-          border-radius: 0px !important;
+      & .el-input__inner {
+        border-radius: 0px !important;
       }
     }
 
@@ -146,6 +145,7 @@
     }
     &__block {
       margin: 0px 20px 20px auto;
+      border: 1px solid #e0e0e0;
       padding: 18px;
       background-color: #ffffff;
       border-radius: 3px;
