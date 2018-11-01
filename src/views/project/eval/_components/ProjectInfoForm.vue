@@ -1,26 +1,25 @@
 <template>
   <div>
 
-  <page class="page" :breadcrumb="false">
+    <page class="page" :breadcrumb="false">
       <div slot="panel">
 
         <h3>一、测评信息</h3>
         <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
+          <el-form-item label="学年">
+            <elx-select v-model="form.expand.schoolYearId" placeholder="请选择" @change="schoolYearChange">
+              <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :obj="item" :value="item.id">
+              </el-option>
+            </elx-select>
+          </el-form-item>
           <el-form-item label="名称">
             <el-input v-model="form.expand.name" autosize focus style="width:50%;">
               <i slot="suffix" class="el-icon-edit el-input__icon"></i>
             </el-input>
           </el-form-item>
-         <el-form-item label="学年">
-            <elx-select v-model="form.expand.schoolYearId" placeholder="请选择">
-              <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :value="item.id">
-              </el-option>
-            </elx-select>
-          </el-form-item>
         </el-form>
       </div>
     </page>
-
 
     <page class="page" :breadcrumb="false">
       <div slot="panel">
@@ -62,8 +61,6 @@
         </el-form>
       </div>
     </page>
-
-  
 
     <page class="page" :breadcrumb="false">
       <div slot="panel">
@@ -110,7 +107,6 @@ export default {
       ioptions: state.namespace + "/getServiceTypeList",
       ClassifyTypeList: state.namespace + "/getClassifyTypeList",
       categoryList: state.namespace + "/getappraiseCategoryList"
-      
     })
   },
   data() {
@@ -126,10 +122,20 @@ export default {
       iopt: [],
       classifyType: "",
       yearTypeList: [],
-      schoolYearList:[]
+      schoolYearList: []
     };
   },
   methods: {
+    schoolYearChange(p1, p2, p3, p4) {
+      console.log([p1, p2, p3, p4]);
+      var schoolYearName = p3.obj.name;
+      this.form.expand.name =
+        schoolYearName +
+        this.ioptions.find(el => {
+          return el.classifyCode == this.form.projectServiceType;
+        }).classifyName +
+        "任务";
+    },
     getSchoolYearList() {
       this.querySchoolYear({ currentPage: 1, pageSize: 99999 }).then(
         response => {
@@ -214,25 +220,24 @@ export default {
         }
       };
       console.log(this.form);
-     
-        this.insertOrUpdateAndNext(requestData).then(response => {
-          this.$message.success("保存成功!");
-          this.form.id = response.resBody.projectId;
-          console.log(["insertOrUpdateAndNext", response]);
-          this.startStudyWorkProject({
-            scopeId: response.resBody.scopeId
-          }).then(responsex => {
-            console.log(
-              "insertOrUpdateAndNext" +
-                ["insertOrUpdateAndNext", response.resBody.scopeId]
-            );
-            this.$router.push({
-              path: "/project/control",
-              query: { scopeId: response.resBody.scopeId }
-            });
+
+      this.insertOrUpdateAndNext(requestData).then(response => {
+        this.$message.success("保存成功!");
+        this.form.id = response.resBody.projectId;
+        console.log(["insertOrUpdateAndNext", response]);
+        this.startStudyWorkProject({
+          scopeId: response.resBody.scopeId
+        }).then(responsex => {
+          console.log(
+            "insertOrUpdateAndNext" +
+              ["insertOrUpdateAndNext", response.resBody.scopeId]
+          );
+          this.$router.push({
+            path: "/project/control",
+            query: { scopeId: response.resBody.scopeId }
           });
         });
-
+      });
     },
     onSave(e) {
       console.log(this.form);
@@ -273,20 +278,9 @@ export default {
         tempArr[i] = files[i].response.body.resBody.fileId;
       }
       this.form.projectAttachmentId = tempArr;
-    },
-    createYearTypeList() {
-      this.yearTypeList = [];
-      for (var i = 2000; i < 2050; i++) {
-        var temp = {
-          label: i + "年",
-          value: i.toString()
-        };
-        this.yearTypeList.push(temp);
-      }
     }
   },
   mounted() {
-    this.createYearTypeList();
     this.getSchoolYearList();
   }
 };

@@ -52,36 +52,43 @@
           <el-form-item label="姓名:">
             <el-input v-model="formInline.name" placeholder="姓名"></el-input>
           </el-form-item>
-            <el-form-item label="组织机构">
-              <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
-            </el-form-item>
+          <el-form-item label="组织机构">
+            <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
+          </el-form-item>
 
-            <el-form-item label="系">
-              <el-select v-model="formInline.departmentCode" placeholder="" @change="getMajorListAll">
-                <el-option v-for="item in departmentListALL" :key="item.id" :label="item.departmentName" :value="item.code"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="专业">
-              <el-select v-model="formInline.majorCode" placeholder="">
-                <el-option v-for="item in majorListALL" :key="item.id" :label="item.name" :value="item.code"></el-option>
-              </el-select>
-            </el-form-item>
-            <br />
-            <el-form-item label="学历">
-              <el-select v-model="formInline.degreeCode" placeholder="" @change="getMemberTypeALL">
-                <el-option v-for="item in educationLevelListALL" :key="item.id" :label="item.name" :value="item.code"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="成员类型">
-              <el-select v-model="formInline.stuTypeCode" placeholder="">
-                <el-option v-for="item in memberTypeALL" :key="item.id" :label="item.name" :value="item.code"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="入学学年">
-              <el-select v-model="formInline.startSchoolYearId" placeholder="">
-                <el-option v-for="item in schoolYearListAll" :key="item.id" :value="item.id" :label="item.name"></el-option>
-              </el-select>
-            </el-form-item>
+          <el-form-item label="分配班级">
+            <el-select v-model="formInline.hasClass" placeholder="">
+              <el-option label="不限" value="0"></el-option>
+              <el-option label="是" value="Y"></el-option>
+              <el-option label="否" value="N"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item label="系">
+            <el-select v-model="formInline.departmentCode" placeholder="" @change="getMajorListAll">
+              <el-option v-for="item in departmentListALL" :key="item.id" :label="item.departmentName" :value="item.code"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="专业">
+            <el-select v-model="formInline.majorCode" placeholder="">
+              <el-option v-for="item in majorListALL" :key="item.id" :label="item.name" :value="item.code"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="学历">
+            <el-select v-model="formInline.degreeCode" placeholder="" @change="getMemberTypeALL">
+              <el-option v-for="item in educationLevelListALL" :key="item.id" :label="item.name" :value="item.code"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="成员类型">
+            <el-select v-model="formInline.stuTypeCode" placeholder="">
+              <el-option v-for="item in memberTypeALL" :key="item.id" :label="item.name" :value="item.code"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="入学学年">
+            <el-select v-model="formInline.startSchoolYearId" placeholder="">
+              <el-option v-for="item in schoolYearListAll" :key="item.id" :value="item.id" :label="item.name"></el-option>
+            </el-select>
+          </el-form-item>
 
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -199,6 +206,7 @@ export default {
       academicList: [],
       data: [],
       formInline: {
+        hasClass:"0",
         stuNo: "",
         name: "",
         orgCode: [],
@@ -386,6 +394,7 @@ export default {
     },
     getData() {
       var requestData = {
+        hasClass:this.formInline.hasClass,
         stuNo: this.formInline.stuNo,
         name: this.formInline.name,
         departmentCode: this.formInline.departmentCode,

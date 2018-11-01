@@ -21,10 +21,16 @@ const createStaff = data =>
         method: 'post',
         data: data
     })
-
+const updateStaffInfo = data =>
+    request({
+        url: "/staInfo/updateStaffInfo.do",
+        method: 'post',
+        data: data
+    })
 
 const importStaff = process.env.BASE_API + "/staInfo/importStaff.do"
 export default {
+    updateStaffInfo,
     queryCurrentOrgStaffList,
     queryOrgByOrgCode,
     createStaff,
