@@ -8,7 +8,7 @@
             <el-input v-model="searchData" placeholder="输入标题搜索"></el-input>
           </el-form-item>
           <el-form-item label="">
-            <el-button type="primary" @click="search">查询</el-button>
+            <el-button type="primary" @click="search" icon="el-icon-search">查询</el-button>
           </el-form-item>
         </el-form>
         <ul class="mp_news_list">

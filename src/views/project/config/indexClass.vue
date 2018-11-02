@@ -2,32 +2,31 @@
   <page>
     <div slot="title">项目配置计划</div>
     <div slot="panel">
-      <ProjectAddSteps :active="1" :steps="steps"></ProjectAddSteps>
-      <br/>
-      <ProjectConfig :hasNext="hasNext"></ProjectConfig>
-      <br/>
+      <el-card>
+        <ProjectAddSteps :active="1" :steps="steps"></ProjectAddSteps>
+        <br />
+        <ProjectConfig :hasNext="hasNext"></ProjectConfig>
+      </el-card>
     </div>
   </page>
 </template>
 <script>
-import ProjectConfig from './_components/ProjectConfigClass'
-import ProjectAddSteps from '../_components/ProjectAddSteps'
-import { mapGetters, mapMutations, mapActions } from 'vuex'
-import commons from '~/utils/common.js'
-import store from '../_store/index.js'
+import ProjectConfig from "./_components/ProjectConfigClass";
+import ProjectAddSteps from "../_components/ProjectAddSteps";
+import { mapGetters, mapMutations, mapActions } from "vuex";
+import commons from "~/utils/common.js";
+import store from "../_store/index.js";
 export default {
-  data(){
+  data() {
     return {
-      hasNext:true,
-      steps:[
-          
-          {
-            title: "配置计划",
-            icon: "el-icon-picture"
-          },
-          
-        ]
-    }
+      hasNext: true,
+      steps: [
+        {
+          title: "配置计划",
+          icon: "el-icon-picture"
+        }
+      ]
+    };
   },
   components: {
     ProjectConfig,
@@ -35,38 +34,38 @@ export default {
   },
   computed: {
     ...mapGetters({
-      getConfig: store.namespace + '/getConfig'
+      getConfig: store.namespace + "/getConfig"
     })
   },
   methods: {
     ...mapMutations({
-      setConfig: store.namespace + '/setConfig'
+      setConfig: store.namespace + "/setConfig"
     }),
     ...mapActions({
-      queryScopeConfigInfo: store.namespace + '/queryScopeDataView'
+      queryScopeConfigInfo: store.namespace + "/queryScopeDataView"
     }),
     doExecute: function() {
-      this.setConfig([7, 8, 9])
+      this.setConfig([7, 8, 9]);
     }
   },
   beforeRouteEnter(to, from, next) {
-    console.log(['config', to, from])
+    console.log(["config", to, from]);
     next(vm => {
-      var scopeId = commons.getRouterParam(to, 'scopeId')
-      var itemId = commons.getRouterParam(to, 'itemId')
+      var scopeId = commons.getRouterParam(to, "scopeId");
+      var itemId = commons.getRouterParam(to, "itemId");
       if (scopeId == null || itemId == null) {
-        console.log('没有传递scopeid and itemId,该页面不能访问')
+        console.log("没有传递scopeid and itemId,该页面不能访问");
       } else {
         //debugger
-        var nextEnable=commons.getRouterParam(to, 'nextEnable');
-        if(nextEnable!=null){
-          vm.hasNext=nextEnable;
+        var nextEnable = commons.getRouterParam(to, "nextEnable");
+        if (nextEnable != null) {
+          vm.hasNext = nextEnable;
         }
-        vm.queryScopeConfigInfo({ 'scopeId': scopeId, 'itemId': itemId })
+        vm.queryScopeConfigInfo({ scopeId: scopeId, itemId: itemId });
       }
-    })
+    });
   }
-}
+};
 </script>
 <style >
 </style>

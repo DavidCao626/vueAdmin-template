@@ -1,43 +1,42 @@
 <template>
-    <div>
-        <page>
-            <div slot="title">申请记录</div>
-        </page>
-        <elx-table-layout>
-            <template slot="headerLeft">
+  <page>
+    <div slot="title">申请记录</div>
+    <div slot="panel">
+      <elx-table-layout>
+        <template slot="headerLeft">
 
-                <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
+          <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
 
-                    <!-- <el-form-item label="记录状态">
+            <!-- <el-form-item label="记录状态">
                         <el-select v-model="formInline.recordState" placeholder="记录状态">
                             <el-option v-for="item in recordStateList" :key="item.value" :value="item.value" :label="item.label"></el-option>
                         </el-select>
                     </el-form-item> -->
 
-                    <el-form-item>
-                        <el-button type="primary" @click="onSubmit">查询</el-button>
-                    </el-form-item>
-                </el-form>
-            </template>
-            <el-table :data="data" style="width: 100%" border size="mini">
-                <el-table-column prop="project_name" label="项目名称">
-                </el-table-column>
-                <el-table-column prop="year_type" label="年度">
-                </el-table-column>
-                <el-table-column prop="job_name" label="岗位名称">
-                </el-table-column>
-                <el-table-column prop="mobile" label="岗位联系人">
-                </el-table-column>
-                <el-table-column prop="state" label="申请状态状态" :formatter="stateFormatter">
-                </el-table-column>
-                <el-table-column prop="apply_time" label="申请时间">
-                </el-table-column>
-                <el-table-column prop="employ_time" label="录用时间">
-                </el-table-column>
-                <el-table-column prop="should_post_time" label="应到岗时间">
-                </el-table-column>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit" icon="el-icon-search">查询</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+        <el-table :data="data" style="width: 100%" border size="mini">
+          <el-table-column prop="project_name" label="项目名称">
+          </el-table-column>
+          <el-table-column prop="year_type" label="年度">
+          </el-table-column>
+          <el-table-column prop="job_name" label="岗位名称">
+          </el-table-column>
+          <el-table-column prop="mobile" label="岗位联系人">
+          </el-table-column>
+          <el-table-column prop="state" label="申请状态状态" :formatter="stateFormatter">
+          </el-table-column>
+          <el-table-column prop="apply_time" label="申请时间">
+          </el-table-column>
+          <el-table-column prop="employ_time" label="录用时间">
+          </el-table-column>
+          <el-table-column prop="should_post_time" label="应到岗时间">
+          </el-table-column>
 
-                <!-- <el-table-column label="操作" width="88" header-align="left" align="center">
+          <!-- <el-table-column label="操作" width="88" header-align="left" align="center">
                     <template slot-scope="scope">
                         <el-dropdown>
                             <el-button size="mini" @click="">
@@ -50,13 +49,14 @@
                         </el-dropdown>
                     </template>
                 </el-table-column> -->
-            </el-table>
-            <template slot="footer">
-                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-                </el-pagination>
-            </template>
-        </elx-table-layout>
+        </el-table>
+        <template slot="footer">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+          </el-pagination>
+        </template>
+      </elx-table-layout>
     </div>
+  </page>
 </template>
 
   <script>

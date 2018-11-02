@@ -1,7 +1,6 @@
 <template>
     <el-steps :active="active" simple finish-status="success">
         <el-step v-for="(i,index) in steps" :key="index" :title="i.title" :icon="i.icon"> </el-step>
-
     </el-steps>
 </template>
 <script>

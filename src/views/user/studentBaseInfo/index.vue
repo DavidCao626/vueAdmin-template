@@ -1,167 +1,166 @@
 <template>
-  <div>
-    <el-dialog title="导入数据" :visible.sync="dialogVisible" width="400px" :before-close="handleClose">
-      <el-upload ref="upfile" class="upload-demo" drag :action="importStudentUrl" :limit='1' :onSuccess="onUploadSuccess">
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处，或
-          <em>点击上传</em>
-        </div>
-        <div class="el-upload__tip" slot="tip">只能上传xls</div>
-      </el-upload>
-      <el-form :model="importForm">
-        <el-form-item label="入学学年">
-          <el-select v-model="importForm.schoolYearId" placeholder="">
-            <el-option v-for="item in schoolYearList" :key="item.id" :value="item.id" :label="item.name"></el-option>
-          </el-select>
+  <page>
+    <div slot="title">学生管理</div>
+    <div slot="header">
+      <el-form :inline="true" :model="formInline" label-positio="right" label-width="80px" size="mini">
+        <el-form-item label="学号:">
+          <el-input v-model="formInline.stuNo" placeholder="学号"></el-input>
         </el-form-item>
-      </el-form>
-
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitimport">确 定</el-button>
-      </span>
-
-    </el-dialog>
-
-    <elx-table-layout>
-      <template slot="headerRight">
-        <el-button-group>
-          <!-- <el-tooltip class="item" effect="dark" content="创建学生" placement="bottom">
-            <el-button plain size="mini" @click="addStu">
-              新建
-            </el-button>
-          </el-tooltip> -->
-          <el-tooltip class="item" effect="dark" content="导入学生" placement="bottom">
-            <el-button plain size="mini" @click="dialogVisible = true">
-              导入
-            </el-button>
-          </el-tooltip>
-          <el-tooltip class="item" effect="dark" content="导出学生" placement="bottom">
-            <el-button plain size="mini">
-              导出
-            </el-button>
-          </el-tooltip>
-        </el-button-group>
-      </template>
-
-      <template slot="headerLeft">
-        <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-          <el-form-item label="学号:">
-            <el-input v-model="formInline.stuNo" placeholder="学号"></el-input>
-          </el-form-item>
-          <el-form-item label="姓名:">
-            <el-input v-model="formInline.name" placeholder="姓名"></el-input>
-          </el-form-item>
-          <el-form-item label="组织机构">
-            <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
-          </el-form-item>
-
-          <el-form-item label="分配班级">
+        <el-form-item label="姓名:">
+          <el-input v-model="formInline.name" placeholder="姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="组织机构:">
+          <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
+        </el-form-item>
+         <el-form-item label="分配班级:">
             <el-select v-model="formInline.hasClass" placeholder="">
               <el-option label="不限" value="0"></el-option>
               <el-option label="是" value="Y"></el-option>
               <el-option label="否" value="N"></el-option>
             </el-select>
           </el-form-item>
+        <el-form-item label="系:">
+          <el-select v-model="formInline.departmentCode" placeholder="" @change="getMajorListAll">
+            <el-option v-for="item in departmentListALL" :key="item.id" :label="item.departmentName" :value="item.code"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="专业:">
+          <el-select v-model="formInline.majorCode" placeholder="">
+            <el-option v-for="item in majorListALL" :key="item.id" :label="item.name" :value="item.code"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="学历:">
+          <el-select v-model="formInline.degreeCode" placeholder="" @change="getMemberTypeALL">
+            <el-option v-for="item in educationLevelListALL" :key="item.id" :label="item.name" :value="item.code"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="成员类型:">
+          <el-select v-model="formInline.stuTypeCode" placeholder="">
+            <el-option v-for="item in memberTypeALL" :key="item.id" :label="item.name" :value="item.code"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="入学学年:">
+          <el-select v-model="formInline.startSchoolYearId" placeholder="">
+            <el-option v-for="item in schoolYearListAll" :key="item.id" :value="item.id" :label="item.name"></el-option>
+          </el-select>
+        </el-form-item>
 
-          <el-form-item label="系">
-            <el-select v-model="formInline.departmentCode" placeholder="" @change="getMajorListAll">
-              <el-option v-for="item in departmentListALL" :key="item.id" :label="item.departmentName" :value="item.code"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="专业">
-            <el-select v-model="formInline.majorCode" placeholder="">
-              <el-option v-for="item in majorListALL" :key="item.id" :label="item.name" :value="item.code"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="学历">
-            <el-select v-model="formInline.degreeCode" placeholder="" @change="getMemberTypeALL">
-              <el-option v-for="item in educationLevelListALL" :key="item.id" :label="item.name" :value="item.code"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="成员类型">
-            <el-select v-model="formInline.stuTypeCode" placeholder="">
-              <el-option v-for="item in memberTypeALL" :key="item.id" :label="item.name" :value="item.code"></el-option>
-            </el-select>
-          </el-form-item>
+        <el-form-item>
+          <div class="header-btn">
+            <el-button type="primary" @click="onSubmit" icon="el-icon-search">查询</el-button>
+            <el-button @click="onSubmit" icon="el-icon-refresh">重置</el-button>
+          </div>
+        </el-form-item>
+      </el-form>
+    </div>
+
+    <div slot="panel">
+      <el-dialog title="导入数据" :visible.sync="dialogVisible" width="400px" :before-close="handleClose">
+        <el-upload ref="upfile" class="upload-demo" drag :action="importStudentUrl" :limit='1' :onSuccess="onUploadSuccess">
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">将文件拖到此处，或
+            <em>点击上传</em>
+          </div>
+          <div class="el-upload__tip" slot="tip">只能上传xls</div>
+        </el-upload>
+        <el-form :model="importForm">
           <el-form-item label="入学学年">
-            <el-select v-model="formInline.startSchoolYearId" placeholder="">
-              <el-option v-for="item in schoolYearListAll" :key="item.id" :value="item.id" :label="item.name"></el-option>
+            <el-select v-model="importForm.schoolYearId" placeholder="">
+              <el-option v-for="item in schoolYearList" :key="item.id" :value="item.id" :label="item.name"></el-option>
             </el-select>
-          </el-form-item>
-
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
         </el-form>
-      </template>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="submitimport">确 定</el-button>
+        </span>
+      </el-dialog>
 
-      <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop: 'name',prop: 'address'}" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="38">
-        </el-table-column>
-        <el-table-column prop="stu_no" label="学号">
-        </el-table-column>
-        <el-table-column prop="name" label="姓名">
-        </el-table-column>
-        <el-table-column prop="nation" label="民族" :formatter="nationFormatter">
-        </el-table-column>
-        <el-table-column prop="sex_type" label="性别" :formatter="sexTypeFormatter">
-        </el-table-column>
-        <el-table-column prop="educational_type" label="学制" :formatter="academicFormatter">
-        </el-table-column>
-        <el-table-column prop="college_social_name" label="学院">
-        </el-table-column>
-        <el-table-column prop="stu_class_social_name" label="班级">
-        </el-table-column>
-        <el-table-column prop="study_degree_name" label="攻读学历">
-        </el-table-column>
-        <el-table-column prop="stu_type_name" label="学生类型">
-        </el-table-column>
-        <el-table-column prop="department_name" label="系">
-        </el-table-column>
-        <el-table-column prop="major_social_name" label="专业">
-        </el-table-column>
-        <el-table-column prop="start_school_year_name" label="入学学年">
-        </el-table-column>
-        <el-table-column label="操作" width="88" header-align="left" align="center">
-          <template slot-scope="scope">
-            <el-dropdown>
-              <el-button size="mini" @click="">
-                <i class="el-icon-arrow-down"></i>
+      <elx-table-layout >
+
+        <template slot="headerRight">
+          <el-button-group>
+            <el-tooltip class="item" effect="dark" content="导入学生" placement="bottom">
+              <el-button plain size="mini" @click="dialogVisible = true">
+                导入
               </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="resignation(scope.row)">任职</el-dropdown-item>
-                <el-dropdown-item @click.native="edit(scope.row)">详情</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </template>
-        </el-table-column>
-        <el-table-column type="expand" label="#" width="42">
-          <template slot-scope="props" style="background-color:#f7f8f9">
-            <el-form label-position="left" inline class="demo-table-expand">
-              <el-form-item label="证件类型:">
-                <span v-html="idTypeFormatter(props.row.identity_type)"></span>
-              </el-form-item>
-              <br />
-              <el-form-item label="证件号码:">
-                <span>{{ props.row.identity_no }}</span>
-              </el-form-item>
-              <br />
-              <el-form-item label="家庭住址:">
-                <span>{{ props.row.postal_address }}</span>
-              </el-form-item>
-            </el-form>
-          </template>
-        </el-table-column>
-      </el-table>
+            </el-tooltip>
+            <el-tooltip class="item" effect="dark" content="导出学生" placement="bottom">
+              <el-button plain size="mini">
+                导出
+              </el-button>
+            </el-tooltip>
+          </el-button-group>
+        </template>
 
-      <template slot="footer">
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-        </el-pagination>
-      </template>
 
-    </elx-table-layout>
-  </div>
+        <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop: 'name',prop: 'address'}" @selection-change="handleSelectionChange">
+          <el-table-column type="selection" width="38">
+          </el-table-column>
+          <el-table-column prop="stu_no" label="学号">
+          </el-table-column>
+          <el-table-column prop="name" label="姓名">
+          </el-table-column>
+          <el-table-column prop="nation" label="民族" :formatter="nationFormatter">
+          </el-table-column>
+          <el-table-column prop="sex_type" label="性别" :formatter="sexTypeFormatter">
+          </el-table-column>
+          <el-table-column prop="educational_type" label="学制" :formatter="academicFormatter">
+          </el-table-column>
+          <el-table-column prop="college_social_name" label="学院">
+          </el-table-column>
+          <el-table-column prop="stu_class_social_name" label="班级">
+          </el-table-column>
+          <el-table-column prop="study_degree_name" label="攻读学历">
+          </el-table-column>
+          <el-table-column prop="stu_type_name" label="学生类型">
+          </el-table-column>
+          <el-table-column prop="department_name" label="系">
+          </el-table-column>
+          <el-table-column prop="major_social_name" label="专业">
+          </el-table-column>
+          <el-table-column prop="start_school_year_name" label="入学学年">
+          </el-table-column>
+          <el-table-column label="操作" width="88" header-align="left" align="center">
+            <template slot-scope="scope">
+              <el-dropdown>
+                <el-button size="mini" @click="">
+                  <i class="el-icon-arrow-down"></i>
+                </el-button>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item @click.native="resignation(scope.row)">任职</el-dropdown-item>
+                  <el-dropdown-item @click.native="edit(scope.row)">详情</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </template>
+          </el-table-column>
+          <el-table-column type="expand" label="#" width="42">
+            <template slot-scope="props" style="background-color:#f7f8f9">
+              <el-form label-position="left" inline class="demo-table-expand">
+                <el-form-item label="证件类型:">
+                  <span v-html="idTypeFormatter(props.row.identity_type)"></span>
+                </el-form-item>
+                <br />
+                <el-form-item label="证件号码:">
+                  <span>{{ props.row.identity_no }}</span>
+                </el-form-item>
+                <br />
+                <el-form-item label="家庭住址:">
+                  <span>{{ props.row.postal_address }}</span>
+                </el-form-item>
+              </el-form>
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <template slot="footer">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+          </el-pagination>
+        </template>
+
+      </elx-table-layout>
+    </div>
+  </page>
 </template>
 
   <script>

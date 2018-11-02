@@ -118,9 +118,6 @@ export default {
 </script>
 
 <style scoped>
-.el-form-item {
-  margin-bottom: 0px;
-}
 .demo-form-inline {
   display: inline !important;
 }

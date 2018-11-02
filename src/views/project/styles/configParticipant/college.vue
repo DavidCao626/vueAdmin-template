@@ -1,23 +1,20 @@
 <template>
-  <div>
-    <projectinfo :item-id="itemId"></projectinfo>
-    <page :Breadcrumb="false">
-      <div slot="title">
-        选择参与者
-      </div>
-      <div slot="panel">
-        <div style="margin-bottom:10px">
-          <el-row :gutter="10">
-          </el-row>
-        </div>
-        <transter :source="source" :service-name="serviceName"></transter>
-      </div>
-    </page>
-  </div>
+  <page :Breadcrumb="false">
+    <div slot="title">
+      选择参与者
+    </div>
+    <div slot="header">
+      <projectinfo :item-id="itemId"></projectinfo>
+    </div>
+
+    <div slot="panel">
+      <transter :source="source" :service-name="serviceName"></transter>
+    </div>
+  </page>
 </template>
 <script>
 import transter from "./_components/ParticipantTranster.vue";
-import projectinfo from "../../_components/itemProjectSimpleInfo"
+import projectinfo from "../../_components/itemProjectSimpleInfo";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import store from "../../_store/index.js";
 import commons from "~/utils/common.js";
@@ -47,7 +44,7 @@ export default {
     })
   },
   beforeRouteEnter(to, from, next) {
-    console.log(["to",to])
+    console.log(["to", to]);
     next(vm => {
       var scopeId = commons.getRouterParam(to, "scopeId");
       vm.scopeId = scopeId;
@@ -57,15 +54,13 @@ export default {
         console.log("没有传递scopeid,该页面不能访问");
       } else {
         vm.serviceName = "collegeGroupReview";
-        vm
-          .queryItemParticipant({
-            scopeId: scopeId,
-            itemId: itemId,
-            serviceName: "collegeGroupReview"
-          })
-          .then(result => {
-            vm.source = result.resBody;
-          });
+        vm.queryItemParticipant({
+          scopeId: scopeId,
+          itemId: itemId,
+          serviceName: "collegeGroupReview"
+        }).then(result => {
+          vm.source = result.resBody;
+        });
       }
     });
   }

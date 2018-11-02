@@ -3,33 +3,10 @@
     <div slot="title">
       选择参与者
     </div>
-
+    <div slot="header">
+      <projectinfo :item-id="itemId"></projectinfo>
+    </div>
     <div slot="panel">
-
-    <projectinfo :item-id="itemId"></projectinfo>
-      <div style="margin-bottom:10px">
-        <!--
-          <el-row :gutter="10">
-            <el-col :span="2" class="input_label">姓名：</el-col>
-            <el-col :span="7">
-              <el-input autosize focus size="mini">
-                <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-              </el-input>
-            </el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-col :span="2" class="input_label">学号：</el-col>
-            <el-col :span="7">
-              <el-input autosize focus size="mini">
-                <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-              </el-input>
-            </el-col>
-            <el-col :span="2">
-              <el-button type="primary" size="mini">查询</el-button>
-            </el-col>
-          </el-row>
-          -->
-      </div>
       <transter :source="source" :service-name="serviceName"></transter>
     </div>
   </page>
@@ -74,15 +51,13 @@ export default {
         console.log("没有传递scopeid,该页面不能访问");
       } else {
         vm.serviceName = "ClassGroupReview";
-        vm
-          .queryItemParticipant({
-            scopeId: scopeId,
-            itemId: itemId,
-            serviceName: "ClassGroupReview"
-          })
-          .then(result => {
-            vm.source = result.resBody;
-          });
+        vm.queryItemParticipant({
+          scopeId: scopeId,
+          itemId: itemId,
+          serviceName: "ClassGroupReview"
+        }).then(result => {
+          vm.source = result.resBody;
+        });
       }
     });
   }

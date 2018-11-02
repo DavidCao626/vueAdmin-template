@@ -1,57 +1,50 @@
 <template>
-    <div>
-        <page>
-            <div slot="title">勤工俭学项目</div>
-        </page>
-        <elx-table-layout>
-            <template slot="headerLeft">
+  <page>
+    <div slot="title">勤工俭学项目</div>
+    <div slot="panel">
+      <elx-table-layout>
+        <template slot="headerLeft">
 
-                <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-                    <el-form-item label="名称">
-                        <el-input v-model="formInline['name']" placeholder="请输入名称"></el-input>
-                    </el-form-item>
-                    <el-form-item label="状态">
-                        <el-select v-model="formInline.projectState" placeholder="岗位状态">
-                            <el-option v-for="item in projectStateList" :key="item.value" :value="item.value" :label="item.label"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="onSubmit">查询</el-button>
-                    </el-form-item>
-                </el-form>
+          <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
+            <el-form-item label="名称:">
+              <el-input v-model="formInline['name']" placeholder="请输入名称"></el-input>
+            </el-form-item>
+            <el-form-item label="状态:">
+              <el-select v-model="formInline.projectState" placeholder="岗位状态">
+                <el-option v-for="item in projectStateList" :key="item.value" :value="item.value" :label="item.label"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit" icon="el-icon-search">查询</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+        <el-table :data="data" style="width: 100%" border size="mini">
+          <el-table-column prop="yearType" label="年度">
+          </el-table-column>
+          <el-table-column prop="name" label="项目名称">
+          </el-table-column>
+          <el-table-column prop="state" label="状态" :formatter="stateFormatter">
+          </el-table-column>
+          <el-table-column prop="startTime" label="开始时间">
+          </el-table-column>
+          <el-table-column prop="endTime" label="结束时间">
+          </el-table-column>
+          <el-table-column prop="createTime" label="创建时间">
+          </el-table-column>
+          <el-table-column label="操作" width="100" header-align="left" align="center">
+            <template slot-scope="scope">
+              <el-button size="mini" plain @click.native="showJob(scope.row)">查看岗位</el-button>
             </template>
-            <el-table :data="data" style="width: 100%" border size="mini">
-                <el-table-column prop="yearType" label="年度">
-                </el-table-column>
-                <el-table-column prop="name" label="项目名称">
-                </el-table-column>
-                <el-table-column prop="state" label="状态" :formatter="stateFormatter">
-                </el-table-column>
-                <el-table-column prop="startTime" label="开始时间">
-                </el-table-column>
-                <el-table-column prop="endTime" label="结束时间">
-                </el-table-column>
-                <el-table-column prop="createTime" label="创建时间">
-                </el-table-column>
-                <el-table-column label="操作" width="88" header-align="left" align="center">
-                    <template slot-scope="scope">
-                        <el-dropdown>
-                            <el-button size="mini" @click="">
-                                <i class="el-icon-arrow-down"></i>
-                            </el-button>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item @click.native="showJob(scope.row)">查看岗位</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <template slot="footer">
-                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-                </el-pagination>
-            </template>
-        </elx-table-layout>
+          </el-table-column>
+        </el-table>
+        <template slot="footer">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+          </el-pagination>
+        </template>
+      </elx-table-layout>
     </div>
+  </page>
 </template>
 
   <script>

@@ -7,7 +7,7 @@
 
                     <template slot="headerLeft">
 
-                        <el-form label-position="left" :inline="true" :model="formInline" size="mini" label-width="100px" class="demo-form-inline">
+                        <el-form label-position="right" :inline="true" :model="formInline" size="mini" label-width="80px" class="demo-form-inline">
 
                             <el-form-item label="所属机构:">
                                 <el-cascader v-model="formInline.orgCode" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
