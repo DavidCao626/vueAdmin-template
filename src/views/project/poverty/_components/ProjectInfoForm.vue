@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-form ref="form.expand" label-position="right" :model="form" label-width="120px" style="margin: 20px;">
-     <el-form-item label="学年">
-            <elx-select v-model="form.expand.schoolYearId" placeholder="请选择" @change="schoolYearChange">
-              <el-option v-for="item in schoolYearList" :key="item.id" :obj="item" :label="item.name" :value="item.id">
-              </el-option>
-            </elx-select>
-          </el-form-item>
+      <el-form-item label="学年">
+        <elx-select v-model="form.expand.schoolYearId" placeholder="请选择" @change="schoolYearChange">
+          <el-option v-for="item in schoolYearList" :key="item.id" :obj="item" :label="item.name" :value="item.id">
+          </el-option>
+        </elx-select>
+      </el-form-item>
       <el-form-item label="名称">
         <el-input v-model="form.expand.name" autosize focus style="width:50%;">
           <i slot="suffix" class="el-icon-edit el-input__icon"></i>
@@ -58,8 +58,6 @@
       <el-form-item label="项目附件:">
         <ProjectAttachmentUplad :fileList2="form.attrDetailBean" :url="uploadAttrUrl" style="width: 30%;" @onSuccess="formUploadOnSuccess"></ProjectAttachmentUplad>
       </el-form-item>
-
-<<<<<<< HEAD
       <el-form-item label="是否生成公告:">
         <el-switch v-model="form.isSendPublicNotice" active-value="Y" inactive-value="N"></el-switch>
       </el-form-item>
@@ -74,22 +72,6 @@
         <el-button type="primary" @click="onSaveAndNext">保存并下发</el-button>
       </el-form-item>
     </el-form>
-=======
-        <el-form-item label="是否生成公告:">
-          <el-switch v-model="form.isSendPublicNotice" active-value="Y" inactive-value="N"></el-switch>
-        </el-form-item>
-        <el-form-item label="公告内容:" v-show="form.isSendPublicNotice=='Y'?true:false">
-          <el-button type="text" @click="tinymceShow=true">编辑内容</el-button>
-          <el-button type="text" v-show="tinymceShow" @click="tinymceShow=false">隐藏内容</el-button>
-          <template >
-            <tinymce :height="300" v-model="form.projectDesc" id='tinymce' v-show="tinymceShow"></tinymce>
-          </template>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSaveAndNext">保存并下发</el-button>
-        </el-form-item>
-      </el-form>
->>>>>>> cdde8b3516b3fe989a4c27062372814aa8e16985
 
   </div>
 </template>
@@ -148,13 +130,23 @@ export default {
     };
   },
   methods: {
+    schoolYearChange(p1, p2, p3, p4) {
+      console.log([p1, p2, p3, p4]);
+      var schoolYearName = p3.obj.name;
+      this.form.expand.name =
+        schoolYearName +
+        this.ioptions.find(el => {
+          return el.classifyCode == this.form.projectServiceType;
+        }).classifyName +
+        "任务";
+    },
+
     getDict() {
       var requestData = {
         dicts: ["study_degree_code", "grade"]
       };
       this.getDictByDictNames(requestData).then(response => {
         this.gradeList = response.resBody.grade;
-        this.stuTypeList = response.resBody.study_degree_code;
       });
       this.queryStuTypeByEducationLevelCode({}).then(response => {
         this.stuTypeList = response.resBody;
