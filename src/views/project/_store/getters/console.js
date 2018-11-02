@@ -30,6 +30,11 @@ export const getInteratedProjectInfo = state => {
   return dispenseView.project
 }
 
+export const getScopeDeployPackage = state => { 
+  var dispenseView = state.scopeIntegratedView;
+  return dispenseView.taskDeployPackage;
+}
+
 
 export const getInteratedScopeInfo = state => {
   var dispenseView = state.scopeIntegratedView
