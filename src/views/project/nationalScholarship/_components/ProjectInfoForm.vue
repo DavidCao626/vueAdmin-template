@@ -4,16 +4,16 @@
       <div slot="panel">
         <div class="pannel_title">项目信息</div>
         <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
+          <el-form-item label="所属学年">
+            <elx-select v-model="form.expand.schoolYearId" placeholder="请选择" @change="schoolYearChange">
+              <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :obj="item" :value="item.id">
+              </el-option>
+            </elx-select>
+          </el-form-item>
           <el-form-item label="名称">
             <el-input v-model="form.expand.name" autosize focus style="width:50%;">
               <i slot="suffix" class="el-icon-edit el-input__icon"></i>
             </el-input>
-          </el-form-item>
-          <el-form-item label="所属学年">
-            <elx-select v-model="form.expand.schoolYearId" placeholder="请选择">
-              <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :value="item.id">
-              </el-option>
-            </elx-select>
           </el-form-item>
           <!-- <el-form-item label="关联测评项目">
             <el-select v-model="form.expand.appraiseProjectCode" placeholder="请选择" no-data-text="无数据,请尝试刷新页面">
@@ -69,6 +69,27 @@
             </el-radio-group>
           </el-form-item>
 
+          <el-form-item label="建档年度综测">
+            <el-radio-group v-model="form.expand.rules.createFileYearAppraisal.flag">
+              <el-radio-button label="Y">是</el-radio-button>
+              <el-radio-button label="N">否</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="建档综测排名" v-show="form.expand.rules.createFileYearAppraisal.flag == 'Y'">
+            <el-input-number v-model="form.expand.rules.createFileYearAppraisal.first" :min="1" label="班级排名"></el-input-number>
+          </el-form-item>
+
+          <el-form-item label="关联学习成绩">
+            <el-radio-group v-model="form.expand.rules.stuScore.flag">
+              <el-radio-button label="Y">是</el-radio-button>
+              <el-radio-button label="N">否</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="学习成绩排名" v-show="form.expand.rules.stuScore.flag == 'Y'">
+            <el-input-number v-model="form.expand.rules.stuScore.first" :min="1" label="班级排名"></el-input-number>
+          </el-form-item>
           <!-- <el-form-item label="体能测试分数" v-show="form.expand.rules.physical.flag == 'Y'">
             <el-input-number v-model="form.expand.rules.physical.score" label="分数"></el-input-number>
           </el-form-item> -->
@@ -188,6 +209,16 @@ export default {
     };
   },
   methods: {
+    schoolYearChange(p1, p2, p3, p4) {
+      console.log([p1, p2, p3, p4]);
+      var schoolYearName = p3.obj.name;
+      this.form.expand.name =
+        schoolYearName +
+        this.ioptions.find(el => {
+          return el.classifyCode == this.form.projectServiceType;
+        }).classifyName +
+        "任务";
+    },
     getDict() {
       var requestData = {
         dicts: ["study_degree_code", "grade"]
@@ -195,9 +226,9 @@ export default {
       this.getDictByDictNames(requestData).then(response => {
         this.gradeList = response.resBody.grade;
       });
-       this.queryStuTypeByEducationLevelCode({}).then(response=>{
-         this.stuTypeList = response.resBody;
-      })
+      this.queryStuTypeByEducationLevelCode({}).then(response => {
+        this.stuTypeList = response.resBody;
+      });
     },
     updateCategory() {
       this.currentCategoryId = this.form.expand.appraiseServiceType;
@@ -222,7 +253,8 @@ export default {
       });
     },
     ...mapActions({
-      queryStuTypeByEducationLevelCode:state.namespace + "/queryStuTypeByEducationLevelCode",
+      queryStuTypeByEducationLevelCode:
+        state.namespace + "/queryStuTypeByEducationLevelCode",
       queryServiceTypeList: state.namespace + "/queryServiceTypeList",
       insertOrUpdateProject: state.namespace + "/insertOrUpdateProject",
       insertOrUpdateAndNext: state.namespace + "/insertOrUpdateAndNext",
@@ -286,7 +318,7 @@ export default {
         attrDetailBean: null,
         expand: {
           id: 0,
-          appraiseProjectCode: '000', //测评项目名称
+          appraiseProjectCode: "000", //测评项目名称
           name: t.expand.name, //名称
           userCode: t.expand.userCode, //编码
           schoolYearId: t.expand.schoolYearId, //学年
@@ -296,7 +328,6 @@ export default {
           rules: t.expand.rules //参与者规则
         }
       };
-
 
       this.insertOrUpdateAndNext(requestData).then(response => {
         this.$message.success("保存成功!");

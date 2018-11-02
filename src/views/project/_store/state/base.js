@@ -54,6 +54,13 @@ export const baseproject = {
                 physical: {
                     flag: "N",
                     score: 0
+                },
+                createFileYearAppraisal: {
+                    flag: "N",
+                    first: 0
+                }, stuScore: {
+                    flag: "N",
+                    first: 0
                 }
             }
         }
@@ -93,6 +100,13 @@ export const baseproject = {
                 physical: {
                     flag: "N",
                     score: 0
+                },
+                createFileYearAppraisal: {
+                    flag: "N",
+                    first: 0
+                }, stuScore: {
+                    flag: "N",
+                    first: 0
                 }
             }
         }
@@ -132,6 +146,13 @@ export const baseproject = {
                 physical: {
                     flag: "N",
                     score: 0
+                },
+                createFileYearAppraisal: {
+                    flag: "N",
+                    first: 0
+                }, stuScore: {
+                    flag: "N",
+                    first: 0
                 }
             }
         }
@@ -195,7 +216,7 @@ export const baseproject = {
             name: "",//名称
             startTime: "",//开始时间
             endTime: "",//结束时间
-            yearType: "2018"//年度
+            yearType: null//年度
         }
     },
     //勤工俭学扩展
@@ -270,7 +291,7 @@ export const baseproject = {
             name: "",//名称
             stuType: [],
             grade: [],
-            dateDue:null//截止日期
+            dateDue: null//截止日期
         }
     },
     tempProjectId: "",//临时储存当前项目id
