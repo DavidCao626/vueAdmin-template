@@ -14,11 +14,11 @@
 
                   <el-tree class="filter-tree" :data="data2" :props="defaultProps" @node-click="nodeClick" :expand-on-click-node="false" :filter-node-method="filterNode" ref="tree2">
                   </el-tree>
-                  <el-button slot="reference" size="mini">查看子任务进度</el-button>
+                  <el-button slot="reference" size="mini" :disabled="getViewChildEnable">查看子任务进度</el-button>
                 </el-popover>
               </div>
               <div style="float: left;margin: -5px auto;">
-                <el-button @click="showScopeData(interatedView.viewAction)" size="mini">查看环节数据</el-button>
+                <el-button @click="showScopeData(interatedView.viewAction)" :disabled="getViewDataEnable" size="mini">查看环节数据</el-button>
               </div>
               <div style="float: left;margin: -5px auto;" v-if="interatedView.expandFunction">
                 <template v-for="(fun,index) in interatedView.expandFunction">
@@ -114,8 +114,33 @@ export default {
     ...mapGetters({
       projectInfo: store.namespace + "/getInteratedProjectInfo",
       interatedView: store.namespace + "/getIntegratedView",
-      scopeInfo: store.namespace + "/getInteratedScopeInfo"
-    })
+      scopeInfo: store.namespace + "/getInteratedScopeInfo",
+      packageInfo:store.namespace+ "/getScopeDeployPackage"
+    }),
+      getViewChildEnable:function(){
+        if(!this.packageInfo){
+          return false;
+        }
+        //console.log(["packageInfo",this.packageInfo]);
+        var disVal=this.packageInfo.inHandlerDisplay;
+        var disEnbaleVal=disVal&1;
+        //console.log(["disVal",disEnbaleVal]);
+        if(disEnbaleVal<1){
+          return true;
+        }
+      },
+      getViewDataEnable:function(){
+        if(!this.packageInfo){
+          return false;
+        }
+        //console.log(["packageInfo",this.packageInfo]);
+         var disVal=this.packageInfo.inHandlerDisplay;
+        var disEnbaleVal=disVal&2;
+        //console.log(["disVal",disEnbaleVal]);
+        if(disEnbaleVal<1){
+          return true;
+        }
+      }
   },
   methods: {
     ...mapActions({
