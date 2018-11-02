@@ -26,27 +26,14 @@
           </el-pagination>
         </template>
       </elx-table-layout>
-      <page>
-        <div slot="panel" style="text-align: right">
-          <el-button size="mini" type="primary" @click="complate">完成</el-button>
-          <el-button size="mini" type="primary" @click="stopScope">终止任务</el-button>
-        </div>
-      </page>
-    </div>
-  </page>
-
-      <template slot="footer">
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-        </el-pagination>
-      </template>
-    </elx-table-layout>
-    <page>
-      <div slot="panel" style="text-align: right">
+      <br />
+      <div tyle="text-align: right">
         <el-button size="mini" type="primary" @click="complate">继续任务</el-button>
         <el-button size="mini" type="primary" @click="stopScope">终止任务</el-button>
       </div>
-    </page>
-  </div>
+      <div class="clearfix"></div>
+    </div>
+  </page>
 </template>
 
   <script>
