@@ -130,6 +130,9 @@ export function updatePublicNotice(data) {
 
   })
 }
+
+
+
 /**
  * 删除公示/公告草稿
  * @param {*} data 

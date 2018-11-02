@@ -6,6 +6,9 @@
 
         <div>
           <el-form :inline="true" :model="searchData" size="mini">
+            <el-form-item label="项目名称:">
+            <el-input v-model="searchData.projectName" placeholder=""></el-input>
+            </el-form-item>
             <el-form-item label="状态:">
               <el-select v-model="searchData.state" placeholder="请选择状态">
                 <el-option v-for="item in stateList" :key="item.value" :label="item.label" :value="item.value">
@@ -71,7 +74,8 @@ export default {
     return {
       searchData: {
         state: "N",
-        type: "A"
+        type: "A",
+        projectName:""
       },
       stateList: [
         { label: "全部", value: "A" },
@@ -175,14 +179,11 @@ export default {
         currentPage: this.currentPage,
         pageSize: this.pageSize,
         type: this.searchData.type,
-        state: this.searchData.state
+        state: this.searchData.state,
+        projectName:this.searchData.projectName
       };
       this.queryPend(requestData).then(response => {
         this.tableData = response.resBody.baseData;
-        console.log([
-          "tableData",
-          moment(this.tableData[0].over_time).format("YYYY-MM-DD HH:mm:ss")
-        ]);
         this.dataTotal = response.resBody.pageInfo.totalRecord;
       });
     }

@@ -16,10 +16,14 @@ const user = {
     name: "",
     avatar: "",
     roles: [],
-    navMenu: []
+    navMenu: [],
+    messageCount:0
   },
 
   mutations: {
+    SET_MESSAGECOUNT:(state, count) => { 
+  state.messageCount = count;
+    },
     SET_TOKEN: (state, token) => {
       state.token = token;
     },
@@ -48,6 +52,10 @@ const user = {
   },
 
   actions: {
+    setMessageCount({ commit }, count) { 
+      commit("SET_MESSAGECOUNT",count)
+    },
+
     Register({ commit }, registerForm) {
       return new Promise((resolve, reject) => {
         uregister(

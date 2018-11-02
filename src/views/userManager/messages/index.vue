@@ -72,7 +72,7 @@ import {
   queryUserNoticeCountByStatus,
   queryUserNoticeCount
 } from "~/api/notice";
-
+import { mapGetters, mapActions } from "vuex";
 var noticeData = [];
 
 export default {
@@ -95,8 +95,13 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      setMessageCount: "setMessageCount"
+    }),
     gotopage(id) {
-      this.changeNoticeStatus(id, "Y");
+      var that = this;
+      this.changeNoticeStatus(id, "Y")
+        
     },
     search() {
       // this.currentShowState
@@ -208,6 +213,13 @@ export default {
         if (that.currentShowState == "N") {
           that.queryDataByStatus("N");
         }
+        queryUserNoticeCountByStatus({
+          status: "N"
+        }).then(data => {
+          // 查未读数量
+          that.noReadNumber = data.resBody.count;
+          that.setMessageCount( data.resBody.count) ;
+        });
       });
     }
   },
@@ -224,6 +236,7 @@ export default {
     }).then(data => {
       // 查未读数量
       that.noReadNumber = data.resBody.count;
+      that.setMessageCount(data.resBody.count);
     });
     queryUserNoticeCount().then(data => {
       // 查全部数量

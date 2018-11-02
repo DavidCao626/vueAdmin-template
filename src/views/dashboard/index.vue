@@ -1,10 +1,10 @@
 <template>
-  <div class="dashboard" >
+  <div class="dashboard">
     <div class="page-box">
       <div class="page-box__1">
         <div class="page-box__block flex">
           <div class="page-box__1">
-            <listbody title="公告栏" :titleUrl="announceMoreUrl" :data="announceDate">
+            <listbody title="公告栏" :titleUrl="announceMoreUrl" :orgTypeList="orgTypeList" :data="announceDate">
 
             </listbody>
           </div>
@@ -13,7 +13,7 @@
       </div>
       <div class="page-box__1">
         <div class="page-box__block">
-          <listbody title="公示栏" :titleUrl="noticeMoreUrl" :data="noticeDate"></listbody>
+          <listbody title="公示栏" :titleUrl="noticeMoreUrl" :orgTypeList="orgTypeList" :data="noticeDate"></listbody>
 
         </div>
 
@@ -36,8 +36,8 @@
             </div>
           </div>
           <hr class="line" />
-    
-         <el-table class="i-cursor" :data="tableData" @row-click="onRowClick" style="width:99%">
+
+          <el-table class="i-cursor" :data="tableData" @row-click="onRowClick" style="width:99%">
             <el-table-column prop="item_name" label="待办事项">
             </el-table-column>
             <el-table-column prop="projectInfo.project_service_type_name" label="业务类别">
@@ -50,13 +50,36 @@
                 <span v-html="overTimeFormatter(scope.row)"></span>
               </template>
             </el-table-column>
-          </el-table> 
+          </el-table>
         </div>
       </div>
 
       <div class="page-box__1">
         <div class="page-box__block">
-          <listbody title="通知栏" :titleUrl="noticeMoreUrl" :data="noticeDate"></listbody>
+          <div class="weui-desktop-home-notice">
+            <div class="weui-desktop-home-notice__info">
+              <i class="el-icon-document"></i>
+              <router-link :to="{path:'/user/messages'}" class="weui-desktop-home-notice__title title">
+                 通知栏 
+              </router-link>
+            </div>
+            <div class="weui-desktop-home-notice__extra">
+              <router-link :to="{path:'/user/messages'}" class="weui-desktop-home-notice__readmore">
+                更多
+              </router-link>
+            </div>
+          </div>
+          <hr class="line" />
+          <div>
+            <ul class="olli">
+              <template v-for="(i,index) in noticeData">
+                <router-link :to="{path:'/user/messages'}">
+                  <li>{{i.title}}
+                  </li>
+                </router-link>
+              </template>
+            </ul>
+          </div>
 
         </div>
 
@@ -103,14 +126,18 @@ export default {
       noticeMoreUrl: "/messages/notice/showlist",
       announceDate: [],
       noticeDate: [],
-      tableData: []
+      tableData: [],
+      orgTypeList: [],
+      noticeData: []
     };
   },
   methods: {
     ...mapActions({
       pullPublicNoticeA: "pullPublicNoticeA",
       pullPublicNoticeP: "pullPublicNoticeP",
-      queryUserPending: "queryUserPending"
+      queryUserPending: "queryUserPending",
+      getOrgTypeDict: "getOrgTypeDict",
+      queryUserNoticeByStatus: "queryUserNoticeByStatus"
     }),
     typeFormatter(row, column, cellValue, index) {
       if (row.pending_type == "Item") {
@@ -119,6 +146,11 @@ export default {
         return "工序";
       }
     },
+    getOrgType() {
+      this.getOrgTypeDict({}).then(response => {
+        this.orgTypeList = response.resBody;
+      });
+    },
     overTimeFormatter(row) {
       var date = row.over_time;
       if (date == undefined) {
@@ -126,6 +158,11 @@ export default {
       }
       return moment(date, "yyyy-MM-DD HH:mm:ss").format("MM-DD HH:mm");
       //return date;
+    },
+    getNoticeData() {
+      this.queryUserNoticeByStatus().then(response => {
+        this.noticeData = response.resBody.baseData;
+      });
     },
     onRowClick(row, event, column) {
       if (row.pending_type == "Item") {
@@ -166,6 +203,8 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
+      vm.getNoticeData();
+      vm.getOrgType();
       vm.pullPublicNoticeA().then(response => {
         console.log(["123123", response]);
         vm.announceDate = [];
@@ -211,7 +250,7 @@ export default {
           vm.noticeDate.push(temp);
         });
       });
-      vm.queryUserPending({state:"N"}).then(response => {
+      vm.queryUserPending({ state: "N" }).then(response => {
         vm.tableData = response.resBody.baseData;
       });
     });
@@ -223,7 +262,22 @@ export default {
   margin-bottom: 5px;
   width: 90px;
 }
-.dashboard{
+.dashboard {
   margin: 10px;
+}
+.olli {
+  margin: 0 20px;
+  line-height: 35px;
+  font-size: 14px;
+  color: #666;
+  & small {
+    color: #999;
+    float: right;
+    font-size: 14px;
+    margin-right: -20px;
+  }
+}
+.title {
+  font-size: 16px;
 }
 </style>

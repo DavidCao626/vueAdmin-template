@@ -1,33 +1,33 @@
 <template>
-    <div>
-        <div class="weui-desktop-home-notice">
-            <div class="weui-desktop-home-notice__info">
-               <i class="el-icon-tickets" v-if="title=='公告栏'"></i>
-              <i class="el-icon-document" v-else></i>
-                <router-link :to="{path:titleUrl}"  class="weui-desktop-home-notice__title title">
-                    {{ title }}
-                </router-link>
-            </div>
-            <div class="weui-desktop-home-notice__extra">
-                <router-link :to="{path:titleUrl}"  class="weui-desktop-home-notice__readmore">
-                    更多
-                </router-link>
-            </div>
-        </div>
-        <hr  class="line" />
-        <div>
-            <ul class="olli">
-                <template v-for="(i,index) in data">
-                    <router-link :to="{path:i.url,query:i.urlParams}">
-                        <li>{{i.title}}
-                            <small>{{i.orgLabel}}&nbsp;&nbsp;&nbsp;{{i.date}}
-                            </small>
-                        </li>
-                    </router-link>
-                </template>
-            </ul>
-        </div>
+  <div>
+    <div class="weui-desktop-home-notice">
+      <div class="weui-desktop-home-notice__info">
+        <i class="el-icon-tickets" v-if="title=='公告栏'"></i>
+        <i class="el-icon-document" v-else></i>
+        <router-link :to="{path:titleUrl}" class="weui-desktop-home-notice__title title">
+          {{ title }}
+        </router-link>
+      </div>
+      <div class="weui-desktop-home-notice__extra">
+        <router-link :to="{path:titleUrl}" class="weui-desktop-home-notice__readmore">
+          更多
+        </router-link>
+      </div>
     </div>
+    <hr class="line" />
+    <div>
+      <ul class="olli">
+        <template v-for="(i,index) in data">
+          <router-link :to="{path:i.url,query:i.urlParams}">
+            <li>{{i.title}}
+              <small v-html="orgLabelFormatter(i.orgLabel)">&nbsp;&nbsp;&nbsp;{{i.date}}
+              </small>
+            </li>
+          </router-link>
+        </template>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -41,10 +41,16 @@ export default {
       type: String,
       default: "/"
     },
-    titleUrlParams:{
+    orgTypeList: {
+      type: Array,
+      function() {
+        return [];
+      }
+    },
+    titleUrlParams: {
       type: Object,
-      default:function(){
-          return {}
+      default: function() {
+        return {};
       }
     },
     data: {
@@ -55,11 +61,22 @@ export default {
             title: "默认标题",
             url: "/",
             date: "",
-            urlParams:{},
-            orgLabel:""
+            urlParams: {},
+            orgLabel: ""
           }
         ];
       }
+    }
+  },
+  methods: {
+    orgLabelFormatter(label) {
+      var a = this.orgTypeList;
+      for (var i = 0; i < a.length; i++) {
+        if (a[i].type == label) {
+          return a[i].name;
+        }
+      }
+      return label;
     }
   }
 };
@@ -68,7 +85,7 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .line {
-  margin-top:5px;
+  margin-top: 5px;
   margin-bottom: 5px;
 }
 .olli {

@@ -23,7 +23,16 @@ const queryUserPending = data =>
         method: 'post',
         data: data
     })
-    
+   
+export function getOrgTypeDict(data) {
+    return request({
+        url: '/publicNotice/getOrgTypeDict.do',
+        method: 'post',
+        data:
+            data
+
+    })
+}
 /**
  * 
  * @param {获取用户相关scope} data 
@@ -34,10 +43,18 @@ const getUserScope = data =>
         method: 'post',
         data: data
     })
+const queryUserNoticeByStatus = data =>
+    request({
+        url: 'notice/queryUserNoticeByStatus.do',
+        method: 'post',
+        data: data
+    })
 
 
 export default {
     pullPublicNotice,
     queryUserPending,
-    getUserScope
+    getUserScope,
+    getOrgTypeDict,
+    queryUserNoticeByStatus
 }

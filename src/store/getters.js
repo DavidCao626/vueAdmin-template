@@ -9,10 +9,10 @@ const getters = {
   name: state => state.user.name,
   roles: state => state.user.roles,
   navMenu: state => state.user.navMenu,
-
   task: state => state.task,
   taskStyleData: state => state.task.taskStyleData,
   taskStyleDataFamily: state => state.task.taskStyleData.fromData.family,
-  projectApply: state => state.task.taskStyleData.fromData.projectApply
+  projectApply: state => state.task.taskStyleData.fromData.projectApply,
+  messageCount :state=>state.user.messageCount
 }
 export default getters

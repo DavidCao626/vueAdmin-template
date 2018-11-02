@@ -120,12 +120,11 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters ,mapActions} from "vuex";
 import { queryUserNoticeCountByStatus } from "~/api/notice";
 export default {
   data() {
     return {
-      messageCount: "",
       dutyRoles: null,
       radio2: "",
       menuRenZhi: [
@@ -152,16 +151,19 @@ export default {
   },
   components: {},
   computed: {
-    ...mapGetters(["sidebar", "avatar", "name", "roles", "user"])
+    ...mapGetters(["sidebar", "avatar", "name", "roles", "user","messageCount"])
   },
   mounted: function() {
+
     var that = this;
     queryUserNoticeCountByStatus({
       status: "N"
     }).then(data => {
       // 查未读数量
-      that.messageCount = data.resBody.count;
+     that.setMessageCount(data.resBody.count);
     });
+
+
   },
   created: function() {
     this.user.roles.forEach(key => {
@@ -174,6 +176,9 @@ export default {
     });
   },
   methods: {
+    ...mapActions({
+      setMessageCount : "setMessageCount"
+    }),
     roleSwitchches(item, rolesItem) {
       if (item.currently === "true") {
         return;

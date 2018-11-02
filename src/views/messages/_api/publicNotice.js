@@ -36,9 +36,17 @@ const insertNotice = data =>
         method: "post",
         data: data
     })
+const getOrgTypeDict = data =>
+    request({
+        url: "/publicNotice/getOrgTypeDict.do",
+        method: "post",
+        data: data
+    })
+
 
 const uploadAttrUrl = process.env.BASE_API + "/project/uploadAttachment.do"
 export default {
+    getOrgTypeDict,
     queryPublicNotice,
     getDictByDictNames,
     getPublicNoticeById,

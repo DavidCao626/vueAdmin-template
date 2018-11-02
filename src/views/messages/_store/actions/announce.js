@@ -37,7 +37,14 @@ const insertNotice = ({ commit, state }, params) =>
             resolve(response);
         })
     })    
+const getOrgTypeDict = ({ commit, state }, params) =>
+    new Promise(resolve => {
+        api.getOrgTypeDict(params).then(response => {
+            resolve(response);
+        })
+    })    
 export default {
+    getOrgTypeDict,
     pullPublicNoticeA,
     queryPublicNoticeA,
     getDictByDictNames,
