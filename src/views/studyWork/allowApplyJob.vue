@@ -1,95 +1,95 @@
 <template>
-  <div>
-    <page>
-      <div slot="title">岗位申请</div>
-    </page>
-    <elx-table-layout>
-      <template slot="headerLeft">
+  <page>
+    <div slot="title">岗位申请</div>
+    <div slot="panel">
+      <elx-table-layout>
+        <template slot="headerLeft">
 
-        <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-          <!-- <el-form-item label="所属项目">
+          <el-form :inline="true" :model="formInline" label-width="120px" label-position="right" size="mini" class="demo-form-inline">
+            <!-- <el-form-item label="所属项目">
             <el-select v-model="formInline.projectId" placeholder="项目">
               <el-option v-for="(item,index) in projectList" :key="index" :value="item.id" :label="item.name"> -->
-                <!-- <span style="float: left">{{ item.label }}</span> -->
-                <!-- <span style="float: right; color: #8492a6; font-size: 13px" v-html="projectState(item.state)"></span> -->
-              <!-- </el-option>
+            <!-- <span style="float: left">{{ item.label }}</span> -->
+            <!-- <span style="float: right; color: #8492a6; font-size: 13px" v-html="projectState(item.state)"></span> -->
+            <!-- </el-option>
             </el-select>
           </el-form-item> -->
-          <el-form-item label="机构">
-            <el-select v-model="formInline.orgCode" placeholder="请选择" no-data-text="暂无可申请岗位">
-              <el-option v-for="(item,index) in orgList" :key="index" :label="item.org_name" :value="item.org_code"></el-option>
+            <el-form-item label="机构:">
+              <el-select v-model="formInline.orgCode" placeholder="请选择" no-data-text="暂无可申请岗位">
+                <el-option v-for="(item,index) in orgList" :key="index" :label="item.org_name" :value="item.org_code"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="岗位状态:">
+              <el-select v-model="formInline.jobState" placeholder="岗位状态">
+                <el-option v-for="item in jobStateList" :key="item.value" :value="item.value" :label="item.label"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="岗位名称:">
+              <el-input v-model="formInline.name" placeholder="岗位名称"></el-input>
+            </el-form-item>
+            <el-form-item label="">
+              <el-button type="primary" @click="onSubmit" icon="el-icon-search">查询</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+        <el-table :data="data" style="width: 100%" border size="mini">
+          <el-table-column prop="name" label="岗位名称">
+          </el-table-column>
+          <el-table-column prop="numbers" label="招聘名额">
+          </el-table-column>
+          <el-table-column prop="state" label="岗位状态" :formatter="stateFormatter">
+          </el-table-column>
+          <el-table-column prop="applyNum" label="申请人数">
+          </el-table-column>
+          <el-table-column prop="noDisposeNum" label="录用人数">
+          </el-table-column>
+          <el-table-column prop="jobDemand" label="岗位要求">
+          </el-table-column>
+          <el-table-column prop="workTime" label="工作时间要求">
+          </el-table-column>
+          <el-table-column prop="monthWorkload" label="月工作时间">
+          </el-table-column>
+          <el-table-column prop="remark" label="备注">
+          </el-table-column>
+          <el-table-column prop="publisherMobile" label="联系电话">
+          </el-table-column>
+          <el-table-column prop="publisherTime" label="发布时间">
+          </el-table-column>
+          <el-table-column label="操作" width="88" header-align="left" align="center">
+            <template slot-scope="scope">
+              <el-dropdown>
+                <el-button size="mini" @click="">
+                  <i class="el-icon-arrow-down"></i>
+                </el-button>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item @click.native="apply(scope.row)">申请</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </template>
+          </el-table-column>
+        </el-table>
+        <template slot="footer">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+          </el-pagination>
+        </template>
+      </elx-table-layout>
+
+      <el-dialog title="请选择" :visible.sync="applyDV">
+        <el-form :model="applyFormData">
+          <el-form-item label="简历">
+            <el-select v-model="applyFormData.resumeId" placeholder="请选择">
+              <el-option v-for="item in resumeList" :key="item.id" :value="item.id" :label="item.name"></el-option>
             </el-select>
-          </el-form-item>
-          <el-form-item label="岗位状态">
-            <el-select v-model="formInline.jobState" placeholder="岗位状态">
-              <el-option v-for="item in jobStateList" :key="item.value" :value="item.value" :label="item.label"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="岗位名称">
-            <el-input v-model="formInline.name" placeholder="岗位名称"></el-input>
-          </el-form-item>
-          <el-form-item label="">
-            <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
         </el-form>
-      </template>
-      <el-table :data="data" style="width: 100%" border size="mini">
-        <el-table-column prop="name" label="岗位名称">
-        </el-table-column>
-        <el-table-column prop="numbers" label="招聘名额">
-        </el-table-column>
-        <el-table-column prop="state" label="岗位状态" :formatter="stateFormatter">
-        </el-table-column>
-        <el-table-column prop="applyNum" label="申请人数">
-        </el-table-column>
-        <el-table-column prop="noDisposeNum" label="录用人数">
-        </el-table-column>
-        <el-table-column prop="jobDemand" label="岗位要求">
-        </el-table-column>
-        <el-table-column prop="workTime" label="工作时间要求">
-        </el-table-column>
-        <el-table-column prop="monthWorkload" label="月工作时间">
-        </el-table-column>
-        <el-table-column prop="remark" label="备注">
-        </el-table-column>
-        <el-table-column prop="publisherMobile" label="联系电话">
-        </el-table-column>
-        <el-table-column prop="publisherTime" label="发布时间">
-        </el-table-column>
-        <el-table-column label="操作" width="88" header-align="left" align="center">
-          <template slot-scope="scope">
-            <el-dropdown>
-              <el-button size="mini" @click="">
-                <i class="el-icon-arrow-down"></i>
-              </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="apply(scope.row)">申请</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </template>
-        </el-table-column>
-      </el-table>
-      <template slot="footer">
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-        </el-pagination>
-      </template>
-    </elx-table-layout>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="applyDV = false">取 消</el-button>
+          <el-button type="primary" @click="applySubmit">确 定</el-button>
+        </div>
+      </el-dialog>
 
-    <el-dialog title="请选择" :visible.sync="applyDV">
-      <el-form :model="applyFormData">
-        <el-form-item label="简历">
-          <el-select v-model="applyFormData.resumeId" placeholder="请选择">
-            <el-option v-for="item in resumeList" :key="item.id" :value="item.id" :label="item.name"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="applyDV = false">取 消</el-button>
-        <el-button type="primary" @click="applySubmit">确 定</el-button>
-      </div>
-    </el-dialog>
-
-  </div>
+    </div>
+  </page>
 </template>
 
   <script>
@@ -116,10 +116,10 @@ export default {
         projectId: null,
         name: "",
         jobState: "",
-        orgCode:""
+        orgCode: ""
       },
       orgProps: {
-         label: "orgName",
+        label: "orgName",
         value: "orgCode",
         children: "children"
       },
@@ -221,7 +221,7 @@ export default {
       getProjectStateDict: store.namespace + "/getProjectStateDict",
       insertApplyRecord: store.namespace + "/insertApplyRecord",
       queryUserResume: store.namespace + "/queryUserResume",
-      queryCanApplyJobOrg:store.namespace + "/queryCanApplyJobOrg"
+      queryCanApplyJobOrg: store.namespace + "/queryCanApplyJobOrg"
     }),
     getResumeList() {
       var requestData = {
@@ -233,17 +233,17 @@ export default {
       });
     },
     getData() {
-      if(this.formInline.orgCode == null ||this.formInline.orgCode == ''){
+      if (this.formInline.orgCode == null || this.formInline.orgCode == "") {
         this.$message.error("请选择一个机构");
         return;
       }
-      var requestData = { 
+      var requestData = {
         currentPage: this.pageInfo.currentPage,
         pageSize: this.pageInfo.pageSize,
         projectId: this.formInline.projectId,
         name: this.formInline.name,
         jobState: this.formInline.jobState,
-        orgCode:this.formInline.orgCode
+        orgCode: this.formInline.orgCode
       };
       //查询数据的方法
       this.queryMyJobList(requestData).then(response => {

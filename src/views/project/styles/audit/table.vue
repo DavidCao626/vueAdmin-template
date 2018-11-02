@@ -15,22 +15,7 @@
                     </el-button-group>
                 </div>
                 <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
-                    <!-- <el-form-item label="业务类别">
-                        <el-select v-model="formInline.region" placeholder="筛选类别">
-                            <el-option label="全部" value="shanghai"></el-option>
-                            <el-option label="贫困建档" value="beijing"></el-option>
-                            <el-option label="助学金" value="beijing2"></el-option>
-                            <el-option label="奖学金" value="beijing3"></el-option>
-                            <el-option label="学生资助" value="beijing4"></el-option>
-                            <el-option label="其他" value="beijing5"></el-option>
-                        </el-select>
-                    </el-form-item> -->
-                    <!-- <el-form-item label="相关项目">
-                        <el-autocomplete v-model="state4" :fetch-suggestions="querySearchAsync" placeholder="请输入相关项目名称" @select="handleSelect"></el-autocomplete>
-                    </el-form-item> -->
-                    <!-- <el-form-item label="上报机构">
-                        <el-autocomplete v-model="state4" :fetch-suggestions="querySearchAsync" placeholder="请输入相关项目名称" @select="handleSelect"></el-autocomplete>
-                    </el-form-item> -->
+                   
                     <el-form-item label="申请人学号">
                         <el-input v-model="formInline.user" placeholder="申请人"></el-input>
                     </el-form-item>

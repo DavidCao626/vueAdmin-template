@@ -1,9 +1,9 @@
 <template>
   <page>
-    <div slot="title">与我相关</div>
+    <div slot="title">与我相关任务</div>
     <div slot="panel">
 
-      <template>
+      <template >
         <el-form :inline="true" :model="searchDataF" class="demo-form-inline" size="mini">
           <el-form-item label="状态:">
             <el-select v-model="searchDataF.state" placeholder="请选择状态">
@@ -20,7 +20,7 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" @click="onSearch">查 询</el-button>
+            <el-button type="primary" @click="onSearch" icon="el-icon-search">查 询</el-button>
           </el-form-item>
         </el-form>
         <el-table class="i-cursor" @row-click="showDetail" :data="tableData" style="width: 100%;margin-top:5px">

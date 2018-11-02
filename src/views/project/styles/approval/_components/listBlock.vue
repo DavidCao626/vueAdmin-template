@@ -274,9 +274,6 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.el-form-item {
-  margin-bottom: 10px;
-}
 .demo-form-inline .el-form-item {
   margin-bottom: 0px;
 }

@@ -1,107 +1,110 @@
 <template>
-  <div>
-    <el-dialog title="导入数据" :visible.sync="dialogVisible" width="400px" :before-close="handleClose">
-      <el-upload class="upload-demo" drag :action="action" :limit='1' @onSuccess="onUploadSuccess">
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处，或
-          <em>点击上传</em>
-        </div>
-        <div class="el-upload__tip" slot="tip">只能上传xlx/xlsx</div>
-      </el-upload>
-    </el-dialog>
+  <page>
+    <div slot="title">职工管理</div>
+    <div slot="panel">
+      <el-dialog title="导入数据" :visible.sync="dialogVisible" width="400px" :before-close="handleClose">
+        <el-upload class="upload-demo" drag :action="action" :limit='1' @onSuccess="onUploadSuccess">
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">将文件拖到此处，或
+            <em>点击上传</em>
+          </div>
+          <div class="el-upload__tip" slot="tip">只能上传xlx/xlsx</div>
+        </el-upload>
+      </el-dialog>
 
-    <elx-table-layout>
-      <template slot="headerRight">
-        <el-button-group>
-          <el-tooltip class="item" effect="dark" content="创建职工" placement="bottom">
-            <el-button plain size="mini" @click="addStu">
-              新建
-            </el-button>
-          </el-tooltip>
-          <el-tooltip class="item" effect="dark" content="导入职工" placement="bottom">
-            <el-button @click="dialogVisible = true" plain size="mini">
-              导入
-            </el-button>
-          </el-tooltip>
-          <el-tooltip class="item" effect="dark" content="导出职工" placement="bottom">
-            <el-button plain size="mini">
-              导出
-            </el-button>
-          </el-tooltip>
-        </el-button-group>
-      </template>
+      <elx-table-layout>
 
-      <template slot="headerLeft">
-        <!-- <span v-if="deleteOpen && isMultipleSelection">
+        <template slot="headerLeft">
+          <!-- <span v-if="deleteOpen && isMultipleSelection">
                     <el-button plain @click="onMultipleSelectionDel" size="mini" style="margin-top: 1px;margin-right: 20px;">
                         <i class="el-icon-delete"> ({{ multipleSelection.length }})</i>
                     </el-button>
                 </span> -->
-        <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-          <el-form-item label="职工号:">
-            <el-input v-model="formInline.staffCode" placeholder="职工号"></el-input>
-          </el-form-item>
-          <el-form-item label="姓名:">
-            <el-input v-model="formInline.name" placeholder="姓名"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
-          </el-form-item>
-        </el-form>
-      </template>
+          <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
+            <el-form-item label="职工号:">
+              <el-input v-model="formInline.staffCode" placeholder="职工号"></el-input>
+            </el-form-item>
+            <el-form-item label="姓名:">
+              <el-input v-model="formInline.name" placeholder="姓名"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit">查询</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
 
-      <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop: 'name',prop: 'address'}" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="38">
-        </el-table-column>
-
-        <el-table-column prop="staff_code" label="职工号">
-        </el-table-column>
-        <el-table-column prop="name" label="姓名">
-        </el-table-column>
-        <el-table-column prop="phone" label="手机号">
-        </el-table-column>
-        <el-table-column prop="org_code" label="所属组织" :formatter="orgFormatter">
-        </el-table-column>
-
-        <el-table-column label="操作" width="88" header-align="left" align="center">
-          <template slot-scope="scope">
-            <el-dropdown>
-              <el-button size="mini" @click="">
-                <i class="el-icon-arrow-down"></i>
+        <template slot="headerRight">
+          <el-button-group>
+            <el-tooltip class="item" effect="dark" content="创建职工" placement="bottom">
+              <el-button plain size="mini" @click="addStu">
+                新建
               </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="edit(scope.row)">修改</el-dropdown-item>
-                <el-dropdown-item @click.native="resignation(scope.row)">任职</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </template>
-        </el-table-column>
-        <el-table-column type="expand" label="#" width="42">
-          <template slot-scope="props" style="background-color:#f7f8f9">
-            <el-form label-position="left" inline class="demo-table-expand">
-              <el-form-item label="职工号:">
-                <span>{{ props.row.staff_code }}</span>
-              </el-form-item>
-              <br />
-              <el-form-item label="姓名:">
-                <span>{{ props.row.name }}</span>
-              </el-form-item>
-              <br />
-              <el-form-item label="手机号:">
-                <span>{{ props.row.phone }}</span>
-              </el-form-item>
-            </el-form>
-          </template>
-        </el-table-column>
-      </el-table>
+            </el-tooltip>
+            <el-tooltip class="item" effect="dark" content="导入职工" placement="bottom">
+              <el-button @click="dialogVisible = true" plain size="mini">
+                导入
+              </el-button>
+            </el-tooltip>
+            <el-tooltip class="item" effect="dark" content="导出职工" placement="bottom">
+              <el-button plain size="mini">
+                导出
+              </el-button>
+            </el-tooltip>
+          </el-button-group>
+        </template>
 
-      <template slot="footer">
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-        </el-pagination>
-      </template>
+        <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop: 'name',prop: 'address'}" @selection-change="handleSelectionChange">
+          <el-table-column type="selection" width="38">
+          </el-table-column>
 
-    </elx-table-layout>
+          <el-table-column prop="staff_code" label="职工号">
+          </el-table-column>
+          <el-table-column prop="name" label="姓名">
+          </el-table-column>
+          <el-table-column prop="phone" label="手机号">
+          </el-table-column>
+          <el-table-column prop="org_code" label="所属组织" :formatter="orgFormatter">
+          </el-table-column>
 
+          <el-table-column label="操作" width="88" header-align="left" align="center">
+            <template slot-scope="scope">
+              <el-dropdown>
+                <el-button size="mini" @click="">
+                  <i class="el-icon-arrow-down"></i>
+                </el-button>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item @click.native="edit(scope.row)">修改</el-dropdown-item>
+                  <el-dropdown-item @click.native="resignation(scope.row)">任职</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </template>
+          </el-table-column>
+          <el-table-column type="expand" label="#" width="42">
+            <template slot-scope="props" style="background-color:#f7f8f9">
+              <el-form label-position="left" inline class="demo-table-expand">
+                <el-form-item label="职工号:">
+                  <span>{{ props.row.staff_code }}</span>
+                </el-form-item>
+                <br />
+                <el-form-item label="姓名:">
+                  <span>{{ props.row.name }}</span>
+                </el-form-item>
+                <br />
+                <el-form-item label="手机号:">
+                  <span>{{ props.row.phone }}</span>
+                </el-form-item>
+              </el-form>
+            </template>
+          </el-table-column>
+        </el-table>
+
+        <template slot="footer">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+          </el-pagination>
+        </template>
+
+      </elx-table-layout>
+    </div>
     <el-dialog title="修改" :visible.sync="updateDV" width="30%">
       <el-form :model="updateForm" label-width="80px">
         <el-form-item label="职工号">
@@ -119,8 +122,7 @@
         <el-button type="primary" @click="submitEdit">确 定</el-button>
       </span>
     </el-dialog>
-
-  </div>
+  </page>
 </template>
 
   <script>

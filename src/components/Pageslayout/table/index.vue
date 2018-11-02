@@ -137,7 +137,4 @@ export default {
   -webkit-box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.05);
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.05);
 }
-.el-form-item {
-  margin-bottom: 0px;
-}
 </style>

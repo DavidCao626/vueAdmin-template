@@ -30,12 +30,12 @@
 
             <td v-for="(item,ii) in i.expand">{{ item.value }}</td>
             <td v-for="(items,n) in i.options">
-              <el-input-number size="mini" v-model="items.option.score" :min="0" :max="items.expand.maxScore"></el-input-number>
+              <el-input size="mini" v-model="items.option.score" :min="0" :max="items.expand.maxScore"></el-input>
             </td>
           </tr>
         </table>
       </div>
-      
+
       <div class="approval-panel  footer-toolbar clearfix">
         <div class="footer-toolbar__pagination">
           <el-button type="primary" @click="submit">提交</el-button>
@@ -83,6 +83,10 @@ export default {
   methods: {
     submit() {
       this.submitQuestionBean({ scopeId: this.scopeId, itemId: this.itemId });
+      this.$message({
+        message: "提交成功",
+        type: "success"
+      });
       this.$router.go(-1);
     },
     ...mapActions({

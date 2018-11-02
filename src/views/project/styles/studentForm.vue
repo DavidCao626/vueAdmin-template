@@ -1,63 +1,65 @@
 <template>
   <div>
-    <page style="width: 1000px;margin: 0 auto;" :Breadcrumb="false">
-      <!-- <div slot="title">学生业务申请</div> -->
-      <div slot="panel">
+    <page :Breadcrumb="false">
+      <div slot="title">学生业务申请</div>
+      <div slot="header">
+        <proInfo :itemId="itemId"></proInfo>
+      </div>
+      <div slot="panel" style="width: 1000px;margin: 0 auto;">
         <h2>{{formTitle}}</h2>
         <hr />
-        <proInfo :itemId="itemId"></proInfo>
         <h4 v-if="formFiles.length>0">
           下载附件：
           <div>
             <a v-for="(i,index) in formFiles" :key="index" :href="i.url">{{i.name}} &nbsp;&nbsp; </a>
           </div>
         </h4>
-      </div>
-    </page>
-    <page style="width: 1000px;margin: 0 auto;">
-      <div slot="panel">
-        <h3 style="font-weight:400">一、填写申请信息</h3>
+
+        <h3 style="font-weight:400">填写申请信息</h3>
         <hr />
-        <el-form ref="form" :model="form" label-width="120px">
+        <el-form ref="form" :model="form" label-position="right" label-width="120px">
           <el-row>
             <el-col :span="10">
-              <el-form-item label="学生姓名">
+              <el-form-item label="学生姓名:">
                 <el-input v-model="form.username" disabled></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="10" :offset="1">
-              <el-form-item label="学号">
+              <el-form-item label="学号:">
                 <el-input v-model="form.number" disabled></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="21">
-              <el-form-item label="所在班级">
+              <el-form-item label="所在班级:">
                 <el-input v-model="form.class" disabled></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="10">
-              <el-form-item label="业务类别">
+              <el-form-item label="业务类别:">
                 <el-input v-model="form.type" disabled></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="10" :offset="1">
-              <el-form-item label="申请子业务类别">
+          </el-row>
+          <el-row>
+            <el-col :span="21">
+
+              <el-form-item label="申请子业务类别:">
                 <el-select v-model="form.typeValue" placeholder="请选择">
                   <el-option v-for="item in form.options" :key="item.value" :label="item.label" :value="item.value">
                   </el-option>
                 </el-select>
               </el-form-item>
+
             </el-col>
           </el-row>
-
           <el-row>
             <el-col :span="21">
 
-              <el-form-item label="主要原因">
+              <el-form-item label="主要原因:">
                 <el-select v-model="form.mainReason" placeholder="请选择">
                   <el-option v-for="item in reasonList" :key="item['dict_desc']" :label="item['dict_desc']" :value="item['dict_desc']">
                   </el-option>
@@ -68,14 +70,14 @@
           </el-row>
           <el-row>
             <el-col :span="21">
-              <el-form-item label="申请理由">
+              <el-form-item label="申请理由:">
                 <el-input type="textarea" :rows="3" v-model="form.desc"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="21">
-              <el-form-item label="相关附件">
+              <el-form-item label="相关附件:">
                 <el-upload class="upload-demo" :action="uploadAttrUrl" :on-preview="handlePreview" :on-success="handleSuccess" :on-remove="handleRemove" :before-remove="beforeRemove" multiple :limit="3" :on-exceed="handleExceed" :file-list="form.fileList">
                   <el-button size="small" type="primary">点击上传</el-button>
                   <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -88,58 +90,11 @@
 
       </div>
     </page>
-    <!-- <page style="width: 1000px;margin: 0 auto;" v-if="hasEconmyData">
+    <page style="width: 1000px;margin: 0 auto;">
       <div slot="panel">
-        <h3 style="font-weight:400">二、家庭情况信息 <el-button type="text" @click="editEn">修改</el-button>
-        </h3>
-        <hr />
-        <el-form disabled="" ref="form" :model="form" label-width="120px" size="small">
-          <el-row>
-            <el-col :span="10">
-              <el-form-item label="家庭人口数">
-                <el-input v-model="form.familyNumber" type="Number"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="10" :offset="1">
-              <el-form-item label="家庭情况">
-                <el-radio-group v-model="form.familyStatus">
-                  <el-radio-button label="S">双亲</el-radio-button>
-                  <el-radio-button label="D">单亲</el-radio-button>
-                  <el-radio-button label="G">孤儿</el-radio-button>
-                </el-radio-group>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="10">
-              <el-form-item label="是否低保">
-                <el-switch v-model="form.isSubsistenceAllowance" active-value="Y" inactive-value="N"></el-switch>
-              </el-form-item>
-            </el-col>
-            <el-col :span="10" :offset="1">
-              <el-form-item label="是否建档立卡">
-                <el-switch v-model="form.isRecord" active-value="Y" inactive-value="N"></el-switch>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="10">
-              <el-form-item label="人均月收入">
-                <el-input v-model="form.income" type="Number" placeholder="单位（元）"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-      </div>
-    </page> -->
 
-    <!-- <page style="width: 1000px;margin: 0 auto;" v-else>
-      <div slot="panel">
-        <h3 style="font-weight:400">二、家庭情况信息 <el-button type="text" @click="createjiating">创建家庭信息</el-button>
-        </h3>
-        <hr />
       </div>
-    </page> -->
+    </page>
 
     <page style="width: 1000px;margin: 0 auto;">
       <div slot="panel">

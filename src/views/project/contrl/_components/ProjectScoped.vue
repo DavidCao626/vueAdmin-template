@@ -14,7 +14,7 @@
   </div> -->
   <div>
      <p>环节机构名称：{{ scopeInfo.orgName }}</p>
-     <p>环节开始时间：{{scopeInfo.planStartTime}}</p>
+     <p>环节开始时间：{{ scopeInfo }}.planStartTime}}</p>
       <p>环节结束时间：{{scopeInfo.planEndTime}}</p>
   </div>
 </template>

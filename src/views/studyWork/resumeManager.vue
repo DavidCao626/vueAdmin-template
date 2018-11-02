@@ -1,45 +1,45 @@
 <template>
-    <div>
-        <page>
-            <div slot="title">简历管理</div>
-        </page>
-        <elx-table-layout>
-            <template slot="headerRight">
-                <el-button-group>
-                    <el-tooltip class="item" effect="dark" content="新增简历" placement="bottom">
-                        <el-button @click="insertResume" plain size="mini">
-                            新增简历
-                        </el-button>
-                    </el-tooltip>
-                </el-button-group>
+  <page>
+    <div slot="title">简历管理</div>
+    <div slot="panel">
+      <elx-table-layout>
+        <template slot="headerRight">
+          <el-button-group>
+            <el-tooltip class="item" effect="dark" content="新增简历" placement="bottom">
+              <el-button @click="insertResume" plain size="mini">
+                新增简历
+              </el-button>
+            </el-tooltip>
+          </el-button-group>
+        </template>
+        <el-table :data="data" style="width: 100%" border size="mini">
+          <el-table-column prop="name" label="简历名称">
+          </el-table-column>
+          <el-table-column prop="createTime" label="创建时间">
+          </el-table-column>
+          <el-table-column prop="lastUpdateTime" label="最后修改时间">
+          </el-table-column>
+          <el-table-column label="操作" width="88" header-align="left" align="center">
+            <template slot-scope="scope">
+              <el-dropdown>
+                <el-button size="mini" @click="">
+                  <i class="el-icon-arrow-down"></i>
+                </el-button>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item @click.native="updateResume(scope.row)">更新</el-dropdown-item>
+                  <el-dropdown-item @click.native="deleteResumex(scope.row)">删除</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
             </template>
-            <el-table :data="data" style="width: 100%" border size="mini">
-                <el-table-column prop="name" label="简历名称">
-                </el-table-column>
-                <el-table-column prop="createTime" label="创建时间">
-                </el-table-column>
-                <el-table-column prop="lastUpdateTime" label="最后修改时间">
-                </el-table-column>
-                <el-table-column label="操作" width="88" header-align="left" align="center">
-                    <template slot-scope="scope">
-                        <el-dropdown>
-                            <el-button size="mini" @click="">
-                                <i class="el-icon-arrow-down"></i>
-                            </el-button>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item @click.native="updateResume(scope.row)">更新</el-dropdown-item>
-                                <el-dropdown-item @click.native="deleteResumex(scope.row)">删除</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <template slot="footer">
-                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-                </el-pagination>
-            </template>
-        </elx-table-layout>
+          </el-table-column>
+        </el-table>
+        <template slot="footer">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+          </el-pagination>
+        </template>
+      </elx-table-layout>
     </div>
+  </page>
 </template>
 
   <script>

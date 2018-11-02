@@ -19,7 +19,7 @@
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSearch">查 询</el-button>
+              <el-button type="primary" @click="onSearch" icon="el-icon-search">查 询</el-button>
             </el-form-item>
           </el-form>
         </div>

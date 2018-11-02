@@ -2,22 +2,22 @@
   <page :Breadcrumb="false">
     <div slot="title">编辑公示</div>
     <div slot="panel">
-
-      <proInfo :item-id="itemId"></proInfo>
-       <br/>
-      <div>
-        <el-select v-model="tempContent" placeholder="选择公示模版" @change="selectChange">
-          <el-option v-for="(item,index) in templateList" :key="index" :label="'模板'+(index+1)" :value="item.content">
-          </el-option>
-        </el-select>
-      </div>
-      <br/>
-      <tinymce :height="300" v-model="content" id='tinymce' ref="tinymcs"></tinymce>
-      </br>
-      <div id="sub">
-        <el-button type="success" @click="onSubmit">提交</el-button>
-      </div>
-
+      <el-card>
+        <proInfo :item-id="itemId"></proInfo>
+        <br />
+        <div>
+          <el-select v-model="tempContent" placeholder="选择公示模版" @change="selectChange">
+            <el-option v-for="(item,index) in templateList" :key="index" :label="'模板'+(index+1)" :value="item.content">
+            </el-option>
+          </el-select>
+        </div>
+        <br />
+        <tinymce :height="300" v-model="content" id='tinymce' ref="tinymcs"></tinymce>
+        </br>
+        <div id="sub">
+          <el-button type="success" @click="onSubmit">提交</el-button>
+        </div>
+      </el-card>
     </div>
   </page>
 </template>

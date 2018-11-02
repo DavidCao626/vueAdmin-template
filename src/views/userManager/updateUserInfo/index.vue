@@ -1,22 +1,22 @@
 <template>
-  <page id="bodybox" style="width: 400px;">
+  <page id="bodybox" >
     <span slot="title">账户详情</span>
     <div slot="panel" >
-          <div v-loading="loading">
-            <el-form style="width: 90%;" ref="form1" label-width="80px" size="mini" :model="userInfoFormStore.formData.data" :rules="userInfoFormStore.formData.rules">
-              <el-form-item label="登录名" prop="login_name">
+          <div v-loading="loading" style="width: 550px;margin: 20px auto 30px;">
+            <el-form  ref="form1" label-width="80px" size="mini" :model="userInfoFormStore.formData.data" >
+              <el-form-item label="登录名:" prop="login_name">
                 <el-input size="mini" v-model="userInfoFormStore.formData.data.login_name" disabled></el-input>
               </el-form-item>
-              <el-form-item label="用户昵称" prop="nick_name">
+              <el-form-item label="用户昵称:" prop="nick_name">
                 <el-input size="mini" v-model="userInfoFormStore.formData.data.nick_name"></el-input>
               </el-form-item>
-              <el-form-item label="移动电话" prop="mobile_phone">
+              <el-form-item label="移动电话:" prop="mobile_phone">
                 <el-input size="mini" v-model="userInfoFormStore.formData.data.mobile_phone"></el-input>
               </el-form-item>
-              <el-form-item label="QQ号码" prop="qq">
+              <el-form-item label="QQ号码:" prop="qq">
                 <el-input size="mini" v-model="userInfoFormStore.formData.data.qq"></el-input>
               </el-form-item>
-              <el-form-item label="电子邮件" prop="email">
+              <el-form-item label="电子邮件:" prop="email">
                 <el-input size="mini" v-model="userInfoFormStore.formData.data.email"></el-input>
               </el-form-item>
               <el-form-item>

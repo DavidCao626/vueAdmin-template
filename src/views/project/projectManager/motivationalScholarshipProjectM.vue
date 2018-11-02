@@ -1,8 +1,7 @@
 <template>
-  <div>
     <page>
       <div slot="title">励志奖学金项目管理</div>
-    </page>
+      <div slot="panel">
     <elx-table-layout>
       <template slot="headerRight">
         <el-button-group>
@@ -69,6 +68,7 @@
       </template>
     </elx-table-layout>
   </div>
+  </page>
 </template>
 
   <script>
@@ -224,9 +224,6 @@ export default {
 </script>
 
 <style scoped>
-.el-form-item {
-  margin-bottom: 0px;
-}
 .demo-form-inline {
   display: inline !important;
 }
