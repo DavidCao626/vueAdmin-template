@@ -1,7 +1,7 @@
 <template>
   <page>
     <div slot="title">
-      学院审核
+      学院环节数据
     </div>
     <slot name="header">
       <div class="approval-panel" style="">

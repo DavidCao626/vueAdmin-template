@@ -39,6 +39,7 @@
             <el-input v-model="formInline.user" placeholder="申请人"></el-input>
           </el-form-item>
           <el-form-item>
+             <el-button size="mini" @click="zancun">暂存</el-button>
             <el-button type="primary" @click="onSubmit">查 询</el-button>
           </el-form-item>
         </el-form>
@@ -168,6 +169,10 @@ export default {
       this.currentPage = val;
       this.getData();
     },
+     zancun(){
+      this.$router.go(-1);
+    },
+
     commitData() {
       this.submitClassData({ itemId: this.itemId }).then(response => {
         this.completeUserPendingByItemId({ itemId: this.itemId }).then(res => {

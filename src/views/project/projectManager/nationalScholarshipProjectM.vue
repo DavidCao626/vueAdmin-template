@@ -50,18 +50,12 @@
         </el-table-column>
         <el-table-column prop="create_time" label="创建时间">
         </el-table-column>
-        <!-- <el-table-column label="操作" width="88" header-align="left" align="center">
-                    <template slot-scope="scope">
-                        <el-dropdown>
-                            <el-button size="mini" @click="">
-                                <i class="el-icon-arrow-down"></i>
-                            </el-button>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item @click.native="showProspectus(scope.row)">查阅计划书</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
-                    </template>
-                </el-table-column> -->
+       <el-table-column label="操作" width="88" header-align="left" align="center">
+          <template slot-scope="scope">
+            <el-button @click="showResult(scope.row)" :disabled="scope.row.state != 'CO'">查看结果</el-button>
+          </template>
+        </el-table-column>
+
       </el-table>
       <template slot="footer">
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
@@ -100,6 +94,15 @@ export default {
   },
   watch: {},
   methods: {
+    showResult(row) {
+      var id = row.id;
+      this.$router.push({
+        path:"/project/gjjxjResult",
+        query:{
+          projectId:id
+        }
+      })
+    },
     gradeFormatter(r, c, v, i) {
       if (v == null || v.length == 0) {
         return;

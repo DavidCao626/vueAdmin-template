@@ -44,7 +44,7 @@
                                 <i class="el-icon-star-off" :class="{'messages-mark__true':isMarkForMessage}"></i>
                             </span> -->
               <span class="messages-time">&nbsp;{{notice.sendTime}}</span>
-              <span class="messages-author">来源&nbsp;:&nbsp;{{notice.source}}</span>
+              <!-- <span class="messages-author">来源&nbsp;:&nbsp;{{notice.source}}</span> -->
             </template>
             <div class="messages-body">
               <div v-html="notice.content" @click="gotopage(notice.id)">{{notice.content}}</div>

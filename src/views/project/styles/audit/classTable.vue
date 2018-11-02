@@ -133,6 +133,7 @@
     </div>
 
     <div class="approval-panel" style="text-align: center;">
+       <el-button size="mini" @click="zancun">暂存</el-button>
       <el-button size="mini" @click="commitData">提交</el-button>
     </div>
   </page>
@@ -148,6 +149,10 @@ export default {
     projectinfo
   },
   methods: {
+     zancun(){
+      this.$router.go(-1);
+    },
+
     filterTag(value, row) {
       //本页过滤状态
       return row.isDot === value;

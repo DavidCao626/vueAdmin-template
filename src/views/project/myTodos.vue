@@ -157,7 +157,7 @@ export default {
       if (date == undefined) {
         return "";
       }
-      return moment(date).format("YYYY-MM-DD");
+      return moment(date).format("YYYY-MM-DD hh:mm");
       //return date;
     },
     handleSizeChange(val) {

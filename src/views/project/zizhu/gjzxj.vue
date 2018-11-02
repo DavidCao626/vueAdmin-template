@@ -14,8 +14,14 @@
 
               </el-form-item>
               <el-form-item label="所属学年:">
-                <el-select v-model="formInline.schoolYearId" placeholder="全部">
+                <el-select v-model="formInline.schoolYearId" placeholder="全部" @change="schoolYearIdChange">
                   <el-option v-for="(item,i) in schoolYearDict" :key="i" :label="item.name" :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="所属项目:">
+                <el-select ref="projectSelect" v-model="formInline.projectId" placeholder="全部">
+                  <el-option v-for="(item,i) in projectList" :key="i" :label="item.name" :value="item.id">
                   </el-option>
                 </el-select>
               </el-form-item>
@@ -72,13 +78,16 @@ export default {
   mixins: [elxTable, results],
   data() {
     return {
+      projectList: [{ id: 0, name: "全部" }],
       schoolYearDict: [],
       formInline: {
+        projectId: 0,
         stuNo: "",
         name: "",
-        schoolYearId: "",
+        schoolYearId: 0,
         orgCode: []
       },
+
       orgList: [],
       childServiceTypeList: [],
       orgProps: {
@@ -90,12 +99,32 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
+      vm.schoolYearIdChange(0)
+       if (to.query.projectId) {
+        vm.formInline.projectId = to.query.projectId;
+        vm.getData();
+      }
       vm.getSchoolYearDict();
       vm.getOrgList();
       vm.getChildServiceTypeList();
+      
     });
   },
   methods: {
+     schoolYearIdChange(v) {
+      
+       this.formInline.projectId = 0;
+      this.queryNationalGrantsProject({
+        state: "CO",
+        currentPage: "1",
+        pageSize: "99999",
+        yearType: v
+      }).then(response => {
+        this.projectList = response.resBody.baseData;
+        this.projectList.unshift({ id: 0, name: "全部" });
+      });
+    },
+
     schoolRecommendFormatter(r, c, v, i) {
       var arr = this.childServiceTypeList;
       for (var j = 0; j < arr.length; j++) {
@@ -104,15 +133,17 @@ export default {
         }
       }
     },
-    refresh() {
+   refresh() {
       this.formInline = {
         stuNo: "",
         name: "",
-        schoolYearId: "",
-        orgCode: []
+        schoolYearId: 0,
+        orgCode: [],
+        projectId: 0,
       };
       this.getData();
     },
+
 
     dateFormat: function(row, column) {
       var date = row[column.property];
@@ -145,11 +176,13 @@ export default {
 
     getData() {
       this.data = [];
-      var requestData = {
+       var requestData = {
+        projectId: this.formInline.projectId,
         stuNo: this.formInline.stuNo,
         schoolYearId: this.formInline.schoolYearId,
         stuName: this.formInline.name
       };
+
       if (this.formInline.orgCode.length > 0) {
         requestData.orgCode = this.formInline.orgCode[
           this.formInline.orgCode.length - 1

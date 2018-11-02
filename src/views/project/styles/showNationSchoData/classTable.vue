@@ -1,7 +1,7 @@
 <template>
   <page>
     <div slot="title">
-      班级审核
+      班级环节数据
     </div>
     <slot name="header">
       <div class="approval-panel" style="">

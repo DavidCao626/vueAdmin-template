@@ -1,7 +1,7 @@
 <template>
   <page>
     <div slot="title">
-      学校审核
+      学校环节数据
     </div>
     <slot name="header">
       <div class="approval-panel" style="">
