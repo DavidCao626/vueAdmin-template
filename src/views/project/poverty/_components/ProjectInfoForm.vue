@@ -1,12 +1,12 @@
 <template>
   <div>
     <el-form ref="form.expand" label-position="right" :model="form" label-width="120px" style="margin: 20px;">
-      <el-form-item label="学年">
+      <el-option label="学年">
         <elx-select v-model="form.expand.schoolYearId" placeholder="请选择" @change="schoolYearChange">
           <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :obj="item" :value="item.id">
           </el-option>
         </elx-select>
-      </el-form-item>
+      </el-option>
       <el-form-item label="名称">
         <el-input v-model="form.expand.name" autosize focus style="width:50%;">
           <i slot="suffix" class="el-icon-edit el-input__icon"></i>
