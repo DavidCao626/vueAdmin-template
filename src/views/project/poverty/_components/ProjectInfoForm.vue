@@ -6,6 +6,12 @@
   <div class="pannel_title">项目信息</div>
 
         <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
+          <el-form-item label="学年">
+            <elx-select v-model="form.expand.schoolYearId" placeholder="请选择" @change="schoolYearChange">
+              <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :obj="item" :value="item.id">
+              </el-option>
+            </elx-select>
+          </el-form-item>
           <el-form-item label="名称">
             <el-input v-model="form.expand.name" autosize focus style="width:50%;">
               <i slot="suffix" class="el-icon-edit el-input__icon"></i>
@@ -16,12 +22,11 @@
               <i slot="suffix" class="el-icon-edit el-input__icon"></i>
             </el-input>
           </el-form-item>
-          <el-form-item label="学年">
-            <elx-select v-model="form.expand.schoolYearId" placeholder="请选择">
-              <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :value="item.id">
-              </el-option>
-            </elx-select>
-          </el-form-item>
+
+ 
+
+
+
           <el-form-item label="学生类别">
             <el-checkbox-group v-model="form.expand.stuType" :min="1">
               <el-checkbox v-for="item in stuTypeList" :label="item.code" :key="item.code">{{item.name}}</el-checkbox>
@@ -144,6 +149,16 @@ export default {
     };
   },
   methods: {
+     schoolYearChange(p1, p2, p3, p4) {
+      console.log([p1, p2, p3, p4]);
+      var schoolYearName = p3.obj.name;
+      this.form.expand.name =
+        schoolYearName +
+        this.ioptions.find(el => {
+          return el.classifyCode == this.form.projectServiceType;
+        }).classifyName +
+        "任务";
+    },
     getDict() {
       var requestData = {
         dicts: ["study_degree_code", "grade"]

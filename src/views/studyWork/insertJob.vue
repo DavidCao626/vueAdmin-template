@@ -2,7 +2,7 @@
     <div>
         <page>
             <div slot="title">岗位发布</div>
-            <div slot="panel">
+            <!-- <div slot="panel">
                 <el-form :model="headerForm" label-width="100px">
                     <el-form-item label="项目">
                         <elx-select v-model="headerForm.projectId" placeholder="" @change="projectChange">
@@ -10,7 +10,7 @@
                         </elx-select>
                     </el-form-item>
                 </el-form>
-            </div>
+            </div> -->
         </page>
 
         <page v-for="(formData,index) in dataSource" :key="index">
@@ -182,16 +182,22 @@ export default {
       this.dataSource.forEach(item => {
         item.projectId = that.headerForm.projectId;
         item.projectCode = that.headerForm.projectCode;
-        that.insertJob(item).then(response => {});
+        that.insertJob(item).then(response => {
+            this.$message.success("成功!");
+            this.$router.go(-1);
+
+
+        });
       });
-      this.$message.success("成功!");
-      this.$router.go(-1);
     },
     projectChange(val, vueCom, obj) {
       this.headerForm.projectCode = obj.obj.code;
     },
     getProjectList() {
       this.queryAllowPublishJobProject({}).then(response => {
+          if(response.resBody.length == 0){
+              this.$message.error("当前不存在可发布岗位的项目")
+          }
         this.projectList = response.resBody;
       });
     }

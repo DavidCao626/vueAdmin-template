@@ -5,26 +5,22 @@
 
           <div class="pannel_title">项目信息</div>
         <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
+
+ <el-form-item label="学年">
+            <elx-select v-model="form.expand.yearType" placeholder="请选择" @change="schoolYearChange">
+              <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :obj="item" :value="item.id">
+              </el-option>
+            </elx-select>
+          </el-form-item>
+
+
+
           <el-form-item label="名称">
             <el-input v-model="form.expand.name" autosize focus style="width:50%;">
               <i slot="suffix" class="el-icon-edit el-input__icon"></i>
             </el-input>
           </el-form-item>
 
-          <el-form-item label="年度">
-            <el-select v-model="form.expand.yearType" placeholder="请选择" no-data-text="无数据,请尝试刷新页面">
-              <el-option v-for="item in yearTypeList" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="开始时间">
-            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.expand.startTime" type="date" placeholder="选择日期">
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item label="结束时间">
-            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.expand.endTime" type="date" placeholder="选择日期">
-            </el-date-picker>
-          </el-form-item>
         </el-form>
       </div>
     </page>
@@ -131,10 +127,21 @@ export default {
       classifyTypedetailPath: "",
       iopt: [],
       classifyType: "",
-      yearTypeList: []
+      yearTypeList: [],
+       schoolYearList: []
     };
   },
   methods: {
+     schoolYearChange(p1, p2, p3, p4) {
+      console.log([p1, p2, p3, p4]);
+      var schoolYearName = p3.obj.name;
+      this.form.expand.name =
+        schoolYearName +
+        this.ioptions.find(el => {
+          return el.classifyCode == this.form.projectServiceType;
+        }).classifyName +
+        "任务";
+    },
     updateCategory() {
       this.currentCategoryId = this.form.expand.appraiseServiceType;
       if (!this.currentCategoryId) {
@@ -150,12 +157,20 @@ export default {
       });
     },
     ...mapActions({
+        querySchoolYear: state.namespace + "/querySchoolYear",
       queryServiceTypeList: state.namespace + "/queryServiceTypeList",
       insertOrUpdateProject: state.namespace + "/insertOrUpdateProject",
       insertOrUpdateAndNext: state.namespace + "/insertOrUpdateAndNext",
       startStudyWorkProject: state.namespace + "/startStudyWorkProject"
       //    queryClassifyTypeByCode:store.namespace + "/queryClassifyTypeByCode"
     }),
+     getSchoolYearList() {
+      this.querySchoolYear({ currentPage: 1, pageSize: 99999 }).then(
+        response => {
+          this.schoolYearList = response.resBody.baseData;
+        }
+      );
+    },
     appraiseServiceTypeChange(val) {
       this.currentCategoryId = val;
     },
@@ -270,6 +285,7 @@ export default {
     }
   },
   mounted() {
+    this.getSchoolYearList();
     this.createYearTypeList();
   }
 };

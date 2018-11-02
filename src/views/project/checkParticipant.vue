@@ -29,7 +29,7 @@
     </elx-table-layout>
     <page>
       <div slot="panel" style="text-align: right">
-        <el-button size="mini" type="primary" @click="complate">完成</el-button>
+        <el-button size="mini" type="primary" @click="complate">继续任务</el-button>
         <el-button size="mini" type="primary" @click="stopScope">终止任务</el-button>
       </div>
     </page>
@@ -66,20 +66,23 @@ export default {
       };
       //查询数据的方法
       this.queryParticipantRules(requestData).then(response => {
-        var n = response.resBody.baseData.length;
-        if (n != 0) {
-          this.$message.error("存在警告信息，无法继续任务,请处理后再继续任务");
-          return;
-        } else {
-          this.completeUserPendingByItemId({ itemId: this.itemId }).then(
-            response => {
-             this.$router.push({
-            path: "/project/control",
-            query: { scopeId: this.scopeId }
-          });
-            }
-          );
+        var n = response.resBody.baseData;
+        for (var i = 0; i < n.length; i++) {
+          if (n.type == "提示") {
+            this.$message.error(
+              "存在提示信息，无法继续任务,请处理后再继续任务"
+            );
+            return;
+          }
         }
+        this.completeUserPendingByItemId({ itemId: this.itemId }).then(
+          response => {
+            this.$router.push({
+              path: "/project/control",
+              query: { scopeId: this.scopeId }
+            });
+          }
+        );
       });
     },
     stopScope() {

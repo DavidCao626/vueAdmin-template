@@ -76,7 +76,27 @@
           <el-form-item label="体能测试分数" v-show="form.expand.rules.physical.flag == 'Y'">
             <el-input-number v-model="form.expand.rules.physical.score" label="分数"></el-input-number>
           </el-form-item>
+          <el-form-item label="建档年度综测">
+            <el-radio-group v-model="form.expand.rules.createFileYearAppraisal.flag">
+              <el-radio-button label="Y">是</el-radio-button>
+              <el-radio-button label="N">否</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
 
+          <el-form-item label="建档综测排名" v-show="form.expand.rules.createFileYearAppraisal.flag == 'Y'">
+            <el-input-number v-model="form.expand.rules.createFileYearAppraisal.first" :min="1" label="班级排名"></el-input-number>
+          </el-form-item>
+
+          <el-form-item label="关联学习成绩">
+            <el-radio-group v-model="form.expand.rules.stuScore.flag">
+              <el-radio-button label="Y">是</el-radio-button>
+              <el-radio-button label="N">否</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+
+          <el-form-item label="学习成绩排名" v-show="form.expand.rules.stuScore.flag == 'Y'">
+            <el-input-number v-model="form.expand.rules.stuScore.first" :min="1" label="班级排名"></el-input-number>
+          </el-form-item>
         </el-form>
       </div>
     </page>
