@@ -3,112 +3,114 @@
     <div slot="title">
       班级审核
     </div>
-    <slot name="header">
-      <div class="approval-panel" style="">
-        <div style="float: right;    margin-top: 4px;">
-          <el-button-group>
-          </el-button-group>
-        </div>
-        <projectinfo :item-id="itemId"></projectinfo>
-        <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
-          <el-form-item label="申请人学号">
-            <el-input v-model="formInline.user" placeholder="申请人"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">查 询</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-    </slot>
-     <div class="approval-panel"  style="padding: 10px;">
-      <el-table :data="data" style="width: 100%;" size="mini">
-        <el-table-column type="expand">
-          <template slot-scope="props">
-            <el-form label-position="" inline class="demo-table-expand" size="mini">
-              <el-form-item label="姓名:">
-                <span>{{ props.row.name }}</span>
-              </el-form-item>
-              <el-form-item label="学号:">
-                <span>{{ props.row.cid }}</span>
-              </el-form-item>
-              <br/>
-              <el-form-item label="证件类型:">
-                <span>{{ props.row.zjlx }}</span>
-              </el-form-item>
-              <el-form-item label="证件号码">
-                <span>{{ props.row.zjhm }}</span>
-              </el-form-item>
-              <br/>
-              <el-form-item label="成绩排名人数:">
-                <span>{{ props.row.cjpmrs }}</span>
-              </el-form-item>
-              <el-form-item label="成绩名次:">
-                <span>{{ props.row.cjpmmc }}</span>
-              </el-form-item>
-              <br/>
-              <el-form-item label="必修课及格门数:">
-                <span>{{ props.row.bxkjgms }}</span>
-              </el-form-item>
-              <el-form-item label="必修课门数:">
-                <span>{{ props.row.bxkms }}</span>
-              </el-form-item>
-              <br/>
 
-              <el-form-item label="综合考评名次:">
-                <span>{{ props.row.zhkpmc }}</span>
-              </el-form-item>
+    <div slot="header">
+      <projectinfo :item-id="itemId"></projectinfo>
+    </div>
 
-              <br/>
+    <div slot="panel">
+      <elx-table-layout>
+        <template slot="headerLeft">
+          <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
+            <el-form-item label="申请人学号:">
+              <el-input v-model="formInline.user" placeholder="申请人"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit" icon="el-icon-search">查 询</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
 
-              <el-form-item label="综合考评人数:">
-                <span>{{ props.row.zhkprs }}</span>
-              </el-form-item>
+        <el-table :data="data" style="width: 100%;" size="mini">
+          <el-table-column type="expand">
+            <template slot-scope="props">
+              <el-form label-position="" inline class="demo-table-expand" size="mini">
+                <el-form-item label="姓名:">
+                  <span>{{ props.row.name }}</span>
+                </el-form-item>
+                <el-form-item label="学号:">
+                  <span>{{ props.row.cid }}</span>
+                </el-form-item>
+                <br />
+                <el-form-item label="证件类型:">
+                  <span>{{ props.row.zjlx }}</span>
+                </el-form-item>
+                <el-form-item label="证件号码">
+                  <span>{{ props.row.zjhm }}</span>
+                </el-form-item>
+                <br />
+                <el-form-item label="成绩排名人数:">
+                  <span>{{ props.row.cjpmrs }}</span>
+                </el-form-item>
+                <el-form-item label="成绩名次:">
+                  <span>{{ props.row.cjpmmc }}</span>
+                </el-form-item>
+                <br />
+                <el-form-item label="必修课及格门数:">
+                  <span>{{ props.row.bxkjgms }}</span>
+                </el-form-item>
+                <el-form-item label="必修课门数:">
+                  <span>{{ props.row.bxkms }}</span>
+                </el-form-item>
+                <br />
 
-            </el-form>
-          </template>
-        </el-table-column>
-        <el-table-column label="申请人">
-          <el-table-column label="姓名" width="100" prop="name">
+                <el-form-item label="综合考评名次:">
+                  <span>{{ props.row.zhkpmc }}</span>
+                </el-form-item>
+
+                <br />
+
+                <el-form-item label="综合考评人数:">
+                  <span>{{ props.row.zhkprs }}</span>
+                </el-form-item>
+
+              </el-form>
+            </template>
           </el-table-column>
-          <el-table-column label="学号" width="100" prop="cid">
+          <el-table-column label="申请人">
+            <el-table-column label="姓名" width="100" prop="name">
+            </el-table-column>
+            <el-table-column label="学号" width="100" prop="cid">
+            </el-table-column>
+
+          </el-table-column>
+          <el-table-column label="申请等级" width="80" prop="sqdj">
+          </el-table-column>
+          <el-table-column label="证件类型" prop="zjlx">
+          </el-table-column>
+          </el-table-column>
+          <el-table-column label="证件号码" width="80" prop="zjhm">
+          </el-table-column>
+          <el-table-column label="成绩排名人数" prop="cjpmrs">
+          </el-table-column>
+          <el-table-column label="成绩名次" prop="cjpmmc">
+          </el-table-column>
+          <el-table-column label="必修课及格门数" prop="bxkjgms">
+          </el-table-column>
+          <el-table-column label="必修课门数" prop="bxkms">
+          </el-table-column>
+          <el-table-column label="综合考评名次" prop="zhkpmc">
+          </el-table-column>
+          <el-table-column label="综合考评人数" prop="zhkprs">
+          </el-table-column>
+          <el-table-column label="班级推荐" :formatter="banjiFormatter" width="80" prop="banjipingshen">
           </el-table-column>
 
-        </el-table-column>
-        <el-table-column label="申请等级" width="80" prop="sqdj">
-        </el-table-column>
-        <el-table-column label="证件类型" prop="zjlx">
-        </el-table-column>
-        </el-table-column>
-        <el-table-column label="证件号码" width="80" prop="zjhm">
-        </el-table-column>
-        <el-table-column label="成绩排名人数" prop="cjpmrs">
-        </el-table-column>
-        <el-table-column label="成绩名次" prop="cjpmmc">
-        </el-table-column>
-        <el-table-column label="必修课及格门数" prop="bxkjgms">
-        </el-table-column>
-        <el-table-column label="必修课门数" prop="bxkms">
-        </el-table-column>
-        <el-table-column label="综合考评名次" prop="zhkpmc">
-        </el-table-column>
-        <el-table-column label="综合考评人数" prop="zhkprs">
-        </el-table-column>
-      <el-table-column label="班级推荐" :formatter="banjiFormatter" width="80" prop="banjipingshen">
-        </el-table-column>
-
-        <!-- <el-table-column label="状态" fixed="right" prop="isDot" width="100" :filters="[{ text: '已处理', value: true }, { text: '未处理', value: false }]" :filter-method="filterTag" filter-placement="bottom-end">
+          <!-- <el-table-column label="状态" fixed="right" prop="isDot" width="100" :filters="[{ text: '已处理', value: true }, { text: '未处理', value: false }]" :filter-method="filterTag" filter-placement="bottom-end">
           <template slot-scope="scope">
             <el-tag :type="scope.row.isDot === true ? 'info' : 'danger'" disable-transitions>
               {{scope.row.isDot=== true ? '已处理' : '未处理'}}
             </el-tag>
           </template>
         </el-table-column> -->
-      </el-table>
-    </div>
+        </el-table>
 
-    <div class="approval-panel">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 50, 100,200, 500]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalRecord">
-      </el-pagination>
+        <div  slot="footer">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 50, 100,200, 500]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalRecord">
+          </el-pagination>
+        </div>
+
+      </elx-table-layout>
     </div>
 
   </page>
@@ -117,24 +119,24 @@
 <script>
 import dynamicTable from "~/components/DynamicTable";
 import { mapGetters, mapMutations, mapActions } from "vuex";
-import projectinfo from "../../_components/itemProjectSimpleInfo"
+import projectinfo from "../../_components/itemProjectSimpleInfo";
 import store from "../../_store/index.js";
 export default {
-   components: {
+  components: {
     projectinfo
   },
   methods: {
     banjiFormatter(row, column, cellValue, index) {
       if (row.isDot == true) {
-        var result="";
+        var result = "";
         this.serviceTypeList.forEach(item => {
           if (item.value == row.banjipingshen) {
-            result=item.label;
+            result = item.label;
             return false;
           }
         });
         return result;
-      } else{
+      } else {
         return " ";
       }
     },
@@ -192,7 +194,7 @@ export default {
     },
     getData() {
       var requestData = {
-          scopeId: this.scopeId,
+        scopeId: this.scopeId,
         currentPage: this.currentPage,
         pageSize: this.pageSize,
         stuNo: this.formInline.user

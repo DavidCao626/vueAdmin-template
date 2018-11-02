@@ -1,6 +1,6 @@
 <template>
   <div>
-    <page :Breadcrumb="false">
+    <page >
       <div slot="title">
         预审
       </div>

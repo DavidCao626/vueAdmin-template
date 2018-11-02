@@ -1,21 +1,21 @@
 <template>
-  <page id="bodybox" style="width: 550px;">
+  <page id="bodybox" >
     <span slot="title">修改密码</span>
     <div slot="panel">
-      <div v-loading="loading">
+      <div v-loading="loading"  style="width: 550px;margin: 20px auto 30px;">
         <el-form ref="form1" label-width="100px" size="mini" :model="formStore.formData.data" :rules="formStore.formData.rules">
 
-          <el-form-item label="旧密码" prop="oldPwd">
+          <el-form-item label="旧密码:" prop="oldPwd">
             <el-input type="password" v-model="formStore.formData.data.oldPwd" size="mini"></el-input>
           </el-form-item>
-          <el-form-item label="新密码" prop="newPwd">
+          <el-form-item label="新密码:" prop="newPwd">
             <el-input type="password" v-model="formStore.formData.data.newPwd" size="mini"></el-input>
           </el-form-item>
-          <el-form-item label="确认新密码" prop="tNewPwd">
+          <el-form-item label="确认新密码:" prop="tNewPwd">
             <el-input type="password" v-model="formStore.formData.data.tNewPwd" size="mini"></el-input>
           </el-form-item>
           <el-form-item>
-                <el-button icon="el-icon-check" size="mini" type="success" @click="saveInfo('form1')">确定</el-button>
+                <el-button icon="el-icon-check" size="mini" type="primary" @click="saveInfo('form1')">确定</el-button>
          
           </el-form-item>
         </el-form>

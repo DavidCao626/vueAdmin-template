@@ -1,7 +1,10 @@
 <template>
   <div>
-    <proInfo :itemId="itemId"></proInfo>
-    <huping title="班级互评" :dataHeader="hupingHeadSytle" :dataExpand="expand">
+
+    <huping title="班级互评213" :dataHeader="hupingHeadSytle" :dataExpand="expand">
+      <div slot="header">
+        <proInfo :itemId="itemId"></proInfo>
+      </div>
       <div slot="footer">
 
         <div class="approval-panel" style="text-align: center;">
@@ -10,6 +13,7 @@
       </div>
 
     </huping>
+
   </div>
 </template>
 <script>
@@ -123,8 +127,7 @@ export default {
       } else {
         vm.scopeId = scopeId;
         vm.itemId = itemId;
-        vm
-          .getItemRelaseQuestionCode({ scopeId: scopeId, itemId: itemId })
+        vm.getItemRelaseQuestionCode({ scopeId: scopeId, itemId: itemId })
           .then(result => {
             console.log(result);
             vm.$store.dispatch("initQuuestion", result.resBody);
@@ -142,7 +145,7 @@ export default {
         scopeId: this.scopeId,
         itemId: this.itemId
       });
-       this.$router.go(-1)
+      this.$router.go(-1);
     }
   }
 };

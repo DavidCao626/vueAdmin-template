@@ -1,56 +1,56 @@
 <template>
-  <div>
-    <page>
-      <div slot="title">贫困建档项目管理</div>
-    </page>
-    <elx-table-layout>
-      <template slot="headerRight">
-        <el-button-group>
-          <el-tooltip class="item" effect="dark" content="新建项目" placement="bottom">
-            <el-button @click="createProject" plain size="mini">
-              新建
-            </el-button>
-          </el-tooltip>
-        </el-button-group>
-      </template>
-      <template slot="headerLeft">
+  <page>
+    <div slot="title">贫困建档项目管理</div>
 
-        <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-          <el-form-item label="项目名称">
-            <el-input v-model="formInline.name" placeholder="项目名称"></el-input>
-          </el-form-item>
-          <el-form-item label="学年">
-            <el-select v-model="formInline.yearType" placeholder="请选择" no-data-text="无数据,请尝试刷新页面">
-              <el-option v-for="item in yearTypeList" :key="item.id" :label="item.name" :value="item.id">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="状态">
-            <el-select v-model="formInline.state" placeholder="项目状态">
-              <el-option v-for="(item,index) in projectStateList" :key="index" :value="item.value" :label="item.label"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
-          </el-form-item>
-        </el-form>
-      </template>
-      <el-table :data="data" style="width: 100%" border size="mini">
-        <el-table-column prop="user_code" label="编码">
-        </el-table-column>
-        <el-table-column prop="name" label="名称">
-        </el-table-column>
-        <el-table-column prop="school_year_name" label="学年">
-        </el-table-column>
-        <el-table-column prop="grade" label="年级" :formatter="gradeFormatter">
-        </el-table-column>
-        <el-table-column prop="stu_type" label="学生类型" :formatter="stuTypeFormatter">
-        </el-table-column>
-        <el-table-column prop="state" label="状态" :formatter="stateFormatter">
-        </el-table-column>
-        <el-table-column prop="create_time" label="创建时间">
-        </el-table-column>
-        <!-- <el-table-column label="操作" width="88" header-align="left" align="center">
+    <div slot="panel">
+      <elx-table-layout>
+        <template slot="headerRight">
+          <el-button-group>
+            <el-tooltip class="item" effect="dark" content="新建项目" placement="bottom">
+              <el-button @click="createProject" plain size="mini">
+                新建
+              </el-button>
+            </el-tooltip>
+          </el-button-group>
+        </template>
+        <template slot="headerLeft">
+
+          <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
+            <el-form-item label="项目名称">
+              <el-input v-model="formInline.name" placeholder="项目名称"></el-input>
+            </el-form-item>
+            <el-form-item label="学年">
+              <el-select v-model="formInline.yearType" placeholder="请选择" no-data-text="无数据,请尝试刷新页面">
+                <el-option v-for="item in yearTypeList" :key="item.id" :label="item.name" :value="item.id">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="状态">
+              <el-select v-model="formInline.state" placeholder="项目状态">
+                <el-option v-for="(item,index) in projectStateList" :key="index" :value="item.value" :label="item.label"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit">查询</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+        <el-table :data="data" style="width: 100%" border size="mini">
+          <el-table-column prop="user_code" label="编码">
+          </el-table-column>
+          <el-table-column prop="name" label="名称">
+          </el-table-column>
+          <el-table-column prop="school_year_name" label="学年">
+          </el-table-column>
+          <el-table-column prop="grade" label="年级" :formatter="gradeFormatter">
+          </el-table-column>
+          <el-table-column prop="stu_type" label="学生类型" :formatter="stuTypeFormatter">
+          </el-table-column>
+          <el-table-column prop="state" label="状态" :formatter="stateFormatter">
+          </el-table-column>
+          <el-table-column prop="create_time" label="创建时间">
+          </el-table-column>
+          <!-- <el-table-column label="操作" width="88" header-align="left" align="center">
                     <template slot-scope="scope">
                         <el-dropdown>
                             <el-button size="mini" @click="">
@@ -62,13 +62,14 @@
                         </el-dropdown>
                     </template>
                 </el-table-column> -->
-      </el-table>
-      <template slot="footer">
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-        </el-pagination>
-      </template>
-    </elx-table-layout>
-  </div>
+        </el-table>
+        <template slot="footer">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+          </el-pagination>
+        </template>
+      </elx-table-layout>
+    </div>
+  </page>
 </template>
 
   <script>
@@ -100,7 +101,7 @@ export default {
   },
   watch: {},
   methods: {
-        gradeFormatter(r, c, v, i) {
+    gradeFormatter(r, c, v, i) {
       if (v == null || v.length == 0) {
         return;
       }
@@ -138,7 +139,7 @@ export default {
       this.querySchoolYear({ currentPage: 1, pageSize: 99999 }).then(
         response => {
           this.yearTypeList = response.resBody.baseData;
-          this.yearTypeList.unshift({id:0,name:"全部 "})
+          this.yearTypeList.unshift({ id: 0, name: "全部 " });
         }
       );
     },
@@ -174,10 +175,10 @@ export default {
     },
     ...mapActions({
       getDictByDictNames: store.namespace + "/getDictByDictNames",
-      queryPovertyProject:
-        store.namespace + "/queryPovertyProject",
+      queryPovertyProject: store.namespace + "/queryPovertyProject",
       querySchoolYear: store.namespace + "/querySchoolYear",
-       queryStuTypeByEducationLevelCode:store.namespace + "/queryStuTypeByEducationLevelCode",
+      queryStuTypeByEducationLevelCode:
+        store.namespace + "/queryStuTypeByEducationLevelCode",
       querySubsidizeProjectState:
         store.namespace + "/querySubsidizeProjectState"
     }),
@@ -202,9 +203,9 @@ export default {
       };
       this.getDictByDictNames(requestData).then(response => {
         this.gradeList = response.resBody.grade;
-      this.queryStuTypeByEducationLevelCode({}).then(response=>{
-         this.stuTypeList = response.resBody;
-      })
+        this.queryStuTypeByEducationLevelCode({}).then(response => {
+          this.stuTypeList = response.resBody;
+        });
         this.getData();
       });
     },
@@ -224,9 +225,6 @@ export default {
 </script>
 
 <style scoped>
-.el-form-item {
-  margin-bottom: 0px;
-}
 .demo-form-inline {
   display: inline !important;
 }

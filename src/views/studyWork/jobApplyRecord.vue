@@ -1,99 +1,99 @@
 <template>
-  <div>
-    <page>
-      <div slot="title">申请记录</div>
-    </page>
-    <elx-table-layout>
-      <template slot="headerLeft">
+  <page>
+    <div slot="title">申请记录</div>
+    <div slot="panel">
+      <elx-table-layout>
+        <template slot="headerLeft">
 
-        <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-          <el-form-item label="组织机构">
-            <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
-          </el-form-item>
+          <el-form :inline="true" :model="formInline" label-position="right" label-width="120px" size="mini" class="demo-form-inline">
+            <el-form-item label="组织机构:">
+              <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
+            </el-form-item>
 
-          <el-form-item label="记录状态">
-            <el-select v-model="formInline.recordState" placeholder="记录状态">
-              <el-option v-for="item in recordStateList" :key="item.value" :value="item.value" :label="item.label"></el-option>
-            </el-select>
-          </el-form-item>
+            <el-form-item label="记录状态:">
+              <el-select v-model="formInline.recordState" placeholder="记录状态">
+                <el-option v-for="item in recordStateList" :key="item.value" :value="item.value" :label="item.label"></el-option>
+              </el-select>
+            </el-form-item>
 
-          <el-form-item label="学号">
-            <el-input v-model="formInline.applyUserCode" placeholder="学号"></el-input>
-          </el-form-item>
+            <el-form-item label="学号:">
+              <el-input v-model="formInline.applyUserCode" placeholder="学号"></el-input>
+            </el-form-item>
 
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit" icon="el-icon-search">查询</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+        <el-table :data="data" style="width: 100%" border size="mini">
+          <el-table-column prop="applyUserName" label="学生名称">
+          </el-table-column>
+          <el-table-column prop="applyUserCode" label="学号">
+          </el-table-column>
+          <el-table-column prop="orgName" label="组织">
+          </el-table-column>
+          <el-table-column prop="applyTime" label="申请时间">
+          </el-table-column>
+          <el-table-column prop="state" label="状态" :formatter="stateFormatter">
+          </el-table-column>
+          <el-table-column prop="employTime" label="录用时间">
+          </el-table-column>
+          <el-table-column prop="postTime" label="到岗时间">
+          </el-table-column>
+
+          <el-table-column label="操作" width="88" header-align="left" align="center">
+            <template slot-scope="scope">
+              <el-dropdown>
+                <el-button size="mini" @click="">
+                  <i class="el-icon-arrow-down"></i>
+                </el-button>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item @click.native="showResume(scope.row)">查看简历</el-dropdown-item>
+                  <el-dropdown-item @click.native="showInfo(scope.row)">查看信息</el-dropdown-item>
+                  <el-dropdown-item v-if="scope.row.state == 'NE' " @click.native="employ(scope.row)">录用</el-dropdown-item>
+                  <el-dropdown-item v-if="scope.row.state == 'EM' " @click.native="post(scope.row)">到岗确认</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </template>
+          </el-table-column>
+        </el-table>
+        <template slot="footer">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+          </el-pagination>
+        </template>
+      </elx-table-layout>
+
+      <el-dialog title="录用关系" :visible.sync="employDV">
+        <el-form :model="employData">
+          <el-form-item label="录用关系">
+            <el-radio-group v-model="employData['type']" size="mini">
+              <el-radio label="Y" border>录用</el-radio>
+              <el-radio label="N" border>不录用</el-radio>
+            </el-radio-group>
           </el-form-item>
         </el-form>
-      </template>
-      <el-table :data="data" style="width: 100%" border size="mini">
-        <el-table-column prop="applyUserName" label="学生名称">
-        </el-table-column>
-        <el-table-column prop="applyUserCode" label="学号">
-        </el-table-column>
-        <el-table-column prop="orgName" label="组织">
-        </el-table-column>
-        <el-table-column prop="applyTime" label="申请时间">
-        </el-table-column>
-        <el-table-column prop="state" label="状态" :formatter="stateFormatter">
-        </el-table-column>
-        <el-table-column prop="employTime" label="录用时间">
-        </el-table-column>
-        <el-table-column prop="postTime" label="到岗时间">
-        </el-table-column>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="employDV = false">取 消</el-button>
+          <el-button type="primary" @click="employSubmit">确 定</el-button>
+        </div>
+      </el-dialog>
+      <el-dialog title="到岗状态" :visible.sync="postDV">
+        <el-form :model="postData">
+          <el-form-item label="到岗状态">
+            <el-radio-group v-model="postData['type']" size="mini">
+              <el-radio label="Y" border>到岗</el-radio>
+              <el-radio label="N" border>未到岗</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="postDV = false">取 消</el-button>
+          <el-button type="primary" @click="postSubmit">确 定</el-button>
+        </div>
+      </el-dialog>
 
-        <el-table-column label="操作" width="88" header-align="left" align="center">
-          <template slot-scope="scope">
-            <el-dropdown>
-              <el-button size="mini" @click="">
-                <i class="el-icon-arrow-down"></i>
-              </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="showResume(scope.row)">查看简历</el-dropdown-item>
-                <el-dropdown-item @click.native="showInfo(scope.row)">查看信息</el-dropdown-item>
-                <el-dropdown-item v-if="scope.row.state == 'NE' " @click.native="employ(scope.row)">录用</el-dropdown-item>
-                <el-dropdown-item v-if="scope.row.state == 'EM' " @click.native="post(scope.row)">到岗确认</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </template>
-        </el-table-column>
-      </el-table>
-      <template slot="footer">
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-        </el-pagination>
-      </template>
-    </elx-table-layout>
-
-    <el-dialog title="录用关系" :visible.sync="employDV">
-      <el-form :model="employData">
-        <el-form-item label="录用关系">
-          <el-radio-group v-model="employData['type']" size="mini" >
-            <el-radio label="Y" border>录用</el-radio>
-            <el-radio label="N" border>不录用</el-radio>
-          </el-radio-group>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="employDV = false">取 消</el-button>
-        <el-button type="primary" @click="employSubmit">确 定</el-button>
-      </div>
-    </el-dialog>
-    <el-dialog title="到岗状态" :visible.sync="postDV">
-      <el-form :model="postData">
-        <el-form-item label="到岗状态">
-          <el-radio-group v-model="postData['type']" size="mini" >
-            <el-radio label="Y" border>到岗</el-radio>
-            <el-radio label="N" border>未到岗</el-radio>
-          </el-radio-group>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="postDV = false">取 消</el-button>
-        <el-button type="primary" @click="postSubmit">确 定</el-button>
-      </div>
-    </el-dialog>
-
-  </div>
+    </div>
+  </page>
 </template>
 
   <script>
@@ -129,7 +129,7 @@ export default {
         applyUserCode: "" //学号
       },
       orgProps: {
-       label: "orgName",
+        label: "orgName",
         value: "orgCode",
         children: "children"
       },
@@ -139,20 +139,20 @@ export default {
   },
   watch: {},
   methods: {
-    showInfo(row){
+    showInfo(row) {
       this.$router.push({
-        path:"/user/info",
-        query:{
-          stuNo:row.applyUserCode
+        path: "/user/info",
+        query: {
+          stuNo: row.applyUserCode
         }
-      })
+      });
     },
-    showResume(row){
- this.$router.push({
+    showResume(row) {
+      this.$router.push({
         path: "/studyWork/resumeDetail",
         query: {
           id: row.resumeId,
-          onlyShow:true
+          onlyShow: true
         }
       });
     },

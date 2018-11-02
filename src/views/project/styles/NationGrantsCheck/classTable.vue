@@ -3,24 +3,21 @@
     <div slot="title">
       班级审核
     </div>
-    <slot name="header">
-      <div class="approval-panel" style="">
-        <div style="float: right;    margin-top: 4px;">
-          <el-button-group>
-          </el-button-group>
-        </div>
-        <projectinfo :item-id="itemId"></projectinfo>
+    <div slot="header">
+      <projectinfo :item-id="itemId"></projectinfo>
+    </div>
+    <div slot="panel">
+      <template slot="headerLeft">
         <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
-          <el-form-item label="申请人学号">
+          <el-form-item label="申请人学号:">
             <el-input v-model="formInline.user" placeholder="申请人"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">查 询</el-button>
+            <el-button type="primary" @click="onSubmit" icon="el-icon-search">查 询</el-button>
           </el-form-item>
         </el-form>
-      </div>
-    </slot>
-   <div class="approval-panel"  style="padding: 10px;">
+      </template>
+
       <el-table :data="data" style="width: 100%;" size="mini">
         <el-table-column type="expand">
           <template slot-scope="props">
@@ -31,7 +28,7 @@
               <el-form-item label="学号:">
                 <span>{{ props.row.cid }}</span>
               </el-form-item>
-              <br/>
+              <br />
               <!-- <el-form-item label="证件类型:">
                 <span>{{ props.row.zjlx }}</span>
               </el-form-item>
@@ -70,20 +67,12 @@
             </el-select>
           </template>
         </el-table-column>
-
-        <!-- <el-table-column label="状态" fixed="right" prop="isDot" width="100" :filters="[{ text: '已处理', value: true }, { text: '未处理', value: false }]" :filter-method="filterTag" filter-placement="bottom-end">
-          <template slot-scope="scope">
-            <el-tag :type="scope.row.isDot === true ? 'info' : 'danger'" disable-transitions>
-              {{scope.row.isDot=== true ? '已处理' : '未处理'}}
-            </el-tag>
-          </template>
-        </el-table-column> -->
       </el-table>
-    </div>
 
-    <div class="approval-panel">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 50, 100,200, 500]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalRecord">
-      </el-pagination>
+      <div slot="footer">
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 50, 100,200, 500]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalRecord">
+        </el-pagination>
+      </div>
     </div>
 
     <div class="approval-panel" style="text-align: center;">
@@ -208,7 +197,7 @@ export default {
           for (var i = 0; i < item.mainReason.length; i++) {
             for (var j = 0; j < _this.reasonList.length; j++) {
               if (_this.reasonList[j].dict_key == item.mainReason[i]) {
-                tempStr += _this.reasonList[j].dict_desc +",";
+                tempStr += _this.reasonList[j].dict_desc + ",";
               }
             }
           }

@@ -1,103 +1,103 @@
 <template>
-  <div>
-    <page>
-      <div slot="title">岗位审核</div>
-    </page>
-    <elx-table-layout>
-      <template slot="headerLeft"> 
-        <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-          <el-form-item label="审核状态">
-            <el-select v-model="formInline.jobCheckState" placeholder="岗位状态">
-              <el-option v-for="item in jobCheckStateList" :key="item.value" :value="item.value" :label="item.label"></el-option>
-            </el-select>
-          </el-form-item>
+  <page>
+    <div slot="title">岗位审核</div>
+    <div slot="panel">
+      <elx-table-layout>
+        <template slot="headerLeft">
+          <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
+            <el-form-item label="审核状态:">
+              <el-select v-model="formInline.jobCheckState" placeholder="岗位状态">
+                <el-option v-for="item in jobCheckStateList" :key="item.value" :value="item.value" :label="item.label"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="岗位名称:">
+              <el-input v-model="formInline.name" placeholder="岗位名称"></el-input>
+            </el-form-item>
+            <el-form-item label="">
+              <el-button type="primary" @click="onSubmit" icon="el-icon-search">查询</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+        <template slot="headerRight">
+          <el-button-group>
+            <el-tooltip class="item" effect="dark" content="通过选中" placement="bottom">
+              <el-button @click="okCheckBatch" plain size="mini">
+                通过
+              </el-button>
+            </el-tooltip>
+            <el-tooltip class="item" effect="dark" content="不通过选中" placement="bottom">
+              <el-button @click="noCheckBatch" plain size="mini">
+                不通过
+              </el-button>
+            </el-tooltip>
+          </el-button-group>
+        </template>
+        <el-table :data="data" style="width: 100%" border size="mini" @selection-change="handleSelectionChange">
+          <el-table-column type="selection" width="55">
+          </el-table-column>
+          <el-table-column prop="name" label="岗位名称">
+          </el-table-column>
+          <el-table-column prop="numbers" label="招聘名额">
+          </el-table-column>
+          <el-table-column prop="checkState" label="审核状态" :formatter="checkStateFormatter">
+          </el-table-column>
+          <el-table-column prop="jobDemand" label="岗位要求">
+          </el-table-column>
+          <el-table-column prop="workTime" label="工作时间要求">
+          </el-table-column>
+          <el-table-column prop="monthWorkload" label="月工作时间">
+          </el-table-column>
+
+          <el-table-column prop="publisherTime" label="发布时间" min-width="140px">
+          </el-table-column>
+          <el-table-column label="操作" width="88" header-align="left" align="center">
+            <template slot-scope="scope">
+              <el-dropdown>
+                <el-button size="mini" @click="">
+                  <i class="el-icon-arrow-down"></i>
+                </el-button>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item @click.native="toCheck(scope.row)">审核</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </template>
+          </el-table-column>
+        </el-table>
+        <template slot="footer">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+          </el-pagination>
+        </template>
+      </elx-table-layout>
+      <page>
+        <div slot="panel" style="text-align: right">
+          <el-button size="mini" @click="complateItem" type="primary">完成</el-button>
+        </div>
+      </page>
+
+      <el-dialog title="审核" :visible.sync="checkDV" width="30%">
+
+        <el-form :model="checkForm" label-width="80px">
           <el-form-item label="岗位名称">
-            <el-input v-model="formInline.name" placeholder="岗位名称"></el-input>
+            <el-row>
+              <el-col :span="14">
+                <el-input v-model="checkForm.name" :disabled="true"></el-input>
+              </el-col>
+            </el-row>
           </el-form-item>
-          <el-form-item label="">
-            <el-button type="primary" @click="onSubmit">查询</el-button>
+          <br />
+          <el-form-item label="招聘名额">
+            <el-input-number v-model="checkForm.numbers" :min="1" label="名额"></el-input-number>
           </el-form-item>
         </el-form>
-      </template>
-      <template slot="headerRight">
-        <el-button-group>
-          <el-tooltip class="item" effect="dark" content="通过选中" placement="bottom">
-            <el-button @click="okCheckBatch" plain size="mini">
-              通过
-            </el-button>
-          </el-tooltip>
-          <el-tooltip class="item" effect="dark" content="不通过选中" placement="bottom">
-            <el-button @click="noCheckBatch" plain size="mini">
-              不通过
-            </el-button>
-          </el-tooltip>
-        </el-button-group>
-      </template>
-      <el-table :data="data" style="width: 100%" border size="mini" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="55">
-        </el-table-column>
-        <el-table-column prop="name" label="岗位名称">
-        </el-table-column>
-        <el-table-column prop="numbers" label="招聘名额">
-        </el-table-column>
-        <el-table-column prop="checkState" label="审核状态" :formatter="checkStateFormatter">
-        </el-table-column>
-        <el-table-column prop="jobDemand" label="岗位要求">
-        </el-table-column>
-        <el-table-column prop="workTime" label="工作时间要求">
-        </el-table-column>
-        <el-table-column prop="monthWorkload" label="月工作时间">
-        </el-table-column>
 
-        <el-table-column prop="publisherTime" label="发布时间" min-width="140px">
-        </el-table-column>
-        <el-table-column label="操作" width="88" header-align="left" align="center">
-          <template slot-scope="scope">
-            <el-dropdown>
-              <el-button size="mini" @click="">
-                <i class="el-icon-arrow-down"></i>
-              </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="toCheck(scope.row)">审核</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </template>
-        </el-table-column>
-      </el-table>
-      <template slot="footer">
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-        </el-pagination>
-      </template>
-    </elx-table-layout>
-    <page>
-      <div slot="panel" style="text-align: right">
-        <el-button size="mini" @click="complateItem" type="primary">完成</el-button>
-      </div>
-    </page>
+        <span slot="footer" class="dialog-footer">
+          <el-button size="small" type="danger" @click="noCheck">不通过</el-button>
+          <el-button size="small" type="primary" @click="okCheck">通 过</el-button>
+        </span>
+      </el-dialog>
 
-    <el-dialog title="审核" :visible.sync="checkDV" width="30%">
-
-      <el-form :model="checkForm" label-width="80px">
-        <el-form-item label="岗位名称">
-          <el-row>
-            <el-col :span="14">
-              <el-input v-model="checkForm.name" :disabled="true"></el-input>
-            </el-col>
-          </el-row>
-        </el-form-item>
-        <br/>
-        <el-form-item label="招聘名额">
-          <el-input-number v-model="checkForm.numbers" :min="1" label="名额"></el-input-number>
-        </el-form-item>
-      </el-form>
-
-      <span slot="footer" class="dialog-footer">
-        <el-button size="small" type="danger" @click="noCheck">不通过</el-button>
-        <el-button size="small" type="primary" @click="okCheck">通 过</el-button>
-      </span>
-    </el-dialog>
-
-  </div>
+    </div>
+  </page>
 </template>
 
   <script>
@@ -152,25 +152,27 @@ export default {
       this.checkForm.name = row.name;
       this.checkForm.numbers = row.numbers;
       this.checkDV = true;
-      console.log(["checkForm",this.checkForm])
+      console.log(["checkForm", this.checkForm]);
     },
     okCheck() {
       var that = this;
       //更新数量
-      that.updateJobNumbers({
-        id: that.checkForm.id,
-        numbers: that.checkForm.numbers
-      }).then(response => {
-        //审核通过
-        var requestData = {
-          idList: [that.checkForm.id]
-        };
-        that.okCheckJobState(requestData).then(re => {
-          that.getData();
-          that.$message.success("操作成功");
+      that
+        .updateJobNumbers({
+          id: that.checkForm.id,
+          numbers: that.checkForm.numbers
+        })
+        .then(response => {
+          //审核通过
+          var requestData = {
+            idList: [that.checkForm.id]
+          };
+          that.okCheckJobState(requestData).then(re => {
+            that.getData();
+            that.$message.success("操作成功");
+          });
         });
-      });
-          that.checkDV = false;
+      that.checkDV = false;
     },
     noCheck() {
       var that = this;
@@ -181,7 +183,7 @@ export default {
         that.getData();
         that.$message.success("操作成功");
       });
-        that.checkDV = false;
+      that.checkDV = false;
     },
     complateItem() {
       var that = this;

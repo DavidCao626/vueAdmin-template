@@ -3,135 +3,108 @@
     <div slot="title">
       班级审核
     </div>
-    <slot name="header">
-      <div class="approval-panel" style="">
-        <div style="float: right;    margin-top: 4px;">
-          <el-button-group>
-            <!-- <el-button plain size="mini">
-                            <i class="el-icon-sort-down"></i>
-                        </el-button>
-                        //排序
-                        <el-button plain size="mini">
+    <div slot="header">
+      <projectinfo :item-id="itemId"></projectinfo>
+    </div>
+    <div slot="panel">
+      <elx-table-layout>
+        <template slot="headerLeft">
+          <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
 
-                            <i class="el-icon-sort-up"></i>
-                        </el-button> -->
-          </el-button-group>
-        </div>
-         <projectinfo :item-id="itemId"></projectinfo>
-        <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
-          <!-- <el-form-item label="业务类别">
-                        <el-select v-model="formInline.region" placeholder="筛选类别">
-                            <el-option label="全部" value="shanghai"></el-option>
-                            <el-option label="贫困建档" value="beijing"></el-option>
-                            <el-option label="助学金" value="beijing2"></el-option>
-                            <el-option label="奖学金" value="beijing3"></el-option>
-                            <el-option label="学生资助" value="beijing4"></el-option>
-                            <el-option label="其他" value="beijing5"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="相关项目">
-                        <el-autocomplete v-model="state4" :fetch-suggestions="querySearchAsync" placeholder="请输入相关项目名称" @select="handleSelect"></el-autocomplete>
-                    </el-form-item>
-                    <el-form-item label="上报机构">
-                        <el-autocomplete v-model="state4" :fetch-suggestions="querySearchAsync" placeholder="请输入相关项目名称" @select="handleSelect"></el-autocomplete>
-                    </el-form-item> -->
-          <el-form-item label="申请人学号">
-            <el-input v-model="formInline.user" placeholder="申请人"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">查 询</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-    </slot>
-     <div class="approval-panel"  style="padding: 10px;">
-      <el-table :data="data" style="width: 100%;" size="mini">
-        <el-table-column type="expand">
-          <template slot-scope="props">
+            <el-form-item label="申请人学号:">
+              <el-input v-model="formInline.user" placeholder="申请人"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit" icon="el-icon-search">查 询</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+        <el-table :data="data" style="width: 100%;" size="mini">
+          <el-table-column type="expand">
+            <template slot-scope="props">
 
-            <el-form label-position="" inline class="demo-table-expand" size="mini">
+              <el-form label-position="" inline class="demo-table-expand" size="mini">
 
-              <el-form-item label="姓名:">
-                <span>{{ props.row.name }}</span>
-              </el-form-item>
+                <el-form-item label="姓名:">
+                  <span>{{ props.row.name }}</span>
+                </el-form-item>
 
-              <el-form-item label="学号:">
-                <span>{{ props.row.cid }}</span>
-              </el-form-item>
-              <br/>
-              <el-form-item label="家庭情况:">
-                <span>{{ props.row.jtQk }}</span>
-              </el-form-item>
-              <el-form-item label="家庭人口">
-                <span>{{ props.row.jtNumber }}</span>
-              </el-form-item>
+                <el-form-item label="学号:">
+                  <span>{{ props.row.cid }}</span>
+                </el-form-item>
+                <br />
+                <el-form-item label="家庭情况:">
+                  <span>{{ props.row.jtQk }}</span>
+                </el-form-item>
+                <el-form-item label="家庭人口">
+                  <span>{{ props.row.jtNumber }}</span>
+                </el-form-item>
 
-              <el-form-item label="是否低保户:">
-                <span>{{ props.row.jtisDb }}</span>
-              </el-form-item>
-              <el-form-item label="是否建档立卡:">
-                <span>{{ props.row.jtisjdlk }}</span>
-              </el-form-item>
+                <el-form-item label="是否低保户:">
+                  <span>{{ props.row.jtisDb }}</span>
+                </el-form-item>
+                <el-form-item label="是否建档立卡:">
+                  <span>{{ props.row.jtisjdlk }}</span>
+                </el-form-item>
 
-              <el-form-item label="家庭收入:">
-                <span>{{ props.row.jtsr }}</span>
-              </el-form-item>
-              <br/>
+                <el-form-item label="家庭收入:">
+                  <span>{{ props.row.jtsr }}</span>
+                </el-form-item>
+                <br />
 
-              <el-form-item label="互评情况:">
-                <span>{{ props.row.huping }}</span>
-              </el-form-item>
+                <el-form-item label="互评情况:">
+                  <span>{{ props.row.huping }}</span>
+                </el-form-item>
 
-              <br/>
+                <br />
 
-              <el-form-item label="组评情况:">
-                <span>{{ props.row.zuping }}</span>
-              </el-form-item>
+                <el-form-item label="组评情况:">
+                  <span>{{ props.row.zuping }}</span>
+                </el-form-item>
 
-            </el-form>
-          </template>
-        </el-table-column>
-        <el-table-column label="申请人">
-          <el-table-column label="姓名" width="100" prop="name">
+              </el-form>
+            </template>
           </el-table-column>
-          <el-table-column label="学号" width="100" prop="cid">
+          <el-table-column label="申请人">
+            <el-table-column label="姓名" width="100" prop="name">
+            </el-table-column>
+            <el-table-column label="学号" width="100" prop="cid">
+            </el-table-column>
+
           </el-table-column>
 
-        </el-table-column>
+          <el-table-column label="家庭情况" prop="jtdesc">
+          </el-table-column>
+          </el-table-column>
+          <el-table-column label="申请等级" width="80" prop="shenqin">
+          </el-table-column>
+          <el-table-column label="班级互评" prop="huping">
+          </el-table-column>
+          <el-table-column label="班级组评" prop="zuping">
+          </el-table-column>
+          <el-table-column label="班主任评审" width="150" fixed="right">
+            <template slot-scope="scope">
+              <el-select v-model="scope.row.banjipingshen" placeholder="请选择" @change="saveData(scope,$event)">
+                <el-option v-for="(item,index) in serviceTypeList" :key="index" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+            </template>
+          </el-table-column>
 
-        <el-table-column label="家庭情况" prop="jtdesc">
-        </el-table-column>
-        </el-table-column>
-        <el-table-column label="申请等级" width="80" prop="shenqin">
-        </el-table-column>
-        <el-table-column label="班级互评" prop="huping">
-        </el-table-column>
-        <el-table-column label="班级组评" prop="zuping">
-        </el-table-column>
-        <el-table-column label="班主任评审" width="150" fixed="right">
-          <template slot-scope="scope">
-            <el-select v-model="scope.row.banjipingshen" placeholder="请选择" @change="saveData(scope,$event)">
-              <el-option v-for="(item,index) in serviceTypeList" :key="index" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </template>
-        </el-table-column>
-
-        <!-- <el-table-column label="状态" fixed="right" prop="isDot" width="100" :filters="[{ text: '已处理', value: true }, { text: '未处理', value: false }]" :filter-method="filterTag" filter-placement="bottom-end">
+          <!-- <el-table-column label="状态" fixed="right" prop="isDot" width="100" :filters="[{ text: '已处理', value: true }, { text: '未处理', value: false }]" :filter-method="filterTag" filter-placement="bottom-end">
           <template slot-scope="scope">
             <el-tag :type="scope.row.isDot === true ? 'info' : 'danger'" disable-transitions>
               {{scope.row.isDot=== true ? '已处理' : '未处理'}}
             </el-tag>
           </template>
         </el-table-column> -->
-      </el-table>
+        </el-table>
+        <template slot="foooter">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 50, 100,200, 500]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalRecord">
+          </el-pagination>
+        </template>
+      </elx-table-layout>
     </div>
-
-    <div class="approval-panel">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 50, 100,200, 500]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalRecord">
-      </el-pagination>
-    </div>
-
     <div class="approval-panel" style="text-align: center;">
       <el-button size="mini" @click="commitData">提交</el-button>
     </div>
@@ -139,12 +112,12 @@
 </template>
 
 <script>
-import projectinfo from "../../_components/itemProjectSimpleInfo"
+import projectinfo from "../../_components/itemProjectSimpleInfo";
 import dynamicTable from "~/components/DynamicTable";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import store from "../../_store/index.js";
 export default {
-    components: {
+  components: {
     projectinfo
   },
   methods: {
@@ -281,7 +254,14 @@ export default {
           // };
 
           var _this = this;
-          var sufferStr = "总人数:"+item.groupSum + ",参与人数:" +(item.groupSum-item.groupGiveUp)+ ",弃权数:" + item.groupGiveUp + ",";
+          var sufferStr =
+            "总人数:" +
+            item.groupSum +
+            ",参与人数:" +
+            (item.groupSum - item.groupGiveUp) +
+            ",弃权数:" +
+            item.groupGiveUp +
+            ",";
           if (item.groupComment != null && item.groupComment != undefined) {
             var obj1 = item.groupComment;
             Object.keys(obj1).forEach(function(key) {
@@ -293,9 +273,9 @@ export default {
               });
               tempLis.zuping += tempName + ":" + obj1[key] + "人,";
             });
-            console.log(["zuping1",tempLis.zuping,sufferStr])
-            tempLis.zuping = sufferStr +  tempLis.zuping;
-             console.log(["zuping2",tempLis.zuping,sufferStr])
+            console.log(["zuping1", tempLis.zuping, sufferStr]);
+            tempLis.zuping = sufferStr + tempLis.zuping;
+            console.log(["zuping2", tempLis.zuping, sufferStr]);
             tempLis.zuping = tempLis.zuping.substring(
               0,
               tempLis.zuping.length - 1
@@ -304,7 +284,14 @@ export default {
             tempLis.zuping = "暂无";
           }
 
- var sufferStr2 = "总人数:"+item.eachOtherSum + ",参与人数:" +(item.eachOtherSum-item.eachOtherGiveUp)+",弃权数:" + item.eachOtherGiveUp + ",";
+          var sufferStr2 =
+            "总人数:" +
+            item.eachOtherSum +
+            ",参与人数:" +
+            (item.eachOtherSum - item.eachOtherGiveUp) +
+            ",弃权数:" +
+            item.eachOtherGiveUp +
+            ",";
           if (
             item.eachOtherComment != null &&
             item.eachOtherComment != undefined
@@ -319,7 +306,7 @@ export default {
               });
               tempLis.huping += tempName + ":" + obj2[key] + "人,";
             });
-              tempLis.huping = sufferStr2 +  tempLis.huping;
+            tempLis.huping = sufferStr2 + tempLis.huping;
             tempLis.huping = tempLis.huping.substring(
               0,
               tempLis.huping.length - 1

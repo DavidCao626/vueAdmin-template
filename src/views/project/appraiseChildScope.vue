@@ -1,8 +1,8 @@
 <template>
-<div>
-  <page>
-    <div slot="title">子环节</div>
-    <div slot="panel">
+  <div>
+    <page>
+      <div slot="title">子环节</div>
+      <div slot="panel">
 
         <el-table class="i-cursor" @row-click="showDetail" :data="tableData" style="width: 100%">
           <template>
@@ -20,10 +20,10 @@
             </el-table-column>
           </template>
         </el-table>
-    </div>
-  </page>
+      </div>
+    </page>
 
-   <page class="page" :breadcrumb="false">
+    <page class="page" :breadcrumb="false">
       <div slot="panel">
         <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
           <el-col :span="7">
@@ -32,7 +32,7 @@
         </el-row>
       </div>
     </page>
-    </div>
+  </div>
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
@@ -45,7 +45,7 @@ export default {
       dataTotal: 0,
       pageSize: 10,
       scopeId: 0,
-      itemId:0,
+      itemId: 0,
       currentPage: 1
     };
   },
@@ -55,11 +55,13 @@ export default {
     })
   },
   methods: {
-    complateNode(){
-      this.completeUserPendingByItemId({itemId:this.itemId}).then(response=>{
-        this.$message.success("操作成功")
-        this.$router.go(-1)
-      })
+    complateNode() {
+      this.completeUserPendingByItemId({ itemId: this.itemId }).then(
+        response => {
+          this.$message.success("操作成功");
+          this.$router.go(-1);
+        }
+      );
     },
     ...mapActions({
       getUserScope: store.namespace + "/getChildScope",
@@ -122,7 +124,7 @@ export default {
       var scopeId = commons.getRouterParam(to, "scopeId");
       var itemId = commons.getRouterParam(to, "itemId");
       vm.scopeId = scopeId;
-      vm.itemId = itemId
+      vm.itemId = itemId;
       vm.queryData();
     });
   },

@@ -1,27 +1,27 @@
 <template>
-  <div>
-    <page>
-      <div slot="title">岗位列表</div>
-    </page>
+
+  <page>
+    <div slot="title">岗位列表</div>
+    <div slot="panel">
     <elx-table-layout>
       <template slot="headerLeft">
 
-        <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-          <el-form-item label="岗位状态">
+        <el-form :inline="true" label-position="right" :model="formInline" size="mini" class="demo-form-inline">
+          <el-form-item label="岗位状态:">
             <el-select v-model="formInline.jobState" placeholder="岗位状态">
               <el-option v-for="item in jobStateList" :key="item.value" :value="item.value" :label="item.label"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="审核状态">
+          <el-form-item label="审核状态:">
             <el-select v-model="formInline.jobCheckState" placeholder="岗位状态">
               <el-option v-for="item in jobCheckStateList" :key="item.value" :value="item.value" :label="item.label"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="岗位名称">
+          <el-form-item label="岗位名称:">
             <el-input v-model="formInline.name" placeholder="岗位名称"></el-input>
           </el-form-item>
           <el-form-item label="">
-            <el-button type="primary" @click="onSubmit">查询</el-button>
+            <el-button type="primary" @click="onSubmit" icon="el-icon-search">查询</el-button>
           </el-form-item>
         </el-form>
       </template>
@@ -56,7 +56,8 @@
         </el-pagination>
       </template>
     </elx-table-layout>
-  </div>
+    </div>
+  </page>
 </template>
 
   <script>
@@ -85,7 +86,7 @@ export default {
         jobState: ""
       },
       orgProps: {
-         label: "orgName",
+        label: "orgName",
         value: "orgCode",
         children: "children"
       },

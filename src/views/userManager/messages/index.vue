@@ -21,7 +21,7 @@
               <el-input v-model="currentShowContent" placeholder="输入消息标题或关键字搜索"></el-input>
             </el-form-item>
             <el-form-item label="">
-              <el-button type="primary" @click="queryDataByStatus('')">查询</el-button>
+              <el-button type="primary" @click="queryDataByStatus('')" icon="el-icon-search">查询</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -44,7 +44,7 @@
                                 <i class="el-icon-star-off" :class="{'messages-mark__true':isMarkForMessage}"></i>
                             </span> -->
               <span class="messages-time">&nbsp;{{notice.sendTime}}</span>
-              <span class="messages-author">来源&nbsp;:&nbsp;{{notice.source}}</span>
+              <!-- <span class="messages-author">来源&nbsp;:&nbsp;{{notice.source}}</span> -->
             </template>
             <div class="messages-body">
               <div v-html="notice.content" @click="gotopage(notice.id)">{{notice.content}}</div>

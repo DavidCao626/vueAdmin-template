@@ -3,137 +3,108 @@
     <div slot="title">
       学校审核
     </div>
-    <slot name="header">
-      <div class="approval-panel" style="">
-        <div style="float: right;    margin-top: 4px;">
-          <el-button-group>
-            <!-- <el-button plain size="mini">
-                            <i class="el-icon-sort-down"></i>
-                        </el-button>
-                        //排序
-                        <el-button plain size="mini">
-
-                            <i class="el-icon-sort-up"></i>
-                        </el-button> -->
-          </el-button-group>
-        </div>
-        <projectinfo :item-id="itemId"></projectinfo>
-        <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
-          <!-- <el-form-item label="业务类别">
-                        <el-select v-model="formInline.region" placeholder="筛选类别">
-                            <el-option label="全部" value="shanghai"></el-option>
-                            <el-option label="贫困建档" value="beijing"></el-option>
-                            <el-option label="助学金" value="beijing2"></el-option>
-                            <el-option label="奖学金" value="beijing3"></el-option>
-                            <el-option label="学生资助" value="beijing4"></el-option>
-                            <el-option label="其他" value="beijing5"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="相关项目">
-                        <el-autocomplete v-model="state4" :fetch-suggestions="querySearchAsync" placeholder="请输入相关项目名称" @select="handleSelect"></el-autocomplete>
-                    </el-form-item>
-                    <el-form-item label="上报机构">
-                        <el-autocomplete v-model="state4" :fetch-suggestions="querySearchAsync" placeholder="请输入相关项目名称" @select="handleSelect"></el-autocomplete>
-                    </el-form-item> -->
-          <el-form-item label="申请人学号">
-            <el-input v-model="formInline.user" placeholder="申请人"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">查 询</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-    </slot>
-    <div class="approval-panel"  style="padding: 10px;">
-      <el-table :data="data" style="width: 100%;" size="mini">
-        <el-table-column type="expand">
-          <template slot-scope="props">
-
-            <el-form label-position="" inline class="demo-table-expand" size="mini">
-
-              <el-form-item label="姓名:">
-                <span>{{ props.row.name }}</span>
-              </el-form-item>
-
-              <el-form-item label="学号:">
-                <span>{{ props.row.cid }}</span>
-              </el-form-item>
-              <br/>
-              <el-form-item label="家庭情况:">
-                <span>{{ props.row.jtQk }}</span>
-              </el-form-item>
-              <el-form-item label="家庭人口">
-                <span>{{ props.row.jtNumber }}</span>
-              </el-form-item>
-
-              <el-form-item label="是否低保户:">
-                <span>{{ props.row.jtisDb }}</span>
-              </el-form-item>
-              <el-form-item label="是否建档立卡:">
-                <span>{{ props.row.jtisjdlk }}</span>
-              </el-form-item>
-
-              <el-form-item label="家庭收入:">
-                <span>{{ props.row.jtsr }}</span>
-              </el-form-item>
-              <br/>
-
-              <el-form-item label="学校评议:">
-                <span>{{ props.row.xxpy }}</span>
-              </el-form-item>
-
-              <br/>
-
-              <el-form-item label="学院推荐:">
-                <span>{{ props.row.xytj }}</span>
-              </el-form-item>
-
-            </el-form>
-          </template>
-        </el-table-column>
-        <el-table-column label="申请人">
-          <el-table-column label="姓名" width="100" prop="name">
-          </el-table-column>
-          <el-table-column label="学号" width="100" prop="cid">
-          </el-table-column>
-
-        </el-table-column>
-
-        <el-table-column label="家庭情况" prop="jtdesc">
-        </el-table-column>
-        </el-table-column>
-        <el-table-column label="申请等级" width="80" prop="shenqin">
-        </el-table-column>
-        <el-table-column label="学校评议" prop="xxpy">
-        </el-table-column>
-        <el-table-column label="学院推荐" prop="xytj" width="80">
-        </el-table-column>
-        <el-table-column label="学校推荐" width="150" fixed="right">
-          <template slot-scope="scope">
-            <el-select v-model="scope.row.xuexiaopingshen" placeholder="请选择" @change="saveData(scope,$event)">
-              <el-option v-for="(item,index) in serviceTypeList" :key="index" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </template>
-        </el-table-column>
-
-        <!-- <el-table-column label="状态" fixed="right" prop="isDot" width="100" :filters="[{ text: '已处理', value: true }, { text: '未处理', value: false }]" :filter-method="filterTag" filter-placement="bottom-end">
-          <template slot-scope="scope">
-            <el-tag :type="scope.row.isDot === true ? 'info' : 'danger'" disable-transitions>
-              {{scope.row.isDot=== true ? '已处理' : '未处理'}}
-            </el-tag>
-          </template>
-        </el-table-column> -->
-      </el-table>
+    <div slot="header">
+      <projectinfo :item-id="itemId"></projectinfo>
     </div>
+    <div slot="panel">
+      <elx-table-layout>
+        <template slot="headerRight">
+          <el-button size="mini" @click="commitData">暂存环节数据</el-button>
 
-    <div class="approval-panel">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 50, 100,200, 500]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalRecord">
-      </el-pagination>
+        </template>
+        <template slot="headerLeft">
+          <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
+
+            <el-form-item label="申请人学号:">
+              <el-input v-model="formInline.user" placeholder="申请人"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit" icon="el-icon-search">查 询</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+        <el-table :data="data" style="width: 100%;" size="mini">
+          <el-table-column type="expand">
+            <template slot-scope="props">
+
+              <el-form label-position="" inline class="demo-table-expand" size="mini">
+
+                <el-form-item label="姓名:">
+                  <span>{{ props.row.name }}</span>
+                </el-form-item>
+
+                <el-form-item label="学号:">
+                  <span>{{ props.row.cid }}</span>
+                </el-form-item>
+                <br />
+                <el-form-item label="家庭情况:">
+                  <span>{{ props.row.jtQk }}</span>
+                </el-form-item>
+                <el-form-item label="家庭人口">
+                  <span>{{ props.row.jtNumber }}</span>
+                </el-form-item>
+
+                <el-form-item label="是否低保户:">
+                  <span>{{ props.row.jtisDb }}</span>
+                </el-form-item>
+                <el-form-item label="是否建档立卡:">
+                  <span>{{ props.row.jtisjdlk }}</span>
+                </el-form-item>
+
+                <el-form-item label="家庭收入:">
+                  <span>{{ props.row.jtsr }}</span>
+                </el-form-item>
+                <br />
+
+                <el-form-item label="学校评议:">
+                  <span>{{ props.row.xxpy }}</span>
+                </el-form-item>
+
+                <br />
+
+                <el-form-item label="学院推荐:">
+                  <span>{{ props.row.xytj }}</span>
+                </el-form-item>
+
+              </el-form>
+            </template>
+          </el-table-column>
+          <el-table-column label="申请人">
+            <el-table-column label="姓名" width="100" prop="name">
+            </el-table-column>
+            <el-table-column label="学号" width="100" prop="cid">
+            </el-table-column>
+
+          </el-table-column>
+
+          <el-table-column label="家庭情况" prop="jtdesc">
+          </el-table-column>
+          </el-table-column>
+          <el-table-column label="申请等级" width="80" prop="shenqin">
+          </el-table-column>
+          <el-table-column label="学校评议" prop="xxpy">
+          </el-table-column>
+          <el-table-column label="学院推荐" prop="xytj" width="80">
+          </el-table-column>
+          <el-table-column label="学校推荐" width="150" fixed="right">
+            <template slot-scope="scope">
+              <el-select v-model="scope.row.xuexiaopingshen" placeholder="请选择" @change="saveData(scope,$event)">
+                <el-option v-for="(item,index) in serviceTypeList" :key="index" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+            </template>
+          </el-table-column>
+        </el-table>
+        <div slot="footer">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[10, 50, 100,200, 500]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="totalRecord">
+          </el-pagination>
+        </div>
+      </elx-table-layout>
+
     </div>
 
     <div class="approval-panel" style="text-align: center;">
-      <el-button size="mini" @click="commitData">提交</el-button>
+      <el-button size="mini" @click="commitData">提交环节数据</el-button>
     </div>
   </page>
 </template>
@@ -348,7 +319,7 @@ export default {
 };
 </script>
 
-<style scoped> 
+<style scoped>
 .el-form-item {
   margin-bottom: 10px;
 }

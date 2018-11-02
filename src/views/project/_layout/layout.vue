@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template>
+    <!-- <template>
       <h2 v-if="currentNavMenus.length>0">{{ this.$route.meta.title }}模块功能导航：</h2>
       <el-row :gutter="10">
         <div v-for="i in currentNavMenus">
@@ -18,7 +18,7 @@
 
         </div>
       </el-row>
-    </template>
+    </template> -->
     <router-view></router-view>
   </div>
 </template>

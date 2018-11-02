@@ -3,76 +3,76 @@
         <h2 @click="goBack">返回</h2><br/>
         <el-form :model="formData" size="small" label-width="80px">
 
-            <el-form-item label="学号">
+            <el-form-item label="学号:">
                 <el-input v-model="formData.stuNo" placeholder="学号"></el-input>
             </el-form-item>
 
-            <el-form-item label="姓名">
+            <el-form-item label="姓名:">
                 <el-input v-model="formData.name" placeholder="姓名"></el-input>
             </el-form-item>
 
-            <el-form-item label="考生号">
+            <el-form-item label="考生号:">
                 <el-input v-model="formData.collegeEntranceNo" placeholder="考生号"></el-input>
             </el-form-item>
 
-            <el-form-item label="证件类型">
+            <el-form-item label="证件类型:">
                 <elx-select @change="changeIdType" v-model="formData.identityType" :options="idTypeList"></elx-select>
             </el-form-item>
 
-            <el-form-item label="证件号码">
+            <el-form-item label="证件号码:">
                 <el-input v-model="formData.identityNo" placeholder="证件号码"></el-input>
             </el-form-item>
 
-            <el-form-item label="性别">
+            <el-form-item label="性别:">
                 <el-radio-group v-model="formData.sexType">
                     <el-radio-button v-for="item in sexTypeList" :key="item.dict_key" :label="item.dict_key">{{item.dict_desc}}</el-radio-button>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item label="出生日期">
+            <el-form-item label="出生日期:">
                 <el-date-picker v-model="formData.birthday" value-format="yyyy-MM-dd" type="date" placeholder="选择日期">
                 </el-date-picker>
             </el-form-item>
-            <el-form-item label="政治面貌">
+            <el-form-item label="政治面貌:">
                 <elx-select @change="politicalStatus" v-model="formData.politicalStatus" :options="politicalStatusList"></elx-select>
             </el-form-item>
 
-            <el-form-item label="民族">
+            <el-form-item label="民族:">
                 <elx-select @change="nation" v-model="formData.nation" :options="nationList"></elx-select>
             </el-form-item>
 
-            <el-form-item label="农村学生">
+            <el-form-item label="农村学生:">
                 <el-radio-group v-model="formData.isCountryStu">
                     <el-radio-button v-for="item in isCountryStuList" :key="item.dict_key" :label="item.dict_key">{{item.dict_desc}}</el-radio-button>
                 </el-radio-group>
             </el-form-item>
 
-            <el-form-item label="学生类型">
+            <el-form-item label="学生类型:">
                 <elx-select @change="stuTypeCode" v-model="formData.stuTypeCode"  :options="stuTypeCodeList"></elx-select>
             </el-form-item>
 
-            <el-form-item label="学习形式">
+            <el-form-item label="学习形式:">
                 <elx-select @change="learnTypeCode" v-model="formData.learnTypeCode"  :options="learnTypeCodeList"></elx-select>
             </el-form-item>
 
-            <el-form-item label="所属班级">
+            <el-form-item label="所属班级:">
 
                 <el-cascader :show-all-levels="false" v-model="formData.orgArr" placeholder="输入进行搜索" :options="orgList" filterable change-on-select :props="orgProps"></el-cascader>
 
             </el-form-item>
 
-            <el-form-item label="专业">
+            <el-form-item label="专业:">
                 <elx-select @change="majorCode" v-model="formData.majorCode" :options="majorCodeList"></elx-select>
             </el-form-item>
 
-            <el-form-item label="学制">
+            <el-form-item label="学制:">
                 <elx-select @change="educationalType" v-model="formData.educationalType" :options="educationalTypeList"></elx-select>
             </el-form-item>
 
-            <el-form-item label="攻读学历">
+            <el-form-item label="攻读学历:">
                 <elx-select @change="studyDegreeCode" v-model="formData.studyDegreeCode" :options="studyDegreeCodeList"></elx-select>
             </el-form-item>
 
-            <el-form-item label="入学日期">
+            <el-form-item label="入学日期:">
                 <el-date-picker v-model="formData.startSchoolDate" value-format="yyyy-MM-dd" type="date" placeholder="选择日期">
                 </el-date-picker>
             </el-form-item>

@@ -1,39 +1,40 @@
 <template>
-  <div>
-    <page>
-      <div slot="title">参与者情况检查</div>
-    </page>
-    <elx-table-layout>
-      <template slot="headerLeft">
+  <page>
+    <div slot="title">参与者情况检查</div>
+    <div slot="panel">
+      <elx-table-layout>
+        <template slot="headerLeft">
 
-        <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-          <el-form-item>
-            <el-button type="primary" @click="reCheck">重新检查</el-button>
-          </el-form-item>
-        </el-form>
-      </template>
+          <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
+            <el-form-item>
+              <el-button type="primary" @click="reCheck">重新检查</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
 
-      <el-table :data="data" style="width: 100%" border size="mini">
-        <el-table-column prop="name" label="名称" width="100">
-        </el-table-column>
-        <el-table-column prop="type" label="类别" width="100">
-        </el-table-column>
-        <el-table-column prop="body" label="内容">
-        </el-table-column>
-      </el-table>
+        <el-table :data="data" style="width: 100%" border size="mini">
+          <el-table-column prop="name" label="名称" width="100">
+          </el-table-column>
+          <el-table-column prop="type" label="类别" width="100">
+          </el-table-column>
+          <el-table-column prop="body" label="内容">
+          </el-table-column>
+        </el-table>
 
-      <template slot="footer">
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-        </el-pagination>
-      </template>
-    </elx-table-layout>
-    <page>
-      <div slot="panel" style="text-align: right">
-        <el-button size="mini" type="primary" @click="complate">完成</el-button>
-        <el-button size="mini" type="primary" @click="stopScope">终止任务</el-button>
-      </div>
-    </page>
-  </div>
+        <template slot="footer">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+          </el-pagination>
+        </template>
+      </elx-table-layout>
+      <page>
+        <div slot="panel" style="text-align: right">
+          <el-button size="mini" type="primary" @click="complate">完成</el-button>
+          <el-button size="mini" type="primary" @click="stopScope">终止任务</el-button>
+        </div>
+      </page>
+    </div>
+  </page>
+
 </template>
 
   <script>
@@ -73,10 +74,10 @@ export default {
         } else {
           this.completeUserPendingByItemId({ itemId: this.itemId }).then(
             response => {
-             this.$router.push({
-            path: "/project/control",
-            query: { scopeId: this.scopeId }
-          });
+              this.$router.push({
+                path: "/project/control",
+                query: { scopeId: this.scopeId }
+              });
             }
           );
         }
@@ -142,9 +143,6 @@ export default {
 </script>
 
 <style scoped>
-.el-form-item {
-  margin-bottom: 0px;
-}
 .demo-form-inline {
   display: inline !important;
 }

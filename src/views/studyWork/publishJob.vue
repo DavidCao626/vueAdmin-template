@@ -3,65 +3,62 @@
     <page>
       <div slot="title">岗位信息</div>
       <div slot="panel">
-        <el-form :model="formData" label-width="100px">
-          <el-form-item label="项目">
+        <el-form :model="formData" label-width="100px" label-position="right">
+          <el-form-item label="项目:">
             <elx-select v-model="formData.projectId" placeholder="" @change="projectChange" :disabled="serviceType == 'U'">
               <el-option v-for="item in projectList" :key="item.id" :obj="item" :value="item.id" :label="item.name"></el-option>
             </elx-select>
           </el-form-item>
-          <el-form-item label="岗位名称">
+          <el-form-item label="岗位名称:">
             <el-row>
               <el-col :span="7">
                 <el-input v-model="formData.name" placeholder="岗位名称"></el-input>
               </el-col>
             </el-row>
           </el-form-item>
-          <el-form-item label="招聘名额">
+          <el-form-item label="招聘名额:">
             <el-input-number v-model="formData.numbers" :min="1" label="名额"></el-input-number>
           </el-form-item>
-          <el-form-item label="工作时间要求">
+          <el-form-item label="工作时间要求:">
             <el-row>
               <el-col :span="7">
                 <el-input v-model="formData.workTime" placeholder="工作时间要求"></el-input>
               </el-col>
             </el-row>
           </el-form-item>
-          <el-form-item label="月工作量">
+          <el-form-item label="月工作量:">
             <el-row>
               <el-col :span="7">
                 <el-input v-model="formData.monthWorkload" placeholder="月工作量"></el-input>
               </el-col>
             </el-row>
           </el-form-item>
-          <el-form-item label="岗位需求">
+          <el-form-item label="岗位需求:">
             <el-row>
               <el-col :span="11">
                 <el-input v-model="formData.jobDemand" type="textarea" rows="3" placeholder="请填写岗位需求"></el-input>
               </el-col>
             </el-row>
           </el-form-item>
-          <el-form-item label="岗位内容">
+          <el-form-item label="岗位内容:">
             <el-row>
               <el-col :span="11">
                 <el-input v-model="formData.jobDesc" type="textarea" rows="3" placeholder="请填写岗位相关信息及招聘条件"></el-input>
               </el-col>
             </el-row>
           </el-form-item>
+          <el-form-item label="">
+            <el-row>
+              <el-col :span="11">
+                <el-button type="primary" @click="onSubmit">确定</el-button>
+              </el-col>
+            </el-row>
 
+          </el-form-item>
         </el-form>
       </div>
     </page>
-    <page>
-      <div slot="panel">
-        <el-row>
-          <el-col :span="7" justify="center">
-          </el-col>
-          <el-col :span="17">
-            <el-button type="primary" @click="onSubmit">确定</el-button>
-          </el-col>
-        </el-row>
-      </div>
-    </page>
+
   </div>
 </template>
 
