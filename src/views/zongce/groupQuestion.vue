@@ -4,36 +4,42 @@
       <div slot="title">
         {{getQuestion.question.title}}
       </div>
-      <div slot="extra">
-        <el-input placeholder="请输入搜索内容" style="width:280px" v-model="selectInput" class="input-with-select">
-          <elx-select v-model="select" style="width:80px" slot="prepend" placeholder="请选择">
-            <el-option label="姓名" value="1"></el-option>
-            <el-option label="学号" value="2"></el-option>
-          </elx-select>
-        </el-input>
-      </div>
-      <div class="approval-panel">
+      <div slot="header">
         <p>{{ getQuestion.question.desc }}</p>
+
       </div>
-      <div class="approval-panel">
-        <table style="">
-          <tr>
-            <th>学生姓名</th>
-            <th>学号</th>
 
-            <th v-for="(item,index) in questions[0].options">{{ item.option.title }}
-              <small style="color:#333;font-weight:400;font-size:10px">(最高{{item.expand.maxScore}}分)</small>
-            </th>
-          </tr>
-          <tr v-for="(i,index) in questions" :key="index">
-            <td style="text-align: left;">{{ index+=1 }}、{{ i.entry.title }}</td>
+      <div slot="panel">
+        <elx-table-layout>
+          <template slot="headerRight">
+            <el-input placeholder="请输入学号搜索" size="mini" style="width:300px" v-model="selectInput"></el-input>
+            <el-button type="primary" size="mini" icon="el-icon-search">查询</el-button>
+          </template>
+          <div class="approval-panel" style="padding:5px 0px">
+            <table style="">
+              <tr>
+                <th>学生姓名</th>
+                <th>学号</th>
 
-            <td v-for="(item,ii) in i.expand">{{ item.value }}</td>
-            <td v-for="(items,n) in i.options">
-              <el-input size="mini" v-model="items.option.score" :min="0" :max="items.expand.maxScore"></el-input>
-            </td>
-          </tr>
-        </table>
+                <th v-for="(item,index) in questions[0].options">{{ item.option.title }}
+                  <small style="color:#333;font-weight:400;font-size:10px">(最高{{item.expand.maxScore}}分)</small>
+                </th>
+              </tr>
+              <tr v-for="(i,index) in questions" :key="index">
+                <td style="text-align: left;">{{ index+=1 }}、{{ i.entry.title }}</td>
+
+                <td v-for="(item,ii) in i.expand">{{ item.value }}</td>
+                <td v-for="(items,n) in i.options">
+                  <el-input size="mini" v-model="items.option.score" :min="0" :max="items.expand.maxScore"></el-input>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div slot="footer">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4" :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper" :total="400">
+            </el-pagination>
+          </div>
+        </elx-table-layout>
       </div>
 
       <div class="approval-panel  footer-toolbar clearfix">
@@ -52,6 +58,7 @@ import _ from "lodash";
 export default {
   data() {
     return {
+      currentPage4: 4,
       select: "1",
       selectInput: "",
       oldchildren: [],
@@ -81,6 +88,12 @@ export default {
     }
   },
   methods: {
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    },
     submit() {
       this.submitQuestionBean({ scopeId: this.scopeId, itemId: this.itemId });
       this.$message({
