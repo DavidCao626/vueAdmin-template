@@ -52,6 +52,8 @@
       <el-table :data="data" style="width: 100%" border size="mini">
         <el-table-column prop="type" :formatter="typeFormatter" label="类型">
         </el-table-column>
+        <el-table-column prop="schoolYearName"  label="年度">
+        </el-table-column>
         <el-table-column prop="orgName" label="组织名称">
         </el-table-column>
         <el-table-column prop="state" :formatter="stateFormatter" label="状态">

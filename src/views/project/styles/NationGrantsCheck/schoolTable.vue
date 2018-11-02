@@ -93,6 +93,7 @@
     </div>
 
     <div class="approval-panel" style="text-align: center;">
+       <el-button size="mini" @click="zancun">暂存</el-button>
       <el-button size="mini" @click="commitData">提交</el-button>
     </div>
   </page>
@@ -139,6 +140,10 @@ export default {
       this.currentPage = val;
       this.getData();
     },
+     zancun(){
+      this.$router.go(-1);
+    },
+
     commitData() {
       this.submitClassData({ itemId: this.itemId }).then(response => {
         this.completeUserPendingByItemId({ itemId: this.itemId }).then(res => {

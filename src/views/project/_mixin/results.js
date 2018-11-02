@@ -8,7 +8,7 @@ export default {
 
   methods: {
     ...mapActions({
-
+       
       queryPovertyResult: store.namespace + "/queryPovertyResult",
       queryNationalGrantsResult: store.namespace + "/queryNationalGrantsResult",
       queryMotivationalScholarshipResult: store.namespace + "/queryMotivationalScholarshipResult",
@@ -17,6 +17,12 @@ export default {
        querySchoolYearDict: store.namespace + "/querySchoolYearDict",//获取学年
       // getPunishStateDict: store.namespace + "/getPunishStateDict",//获取字典
       getCurrentOrgListAndOwner: store.namespace + "/getCurrentOrgListAndOwner",
+
+      queryNationalGrantsProject:
+        store.namespace + "/queryNationalGrantsProject",
+      queryNationalScholarshipProject: store.namespace + "/queryNationalScholarshipProject",
+      queryPovertyProject:
+        store.namespace + "/queryPovertyProject"
     })
   }
 };

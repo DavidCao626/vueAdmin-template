@@ -523,7 +523,7 @@ export default {
     getOrgList() {
       this.getCurrentOrgListAndOwner({}).then(response => {
         this.orgList = response.resBody;
-        this.formInline.orgCode.push(this.orgList[0]["org_code"]);
+        //this.formInline.orgCode.push(this.orgList[0]["org_code"]);
 
         this.getData(this.orgList[0]["org_code"]);
       });
@@ -592,13 +592,10 @@ export default {
                   this.formInline.expendCategoryCode.length - 1
                 ]
               : "",
-          //expendCategoryName: this.formInline.expend.expendCategoryName || "",
-          //expendGradeName: this.formInline.expend.expendGradeName || "",
-          //expandItemCode: this.formInline.expend.expandItemCode || "",
-          //expandItemName: this.formInline.expend.expandItemName || "",
-          sourceState: this.formInline.dateSource || ""
+          sourceState: this.formInline.dataSource || ""
         }
         if( this.formInline.orgCode.length > 0){
+          console.log(["orgCode",this.formInline.orgCode.length])
           requestData.orgCode = this.formInline.orgCode[this.formInline.orgCode.length-1]
         }
 

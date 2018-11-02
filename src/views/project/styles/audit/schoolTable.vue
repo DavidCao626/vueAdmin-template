@@ -133,6 +133,7 @@
     </div>
 
     <div class="approval-panel" style="text-align: center;">
+       <el-button size="mini" @click="zancun">暂存</el-button>
       <el-button size="mini" @click="commitData">提交</el-button>
     </div>
   </page>
@@ -182,6 +183,10 @@ export default {
         });
       });
     },
+     zancun(){
+      this.$router.go(-1);
+    },
+
     onSubmit() {
       //查询
       this.currentPage = 1;
