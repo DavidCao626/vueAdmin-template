@@ -59,6 +59,7 @@
         <ProjectAttachmentUplad :fileList2="form.attrDetailBean" :url="uploadAttrUrl" style="width: 30%;" @onSuccess="formUploadOnSuccess"></ProjectAttachmentUplad>
       </el-form-item>
 
+<<<<<<< HEAD
       <el-form-item label="是否生成公告:">
         <el-switch v-model="form.isSendPublicNotice" active-value="Y" inactive-value="N"></el-switch>
       </el-form-item>
@@ -73,6 +74,22 @@
         <el-button type="primary" @click="onSaveAndNext">保存并下发</el-button>
       </el-form-item>
     </el-form>
+=======
+        <el-form-item label="是否生成公告:">
+          <el-switch v-model="form.isSendPublicNotice" active-value="Y" inactive-value="N"></el-switch>
+        </el-form-item>
+        <el-form-item label="公告内容:" v-show="form.isSendPublicNotice=='Y'?true:false">
+          <el-button type="text" @click="tinymceShow=true">编辑内容</el-button>
+          <el-button type="text" v-show="tinymceShow" @click="tinymceShow=false">隐藏内容</el-button>
+          <template >
+            <tinymce :height="300" v-model="form.projectDesc" id='tinymce' v-show="tinymceShow"></tinymce>
+          </template>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSaveAndNext">保存并下发</el-button>
+        </el-form-item>
+      </el-form>
+>>>>>>> cdde8b3516b3fe989a4c27062372814aa8e16985
 
   </div>
 </template>
@@ -131,16 +148,6 @@ export default {
     };
   },
   methods: {
-    schoolYearChange(p1, p2, p3, p4) {
-      console.log([p1, p2, p3, p4]);
-      var schoolYearName = p3.obj.name;
-      this.form.expand.name =
-        schoolYearName +
-        this.ioptions.find(el => {
-          return el.classifyCode == this.form.projectServiceType;
-        }).classifyName +
-        "任务";
-    },
     getDict() {
       var requestData = {
         dicts: ["study_degree_code", "grade"]

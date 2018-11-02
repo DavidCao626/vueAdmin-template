@@ -4,9 +4,8 @@
     <div slot="panel">
 
       <el-card class="box-card" shadow="hover">
-        <div slot="header" class="clearfix">
           <ProjectAddSteps :active="0"></ProjectAddSteps>
-        </div>
+          <br/>
         <ProjectInfoForm></ProjectInfoForm>
       </el-card>
     </div>

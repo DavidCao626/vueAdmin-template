@@ -25,12 +25,13 @@
           </el-pagination>
         </template>
       </elx-table-layout>
-      <page>
-        <div slot="panel" style="text-align: right">
-          <el-button size="mini" type="primary" @click="complate">继续任务</el-button>
-          <el-button size="mini" type="primary" @click="stopScope">终止任务</el-button>
-        </div>
-      </page>
+      <br />
+      <div tyle="text-align: right">
+        <el-button size="mini" type="primary" @click="complate">继续任务</el-button>
+        <el-button size="mini" type="primary" @click="stopScope">终止任务</el-button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
   </page>
 </template>
 
