@@ -1,7 +1,7 @@
 <template>
   <page>
     <div slot="title">
-      学院审核
+      学院环节数据
     </div>
     <div slot="header">
       <projectinfo :item-id="itemId"></projectinfo>

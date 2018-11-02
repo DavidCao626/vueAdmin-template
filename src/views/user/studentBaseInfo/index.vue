@@ -12,6 +12,13 @@
         <el-form-item label="组织机构:">
           <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
         </el-form-item>
+         <el-form-item label="分配班级:">
+            <el-select v-model="formInline.hasClass" placeholder="">
+              <el-option label="不限" value="0"></el-option>
+              <el-option label="是" value="Y"></el-option>
+              <el-option label="否" value="N"></el-option>
+            </el-select>
+          </el-form-item>
         <el-form-item label="系:">
           <el-select v-model="formInline.departmentCode" placeholder="" @change="getMajorListAll">
             <el-option v-for="item in departmentListALL" :key="item.id" :label="item.departmentName" :value="item.code"></el-option>
@@ -198,6 +205,7 @@ export default {
       academicList: [],
       data: [],
       formInline: {
+        hasClass:"0",
         stuNo: "",
         name: "",
         orgCode: [],
@@ -385,6 +393,7 @@ export default {
     },
     getData() {
       var requestData = {
+        hasClass:this.formInline.hasClass,
         stuNo: this.formInline.stuNo,
         name: this.formInline.name,
         departmentCode: this.formInline.departmentCode,

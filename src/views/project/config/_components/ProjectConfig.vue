@@ -66,16 +66,16 @@
                       </span>
                     </el-tooltip>
                   </span>
-                  <span>计划{{item.viewPlanDay}}天{{item.viewPlanHour}}小时</span>
+                  <span>{{item.disPlanDate}}</span>
                 </div>
                 <div class="tag-description">计划开始时间： {{item.start==''?'未配置':formatMoment(item.start)}} ~ 计划结束时间： {{item.end==''?'未配置':formatMoment(item.end)}} </div>
               </div>
               <div class="tag-flex tag-flex-direction__column" style="margin-left:20px;">
 
                 <el-popover placement="top" width="300" :ref="'popover'+item.item.id">
-                  <p>{{ item.viewPlanDay }}天 {{ item.viewPlanHour }}小时</p>
+                  <p>{{ item.viewPlanAsDay }}天 {{ item.viewPlanHour }}小时</p>
                  <div>
-                  <el-input style=" margin-top: 10px;width:100px;" size="small" type="Number" min="0"  :value="item.viewPlanDay" @change="handleChangeDay(item,$event)">
+                  <el-input style=" margin-top: 10px;width:100px;" size="small" type="Number" min="0"  :value="item.viewPlanAsDay" @change="handleChangeDay(item,$event)">
                   </el-input>
                   天
                   <el-input style=" margin-top: 10px;width:100px;" size="small" type="Number" min="0" max="24" :value="item.viewPlanHour" @change="handleChangeHour(item,$event)"></el-input>
@@ -198,7 +198,7 @@ export default {
     },
     handleChangeHour(param,value){
       console.log("startChange");
-      var hour=parseInt(value)+parseInt(param.viewPlanDay*24);
+      var hour=parseInt(value)+parseInt(param.viewPlanAsDay*24);
       this.changeScopeItemHour({ itemKey:  param.stepKey, timeLong: hour });
     }
   }

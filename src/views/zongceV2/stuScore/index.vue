@@ -32,15 +32,14 @@
                     <template slot="headerRight">
                         <el-button-group>
                             <el-tooltip class="item" effect="dark" content="下载模版" placement="bottom">
-                                <el-button plain size="mini">
                                     <a :href="urldo" target='_blank'>
-                                        <i class="el-icon-sold-out"></i>
-                                    </a>
+                                <el-button plain size="mini">模板下载
                                 </el-button>
+                                    </a>
                             </el-tooltip>
                             <el-tooltip class="item" effect="dark" content="导入数据" placement="bottom" v-if="importOpen">
                                 <el-button plain size="mini" @click="dialogVisible = true">
-                                    <i class="el-icon-download"></i>
+                                   导入数据
                                 </el-button>
                             </el-tooltip>
                             <el-tooltip class="item" effect="dark" content="导出数据" placement="bottom" v-if="exportOpen">

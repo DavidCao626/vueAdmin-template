@@ -9,8 +9,8 @@
     <div slot="panel">
       <elx-table-layout>
         <template slot="headerRight">
-          <el-button size="mini" @click="commitData">暂存环节数据</el-button>
-
+          <el-button size="mini" @click="zancun">暂存</el-button>
+          <el-button size="mini" @click="commitData">提交</el-button>
         </template>
         <template slot="headerLeft">
           <el-form :inline="true" :model="formInline" class="demo-form-inline" size="mini">
@@ -104,7 +104,8 @@
     </div>
 
     <div class="approval-panel" style="text-align: center;">
-      <el-button size="mini" @click="commitData">提交环节数据</el-button>
+      <el-button size="mini" @click="zancun">暂存</el-button>
+      <el-button size="mini" @click="commitData">提交</el-button>
     </div>
   </page>
 </template>
@@ -153,6 +154,10 @@ export default {
         });
       });
     },
+    zancun() {
+      this.$router.go(-1);
+    },
+
     onSubmit() {
       //查询
       this.currentPage = 1;

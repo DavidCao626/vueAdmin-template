@@ -30,12 +30,17 @@ export const getInteratedProjectInfo = state => {
   return dispenseView.project
 }
 
+export const getScopeDeployPackage = state => { 
+  var dispenseView = state.scopeIntegratedView;
+  return dispenseView.taskDeployPackage;
+}
+
 
 export const getInteratedScopeInfo = state => {
   var dispenseView = state.scopeIntegratedView
   var scope = dispenseView.scope
   if (dispenseView.scopeDelayedTimeLong >0) {
-    scope.delayDay = "预计超时"+_getHourDay(dispenseView.scopeDelayedTimeLong)+"天"
+    scope.delayDay = "预计超时" + _getHourDay(dispenseView.scopeDelayedTimeLong)
   } else {
     scope.delayDay = "未超时"
   }
@@ -65,7 +70,8 @@ export const getInteratedItems = state => {
     var duration = moment.duration(value.item.planTimeLong,'hours');
     value.vday = duration.days();
     value.vhour = duration.hours();
-    console.log([value.vday,value.vhour,value.item.planTimeLong]);
+    value.vAsDay = parseInt(duration.asDays());
+    console.log(["item", value]);
     result.push(value)
   })
   return result

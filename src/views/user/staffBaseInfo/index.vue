@@ -73,38 +73,55 @@
                   <i class="el-icon-arrow-down"></i>
                 </el-button>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item @click.native="edit(scope.row)">编辑</el-dropdown-item>
+                  <el-dropdown-item @click.native="edit(scope.row)">修改</el-dropdown-item>
                   <el-dropdown-item @click.native="resignation(scope.row)">任职</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </template>
-            </el-table-column>
-            <el-table-column type="expand" label="#" width="42">
-              <template slot-scope="props" style="background-color:#f7f8f9">
-  <el-form label-position="left" inline class="demo-table-expand">
-    <el-form-item label="职工号:">
-      <span>{{ props.row.staff_code }}</span>
-    </el-form-item>
-    <br />
-    <el-form-item label="姓名:">
-      <span>{{ props.row.name }}</span>
-    </el-form-item>
-    <br />
-    <el-form-item label="手机号:">
-      <span>{{ props.row.phone }}</span>
-    </el-form-item>
-  </el-form>
-</template>
-            </el-table-column>
-          </el-table>
+          </el-table-column>
+          <el-table-column type="expand" label="#" width="42">
+            <template slot-scope="props" style="background-color:#f7f8f9">
+              <el-form label-position="left" inline class="demo-table-expand">
+                <el-form-item label="职工号:">
+                  <span>{{ props.row.staff_code }}</span>
+                </el-form-item>
+                <br />
+                <el-form-item label="姓名:">
+                  <span>{{ props.row.name }}</span>
+                </el-form-item>
+                <br />
+                <el-form-item label="手机号:">
+                  <span>{{ props.row.phone }}</span>
+                </el-form-item>
+              </el-form>
+            </template>
+          </el-table-column>
+        </el-table>
 
-          <template slot="footer">
-  <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-  </el-pagination>
-</template>
+        <template slot="footer">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+          </el-pagination>
+        </template>
 
       </elx-table-layout>
     </div>
+    <el-dialog title="修改" :visible.sync="updateDV" width="30%">
+      <el-form :model="updateForm" label-width="80px">
+        <el-form-item label="职工号">
+          <el-input v-model="updateForm.staffNo" disabled placeholder=""></el-input>
+        </el-form-item>
+        <el-form-item label="姓名">
+          <el-input v-model="updateForm.name" placeholder=""></el-input>
+        </el-form-item>
+        <el-form-item label="手机号">
+          <el-input v-model="updateForm.phone" placeholder=""></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="updateDV = false">取 消</el-button>
+        <el-button type="primary" @click="submitEdit">确 定</el-button>
+      </span>
+    </el-dialog>
   </page>
 </template>
 
@@ -119,6 +136,7 @@ Vue.use(Element);
 export default {
   data() {
     return {
+      updateDV: false,
       pageInfo: {
         currentPage: 1,
         pageSize: 10,
@@ -139,7 +157,13 @@ export default {
       sexObj: {},
       nationObj: {},
       idTypeObj: {},
-      action: api.importStaff
+      action: api.importStaff,
+      updateForm: {
+        staffNo: null,
+        id: 0,
+        name: "",
+        phone: ""
+      }
     };
   },
   watch: {
@@ -176,7 +200,8 @@ export default {
     ...mapActions({
       queryCurrentOrgStaffList: store.namespace + "/queryCurrentOrgStaffList",
       getDictByDictNames: store.namespace + "/getDictByDictNames",
-      queryOrgByOrgCode: store.namespace + "/queryOrgByOrgCode"
+      queryOrgByOrgCode: store.namespace + "/queryOrgByOrgCode",
+      updateStaffInfo: store.namespace + "/updateStaffInfo"
     }),
     resignation(row) {
       console.log(["row", row]);
@@ -190,6 +215,17 @@ export default {
     },
     edit(row) {
       console.log(["row", row]);
+      (this.updateForm.staffNo = row.staff_code), (this.updateForm.id = row.id);
+      this.updateForm.name = row.name;
+      this.updateForm.phone = row.phone;
+      this.updateDV = true;
+    },
+    submitEdit() {
+      this.updateStaffInfo(this.updateForm).then(response => {
+        this.$message.success("修改成功");
+        this.updateDV = false;
+        this.getData();
+      });
     },
     nationFormatter(row, column, cellValue, index) {
       return this.nationObj[cellValue];

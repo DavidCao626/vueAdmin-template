@@ -23,7 +23,14 @@ const createStaff = ({ commit, state }, params) => new Promise(resolve => {
         resolve(response)
     })
 })
+const updateStaffInfo = ({ commit, state }, params) => new Promise(resolve => {
+    api.updateStaffInfo(params).then(response => {
+        console.log(["updateStaffInfo", response])
+        resolve(response)
+    })
+})
 export default {
+    updateStaffInfo,
     queryCurrentOrgStaffList,
     queryOrgByOrgCode,
     createStaff

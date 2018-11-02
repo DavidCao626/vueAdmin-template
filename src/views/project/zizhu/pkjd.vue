@@ -1,43 +1,49 @@
  <template>
-    <page>
-        <div slot="title">贫困建档结果查询</div>
-        <div slot="panel">
-            <div>
-                <elx-table-layout>
+  <page>
+    <div slot="title">贫困建档结果查询</div>
+    <div slot="panel">
+      <div>
+        <elx-table-layout>
 
-                    <template slot="headerLeft">
-                        <el-form label-position="right" :inline="true" :model="formInline" size="mini" label-width="80px" class="demo-form-inline">
-                            <el-form-item label="所属机构:">
-                                <el-cascader v-model="formInline.orgCode" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
-                            </el-form-item>
-                            <el-form-item label="所属学年:">
-                                <el-select v-model="formInline.schoolYearId" placeholder="全部">
-                                    <el-option v-for="(item,i) in schoolYearDict" :key="i" :label="item.name" :value="item.id">
-                                    </el-option>
-                                </el-select>
-                            </el-form-item>
+          <template slot="headerLeft">
+            <el-form label-position="right" :inline="true" :model="formInline" size="mini" label-width="80px" class="demo-form-inline">
+              <el-form-item label="所属机构:">
+                <el-cascader v-model="formInline.orgCode" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
 
-                            <el-form-item label="学生姓名:">
-                                <el-input v-model="formInline.name" placeholder="全部"></el-input>
-                            </el-form-item>
+              </el-form-item>
+              <el-form-item label="所属学年:">
+                <el-select v-model="formInline.schoolYearId" placeholder="全部" @change="schoolYearIdChange">
+                  <el-option v-for="(item,i) in schoolYearDict" :key="i" :label="item.name" :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="所属项目:">
+                <el-select v-model="formInline.projectId" placeholder="全部">
+                  <el-option v-for="(item,i) in projectList" :key="i" :label="item.name" :value="item.id">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="学生姓名:">
+                <el-input v-model="formInline.name" placeholder="全部"></el-input>
+              </el-form-item>
 
-                            <el-form-item label="学生学号:">
-                                <el-input v-model="formInline.stuNo" placeholder="全部"></el-input>
-                            </el-form-item>
-                            <el-form-item>
-                                <el-button type="primary" @click="onSubmit">
-                                    <i class="el-icon-search"></i> 查询</el-button>
-                                <el-button @click="refresh">
-                                    <i class="el-icon-refresh"></i> 重置</el-button>
-                            </el-form-item>
-                            </el-form-item>
-                        </el-form>
-                    </template>
+              <el-form-item label="学生学号:">
+                <el-input v-model="formInline.stuNo" placeholder="全部"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="onSubmit">
+                  <i class="el-icon-search"></i> 查询</el-button>
+                <el-button @click="refresh">
+                  <i class="el-icon-refresh"></i> 重置</el-button>
+              </el-form-item>
 
-                <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{ prop: 'stuNo',prop: 'stuName',prop: 'orgName'}">
+            </el-form>
+          </template>
+
+          <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{ prop: 'stuNo',prop: 'stuName',prop: 'orgName'}">
             <el-table-column prop="projectName" label="项目名称">
             </el-table-column>
-             <el-table-column prop="schoolYearName" label="所属学年">
+            <el-table-column prop="schoolYearName" label="所属学年">
             </el-table-column>
             <el-table-column prop="stuNo" label="学号">
             </el-table-column>
@@ -69,11 +75,13 @@ export default {
   mixins: [elxTable, results],
   data() {
     return {
+      projectList: [{ id: 0, name: "全部" }],
       schoolYearDict: [],
       formInline: {
+        projectId: 0,
         stuNo: "",
         name: "",
-        schoolYearId: "",
+        schoolYearId: 0,
         orgCode: []
       },
       orgList: [],
@@ -87,12 +95,29 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
+      vm.schoolYearIdChange(0);
+      if (to.query.projectId) {
+        vm.formInline.projectId = to.query.projectId;
+        vm.getData();
+      }
       vm.getSchoolYearDict();
       vm.getOrgList();
       vm.getChildServiceTypeList();
     });
   },
   methods: {
+    schoolYearIdChange(v) {
+      this.formInline.projectId = 0;
+      this.queryPovertyProject({
+        state: "CO",
+        currentPage: "1",
+        pageSize: "99999",
+        yearType: v
+      }).then(response => {
+        this.projectList = response.resBody.baseData;
+        this.projectList.unshift({ id: 0, name: "全部" });
+      });
+    },
     schoolRecommendFormatter(r, c, v, i) {
       var arr = this.childServiceTypeList;
       for (var j = 0; j < arr.length; j++) {
@@ -105,8 +130,9 @@ export default {
       this.formInline = {
         stuNo: "",
         name: "",
-        schoolYearId: "",
-        orgCode: []
+        schoolYearId: 0,
+        orgCode: [],
+        projectId: 0
       };
       this.getData();
     },
@@ -142,6 +168,7 @@ export default {
     getData() {
       this.data = [];
       var requestData = {
+        projectId: this.formInline.projectId,
         stuNo: this.formInline.stuNo,
         schoolYearId: this.formInline.schoolYearId,
         stuName: this.formInline.name
@@ -152,9 +179,9 @@ export default {
         ];
       }
 
-        this.getApi(this.queryPovertyResult, requestData,(r,vm)=>{
-         vm.data  = r.baseData;
-       }); 
+      this.getApi(this.queryPovertyResult, requestData, (r, vm) => {
+        vm.data = r.baseData;
+      });
     }
   }
 };

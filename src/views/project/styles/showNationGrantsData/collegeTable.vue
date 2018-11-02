@@ -1,7 +1,7 @@
 <template>
   <page>
     <div slot="title">
-      班级审核
+     学院环节数据
     </div>
     <div slot="header">
 

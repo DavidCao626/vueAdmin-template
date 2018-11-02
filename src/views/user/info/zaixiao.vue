@@ -158,7 +158,8 @@ export default {
     },
     getData() {
       var requestData = {};
-      if (this.stuNos != 0) {
+      if (this.stuNo != 0) {
+        this.newForm.stuNos = this.stuNo;
         requestData.stuNo = this.newForm.stuNos;
       }
       this.getStuUniverInfo(requestData).then(response => {

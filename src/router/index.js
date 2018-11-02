@@ -34,7 +34,7 @@ export const constantRouterMap = [
     name: "home_index",
     children: [
       zongceV2Router,
-      studyWorkRouter,
+     studyWorkRouter,
       zongceRouter,
       userRouter,
       componentsRouter,
