@@ -208,6 +208,11 @@ export default {
       });
     },
     importJobBT() {
+      if(this.projectList2.length == 0){
+        this.$message.error("当前不存在可发布岗位的勤工俭学项目")
+        return;
+      }
+
       this.importDV = true;
     },
     jobTypeFormatter(r, c, v, i) {
