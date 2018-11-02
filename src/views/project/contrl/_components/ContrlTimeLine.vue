@@ -10,16 +10,13 @@
             <td>
                 <div class="timeline-box-header__title">
                     <h3 style="color:#444">
-                        已用{{scopeInfo.useredDay}}天，环节可用 {{scopeInfo.useabledDay}}天，任需时长：{{scopeInfo.neededDay}}天，
-                        预计超时：<strong style="color:red">{{scopeInfo.delayDay}}</strong>。
+                        已用{{scopeInfo.useredDay}}，环节可用 {{scopeInfo.useabledDay}}，任需时长：{{scopeInfo.neededDay}}， 预计超时：
+                        <strong style="color:red">{{scopeInfo.delayDay}}</strong>。
                     </h3>
                 </div>
             </td>
         </tr>
         <template v-for="(item,index) in items">
-
-
-
 
             <tr v-if="item.item.state=='F'" :key="index">
                 <td class="timeline-box">
@@ -39,7 +36,7 @@
                                         </span>
                                     </el-tooltip>
                                 </span>
-                                <span v-if="item.item.itemType=='automatic'">计划{{transHourToDayAndHour(item.item.planTimeLong)}}天</span>
+                                <span v-if="item.item.itemType=='automatic'">计划{{transHourToDayAndHour(item.item.planTimeLong)}}</span>
                             </div>
                             <div class="tag-description">实际用时（{{transHourToDayAndHour(item.usedHourLong)}}）</div>
                         </div>
@@ -51,8 +48,7 @@
                 </td>
             </tr>
 
-
-      <tr v-else-if="item.item.state=='T'" :key="index">
+            <tr v-else-if="item.item.state=='T'" :key="index">
                 <td class="timeline-box">
                     <span class="timeline-serial">
                         <i class="el-icon-check"></i>
@@ -70,7 +66,7 @@
                                         </span>
                                     </el-tooltip>
                                 </span>
-                                <span v-if="item.item.itemType=='automatic'">计划{{transHourToDayAndHour(item.item.planTimeLong)}}天</span>
+                                <span v-if="item.item.itemType=='automatic'">计划{{transHourToDayAndHour(item.item.planTimeLong)}}</span>
                             </div>
                             <div class="tag-description">实际用时（{{transHourToDayAndHour(item.usedHourLong)}}）</div>
                         </div>
@@ -98,7 +94,6 @@
                                         <span class="tag-title">{{item.item.stepName}}
                                             <small class="el-icon-question"></small>
                                         </span>
-
                                     </el-tooltip>
                                 </span>
                                 <span v-if="item.item.itemType=='automatic'">计划{{transHourToDayAndHour(item.item.planTimeLong)}}</span>
@@ -110,13 +105,13 @@
                             <el-button type="warning" v-if="item.item.itemType=='manual'" size="mini" @click="handle(item)">操作</el-button>
 
                             <el-popover placement="top" width="200" :ref="'popover'+item.item.id" v-else>
-                                <p>{{ item.vday}}天 {{ item.vhour }}小时</p>
+                                <p>{{ item.vAsDay}}天 {{ item.vhour }}小时</p>
                                 <div>
-                                    <el-input style=" margin-top: 10px;width:60px;" size="small" type="Number" min="0" v-model="item.vday">
+                                    <el-input style=" margin-top: 10px;width:90px;" size="small" type="Number" min="0" v-model="item.vAsDay">
 
                                     </el-input>
                                     天
-                                    <el-input style=" margin-top: 10px;width:60px;" size="small" type="Number" min="0" max="24" v-model="item.vhour"></el-input>
+                                    <el-input style=" margin-top: 10px;width:90px;" size="small" type="Number" min="0" max="24" v-model="item.vhour"></el-input>
                                     小时</div>
                                 <div style="text-align: right; margin-top: 10px">
                                     <el-button type="primary" size="mini" @click="updateItemPlanDayHandler(item)">保存</el-button>
@@ -158,16 +153,16 @@
                                         </span>
                                     </el-tooltip>
                                 </span>
-                               <span v-if="item.item.itemType=='automatic'">计划{{transHourToDayAndHour(item.item.planTimeLong)}}</span>
+                                <span v-if="item.item.itemType=='automatic'">计划{{transHourToDayAndHour(item.item.planTimeLong)}}</span>
                             </div>
                             <div class="tag-description" v-if="item.item.itemType=='automatic'">计划开始时间：{{item.start==''?'-':formatMoment(item.start)}} ~ 计划结束时间：{{item.end==''?'未配置':formatMoment(item.end)}} </div>
                         </div>
                         <div class="tag-flex tag-flex-direction__column" style="margin-left:20px;" v-if="item.item.itemType=='automatic'">
 
                             <el-popover placement="top" width="200" :ref="'popover'+item.item.id">
-                                  <p>{{ item.vday}}天 {{ item.vhour }}小时</p>
+                                <p>{{ item.vAsDay}}天 {{ item.vhour }}小时</p>
                                 <div>
-                                    <el-input style=" margin-top: 10px;width:60px;" size="small" type="Number" min="0" v-model="item.vday">
+                                    <el-input style=" margin-top: 10px;width:60px;" size="small" type="Number" min="0" v-model="item.vAsDay">
 
                                     </el-input>
                                     天
@@ -213,20 +208,19 @@
                                         </span>
                                     </el-tooltip>
                                 </span>
-                              <span v-if="item.item.itemType=='automatic'">计划{{transHourToDayAndHour(item.item.planTimeLong)}}</span>
+                                <span v-if="item.item.itemType=='automatic'">计划{{transHourToDayAndHour(item.item.planTimeLong)}}</span>
                             </div>
                             <div class="tag-description" v-if="item.item.itemType=='automatic'">计划开始时间：{{item.start==''?'-':formatMoment(item.start)}} ~ 计划结束时间：{{item.end==''?'未配置':formatMoment(item.end)}} </div>
                         </div>
                         <div class="tag-flex tag-flex-direction__column" style="margin-left:20px;" v-if="item.item.itemType=='automatic'">
 
                             <el-popover placement="top" width="160" :ref="'popover'+item.item.id">
-                                 <p>{{ item.vday}}天 {{ item.vhour }}小时</p>
+                               <p>{{ item.vAsDay}}天 {{ item.vhour }}小时</p>
                                 <div>
-                                    <el-input style=" margin-top: 10px;width:60px;" size="small" type="Number" min="0" v-model="item.vday">
-
+                                    <el-input style=" margin-top: 10px;width:80px;" size="small" type="Number" min="0" v-model="item.vAsDay">
                                     </el-input>
                                     天
-                                    <el-input style=" margin-top: 10px;width:60px;" size="small" type="Number" min="0" max="24" v-model="item.vhour"></el-input>
+                                    <el-input style=" margin-top: 10px;width:80px;" size="small" type="Number" min="0" max="24" v-model="item.vhour"></el-input>
                                     小时</div>
                                 <div style="text-align: right; margin-top: 10px">
                                     <el-button type="primary" size="mini" @click="updateItemPlanDayHandler(item)">保存</el-button>
@@ -270,13 +264,30 @@ export default {
       handlerStartWorkItem: store.namespace + "/handlerStartWorkItem",
       handlerCompleteWorkItem: store.namespace + "/handlerCompleteWorkItem"
     }),
-    transHourToDayAndHour:function(hour){
-        var duration=moment.duration(hour,"hour");
-        return duration.days()+"天"+duration.hours()+"小时";
+    transHourToDayAndHour: function(hour) {
+      var duration = moment.duration(hour,"hours");
+      var monthVal = duration.months();
+      var dayVal = duration.days();
+      var hourVal = duration.hours();
+      var disStr = "";
+      if (monthVal > 0) {
+        disStr = disStr + monthVal + "月";
+      }
+      if (dayVal > 0) {
+        disStr = disStr + dayVal + "天";
+      }
+      if (hourVal > 0) {
+        disStr = disStr + hourVal + "小时";
+      }
+      if(disStr==""){
+          disStr="<1小时";
+      }
+      return disStr;
     },
     formatMoment: function(time) {
       return moment(time)
-        .second(0).minute(0)
+        .second(0)
+        .minute(0)
         .format("MM/DD/YY HH:mm");
     },
     getItemEnableState: function(item) {
@@ -303,9 +314,9 @@ export default {
     },
     handle: function(item) {
       var pathName = item.action;
-      var routerParams=item.actionParameter?item.actionParameter:{};
-      routerParams.scopeId=this.scopeInfo.id;
-      routerParams.itemId=item.item.id;
+      var routerParams = item.actionParameter ? item.actionParameter : {};
+      routerParams.scopeId = this.scopeInfo.id;
+      routerParams.itemId = item.item.id;
       if (!pathName) {
         this.$message({ message: "未知的业务路径！" });
         return false;
@@ -323,13 +334,14 @@ export default {
       }
     },
     updateItemPlanDayHandler: function(item) {
-      var day=item.vday;
-      var hour=item.vhour;
-      var hourLong=parseInt(day)*24+parseInt(hour);
+      var day = item.vAsDay;
+      var hour = item.vhour;
+      console.log(["days",day,hour]);
+      var hourLong = parseInt(day) * 24 + parseInt(hour);
       console.log(hourLong);
       this.updateItemPlanDay({
         itemId: item.item.id,
-        dayLong:hourLong
+        dayLong: hourLong
       });
     }
   },
