@@ -292,7 +292,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .el-form-item {
   margin-bottom: 10px;
 }

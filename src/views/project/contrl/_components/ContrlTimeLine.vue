@@ -72,7 +72,7 @@
                         </div>
                         <div class="tag-flex status-mark" style="margin-left:20px;">
                             <!-- 已终止图标 -->
-                            <svg-icon icon-class="status-ok" width="65px" height="65px" />
+                            <svg-icon icon-class="status-stop" width="65px" height="65px" />
                         </div>
                     </div>
                 </td>

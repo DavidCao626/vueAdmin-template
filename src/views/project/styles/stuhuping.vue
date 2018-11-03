@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <huping title="班级互评213" :dataHeader="hupingHeadSytle" :dataExpand="expand">
+    <huping title="班级互评" :dataHeader="hupingHeadSytle" :dataExpand="expand">
       <div slot="header">
         <proInfo :itemId="itemId"></proInfo>
       </div>

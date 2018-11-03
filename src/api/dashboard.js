@@ -50,8 +50,17 @@ const queryUserNoticeByStatus = data =>
         data: data
     })
 
+export function getCurrentUserInfo(data) {
+    return request({
+        url: '/user/getCurrentUserInfo.do',
+        method: 'post',
+        data:
+            data
 
+    })
+}
 export default {
+    getCurrentUserInfo,
     pullPublicNotice,
     queryUserPending,
     getUserScope,

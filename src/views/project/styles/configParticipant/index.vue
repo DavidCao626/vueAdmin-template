@@ -64,7 +64,7 @@ export default {
 };
 </script>
 
-<style >
+<style scoped>
 .approval-panel {
   padding: 15px;
   margin-bottom: 10px;

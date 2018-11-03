@@ -19,7 +19,7 @@
         </div>
       </el-row>
     </template> -->
-    <router-view></router-view>
+    <router-view></router-view>　
   </div>
 </template>
 <script>

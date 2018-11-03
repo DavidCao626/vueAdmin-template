@@ -17,10 +17,22 @@ const user = {
     avatar: "",
     roles: [],
     navMenu: [],
-    messageCount:0
+    messageCount: 0,
+    userName: "",
+    orgName: "",
+    dutyName:""
   },
 
   mutations: {
+    SET_USERNAME: (state, par) => {
+      state.userName = par;
+    },
+    SET_ORGNAME: (state, par) => {
+      state.orgName = par;
+    },
+    SET_DUTYNAME: (state, par) => {
+      state.dutyName = par;
+    },
     SET_MESSAGECOUNT:(state, count) => { 
   state.messageCount = count;
     },
@@ -52,6 +64,15 @@ const user = {
   },
 
   actions: {
+    setUserName({ commit }, par) {
+      commit("SET_USERNAME", par)
+    },
+    setOrgName({ commit }, par) {
+      commit("SET_ORGNAME", par)
+    },
+    setDutyName({ commit }, par) {
+      commit("SET_DUTYNAME", par)
+    },
     setMessageCount({ commit }, count) { 
       commit("SET_MESSAGECOUNT",count)
     },
