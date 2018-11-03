@@ -78,9 +78,9 @@
                     <!-- <img :src="avatar" class="user-avatar" /> -->
                     <svg-icon class="user-avatar" icon-class="user2" style="fill:#fff"></svg-icon>
                     <div class="name">
-                      <span class="name__1" style="color:#fff">{{name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <span class="name__1" style="color:#fff">{{userName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <!-- <span class="name__2">学号：No.01521</span> --><br/>
-                      <span class="name__2" style="color:#fff" v-if="dutyRoles">{{ dutyRoles['managerNodeName']}} | {{dutyRoles['dutyName']}} </span>
+                      <span class="name__2" style="color:#fff" v-if="dutyName">{{ orgName}} | {{dutyName}} </span>
                     </div>
                     <i class="el-icon-caret-bottom" style="color:#fff"></i>
                   </div>
@@ -151,7 +151,7 @@ export default {
   },
   components: {},
   computed: {
-    ...mapGetters(["sidebar", "avatar", "name", "roles", "user","messageCount"])
+    ...mapGetters(["sidebar", "avatar", "name", "roles", "user","messageCount","userName","orgName","dutyName"])
   },
   mounted: function() {
 
@@ -174,10 +174,14 @@ export default {
         return key;
       }
     });
+    this.getCurrentUserInfo();
+
+
   },
   methods: {
     ...mapActions({
-      setMessageCount : "setMessageCount"
+      setMessageCount : "setMessageCount",
+getCurrentUserInfo:"getCurrentUserInfo"
     }),
     roleSwitchches(item, rolesItem) {
       if (item.currently === "true") {
