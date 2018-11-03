@@ -2,7 +2,7 @@ import api from '~/api/dashboard'
 
 const bashboard = {
   state: {
-    
+
   },
 
   mutations: {
@@ -46,6 +46,15 @@ const bashboard = {
     queryUserNoticeByStatus: ({ commit, state }) => new Promise(resolve => {
       api.queryUserNoticeByStatus({ 'currentPage': 1, 'pageSize': 3, 'content': '', 'status': "N" }).then(response => {
         console.log(["queryUserNoticeByStatus", response])
+        resolve(response)
+      })
+    }),
+
+    getCurrentUserInfo: ({ commit, state }) => new Promise(resolve => {
+      api.getCurrentUserInfo({}).then(response => {
+        commit("SET_USERNAME", response.resBody.userName)
+        commit("SET_ORGNAME", response.resBody.orgName)
+        commit("SET_DUTYNAME", response.resBody.dutyName)
         resolve(response)
       })
     })

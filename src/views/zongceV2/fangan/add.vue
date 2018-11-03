@@ -244,9 +244,6 @@ export default {
         ) {
           return;
         }
-        if (val.name) {
-          return;
-        }
         this.getApi(
           this.processSchemeName,
           { schoolYearId: oldVal.schoolYearId },
