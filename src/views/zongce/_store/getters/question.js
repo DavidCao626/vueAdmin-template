@@ -1,4 +1,6 @@
 export const getQuestionInfo = (state) => { 
-    console.log(state);
-    return state.zc_question.questionBean;
+    return {
+        "questionBean": state.zc_question.questionBean,
+        "pageBean": state.zc_question.pageBean
+    };
 }

@@ -440,7 +440,7 @@ export const projectRouter = {
       path: "studyWorkConfig",
       name: "studyWorkConfig",
       title: "勤工俭学配置",
-      component: () => import("../studyWorkConfig/index.vue"),
+      component: () => import("../config/indexClass.vue"),
       meta: { hidden: true }
     },
     {
@@ -592,6 +592,6 @@ export const projectRouter = {
       title: "检查参与者规则",
       component: () => import("../checkParticipant.vue"),
       meta: { hidden: true, title: "检查参与者规则" }
-    },
+    }
   ]
-}; 
+};
