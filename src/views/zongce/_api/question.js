@@ -14,6 +14,13 @@ const submitQuestion = data =>
     data: data
   });
 
+const saveQuestionBean = data =>
+  ajax({
+    url: "/appQuestion/saveQuestionRecord.do",
+    method: "post",
+    data: data
+  });
+
 const submitSingleQuestion = data =>
   ajax({
     url: "/appQuestion/submigSingleQuestion.do",
@@ -24,5 +31,6 @@ const submitSingleQuestion = data =>
 export default {
   getQuestionBean,
   submitQuestion,
-  submitSingleQuestion
+  submitSingleQuestion,
+  saveQuestionBean
 };
