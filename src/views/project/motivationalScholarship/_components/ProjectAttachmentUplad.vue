@@ -1,11 +1,7 @@
 <template>
 
-  <el-upload class="upload-demo" :action="url" drag :on-preview="handlePreview" :accept="accept" :on-remove="handleRemove" :file-list="fileList2" list-type="picture" :on-success="onSuccess">
-    <i class="el-icon-upload"></i>
-    <div class="el-upload__text">将文件拖到此处，或
-      <em>点击上传</em>
-    </div>
-    <div slot="tip" class="el-upload__tip">{{acceptContent}}</div>
+  <el-upload class="upload-demo" :action="url"  :on-preview="handlePreview" :accept="accept" :on-remove="handleRemove" :file-list="fileList2" list-type="picture" :on-success="onSuccess">
+     <el-button size="small" type="primary" plain>点击上传</el-button>
   </el-upload>
 
 </template>

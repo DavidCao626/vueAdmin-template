@@ -1,46 +1,42 @@
 <template>
-  <div>
-    <h2 @click="goBack">返回</h2><br/>
-    <elx-table-layout>
+  <page>
+    <div slot="title">已任职情况查询</div>
+    <div slot="panel">
 
-      <template slot="headerRight">
-        <el-button-group>
-          <el-tooltip class="item" effect="dark" content="分配职务" placement="bottom">
-            <el-button plain size="mini" @click="addBT">
-              分配
-            </el-button>
-          </el-tooltip>
-        </el-button-group>
-      </template>
+      <elx-table-layout>
 
-      <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop: 'name',prop: 'address'}" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="38">
-        </el-table-column>
-
-        <el-table-column prop="name" label="姓名">
-        </el-table-column>
-        <el-table-column prop="orgName" label="任职组织">
-        </el-table-column>
-        <el-table-column prop="definitionName" label="职务名称">
-        </el-table-column>
-        <el-table-column prop="beginDate" :formatter="beginDateFormatter" label="任职时间">
-        </el-table-column>
-        <el-table-column prop="isBandh" :formatter="stateFormatter" label="状态">
-        </el-table-column>
-        <el-table-column label="操作" width="88" header-align="left" align="center">
-          <template slot-scope="scope">
-            <el-dropdown>
-              <el-button size="mini" @click="">
-                <i class="el-icon-arrow-down"></i>
+        <template slot="headerRight">
+          <el-button-group>
+            <el-tooltip class="item" effect="dark" content="分配职务" placement="bottom">
+              <el-button plain size="mini" @click="addBT">
+                分配
               </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="edit(scope.row)">编辑</el-dropdown-item>
-                <el-dropdown-item @click.native="del(scope.row)">移除</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </template>
-        </el-table-column>
-        <!-- <el-table-column type="expand" label="#" width="42">
+            </el-tooltip>
+          </el-button-group>
+        </template>
+
+        <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop: 'name',prop: 'address'}" @selection-change="handleSelectionChange">
+          <el-table-column type="selection" width="38">
+          </el-table-column>
+
+          <el-table-column prop="name" label="姓名">
+          </el-table-column>
+          <el-table-column prop="orgName" label="任职组织">
+          </el-table-column>
+          <el-table-column prop="definitionName" label="职务名称">
+          </el-table-column>
+          <el-table-column prop="beginDate" :formatter="beginDateFormatter" label="任职时间">
+          </el-table-column>
+          <el-table-column prop="isBandh" :formatter="stateFormatter" label="状态">
+          </el-table-column>
+          <el-table-column label="操作" width="168" header-align="left" align="center">
+            <template slot-scope="scope">
+              <el-button size="mini" @click="edit(scope.row)">编辑</el-button>
+              <el-button size="mini" @click="del(scope.row)">移除</el-button>
+
+            </template>
+          </el-table-column>
+          <!-- <el-table-column type="expand" label="#" width="42">
                     <template slot-scope="props" style="background-color:#f7f8f9">
                         <el-form label-position="left" inline class="demo-table-expand">
                             <el-form-item label="证件类型:">
@@ -57,41 +53,43 @@
                         </el-form>
                     </template>
                 </el-table-column> -->
-      </el-table>
+        </el-table>
 
-    </elx-table-layout>
+      </elx-table-layout>
 
-    <el-dialog title="编辑" :visible.sync="editDV" width="30%">
-      <el-radio-group size="small" v-model="editData.isBandh">
-        <el-radio-button v-for="item in stateList" :key="item.dict_key" :label="item.dict_key">{{item.dict_desc}}</el-radio-button>
-      </el-radio-group>
+      <el-dialog title="编辑" :visible.sync="editDV" width="30%">
+        <el-radio-group size="small" v-model="editData.isBandh">
+          <el-radio-button v-for="item in stateList" :key="item.dict_key" :label="item.dict_key">{{item.dict_desc}}</el-radio-button>
+        </el-radio-group>
 
-      <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="editDV = false">取 消</el-button>
-        <el-button size="small" type="primary" @click="updateResign">确 定</el-button>
-      </span>
-    </el-dialog>
+        <span slot="footer" class="dialog-footer">
+          <el-button size="small" @click="editDV = false">取 消</el-button>
+          <el-button size="small" type="primary" @click="updateResign">确 定</el-button>
+        </span>
+      </el-dialog>
 
-    <el-dialog title="分配" :visible.sync="addDV" width="50%">
-      <el-form :model="addData" label-width="80px">
-        <el-form-item label="组织">
-          <el-cascader v-model="addData.org" placeholder="输入进行搜索" :options="orgList" filterable change-on-select :props="orgProps"></el-cascader>
-        </el-form-item>
-        </br>
-        <el-form-item label="职务">
-          <el-select v-model="addData.dutyCode" placeholder="请选择职务">
-            <el-option v-for="item in dutyList" :key="item.dutyCode" :label="item.dutyName" :value="item.dutyCode">
-            </el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button size="small" @click="addDV = false">取 消</el-button>
-        <el-button size="small" type="primary" @click="addReg">确 定</el-button>
-      </span>
-    </el-dialog>
+      <el-dialog title="分配" :visible.sync="addDV" width="50%">
+        <el-form :model="addData" label-width="80px">
+          <el-form-item label="组织">
+            <el-cascader v-model="addData.org" placeholder="输入进行搜索" :options="orgList" filterable change-on-select :props="orgProps"></el-cascader>
+          </el-form-item>
+          </br>
+          <el-form-item label="职务">
+            <el-select v-model="addData.dutyCode" placeholder="请选择职务">
+              <el-option v-for="item in dutyList" :key="item.dutyCode" :label="item.dutyName" :value="item.dutyCode">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button size="small" @click="addDV = false">取 消</el-button>
+          <el-button size="small" type="primary" @click="addReg">确 定</el-button>
+        </span>
+      </el-dialog>
 
-  </div>
+    </div>
+  </page>
+
 </template>
 
   <script>

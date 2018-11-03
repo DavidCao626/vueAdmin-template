@@ -7,7 +7,7 @@
 
 export const zongceV2Router = {
   path: "/zongceV2",
-  name: "综测中心",
+  name: "",
   component: () => import("../_layout/layout.vue"),
   meta: { title: "综测中心", hidden: true },
   children: [

@@ -48,6 +48,10 @@
           <el-table-column prop="stu_type" label="学生类型" :formatter="stuTypeFormatter">
           </el-table-column>
           <el-table-column prop="state" label="状态" :formatter="stateFormatter">
+             <template slot-scope="scope">
+              <el-tag :type="scope.row.state === 'ST' ? 'danger' : 'success'" disable-transitions>{{ stateFormatter(scope.row,null,scope.row.state) }}</el-tag>
+            </template>
+
           </el-table-column>
           <el-table-column prop="create_time" label="创建时间">
           </el-table-column>

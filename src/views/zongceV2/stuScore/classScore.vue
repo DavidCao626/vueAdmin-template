@@ -4,7 +4,7 @@
         <div slot="panel">
             <div>
                 <el-dialog title="导入班级成绩" :visible.sync="dialogVisible" width="400px">
-                    <el-form :model="importForm" style="margin-top: -25px;">
+                    <el-form :model="importForm" >
                         <el-form-item label="1、选择要导入到的学年：">
                             <el-select v-model="importForm.schoolYearId" placeholder="全部">
                                 <el-option v-for="item in importForm.schoolYearDict" :key="item.value" :label="item.name" :value="item.id">
@@ -33,22 +33,25 @@
 
                 <elx-table-layout>
                     <template slot="headerRight">
+
+                            
                         <el-button-group>
+                            
                             <el-tooltip class="item" effect="dark" content="下载模版" placement="bottom">
                                 <el-button plain size="mini">
                                     <a :href="urldo" target='_blank'>
-                                        <i class="el-icon-sold-out"></i>
+                                     下载模版
                                     </a>
                                 </el-button>
                             </el-tooltip>
 
                             <el-tooltip class="item" effect="dark" content="导入班级成绩" placement="bottom">
                                 <el-button plain size="mini" @click="dialogVisible = true">
-                                    <i class="el-icon-download"></i>
+                                    导入班级成绩
                                 </el-button>
                             </el-tooltip>
                         </el-button-group>
-
+    <el-button  plain size="mini" @click="onProcessRank">生成班级排名</el-button>
                     </template>
 
                     <template slot="headerLeft">
@@ -77,7 +80,6 @@
                             </el-form-item>
                             <el-form-item>
                                 <el-button type="primary" @click="onSubmit">查询</el-button>
-                                <el-button type="primary" plain size="mini" @click="onProcessRank">生成排名</el-button>
                             </el-form-item>
                         </el-form>
                     </template>

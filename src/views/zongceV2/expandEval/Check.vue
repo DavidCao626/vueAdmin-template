@@ -27,8 +27,11 @@
                             </el-tag>
                         </el-form-item>
                         <el-form-item label="2、">
-                            <el-switch v-model="formCheck.isok" active-color="#13ce66" inactive-color="#ccc" active-text="通过" inactive-text="不通过">
-                            </el-switch>
+                          <template>
+                            <el-radio v-model="formCheck.isok" label="true">通过</el-radio>
+                            <el-radio v-model="formCheck.isok" label="false">不通过</el-radio>
+                            </template>
+                           
 
                         </el-form-item>
                     </el-form>

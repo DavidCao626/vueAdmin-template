@@ -277,13 +277,13 @@ export default {
     'nrole_check': nroleCheck
   },
   beforeCreate: function() {
-    loadingVars = Loading.service({
-      fullscreen: true
-    })
+   // loadingVars = Loading.service({
+   //   fullscreen: true
+  //  })
   },
   mounted: function() {
     setTimeout(() => {
-      loadingVars.close()
+  //    loadingVars.close()
     }, 2000)
     // var that = this
     var height = GUtils.getClientHeight()

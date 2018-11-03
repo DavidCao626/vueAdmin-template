@@ -1,13 +1,29 @@
 <template>
   <div>
-    <proInfo :itemId="itemId"></proInfo>
     <huping title="学院评议" :dataHeader="hupingHeadSytle" :dataExpand="expand">
+      <div slot="header">
+        <proInfo :itemId="itemId"></proInfo>
+      </div>
+      <div slot="headerRight">
+
+        <el-form :inline="true" size="mini">
+          <el-form-item label="姓名:">
+            <el-input v-model="searchData" placeholder=""></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSearch" icon="el-icon-search">查 询</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div slot="pageList">
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper" :total="400">
+        </el-pagination>
+      </div>
       <div slot="footer">
         <div class="approval-panel" style="text-align: center;">
           <el-button type="primary" size="mini" @click="subForm">提交</el-button>
         </div>
       </div>
-
     </huping>
   </div>
 </template>
@@ -23,7 +39,10 @@ export default {
     proInfo
   },
   data() {
-    return { hupingHeadSytle: [
+    return {
+      searchData: "",
+      currentPage: 4,
+      hupingHeadSytle: [
         {
           label: "申请人情况",
           key: "qk",
@@ -121,8 +140,7 @@ export default {
       } else {
         vm.scopeId = scopeId;
         vm.itemId = itemId;
-        vm
-          .getItemRelaseQuestionCode({ scopeId: scopeId, itemId: itemId })
+        vm.getItemRelaseQuestionCode({ scopeId: scopeId, itemId: itemId })
           .then(result => {
             console.log(result);
             vm.$store.dispatch("initQuuestion", result.resBody);
@@ -140,7 +158,16 @@ export default {
         scopeId: this.scopeId,
         itemId: this.itemId
       });
-       this.$router.go(-1)
+      this.$router.go(-1);
+    },
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    },
+    onSearch(){
+      // 搜索事件
     }
   }
 };

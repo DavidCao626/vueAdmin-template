@@ -1,11 +1,15 @@
 <template>
   <page class="page" :breadcrumb="false">
     <div slot="title">新建项目</div>
-    <div slot="panel" >
-      <ProjectAddSteps :active="0"></ProjectAddSteps>
+    <div slot="panel">
+      <el-card>
+        <ProjectAddSteps :active="0"></ProjectAddSteps>
+        <br />
+
+        <ProjectInfoForm></ProjectInfoForm>
+      </el-card>
 
     </div>
-      <ProjectInfoForm></ProjectInfoForm>
   </page>
 </template>
 

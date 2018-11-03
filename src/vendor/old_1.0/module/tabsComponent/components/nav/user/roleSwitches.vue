@@ -51,9 +51,9 @@ export default {
   },
 	  methods: {
 	    getMenuforServer: function() {
-	      var loadingVars = Loading.service({
-	        fullscreen: true
-	      })
+	  //    var loadingVars = Loading.service({
+	   //     fullscreen: true
+	   //   })
 	      const t = this
 	      axios({
 	        // 获取用户菜单
@@ -61,7 +61,7 @@ export default {
 	        'method': 'get'
 	      }).then(function(response) {
 	        console.log(['切换职务列表', response.data])
-	        loadingVars.close()
+	   //     loadingVars.close()
 	      }).catch(function(error) {
 	        console.log('接口异常' + error)
 	      })

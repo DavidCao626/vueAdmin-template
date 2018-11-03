@@ -77,7 +77,7 @@
                     </div>
                 </el-dialog>
                 <el-dialog title="导入学生处分数据" :visible.sync="dialogVisible" width="400px">
-                    <el-form style="margin-top: -25px;">
+                    <el-form >
                         <el-form-item label="选择学生处分数据：">
                             <br/>
                             <el-upload class="upload-demo" :action="uploadStuPunishurl" ref="upload" :limit='1' :onSuccess="onUploadSuccess2">
@@ -101,22 +101,22 @@
                         <el-button-group>
                             <el-tooltip class="item" effect="dark" content="下载模版" placement="bottom" v-if="newOpen">
                                 <el-button plain size="mini">
-                                    <a :href="urldo" target='_blank'><i class="el-icon-sold-out"></i></a>
+                                    <a :href="urldo" target='_blank'>下载模版</a>
                                 </el-button>
                             </el-tooltip>
                             <el-tooltip class="item" effect="dark" content="新增记录" placement="bottom" v-if="newOpen">
                                 <el-button plain size="mini" @click="dialogVisible_new = true">
-                                    <i class="el-icon-plus"></i>
+                                   新增记录
                                 </el-button>
                             </el-tooltip>
                             <el-tooltip class="item" effect="dark" content="导入数据" placement="bottom" v-if="importOpen">
                                 <el-button plain size="mini" @click="dialogVisible = true">
-                                    <i class="el-icon-download"></i>
+                                  导入数据
                                 </el-button>
                             </el-tooltip>
                             <el-tooltip class="item" effect="dark" content="导出数据" placement="bottom" v-if="exportOpen">
                                 <el-button plain size="mini" @click="onExportExcel">
-                                    <i class="el-icon-upload2"></i>
+                                    导出数据
                                 </el-button>
                             </el-tooltip>
                         </el-button-group>

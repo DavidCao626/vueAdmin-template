@@ -69,9 +69,9 @@ var commonUtils = {
   },
   vaildUtils: validateUtils,
   post: function(url, data, success, exMethod, finallyMethod) {
-    var loadCover = Loading.service({
-      'fullscreen': true
-    })
+    // var loadCover = Loading.service({
+    //   'fullscreen': true
+    // })
     axios.post(url, data, {
         headers: {
           "Specify-Request-Type":
@@ -79,7 +79,7 @@ var commonUtils = {
         }
       })
       .then(function(response) {
-        loadCover.close();
+       // loadCover.close();
         if (response.data.respStatus > 0) {
           // Message({"message":"请求成功","type":"success"});
           if (success) {
@@ -97,7 +97,7 @@ var commonUtils = {
       })
       .catch(function(ex) {
         console.error(ex);
-        loadCover.close(); // console.log([ex]);
+   //     loadCover.close(); // console.log([ex]);
         Message({ message: ex.message, type: "error" });
         if (exMethod) {
           exMethod.call(this, "system", ex);
@@ -125,12 +125,12 @@ var commonUtils = {
     })
   },
   requestBody: function(url, data, success, exMethod, finallyMethod) {
-    var loadCover = Loading.service({
-      'fullscreen': true
-    })
+    // var loadCover = Loading.service({
+    //   'fullscreen': true
+    // })
     data['content_type'] = 'application/json'
     axios.post(url, data).then(function(response) {
-      loadCover.close()
+    //  loadCover.close()
       if (response.data.respStatus > 0) {
         // Message({"message":"请求成功","type":"success"});
         if (success) {
@@ -150,7 +150,7 @@ var commonUtils = {
       }
     }).catch(function(ex) {
       console.error(ex)
-      loadCover.close() // console.log([ex]);
+     // loadCover.close() // console.log([ex]);
       Message({
         'message': ex.message,
         'type': 'error'

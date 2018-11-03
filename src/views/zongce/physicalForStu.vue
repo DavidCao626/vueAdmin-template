@@ -1,8 +1,8 @@
 <template>
-    <div>
+
         <page>
             <div slot="title">我的体能测试</div>
-        </page>
+     <div slot="panel">
         <elx-table-layout>
             <template slot="headerLeft">
 
@@ -41,6 +41,7 @@
         </elx-table-layout>
 
     </div>
+           </page>
 </template>
 
 <script>

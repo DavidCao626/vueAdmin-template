@@ -12,13 +12,13 @@
         <el-form-item label="组织机构:">
           <el-cascader v-model="formInline.orgCode" placeholder="输入进行搜索" :options="orgList" filterable change-on-select expand-trigger="hover" :props="orgProps"></el-cascader>
         </el-form-item>
-         <el-form-item label="分配班级:">
-            <el-select v-model="formInline.hasClass" placeholder="">
-              <el-option label="不限" value="0"></el-option>
-              <el-option label="是" value="Y"></el-option>
-              <el-option label="否" value="N"></el-option>
-            </el-select>
-          </el-form-item>
+        <el-form-item label="分配班级:">
+          <el-select v-model="formInline.hasClass" placeholder="">
+            <el-option label="不限" value="0"></el-option>
+            <el-option label="是" value="Y"></el-option>
+            <el-option label="否" value="N"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="系:">
           <el-select v-model="formInline.departmentCode" placeholder="" @change="getMajorListAll">
             <el-option v-for="item in departmentListALL" :key="item.id" :label="item.departmentName" :value="item.code"></el-option>
@@ -76,23 +76,23 @@
         </span>
       </el-dialog>
 
-      <elx-table-layout >
+      <elx-table-layout>
 
         <template slot="headerRight">
           <el-button-group>
-            <el-tooltip class="item" effect="dark" content="导入学生" placement="bottom">
-              <el-button plain size="mini" @click="dialogVisible = true">
-                导入
-              </el-button>
-            </el-tooltip>
+
             <el-tooltip class="item" effect="dark" content="导出学生" placement="bottom">
               <el-button plain size="mini">
                 导出
               </el-button>
             </el-tooltip>
+            <el-tooltip class="item" effect="dark" content="导入学生" placement="bottom">
+              <el-button plain size="mini" @click="dialogVisible = true">
+                导入
+              </el-button>
+            </el-tooltip>
           </el-button-group>
         </template>
-
 
         <el-table :data="data" style="width: 100%" border size="mini" :default-sort="{prop: 'date', prop: 'name',prop: 'address'}" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="38">
@@ -121,17 +121,13 @@
           </el-table-column>
           <el-table-column prop="start_school_year_name" label="入学学年">
           </el-table-column>
-          <el-table-column label="操作" width="88" header-align="left" align="center">
+          <el-table-column label="操作" width="160" header-align="left" align="center">
             <template slot-scope="scope">
-              <el-dropdown>
-                <el-button size="mini" @click="">
-                  <i class="el-icon-arrow-down"></i>
-                </el-button>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item @click.native="resignation(scope.row)">任职</el-dropdown-item>
-                  <el-dropdown-item @click.native="edit(scope.row)">详情</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
+
+              <el-button size="mini" @click="resignation(scope.row)">任职</el-button>
+              <el-button size="mini" @click="edit(scope.row)">详情</el-button>
+           
+
             </template>
           </el-table-column>
           <el-table-column type="expand" label="#" width="42">
@@ -205,7 +201,7 @@ export default {
       academicList: [],
       data: [],
       formInline: {
-        hasClass:"0",
+        hasClass: "0",
         stuNo: "",
         name: "",
         orgCode: [],
@@ -345,7 +341,7 @@ export default {
       });
     },
     edit(row) {
-      this.$message.success("正在跳转");
+      //this.$message.success("正在跳转");
       this.$router.push({
         path: "/user/info",
         query: {
@@ -393,7 +389,7 @@ export default {
     },
     getData() {
       var requestData = {
-        hasClass:this.formInline.hasClass,
+        hasClass: this.formInline.hasClass,
         stuNo: this.formInline.stuNo,
         name: this.formInline.name,
         departmentCode: this.formInline.departmentCode,

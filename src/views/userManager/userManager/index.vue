@@ -1,4 +1,5 @@
-<template>
+<template >
+
 
   <div id="bodyBox">
     <gc-container :component-store="pageHCon">
@@ -6,7 +7,7 @@
       </div>
       <gc-manager :component-store="pmanager">
         <template slot="quickSearchItems">
-          <el-form-item label="登录名" prop="loginName">
+          <el-form-item label="登录名:" prop="loginName">
             <el-input v-model="serviceForm.bindMutual.data.loginName" size="mini"></el-input>
           </el-form-item>
         </template>

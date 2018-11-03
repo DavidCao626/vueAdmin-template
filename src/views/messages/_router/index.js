@@ -1,7 +1,7 @@
 export const messagesRouter = {
   path: "messages",
   redirect: "/messages/announce/list",
-  name: "消息管理",
+  name: "",
   component: () => import("../_layout/layout.vue"),
   children: [
     {

@@ -46,10 +46,14 @@
         <el-table-column prop="stu_type" label="学生类型" :formatter="stuTypeFormatter">
         </el-table-column>
         <el-table-column prop="state" label="状态" :formatter="stateFormatter">
+           <template slot-scope="scope">
+              <el-tag :type="scope.row.state === 'ST' ? 'danger' : 'success'" disable-transitions>{{ stateFormatter(scope.row,null,scope.row.state) }}</el-tag>
+            </template>
+
         </el-table-column>
         <el-table-column prop="create_time" label="创建时间">
         </el-table-column>
-        <el-table-column label="操作" width="88" header-align="left" align="center">
+        <el-table-column label="操作" width="100" header-align="left" align="center">
           <template slot-scope="scope">
             <el-button @click="showResult(scope.row)" :disabled="scope.row.state != 'CO'">查看结果</el-button>
           </template>

@@ -3,7 +3,11 @@
 	<el-input placeholder="搜索关键字" size="mini" v-if="store.conf.boost" v-model="store.conf.filterText">
     		<el-button slot="append" icon="el-icon-refresh" size="mini" @click="updateSelectNode()"></el-button>
   </el-input>
-	<el-tree :data="store.data" ref="boost_tree" :filter-node-method="filterNode" @node-expand="nodeExpand" :node-key="store.conf.dataKey" :show-checkbox="store.conf.isCheckBox" @node-click="clickNode" :expand-on-click-node="store.conf.clickExpanded" node-key="id" :default-expanded-keys="store.conf.defaultExpands" :default-checked-keys="store.conf.defaultCheckeds" :lazy="store.conf.isLazy" :load="load" :empty-text="store.conf.emptyText" :props="store.conf.defaultProps">
+	<el-tree :data="store.data" 
+	 ref="boost_tree" default-expand-all :filter-node-method="filterNode" @node-expand="nodeExpand" :node-key="store.conf.dataKey"  @node-click="clickNode" :expand-on-click-node="store.conf.clickExpanded" node-key="id" :default-expanded-keys="store.conf.defaultExpands" :default-checked-keys="store.conf.defaultCheckeds" :lazy="store.conf.isLazy" :load="load" :empty-text="store.conf.emptyText" 
+	 :props="store.conf.defaultProps"
+	  :show-checkbox="false"
+	 >
 	</el-tree>
 	</div>
 </template>

@@ -20,7 +20,7 @@
                 <el-input size="mini" v-model="userInfoFormStore.formData.data.email"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button icon="el-icon-check" type="primary" style="width: 100%;    margin-top: 10px;" @click="saveInfo('form1')">保存资料</el-button>
+                <el-button icon="el-icon-check" type="primary" style="margin-top: 10px;" @click="saveInfo('form1')">保存资料</el-button>
               </el-form-item>
             </el-form>
           </div>

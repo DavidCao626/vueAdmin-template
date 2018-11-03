@@ -1,87 +1,96 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="UTF-8">
-		<title>菜单管理</title>
-	</head>
-	<body>
-		<div id="bodyBox">
-			<gc-hcontainer :component-store="pageHCon">
-				<template slot="aside">
-					<gc-tree :component-store="treeStore"></gc-tree>
-				</template>
-				<div style="margin-right:120px;margin-top:5px;margin-left:10px">
-					
-					 <el-tabs v-model="activeName" type="card">
-    <el-tab-pane label="更新菜单信息" name="first" :disabled="updateEnable">
-    	<gc-form :component-store="formStore">
-					<el-form-item label="菜单名称" prop="title">
-							<el-input v-model="formDataStore.data.title" placeholder="请输入名称"></el-input>
-					</el-form-item>
-					<el-form-item label="菜单路径" prop="path_attr">
-							<el-input v-model="formDataStore.data.path_attr" placeholder="请输入链接地址"></el-input>
-					</el-form-item>
-					<el-form-item label="菜单编号" prop="serial">
-							<el-input v-model="formDataStore.data.serial" disabled  placeholder="系统自动生成"  ></el-input>
-					</el-form-item>
-					<el-form-item label="上级菜单编号" prop="p_serial">
-							<el-input v-model="formDataStore.data.p_serial" disabled ></el-input>
-					</el-form-item>
-					<el-form-item label="菜单打开类型" prop="type">
-						<gc-s-sel :component-store="f_type"></gc-s-sel>
-					</el-form-item>
-					<el-form-item label="可访问角色" prop="role_val">
-							<role_check></role_check>
-					</el-form-item>
-					<el-form-item label="菜单图标" prop="icon">
-						<gc-s-sel :component-store="f_icon"></gc-s-sel>
-					</el-form-item>
-					<el-form-item label="位置（前置）" prop="sort_val">
-						<gc-s-sel :component-store="f_vis_list"></gc-s-sel>
-					</el-form-item>
-					<el-form-item label="是否可用" prop="available">
-						<gc-s-radio :component-store="f_available"></gc-s-radio>
-					</el-form-item>
-					<el-form-item label="" prop="submit">
-							<el-button type="success" @click="updateMenu()"  size="small">保存信息</el-button>
-					</el-form-item>
-				</gc-form>
-    </el-tab-pane>
-    <el-tab-pane label="新增下级菜单" name="second" :disabled="nchildEnable">
-    	<gc-form :component-store="nchild_formStore">
-					<el-form-item label="菜单名称" prop="title">
-							<el-input v-model="nchild_formDataStore.data.title" placeholder="请输入名称"></el-input>
-					</el-form-item>
-					<el-form-item label="菜单路径" prop="path_attr">
-							<el-input v-model="nchild_formDataStore.data.path_attr" placeholder="请输入链接地址"></el-input>
-					</el-form-item>
-					<el-form-item label="上级菜单编号" prop="p_serial">
-							<el-input v-model="nchild_formDataStore.data.p_serial" disabled ></el-input>
-					</el-form-item>
-						<el-form-item label="上级菜单名称" >
-							<el-input   disabled  v-model="nchild_menu_name"></el-input>
-					</el-form-item>
-					<el-form-item label="菜单打开类型" prop="type">
-						<gc-s-sel :component-store="n_f_type"></gc-s-sel>
-					</el-form-item>
-					<el-form-item label="可访问角色" prop="role_val">
-					    <nrole_check></nrole_check>
-					</el-form-item>
-					<el-form-item label="菜单图标" prop="icon">
-						<gc-s-sel :component-store="n_f_icon"></gc-s-sel>
-					</el-form-item>
-					<el-form-item label="是否可用" prop="available">
-						<gc-s-radio :component-store="n_f_available"></gc-s-radio>
-					</el-form-item>
-					<el-form-item label="" prop="submit">
-							<el-button type="success"  size="small" @click="addMenu()">保存信息</el-button>
-					</el-form-item>
-				</gc-form>
-    </el-tab-pane>
-  </el-tabs>
-</div>
-</gc-hcontainer>
-		</div>
-	</body>
+<head>
+	<meta charset="UTF-8">
+	<title>菜单管理</title>
+</head>
+
+<body>
+	<div id="bodyBox">
+		<page>
+			<div slot="title">菜单管理</div>
+			<div slot="panel">
+				<gc-hcontainer :component-store="pageHCon">
+					<template slot="aside">
+						<br/>
+						<gc-tree :component-store="treeStore"></gc-tree>
+					</template>
+					<div style="margin-right:120px;margin-top:5px;margin-left:10px">
+
+						<el-tabs v-model="activeName" type="card">
+							<el-tab-pane label="更新菜单信息" name="first" :disabled="updateEnable">
+								<gc-form :component-store="formStore">
+									<el-form-item label="菜单名称" prop="title">
+										<el-input v-model="formDataStore.data.title" placeholder="请输入名称"></el-input>
+									</el-form-item>
+									<el-form-item label="菜单路径" prop="path_attr">
+										<el-input v-model="formDataStore.data.path_attr" placeholder="请输入链接地址"></el-input>
+									</el-form-item>
+									<el-form-item label="菜单编号" prop="serial">
+										<el-input v-model="formDataStore.data.serial" disabled placeholder="系统自动生成"></el-input>
+									</el-form-item>
+									<el-form-item label="上级菜单编号" prop="p_serial">
+										<el-input v-model="formDataStore.data.p_serial" disabled></el-input>
+									</el-form-item>
+									<el-form-item label="菜单打开类型" prop="type">
+										<gc-s-sel :component-store="f_type"></gc-s-sel>
+									</el-form-item>
+									<el-form-item label="可访问角色" prop="role_val">
+										<role_check></role_check>
+									</el-form-item>
+									<el-form-item label="菜单图标" prop="icon">
+										<gc-s-sel :component-store="f_icon"></gc-s-sel>
+									</el-form-item>
+									<el-form-item label="位置（前置）" prop="sort_val">
+										<gc-s-sel :component-store="f_vis_list"></gc-s-sel>
+									</el-form-item>
+									<el-form-item label="是否可用" prop="available">
+										<gc-s-radio :component-store="f_available"></gc-s-radio>
+									</el-form-item>
+									<el-form-item label="" prop="submit">
+										<el-button type="success" @click="updateMenu()" size="small">保存信息</el-button>
+									</el-form-item>
+								</gc-form>
+							</el-tab-pane>
+							<el-tab-pane label="新增下级菜单" name="second" :disabled="nchildEnable">
+								<gc-form :component-store="nchild_formStore">
+									<el-form-item label="菜单名称" prop="title">
+										<el-input v-model="nchild_formDataStore.data.title" placeholder="请输入名称"></el-input>
+									</el-form-item>
+									<el-form-item label="菜单路径" prop="path_attr">
+										<el-input v-model="nchild_formDataStore.data.path_attr" placeholder="请输入链接地址"></el-input>
+									</el-form-item>
+									<el-form-item label="上级菜单编号" prop="p_serial">
+										<el-input v-model="nchild_formDataStore.data.p_serial" disabled></el-input>
+									</el-form-item>
+									<el-form-item label="上级菜单名称">
+										<el-input disabled v-model="nchild_menu_name"></el-input>
+									</el-form-item>
+									<el-form-item label="菜单打开类型" prop="type">
+										<gc-s-sel :component-store="n_f_type"></gc-s-sel>
+									</el-form-item>
+									<el-form-item label="可访问角色" prop="role_val">
+										<nrole_check></nrole_check>
+									</el-form-item>
+									<el-form-item label="菜单图标" prop="icon">
+										<gc-s-sel :component-store="n_f_icon"></gc-s-sel>
+									</el-form-item>
+									<el-form-item label="是否可用" prop="available">
+										<gc-s-radio :component-store="n_f_available"></gc-s-radio>
+									</el-form-item>
+									<el-form-item label="" prop="submit">
+										<el-button type="success" size="small" @click="addMenu()">保存信息</el-button>
+									</el-form-item>
+								</gc-form>
+							</el-tab-pane>
+						</el-tabs>
+					</div>
+				</gc-hcontainer>
+			</div>
+		</page>
+
+	</div>
+</body>
+
 </html>

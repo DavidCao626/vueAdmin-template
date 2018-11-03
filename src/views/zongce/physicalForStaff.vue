@@ -1,8 +1,8 @@
 <template>
-    <div>
+  
         <page>
             <div slot="title">体能测试成绩管理</div>
-        </page>
+      <div slot="panel">
         <elx-table-layout>
             <template slot="headerRight">
                 <el-button-group>
@@ -58,14 +58,10 @@
                 </el-table-column>
                 <el-table-column label="操作" width="88" header-align="left" align="center">
                     <template slot-scope="scope">
-                        <el-dropdown>
-                            <el-button size="mini" @click="">
-                                <i class="el-icon-arrow-down"></i>
+                        <el-button size="mini" @click="updatePhysicalBT(scope.row)">
+                                修改
                             </el-button>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item @click.native="updatePhysicalBT(scope.row)">修改</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
+                       
                     </template>
                 </el-table-column>
             </el-table>
@@ -197,7 +193,7 @@
             </div>
         </el-dialog>
 
-    </div>
+    </div>  </page>
 </template>
 
 <script>

@@ -101,9 +101,11 @@ export default {
 </script>
 <style lang="scss" >
 .page-header .el-input--mini .el-input__inner {
-  width: 185px;
+  width: 158px !important;
 }
-
+.Page-dafault .el-input--mini .el-input__inner{
+  width: 158px !important;  
+}
 .page-header .header-btn {
   padding-left: 8px;
 }

@@ -1,89 +1,86 @@
 <template>
-  <div>
-    <page>
-      <div slot="title">综合测评管理</div>
-    </page>
-    <elx-table-layout>
-      <template slot="headerLeft">
-        <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
-          <el-form-item label="状态">
-            <el-select v-model="formInline.state" placeholder="请选择">
-              <el-option v-for="item in recordStateList" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="类型">
-            <el-select v-model="formInline.type" placeholder="请选择">
-              <el-option v-for="item in typeList" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          </el-form-item>
-          <el-form-item label="学年">
-            <el-select v-model="formInline.schoolYearId" placeholder="请选择">
-              <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :value="item.id">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="锁定状态">
-            <el-select v-model="formInline.isDefault" placeholder="请选择">
-              <el-option v-for="item in isDefaultList" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
-          </el-form-item>
-        </el-form>
-      </template>
-      <template slot="headerRight">
-        <el-button-group>
-           <el-button @click="lockAppraisal" plain size="mini">
-           锁定测评结果
-          </el-button>
-          <el-button @click="createDataBT" plain size="mini">
-            生成年度综测结果
-          </el-button>
-          <el-button @click="createDataBT2" plain size="mini">
-            生成校内综测结果
-          </el-button>
-        </el-button-group>
-      </template>
-      <el-table :data="data" style="width: 100%" border size="mini">
-        <el-table-column prop="type" :formatter="typeFormatter" label="类型">
-        </el-table-column>
-        <el-table-column prop="schoolYearName"  label="年度">
-        </el-table-column>
-        <el-table-column prop="orgName" label="组织名称">
-        </el-table-column>
-        <el-table-column prop="state" :formatter="stateFormatter" label="状态">
-        </el-table-column>
-        <el-table-column prop="isDefault" :formatter="defaultFormatter" label="是否锁定">
-        </el-table-column>
-        <el-table-column prop="startTime" label="开始时间">
-        </el-table-column>
-        <el-table-column prop="complateTime" label="完成时间">
-        </el-table-column>
+  <page>
+    <div slot="title">综合测评管理</div>
+    <div slot="panel">
+      <elx-table-layout>
+        <template slot="headerLeft">
+          <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
+            <el-form-item label="状态">
+              <el-select v-model="formInline.state" placeholder="请选择">
+                <el-option v-for="item in recordStateList" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="类型">
+              <el-select v-model="formInline.type" placeholder="请选择">
+                <el-option v-for="item in typeList" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            </el-form-item>
+            <el-form-item label="学年">
+              <el-select v-model="formInline.schoolYearId" placeholder="请选择">
+                <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :value="item.id">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="锁定状态">
+              <el-select v-model="formInline.isDefault" placeholder="请选择">
+                <el-option v-for="item in isDefaultList" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit">查询</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+        <template slot="headerRight">
+          <el-button-group>
+            <el-button @click="lockAppraisal" plain size="mini">
+              锁定测评结果
+            </el-button>
+            <el-button @click="createDataBT" plain size="mini">
+              生成年度综测结果
+            </el-button>
+            <el-button @click="createDataBT2" plain size="mini">
+              生成校内综测结果
+            </el-button>
+          </el-button-group>
+        </template>
+        <el-table :data="data" style="width: 100%" border size="mini">
+          <el-table-column prop="type" :formatter="typeFormatter" label="类型">
+          </el-table-column>
+          <el-table-column prop="schoolYearName" label="年度">
+          </el-table-column>
+          <el-table-column prop="orgName" label="组织名称">
+          </el-table-column>
+          <el-table-column prop="state" :formatter="stateFormatter" label="状态">
+          </el-table-column>
+          <el-table-column prop="isDefault" :formatter="defaultFormatter" label="是否锁定">
+          </el-table-column>
+          <el-table-column prop="startTime" label="开始时间">
+          </el-table-column>
+          <el-table-column prop="complateTime" label="完成时间">
+          </el-table-column>
 
-        <el-table-column label="操作" width="88" header-align="left" align="center">
-          <template slot-scope="scope">
-            <el-dropdown>
-              <el-button size="mini" @click="">
-                <i class="el-icon-arrow-down"></i>
+          <el-table-column label="操作" width="128" header-align="left" align="center">
+            <template slot-scope="scope">
+              <el-button size="mini" @click="showRank(scope.row)">
+                查看排名
               </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item :disabled="scope.row.state != 'ER'" @click.native="showError(scope.row)">查看错误</el-dropdown-item>
-                <el-dropdown-item :disabled="scope.row.state != 'CO'" @click.native="showRank(scope.row)">查看排名</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </template>
-        </el-table-column>
-      </el-table>
-      <template slot="footer">
-        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
-        </el-pagination>
-      </template>
-    </elx-table-layout>
+              <!-- <el-button size="mini" @click="showError(scope.row)">
+                查看错误
+              </el-button> -->
+
+            </template>
+          </el-table-column>
+        </el-table>
+        <template slot="footer">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="pageInfo.currentPage" :page-sizes="[10, 20, 50, 100]" :page-size="pageInfo.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.totalRecord">
+          </el-pagination>
+        </template>
+      </elx-table-layout>
 
       <el-dialog title="年度综合测评结果生成" :visible.sync="createDataDV">
         <el-form :model="createDataForm">
@@ -111,7 +108,8 @@
           <el-button type="primary" @click="createDataSubmit2 ">确 定</el-button>
         </div>
       </el-dialog>
-  </div>
+    </div>
+  </page>
 </template>
 
   <script>
@@ -190,10 +188,10 @@ export default {
         this.getData();
       });
     },
-    lockAppraisal(){
-      this.lockAppraisalResult({}).then(vm=>{
+    lockAppraisal() {
+      this.lockAppraisalResult({}).then(vm => {
         this.$message.success("操作成功");
-      })
+      });
     },
     ...mapActions({
       processAppraisalRecordSchoolB:
@@ -203,7 +201,7 @@ export default {
       getAppraisalRecordState: store.namespace + "/getAppraisalRecordState",
       queryAppraisalClassRecord: store.namespace + "/queryAppraisalClassRecord",
       querySchoolYear: store.namespace + "/querySchoolYear",
-      lockAppraisalResult:store.namespace + "/lockAppraisalResult"
+      lockAppraisalResult: store.namespace + "/lockAppraisalResult"
     }),
     showError(row) {
       this.$alert(row.errorCause, "错误原因", {

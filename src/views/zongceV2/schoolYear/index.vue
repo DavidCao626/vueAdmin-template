@@ -1,5 +1,4 @@
 <template>
-  <div>
     <page>
       <div slot="title">学年管理</div>
       <div slot="panel">
@@ -69,7 +68,7 @@
           </el-dialog>
           <elx-table-layout>
 
-            <template slot="headerLeft">
+            <template slot="headerRight">
               <el-dropdown split-button type="primary" @click="add" size="small" @command="handleCommand">
                 新建学年
                 <el-dropdown-menu slot="dropdown" size="medium">
@@ -93,7 +92,7 @@
               <el-table-column prop="createUserLogin" label="创建人用户名">
               </el-table-column>
 
-              <el-table-column label="操作">
+              <el-table-column label="操作"  width="160">
                 <template slot-scope="scope">
                   <el-button size="mini" plain @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                   <el-button size="mini" plain type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
@@ -111,7 +110,7 @@
         </div>
       </div>
     </page>
-  </div>
+  
 </template>
 <script>
 import moment from "moment";

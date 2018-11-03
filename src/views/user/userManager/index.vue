@@ -1,5 +1,9 @@
 <template>
-  <div>
+<page>
+  <div  slot="title">
+    登录用户管理
+    </div>
+     <div slot="panel">
 
     <elx-table-layout>
 
@@ -38,17 +42,15 @@
         </el-table-column>
         <el-table-column prop="lastUpdateTime" label="最后修改时间">
         </el-table-column>
-        <el-table-column label="操作" width="88" header-align="left" align="center">
+        <el-table-column label="操作" width="220" header-align="left" align="center">
           <template slot-scope="scope">
-            <el-dropdown>
-              <el-button size="mini" @click="">
-                <i class="el-icon-arrow-down"></i>
+              <el-button size="mini" @click="resetpwd(scope.row)">
+                重置密码
               </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="edit(scope.row)">状态变更</el-dropdown-item>
-                <el-dropdown-item @click.native="resetpwd(scope.row)">重置密码</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
+                <el-button size="mini" @click="edit(scope.row)">
+                禁用账户
+              </el-button>
+           
           </template>
         </el-table-column>
       </el-table>
@@ -72,6 +74,8 @@
     </el-dialog>
 
   </div>
+  </page>
+ 
 </template>
 
   <script>

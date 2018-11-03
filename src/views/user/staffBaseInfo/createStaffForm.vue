@@ -1,22 +1,28 @@
 <template>
-    <div>
-        <h2 @click="goBack">返回</h2><br/>
-        <el-form :model="formData" size="small" label-width="80px">
-            <el-form-item label="职工编号">
-                <el-input v-model="formData.staffCode" placeholder="职工编号"></el-input>
-            </el-form-item>
-            <el-form-item label="姓名">
-                <el-input v-model="formData.name" placeholder="姓名"></el-input>
-            </el-form-item>
-            <el-form-item label="手机号">
-                <el-input v-model="formData.phone" placeholder="手机号"></el-input>
-            </el-form-item>
+  <page>
+    <div slot="title">新建职工</div>
 
-            <el-form-item>
-                <el-button type="success" @click="onSubmit">保存</el-button>
-            </el-form-item>
-        </el-form>
+    <div slot="panel">
+      <h2 @click="goBack"></h2><br />
+      <el-form :model="formData" size="small" label-width="80px" style="width:400px;">
+        <el-form-item label="职工编号:">
+          <el-input v-model="formData.staffCode" placeholder="职工编号"></el-input>
+        </el-form-item>
+        <el-form-item label="姓名:">
+          <el-input v-model="formData.name" placeholder="姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="手机号:">
+          <el-input v-model="formData.phone" placeholder="手机号"></el-input>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">保存</el-button>
+        </el-form-item>
+      </el-form>
+      <br />
+      <br />
     </div>
+  </page>
 </template>
 
 <script>

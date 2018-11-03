@@ -1,18 +1,21 @@
 <template>
-    <div>
-        <h2 @click="goBack">返回</h2><br/>
-        <el-form :model="formData" size="small" label-width="80px">
-            <el-form-item label="编号">
-                <el-input v-model="formData.sysCode" placeholder="编号"></el-input>
-            </el-form-item>
-            <el-form-item label="姓名">
-                <el-input v-model="formData.name" placeholder="姓名"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="success" @click="onSubmit">保存</el-button>
-            </el-form-item>
-        </el-form>
-    </div>
+  <page>
+    <div slot="title">创建系统对象</div>
+    <div slot="panel"> <br/>
+      <el-form :model="formData" size="small" label-width="80px" style="width:400px">
+        <el-form-item label="编号">
+          <el-input v-model="formData.sysCode" placeholder="编号"></el-input>
+        </el-form-item>
+        <el-form-item label="姓名">
+          <el-input v-model="formData.name" placeholder="姓名"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">保存</el-button>
+        </el-form-item>
+      </el-form>
+      <br/>
+    </div> <br/>
+  </page>
 </template>
 
 <script>

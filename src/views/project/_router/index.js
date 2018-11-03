@@ -1,9 +1,9 @@
 export const projectRouter = {
   path: "/project",
   redirect: "/project/control",
-  name: "项目管理",
+  name: "",
   component: () => import("../_layout/layout.vue"),
-  meta: { title: "项目控制台", icon: "example", hidden: false },
+  meta: { title: "", icon: "example", hidden: false },
   children: [
     {
       path: "my",

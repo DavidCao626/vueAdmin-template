@@ -72,9 +72,9 @@ import RquestUserPathConfig from '@/API/User/user_manager_self.js'// 演示接�
 	      this.active--
 	    },
 	    subForm() {
-	      var loadingVars = Loading.service({
-	        fullscreen: true
-	      })
+	   //   var loadingVars = Loading.service({
+	    //    fullscreen: true
+	     // })
 	      const ajaxThis = this
 	      axios({ // 获取用户菜单
 	        'url': RquestUserPathConfig.getLoginUserInfo,
@@ -83,7 +83,7 @@ import RquestUserPathConfig from '@/API/User/user_manager_self.js'// 演示接�
 	      }).then(function(response) {
 	        console.log(response.data)
 
-	        loadingVars.close()
+	       // loadingVars.close()
 	      }).catch(function(error) {
 	        console.log('接口异常' + error)
 	      })

@@ -1,16 +1,13 @@
 <template>
   <div>
-    <page class="page" :breadcrumb="false">
-      <div slot="panel">
-
-        <div class="pannel_title">项目信息</div>
-        <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
-          <el-form-item label="名称">
+   
+        <el-form ref="form.expand" label-position="right" :model="form" label-width="120px" style="margin: 20px;">
+          <el-form-item label="名称:">
             <el-input v-model="form.expand.name" autosize focus style="width:50%;">
               <i slot="suffix" class="el-icon-edit el-input__icon"></i>
             </el-input>
           </el-form-item>
-          <el-form-item label="代码">
+          <el-form-item label="代码:">
             <el-input v-model="form.expand.userCode" autosize focus style="width:50%;">
               <i slot="suffix" class="el-icon-edit el-input__icon"></i>
             </el-input>
@@ -21,41 +18,41 @@
               </el-option>
             </el-select>
           </el-form-item> -->
-          <el-form-item label="学年">
+          <el-form-item label="学年:">
             <elx-select v-model="form.expand.schoolYearId" placeholder="请选择">
               <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :value="item.id">
               </el-option>
             </elx-select>
           </el-form-item>
-          <el-form-item label="学生类别">
+          <el-form-item label="学生类别:">
             <el-checkbox-group v-model="form.expand.stuType" :min="1">
               <el-checkbox v-for="item in stuTypeList" :label="item.dict_key" :key="item.dict_key">{{item.dict_desc}}</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
-          <el-form-item label="年级">
+          <el-form-item label="年级:">
             <el-checkbox-group v-model="form.expand.grade" :min="1">
               <el-checkbox v-for="item in gradeList" :label="item.dict_key" :key="item.dict_key">{{item.dict_desc}}</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
-          <el-form-item label="关联贫困建档">
+          <el-form-item label="关联贫困建档:">
             <el-radio-group v-model="form.expand.rules.relationPoverty.flag">
               <el-radio-button label="Y">是</el-radio-button>
               <el-radio-button label="N">否</el-radio-button>
             </el-radio-group>
           </el-form-item>
 
-          <el-form-item label="关联校内测评">
+          <el-form-item label="关联校内测评:">
             <el-radio-group v-model="form.expand.rules.schoolAppraisal.flag">
               <el-radio-button label="Y">是</el-radio-button>
               <el-radio-button label="N">否</el-radio-button>
             </el-radio-group>
           </el-form-item>
 
-          <el-form-item label="校内测评名次" v-show="form.expand.rules.schoolAppraisal.flag == 'Y'">
+          <el-form-item label="校内测评名次:" v-show="form.expand.rules.schoolAppraisal.flag == 'Y'">
             <el-input-number v-model="form.expand.rules.schoolAppraisal.first" :min="1" label="班级排名"></el-input-number>
           </el-form-item>
 
-          <el-form-item label="关联年度测评">
+          <el-form-item label="关联年度测评:">
             <el-radio-group v-model="form.expand.rules.yearAppraisal.flag">
               <el-radio-button label="Y">是</el-radio-button>
               <el-radio-button label="N">否</el-radio-button>
@@ -83,28 +80,23 @@
             </el-radio-group>
           </el-form-item>
 
-          <el-form-item label="建档综测排名" v-show="form.expand.rules.createFileYearAppraisal.flag == 'Y'">
+          <el-form-item label="建档综测排名:" v-show="form.expand.rules.createFileYearAppraisal.flag == 'Y'">
             <el-input-number v-model="form.expand.rules.createFileYearAppraisal.first" :min="1" label="班级排名"></el-input-number>
           </el-form-item>
 
-          <el-form-item label="关联学习成绩">
+          <el-form-item label="关联学习成绩:">
             <el-radio-group v-model="form.expand.rules.stuScore.flag">
               <el-radio-button label="Y">是</el-radio-button>
               <el-radio-button label="N">否</el-radio-button>
             </el-radio-group>
           </el-form-item>
 
-          <el-form-item label="学习成绩排名" v-show="form.expand.rules.stuScore.flag == 'Y'">
+          <el-form-item label="学习成绩排名:" v-show="form.expand.rules.stuScore.flag == 'Y'">
             <el-input-number v-model="form.expand.rules.stuScore.first" :min="1" label="班级排名"></el-input-number>
           </el-form-item>
         </el-form>
-      </div>
-    </page>
-
-    <page class="page" :breadcrumb="false">
-      <div slot="panel">
-        <div class="pannel_title">任务配置</div>
-        <el-form ref="form" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
+        <hr/>
+        <el-form ref="form" label-position="right" :model="form" label-width="120px" style="margin: 20px;">
           <el-form-item label="业务类型:">
             <ProjectTypeSelect @selectValue="selectValue" :value="form.projectServiceType" :options="ioptions" :disabled="isProjectTypeSelectDisDisabled"></ProjectTypeSelect>
           </el-form-item>
@@ -118,11 +110,11 @@
 
           </el-form-item>
 
-          <el-form-item label="计划开始日期">
+          <el-form-item label="计划开始日期:">
             <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planStartTime" type="date" placeholder="选择日期">
             </el-date-picker>
           </el-form-item>
-          <el-form-item label="计划结束日期">
+          <el-form-item label="计划结束日期:">
             <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planCompleteTime" type="date" placeholder="选择日期">
             </el-date-picker>
           </el-form-item>
@@ -135,24 +127,18 @@
             <el-switch v-model="form.isSendPublicNotice" active-value="Y" inactive-value="N"></el-switch>
           </el-form-item>
           <el-form-item label="公告内容:" v-show="form.isSendPublicNotice=='Y'?true:false">
-            <!-- <el-input type="textarea" :autosize="{ minRows: 3}" v-model="form.projectDesc"></el-input> -->
-            <tinymce :height="300" v-model="form.projectDesc" id='tinymce'></tinymce>
+            <el-button type="text" @click="tinymceShow=true">编辑内容</el-button>
+            <el-button type="text" v-show="tinymceShow" @click="tinymceShow=false">隐藏内容</el-button>
+            <template>
+              <tinymce :height="300" v-model="form.projectDesc" id='tinymce' v-show="tinymceShow"></tinymce>
+            </template>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSaveAndNext">保存并下发</el-button>
           </el-form-item>
         </el-form>
-      </div>
-    </page>
 
-    <page class="page" :breadcrumb="false">
-      <div slot="panel">
-        <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
-          <el-col :span="7">
-            <el-button type="primary" @click="onSaveAndNext">保存并下发</el-button>
-          </el-col>
-        </el-row>
       </div>
-    </page>
-
-  </div>
 </template>
 <script>
 import tinymce from "~/components/Tinymce";
@@ -191,6 +177,7 @@ export default {
   },
   data() {
     return {
+       tinymceShow:false,
       stuTypeList: [],
       gradeList: [],
       schoolYearList: [],

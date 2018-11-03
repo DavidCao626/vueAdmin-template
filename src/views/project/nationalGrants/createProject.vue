@@ -2,10 +2,14 @@
   <page class="page" :breadcrumb="false">
     <div slot="title">新建项目</div>
     <div slot="panel">
-      <ProjectAddSteps :active="0"></ProjectAddSteps>
-      <br/>
+      <el-card>
+        <ProjectAddSteps :active="0"></ProjectAddSteps>
+        <br />
+        <ProjectInfoForm></ProjectInfoForm>
+      </el-card>
+
     </div>
-      <ProjectInfoForm></ProjectInfoForm>
+
   </page>
 </template>
 
@@ -51,7 +55,7 @@ export default {
           vm.getProjectInfo(projectId, serType);
         }
       } else {
-        var serType ="201808"
+        var serType = "201808";
         if (serType == null) {
           vm.$message.error("业务类别不能为空");
           vm.$router.go(-1);

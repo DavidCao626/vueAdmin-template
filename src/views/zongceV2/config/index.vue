@@ -1,41 +1,7 @@
-<style lang="scss" scoped>
-.state_empty_hd {
-  margin-top: 40px;
-  .desc {
-    padding: 0 60px;
-  }
-}
-.content {
-  &__flex {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  &__box {
-    border: 1px solid var(--color-grey-light-3);
-    padding: 20px;
-    margin: 20px;
-    text-align: center;
-    line-height: 1.6;
-    border-radius: 5px;
-    min-height: 150px;
-    .img__box {
-      height: 150px;
-      margin-bottom: 15px;
-    }
-    img {
-      height: 150px;
-    }
-  }
-  &__box:hover {
-    border: 1px solid var(--color-primary);
-  }
-}
-</style>
 
 
 <template>
-    <page :Breadcrumb="false">
+    <page >
         <span slot="title">方案可管理时间配置</span>
         <div slot="panel">
 

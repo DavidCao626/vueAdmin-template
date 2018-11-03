@@ -14,7 +14,7 @@ import {
 } from 'element-ui'
 Vue.use(GraceComponent)
 var pagehContainer = GStoreFactory.buildHContainer()
-var loadingVars
+//var loadingVars
 var treeStore = GStoreFactory.buildTreeStore()
 treeStore.addConf('isCheckBox', true)
 treeStore.setLazy(function(node, resolve) {
@@ -116,14 +116,14 @@ var index = new Vue({
     cascaderStore: cascaderStore
   },
   beforeCreate: function() {
-    loadingVars = Loading.service({
-      fullscreen: true
-    })
+   // loadingVars = Loading.service({
+   //   fullscreen: true
+   // })
   },
   mounted: function() {
-    setTimeout(() => {
-      loadingVars.close()
-    }, 2000)
+  //  setTimeout(() => {
+   //   loadingVars.close()
+   // }, 2000)
     var that = this
     var height = GUtils.getClientHeight()
     pagehContainer.store.conf.prefHeight = height

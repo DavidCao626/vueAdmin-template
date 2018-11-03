@@ -55,7 +55,7 @@
 <template>
   <page :Breadcrumb="false">
     <div slot="title">
-      <el-button icon="el-icon-arrow-left" @click="go(-1)" plain>返回</el-button>
+      方案配置
     </div>
     <div slot="panel" style="">
       <div class="block">

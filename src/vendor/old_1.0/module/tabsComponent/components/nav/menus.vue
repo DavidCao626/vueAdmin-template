@@ -21,9 +21,9 @@ export default {
   },
   methods: {
       	getMenuforServer: function() {
-      		var loadingVars = Loading.service({
-        fullscreen: true
-      })
+      //		var loadingVars = Loading.service({
+     //   fullscreen: true
+    //  })
       		const t = this
       axios({// 获取用户菜单
         'url': RquestPathConfig.getUserMenu,
@@ -33,7 +33,7 @@ export default {
 
       			console.log(response)
 
-        loadingVars.close()
+      //  loadingVars.close()
       }).catch(function(error) {
         console.log('接口异常' + error)
       })

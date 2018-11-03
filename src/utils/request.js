@@ -2,25 +2,25 @@ import axios from "axios";
 import store from "../store";
 import { getToken } from "~/utils/auth";
 import { Message, Loading } from "element-ui";
-// import { Loading } from 'element-ui'
 
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
-  timeout: 30*1000, // 请求超时时间
+  timeout: 7 * 1000, // 请求超时时间
   headers: {
     "Specify-Request-Type": "application/x-www-form-urlencoded;charset=utf-8"
   }
 });
-
-let loading;
+var intres = 10;
 // request拦截器
-service.interceptors.request.use(
+let loading;
+const reqInterceptor = service.interceptors.request.use(
   config => {
     if (store.getters.token) {
       config.headers["X-Token"] = getToken(); // 让每个请求携带自定义token 请根据实际情况自行修改
     }
-    loading = Loading.service({ text: "数据加载中...", target: "#app-main" });
+    loading = Loading.service({ text: "数据加载中..." });
+    console.log([(intres += 1), "请去数据：", config]);
     //
     return config;
   },
@@ -31,13 +31,16 @@ service.interceptors.request.use(
   }
 );
 
-service.interceptors.response.use(
+const resInterceptor = service.interceptors.response.use(
   response => {
-    loading.close();
-    
+    console.log([(intres -= 1), "返回数据：", response]);
+    loading.close(); //关闭加载前，记得重新定义实例
+
     if (response.data.respStatus > 0) {
-      return response.data.body;
+      loading.close(); 
+      return Promise.resolve(response.data.body);
     } else {
+      loading.close();
       Message({
         message: response.data.body.message,
         type: "error"
@@ -46,15 +49,14 @@ service.interceptors.response.use(
     }
   },
   error => {
-    loading.close();
+    loading.close(); //关闭加载前，记得重新定义实例
     console.log(error);
-    Message({
-      message: error.message,
-      type: "error"
-    });
+    Message({ message: error.message, type: "error" });
     return Promise.reject(error);
   }
 );
+//  service.interceptors.request.eject(reqInterceptor);
+//  service.interceptors.response.eject(resInterceptor);
 
 // respone拦截器
 // service.interceptors.response.use(

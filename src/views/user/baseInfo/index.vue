@@ -55,15 +55,10 @@
 
           <el-table-column label="操作" width="88" header-align="left" align="center">
             <template slot-scope="scope">
-              <el-dropdown>
-                <el-button size="mini" @click="">
-                  <i class="el-icon-arrow-down"></i>
-                </el-button>
-                <el-dropdown-menu slot="dropdown">
-                  <!-- <el-dropdown-item @click.native="edit(scope.row)">编辑</el-dropdown-item> -->
-                  <el-dropdown-item @click.native="resignation(scope.row)">任职</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
+              <el-button size="mini" @click="resignation(scope.row)">
+                任职
+              </el-button>
+
             </template>
           </el-table-column>
         </el-table>
@@ -130,7 +125,7 @@ export default {
       this.getData();
     },
     addStu() {
-      this.$message.success("正在跳转 ");
+      // this.$message.success("正在跳转 ");
       this.$router.push({
         path: "/user/createBaseForm"
       });

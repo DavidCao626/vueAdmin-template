@@ -5,6 +5,11 @@ import 'nprogress/nprogress.css' // Progress 进度条样式
 import { Message } from 'element-ui'
 import { getToken } from '~/utils/auth' // 验权
 
+// 简单配置
+NProgress.inc(0.2)
+NProgress.configure({ easing: 'ease', speed: 500, showSpinner: false })
+
+
 const whiteList = ['/login', '/register','/whktest'] // 不重定向白名单
 router.beforeEach((to, from, next) => {
   NProgress.start()

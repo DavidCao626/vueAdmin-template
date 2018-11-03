@@ -19,7 +19,7 @@ Vue.use(GraceComponent)
 var pagehContainer = GStoreFactory.buildHContainer()
 var loadingVars
 var treeStore = GStoreFactory.buildTreeStore()
-treeStore.addConf('isCheckBox', true)
+
 treeStore.addConf('defaultProps', {
   'children': 'children',
   'label': 'title',
@@ -228,13 +228,13 @@ var index = new Vue({
     'nrole_check': nroleCheck
   },
   beforeCreate: function() {
-    loadingVars = Loading.service({
-      fullscreen: true
-    })
+ //   loadingVars = Loading.service({
+   //   fullscreen: true
+  //  })
   },
   mounted: function() {
     setTimeout(() => {
-      loadingVars.close()
+     // loadingVars.close()
     }, 2000)
     var that = this
     var height = GUtils.getClientHeight()
@@ -247,6 +247,7 @@ var index = new Vue({
       }, function(error) {
         console.log(error)
       })
+      this.$msssage.success('操作成功')
     },
     updateMenu: function() {
       GUtils.post(reqPath.updateMenu, formDataStore.data, function(data) {
@@ -258,6 +259,7 @@ var index = new Vue({
       }, function(error) {
         console.log(error)
       })
+       this.$msssage.success('操作成功')
     },
     updateNodeChild: function() {
       var selectNode = this.treeStore.store.conf.selectedNode

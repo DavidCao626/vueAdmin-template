@@ -1,29 +1,29 @@
 <template>
   <div>
     <el-form ref="form.expand" label-position="right" :model="form" label-width="120px" style="margin: 20px;">
-      <el-form-item label="学年">
+      <el-form-item label="学年:">
         <elx-select v-model="form.expand.schoolYearId" placeholder="请选择" @change="schoolYearChange">
           <el-option v-for="item in schoolYearList" :key="item.id" :obj="item" :label="item.name" :value="item.id">
           </el-option>
         </elx-select>
       </el-form-item>
-      <el-form-item label="名称">
+      <el-form-item label="名称:">
         <el-input v-model="form.expand.name" autosize focus style="width:50%;">
           <i slot="suffix" class="el-icon-edit el-input__icon"></i>
         </el-input>
       </el-form-item>
-      <el-form-item label="代码">
+      <el-form-item label="代码:">
         <el-input v-model="form.expand.userCode" autosize focus style="width:50%;">
           <i slot="suffix" class="el-icon-edit el-input__icon"></i>
         </el-input>
       </el-form-item>
 
-      <el-form-item label="学生类别">
+      <el-form-item label="学生类别:">
         <el-checkbox-group v-model="form.expand.stuType" :min="1">
           <el-checkbox v-for="item in stuTypeList" :label="item.code" :key="item.code">{{item.name}}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
-      <el-form-item label="年级">
+      <el-form-item label="年级:">
         <el-checkbox-group v-model="form.expand.grade" :min="1">
           <el-checkbox v-for="item in gradeList" :label="item.dict_key" :key="item.dict_key">{{item.dict_desc}}</el-checkbox>
         </el-checkbox-group>
@@ -46,11 +46,11 @@
 
       </el-form-item>
 
-      <el-form-item label="计划开始日期">
+      <el-form-item label="计划开始日期:">
         <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planStartTime" type="date" placeholder="选择日期">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="计划结束日期">
+      <el-form-item label="计划结束日期:">
         <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planCompleteTime" type="date" placeholder="选择日期">
         </el-date-picker>
       </el-form-item>

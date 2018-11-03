@@ -1,9 +1,9 @@
 export const userRouter = {
   path: "/user",
   redirect: "/user/info",
-  name: "用户",
+  name: "",
   component: () => import("../_layout/layout.vue"),
-  meta: { title: "用户中心", icon: "example", hidden: false },
+  meta: { title: "", icon: "example", hidden: false },
   children: [
     { path: "info", name: "info", component: () => import("../info") },
     {

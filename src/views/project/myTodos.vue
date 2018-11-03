@@ -39,7 +39,7 @@
           </el-table-column>
           <!-- <el-table-column prop="real_start_time" label="开始时间" min-width="120">
           </el-table-column> -->
-          <el-table-column prop="over_time" label="结束时间" :formatter="overTimeFormatter" width="120">
+          <el-table-column prop="over_time" label="结束时间" :formatter="overTimeFormatter" width="140">
             <template slot-scope="scope">
               <span v-html="overTimeFormatter(scope.row)"></span>
             </template>

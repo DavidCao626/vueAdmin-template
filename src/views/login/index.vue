@@ -60,7 +60,7 @@ export default {
       },
       ruleLoginForm: {
         pass: "123456",
-        username: "user1"
+        username: "nmgdxadmin"
       },
       rules2: {
         pass: [{ required: true, message: "请输入密码", trigger: "blur" }],

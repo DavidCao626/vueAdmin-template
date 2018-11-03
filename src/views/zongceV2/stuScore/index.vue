@@ -4,7 +4,7 @@
         <div slot="panel">
             <div>
                 <el-dialog title="导入班级成绩" :visible.sync="dialogVisible" width="400px">
-                    <el-form :model="importForm" style="margin-top: -25px;">
+                    <el-form :model="importForm" >
                         <el-form-item label="1、选择要导入到的学年：">
                             <el-select v-model="importForm.schoolYearId" placeholder="全部">
                                 <el-option v-for="item in schoolYearDict" :key="item.value" :label="item.name" :value="item.id">

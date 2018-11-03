@@ -15,11 +15,6 @@
       <elx-table-layout>
 
         <template slot="headerLeft">
-          <!-- <span v-if="deleteOpen && isMultipleSelection">
-                    <el-button plain @click="onMultipleSelectionDel" size="mini" style="margin-top: 1px;margin-right: 20px;">
-                        <i class="el-icon-delete"> ({{ multipleSelection.length }})</i>
-                    </el-button>
-                </span> -->
           <el-form :inline="true" :model="formInline" size="mini" class="demo-form-inline">
             <el-form-item label="职工号:">
               <el-input v-model="formInline.staffCode" placeholder="职工号"></el-input>
@@ -35,19 +30,21 @@
 
         <template slot="headerRight">
           <el-button-group>
-            <el-tooltip class="item" effect="dark" content="创建职工" placement="bottom">
-              <el-button plain size="mini" @click="addStu">
-                新建
+            <el-tooltip class="item" effect="dark" content="导出职工" placement="bottom">
+              <el-button plain size="mini">
+                导出
               </el-button>
             </el-tooltip>
+
             <el-tooltip class="item" effect="dark" content="导入职工" placement="bottom">
               <el-button @click="dialogVisible = true" plain size="mini">
                 导入
               </el-button>
             </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="导出职工" placement="bottom">
-              <el-button plain size="mini">
-                导出
+
+            <el-tooltip class="item" effect="dark" content="创建职工" placement="bottom">
+              <el-button plain size="mini" @click="addStu">
+                新建
               </el-button>
             </el-tooltip>
           </el-button-group>

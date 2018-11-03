@@ -1,6 +1,7 @@
 <template>
-  <div>
-
+  <page>
+    <div slot="title">职务管理</div>
+    <div slot="panel">
     <elx-table-layout>
       <template slot="headerRight">
         <el-button-group>
@@ -154,6 +155,8 @@
     </el-dialog>
 
   </div>
+    </page>
+
 </template>
 
   <script>

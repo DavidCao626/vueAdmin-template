@@ -8,7 +8,7 @@ import { Loading } from "element-ui";
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
-  timeout: 30 * 1000 // 请求超时时间
+  timeout: 7 * 1000 // 请求超时时间
 });
 let loading;
 // request拦截器
@@ -19,12 +19,12 @@ service.interceptors.request.use(
     }
     loading = Loading.service({
       text: "数据加载中...",
-      target: "#app-main"
     });
     return config;
   },
   error => {
     // Do something with request error
+    loading.close(); //关闭加载前，记得重新定义实例
     console.error(error); // for debug
     Promise.reject(error);
   }
@@ -32,7 +32,7 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   response => {
-    loading.close();
+    loading.close(); //关闭加载前，记得重新定义实例
     if (response.data.respStatus > 0) {
       return response.data.body;
     } else {
@@ -45,7 +45,7 @@ service.interceptors.response.use(
   },
   error => {
     console.log(error);
-    loading.close();
+    loading.close(); //关闭加载前，记得重新定义实例
     Message({
       message: error.message,
       type: "error"

@@ -30,7 +30,7 @@
 
         <div :class="['page-component__content', sidebar?'sidebar-hide':'']">
           <!-- <router-view class="content"></router-view> -->
-          <app-main class=" app-container "></app-main>
+          <app-main class=" app-container " id="app-body"></app-main>
           <div class="app-container app-footer">
             <!-- <div class="app-footer__info">
               <ul>

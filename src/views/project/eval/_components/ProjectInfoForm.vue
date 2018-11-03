@@ -3,9 +3,7 @@
 
     <page class="page" :breadcrumb="false">
       <div slot="panel">
-
-        <h3>一、测评信息</h3>
-        <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
+        <el-form ref="form.expand" label-position="right" :model="form" label-width="120px" style="margin: 20px;">
           <el-form-item label="学年">
             <elx-select v-model="form.expand.schoolYearId" placeholder="请选择" @change="schoolYearChange">
               <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :obj="item" :value="item.id">
@@ -18,13 +16,8 @@
             </el-input>
           </el-form-item>
         </el-form>
-      </div>
-    </page>
-
-    <page class="page" :breadcrumb="false">
-      <div slot="panel">
-        <h3>二、项目信息</h3>
-        <el-form ref="form" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
+        <hr/>
+        <el-form ref="form" label-position="right" :model="form" label-width="120px" style="margin: 20px;">
           <el-form-item label="业务类型:">
             <ProjectTypeSelect @selectValue="selectValue" :value="form.projectServiceType" :options="ioptions" :disabled="isProjectTypeSelectDisDisabled"></ProjectTypeSelect>
           </el-form-item>
@@ -55,23 +48,20 @@
             <el-switch v-model="form.isSendPublicNotice" active-value="Y" inactive-value="N"></el-switch>
           </el-form-item>
           <el-form-item label="公告内容:" v-show="form.isSendPublicNotice=='Y'?true:false">
-            <!-- <el-input type="textarea" :autosize="{ minRows: 3}" v-model="form.projectDesc"></el-input> -->
-            <tinymce :height="300" v-model="form.projectDesc" id='tinymce'></tinymce>
+            <el-button type="text" @click="tinymceShow=true">编辑内容</el-button>
+            <el-button type="text" v-show="tinymceShow" @click="tinymceShow=false">隐藏内容</el-button>
+            <template>
+              <tinymce :height="300" v-model="form.projectDesc" id='tinymce' v-show="tinymceShow"></tinymce>
+            </template>
+          </el-form-item>
+          <el-form-item>
+           <el-button type="primary" @click="onSaveAndNext">保存并进行下一步</el-button>
           </el-form-item>
         </el-form>
       </div>
     </page>
 
-    <page class="page" :breadcrumb="false">
-      <div slot="panel">
-        <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
-          <el-col :span="7">
-            <el-button type="primary" @click="onSaveAndNext">保存并进行下一步</el-button>
-          </el-col>
-        </el-row>
-      </div>
-    </page>
-
+    
   </div>
 </template>
 <script>
@@ -111,6 +101,7 @@ export default {
   },
   data() {
     return {
+      tinymceShow:false,
       currentCategoryId: 0, //当前选中的测评类别id
       appraiseTypeList: [
         {

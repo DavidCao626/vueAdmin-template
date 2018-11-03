@@ -397,13 +397,13 @@ export default {
     }
   },
   beforeCreate: function() {
-    loadingVars = Loading.service({
-      fullscreen: true
-    })
+  //  loadingVars = Loading.service({
+  //    fullscreen: true
+  //  })
   },
   mounted: function() {
     setTimeout(() => {
-      loadingVars.close()
+  //    loadingVars.close()
     }, 2000)
     var height = GUtils.getClientHeight()
     pagehContainer.store.conf.prefHeight = height

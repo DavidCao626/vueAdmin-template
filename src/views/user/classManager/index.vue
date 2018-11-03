@@ -1,8 +1,7 @@
 <template>
-  <div>
     <page>
       <div slot="title">班级管理</div>
-    </page>
+ <div slot="panel">
     <elx-table-layout>
       <template slot="headerRight">
         <el-button-group>
@@ -14,34 +13,33 @@
         </el-button-group>
       </template>
       <template slot="headerLeft">
-        <el-form :inline="true" :model="formInline" label-width="80px" size="mini" class="demo-form-inline">
-          <el-form-item label="班级名称">
-            <el-input v-model="formInline.orgName" placeholder=""></el-input>
-          </el-form-item>
-          <el-form-item label="班级代码">
-            <el-input v-model="formInline.socialCode" placeholder=""></el-input>
-          </el-form-item>
-          <br />
-          <el-form-item label="系">
+        <el-form :inline="true" :model="formInline" label-position="right"   label-width="80px" size="mini" class="demo-form-inline">
+       
+          <el-form-item label="系:">
             <el-select v-model="formInline.departmentCode" placeholder="" @change="getMajorListAll">
               <el-option v-for="item in departmentListALL" :key="item.id" :label="item.departmentName" :value="item.code"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="专业">
+          <el-form-item label="专业:">
             <el-select v-model="formInline.majorCode" placeholder="">
               <el-option v-for="item in majorListALL" :key="item.id" :label="item.name" :value="item.code"></el-option>
             </el-select>
           </el-form-item>
-          <br />
-          <el-form-item label="学历">
+          <el-form-item label="学历:">
             <el-select v-model="formInline.educationLevelCode" placeholder="" @change="getMemberTypeALL">
               <el-option v-for="item in educationLevelListALL" :key="item.id" :label="item.name" :value="item.code"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="成员类型">
+          <el-form-item label="成员类型:">
             <el-select v-model="formInline.memberType" placeholder="">
               <el-option v-for="item in memberTypeALL" :key="item.id" :label="item.name" :value="item.code"></el-option>
             </el-select>
+          </el-form-item>
+             <el-form-item label="班级名称:">
+            <el-input v-model="formInline.orgName" placeholder=""></el-input>
+          </el-form-item>
+          <el-form-item label="班级代码:">
+            <el-input v-model="formInline.socialCode" placeholder=""></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -65,17 +63,16 @@
         </el-table-column>
         <el-table-column prop="academic" label="学制" :formatter="academicFormatter">
         </el-table-column>
-        <el-table-column label="操作" width="88" header-align="left" align="center">
+        <el-table-column label="操作" width="188" header-align="left" align="center">
           <template slot-scope="scope">
-            <el-dropdown>
-              <el-button size="mini" @click="">
-                <i class="el-icon-arrow-down"></i>
+             <el-button size="mini" @click="updateBT(scope.row)">
+               更新
               </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="updateBT(scope.row)">更新</el-dropdown-item>
-                <el-dropdown-item @click.native="allotStudent(scope.row)">分配学生</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
+               <el-button size="mini" @click="allotStudent(scope.row)">
+             分配学生
+              </el-button>
+
+         
           </template>
         </el-table-column>
       </el-table>
@@ -190,10 +187,10 @@
       <elx-table-layout>
         <template slot="headerLeft">
           <el-form :inline="true" :model="studentSearchForm" size="mini" class="demo-form-inline">
-            <el-form-item label="学号">
+            <el-form-item label="学号:">
               <el-input v-model="studentSearchForm.stuNo" placeholder="学号"></el-input>
             </el-form-item>
-            <el-form-item label="姓名">
+            <el-form-item label="姓名:">
               <el-input v-model="studentSearchForm.name" placeholder="姓名"></el-input>
             </el-form-item>
             <el-form-item>
@@ -233,7 +230,7 @@
       </div>
     </el-dialog>
 
-  </div>
+  </div>   </page>
 </template>
 
   <script>
@@ -576,11 +573,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.el-form-item {
-  margin-bottom: 0px;
-}
-.demo-form-inline {
-  display: inline !important;
-}
-</style>

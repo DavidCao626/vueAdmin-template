@@ -1,82 +1,66 @@
 <template>
   <div>
-    <page class="page" :breadcrumb="false">
-      <div slot="panel">
 
-          <div class="pannel_title">项目信息</div>
-        <el-form ref="form.expand" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
+    <el-form ref="form.expand" label-position="right" :model="form" label-width="120px" style="margin: 20px;">
 
- <el-form-item label="学年">
-            <elx-select v-model="form.expand.yearType" placeholder="请选择" @change="schoolYearChange">
-              <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :obj="item" :value="item.id">
-              </el-option>
-            </elx-select>
-          </el-form-item>
+      <el-form-item label="学年:">
+        <elx-select v-model="form.expand.yearType" placeholder="请选择" @change="schoolYearChange">
+          <el-option v-for="item in schoolYearList" :key="item.id" :label="item.name" :obj="item" :value="item.id">
+          </el-option>
+        </elx-select>
+      </el-form-item>
 
+      <el-form-item label="名称:">
+        <el-input v-model="form.expand.name" autosize focus style="width:50%;">
+          <i slot="suffix" class="el-icon-edit el-input__icon"></i>
+        </el-input>
+      </el-form-item>
 
+    </el-form>
+    <hr />
+    <el-form ref="form" label-position="right" :model="form" label-width="120px" style="margin: 20px;">
 
-          <el-form-item label="名称">
-            <el-input v-model="form.expand.name" autosize focus style="width:50%;">
-              <i slot="suffix" class="el-icon-edit el-input__icon"></i>
-            </el-input>
-          </el-form-item>
+      <el-form-item label="业务类型:">
+        <ProjectTypeSelect @selectValue="selectValue" :value="form.projectServiceType" :options="ioptions" :disabled="isProjectTypeSelectDisDisabled"></ProjectTypeSelect>
+      </el-form-item>
 
-        </el-form>
-      </div>
-    </page>
+      <el-form-item label="子类型:">
+        <el-select v-model="classifyType" placeholder="请选择" @change="classifyTypeDetail">
+          <el-option v-for="item in ClassifyTypeList" :key="item.value" :label="item.typeName" :value="item.templateKey">
+          </el-option>
+        </el-select>
+        <el-button size="small" @click="clasDetail">详细</el-button>
 
-    <page class="page" :breadcrumb="false">
-      <div slot="panel">
-        <div class="pannel_title">任务配置</div>
-        <el-form ref="form" label-position="left" :model="form" label-width="110px" style="margin: 20px;">
-        
-          <el-form-item label="业务类型:">
-            <ProjectTypeSelect @selectValue="selectValue" :value="form.projectServiceType" :options="ioptions" :disabled="isProjectTypeSelectDisDisabled"></ProjectTypeSelect>
-          </el-form-item>
+      </el-form-item>
 
-          <el-form-item label="子类型:">
-            <el-select v-model="classifyType" placeholder="请选择" @change="classifyTypeDetail">
-              <el-option v-for="item in ClassifyTypeList" :key="item.value" :label="item.typeName" :value="item.templateKey">
-              </el-option>
-            </el-select>
-            <el-button size="small" @click="clasDetail">详细</el-button>
+      <el-form-item label="计划开始日期:">
+        <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planStartTime" type="date" placeholder="选择日期">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="计划结束日期:">
+        <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planCompleteTime" type="date" placeholder="选择日期">
+        </el-date-picker>
+      </el-form-item>
 
-          </el-form-item>
+      <el-form-item label="项目附件:">
+        <ProjectAttachmentUplad :fileList2="form.attrDetailBean" :url="uploadAttrUrl" style="width: 30%;" @onSuccess="formUploadOnSuccess"></ProjectAttachmentUplad>
+      </el-form-item>
 
-          <el-form-item label="计划开始日期">
-            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planStartTime" type="date" placeholder="选择日期">
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item label="计划结束日期">
-            <el-date-picker format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" v-model="form.planCompleteTime" type="date" placeholder="选择日期">
-            </el-date-picker>
-          </el-form-item>
+      <el-form-item label="是否生成公告:">
+        <el-switch v-model="form.isSendPublicNotice" active-value="Y" inactive-value="N"></el-switch>
+      </el-form-item>
+      <el-form-item label="公告内容:" v-show="form.isSendPublicNotice=='Y'?true:false">
+        <el-button type="text" @click="tinymceShow=true">编辑内容</el-button>
+        <el-button type="text" v-show="tinymceShow" @click="tinymceShow=false">隐藏内容</el-button>
+        <template>
+          <tinymce :height="300" v-model="form.projectDesc" id='tinymce' v-show="tinymceShow"></tinymce>
+        </template>
+      </el-form-item>
 
-          <el-form-item label="项目附件:">
-            <ProjectAttachmentUplad :fileList2="form.attrDetailBean" :url="uploadAttrUrl" style="width: 30%;" @onSuccess="formUploadOnSuccess"></ProjectAttachmentUplad>
-          </el-form-item>
-
-          <el-form-item label="是否生成公告:">
-            <el-switch v-model="form.isSendPublicNotice" active-value="Y" inactive-value="N"></el-switch>
-          </el-form-item>
-          <el-form-item label="公告内容:" v-show="form.isSendPublicNotice=='Y'?true:false">
-            <!-- <el-input type="textarea" :autosize="{ minRows: 3}" v-model="form.projectDesc"></el-input> -->
-            <tinymce :height="300" v-model="form.projectDesc" id='tinymce'></tinymce>
-          </el-form-item>
-        </el-form>
-      </div>
-    </page>
-
-    
-    <page class="page" :breadcrumb="false">
-      <div slot="panel">
-        <el-row type="flex" class="row-bg" justify="center" style="padding: 20px;border-top: #f6f8f9 solid 2px;">
-          <el-col :span="7">
-            <el-button type="primary" @click="onSaveAndNext">保存并进行下一步</el-button>
-          </el-col>
-        </el-row>
-      </div>
-    </page>
+      <el-form-item >
+        <el-button type="primary" @click="onSaveAndNext">保存并进行下一步</el-button>
+      </el-form-item>
+    </el-form>
 
   </div>
 </template>
@@ -117,6 +101,7 @@ export default {
   },
   data() {
     return {
+      tinymceShow:false,
       currentCategoryId: 0, //当前选中的测评类别id
       appraiseTypeList: [
         {
@@ -128,11 +113,11 @@ export default {
       iopt: [],
       classifyType: "",
       yearTypeList: [],
-       schoolYearList: []
+      schoolYearList: []
     };
   },
   methods: {
-     schoolYearChange(p1, p2, p3, p4) {
+    schoolYearChange(p1, p2, p3, p4) {
       console.log([p1, p2, p3, p4]);
       var schoolYearName = p3.obj.name;
       this.form.expand.name =
@@ -157,14 +142,14 @@ export default {
       });
     },
     ...mapActions({
-        querySchoolYear: state.namespace + "/querySchoolYear",
+      querySchoolYear: state.namespace + "/querySchoolYear",
       queryServiceTypeList: state.namespace + "/queryServiceTypeList",
       insertOrUpdateProject: state.namespace + "/insertOrUpdateProject",
       insertOrUpdateAndNext: state.namespace + "/insertOrUpdateAndNext",
       startStudyWorkProject: state.namespace + "/startStudyWorkProject"
       //    queryClassifyTypeByCode:store.namespace + "/queryClassifyTypeByCode"
     }),
-     getSchoolYearList() {
+    getSchoolYearList() {
       this.querySchoolYear({ currentPage: 1, pageSize: 99999 }).then(
         response => {
           this.schoolYearList = response.resBody.baseData;
@@ -224,7 +209,10 @@ export default {
         console.log(["insertOrUpdateAndNext", response]);
         this.startStudyWorkProject({ scopeId: response.resBody.scopeId }).then(
           responsex => {
-             console.log("insertOrUpdateAndNext"+["insertOrUpdateAndNext", response.resBody.scopeId]);
+            console.log(
+              "insertOrUpdateAndNext" +
+                ["insertOrUpdateAndNext", response.resBody.scopeId]
+            );
             this.$router.push({
               path: "/project/control",
               query: { scopeId: response.resBody.scopeId }
@@ -297,5 +285,5 @@ export default {
   color: #ffffff;
   padding-left: 5px;
   margin: -10px;
-} 
+}
 </style>

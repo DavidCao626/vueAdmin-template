@@ -7,10 +7,10 @@
 
 export const studyWorkRouter = {
   path: "/studyWork",
-  name: "勤工俭学",
+  name: "",
   redirect: "/studyWork/baseTable",
   component: () => import("../_layout/layout.vue"),
-  meta: { title: "勤工俭学", icon: "example", hidden: true },
+  meta: { title: "", icon: "example", hidden: true },
   children: [
     {
       path: "baseTable",
