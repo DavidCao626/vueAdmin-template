@@ -36,17 +36,10 @@ export const constantRouterMap = [
     zongceV2Router,
       studyWorkRouter,
       zongceRouter,
-<<<<<<< HEAD
       userRouter,
      // componentsRouter,
       projectRouter,
       messagesRouter,
-=======
-      //userRouter,
-     // componentsRouter,
-      //projectRouter,
-     // messagesRouter,
->>>>>>> 36566435dec2cffb1abc4405d7d578e40f4d0b55
       {
         path: "dashboard",
         meta: { title: "首页" },
