@@ -204,6 +204,8 @@ export default {
       var scopeId = commons.getRouterParam(to, "scopeId");
       if (scopeId == null) {
         console.log(["没有传递scopeid,该页面不能访问", to]);
+        vm.$message.error("参数失效，请重新进入控制台")
+        vm.$router.go(-1);
       } else {
         vm.scopeId = scopeId;
         vm.queryScopeIntegeratedDateView({ scopeId: scopeId });
