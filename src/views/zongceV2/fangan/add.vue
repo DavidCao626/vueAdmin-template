@@ -235,58 +235,25 @@ export default {
     };
   },
   watch: {
-    formInline: {
-      handler: function(val, oldVal) {
-        if (
-          oldVal.schoolYearId == "" ||
-          oldVal.schoolYearId == null ||
-          oldVal.schoolYearId == 0
-        ) {
-          return;
-        }
+    "formInline.schoolYearId"(val, oldVal) {
         this.getApi(
           this.processSchemeName,
-          { schoolYearId: oldVal.schoolYearId },
+          { schoolYearId: val },
           res => {
-            val.name = res.name;
+            this.formInline.name = res.name;
           }
-        );
-      },
-      deep: true
+        )
     },
-    formInlineEdit: {
-      handler: function(val, oldVal) {
-        if (
-          oldVal.begindate == "" ||
-          oldVal.enddate == "" ||
-          oldVal.begindate == null ||
-          oldVal.enddate == null
-        ) {
-          return;
-        }
-        if (
-          new Date(Date.parse(oldVal.enddate)) <=
-          new Date(Date.parse(oldVal.begindate))
-        ) {
-          this.$message.error("结束日期必须大于开始日期");
-          return (val.enddate = "");
-        }
-        if (val.name) {
-          return;
-        }
-        var requestData = {
-          startTime: Date.parse(val.begindate),
-          endTime: Date.parse(val.enddate)
-        };
-        this.getSchoolYearName(requestData).then(response => {
-          console.log(["getSchoolYearName", response]);
-          var res = response.resBody;
-          val.name = res.name;
-          val.describe = res.shortName;
-        });
-      },
-      deep: true
+    "formInlineEdit.schoolYearId"(val, oldVal) {
+        this.getApi(
+          this.processSchemeName,
+          { schoolYearId: val },
+          res => {
+            this.formInlineEdit.name = res.name;
+          }
+        )
     },
+
     formInlines: {
       handler: function(val, oldVal) {
         if (
