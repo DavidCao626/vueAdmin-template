@@ -54,7 +54,7 @@
         </div>
       </div>
 
-      <div class="page-box__1">
+      <!-- <div class="page-box__1">
         <div class="page-box__block">
           <div class="weui-desktop-home-notice">
             <div class="weui-desktop-home-notice__info">
@@ -83,7 +83,7 @@
 
         </div>
 
-      </div>
+      </div> -->
     </div>
     <!-- 我的发起的项目 -->
     <!-- <div class="page-box__block">

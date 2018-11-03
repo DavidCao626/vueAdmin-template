@@ -18,105 +18,10 @@
             </el-form-item>
           </el-form>
         </template>
-
-        <el-table :data="data" style="width: 100%;" size="mini">
-          <el-table-column type="expand">
-            <template slot-scope="props">
-              <el-form label-position="" inline class="demo-table-expand" size="mini">
-                <el-form-item label="姓名:">
-                  <span>{{ props.row.name }}</span>
-                </el-form-item>
-                <el-form-item label="学号:">
-                  <span>{{ props.row.cid }}</span>
-                </el-form-item>
-                <br />
-                <!-- <el-form-item label="证件类型:">
-                <span>{{ props.row.zjlx }}</span>
-              </el-form-item>
-              <el-form-item label="证件号码">
-                <span>{{ props.row.zjhm }}</span>
-              </el-form-item>
-              <br/> -->
-                <el-form-item label="成绩排名人数:">
-                  <span>{{ props.row.cjpmrs }}</span>
-                </el-form-item>
-                <el-form-item label="成绩名次:">
-                  <span>{{ props.row.cjpmmc }}</span>
-                </el-form-item>
-                <br />
-                <el-form-item label="必修课及格门数:">
-                  <span>{{ props.row.bxkjgms }}</span>
-                </el-form-item>
-                <el-form-item label="必修课门数:">
-                  <span>{{ props.row.bxkms }}</span>
-                </el-form-item>
-                <br />
-
-                <el-form-item label="综合考评名次:">
-                  <span>{{ props.row.zhkpmc }}</span>
-                </el-form-item>
-
-                <el-form-item label="综合考评人数:">
-                  <span>{{ props.row.zhkprs }}</span>
-                </el-form-item>
-                <br />
-                <el-form-item label="学校评议:">
-                  <span>{{ props.row.xxpy }}</span>
-                </el-form-item>
-                <br />
-                <el-form-item label="学院推荐:">
-                  <span>{{ props.row.xytj }}</span>
-                </el-form-item>
-              </el-form>
-            </template>
-          </el-table-column>
-          <el-table-column label="申请人">
-            <el-table-column label="姓名" width="100" prop="name">
-            </el-table-column>
-            <el-table-column label="学号" width="100" prop="cid">
-            </el-table-column>
-
-          </el-table-column>
-          <el-table-column label="申请等级" width="80" prop="sqdj">
-          </el-table-column>
-          <!-- <el-table-column label="证件类型" prop="zjlx">
-        </el-table-column>
-        </el-table-column>
-        <el-table-column label="证件号码" width="80" prop="zjhm">
-        </el-table-column> -->
-          <el-table-column label="成绩排名人数" prop="cjpmrs">
-          </el-table-column>
-          <el-table-column label="成绩名次" prop="cjpmmc">
-          </el-table-column>
-          <el-table-column label="必修课及格门数" prop="bxkjgms">
-          </el-table-column>
-          <el-table-column label="必修课门数" prop="bxkms">
-          </el-table-column>
-          <el-table-column label="综合考评名次" prop="zhkpmc">
-          </el-table-column>
-          <el-table-column label="综合考评人数" prop="zhkprs">
-          </el-table-column>
-          <el-table-column label="学校评议" prop="xxpy">
-          </el-table-column>
-          <el-table-column label="学院推荐" prop="xytj" width="80">
-          </el-table-column>
-          <el-table-column label="学校推荐" width="150" fixed="right">
-            <template slot-scope="scope">
-              <el-select v-model="scope.row.xuexiaopingshen" placeholder="请选择" @change="saveData(scope,$event)">
-                <el-option v-for="(item,index) in serviceTypeList" :key="index" :label="item.label" :value="item.value">
-                </el-option>
-              </el-select>
-            </template>
-          </el-table-column>
-
-          <!-- <el-table-column label="状态" fixed="right" prop="isDot" width="100" :filters="[{ text: '已处理', value: true }, { text: '未处理', value: false }]" :filter-method="filterTag" filter-placement="bottom-end">
-          <template slot-scope="scope">
-            <el-tag :type="scope.row.isDot === true ? 'info' : 'danger'" disable-transitions>
-              {{scope.row.isDot=== true ? '已处理' : '未处理'}}
-            </el-tag>
-          </template>
-        </el-table-column> -->
-        </el-table>
+        <template slot="headerRight">
+          <el-button size="mini" @click="zancun">暂存</el-button>
+          <el-button size="mini" @click="commitData">提交</el-button>
+        </template>
         <el-table :data="data" style="width: 100%;" size="mini">
           <el-table-column type="expand">
             <template slot-scope="props">
@@ -223,9 +128,9 @@
 
       </elx-table-layout>
     </div>
-  
+
     <div class="approval-panel" style="text-align: center;">
-       <el-button size="mini" @click="zancun">暂存</el-button>
+      <el-button size="mini" @click="zancun">暂存</el-button>
       <el-button size="mini" @click="commitData">提交</el-button>
     </div>
   </page>
@@ -245,7 +150,7 @@ export default {
       //本页过滤状态
       return row.isDot === value;
     },
-     zancun(){
+    zancun() {
       this.$router.go(-1);
     },
 
@@ -409,8 +314,7 @@ export default {
   }
 };
 </script>
-
-<style>
+<style scoped>
 .el-form-item {
   margin-bottom: 10px;
 }

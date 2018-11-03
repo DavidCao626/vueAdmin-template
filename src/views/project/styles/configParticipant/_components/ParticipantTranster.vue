@@ -79,7 +79,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 .transfer-footer {
   margin-left: 10px;
   padding: 6px 5px;
