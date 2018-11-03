@@ -4,14 +4,18 @@
             <el-row :gutter="0">
                 <el-col :span="8">
                     <el-form-item label="是否农村五保户:">
-                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isNCWBH" active-color="#13ce66" inactive-color="#ccc">
-                        </el-switch>
+                        <el-radio-group v-model="baseform.isNCWBH">
+                            <el-radio-button label="Y">是</el-radio-button>
+                            <el-radio-button label="N">否</el-radio-button>
+                        </el-radio-group>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
                     <el-form-item label="是否家中有大病患者:">
-                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isBRSFCJ" active-color="#13ce66" inactive-color="#ccc">
-                        </el-switch>
+                        <el-radio-group v-model="baseform.isBRSFCJ">
+                            <el-radio-button label="Y">是</el-radio-button>
+                            <el-radio-button label="N">否</el-radio-button>
+                        </el-radio-group>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -19,14 +23,19 @@
 
                 <el-col :span="8">
                     <el-form-item label="是否孤儿:">
-                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isGE" active-color="#13ce66" inactive-color="#ccc">
-                        </el-switch>
+                        <el-radio-group v-model="baseform.isGE">
+                            <el-radio-button label="Y">是</el-radio-button>
+                            <el-radio-button label="N">否</el-radio-button>
+                        </el-radio-group>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
                     <el-form-item label="是否单亲家庭子女:">
-                        <el-switch :disabled="!baseform.isGE == 'N'" active-value="Y" inactive-value="N" v-model="baseform.isDQJTZN" ref="isDQJTZN" active-color="#13ce66" inactive-color="#ccc">
-                        </el-switch>
+
+                        <el-radio-group :disabled="!baseform.isGE == 'N'" v-model="baseform.isDQJTZN">
+                            <el-radio-button label="Y">是</el-radio-button>
+                            <el-radio-button label="N">否</el-radio-button>
+                        </el-radio-group>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -37,16 +46,17 @@
 
                 <el-col :span="8">
                     <el-form-item label="本人是否残疾:">
-                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isCJRZN" active-color="#13ce66" inactive-color="#ccc">
-                        </el-switch>
+                        <el-radio-group v-model="baseform.isCJRZN">
+                            <el-radio-button label="Y">是</el-radio-button>
+                            <el-radio-button label="N">否</el-radio-button>
+                        </el-radio-group>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
                     <el-form-item label="残疾类别:">
-                        <el-select :disabled="!baseform.isCJRZN == 'Y'" v-model="baseform.cjlb" placeholder="">
+                        <el-select :disabled="baseform.isCJRZN != 'Y'" v-model="baseform.cjlb" placeholder="">
                             <el-option v-for="item in checkDisableType" :key="item.value" :value="item.value" :label="item.label"></el-option>
                         </el-select>
-
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -55,14 +65,18 @@
 
                 <el-col :span="8">
                     <el-form-item label="是否低收入家庭:">
-                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isDSRJT" active-color="#13ce66" inactive-color="#ccc">
-                        </el-switch>
+                        <el-radio-group v-model="baseform.isDSRJT">
+                            <el-radio-button label="Y">是</el-radio-button>
+                            <el-radio-button label="N">否</el-radio-button>
+                        </el-radio-group>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
                     <el-form-item label="是否军烈属或优抚子女:">
-                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isJLSHYFZN" active-color="#13ce66" inactive-color="#ccc">
-                        </el-switch>
+                        <el-radio-group v-model="baseform.isJLSHYFZN">
+                            <el-radio-button label="Y">是</el-radio-button>
+                            <el-radio-button label="N">否</el-radio-button>
+                        </el-radio-group>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -108,14 +122,18 @@
             <el-row>
                 <el-col :span="8">
                     <el-form-item label="是否农村低保户:">
-                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isNCDBH" active-color="#13ce66" inactive-color="#ccc">
-                        </el-switch>
+                        <el-radio-group v-model="baseform.isNCDBH">
+                            <el-radio-button label="Y">是</el-radio-button>
+                            <el-radio-button label="N">否</el-radio-button>
+                        </el-radio-group>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8">
                     <el-form-item label="是否农村特困供养:">
-                        <el-switch active-value="Y" inactive-value="N" v-model="baseform.isNCTKGY" active-color="#13ce66" inactive-color="#ccc">
-                        </el-switch>
+                        <el-radio-group v-model="baseform.isNCTKGY">
+                            <el-radio-button label="Y">是</el-radio-button>
+                            <el-radio-button label="N">否</el-radio-button>
+                        </el-radio-group>
                     </el-form-item>
                 </el-col>
             </el-row>

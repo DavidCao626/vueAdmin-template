@@ -16,7 +16,7 @@ import Router from "vue-router";
 Vue.use(Router);
 
 import _lodash from "lodash";
-//import { userRouter } from "~/views/user/_router/index";
+import { userRouter } from "~/views/user/_router/index";
 import { projectRouter } from "~/views/project/_router/index";
 //import { messagesRouter } from "~/views/messages/_router/index";
 import { zongceRouter } from "~/views/zongce/_router/index";
@@ -36,7 +36,7 @@ export const constantRouterMap = [
       zongceV2Router,
      //studyWorkRouter,
       zongceRouter,
-    //  userRouter,
+      userRouter,
      // componentsRouter,
       projectRouter,
       //messagesRouter,
