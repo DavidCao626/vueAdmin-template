@@ -32,6 +32,18 @@ const submitQuestionBean = ({ commit, state }, params) =>
     });
   });
 
+
+  const saveQuestionBean = ({ commit, state }, params) => new Promise(
+      resolve => {
+        var question = state.zc_question.questionBean;
+        var contextParam = params;
+        var data = { question: question, contextParam: contextParam };
+        api.saveQuestionBean(data).then(response => {
+          resolve(response);
+        });
+      }
+    );
+
   const submitSingleQuestionBean = ({ commit, state }, params) => new Promise(
       resolve => {
         var question = state.zc_question.questionBean;
@@ -47,5 +59,6 @@ export default {
   getQuestionBean,
   submitQuestionBean,
   submitSingleQuestionBean,
+  saveQuestionBean,
   changePage
 };

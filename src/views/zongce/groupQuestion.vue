@@ -14,7 +14,7 @@
           <template slot="headerRight">
             <el-input placeholder="按姓名筛选" size="mini" style="width:300px" v-model="entryName"></el-input>
             <el-button type="primary" size="mini" @click="searchEntry" icon="el-icon-search">查询</el-button>
-            <el-button type="primary" size="mini" icon="el-icon-search">保存当前结果</el-button>
+            <el-button type="primary" size="mini" icon="el-icon-search" @click="saveEntitys">保存当前结果</el-button>
           </template>
           <div class="approval-panel" style="padding:5px 0px">
             <table style="" v-if="questions[0]">
@@ -35,7 +35,7 @@
             </table>
           </div>
           <div slot="footer">
-            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="getQuestion.pageBean.currentPage" :page-sizes="[10]" :page-size="getQuestion.pageBean.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="getQuestion.pageBean.totalRecord">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="getQuestion.pageBean.currentPage" :page-sizes="[50]" :page-size="getQuestion.pageBean.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="getQuestion.pageBean.totalRecord">
             </el-pagination>
           </div>
         </elx-table-layout>
@@ -43,7 +43,7 @@
 
       <div class="approval-panel  footer-toolbar clearfix">
         <div class="footer-toolbar__pagination">
-          <el-button type="primary" @click="submit">保存当前结果</el-button> <el-button type="primary" @click="submit">提交全部结果</el-button>
+          <el-button type="primary" @click="saveEntitys">保存当前结果</el-button> <el-button type="primary" @click="submit">提交全部结果</el-button>
         </div>
       </div>
     </page>
@@ -89,17 +89,29 @@ export default {
       this.loadQuestion({ scopeId: this.scopeId, itemId: this.itemId,"entryName":this.entryName});
     },
     submit() {
-      this.submitQuestionBean({ scopeId: this.scopeId, itemId: this.itemId });
+      this.submitQuestionBean({ scopeId: this.scopeId, itemId: this.itemId }).then(()=>{
+        this.loadQuestion({ scopeId: this.scopeId, itemId: this.itemId,"entryName":this.entryName});
+      })
       this.$message({
         message: "提交成功",
         type: "success"
       });
       this.$router.go(-1);
     },
+    saveEntitys:function(){
+      this.saveQuestionBean({ scopeId: this.scopeId, itemId: this.itemId }).then(()=>{
+         this.loadQuestion({ scopeId: this.scopeId, itemId: this.itemId,"entryName":this.entryName});
+      })
+      this.$message({
+        message: "当前数据已暂存",
+        type: "success"
+      });
+    },
     ...mapActions({
       loadQuestion: store.namespace + "/getQuestionBean",
       submitQuestionBean: store.namespace + "/submitQuestionBean",
-      changePage:store.namespace+"/changePage"
+      changePage:store.namespace+"/changePage",
+      saveQuestionBean:store.namespace+"/saveQuestionBean"
     })
   },
   beforeRouteEnter(to, from, next) {
